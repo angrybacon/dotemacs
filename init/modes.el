@@ -65,3 +65,10 @@
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
 (pending-delete-mode t)
+
+
+;; Projectile (https://github.com/bbatsov/projectile)
+(projectile-global-mode)
+(setq projectile-enable-caching t)
+(setq projectile-remember-window-configs t)
+(setq projectile-mode-line '(:eval (format " p[%s]" (projectile-project-name))))
