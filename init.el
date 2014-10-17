@@ -95,6 +95,12 @@
 (global-set-key (kbd "C-=") 'er/expand-region)
 (pending-delete-mode t)
 
+;; Aliases
+;; ────────────────────────────────────────────────────────────────────────────
+
+(defalias 'yes-or-no-p 'y-or-n-p)  ; Always use 'y' or 'n'
+(defalias 'replace-string 'rp)     ; Alias for replace-string
+
 ;; Key bindings
 ;; ────────────────────────────────────────────────────────────────────────────
 
