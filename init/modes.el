@@ -10,7 +10,6 @@
 (add-to-list 'auto-mode-alist '("\\.less?\\'" . css-mode))
 (add-to-list 'auto-mode-alist '("\\.sass?\\'" . css-mode))
 
-
 ;; Auto complete (https://github.com/auto-complete/auto-complete)
 (add-to-list 'load-path "~/.emacs.d/packages/auto-complete/")
 (require 'auto-complete-config)
@@ -71,4 +70,4 @@
 (projectile-global-mode)
 (setq projectile-enable-caching t)
 (setq projectile-remember-window-configs t)
-(setq projectile-mode-line '(:eval (format " p[%s]" (projectile-project-name))))
+(setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))

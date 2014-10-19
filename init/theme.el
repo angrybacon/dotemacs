@@ -4,8 +4,7 @@
 
 
 ;; Set color theme
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(load-theme 'solarized-dark 1)
+(load-theme 'solarized-dark t)
 
 
 ;; Face customization
@@ -17,6 +16,11 @@
 ;; Customize the mode line
 (add-to-list 'load-path "~/.emacs.d/packages/delight/")
 (require 'delight)
-(delight 'indent-guide-mode " ig" "indent-guide")
+(delight 'auto-complete-mode " autocomplete" "auto-complete")
+(delight 'autopair-mode " autopair" "autopair")
 (delight 'emmet-mode " emmet" "emmet-mode")
-(delight 'emacs-lisp-mode "el" :major)
+(delight 'indent-guide-mode " indent" "indent-guide")
+(delight 'css-mode "css" :major)
+(delight 'html-mode "html" :major)
+(delight 'scss-mode "scss" :major)
+(delight 'emacs-lisp-mode "elisp" :major)
