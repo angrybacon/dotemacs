@@ -1,5 +1,6 @@
 -/auto-save-list
--/elpa/archives
+-/elpa
+-/packages
 -/themes
 
 -/projectile-bookmarks.eld
