@@ -3,8 +3,7 @@
 
 (setq mc/cmds-to-run-for-all
       '(
-        autopair-skip-close-maybe
-        count-words-region
+        subword-right
         ))
 
 (setq mc/cmds-to-run-once

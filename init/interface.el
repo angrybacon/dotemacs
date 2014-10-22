@@ -16,6 +16,7 @@
 (global-subword-mode 1)                    ; Iterate through CamelCase words
 (setq mouse-yank-at-point 1)               ; Yank at mouse cursor rather than click location
 (mouse-avoidance-mode 'animate)            ; Move the cursor to the corner when typing
+(toggle-frame-fullscreen)                  ; Start Emacs in full-screen
 
 
 ;; Add prefixes to buffer titles (in case of duplicates)
@@ -36,7 +37,7 @@
 
 
 ;; Color the background of strings representing a hex color code
-(defun color-hex-code-strings ()
+(defun highlight-hex-strings ()
   (interactive)
   (font-lock-add-keywords
    nil
@@ -47,7 +48,7 @@
           'face (list :background (match-string-no-properties 0)))))))
   (font-lock-fontify-buffer)
   )
-(add-hook 'emmet-mode-hook 'color-hex-code-strings)
+(add-hook 'emmet-mode-hook 'highlight-hex-strings)
 
 
 ;; Highlight parent parenthesis

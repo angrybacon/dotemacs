@@ -7,14 +7,8 @@
 
 
 ;; CSS mode
-(add-to-list 'auto-mode-alist '("\\.less?\\'" . css-mode))
-(add-to-list 'auto-mode-alist '("\\.sass?\\'" . css-mode))
-
-;; Auto complete (https://github.com/auto-complete/auto-complete)
-(add-to-list 'load-path "~/.emacs.d/packages/auto-complete/")
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/packages/auto-complete/ac-dict/")
-(ac-config-default)
+;; (add-to-list 'auto-mode-alist '("\\.less?\\'" . css-mode))
+;; (add-to-list 'auto-mode-alist '("\\.sass?\\'" . css-mode))
 
 
 ;; Autopair (https://github.com/capitaomorte/autopair)
@@ -47,6 +41,8 @@
 ;; SCSS mode (https://github.com/antonj/scss-mode/)
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/packages/scss-mode/"))
 (autoload 'scss-mode "scss-mode")
+(add-to-list 'auto-mode-alist '("\\.less\\'" . scss-mode))
+(add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
 (setq scss-compile-at-save nil)
 (eval-after-load "scss-mode"
@@ -71,3 +67,22 @@
 (setq projectile-enable-caching t)
 (setq projectile-remember-window-configs t)
 (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
+
+
+;; Auto complete (https://github.com/auto-complete/auto-complete)
+;; (add-to-list 'load-path "~/.emacs.d/packages/auto-complete/")
+;; (require 'auto-complete-config)
+;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/packages/auto-complete/ac-dict/")
+;; (ac-config-default)
+
+
+;; Company (https://github.com/company-mode/company-mode)
+(add-hook 'after-init-hook 'global-company-mode)
+(setq company-minimum-prefix-length 1)
+(setq company-idle-delay 0.1)
+
+
+;; Anaconda backend for Company (https://github.com/proofit404/company-anaconda)
+(eval-after-load "company"
+  '(progn
+     (add-to-list 'company-backends 'company-anaconda)))
