@@ -317,13 +317,18 @@
 	    ((:url . "http://elpa.gnu.org/packages/omn-mode.html")
 	     (:keywords))])
  (org .
-      [(20141013)
+      [(20141020)
        nil "Outline-based notes management and organizer" tar nil])
  (osc .
       [(0 1)
        nil "Open Sound Control protocol library" single
        ((:url . "http://elpa.gnu.org/packages/osc.html")
 	(:keywords "comm" "processes" "multimedia"))])
+ (pabbrev .
+	  [(4 1)
+	   nil "Predictive abbreviation expansion" single
+	   ((:url . "http://elpa.gnu.org/packages/pabbrev.html")
+	    (:keywords))])
  (poker .
 	[(0 1)
 	 nil "Texas hold'em poker" single

@@ -46,8 +46,7 @@
           (match-beginning 0)
           (match-end 0)
           'face (list :background (match-string-no-properties 0)))))))
-  (font-lock-fontify-buffer)
-  )
+  (font-lock-fontify-buffer))
 (add-hook 'emmet-mode-hook 'highlight-hex-strings)
 
 
