@@ -47,7 +47,8 @@
           (match-end 0)
           'face (list :background (match-string-no-properties 0)))))))
   (font-lock-fontify-buffer))
-(highlight-hex-strings)
+(add-hook 'emacs-lisp-mode-hook 'highlight-hex-strings)
+(add-hook 'emmet-mode-hook 'highlight-hex-strings)
 
 
 ;; Highlight parent parenthesis
