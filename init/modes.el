@@ -63,6 +63,14 @@
 (pending-delete-mode t)
 
 
+;; Projectile (https://github.com/bbatsov/projectile)
+(add-hook 'after-init-hook 'projectile-global-mode)
+;; (projectile-global-mode)
+(setq projectile-enable-caching t)
+(setq projectile-remember-window-configs t)
+(setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
+
+
 ;; Company (https://github.com/company-mode/company-mode)
 (add-hook 'after-init-hook 'global-company-mode)
 (setq company-minimum-prefix-length 1)
@@ -74,8 +82,5 @@
   '(progn (add-to-list 'company-backends 'company-anaconda)))
 
 
-;; Projectile (https://github.com/bbatsov/projectile)
-(projectile-global-mode)
-(setq projectile-enable-caching t)
-(setq projectile-remember-window-configs t)
-(setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
+;; Flycheck (https://github.com/flycheck/flycheck)
+(add-hook 'after-init-hook #'global-flycheck-mode)

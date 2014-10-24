@@ -1,4 +1,4 @@
-;; Customize the mode line (major and minor modes)
+;; Customize the major and minor modes strings
 (add-to-list 'load-path "~/.emacs.d/packages/delight/")
 (require 'delight)
 (delight  'css-mode               "css"     :major)
@@ -16,7 +16,7 @@
 
 ;; Nyan mode (https://github.com/TeMPOraL/nyan-mode/)
 (add-to-list 'load-path "~/.emacs.d/packages/nyan-mode/")
-;; (require 'nyan-mode)
+(require 'nyan-mode)
 ;; (nyan-mode)
 
 
