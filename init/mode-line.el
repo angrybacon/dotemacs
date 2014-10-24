@@ -1,7 +1,24 @@
+;; Customize the mode line (major and minor modes)
+(add-to-list 'load-path "~/.emacs.d/packages/delight/")
+(require 'delight)
+(delight  'css-mode               "css"     :major)
+(delight  'emacs-lisp-mode        "elisp"   :major)
+(delight  'html-mode              "html"    :major)
+(delight  'lisp-interaction-mode  "lisp"    :major)
+(delight  'python-mode            "python"  :major)
+(delight  'scss-mode              "scss"    :major)
+(delight  'autopair-mode          " ap"     "autopair")
+(delight  'company-mode           " co"     "company")
+(delight  'emmet-mode             " em"     "emmet-mode")
+(delight  'indent-guide-mode      " ig"     "indent-guide")
+(delight  'subword-mode           " sb"     "subword")
+
+
 ;; Nyan mode (https://github.com/TeMPOraL/nyan-mode/)
 (add-to-list 'load-path "~/.emacs.d/packages/nyan-mode/")
 ;; (require 'nyan-mode)
 ;; (nyan-mode)
+
 
 ;; Mode line setup (http://amitp.blogspot.fr/2011/08/emacs-custom-mode-line.html)
 (setq-default mode-line-format
@@ -81,67 +98,53 @@
                     :inverse-video nil
                     :underline nil
                     :overline nil
-                    :box '(:line-width 1 :color "#073642" :style nil)
-                    )
+                    :box '(:line-width 1 :color "#073642" :style nil))
 
 (set-face-attribute 'mode-line-inactive nil
                     ;; :foreground "gray80" :background "gray40"
                     :inverse-video nil
                     :underline nil
                     :overline nil
-                    :box '(:line-width 1 :color "#073642" :style nil)
-                    )
+                    :box '(:line-width 1 :color "#073642" :style nil))
 
 (set-face-attribute 'mode-line-read-only-face nil
                     :inherit 'mode-line-face
                     :foreground "#CB4B16"
                     :background "#268BD2"
-                    :weight 'bold
-                    )
+                    :weight 'bold)
 
 
 (set-face-attribute 'mode-line-modified-face nil
                     :inherit 'mode-line-face
                     :foreground "#268BD2"
                     :background "#CB4B16"
-                    :weight 'bold
-                    )
-
+                    :weight 'bold)
 
 (set-face-attribute 'mode-line-folder-face nil
-                    :inherit 'mode-line-face
-                    )
+                    :inherit 'mode-line-face)
 
 (set-face-attribute 'mode-line-filename-face nil
                     :inherit 'mode-line-face
                     :foreground "#93A1A1"
-                    :weight 'bold
-                    )
+                    :weight 'bold)
 
 (set-face-attribute 'mode-line-position-face nil
                     :inherit 'mode-line-face
                     :foreground "#93A1A1"
-                    :weight 'bold
-                    )
+                    :weight 'bold)
 
 (set-face-attribute 'mode-line-mode-face nil
                     :inherit 'mode-line-face
                     :foreground "#93A1A1"
-                    :weight 'bold
-                    )
-
+                    :weight 'bold)
 
 (set-face-attribute 'mode-line-minor-mode-face nil
-                    :inherit 'mode-line-face
-                    )
+                    :inherit 'mode-line-face)
 
 (set-face-attribute 'mode-line-process-face nil
                     :inherit 'mode-line-face
-                    :foreground "#718C00"
-                    )
-
+                    :foreground "#718C00")
 
 (set-face-attribute 'mode-line-80col-face nil
                     :inherit 'mode-line-position-face
-                    :foreground "#CB4B16"
-                    )
+                    :foreground "#CB4B16")

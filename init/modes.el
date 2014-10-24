@@ -6,11 +6,6 @@
 (setq linum-format 'linum-format-func)
 
 
-;; CSS mode
-;; (add-to-list 'auto-mode-alist '("\\.less?\\'" . css-mode))
-;; (add-to-list 'auto-mode-alist '("\\.sass?\\'" . css-mode))
-
-
 ;; Autopair (https://github.com/capitaomorte/autopair)
 (add-to-list 'load-path "~/.emacs.d/packages/autopair/")
 (require 'autopair)
@@ -48,6 +43,12 @@
 (eval-after-load "scss-mode"
   '(define-key emmet-mode-keymap (kbd "C-S-c C-S-c") nil))
 
+
+;; CSS mode
+;; (add-to-list 'auto-mode-alist '("\\.less?\\'" . css-mode))
+;; (add-to-list 'auto-mode-alist '("\\.sass?\\'" . css-mode))
+
+
 ;; Multiple cursors (https://github.com/magnars/multiple-cursors.el)
 (require 'multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
@@ -62,20 +63,6 @@
 (pending-delete-mode t)
 
 
-;; Projectile (https://github.com/bbatsov/projectile)
-(projectile-global-mode)
-(setq projectile-enable-caching t)
-(setq projectile-remember-window-configs t)
-(setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
-
-
-;; Auto complete (https://github.com/auto-complete/auto-complete)
-;; (add-to-list 'load-path "~/.emacs.d/packages/auto-complete/")
-;; (require 'auto-complete-config)
-;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/packages/auto-complete/ac-dict/")
-;; (ac-config-default)
-
-
 ;; Company (https://github.com/company-mode/company-mode)
 (add-hook 'after-init-hook 'global-company-mode)
 (setq company-minimum-prefix-length 1)
@@ -84,5 +71,11 @@
 
 ;; Anaconda backend for Company (https://github.com/proofit404/company-anaconda)
 (eval-after-load "company"
-  '(progn
-     (add-to-list 'company-backends 'company-anaconda)))
+  '(progn (add-to-list 'company-backends 'company-anaconda)))
+
+
+;; Projectile (https://github.com/bbatsov/projectile)
+(projectile-global-mode)
+(setq projectile-enable-caching t)
+(setq projectile-remember-window-configs t)
+(setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
