@@ -6,6 +6,11 @@
 (setq linum-format 'linum-format-func)
 
 
+;; Smooth scroll (http://www.emacswiki.org/emacs/smooth-scroll.el)
+(add-to-list 'load-path "~/.emacs.d/packages/smooth-scroll/")
+(require 'smooth-scroll)
+(smooth-scroll-mode t)
+
 ;; Autopair (https://github.com/capitaomorte/autopair)
 (add-to-list 'load-path "~/.emacs.d/packages/autopair/")
 (require 'autopair)
