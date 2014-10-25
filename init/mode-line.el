@@ -4,6 +4,7 @@
 (delight  'css-mode               "css"     :major)
 (delight  'emacs-lisp-mode        "elisp"   :major)
 (delight  'html-mode              "html"    :major)
+(delight  'js-mode                "js"      :major)
 (delight  'lisp-interaction-mode  "lisp"    :major)
 (delight  'python-mode            "python"  :major)
 (delight  'scss-mode              "scss"    :major)
@@ -17,7 +18,6 @@
 ;; Nyan mode (https://github.com/TeMPOraL/nyan-mode/)
 (add-to-list 'load-path "~/.emacs.d/packages/nyan-mode/")
 (require 'nyan-mode)
-;; (nyan-mode)
 
 
 ;; Mode line setup (http://amitp.blogspot.fr/2011/08/emacs-custom-mode-line.html)
@@ -101,7 +101,6 @@
                     :box '(:line-width 1 :color "#073642" :style nil))
 
 (set-face-attribute 'mode-line-inactive nil
-                    ;; :foreground "gray80" :background "gray40"
                     :inverse-video nil
                     :underline nil
                     :overline nil
@@ -112,7 +111,6 @@
                     :foreground "#CB4B16"
                     :background "#268BD2"
                     :weight 'bold)
-
 
 (set-face-attribute 'mode-line-modified-face nil
                     :inherit 'mode-line-face
