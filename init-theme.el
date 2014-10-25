@@ -10,4 +10,4 @@
 ;; Face customization
 (set-face-italic-p 'font-lock-string-face 1)
 (set-face-italic-p 'font-lock-comment-face 1)
-(set-face-background 'linum "#073642")
+;; (set-face-background 'linum "#073642")

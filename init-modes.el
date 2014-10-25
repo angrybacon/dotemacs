@@ -1,9 +1,9 @@
 ;; Linum mode
-(global-linum-mode 1)
-(defun linum-format-func (line)
-  (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
-     (propertize (format (format " %%%dd  " w) line) 'face 'linum)))
-(setq linum-format 'linum-format-func)
+;; (global-linum-mode 1)
+;; (defun linum-format-func (line)
+;;   (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
+;;      (propertize (format (format " %%%dd  " w) line) 'face 'linum)))
+;; (setq linum-format 'linum-format-func)
 
 
 ;; Smooth scroll (http://www.emacswiki.org/emacs/smooth-scroll.el)
@@ -83,9 +83,9 @@
 
 
 ;; Anaconda backend for Company (https://github.com/proofit404/company-anaconda)
-(eval-after-load "company"
-  '(progn (add-to-list 'company-backends 'company-anaconda)))
+;; (eval-after-load "company"
+;;   '(progn (add-to-list 'company-backends 'company-anaconda)))
 
 
 ;; Flycheck (https://github.com/flycheck/flycheck)
-;; (add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'after-init-hook 'global-flycheck-mode)

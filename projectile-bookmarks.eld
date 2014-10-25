@@ -1,1 +1,1 @@
-("~/Workspace/yapm/" "~/.emacs.d/" "~/Workspace/labadens/labadens/" "~/Workspace/esportbets/sources/" "~/Workspace/esportbets/showcase/")
+("~/Workspace/yapm/" "~/.emacs.d/" "~/Workspace/esportbets/sources/" "~/Workspace/labadens/labadens/" "~/Workspace/esportbets/showcase/")
