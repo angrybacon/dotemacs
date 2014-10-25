@@ -67,6 +67,7 @@
                 (:eval (when nyan-mode (list (nyan-create))))
                 ))
 
+
 ;; Helper function
 (defun shorten-directory (dir max-length)
   "Show up to 'max-length' characters of a directory name 'dir'."
@@ -81,6 +82,7 @@
       (setq output (concat ".../" output)))
     output))
 
+
 ;; Extra mode line faces
 (make-face 'mode-line-read-only-face)
 (make-face 'mode-line-modified-face)
@@ -92,6 +94,8 @@
 (make-face 'mode-line-process-face)
 (make-face 'mode-line-80col-face)
 
+
+;; Customize mode line faces
 (set-face-attribute 'mode-line nil
                     :foreground "#586E75"
                     :background "#073642"

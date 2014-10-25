@@ -1,4 +1,4 @@
-;; Interface
+;; Element of Emacs UI
 (setq inhibit-startup-screen 1)            ; Remove start-up screen
 (scroll-bar-mode -1)                       ; Remove scroll bar
 (menu-bar-mode -1)                         ; Remove menu bar
@@ -20,8 +20,8 @@
 
 
 ;; Add prefixes to buffer titles (in case of duplicates)
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'forward)
+;; (require 'uniquify)
+;; (setq uniquify-buffer-name-style 'forward)
 
 
 ;; Sort directories first while in dired mode

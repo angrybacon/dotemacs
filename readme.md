@@ -1,3 +1,3 @@
 Requirements:
 
-+ pip install --user pylint
++ `pip install --user pylint` (for Flycheck)
