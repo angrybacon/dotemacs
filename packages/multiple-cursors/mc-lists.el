@@ -3,7 +3,7 @@
 
 (setq mc/cmds-to-run-for-all
       '(
-        subword-right
+        autopair-insert-or-skip-quote
         ))
 
 (setq mc/cmds-to-run-once

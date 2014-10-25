@@ -8,11 +8,11 @@
 (delight  'lisp-interaction-mode  "lisp"    :major)
 (delight  'python-mode            "python"  :major)
 (delight  'scss-mode              "scss"    :major)
-(delight  'autopair-mode          " ap"     "autopair")
-(delight  'company-mode           " co"     "company")
-(delight  'emmet-mode             " em"     "emmet-mode")
-(delight  'indent-guide-mode      " ig"     "indent-guide")
-(delight  'subword-mode           " sb"     "subword")
+(delight  'autopair-mode          "ap "     "autopair")
+(delight  'company-mode           "co "     "company")
+(delight  'emmet-mode             "em "     "emmet-mode")
+(delight  'indent-guide-mode      "ig "     "indent-guide")
+(delight  'subword-mode           "sb "     "subword")
 
 
 ;; Nyan mode (https://github.com/TeMPOraL/nyan-mode/)
