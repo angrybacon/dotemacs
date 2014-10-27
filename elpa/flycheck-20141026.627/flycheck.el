@@ -6,7 +6,7 @@
 ;; Author: Sebastian Wiesner <swiesner@lunaryorn.com>
 ;; URL: https://flycheck.readthedocs.org
 ;; Keywords: convenience languages tools
-;; Version: 0.21-cvs1
+;; Version: 0.22-cvs
 ;; Package-Requires: ((dash "2.4.0") (pkg-info "0.4") (cl-lib "0.3") (emacs "24.1"))
 
 ;; This file is not part of GNU Emacs.
@@ -4567,6 +4567,15 @@ When non-nil, disable RTTI for syntax checks, via `-fno-rtti'."
   :safe #'booleanp
   :package-version '(flycheck . "0.20"))
 
+(flycheck-def-option-var flycheck-gcc-openmp nil c/c++-gcc
+  "Whether to enable OpenMP in GCC.
+
+When non-nil, enable OpenMP for syntax checkers, via
+`-fopenmp'."
+  :type 'boolean
+  :safe #'booleanp
+  :package-version '(flycheck . "0.21"))
+
 (flycheck-def-option-var flycheck-gcc-warnings '("all" "extra") c/c++-gcc
   "A list of additional warnings to enable in GCC.
 
@@ -4597,6 +4606,7 @@ Requires GCC 4.8 or newer.  See URL `https://gcc.gnu.org/'."
             (option "-std=" flycheck-gcc-language-standard concat)
             (option-flag "-fno-exceptions" flycheck-gcc-no-exceptions)
             (option-flag "-fno-rtti" flycheck-gcc-no-rtti)
+            (option-flag "-fopenmp" flycheck-gcc-openmp)
             (option-list "-include" flycheck-gcc-includes)
             (option-list "-W" flycheck-gcc-warnings concat)
             (option-list "-D" flycheck-gcc-definitions concat)
@@ -6305,7 +6315,10 @@ See URL `https://github.com/koalaman/shellcheck/'."
           line-end)
    (warning line-start
             (file-name) ":" line ":" column ": warning: " (message)
-            line-end))
+            line-end)
+   (info line-start
+         (file-name) ":" line ":" column ": note: " (message)
+         line-end))
   :predicate (lambda () (memq sh-shell flycheck-shellcheck-supported-shells)))
 
 (flycheck-define-checker slim
