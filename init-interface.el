@@ -3,9 +3,9 @@
 (scroll-bar-mode -1)                       ; Remove scroll bar
 (menu-bar-mode -1)                         ; Remove menu bar
 (tool-bar-mode -1)                         ; Remove the toolbar
-(set-fringe-mode 0)                        ; Remove left and right fringes
-(line-number-mode 1)                       ; Display line number according cursor current position
+(line-number-mode )                        ; Display line number according cursor current position
 (column-number-mode 1)                     ; Display column number according cursor current position
+(fringe-mode '(7 . 0))                     ; Display left fringe
 (setq scroll-step 1)                       ; Line by line scrolling
 (setq default-tab-width 4)                 ; Set width for tabs
 (global-hl-line-mode 1)                    ; Hightlight current line
@@ -17,6 +17,13 @@
 (setq mouse-yank-at-point 1)               ; Yank at mouse cursor rather than click location
 (mouse-avoidance-mode 'animate)            ; Move the cursor to the corner when typing
 (toggle-frame-fullscreen)                  ; Start Emacs in full-screen
+(setq-default indicate-empty-lines t)      ; Indicate empty line (require left fringe)
+
+
+;; Customize empty line indicator
+(progn
+  (define-fringe-bitmap 'tilde [0 0 0 113 219 142 0 0] nil nil 'center)
+  (setcdr (assq 'empty-line fringe-indicator-alist) 'tilde))
 
 
 ;; Add prefixes to buffer titles (in case of duplicates)
