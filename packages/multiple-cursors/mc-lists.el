@@ -3,7 +3,6 @@
 
 (setq mc/cmds-to-run-for-all
       '(
-        subword-left
         subword-right
         ))
 

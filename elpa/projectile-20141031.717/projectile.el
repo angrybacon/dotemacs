@@ -5,7 +5,7 @@
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/projectile
 ;; Keywords: project, convenience
-;; Version: 20141023.47
+;; Version: 20141031.717
 ;; X-Original-Version: 0.11.0
 ;; Package-Requires: ((s "1.6.0") (dash "1.5.0") (pkg-info "0.4"))
 
@@ -409,7 +409,7 @@ timer if no more items are in the cache."
   (let ((now (current-time)))
     (maphash (lambda (key value)
                (if (time-less-p (cdr value) now)
-                   (remhash key  projectile-file-exists-cache)))
+                   (remhash key projectile-file-exists-cache)))
              projectile-file-exists-cache)
     (setq projectile-file-exists-cache-timer
           (if (> (hash-table-count projectile-file-exists-cache) 0)
@@ -877,7 +877,9 @@ looping at a single point."
                (mapcar (lambda (f)
                          (concat s f))
                        (projectile-files-via-ext-command projectile-git-command))))
-           (projectile-get-all-sub-projects (projectile-project-root)))))
+           (condition-case nil
+               (projectile-get-all-sub-projects (projectile-project-root))
+             nil))))
 
 (defun projectile-get-repo-files ()
   "Get a list of the files in the project, including sub-projects."
@@ -971,6 +973,7 @@ Operates on filenames relative to the project root."
     (and (not (s-starts-with? " " (buffer-name buffer)))
          (not (projectile-ignored-buffer-p buffer))
          (s-equals? (file-remote-p default-directory) (file-remote-p project-root))
+         (not (s-matches? "^http\\(s\\)?://" default-directory))
          (s-starts-with? project-root (file-truename default-directory)))))
 
 (defun projectile-ignored-buffer-p (buffer)
@@ -2251,12 +2254,27 @@ This command will first prompt for the directory the file is in."
   :group 'projectile
   :type 'hook)
 
+(defun projectile-keep-project-p (project)
+  "Determine wether we should cleanup this project or not.
+
+It handles the case of remote files as well. See `projectile-cleanup-known-projects'."
+  ;; Taken from from `recentf-keep-default-predicate'
+  (cond
+   ((file-remote-p project nil t) (file-readable-p project))
+   ((file-remote-p project))
+   ((file-readable-p project))))
 
 (defun projectile-cleanup-known-projects ()
   "Remove known projects that don't exist anymore."
   (interactive)
-  (setq projectile-known-projects (--filter (projectile-file-exists-p it) projectile-known-projects))
-  (projectile-save-known-projects))
+  (let* ((separated-projects (-separate #'projectile-keep-project-p projectile-known-projects))
+         (projects-kept (car separated-projects))
+         (projects-removed (cadr separated-projects)))
+    (setq projectile-known-projects projects-kept)
+    (projectile-save-known-projects)
+    (if projects-removed
+        (message "Projects removed: %s" (s-join ", " projects-removed))
+      (message "No projects needed to be removed."))))
 
 (defun projectile-clear-known-projects ()
   "Clear both `projectile-known-projects' and `projectile-known-projects-file'."
@@ -2421,6 +2439,10 @@ is chosen."
 (def-projectile-commander-method ?v
   "Open project root in vc-dir or magit."
   (projectile-vc))
+
+(def-projectile-commander-method ?r
+  "Replace a string in the project."
+  (projectile-replace))
 
 (def-projectile-commander-method ?R
   "Regenerate the project's [e|g]tags."
