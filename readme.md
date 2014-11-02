@@ -6,4 +6,4 @@ This repository contains my personal Emacs configuration and installed packages.
 # Installation
 ---
 
-Copy/paste all files into a `.emacs.d/` folder and put this folder in your `$HOME` root.
+Put all the files into a `.emacs.d/` folder and place this folder in your `$HOME` root.
