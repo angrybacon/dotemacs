@@ -1,7 +1,3 @@
-Requirements:
-
-+ `pip install pylint` (for Flycheck)
-
 # DotEmacs
 ---
 
