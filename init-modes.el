@@ -69,11 +69,12 @@
 
 
 ;; Projectile (https://github.com/bbatsov/projectile)
-(add-hook 'after-init-hook 'projectile-global-mode)
-;; (projectile-global-mode)
+;; (add-hook 'after-init-hook 'projectile-global-mode)
 (setq projectile-enable-caching t)
 (setq projectile-remember-window-configs t)
 (setq projectile-mode-line '(:eval (format "[%s] " (projectile-project-name))))
+(projectile-global-mode)
+;; (helm-projectile-on)
 
 
 ;; Company (https://github.com/company-mode/company-mode)
