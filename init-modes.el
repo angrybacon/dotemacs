@@ -74,7 +74,8 @@
 (setq projectile-remember-window-configs t)
 (setq projectile-mode-line '(:eval (format "[%s] " (projectile-project-name))))
 (projectile-global-mode)
-;; (helm-projectile-on)
+(require 'helm-projectile)
+(helm-projectile-on)
 
 
 ;; Company (https://github.com/company-mode/company-mode)
