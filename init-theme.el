@@ -1,6 +1,6 @@
 ;; Set default font
-(when (member "Ubuntu Mono" (font-family-list))
-  (set-face-attribute 'default nil :font "Ubuntu Mono-9"))
+(when (member "Inconsolata" (font-family-list))
+  (set-face-attribute 'default nil :font "Inconsolata-9"))
 
 
 ;; Set color theme
@@ -8,10 +8,10 @@
 
 
 ;; Face customization
+(set-face-attribute 'show-paren-match nil :weight 'normal)
 (set-face-italic-p 'font-lock-string-face 1)
 (set-face-italic-p 'font-lock-comment-face 1)
 (set-face-foreground 'fringe "#384E55")
-;; (set-fringe-bitmap-face 'tilde 'font-lock-comment-face)
 
 
 ;; Helm face customization (M-x helm-colors)

@@ -76,6 +76,7 @@
 (projectile-global-mode)
 (require 'helm-projectile)
 (helm-projectile-on)
+(global-set-key (kbd "M-x") 'helm-M-x)
 
 
 ;; Company (https://github.com/company-mode/company-mode)

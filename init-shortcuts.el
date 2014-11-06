@@ -29,3 +29,4 @@
   (when (not (search-forward-regexp "\n[[:blank:]]*\n" nil t)) (goto-char (point-max)))
   (skip-chars-forward "\n"))
 (global-set-key (kbd "<C-down>") 'forward-block)
+
