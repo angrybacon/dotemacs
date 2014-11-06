@@ -1,6 +1,6 @@
 ;; Set default font
-(when (member "Inconsolata" (font-family-list))
-  (set-face-attribute 'default nil :font "Inconsolata-9"))
+(when (member "Ubuntu Mono" (font-family-list))
+  (set-face-attribute 'default nil :font "Ubuntu Mono-9"))
 
 
 ;; Set color theme
