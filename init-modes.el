@@ -49,11 +49,6 @@
   '(define-key emmet-mode-keymap (kbd "C-S-c C-S-c") nil))
 
 
-;; CSS mode
-;; (add-to-list 'auto-mode-alist '("\\.less?\\'" . css-mode))
-;; (add-to-list 'auto-mode-alist '("\\.sass?\\'" . css-mode))
-
-
 ;; Multiple cursors (https://github.com/magnars/multiple-cursors.el)
 (require 'multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
@@ -72,7 +67,7 @@
 ;; (add-hook 'after-init-hook 'projectile-global-mode)
 (setq projectile-enable-caching t)
 (setq projectile-remember-window-configs t)
-(setq projectile-mode-line '(:eval (format "[%s] " (projectile-project-name))))
+(setq projectile-mode-line '(:eval (format " %s" (projectile-project-name))))
 (projectile-global-mode)
 (require 'helm-projectile)
 (helm-projectile-on)
