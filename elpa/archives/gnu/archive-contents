@@ -186,7 +186,7 @@
 	   ((:url . "http://elpa.gnu.org/packages/flylisp.html")
 	    (:keywords))])
  (ggtags .
-	 [(0 8 6)
+	 [(0 8 7)
 	  ((emacs
 	    (24))
 	   (cl-lib
@@ -317,7 +317,7 @@
 	    ((:url . "http://elpa.gnu.org/packages/omn-mode.html")
 	     (:keywords))])
  (org .
-      [(20141103)
+      [(20141110)
        nil "Outline-based notes management and organizer" tar nil])
  (osc .
       [(0 1)
