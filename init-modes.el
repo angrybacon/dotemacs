@@ -52,8 +52,8 @@
 ;; Multiple cursors (https://github.com/magnars/multiple-cursors.el)
 (require 'multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (setq mc/list-file "~/.emacs.d/packages/multiple-cursors/mc-lists.el")
 
 
@@ -81,8 +81,8 @@
 
 
 ;; Anaconda backend for Company (https://github.com/proofit404/company-anaconda)
-;; (eval-after-load "company"
-;;   '(progn (add-to-list 'company-backends 'company-anaconda)))
+(with-eval-after-load 'company
+  (add-to-list 'company-backends 'company-anaconda))
 
 
 ;; Flycheck (https://github.com/flycheck/flycheck)

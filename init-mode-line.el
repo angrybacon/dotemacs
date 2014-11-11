@@ -64,9 +64,6 @@
                 (global-mode-string global-mode-string)
                 "  "
 
-                ;; Status
-                "  %s  "
-
                 ;; nyan-mode uses nyan cat as an alternative to %p
                 (:eval (when nyan-mode (list (nyan-create))))
                 ))
