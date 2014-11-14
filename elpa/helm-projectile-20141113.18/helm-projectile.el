@@ -6,7 +6,7 @@
 ;; URL: https://github.com/bbatsov/projectile
 ;; Created: 2011-31-07
 ;; Keywords: project, convenience
-;; Version: 20141111.1458
+;; Version: 20141113.18
 ;; X-Original-Version: 0.11.0
 ;; Package-Requires: ((helm "1.4.0") (projectile "0.11.0") (cl-lib "0.3"))
 
@@ -232,11 +232,11 @@ It is there because Helm requires it."
   "Get all current Dired buffers."
   (mapcar (lambda (b)
             (with-current-buffer b (buffer-name)))
-          (filter (lambda (b)
-                    (with-current-buffer b
-                      (and (eq major-mode 'dired-mode)
-                           (buffer-name))))
-                  (buffer-list))))
+          (-filter (lambda (b)
+                     (with-current-buffer b
+                       (and (eq major-mode 'dired-mode)
+                            (buffer-name))))
+                   (buffer-list))))
 
 (defun helm-projectile-dired-files-new-action (candidate)
   "Create a Dired buffer from chosen files.
@@ -596,13 +596,12 @@ If it is nil, or ack/ack-grep not found then use default grep command."
          (follow (and helm-follow-mode-persistent
                       (assoc-default 'follow helm-source-grep)))
          (helm-grep-in-recurse t)
-         (grep-find-ignored-files (-union (-map (lambda (dir) (s-chop-suffix "/" (file-relative-name dir default-directory)))
-                                                (cdr (projectile-ignored-directories))) grep-find-ignored-directories))
-         (grep-find-ignored-directories (-union (-map (lambda (dir) (s-chop-suffix "/" (file-relative-name dir default-directory)))
-                                                      (cdr (projectile-ignored-directories))) grep-find-ignored-directories))
+         (grep-find-ignored-files (-union projectile-globally-ignored-files  grep-find-ignored-files))
+         (grep-find-ignored-directories (-union projectile-globally-ignored-directories grep-find-ignored-directories))
          (helm-grep-default-command (if use-ack-p
                                         (concat ack-executable " -H --smart-case --no-group --no-color " ack-ignored-pattern " %p %f")
                                       "grep -a -d recurse %e -n%cH -e %p %f"))
+         (helm-grep-default-recurse-command helm-grep-default-command)
          (helm-source-grep
           (helm-build-async-source
               (capitalize (helm-grep-command t))
@@ -685,7 +684,14 @@ If it is nil, or ack/ack-grep not found then use default grep command."
   (unless (executable-find "ag")
     (error "ag not available"))
   (if (require 'helm-ag nil  'noerror)
-      (let ((helm-ag-insert-at-point 'symbol))
+      (let* ((helm-ag-insert-at-point 'symbol)
+             (grep-find-ignored-files (-union projectile-globally-ignored-files grep-find-ignored-files))
+             (grep-find-ignored-directories (-union projectile-globally-ignored-directories grep-find-ignored-directories))
+             (ignored (mapconcat (lambda (i)
+                                   (concat "--ignore " i))
+                                 (append grep-find-ignored-files grep-find-ignored-directories)
+                                 " "))
+             (helm-ag-base-command (concat helm-ag-base-command " " ignored)))
         (helm-do-ag (projectile-project-root)))
     (error "helm-ag not available")))
 

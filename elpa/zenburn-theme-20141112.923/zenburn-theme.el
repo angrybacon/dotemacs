@@ -4,8 +4,8 @@
 
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: http://github.com/bbatsov/zenburn-emacs
-;; Version: 20140811.754
-;; X-Original-Version: 2.1
+;; Version: 20141112.923
+;; X-Original-Version: 2.3-cvs
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -222,10 +222,10 @@ Also bind `class' to ((class color) (min-colors 89))."
    `(company-tooltip-mouse ((t (:background ,zenburn-bg-1))))
    `(company-tooltip-common ((t (:foreground ,zenburn-green+2))))
    `(company-tooltip-common-selection ((t (:foreground ,zenburn-green+2))))
-   `(company-scrollbar-fg ((t (:background ,zenburn-green+1))))
-   `(company-scrollbar-bg ((t (:background ,zenburn-bg-1))))
-   `(company-preview ((t (:background ,zenburn-green+1))))
-   `(company-preview-common ((t (:background ,zenburn-bg-1))))
+   `(company-scrollbar-fg ((t (:background ,zenburn-bg-1))))
+   `(company-scrollbar-bg ((t (:background ,zenburn-bg+2))))
+   `(company-preview ((t (:background ,zenburn-green+2))))
+   `(company-preview-common ((t (:foreground ,zenburn-green+2 :background ,zenburn-bg-1))))
 ;;;;; bm
    `(bm-face ((t (:background ,zenburn-yellow-1 :foreground ,zenburn-bg))))
    `(bm-fringe-face ((t (:background ,zenburn-yellow-1 :foreground ,zenburn-bg))))
