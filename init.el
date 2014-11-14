@@ -55,6 +55,7 @@
 (load "~/.emacs.d/init-aliases.el")
 (load "~/.emacs.d/init-modes.el")
 (load "~/.emacs.d/init-shortcuts.el")
+(load "~/.emacs.d/init-syntax.el")
 (load "~/.emacs.d/init-theme.el")
 
 
