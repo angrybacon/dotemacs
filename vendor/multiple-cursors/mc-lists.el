@@ -3,14 +3,13 @@
 
 (setq mc/cmds-to-run-for-all
       '(
-        comment-dwim
-        kill-region
+        electric-newline-and-maybe-indent
+        indent-for-tab-command
         subword-left
         subword-right
+        tab-to-tab-stop
         ))
 
 (setq mc/cmds-to-run-once
       '(
-        helm-M-x
-        mouse-buffer-menu
         ))

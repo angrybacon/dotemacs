@@ -5,7 +5,7 @@
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/projectile
 ;; Keywords: project, convenience
-;; Version: 20141111.832
+;; Version: 20141111.2339
 ;; X-Original-Version: 0.11.0
 ;; Package-Requires: ((s "1.6.0") (dash "1.5.0") (pkg-info "0.4"))
 
@@ -519,17 +519,19 @@ The cache is created both in memory and on the hard drive."
   (let* ((current-project (projectile-project-root))
          (abs-current-file (buffer-file-name (current-buffer)))
          (current-file (file-relative-name abs-current-file current-project)))
-    (unless (or (projectile-file-cached-p current-file current-project)
-                (projectile-ignored-directory-p (file-name-directory abs-current-file))
-                (projectile-ignored-file-p abs-current-file))
-      (puthash current-project
-               (cons current-file (gethash current-project projectile-projects-cache))
-               projectile-projects-cache)
-      (projectile-serialize-cache)
-      (when projectile-verbose
-        (message "File %s added to project %s cache."
-                 (propertize current-file 'face 'font-lock-keyword-face)
-                 (propertize current-project 'face 'font-lock-keyword-face))))))
+    (if (gethash (projectile-project-root) projectile-projects-cache)
+        (unless (or (projectile-file-cached-p current-file current-project)
+                    (projectile-ignored-directory-p (file-name-directory abs-current-file))
+                    (projectile-ignored-file-p abs-current-file))
+          (puthash current-project
+                   (cons current-file (gethash current-project projectile-projects-cache))
+                   projectile-projects-cache)
+          (projectile-serialize-cache)
+          (message "File %s added to project %s cache."
+                   (propertize current-file 'face 'font-lock-keyword-face)
+                   (propertize current-project 'face 'font-lock-keyword-face)))
+      (message "Empty cache. Projectile is initializing cache...")
+      (projectile-current-project-files))))
 
 ;; cache opened files automatically to reduce the need for cache invalidation
 (defun projectile-cache-files-find-file-hook ()

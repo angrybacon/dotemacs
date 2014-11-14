@@ -1,8 +1,8 @@
 -/auto-save-list
 -/elpa
--/packages
--/themes
+-/vendor
 -/url
 
--/projectile-bookmarks.eld
--/projectile.cache
+-/.gitignore
+-/.projectile
+-/projectile-cache

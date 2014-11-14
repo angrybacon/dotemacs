@@ -1,5 +1,5 @@
 ;; Customize the major and minor modes strings
-(add-to-list 'load-path "~/.emacs.d/packages/delight/")
+(add-to-list 'load-path "~/.emacs.d/vendor/delight/")
 (require 'delight)
 (delight 'css-mode               "css"     :major)
 (delight 'emacs-lisp-mode        "elisp"   :major)
@@ -17,7 +17,7 @@
 
 
 ;; Nyan mode (https://github.com/TeMPOraL/nyan-mode/)
-(add-to-list 'load-path "~/.emacs.d/packages/nyan-mode/")
+(add-to-list 'load-path "~/.emacs.d/vendor/nyan-mode/")
 (require 'nyan-mode)
 
 
@@ -39,7 +39,7 @@
                               (propertize "  RO  " 'face 'mode-line-read-only-face))
                              ((buffer-modified-p)
                               (propertize "  **  " 'face 'mode-line-modified-face))
-                             (t "      ")))
+                             (t "  --  ")))
 
                 ;; Position in file
                 (:propertize "  %p" face mode-line-position-relative-face)
@@ -52,7 +52,6 @@
 
                 ;; narrow [default -- keep?]
                 ;; "  %n  "
-
                 ;; Mode indicators: vc, recursive edit, major mode, minor modes, process, global
                 ;; (vc-mode vc-mode)
                 "  %["
@@ -98,6 +97,8 @@
 (make-face 'mode-line-80col-face)
 
 
+(set-face-attribute 'vertical-border nil :foreground "#073642")
+
 ;; Customize mode line faces
 (set-face-attribute 'mode-line nil
                     :foreground "#586E75"
@@ -105,13 +106,15 @@
                     :inverse-video nil
                     :underline nil
                     :overline nil
-                    :box '(:line-width 1 :color "#073642" :style nil))
+                    :box '(:line-width 2 :color "#073642" :style nil))
 
 (set-face-attribute 'mode-line-inactive nil
+                    :foreground "#586E75"
+                    :background "#073642"
                     :inverse-video nil
                     :underline nil
                     :overline nil
-                    :box '(:line-width 1 :color "#073642" :style nil))
+                    :box '(:line-width 2 :color "#073642" :style nil))
 
 (set-face-attribute 'mode-line-read-only-face nil
                     :inherit 'mode-line-face

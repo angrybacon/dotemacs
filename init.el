@@ -25,21 +25,22 @@
 ;; Copy this file and its parent folder in your home.
 ;; A list of installed features:
 ;;
-;;   + Multiple cursors
-;;   + Expand region
-;;   + Company (with Anaconda support)
-;;   + Auto pair
-;;   + Emmet
-;;   + Indent guide
-;;   + SCSS mode
-;;   + Projectile (with Helm support)
+;;   - Multiple cursors
+;;   - Expand region
+;;   - Company (with Anaconda support)
+;;   - Emmet
+;;   - Indent guide
+;;   - SCSS mode
+;;   - Projectile
+;;   - Helm
 ;;
-;; Plus some neat improvements such as colorful highlight of hex color strings.
+;; Plus some neat improvements such as colorful highlight of hex color strings
+;; and a cleaner mode-line.
 
 ;;; Code:
 
 
-;; Initializing package manager with Melpa
+;; Initializing package manager with Melpa (Emacs > 24)
 (when (>= emacs-major-version 24)
   (require 'package)
   (package-initialize)
