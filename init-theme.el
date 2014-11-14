@@ -4,7 +4,7 @@
 
 
 ;; Set color theme
-(load-theme 'zenburn t)
+(load-theme 'solarized-dark t)
 
 
 ;; Face customization
