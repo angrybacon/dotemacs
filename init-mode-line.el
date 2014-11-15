@@ -12,6 +12,7 @@
 (delight 'company-mode           ""        "company")
 (delight 'emmet-mode             ""        "emmet-mode")
 (delight 'indent-guide-mode      ""        "indent-guide")
+(delight 'magit-auto-revert-mode ""        "magit")
 (delight 'smooth-scroll-mode     ""        "smooth-scroll")
 (delight 'subword-mode           ""        "subword")
 
