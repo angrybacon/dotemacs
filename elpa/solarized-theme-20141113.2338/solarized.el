@@ -787,6 +787,9 @@ customize the resulting theme."
      `(eshell-ls-special ((,class (:foreground ,yellow :weight bold))))
      `(eshell-ls-symlink ((,class (:foreground ,cyan :weight bold))))
 
+     ;; evil-search-highlight-persist
+     `(evil-search-highlight-persist-highlight-face ((,class (:background ,(if (eq variant 'light) green-lc violet-lc)))))
+
      ;; fic
      `(fic-author-face ((,class (:background ,base03 :foreground ,orange
                                              :underline t :slant italic))))
@@ -2108,6 +2111,12 @@ customize the resulting theme."
      `(highlight-tail-colors
        '((,base02 . 0)(,green-lc . 20)(,cyan-lc . 30)(,blue-lc . 50)
          (,yellow-lc . 60)(,orange-lc . 70)(,magenta-lc . 85)(,base02 . 100)))
+
+     ;; hl-anything
+     `(hl-fg-colors '(,base03 ,base03 ,base03 ,base03 ,base03 ,base03
+                              ,base03 ,base03))
+     `(hl-bg-colors '(,yellow-lc ,orange-lc ,red-lc ,magenta-lc
+                                 ,violet-lc ,blue-lc ,cyan-lc ,green-lc)) 
 
      ;; smartrep
      `(smartrep-mode-line-active-bg (solarized-color-blend ,green ,s-mode-line-bg 0.2))

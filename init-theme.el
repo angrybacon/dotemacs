@@ -1,6 +1,6 @@
 ;; Set default font
 (when (member "Ubuntu Mono" (font-family-list))
-  (set-face-attribute 'default nil :font "Ubuntu Mono-9"))
+  (set-face-attribute 'default nil :font "Ubuntu Mono-8"))
 
 
 ;; Set color theme
@@ -47,5 +47,5 @@
                       :background 'unspecified
                       :foreground "#268BD2"
                       :weight 'bold)
-  (set-face-attribute 'helm-header nil :inherit 'font-lock-comment-face)
+  (set-face-attribute 'helm-header nil :inherit 'font-lock-comment-face :underline nil)
   )

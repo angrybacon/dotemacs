@@ -5,7 +5,7 @@
 ;; Copyright (C) 2013-     Shin Aoyama        (@smihica      https://github.com/smihica)
 ;; Copyright (C) 2009-2012 Chris Done
 
-;; Version: 20141025.1540
+;; Version: 20141114.800
 ;; X-Original-Version: 1.0.10
 ;; Author: Shin Aoyama <smihica@gmail.com>
 ;; URL: https://github.com/smihica/emmet-mode
@@ -462,7 +462,9 @@ cursor position will be moved to after the first quote."
   (let ((here (point)))
     (insert markup)
     (if emmet-indent-after-insert
-        (indent-region here (point)))
+        (let ((pre-indent-point (point)))
+          (indent-region here (point))
+          (setq here (+ here (- (point) pre-indent-point)))))
     (setq emmet-flash-ovl (make-overlay here (point)))
     (overlay-put emmet-flash-ovl 'face 'emmet-preview-output)
     (when (< 0 emmet-insert-flash-time)
