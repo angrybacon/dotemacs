@@ -235,7 +235,7 @@
 	       ((:url . "http://elpa.gnu.org/packages/jgraph-mode.html")
 		(:keywords "tex" "wp"))])
  (js2-mode .
-	   [(20140114)
+	   [(20141115)
 	    ((emacs
 	      (24 1)))
 	    "Improved JavaScript editing mode" tar

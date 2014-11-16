@@ -24,8 +24,10 @@
 
 ;; Mode line setup (http://amitp.blogspot.fr/2011/08/emacs-custom-mode-line.html)
 (setq-default mode-line-format
-              ;; Position, including warning for 80 columns
-              '((:propertize "%4l:" face mode-line-position-face)
+              '(
+
+                ;; Position, including warning for 80 columns
+                (:propertize "%4l:" face mode-line-position-face)
                 (:eval (propertize "%3c" 'face
                                    (if (>= (current-column) 80)
                                        'mode-line-80col-face
@@ -36,23 +38,27 @@
                 "  "
 
                 ;; Read-only or modified status
+                "  "
                 (:eval (cond (buffer-read-only
-                              (propertize "  RO  " 'face 'mode-line-read-only-face))
+                              (propertize "RO" 'face 'mode-line-read-only-face))
                              ((buffer-modified-p)
-                              (propertize "  **  " 'face 'mode-line-modified-face))
-                             (t "  --  ")))
+                              (propertize "**" 'face 'mode-line-modified-face))
+                             (t "--")))
+                "  "
 
                 ;; Position in file
-                (:propertize "  %p" face mode-line-position-relative-face)
-                (:propertize "/%I  " face mode-line-buffer-size-face)
+                "  "
+                (:propertize "%p" face mode-line-position-relative-face)
+                (:propertize "/%I" face mode-line-buffer-size-face)
+                "  "
 
                 ;; Directory and buffer/file name
-                (:propertize (:eval (concat "  " (shorten-directory default-directory 20)))
+                "  "
+                (:propertize (:eval (shorten-directory default-directory 20))
                              face mode-line-folder-face)
-                (:propertize "%b  " face mode-line-filename-face)
+                (:propertize "%b" face mode-line-filename-face)
+                "  "
 
-                ;; narrow [default -- keep?]
-                ;; "  %n  "
                 ;; Mode indicators: vc, recursive edit, major mode, minor modes, process, global
                 ;; (vc-mode vc-mode)
                 "  %["
@@ -65,7 +71,7 @@
                 "  "
 
                 ;; nyan-mode uses nyan cat as an alternative to %p
-                (:eval (when nyan-mode (list (nyan-create))))
+                (:eval (when nyan-mode (list "  " (nyan-create) "")))
                 ))
 
 
@@ -97,25 +103,25 @@
 (make-face 'mode-line-process-face)
 (make-face 'mode-line-80col-face)
 
-
 (set-face-attribute 'vertical-border nil :foreground "#073642")
 
+(setq nyan-bar-length 16)
 ;; Customize mode line faces
 (set-face-attribute 'mode-line nil
-                    :foreground "#586E75"
-                    :background "#073642"
+                    :foreground "#073642"
+                    :background "#93A1A1"
                     :inverse-video nil
                     :underline nil
                     :overline nil
-                    :box '(:line-width 2 :color "#073642" :style nil))
+                    :box '(:line-width 1 :color "#93A1A1" :style nil))
 
 (set-face-attribute 'mode-line-inactive nil
-                    :foreground "#586E75"
+                    :foreground "#93A1A1"
                     :background "#073642"
                     :inverse-video nil
                     :underline nil
                     :overline nil
-                    :box '(:line-width 2 :color "#073642" :style nil))
+                    :box '(:line-width 1 :color "#073642" :style nil))
 
 (set-face-attribute 'mode-line-read-only-face nil
                     :inherit 'mode-line-face
@@ -132,17 +138,17 @@
 
 (set-face-attribute 'mode-line-filename-face nil
                     :inherit 'mode-line-face
-                    :foreground "#93A1A1"
+                    ;; :foreground "#93A1A1"
                     :weight 'bold)
 
 (set-face-attribute 'mode-line-position-face nil
                     :inherit 'mode-line-face
-                    :foreground "#93A1A1"
+                    ;; :foreground "#93A1A1"
                     :weight 'bold)
 
 (set-face-attribute 'mode-line-position-relative-face nil
                     :inherit 'mode-line-face
-                    :foreground "#93A1A1"
+                    ;; :foreground "#93A1A1"
                     :weight 'bold)
 
 (set-face-attribute 'mode-line-buffer-size-face nil
@@ -150,7 +156,7 @@
 
 (set-face-attribute 'mode-line-mode-face nil
                     :inherit 'mode-line-face
-                    :foreground "#93A1A1"
+                    ;; :foreground "#93A1A1"
                     :weight 'bold)
 
 (set-face-attribute 'mode-line-minor-mode-face nil

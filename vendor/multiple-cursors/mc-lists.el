@@ -3,11 +3,8 @@
 
 (setq mc/cmds-to-run-for-all
       '(
-        electric-newline-and-maybe-indent
-        indent-for-tab-command
         subword-left
         subword-right
-        tab-to-tab-stop
         ))
 
 (setq mc/cmds-to-run-once
