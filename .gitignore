@@ -5,3 +5,4 @@
 projectile.cache
 projectile-bookmarks.eld
 url/
+vendor/multiple-cursors/mc-lists.el
