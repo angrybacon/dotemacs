@@ -15,6 +15,9 @@
   (other-window -1))
 (define-key global-map (kbd "C-x p") 'goto-left-buffer)
 
+;; Shortcut for helm-imenu
+(define-key global-map (kbd "C-c m") 'helm-imenu)
+
 
 ;; Consistent behavior when jumping paragraphs backward and forward
 (defun backward-block ()
