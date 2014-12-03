@@ -18,6 +18,7 @@
 (set-face-attribute 'fringe nil :foreground "#384E55")
 (set-face-attribute 'match nil :background 'unspecified :foreground "#B58900" :weight 'normal)
 (set-face-attribute 'show-paren-match nil :weight 'normal)
+(set-face-attribute 'trailing-whitespace nil :background "#b58900")
 
 
 ;; Company face customization
