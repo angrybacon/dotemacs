@@ -12,10 +12,3 @@
 (add-hook 'emacs-lisp-mode-hook 'highlight-hex-strings)
 (add-hook 'emmet-mode-hook 'highlight-hex-strings)
 (add-hook 'python-mode-hook 'highlight-hex-strings)
-
-
-;; Highlight "TODO" like comments
-(add-hook 'prog-mode-hook
-          (lambda ()
-            (font-lock-add-keywords nil
-                                    '(("\\<\\(BUG\\|FIXME\\|TODO\\):" 1 font-lock-warning-face prepend)))))
