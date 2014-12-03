@@ -3,7 +3,7 @@
 
 (setq mc/cmds-to-run-for-all
       '(
-        subword-left
+        backward-block
         subword-right
         ))
 
