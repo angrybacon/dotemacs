@@ -46,6 +46,9 @@
   (package-initialize)
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t))
 
+;; Append path for binaries installed with Homebrew (Mac only)
+(when (eq system-type 'darwin)
+  (setq exec-path (append exec-path '("/usr/local/bin"))))
 
 ;; Loaded first so useless UI elements don't flicker
 (load "~/.emacs.d/init-interface.el")

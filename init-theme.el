@@ -1,6 +1,6 @@
 ;; Set default font
-(when (member "Ubuntu Mono" (font-family-list))
-  (set-face-attribute 'default nil :font "Ubuntu Mono-9"))
+(when (member "Monaco" (font-family-list))
+  (set-face-attribute 'default nil :font "Monaco-12"))
 
 
 ;; Set color theme
@@ -49,4 +49,10 @@
                       :foreground "#268BD2"
                       :weight 'bold)
   (set-face-attribute 'helm-header nil :inherit 'font-lock-comment-face :underline nil)
+  )
+
+
+;; Ace Jump Mode face customization
+(with-eval-after-load 'ace-jump-mode
+  (set-face-attribute 'ace-jump-face-foreground nil :foreground "#B58900")
   )

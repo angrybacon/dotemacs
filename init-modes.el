@@ -23,7 +23,7 @@
 (add-to-list 'load-path "~/.emacs.d/vendor/indent-guide/")
 (require 'indent-guide)
 (set-face-foreground 'indent-guide-face "#586E75")
-(setq indent-guide-char "│")
+(setq indent-guide-char "·")
 (setq indent-guide-recursive nil)
 (indent-guide-global-mode)
 
@@ -85,5 +85,10 @@
   (add-to-list 'company-backends 'company-anaconda))
 
 
-;; Flycheck (https://github.com/flycheck/flycheck)
-;; (add-hook 'after-init-hook 'global-flycheck-mode)
+;; Ace Jump Mode (https://github.com/winterTTr/ace-jump-mode)
+(define-key global-map (kbd "C-f") 'ace-jump-mode)
+;; Enable a more powerful jump back function from ace jump mode
+(autoload 'ace-jump-mode-pop-mark "ace-jump-mode" "Ace jump back" t)
+(eval-after-load "ace-jump-mode"
+  '(ace-jump-mode-enable-mark-sync))
+(define-key global-map (kbd "C-c f") 'ace-jump-mode-pop-mark)
