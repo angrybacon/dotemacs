@@ -28,14 +28,6 @@
 (indent-guide-global-mode)
 
 
-;; Linum mode
-;; (global-linum-mode 1)
-;; (defun linum-format-func (line)
-;;   (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
-;;      (propertize (format (format " %%%dd  " w) line) 'face 'linum)))
-;; (setq linum-format 'linum-format-func)
-
-
 ;; Emmet (https://github.com/smihica/emmet-mode)
 (require 'emmet-mode)
 (add-hook 'sgml-mode-hook 'emmet-mode)                     ; Auto-start on any markup modes
