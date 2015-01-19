@@ -1,4 +1,4 @@
-;; Colorful highlight the hex color strings
+;; Colorful highlight for the hex color strings
 (defun highlight-hex-strings ()
   (interactive)
   (font-lock-add-keywords
