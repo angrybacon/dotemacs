@@ -40,7 +40,7 @@
 			((:url . "http://www.gnuvola.org/software/aa2u/")
 			 (:keywords "ascii" "unicode" "box-drawing"))])
  (auctex .
-	 [(11 88)
+	 [(11 88 1)
 	  nil "Integrated environment for *TeX*" tar
 	  ((:url . "http://www.gnu.org/software/auctex/"))])
  (aumix-mode .
@@ -71,7 +71,7 @@
 	       ((:url . "http://github.com/defunkt/coffee-mode")
 		(:keywords "coffeescript" "major" "mode"))])
  (company .
-	  [(0 8 8)
+	  [(0 8 9)
 	   ((emacs
 	     (24 1))
 	    (cl-lib
@@ -224,6 +224,13 @@
 	nil "Heap (a.k.a. priority queue) data structure" single
 	((:url . "http://www.dr-qubit.org/emacs.php")
 	 (:keywords "extensions" "data structures" "heap" "priority queue"))])
+ (hydra .
+	[(0 3 1)
+	 ((cl-lib
+	   (0 5)))
+	 "Make bindings that stick around" tar
+	 ((:keywords "bindings")
+	  (:url . "https://github.com/abo-abo/hydra"))])
  (ioccur .
 	 [(2 4)
 	  nil "Incremental occur" single
@@ -338,7 +345,7 @@
 	    ((:url . "http://elpa.gnu.org/packages/omn-mode.html")
 	     (:keywords))])
  (org .
-      [(20150112)
+      [(20150119)
        nil "Outline-based notes management and organizer" tar nil])
  (osc .
       [(0 1)

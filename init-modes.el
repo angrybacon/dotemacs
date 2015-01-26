@@ -51,9 +51,9 @@
 
 
 ;; Expand region (https://github.com/magnars/expand-region.el)
-(require 'expand-region)
-(global-set-key (kbd "C-=") 'er/expand-region)
-(pending-delete-mode t)
+;; (require 'expand-region)
+;; (global-set-key (kbd "C-=") 'er/expand-region)
+;; (pending-delete-mode t)
 
 
 ;; Projectile (https://github.com/bbatsov/projectile)
@@ -75,6 +75,10 @@
 ;; Anaconda backend for Company (https://github.com/proofit404/company-anaconda)
 (with-eval-after-load 'company
   (add-to-list 'company-backends 'company-anaconda))
+
+
+;; Anaconda (https://github.com/proofit404/anaconda-mode)
+(add-hook 'python-mode-hook 'anaconda-mode)
 
 
 ;; Ace Jump Mode (https://github.com/winterTTr/ace-jump-mode)
