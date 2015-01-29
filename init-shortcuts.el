@@ -11,6 +11,7 @@
   (other-window -1))
 (define-key global-map (kbd "C-x p") 'goto-left-buffer)
 
+
 ;; Shortcut for Helm
 (define-key global-map (kbd "C-c m") 'helm-imenu)
 (define-key global-map (kbd "C-x b") 'helm-buffers-list)
@@ -30,7 +31,8 @@
   (skip-chars-forward "\n"))
 (global-set-key (kbd "<C-down>") 'forward-block)
 
-;; Map cmd key to Meta (Mac only)
+
+;; Map cmd key to Meta and keep MacOS' option key (MacOS)
 (when (eq system-type 'darwin)
   (setq ns-command-modifier 'meta)
   (setq ns-option-modifier nil))

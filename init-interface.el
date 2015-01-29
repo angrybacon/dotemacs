@@ -5,7 +5,7 @@
 (tool-bar-mode -1)                         ; Remove the toolbar
 (line-number-mode )                        ; Display line number of the cursor current position
 (column-number-mode 1)                     ; Display column number of the cursor current position
-(fringe-mode '(6 . 0))                     ; Display left fringe
+(fringe-mode '(8 . 0))                     ; Display left fringe
 (setq scroll-step 1)                       ; Line by line scrolling
 (setq default-tab-width 4)                 ; Set width for tabs
 (global-hl-line-mode 1)                    ; Hightlight current line
@@ -20,13 +20,8 @@
 (setq-default indicate-empty-lines t)      ; Indicate empty line (require left fringe)
 
 
-;; Add prefixes to buffer titles (in case of duplicates)
-;; (require 'uniquify)
-;; (setq uniquify-buffer-name-style 'forward)
-
-
 ;; Sort directories first while in dired mode
-(defun list-directories-first ()
+(defun me/list-directories-first ()
   (save-excursion
     (let (buffer-read-only)
       (forward-line 2)
@@ -34,10 +29,10 @@
     (set-buffer-modified-p nil)))
 (defadvice dired-readin
   (after dired-after-updating-hook first () activate)
-  (list-directories-first))
+  (me/list-directories-first))
 
 
 ;; Highlight parent parenthesis
-(show-paren-mode t)             ; Turn paren-mode on
-(setq show-paren-delay 0)       ; How long to wait ?
-(setq show-paren-style 'mixed)  ; Alternatives are 'parenthesis' and 'mixed'
+;; (show-paren-mode t)             ; Turn paren-mode on
+;; (setq show-paren-delay 0)       ; How long do you want to wait ?
+;; (setq show-paren-style 'mixed)  ; Alternatives are 'parenthesis' and 'mixed'

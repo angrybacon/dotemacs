@@ -22,22 +22,30 @@
 
 ;;; Commentary:
 
-;; Copy this file and its parent folder in your home.
-;; A list of installed features:
+;; Please copy `.emacs.d/' folder in your home folder, `~/'.
 ;;
-;;   - Multiple cursors
-;;   - Expand region
-;;   - Company (with Anaconda support)
-;;   - Emmet
-;;   - Indent guide
-;;   - SCSS mode
-;;   - Projectile
-;;   - Helm
+;; - Use MELPA as source for packages
+;; - Useful aliases
+;; - Modes:
+;;   - smooth-scroll
+;;   - scss-mode
+;;   - emmet-mode
+;;   - multiple-cursors
+;;   - expand-region
+;;   - projectile
+;;   - company-mode
+;;   - anaconda-mode
+;;   - ace-jump-mode
+;; - Themed with zenburn-theme
+;; - Colored hex strings
 ;;
-;; Plus some neat improvements such as colorful highlight of hex color strings
-;; and a cleaner mode-line.
+;; If you have any issue using the following code, please refer to the package's readme.
 
 ;;; Code:
+
+
+;; Loaded first so useless UI elements don't flicker
+(load "~/.emacs.d/init-interface.el")
 
 
 ;; Initializing package manager with Melpa (Emacs > 24)
@@ -46,24 +54,22 @@
   (package-initialize)
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t))
 
-;; Append path for binaries installed with Homebrew (Mac only)
+
+;; Append path for binaries installed with Homebrew (MacOS)
 (when (eq system-type 'darwin)
   (setq exec-path (append exec-path '("/usr/local/bin"))))
 
-;; Loaded first so useless UI elements don't flicker
-(load "~/.emacs.d/init-interface.el")
 
-
-;; Loading configuration partials into current session
+;; Loading partials into current session
 (load "~/.emacs.d/init-aliases.el")
 (load "~/.emacs.d/init-modes.el")
+(load "~/.emacs.d/init-palettes.el")
 (load "~/.emacs.d/init-shortcuts.el")
-(load "~/.emacs.d/init-syntax.el")
 (load "~/.emacs.d/init-theme.el")
 
 
-;; Loaded last because of some elements being loaded above
-(load "~/.emacs.d/init-mode-line.el")
+;; Loaded last because of some elements above being required
+(load "~/.emacs.d/init-line.el")
 
 
 ;;; init.el ends here

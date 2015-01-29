@@ -4,12 +4,6 @@
 (smooth-scroll-mode t)
 
 
-;; Autopair (https://github.com/capitaomorte/autopair)
-;; (add-to-list 'load-path "~/.emacs.d/vendor/autopair/")
-;; (require 'autopair)
-;; (autopair-global-mode)
-
-
 ;; SCSS mode (https://github.com/antonj/scss-mode/)
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/scss-mode/"))
 (autoload 'scss-mode "scss-mode")
@@ -19,21 +13,12 @@
 (setq scss-compile-at-save nil)
 
 
-;; Indent guide (https://github.com/zk-phi/indent-guide)
-(add-to-list 'load-path "~/.emacs.d/vendor/indent-guide/")
-(require 'indent-guide)
-(set-face-foreground 'indent-guide-face "#586E75")
-(setq indent-guide-char "·")
-(setq indent-guide-recursive nil)
-(indent-guide-global-mode)
-
-
 ;; Emmet (https://github.com/smihica/emmet-mode)
 (require 'emmet-mode)
 (add-hook 'sgml-mode-hook 'emmet-mode)                     ; Auto-start on any markup modes
 (add-hook 'css-mode-hook  'emmet-mode)                     ; Enable Emmet's css abbreviation
 (setq emmet-preview-default nil)                           ; Disable preview before expanding
-(setq emmet-move-cursor-between-quotes t)                  ; Position the cursor on first empty quotes
+(setq emmet-move-cursor-between-quotes t)                  ; Move the cursor to next edit point
 (global-set-key (kbd "<M-left>") 'emmet-prev-edit-point)   ; Jump to previous empty edit point
 (global-set-key (kbd "<M-right>") 'emmet-next-edit-point)  ; Jump to next empty edit point
 (eval-after-load "scss-mode"
@@ -51,9 +36,9 @@
 
 
 ;; Expand region (https://github.com/magnars/expand-region.el)
-;; (require 'expand-region)
-;; (global-set-key (kbd "C-=") 'er/expand-region)
-;; (pending-delete-mode t)
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
+(pending-delete-mode t)
 
 
 ;; Projectile (https://github.com/bbatsov/projectile)
@@ -79,7 +64,7 @@
 
 ;; Anaconda (https://github.com/proofit404/anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-mode)
-
+(add-hook 'python-mode-hook 'eldoc-mode)
 
 ;; Ace Jump Mode (https://github.com/winterTTr/ace-jump-mode)
 (define-key global-map (kbd "C-f") 'ace-jump-mode)
@@ -88,3 +73,15 @@
 (eval-after-load "ace-jump-mode"
   '(ace-jump-mode-enable-mark-sync))
 (define-key global-map (kbd "C-c f") 'ace-jump-mode-pop-mark)
+
+
+;; Hightlight Parentheses (http://www.emacswiki.org/emacs/HighlightParentheses)
+(define-globalized-minor-mode global-highlight-parentheses-mode
+  highlight-parentheses-mode
+  (lambda ()
+    (highlight-parentheses-mode t)))
+(global-highlight-parentheses-mode t)
+
+
+;; Autopair (https://github.com/capitaomorte/autopair)
+(autopair-global-mode)
