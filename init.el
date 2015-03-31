@@ -24,27 +24,22 @@
 
 ;; Please copy `.emacs.d/' folder in your home folder, `~/'.
 ;;
-;; - Use MELPA as source for packages
-;; - Useful aliases
-;; - Modes:
-;;   - smooth-scroll
-;;   - scss-mode
-;;   - emmet-mode
-;;   - multiple-cursors
-;;   - expand-region
-;;   - projectile
-;;   - company-mode
-;;   - anaconda-mode
-;;   - ace-jump-mode
-;; - Themed with zenburn-theme
-;; - Colored hex strings
+;; Major features:
 ;;
-;; If you have any issue using the following code, please refer to the package's readme.
+;; - `zenburn':           smooth palette and pastel feel
+;; - `multiple-cursors':  dynamically add new cursors
+;; - `projectile':        manage project files
+;; - `helm':              improve interactive actions
+;; - `company':           auto-completion
+;; - `autopair':          automatically add closing parenthesis and others
+;; - `org':               note taking made easier
+;;
+;; If you have any issue using the following code, please refer to the package's README.
 
 ;;; Code:
 
 
-;; Loaded first so useless UI elements don't flicker
+;; Loaded first so useless UI elements don't make UI flicker
 (load "~/.emacs.d/init-interface.el")
 
 
@@ -55,7 +50,7 @@
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t))
 
 
-;; Append path for binaries installed with Homebrew (MacOS)
+;; Append path for binaries installed with Homebrew (OS X)
 (when (eq system-type 'darwin)
   (setq exec-path (append exec-path '("/usr/local/bin"))))
 

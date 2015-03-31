@@ -20,13 +20,12 @@
 (set-face-attribute 'fringe nil :background zenburn/bg :foreground zenburn/fg-1)
 (set-face-attribute 'header-line nil
                     :background 'unspecified :foreground zenburn/blue
-                    :bold t :box nil))
+                    :bold t :box nil)
 (set-face-attribute 'helm-match nil :foreground "gold1")
 (set-face-attribute 'isearch nil :foreground "gold1" :background 'unspecified)
 (set-face-attribute 'lazy-highlight nil :foreground "gold3" :background 'unspecified)
 (set-face-attribute 'show-paren-match nil :background 'unspecified)
 (set-face-attribute 'show-paren-mismatch nil :background 'unspecified)
-;; http://emacs.stackexchange.com/questions/7752/face-color-attribute-incorrectly-applied
 (set-face-attribute 'region nil :foreground zenburn/green)
 (set-face-attribute 'vertical-border nil :foreground zenburn/bg-1)
 
