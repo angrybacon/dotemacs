@@ -24,6 +24,7 @@
 (delight 'company-mode                nil  "company")
 (delight 'eldoc-mode                  nil  "eldoc-mode")
 (delight 'emmet-mode                  nil  "emmet-mode")
+(delight 'golden-ratio-mode           nil  "golden-ratio")
 (delight 'highlight-parentheses-mode  nil  "highlight-parentheses")
 (delight 'magit-auto-revert-mode      nil  "magit")
 (delight 'smooth-scroll-mode          nil  "smooth-scroll")
@@ -34,5 +35,16 @@
 (setq nyan-bar-length 16)
 
 ;; Customize mode line faces
-(set-face-attribute 'mode-line nil :box `(:line-width 4 :color ,zenburn/bg-1))
-(set-face-attribute 'mode-line-inactive nil :box `(:line-width 4 :color ,zenburn/bg-05))
+;; (set-face-attribute 'mode-line nil :box `(:line-width 4 :color ,zenburn/bg-1))
+;; (set-face-attribute 'mode-line-inactive nil :box `(:line-width 4 :color ,zenburn/bg-05))
+(set-face-attribute 'mode-line nil :box nil)
+(set-face-attribute 'mode-line-inactive nil :box nil)
+
+
+;; Powerline (https://github.com/milkypostman/powerline)
+(powerline-default-theme)
+
+
+;; Smart Mode Line (https://github.com/Malabarba/smart-mode-line)
+;; (sml/setup)
+;; (sml/apply-theme 'automatic)
