@@ -35,7 +35,7 @@
 		 nil "Indent and dedent Lisp code, automatically adjust close parens" tar
 		 ((:url . "http://elpa.gnu.org/packages/adjust-parens.html"))])
  (aggressive-indent .
-		    [(1 0)
+		    [(1 0 1)
 		     ((emacs
 		       (24 1))
 		      (names
