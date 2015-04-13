@@ -5,6 +5,11 @@ This repository contains my personal Emacs configuration and installed packages.
 
 Have fun tinkering : j
 
+Notes
+=====
+
+This has been tested with railwaycat's [Emacs Mac port for Homebrew](https://github.com/railwaycat/homebrew-emacsmacport/releases) and should work with any build.
+
 Features
 ========
 
@@ -13,4 +18,5 @@ Features
 Installation
 ============
 
-All you have to do is copy `dotemacs/` content into `~/.emacs.d/`.
+1. Install Emacs
+1. Copy `dotemacs/` content into `~/.emacs.d/`.

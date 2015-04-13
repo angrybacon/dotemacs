@@ -1,6 +1,5 @@
 *~
 *.elc
-*.pyc
 
 projectile.cache
 projectile-bookmarks.eld
