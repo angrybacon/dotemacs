@@ -1,8 +1,5 @@
 -/auto-save-list
 -/elpa
+-/projectile-cache
 -/vendor
 -/url
-
--/.gitignore
--/.projectile
--/projectile-cache
