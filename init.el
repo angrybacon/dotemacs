@@ -33,6 +33,7 @@
 ;; - `company':           auto-completion
 ;; - `autopair':          automatically add closing parenthesis and others
 ;; - `org':               note taking made easier
+;; - `smart-mode-line':   prettier mode-line
 ;;
 ;; If you have any issue using the following code, please refer to the package's README.
 
@@ -46,8 +47,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   (quote
-    ("f0b0710b7e1260ead8f7808b3ee13c3bb38d45564e369cbe15fc6d312f0cd7a0" default))))
+   '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
 
 
 ;; Custom faces
@@ -56,7 +56,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-)
+ )
 
 
 ;; Loaded first so useless UI elements don't make UI flicker

@@ -18,6 +18,8 @@
 (mouse-avoidance-mode 'animate)                  ; Move the cursor to the corner when typing
 (setq-default indicate-empty-lines t)            ; Indicate empty line (require left fringe)
 (set-frame-parameter nil 'fullscreen 'fullboth)  ; Maxmimize the window
+(display-battery-mode t)                         ; Display battery level in the mode-line
+(display-time-mode t)                            ; Display time clock in the mode-line
 
 
 ;; Sort directories first while in dired mode
