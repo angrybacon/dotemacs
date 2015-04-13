@@ -84,7 +84,7 @@
 
 
 ;; Loaded last because of some elements above being required
-(load "~/.emacs.d/init-line.el")
+(load "~/.emacs.d/init-mode-line.el")
 
 
 ;;; init.el ends here

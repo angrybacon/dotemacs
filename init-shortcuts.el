@@ -23,12 +23,12 @@
   (skip-chars-backward "\n")
   (when (not (search-backward-regexp "\n[[:blank:]]*\n" nil t)) (goto-char (point-min)))
   (skip-chars-forward "\n"))
-(global-set-key (kbd "<C-up>") 'backward-block)
 (defun forward-block ()
   (interactive)
   (skip-chars-forward "\n")
   (when (not (search-forward-regexp "\n[[:blank:]]*\n" nil t)) (goto-char (point-max)))
   (skip-chars-forward "\n"))
+(global-set-key (kbd "<C-up>") 'backward-block)
 (global-set-key (kbd "<C-down>") 'forward-block)
 
 
@@ -36,3 +36,21 @@
 (when (eq system-type 'darwin)
   (setq ns-command-modifier 'meta)
   (setq ns-option-modifier nil))
+
+
+;; Move line up, move line down
+(defun me/move-line-up ()
+  "Move up the current line."
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2)
+  (indent-according-to-mode))
+(defun me/move-line-down ()
+  "Move down the current line."
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1)
+  (indent-according-to-mode))
+(global-set-key (kbd "<M-up>") 'me/move-line-up)
+(global-set-key (kbd "<M-down>") 'me/move-line-down)

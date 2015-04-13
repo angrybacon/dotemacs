@@ -48,7 +48,7 @@
 
 ;; Customize mode line faces
 (set-face-attribute 'mode-line nil :background zenburn/bg-1 :box `(:line-width 4 :color ,zenburn/bg-1))
-(set-face-attribute 'mode-line-inactive nil :background zenburn/bg-05 :slant 'unspecified :box `(:line-width 4 :color ,zenburn/bg-05))
+(set-face-attribute 'mode-line-inactive nil :background zenburn/bg-0 :slant 'unspecified :box `(:line-width 4 :color ,zenburn/bg-0))
 ;; Global
 (set-face-attribute 'sml/global nil :foreground zenburn/bg+3)
 (set-face-attribute 'sml/prefix nil :foreground zenburn/orange)
