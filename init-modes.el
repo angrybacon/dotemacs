@@ -86,3 +86,7 @@
 ;; Golden Ratio (https://github.com/roman/golden-ratio.el)
 (setq golden-ratio-adjust-factor .9)
 (golden-ratio-mode 1)
+
+
+;; Magit (https://github.com/magit/magit)
+(global-set-key (kbd "C-c g") 'magit-status)
