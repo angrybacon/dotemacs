@@ -1287,7 +1287,7 @@ interface, which you can use for your own extensions.
 6.1 Status changes
 ==================
 
-:hook:‘flycheck-before-syntax-check-hook’ and
+‘flycheck-before-syntax-check-hook’ and
 ‘flycheck-after-syntax-check-hook’ run before and after syntax checks,
 and let you update your Emacs instance according to Flycheck’s state.
 For instance, flycheck-color-mode-line
@@ -2815,61 +2815,61 @@ Node: Passing configuration to checkers44482
 Node: Controlling use of checkers48086
 Node: Applying multiple checkers49188
 Node: Flycheck hooks52441
-Node: Flycheck API54080
-Node: Command syntax checkers54418
-Node: Argument Substitution54788
-Node: Checker configuration54958
-Node: Error parsers55170
-Node: Errors55316
-Node: Supported languages55428
-Ref: language-Ada56637
-Ref: language-AsciiDoc57261
-Ref: language-C/C++57344
-Ref: language-CFEngine59798
-Ref: language-Chef59866
-Ref: language-Coffeescript60111
-Ref: language-Coq60511
-Ref: language-CSS60567
-Ref: language-D60677
-Ref: language-Elixir61035
-Ref: language-Emacs Lisp61126
-Ref: language-Erlang62254
-Ref: language-ERuby62322
-Ref: language-Fortran62417
-Ref: language-Go63310
-Ref: language-Haml64060
-Ref: language-Handlebars64129
-Ref: language-Haskell64211
-Ref: language-HTML65451
-Ref: language-Javascript65760
-Ref: language-JSON66726
-Ref: language-Less66812
-Ref: language-Lua66869
-Ref: language-Perl67227
-Ref: language-PHP67647
-Ref: language-Puppet68339
-Ref: language-Python68521
-Ref: language-R69805
-Ref: language-Racket70242
-Ref: language-RPM Spec70317
-Ref: language-reStructuredText70431
-Ref: language-Ruby70820
-Ref: language-Rust71831
-Ref: language-Sass72663
-Ref: language-Scala72916
-Ref: language-SCSS73523
-Ref: language-Shell scripting languages74083
-Ref: language-Slim74819
-Ref: language-TeX/LaTeX74896
-Ref: language-Texinfo75308
-Ref: language-Verilog75403
-Ref: language-XML75508
-Ref: language-YAML75676
-Node: Issues75815
-Node: GNU Free Documentation License76836
-Node: Main Index102183
-Node: Key Index110308
-Node: Function and Variable Index111816
+Node: Flycheck API54074
+Node: Command syntax checkers54412
+Node: Argument Substitution54782
+Node: Checker configuration54952
+Node: Error parsers55164
+Node: Errors55310
+Node: Supported languages55422
+Ref: language-Ada56631
+Ref: language-AsciiDoc57255
+Ref: language-C/C++57338
+Ref: language-CFEngine59792
+Ref: language-Chef59860
+Ref: language-Coffeescript60105
+Ref: language-Coq60505
+Ref: language-CSS60561
+Ref: language-D60671
+Ref: language-Elixir61029
+Ref: language-Emacs Lisp61120
+Ref: language-Erlang62248
+Ref: language-ERuby62316
+Ref: language-Fortran62411
+Ref: language-Go63304
+Ref: language-Haml64054
+Ref: language-Handlebars64123
+Ref: language-Haskell64205
+Ref: language-HTML65445
+Ref: language-Javascript65754
+Ref: language-JSON66720
+Ref: language-Less66806
+Ref: language-Lua66863
+Ref: language-Perl67221
+Ref: language-PHP67641
+Ref: language-Puppet68333
+Ref: language-Python68515
+Ref: language-R69799
+Ref: language-Racket70236
+Ref: language-RPM Spec70311
+Ref: language-reStructuredText70425
+Ref: language-Ruby70814
+Ref: language-Rust71825
+Ref: language-Sass72657
+Ref: language-Scala72910
+Ref: language-SCSS73517
+Ref: language-Shell scripting languages74077
+Ref: language-Slim74813
+Ref: language-TeX/LaTeX74890
+Ref: language-Texinfo75302
+Ref: language-Verilog75397
+Ref: language-XML75502
+Ref: language-YAML75670
+Node: Issues75809
+Node: GNU Free Documentation License76830
+Node: Main Index102177
+Node: Key Index110302
+Node: Function and Variable Index111810
 
 End Tag Table
 

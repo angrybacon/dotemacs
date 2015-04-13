@@ -5,8 +5,8 @@
 ;; Copyright (C) 2013-     Shin Aoyama        (@smihica      https://github.com/smihica)
 ;; Copyright (C) 2009-2012 Chris Done
 
-;; Version: 20141222.1925
-;; X-Original-Version: 1.0.10
+;; Version: 1.0.10
+;; Package-Version: 20150410.803
 ;; Author: Shin Aoyama <smihica@gmail.com>
 ;; URL: https://github.com/smihica/emmet-mode
 ;; Last-Updated: 2014-08-11 Mon
@@ -173,12 +173,14 @@ and leaving the point in place."
   "Find the left bound of an emmet expr"
   (save-excursion (save-match-data
     (let ((char (char-before))
-          (in-style-attr (looking-back "style=[\"'][^\"']*")))
+          (in-style-attr (looking-back "style=[\"'][^\"']*"))
+          (syn-tab (make-syntax-table)))
+      (modify-syntax-entry ?\\ "\\")
       (while char
         (cond ((and in-style-attr (member char '(?\" ?\')))
                (setq char nil))
               ((member char '(?\} ?\] ?\)))
-               (with-syntax-table (standard-syntax-table)
+               (with-syntax-table syn-tab
                  (backward-sexp) (setq char (char-before))))
               ((eq char ?\>)
                (if (looking-back "<[^>]+>" (line-beginning-position))
@@ -3182,9 +3184,12 @@ tbl))
 
 (defun emmet-text (input)
   "A zen coding expression innertext."
-  (emmet-parse "{\\(.*?\\)}" 2 "inner text"
-                   (let ((txt (emmet-split-numbering-expressions (elt it 1))))
-                     `((text ,txt) . ,input))))
+  (emmet-parse "{\\(\\(?:\\\\.\\|[^\\\\}]\\)*?\\)}" 2 "inner text"
+               (let ((txt (emmet-split-numbering-expressions (elt it 1))))
+                 (if (listp txt)
+                     (setq txt (cons (car txt) (cons (replace-regexp-in-string "\\\\\\(.\\)" "\\1" (cadr txt)) (cddr txt))))
+                   (setq txt (replace-regexp-in-string "\\\\\\(.\\)" "\\1" txt)))
+                 `((text ,txt) . ,input))))
 
 (defun emmet-properties (input)
   "A bracketed emmet property expression."
@@ -3463,7 +3468,7 @@ tbl))
              (if self-closing? "/>"
                (concat ">"
                        (if tag-txt
-                           (if block-indentation? 
+                           (if block-indentation?
                                (emmet-indent tag-txt)
                              tag-txt))
                        (if content

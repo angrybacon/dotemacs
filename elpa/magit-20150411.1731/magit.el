@@ -65,12 +65,7 @@ Use the function by the same name instead of this variable.")
 (when (version< emacs-version "23.2")
   (error "Magit requires at least GNU Emacs 23.2"))
 
-;; Users may choose to use `magit-log-edit' instead of the preferred
-;; `git-commit-mode', by simply putting it on the `load-path'.  If
-;; it can be found there then it is loaded at the end of this file.
-(unless (locate-library "magit-log-edit")
-  (require 'git-commit-mode))
-
+(require 'git-commit-mode)
 (require 'git-rebase-mode)
 
 (require 'ansi-color)
@@ -479,7 +474,7 @@ in the same directory as numbered backup files and have to be
 applied manually.  Only individual hunks are backed up; when
 a complete file is reverted (which requires confirmation) no
 backup is created."
-  :package-version '(magit . "2.1.0")
+  :package-version '(magit . "1.4.0")
   :group 'magit
   :type 'boolean)
 
@@ -621,14 +616,14 @@ To select the face used for highlighting customize the option
 other face that does not use the background then you can set this
 option to nil.  Doing so could potentially improve performance
 when generating large diffs."
-  :package-version '(magit . "2.1.0")
+  :package-version '(magit . "1.4.0")
   :group 'magit
   :group 'magit-faces
   :set-after '(magit-item-highlight-face)
   :type 'boolean)
 
 (define-obsolete-variable-alias 'magit-diff-use-overlays
-  'magit-use-overlays "2.1.0")
+  'magit-use-overlays "1.4.0")
 
 ;;;;; Completion
 
@@ -989,7 +984,7 @@ The function is called with one argument, the propertized graph
 of a single line in as a string.  It has to return the formatted
 string.  This option can also be nil, in which case the graph is
 inserted as is."
-  :package-version '(magit . "2.1.0")
+  :package-version '(magit . "1.4.0")
   :group 'magit-log
   :type '(choice (const :tag "insert as is" nil)
                  (function-item magit-log-format-unicode-graph)
@@ -998,7 +993,7 @@ inserted as is."
 (defcustom magit-log-format-unicode-graph-alist
   '((?/ . ?╱) (?| . ?│) (?\\ . ?╲) (?* . ?◆) (?o . ?◇))
   "Alist used by `magit-log-format-unicode-graph' to translate chars."
-  :package-version '(magit . "2.1.0")
+  :package-version '(magit . "1.4.0")
   :group 'magit-log
   :type '(repeat (cons :format "%v\n"
                        (character :format "replace %v ")
@@ -7813,32 +7808,28 @@ Emacs:
   (setq magit-last-seen-setup-instructions \"1.4.0\")
 
 You might also want to read the release notes:
-https://raw.githubusercontent.com/magit/magit/next/Documentation/RelNotes/1.4.0.txt")))
+https://raw.githubusercontent.com/magit/magit/next/Documentation/RelNotes/1.4.0.txt"))
+  (when (featurep 'magit-log-edit)
+    (display-warning :error "magit-log-edit has to be removed
+
+Magit is no longer compatible with the library `magit-log-edit',
+which was used in earlier releases.  Please remove it, so that
+Magit can use the successor `git-commit-mode' without the
+obsolete library getting in the way.  Then restart Emacs.
+
+You might also want to read:
+https://github.com/magit/magit/wiki/Emacsclient")))
 
 (add-hook 'after-init-hook #'magit-maybe-show-setup-instructions)
 
-(cl-eval-when (load eval) (magit-version t))
-
-(define-obsolete-variable-alias 'magit-cherry-insert-sections-hook
-  'magit-cherry-sections-hook "1.4.0")
-(define-obsolete-variable-alias 'magit-status-insert-sections-hook
-  'magit-status-sections-hook "1.4.0")
-(define-obsolete-variable-alias 'magit-wazzup-insert-sections-hook
-  'magit-wazzup-sections-hook "1.4.0")
-
-(define-obsolete-variable-alias 'magit-quote-curly-braces
-  'magit-process-quote-curly-braces "1.4.0")
-
 (provide 'magit)
 
-;; rest of magit core
-(require 'magit-key-mode)
+(cl-eval-when (load eval)
+  (magit-version t)
+  (when after-init-time
+    (magit-maybe-show-setup-instructions)))
 
-;; If `magit-log-edit' is available and `git-commit-mode' is not
-;; loaded, then we have no choice but to assume the user actually
-;; wants to use the former.
-(unless (featurep 'git-commit-mode)
-  (require 'magit-log-edit nil t))
+(require 'magit-key-mode)
 
 ;; Local Variables:
 ;; coding: utf-8

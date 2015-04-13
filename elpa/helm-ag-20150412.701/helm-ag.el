@@ -4,7 +4,7 @@
 
 ;; Author: Syohei YOSHIDA <syohex@gmail.com>
 ;; URL: https://github.com/syohex/emacs-helm-ag
-;; Package-Version: 20150331.2132
+;; Package-Version: 20150412.701
 ;; Version: 0.38
 ;; Package-Requires: ((helm "1.5.6") (cl-lib "0.5"))
 
@@ -87,6 +87,11 @@ They are specified to `--ignore' options."
 
 (defcustom helm-ag-edit-save t
   "Save buffers you edit at completed."
+  :type 'boolean
+  :group 'helm-ag)
+
+(defcustom helm-ag-use-emacs-lisp-regexp nil
+  "[Experimental] Use Emacs Lisp regexp instead of PCRE."
   :type 'boolean
   :group 'helm-ag)
 
@@ -240,6 +245,20 @@ They are specified to `--ignore' options."
       (forward-char 1))
     (buffer-string)))
 
+(defun helm-ag--elisp-regexp-to-pcre (regexp)
+  (with-temp-buffer
+    (insert regexp)
+    (goto-char (point-min))
+    (while (re-search-forward "[(){}|]" nil t)
+      (backward-char 1)
+      (cond ((looking-back "\\\\\\\\"))
+            ((looking-back "\\\\")
+             (delete-char -1))
+            (t
+             (insert "\\")))
+      (forward-char 1))
+    (buffer-string)))
+
 (defun helm-ag--highlight-candidate (candidate)
   (let ((limit (1- (length candidate)))
         (last-pos 0))
@@ -331,6 +350,8 @@ They are specified to `--ignore' options."
          (query (read-string "Pattern: " searched-word 'helm-ag--command-history)))
     (when (string= query "")
       (error "Input is empty!!"))
+    (when helm-ag-use-emacs-lisp-regexp
+      (setq query (helm-ag--elisp-regexp-to-pcre query)))
     (setq helm-ag--last-query query
           helm-ag--elisp-regexp-query (helm-ag--pcre-to-elisp-regexp query))
     (setq helm-ag--valid-regexp-for-emacs

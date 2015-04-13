@@ -10,9 +10,9 @@
        ((:keywords "tools" "processes" "convenience")
 	(:url . "https://github.com/leoliu/ack-el"))])
  (ada-mode .
-	   [(5 1 7)
+	   [(5 1 8)
 	    ((wisi
-	      (1 1 0))
+	      (1 1 1))
 	     (cl-lib
 	      (0 4))
 	     (emacs
@@ -63,7 +63,7 @@
 			((:url . "http://www.gnuvola.org/software/aa2u/")
 			 (:keywords "ascii" "unicode" "box-drawing"))])
  (auctex .
-	 [(11 88 3)
+	 [(11 88 4)
 	  nil "Integrated environment for *TeX*" tar
 	  ((:url . "http://www.gnu.org/software/auctex/"))])
  (aumix-mode .
@@ -431,7 +431,7 @@
 	    ((:url . "http://elpa.gnu.org/packages/omn-mode.html")
 	     (:keywords))])
  (org .
-      [(20150406)
+      [(20150413)
        nil "Outline-based notes management and organizer" tar nil])
  (osc .
       [(0 1)
@@ -504,11 +504,11 @@
 	   ((:keywords "games")
 	    (:url . "http://elpa.gnu.org/packages/sokoban.html"))])
  (spinner .
-	  [(1 0)
+	  [(1 2)
 	   ((cl-lib
 	     (0 5)))
 	   "Add spinners and progress-bars to the mode-line for ongoing operations" single
-	   ((:url . "https://github.com/Bruce-Connor/spinner.el")
+	   ((:url . "https://github.com/Malabarba/spinner.el")
 	    (:keywords "processes" "mode-line"))])
  (svg .
       [(0 1)
@@ -613,7 +613,7 @@
 	      ((:url . "http://elpa.gnu.org/packages/windresize.html")
 	       (:keywords "window"))])
  (wisi .
-       [(1 1 0)
+       [(1 1 1)
 	((cl-lib
 	  (0 4))
 	 (emacs
