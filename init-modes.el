@@ -62,6 +62,7 @@
 
 
 ;; Hightlight Parentheses (http://www.emacswiki.org/emacs/HighlightParentheses)
+(setq hl-paren-colors `(,zenburn/orange ,zenburn/red+1 ,zenburn/red-1 ,zenburn/red-2))
 (define-globalized-minor-mode global-highlight-parentheses-mode
   highlight-parentheses-mode
   (lambda ()
@@ -89,4 +90,7 @@
 
 
 ;; Magit (https://github.com/magit/magit)
+(setq magit-show-child-count t)
+(setq magit-stage-all-confirm nil)
+(setq magit-unstage-all-confirm nil)
 (global-set-key (kbd "C-c g") 'magit-status)

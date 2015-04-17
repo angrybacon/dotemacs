@@ -47,7 +47,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+   (quote
+    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default))))
 
 
 ;; Custom faces
@@ -77,8 +78,8 @@
 
 ;; Loading partials into current session
 (load "~/.emacs.d/init-aliases.el")
-(load "~/.emacs.d/init-modes.el")
 (load "~/.emacs.d/init-palettes.el")
+(load "~/.emacs.d/init-modes.el")
 (load "~/.emacs.d/init-shortcuts.el")
 (load "~/.emacs.d/init-theme.el")
 

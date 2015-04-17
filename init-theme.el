@@ -18,9 +18,7 @@
 (set-face-attribute 'font-lock-constant-face nil :foreground zenburn/green-1)
 (set-face-attribute 'font-lock-comment-face nil :foreground zenburn/fg-1 :italic t)
 (set-face-attribute 'fringe nil :background zenburn/bg :foreground zenburn/fg-1)
-(set-face-attribute 'header-line nil
-                    :background 'unspecified :foreground zenburn/blue
-                    :bold t :box nil)
+(set-face-attribute 'header-line nil :background 'unspecified :foreground zenburn/blue :bold t :box nil)
 (set-face-attribute 'helm-match nil :foreground "gold1")
 (set-face-attribute 'isearch nil :foreground "gold1" :background 'unspecified)
 (set-face-attribute 'lazy-highlight nil :foreground "gold3" :background 'unspecified)
@@ -39,8 +37,13 @@
 ;; Helm face customization
 (with-eval-after-load 'helm
   (set-face-attribute 'helm-header nil :italic t)
-  (set-face-attribute 'helm-source-header nil
-                      :background 'unspecified :foreground zenburn/blue
-                      :bold t :box nil))
+  (when (member "Monaco" (font-family-list)) (set-face-attribute 'helm-source-header nil :font "Monaco-14"))
+  (set-face-attribute 'helm-source-header nil :foreground zenburn/blue :box nil))
 (with-eval-after-load 'helm-command
   (set-face-attribute 'helm-M-x-key nil :underline nil))
+
+
+;; Magit face customization
+(with-eval-after-load 'magit
+  (when (member "Monaco" (font-family-list)) (set-face-attribute 'magit-section-title nil :font "Monaco-14"))
+  (set-face-attribute 'magit-section-title nil :weight 'unspecified :foreground zenburn/blue))

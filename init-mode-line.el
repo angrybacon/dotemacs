@@ -30,13 +30,9 @@
 (delight 'subword-mode                " subword"                "subword")
 
 
-;; Nyan mode (https://github.com/TeMPOraL/nyan-mode/)
-;; (setq nyan-bar-length 16)
-
-
 ;; Smart Mode Line (https://github.com/Malabarba/smart-mode-line)
-(setq display-time-format "%I:%M%p")
-(setq display-time-load-average-threshold 1.5)
+(setq display-time-format "%I:%M")
+(setq display-time-load-average-threshold 1.0)
 (setq rm-whitelist '(""))
 (setq sml/projectile-replacement-format "[%s] ")
 (setq sml/use-projectile-p 'before-prefixes)
