@@ -145,7 +145,7 @@
 	 ((:url . "http://elpa.gnu.org/packages/crisp.html")
 	  (:keywords "emulations" "brief" "crisp"))])
  (csv-mode .
-	   [(1 2)
+	   [(1 3)
 	    nil "Major mode for editing comma/char separated values" single
 	    ((:url . "http://centaur.maths.qmul.ac.uk/Emacs/")
 	     (:keywords "convenience"))])
@@ -164,7 +164,7 @@
 		((:url . "http://elpa.gnu.org/packages/dbus-codegen.html")
 		 (:keywords "comm" "dbus" "convenience"))])
  (debbugs .
-	  [(0 6)
+	  [(0 7)
 	   nil "SOAP library to access debbugs servers" tar
 	   ((:keywords "comm" "hypermedia")
 	    (:url . "http://elpa.gnu.org/packages/debbugs.html"))])
@@ -479,7 +479,7 @@
 		  ((:url . "http://elpa.gnu.org/packages/scroll-restore.html")
 		   (:keywords "scrolling"))])
  (seq .
-      [(1 3)
+      [(1 4)
        nil "Sequence manipulation functions" single
        ((:url . "http://elpa.gnu.org/packages/seq.html")
 	(:keywords "sequences"))])
