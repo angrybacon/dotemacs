@@ -292,7 +292,7 @@
 	((:url . "http://www.dr-qubit.org/emacs.php")
 	 (:keywords "extensions" "data structures" "heap" "priority queue"))])
  (hydra .
-	[(0 12 1)
+	[(0 13 1)
 	 ((cl-lib
 	   (0 5)))
 	 "Make bindings that stick around." tar
@@ -527,7 +527,7 @@
 	     ((:url . "http://elpa.gnu.org/packages/svg-clock.html")
 	      (:keywords "demo" "svg" "clock"))])
  (swiper .
-	 [(0 2 0)
+	 [(0 2 1)
 	  ((emacs
 	    (24 1)))
 	  "Isearch with an overview. Oh, man!" tar

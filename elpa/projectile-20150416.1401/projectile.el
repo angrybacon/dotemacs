@@ -4,7 +4,7 @@
 
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/projectile
-;; Package-Version: 20150405.126
+;; Package-Version: 20150416.1401
 ;; Keywords: project, convenience
 ;; Version: 0.13.0-cvs
 ;; Package-Requires: ((dash "1.5.0") (pkg-info "0.4"))
@@ -1120,7 +1120,7 @@ https://github.com/emacs-helm/helm")))
 https://github.com/d11wtq/grizzl")))
      ((eq projectile-completion-system 'ivy)
       (if (fboundp 'ivy-read)
-          (ivy-read prompt choices initial-input)
+          (ivy-read prompt choices nil initial-input)
         (user-error "Please install ivy from \
 https://github.com/abo-abo/swiper")))
      (t (funcall projectile-completion-system prompt choices)))))

@@ -3,8 +3,8 @@
 
 ;; Copyright 2011-2015 François-Xavier Bois
 
-;; Version: 11.0.31
-;; Package-Version: 20150416.530
+;; Version: 11.0.34
+;; Package-Version: 20150418.1007
 ;; Author: François-Xavier Bois <fxbois AT Google Mail Service>
 ;; Maintainer: François-Xavier Bois
 ;; Created: July 2011
@@ -23,11 +23,11 @@
 ;;---- TODO --------------------------------------------------------------------
 
 ;; v12 : invert path and XX (web-mode-engines-alist,
-;;       web-mode-content-types-alist)
+;;       web-mode-content-types-alist) for more consistency
 
 ;;---- CONSTS ------------------------------------------------------------------
 
-(defconst web-mode-version "11.0.31"
+(defconst web-mode-version "11.0.34"
   "Web Mode version.")
 
 ;;---- GROUPS ------------------------------------------------------------------
@@ -129,15 +129,15 @@
   :type 'boolean
   :group 'web-mode)
 
-(defcustom web-mode-enable-block-partial-invalidation t
-  "Partial invalidation in blocks (php and asp at the moment)."
-  :type 'boolean
-  :group 'web-mode)
+;; (defcustom web-mode-enable-block-partial-invalidation t
+;;   "Partial invalidation in blocks (php and asp at the moment)."
+;;   :type 'boolean
+;;   :group 'web-mode)
 
-(defcustom web-mode-enable-part-partial-invalidation t
-  "Partial invalidation in js/css parts."
-  :type 'boolean
-  :group 'web-mode)
+;; (defcustom web-mode-enable-part-partial-invalidation t
+;;   "Partial invalidation in js/css parts."
+;;   :type 'boolean
+;;   :group 'web-mode)
 
 (defcustom web-mode-enable-current-element-highlight nil
   "Disable element highlight."
@@ -420,6 +420,11 @@ See web-mode-part-face."
   :group 'web-mode-faces)
 
 (defface web-mode-function-name-face
+  '((t :inherit font-lock-function-name-face))
+  "Face for function names."
+  :group 'web-mode-faces)
+
+(defface web-mode-filter-face
   '((t :inherit font-lock-function-name-face))
   "Face for function names."
   :group 'web-mode-faces)
@@ -1366,50 +1371,61 @@ Must be used in conjunction with web-mode-enable-block-face."
     (regexp-opt '("in" "and" "not" "or"))))
 
 (defvar web-mode-django-control-blocks
-  (regexp-opt
-   '("assets" "autoescape"
-     "block" "blocktrans"
-     "cache" "call" "capture" "comment" "draw"
-     "elif" "else" "elseif" "elsif" "embed" "empty"
-     "filter" "for" "foreach" "form"
-     "if" "ifchanged" "ifequal" "ifnotequal"
-     "macro"
-     "random"
-     "safe" "sandbox" "spaceless"
-     "unless"
-     "verbatim"
-     "with"
-     )
-   t))
+  '("assets" "autoescape"
+    "block" "blocktrans"
+    "cache" "call" "capture" "comment"
+    "draw"
+    "embed"
+    "filter" "for" "foreach" "form"
+    "if" "ifchanged" "ifequal" "ifnotequal"
+    "macro"
+    "random" "raw"
+    "safe" "sandbox" "set" "spaceless"
+    "tablerow" "trans"
+    "unless"
+    "verbatim"
+    "with"
+
+    "endassets" "endautoescape"
+    "endblock" "endblocktrans"
+    "endcache" "endcall" "endcapture" "endcomment"
+    "draw"
+    "endembed"
+    "endfilter" "endfor" "endforeach" "endform"
+    "endif" "endifchanged" "endifequal" "endifnotequal"
+    "endmacro"
+    "endrandom" "endraw"
+    "endsafe" "endsandbox" "endset" "endspaceless"
+    "endtablerow" "endtrans"
+    "endunless"
+    "endverbatim"
+    "endwith"
+
+    "csrf_token" "cycle" "debug"
+    "elif" "else" "elseif" "elsif" "empty" "extends"
+    "firstof" "include" "load" "lorem" "now" "regroup" "ssi"
+    "templatetag" "url" "widthratio"))
+
+(defvar web-mode-django-control-blocks-regexp
+  (regexp-opt web-mode-django-control-blocks t))
 
 (defvar web-mode-django-keywords
   (eval-when-compile
     (regexp-opt
-     '("and" "as" "assign" "autoescape"
-       "block" "blocktrans" "break"
-       "cache" "call" "capture" "case" "comment" "context" "continue"
-       "csrf_token" "cycle"
-       "debug" "do"
-       "elif" "else" "elseif" "elsif" "embed" "empty"
-       "endautoescape" "endblock" "endblocktrans" "endcache" "endcall"
-       "endcapture" "endcomment" "endembed" "endfilter" "endfor" "endform"
-       "endif" "endifchanged" "endifequal" "endifnotequal" "endmacro"
-       "endrandom" "endraw" "endsandbox" "endset" "endspaceless" "endtablerow"
-       "endtrans" "endunless" "endverbatim" "endwith" "extends"
-       "filter" "firstof" "flush" "for" "form" "from"
-       "if" "ifchanged" "ifequal" "ifnotequal" "ignore" "import" "in" "include"
-       "is"
+     '("and" "as" "assign"
+       "break"
+       "cache" "call" "case" "context" "continue"
+       "do"
+       "flush" "from"
+       "ignore" "import" "in" "is"
        "layout" "load"
-       "macro" "missing"
-       "none" "not" "now"
+       "missing"
+       "none" "not"
        "or"
        "pluralize"
-       "random" "raw" "regroup"
-       "sandbox" "set" "spaceless" "ssi" "static"
-       "tablerow" "templatetag" "trans" "trans"
-       "unless" "url" "use"
-       "var" "verbatim"
-       "widthratio" "with"
+       "random"
+       "unless" "use"
+       "var"
        ))))
 
 (defvar web-mode-django-types
@@ -1602,7 +1618,7 @@ Must be used in conjunction with web-mode-enable-block-face."
 
 (defvar web-mode-django-expr-font-lock-keywords
   (list
-   '("|[ ]?\\([[:alpha:]_]+\\)\\>" 1 'web-mode-function-call-face)
+   '("|[ ]?\\([[:alpha:]_]+\\)\\>" 1 'web-mode-filter-face)
    (cons (concat "\\<\\(" web-mode-django-types "\\)\\>")
          '(1 'web-mode-type-face))
    '("\\<\\([[:alpha:]_]+\\)[ ]?(" 1 'web-mode-function-call-face)
@@ -1611,6 +1627,8 @@ Must be used in conjunction with web-mode-enable-block-face."
 
 (defvar web-mode-django-code-font-lock-keywords
   (list
+   (cons (concat "{%[ ]*\\(" web-mode-django-control-blocks-regexp "\\)\\>")
+         '(1 'web-mode-block-control-face))
    (cons (concat "\\<\\(" web-mode-django-keywords "\\)\\>")
          '(1 'web-mode-keyword-face))
    (cons (concat "\\<\\(" web-mode-django-types "\\)\\>")
@@ -1812,7 +1830,7 @@ Must be used in conjunction with web-mode-enable-block-face."
    (cons (concat "\\<\\(" web-mode-mason-keywords "\\)\\>")
          '(0 'web-mode-keyword-face))
    '("sub[ ]+\\([[:alnum:]_]+\\)" 1 'web-mode-function-name-face)
-   '(" | \\([hun]+\\) " 1 'web-mode-function-name-face)
+;;   '(" | \\([hun]+\\) " 1 'web-mode-function-name-face)
    '("\\<\\([[:alnum:]_]+\\)[ ]?::" 1 'web-mode-type-face)
    '("\\([@]\\)\\([[:alnum:]#_]*\\)" (1 nil) (2 'web-mode-variable-name-face))
    '("\\<\\([$%]\\)\\([[:alnum:]@#_]*\\)" (1 nil) (2 'web-mode-variable-name-face))
@@ -1820,8 +1838,8 @@ Must be used in conjunction with web-mode-enable-block-face."
    '("\\<\\(\\sw+\\)[ ]?(" 1 'web-mode-function-call-face)
    '("[[:alnum:]_][ ]?::[ ]?\\([[:alnum:]_]+\\)" 1 'web-mode-variable-name-face)
    '("->[ ]?\\([[:alnum:]_]+\\)" 1 'web-mode-variable-name-face)
-   '("\\(method\\|def\\)" 1 'web-mode-block-control-face)
    '("\\(?:method\\|def\\) \\([[:alnum:]._]+\\)" 1 'web-mode-function-name-face)
+   '("|[ ]*\\([[:alnum:],]+\\)[ ]*%>" 1 'web-mode-filter-face)
    ))
 
 (defvar web-mode-mason-block-font-lock-keywords
@@ -2163,6 +2181,8 @@ the environment as needed for ac-sources, right before they're used.")
   (make-local-variable 'web-mode-start-tag-overlay)
   (make-local-variable 'web-mode-time)
 
+  (make-local-variable 'comment-end)
+  (make-local-variable 'comment-start)
   (make-local-variable 'fill-paragraph-function)
   (make-local-variable 'font-lock-beg)
   (make-local-variable 'font-lock-defaults)
@@ -2183,7 +2203,9 @@ the environment as needed for ac-sources, right before they're used.")
   ;;(add-to-list 'text-property-default-nonsticky '(block-token . t))
   ;;(message "%S" text-property-default-nonsticky)
 
-  (setq fill-paragraph-function 'web-mode-fill-paragraph
+  (setq comment-end "-->"
+        comment-start "<!--"
+        fill-paragraph-function 'web-mode-fill-paragraph
         font-lock-defaults '(web-mode-font-lock-keywords t)
         font-lock-extend-region-functions '(web-mode-extend-region)
         font-lock-support-mode nil
@@ -2225,6 +2247,11 @@ the environment as needed for ac-sources, right before they're used.")
         web-mode-change-end (point-max))
   (when (> (point-max) 256000)
     (web-mode-buffer-highlight))
+
+  (when (and (boundp 'hs-special-modes-alist)
+             (not (assoc major-mode hs-special-modes-alist)))
+    (add-to-list 'hs-special-modes-alist '(web-mode "{" "}" "/[*/]" web-mode-forward-sexp nil))
+    ) ;when
 
   ;;(web-mode-trace "buffer loaded")
 
@@ -2940,9 +2967,7 @@ the environment as needed for ac-sources, right before they're used.")
     (cond
 
      ((member web-mode-engine '("php" "lsp" "python" "web2py" "mason"))
-      (setq regexp web-mode-engine-token-regexp)
-;;      (message "%S %S" (point) web-mode-engine-token-regexp)
-      )
+      (setq regexp web-mode-engine-token-regexp))
 
      ((string= web-mode-engine "mako")
       (cond
@@ -3391,11 +3416,16 @@ the environment as needed for ac-sources, right before they're used.")
             (setq controls (append controls (list (cons 'inside "for")))))
            ((web-mode-block-starts-with "end\\([[:alpha:]]+\\)" reg-beg)
             (setq controls (append controls (list (cons 'close (match-string-no-properties 1))))))
-           ((web-mode-block-starts-with (concat web-mode-django-control-blocks "\\>") reg-beg)
-            ;;(message "%S" (concat web-mode-django-control-blocks "\\>"))
-            (setq controls (append controls (list (cons 'open (match-string-no-properties 1))))))
-           )
-          )
+           ((web-mode-block-starts-with (concat web-mode-django-control-blocks-regexp "\\>") reg-beg)
+            (let (control)
+              (setq control (match-string-no-properties 1))
+              ;;(message "%S %S %S" control (concat "end" control) web-mode-django-control-blocks)
+              (when (member (concat "end" control) web-mode-django-control-blocks)
+                (setq controls (append controls (list (cons 'open control)))))
+              ) ;let
+            ) ;case
+           ) ;cond
+          ) ;when
         ) ;django
 
        ((string= web-mode-engine "smarty")
@@ -3516,7 +3546,7 @@ the environment as needed for ac-sources, right before they're used.")
 
        ((string= web-mode-engine "mason")
         (cond
-         ((looking-at "</?%\\(def\\|method\\)")
+         ((looking-at "</?%\\(after\\|around\\|augment\\|before\\|def\\|filter\\|method\\|override\\)")
           (setq control (match-string-no-properties 1)
                 type (if (eq (aref (match-string-no-properties 0) 1) ?\/) 'close 'open))
           (setq controls (append controls (list (cons type control))))
@@ -4513,24 +4543,17 @@ the environment as needed for ac-sources, right before they're used.")
     ;;      (message "nothing todo")
     nil)
 
-   ((and web-mode-enable-block-partial-invalidation
-         web-mode-engine-token-regexp
+   ((and (member web-mode-engine '("php" "asp"))
+         ;;web-mode-engine-token-regexp
          (get-text-property beg 'block-side)
          (get-text-property end 'block-side)
          (> beg (point-min))
          (not (eq (get-text-property (1- beg) 'block-token) 'delimiter-beg))
-         (not (eq (get-text-property end 'block-token) 'delimiter-end))
-
-         ;; (not (looking-back "\\*/\\|\\?>"))
-         ;; (progn
-         ;;   (setq chunk (buffer-substring-no-properties beg end))
-         ;;   (not (string-match-p "\\*/\\|\\?>" chunk))
-         ;;   )
-           )
+         (not (eq (get-text-property end 'block-token) 'delimiter-end)))
     ;;(message "invalidate block")
     (web-mode-invalidate-block-region beg end))
 
-   ((and web-mode-enable-part-partial-invalidation
+   ((and ;;web-mode-enable-part-partial-invalidation
          (or (member web-mode-content-type '("css" "jsx" "javascript"))
              (and (get-text-property beg 'part-side)
                   (get-text-property end 'part-side)
@@ -5006,7 +5029,8 @@ the environment as needed for ac-sources, right before they're used.")
         (setq keywords web-mode-mason-code-font-lock-keywords))
        ((eq (aref sub2 0) ?\%)
         (setq keywords web-mode-mason-code-font-lock-keywords))
-       ((or (string= sub2 "<%") (string= sub3 "</%"))
+       ((and (or (string= sub2 "<%") (string= sub3 "</%"))
+             (not (member sub3 '("<%c" "<%i" "<%p"))))
         (setq keywords web-mode-mason-block-font-lock-keywords))
        (t
         (setq keywords web-mode-mason-code-font-lock-keywords))
@@ -9845,7 +9869,8 @@ Pos should be in a tag."
         (message "javascript-calls-beginning-position ** invalid pos **")
         (setq continue nil))
        ((< pos reg-beg)
-        (message "javascript-calls-beginning-position ** failure **")
+        ;;(message "pos(%S) reg-beg(%S)" pos reg-beg)
+        ;;(message "javascript-calls-beginning-position ** failure **")
         (setq continue nil
               pos reg-beg))
        ((and blockside
