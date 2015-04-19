@@ -2,7 +2,7 @@
 (defun me/goto-previous-buffer ()
   (interactive)
   (other-window -1))
-(define-key global-map (kbd "C-x p") 'goto-previous-buffer)
+(define-key global-map (kbd "C-x p") 'me/goto-previous-buffer)
 
 
 ;; Shortcuts for Helm

@@ -80,6 +80,7 @@
 (load "~/.emacs.d/init-aliases.el")
 (load "~/.emacs.d/init-palettes.el")
 (load "~/.emacs.d/init-modes.el")
+(load "~/.emacs.d/init-skeletons.el")
 (load "~/.emacs.d/init-shortcuts.el")
 (load "~/.emacs.d/init-theme.el")
 
