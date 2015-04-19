@@ -1,19 +1,3 @@
-;; Colorful highlight for hex color strings
-(defun me/highlight-hex-strings ()
-  (interactive)
-  (font-lock-add-keywords
-   nil
-   '(("#[abcdefABCDEF[:digit:]]\\{6\\}"
-      (0 (put-text-property
-          (match-beginning 0)
-          (match-end 0)
-          'face (list :background (match-string-no-properties 0)))))))
-  (font-lock-fontify-buffer))
-(add-hook 'emacs-lisp-mode-hook 'me/highlight-hex-strings)
-(add-hook 'emmet-mode-hook 'me/highlight-hex-strings)
-(add-hook 'python-mode-hook 'me/highlight-hex-strings)
-
-
 ;; Zenburn palette (https://github.com/bbatsov/zenburn-emacs)
 (defconst zenburn/bg+3      "#6F6F6F" "Zenburn palette: bg+3.")
 (defconst zenburn/bg+2      "#5F5F5F" "Zenburn palette: bg+2.")
