@@ -7,19 +7,11 @@
   (set-face-attribute 'default nil :font "Monaco-12"))
 
 
-;; Copy a face's attributes onto one another
-(defun me/set-face-attribute (target inherit)
-  (let ((attributes(face-all-attributes inherit (selected-frame))))
-    (mapcar (lambda (x) (set-face-attribute target nil (car x) (cdr x))) attributes)))
-
-
-;; Face customization
+;; Built-in face customization
 (set-face-attribute 'font-lock-doc-face nil :italic t)
 (set-face-attribute 'font-lock-constant-face nil :foreground zenburn/green-1)
 (set-face-attribute 'font-lock-comment-face nil :foreground zenburn/fg-1 :italic t)
-(set-face-attribute 'fringe nil :background zenburn/bg :foreground zenburn/fg-1)
 (set-face-attribute 'header-line nil :background 'unspecified :foreground zenburn/blue :bold t :box nil)
-(set-face-attribute 'helm-match nil :foreground "gold1")
 (set-face-attribute 'isearch nil :foreground "gold1" :background 'unspecified)
 (set-face-attribute 'lazy-highlight nil :foreground "gold3" :background 'unspecified)
 (set-face-attribute 'show-paren-match nil :background 'unspecified)
@@ -38,7 +30,8 @@
 (with-eval-after-load 'helm
   (when (member "Monaco" (font-family-list)) (set-face-attribute 'helm-source-header nil :font "Monaco-14"))
   (set-face-attribute 'helm-header nil :italic t)
-  (set-face-attribute 'helm-source-header nil :foreground zenburn/blue :background zenburn/bg :box nil))
+  (set-face-attribute 'helm-source-header nil :foreground zenburn/blue :background zenburn/bg :box nil)
+  (set-face-attribute 'helm-match nil :foreground "gold1"))
 (with-eval-after-load 'helm-command
   (set-face-attribute 'helm-M-x-key nil :underline nil))
 
@@ -51,16 +44,15 @@
 
 ;; Fringe face customization
 (with-eval-after-load 'fringe
- (set-face-attribute 'fringe nil :foreground zenburn/bg+2))
+  (set-face-attribute 'fringe nil :background zenburn/bg :foreground zenburn/bg+2))
 
 
 ;; Whitespace face customization
 (with-eval-after-load 'whitespace
- (setq whitespace-line-column 100)
- (set-face-attribute 'whitespace-empty nil :background zenburn/bg+1)
- (set-face-attribute 'whitespace-indentation nil :background zenburn/bg+1 :foreground zenburn/red)
- (set-face-attribute 'whitespace-space-after-tab nil :background zenburn/bg+1 :foreground zenburn/red)
- (set-face-attribute 'whitespace-space-before-tab nil :background zenburn/bg+1 :foreground zenburn/red)
- (set-face-attribute 'whitespace-tab nil :background zenburn/bg+1 :foreground zenburn/red)
- (set-face-attribute 'whitespace-trailing nil :background zenburn/bg+1 :foreground zenburn/red)
- (set-face-attribute 'whitespace-space nil :background 'unspecified :foreground zenburn/bg+2))
+  (set-face-attribute 'whitespace-empty nil :background zenburn/bg+1)
+  (set-face-attribute 'whitespace-indentation nil :background zenburn/bg+1 :foreground zenburn/red)
+  (set-face-attribute 'whitespace-space-after-tab nil :background zenburn/bg+1 :foreground zenburn/red)
+  (set-face-attribute 'whitespace-space-before-tab nil :background zenburn/bg+1 :foreground zenburn/red)
+  (set-face-attribute 'whitespace-tab nil :background zenburn/bg+1 :foreground zenburn/red)
+  (set-face-attribute 'whitespace-trailing nil :background zenburn/bg+1 :foreground zenburn/red)
+  (set-face-attribute 'whitespace-space nil :background 'unspecified :foreground zenburn/bg+2))

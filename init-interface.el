@@ -1,16 +1,18 @@
 ;; Global default settings
-(setq-default show-trailing-whitespace nil       ; Display trailing whitespaces
-              indent-tabs-mode nil               ; No tabs
-              indicate-empty-lines t)            ; Indicate empty line (require left fringe)
+(setq-default
+ show-trailing-whitespace nil                    ; Display trailing whitespaces
+ indent-tabs-mode nil                            ; No tabs
+ indicate-empty-lines t)                         ; Indicate empty line (require left fringe)
 
 
-;; Buffer local settings
-(setq inhibit-startup-screen 1                   ; Remove start-up screen
-      scroll-step 1                              ; Line by line scrolling
-      default-tab-width 4                        ; Set width for tabs
-      x-select-enable-clipboard 1                ; Merge both system's and Emacs' clipboard
-      sgml-basic-offset 4                        ; Set indent to 4 spaces
-      mouse-yank-at-point 1)                     ; Yank at mouse cursor rather than click location
+;     ; Buffer local settings
+(setq
+ inhibit-startup-screen 1                        ; Remove start-up screen
+ scroll-step 1                                   ; Line by line scrolling
+ default-tab-width 4                             ; Set width for tabs
+ x-select-enable-clipboard 1                     ; Merge both system's and Emacs' clipboard
+ sgml-basic-offset 4                             ; Set indent to 4 spaces
+ mouse-yank-at-point 1)                          ; Yank at mouse cursor rather than click location
 
 
 ;; Toggle Emacs' interface elements

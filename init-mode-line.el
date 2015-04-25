@@ -32,15 +32,16 @@
 
 
 ;; Smart Mode Line (https://github.com/Malabarba/smart-mode-line)
-(setq display-time-format "%I:%M"
-	  display-time-load-average-threshold 1.0
-	  rm-whitelist '("")
-	  sml/projectile-replacement-format "[%s] "
-	  sml/use-projectile-p 'before-prefixes
-	  sml/battery-format "%p%% "
-	  sml/show-remote nil
-	  sml/vc-mode-show-backend nil
-	  sml/theme 'automatic)
+(setq
+ display-time-format "%I:%M"
+ display-time-load-average-threshold 1.0
+ rm-whitelist '("")
+ sml/projectile-replacement-format "[%s] "
+ sml/use-projectile-p 'before-prefixes
+ sml/battery-format "%p%% "
+ sml/show-remote nil
+ sml/vc-mode-show-backend nil
+ sml/theme 'automatic)
 (sml/setup)
 
 ;; Customize mode line faces

@@ -27,8 +27,9 @@
 
 ;; Map cmd key to Meta and keep MacOS' option key (MacOS)
 (when (eq system-type 'darwin)
-  (setq ns-command-modifier 'meta)
-  (setq ns-option-modifier nil))
+  (setq
+   ns-command-modifier 'meta
+   ns-option-modifier nil))
 
 
 ;; Move line up, move line down

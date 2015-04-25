@@ -6,8 +6,9 @@
 
 
 ;; Emmet (https://github.com/smihica/emmet-mode)
-(setq emmet-preview-default nil
-      emmet-move-cursor-between-quotes t)
+(setq
+ emmet-preview-default nil
+ emmet-move-cursor-between-quotes t)
 (add-hook 'sgml-mode-hook 'emmet-mode)
 (add-hook 'css-mode-hook 'emmet-mode)
 (add-hook 'web-mode-hook 'emmet-mode)
@@ -38,17 +39,19 @@
 
 
 ;; Projectile (https://github.com/bbatsov/projectile)
-(setq projectile-enable-caching t
-      projectile-remember-window-configs t
-      projectile-mode-line '(:eval (format " %s" (projectile-project-name))))
+(setq
+ projectile-enable-caching t
+ projectile-remember-window-configs t
+ projectile-mode-line '(:eval (format " %s" (projectile-project-name))))
 (projectile-global-mode)
 (helm-projectile-on)
 (global-set-key (kbd "M-x") 'helm-M-x)
 
 
 ;; Company (https://github.com/company-mode/company-mode)
-(setq company-minimum-prefix-length 1
-      company-idle-delay 0.1)
+(setq
+ company-minimum-prefix-length 1
+ company-idle-delay 0.1)
 (add-hook 'after-init-hook 'global-company-mode)
 
 
@@ -90,9 +93,10 @@
 
 
 ;; Magit (https://github.com/magit/magit)
-(setq magit-show-child-count t
-      magit-stage-all-confirm nil
-      magit-unstage-all-confirm nil)
+(setq
+ magit-show-child-count t
+ magit-stage-all-confirm nil
+ magit-unstage-all-confirm nil)
 (global-set-key (kbd "C-c g") 'magit-status)
 
 
@@ -110,3 +114,8 @@
 
 ;; Dockerfile Mode (https://github.com/spotify/dockerfile-mode)
 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
+
+
+;; Whitespace Mode (built-in)
+(setq whitespace-style
+      '(face tabs spaces trailing space-before-tab indentation empty space-after-tab space-mark tab-mark))
