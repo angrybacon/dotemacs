@@ -79,6 +79,9 @@
 
 ;; Web Mode (http://web-mode.org/)
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(setq web-mode-markup-indent-offset 2)
+(setq web-mode-css-indent-offset 2)
+(setq web-mode-code-indent-offset 2)
 
 
 ;; Golden Ratio (https://github.com/roman/golden-ratio.el)
@@ -103,3 +106,7 @@
    python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
    python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\n"
    python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"))
+
+
+;; Dockerfile Mode (https://github.com/spotify/dockerfile-mode)
+(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))

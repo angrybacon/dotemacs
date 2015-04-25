@@ -1,6 +1,7 @@
 ;; Change the major mode strings
 (delight 'css-mode                    "css"           :major)
 (delight 'dired-mode                  "dired"         :major)
+(delight 'dockerfile-mode             "dockerfile"    :major)
 (delight 'emacs-lisp-mode             "elisp"         :major)
 (delight 'eshell-mode                 "eshell"        :major)
 (delight 'fundamental-mode            "fundamental"   :major)

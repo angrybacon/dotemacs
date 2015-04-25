@@ -1,7 +1,7 @@
 ;; Global default settings
-(setq-default show-trailing-whitespace 1         ; Display trailing whitespaces
-      indent-tabs-mode nil                       ; No tabs
-      indicate-empty-lines t)                    ; Indicate empty line (require left fringe)
+(setq-default show-trailing-whitespace nil       ; Display trailing whitespaces
+              indent-tabs-mode nil               ; No tabs
+              indicate-empty-lines t)            ; Indicate empty line (require left fringe)
 
 
 ;; Buffer local settings
@@ -17,15 +17,19 @@
 (scroll-bar-mode -1)                             ; Remove scroll bar
 (menu-bar-mode -1)                               ; Remove menu bar
 (tool-bar-mode -1)                               ; Remove the toolbar
-(line-number-mode )                              ; Display line number of the cursor current position
-(column-number-mode 1)                           ; Display column number of the cursor current position
 (fringe-mode '(8 . 0))                           ; Display left fringe
-(global-hl-line-mode 1)                          ; Hightlight current line
-(global-subword-mode 1)                          ; Iterate through CamelCase words
-(mouse-avoidance-mode 'animate)                  ; Move the cursor to the corner when typing
-(set-frame-parameter nil 'fullscreen 'fullboth)  ; Maxmimize the window
+(line-number-mode 1)                             ; Display line number of the cursor current position
+(column-number-mode 1)                           ; Display column number of the cursor current position
 (display-battery-mode t)                         ; Display battery level in the mode-line
 (display-time-mode t)                            ; Display time clock in the mode-line
+(global-hl-line-mode 1)                          ; Hightlight current line
+(global-whitespace-mode 1)                       ; Hightlight spaces and tabs characters
+
+
+;; Goodies
+(global-subword-mode 1)                          ; Iterate through CamelCase words
+(mouse-avoidance-mode 'animate)                  ; Move pointer when reaching cursor location
+(set-frame-parameter nil 'fullscreen 'fullboth)  ; Maxmimize the window
 
 
 ;; Sort directories first while in dired mode
