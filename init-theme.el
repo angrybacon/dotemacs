@@ -28,7 +28,7 @@
 
 ;; Helm face customization
 (with-eval-after-load 'helm
-  (when (member "Monaco" (font-family-list)) (set-face-attribute 'helm-source-header nil :font "Monaco-14"))
+  (when (member "Monaco" (font-family-list)) (set-face-attribute 'helm-source-header nil :font "Monaco-13"))
   (set-face-attribute 'helm-header nil :italic t)
   (set-face-attribute 'helm-source-header nil :foreground zenburn/blue :background zenburn/bg :box nil)
   (set-face-attribute 'helm-match nil :foreground "gold1"))

@@ -23,7 +23,7 @@
 
 
 ;; Multiple cursors (https://github.com/magnars/multiple-cursors.el)
-(setq mc/list-file "~/.emacs.d/vendor/multiple-cursors/mc-lists.el")
+(setq mc/list-file "~/.emacs.d/elpa/multiple-cursors/mc-lists.el")
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
@@ -81,10 +81,11 @@
 
 
 ;; Web Mode (http://web-mode.org/)
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-(setq web-mode-markup-indent-offset 2)
-(setq web-mode-css-indent-offset 2)
-(setq web-mode-code-indent-offset 2)
+(setq
+ web-mode-markup-indent-offset 2
+ web-mode-css-indent-offset 2
+ web-mode-code-indent-offset 2)
+;; (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
 
 ;; Golden Ratio (https://github.com/roman/golden-ratio.el)
@@ -119,3 +120,18 @@
 ;; Whitespace Mode (built-in)
 (setq whitespace-style
       '(face tabs spaces trailing space-before-tab indentation empty space-after-tab space-mark tab-mark))
+
+
+;; HTML Mode (built-in)
+(setq sgml-basic-offset 2)
+
+
+;; CSS Mode (buit-in)
+(setq css-indent-offset 2)
+
+
+;; Markdown Mode (http://jblevins.org/projects/markdown-mode/)
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.txt\\'" . markdown-mode))

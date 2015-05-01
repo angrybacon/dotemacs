@@ -77,13 +77,13 @@
 		 ((:keywords "extensions")
 		  (:url . "http://www.dr-qubit.org/emacs.php"))])
  (bug-hunter .
-	     [(0 1)
+	     [(0 2)
 	      ((seq
 		(1 3))
 	       (cl-lib
 		(0 5)))
 	      "Hunt down errors in elisp files" single
-	      ((:url . "http://github.com/Bruce-Connor/elisp-bug-hunter")
+	      ((:url . "http://github.com/Malabarba/elisp-bug-hunter")
 	       (:keywords "lisp"))])
  (caps-lock .
 	    [(1 0)
@@ -382,6 +382,11 @@
 	 "Retrieve and decode METAR weather information" single
 	 ((:url . "http://elpa.gnu.org/packages/metar.html")
 	  (:keywords "comm"))])
+ (minibuffer-line .
+		  [(0 1)
+		   nil "Display status info in the minibuffer window" single
+		   ((:url . "http://elpa.gnu.org/packages/minibuffer-line.html")
+		    (:keywords))])
  (minimap .
 	  [(1 2)
 	   nil "Sidebar showing a \"mini-map\" of a buffer" single
@@ -431,7 +436,7 @@
 	    ((:url . "http://elpa.gnu.org/packages/omn-mode.html")
 	     (:keywords))])
  (org .
-      [(20150420)
+      [(20150427)
        nil "Outline-based notes management and organizer" tar nil])
  (osc .
       [(0 1)
@@ -547,7 +552,9 @@
 		       (:keywords "convenience"))])
  (test-simple .
 	      [(1 1)
-	       nil "Simple Unit Test Framework for Emacs Lisp" single
+	       ((cl-lib
+		 (0)))
+	       "Simple Unit Test Framework for Emacs Lisp" single
 	       ((:url . "http://github.com/rocky/emacs-test-simple")
 		(:keywords "unit-test"))])
  (timerfunctions .

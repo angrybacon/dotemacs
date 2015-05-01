@@ -1,11 +1,11 @@
 ;; Global default settings
 (setq-default
- show-trailing-whitespace nil                    ; Display trailing whitespaces
+ show-trailing-whitespace t                      ; Display trailing whitespaces
  indent-tabs-mode nil                            ; No tabs
  indicate-empty-lines t)                         ; Indicate empty line (require left fringe)
 
 
-;     ; Buffer local settings
+;; Buffer local settings
 (setq
  inhibit-startup-screen 1                        ; Remove start-up screen
  scroll-step 1                                   ; Line by line scrolling
@@ -25,13 +25,13 @@
 (display-battery-mode t)                         ; Display battery level in the mode-line
 (display-time-mode t)                            ; Display time clock in the mode-line
 (global-hl-line-mode 1)                          ; Hightlight current line
-(global-whitespace-mode 1)                       ; Hightlight spaces and tabs characters
+(global-whitespace-mode 0)                       ; Hightlight spaces and tabs characters
 
 
 ;; Goodies
 (global-subword-mode 1)                          ; Iterate through CamelCase words
-(mouse-avoidance-mode 'animate)                  ; Move pointer when reaching cursor location
-(set-frame-parameter nil 'fullscreen 'fullboth)  ; Maxmimize the window
+(mouse-avoidance-mode 'animate)                  ; Move pointer when point reaches cursor location
+(set-frame-parameter nil 'fullscreen 'fullboth)  ; Pseudo fullscreen
 
 
 ;; Sort directories first while in dired mode

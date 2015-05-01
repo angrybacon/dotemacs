@@ -31,7 +31,7 @@
 ;; - `projectile':        manage project files
 ;; - `helm':              improve interactive actions
 ;; - `company':           auto-completion
-;; - `autopair':          automatically add closing parenthesis and others
+;; - `autopair':          automatically add closing parenthesis and related
 ;; - `org':               note taking made easier
 ;; - `smart-mode-line':   prettier mode-line
 ;;
