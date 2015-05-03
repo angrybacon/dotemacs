@@ -4,7 +4,7 @@
 
 ;; Set font
 (when (member "Monaco" (font-family-list))
-  (set-face-attribute 'default nil :font "Monaco-12"))
+  (set-face-attribute 'default nil :font "Monaco-11"))
 
 
 ;; Built-in face customization
