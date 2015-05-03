@@ -36,7 +36,7 @@
 
 ;; Helm (https://github.com/emacs-helm/helm)
 (setq helm-mode-line-string "")
-
+(add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
 
 ;; Projectile (https://github.com/bbatsov/projectile)
 (setq
