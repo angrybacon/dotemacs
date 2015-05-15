@@ -15,6 +15,7 @@
         insert-parentheses
         kill-region
         markdown-exdent-or-delete
+        me/goto-previous-block
         sgml-slash
         subword-left
         subword-right
@@ -28,5 +29,6 @@
         mac-previous-buffer
         mouse-drag-vertical-line
         mouse-save-then-kill
+        mouse-set-region
         suspend-frame
         ))
