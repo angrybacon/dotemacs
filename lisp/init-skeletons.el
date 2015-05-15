@@ -1,9 +1,9 @@
-;; Constants
+;; Set constants with general information
 (defconst me/name   "Mathieu Marques"             "My full name.")
 (defconst me/email  "mathieumarques78@gmail.com"  "My email address.")
 
 
-;; Header for Python files
+;; Define the header skeleton for Python files
 (define-skeleton me/header-for-python
   "Prompt the user for package information and build a header with it."
   ""
@@ -15,3 +15,6 @@
   > "__version__ = " (setq version (skeleton-read "Version (0.1): ")) | "0.1" \n
   > \n)
 (define-auto-insert "\\.py\\'" 'me/header-for-python)
+
+
+(provide 'init-skeletons)

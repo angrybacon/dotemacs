@@ -1,13 +1,13 @@
-;; Set color theme
+;; Set the color theme
 (load-theme 'zenburn t)
 
 
-;; Set font
+;; Set the font
 (when (member "Monaco" (font-family-list))
   (set-face-attribute 'default nil :font "Monaco-11"))
 
 
-;; Built-in face customization
+;; Customize the built-in faces
 (set-face-attribute 'font-lock-doc-face nil :italic t)
 (set-face-attribute 'font-lock-constant-face nil :foreground zenburn/green-1)
 (set-face-attribute 'font-lock-comment-face nil :foreground zenburn/fg-1 :italic t)
@@ -18,6 +18,8 @@
 (set-face-attribute 'show-paren-mismatch nil :background 'unspecified)
 (set-face-attribute 'region nil :foreground zenburn/green)
 (set-face-attribute 'vertical-border nil :foreground zenburn/bg-1)
+(when (member "Monaco" (font-family-list))
+  (set-face-attribute 'header-line nil :font "Monaco-13"))
 
 
 ;; Company face customization
@@ -28,7 +30,9 @@
 
 ;; Helm face customization
 (with-eval-after-load 'helm
-  (when (member "Monaco" (font-family-list)) (set-face-attribute 'helm-source-header nil :font "Monaco-13"))
+  (when (member "Monaco" (font-family-list))
+    (set-face-attribute 'helm-header nil :font "Monaco-10")
+    (set-face-attribute 'helm-source-header nil :font "Monaco-13"))
   (set-face-attribute 'helm-header nil :italic t)
   (set-face-attribute 'helm-source-header nil :foreground zenburn/blue :background zenburn/bg :box nil)
   (set-face-attribute 'helm-match nil :foreground "gold1"))
@@ -56,3 +60,6 @@
   (set-face-attribute 'whitespace-tab nil :background zenburn/bg+1 :foreground zenburn/red)
   (set-face-attribute 'whitespace-trailing nil :background zenburn/bg+1 :foreground zenburn/red)
   (set-face-attribute 'whitespace-space nil :background 'unspecified :foreground zenburn/bg+2))
+
+
+(provide 'init-theme)

@@ -46,3 +46,6 @@
   (indent-according-to-mode))
 (global-set-key (kbd "<M-up>") 'me/move-line-up)
 (global-set-key (kbd "<M-down>") 'me/move-line-down)
+
+
+(provide 'init-shortcuts)

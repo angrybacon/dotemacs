@@ -31,7 +31,7 @@
 ;; Goodies
 (global-subword-mode 1)                          ; Iterate through CamelCase words
 (mouse-avoidance-mode 'animate)                  ; Move pointer when point reaches cursor location
-(set-frame-parameter nil 'fullscreen 'fullboth)  ; Pseudo fullscreen
+(set-frame-parameter nil 'fullscreen 'fullboth)  ; Pseudo fullscreen (only tested with OS X)
 
 
 ;; Sort directories first while in dired mode
@@ -59,3 +59,6 @@
 (add-hook 'emacs-lisp-mode-hook 'me/highlight-hex-strings)
 (add-hook 'emmet-mode-hook 'me/highlight-hex-strings)
 (add-hook 'python-mode-hook 'me/highlight-hex-strings)
+
+
+(provide 'init-interface)

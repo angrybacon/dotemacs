@@ -1,22 +1,26 @@
 ;; Change the major mode strings
-(delight 'css-mode                    "css"           :major)
-(delight 'dired-mode                  "dired"         :major)
-(delight 'dockerfile-mode             "dockerfile"    :major)
-(delight 'emacs-lisp-mode             "elisp"         :major)
-(delight 'eshell-mode                 "eshell"        :major)
-(delight 'fundamental-mode            "fundamental"   :major)
-(delight 'help-mode                   "help"          :major)
-(delight 'html-mode                   "html"          :major)
-(delight 'js-mode                     "js"            :major)
-(delight 'lisp-interaction-mode       "lisp"          :major)
-(delight 'magit-commit-mode           "magit-commit"  :major)
-(delight 'magit-log-mode              "magit-log"     :major)
-(delight 'magit-status-mode           "magit-status"  :major)
-(delight 'org-mode                    "org"           :major)
-(delight 'python-mode                 "python"        :major)
-(delight 'scss-mode                   "scss"          :major)
-(delight 'text-mode                   "text"          :major)
-(delight 'web-mode                    "web"           :major)
+(delight 'css-mode               "css"            :major)
+(delight 'dired-mode             "dired"          :major)
+(delight 'dockerfile-mode        "dockerfile"     :major)
+(delight 'emacs-lisp-mode        "elisp"          :major)
+(delight 'eshell-mode            "eshell"         :major)
+(delight 'fundamental-mode       "fundamental"    :major)
+(delight 'gitattributes-mode     "gitattributes"  :major)
+(delight 'gitconfig-mode         "gitconfig"      :major)
+(delight 'gitignore-mode         "gitignore"      :major)
+(delight 'help-mode              "help"           :major)
+(delight 'html-mode              "html"           :major)
+(delight 'js-mode                "js"             :major)
+(delight 'lisp-interaction-mode  "lisp"           :major)
+(delight 'magit-commit-mode      "magit-commit"   :major)
+(delight 'magit-log-mode         "magit-log"      :major)
+(delight 'magit-status-mode      "magit-status"   :major)
+(delight 'markdown-mode          "markdown"       :major)
+(delight 'org-mode               "org"            :major)
+(delight 'python-mode            "python"         :major)
+(delight 'scss-mode              "scss"           :major)
+(delight 'text-mode              "text"           :major)
+(delight 'web-mode               "web"            :major)
 
 
 ;; Change the minor mode strings
@@ -45,6 +49,9 @@
 (sml/setup)
 
 ;; Customize mode line faces
+(when (member "Monaco" (font-family-list))
+  (set-face-attribute 'mode-line nil :font "Monaco-12")
+  (set-face-attribute 'mode-line-inactive nil :font "Monaco-12"))
 (set-face-attribute 'mode-line nil :background zenburn/bg-1 :box `(:line-width 4 :color ,zenburn/bg-1))
 (set-face-attribute 'mode-line-inactive nil :background zenburn/bg-0 :slant 'unspecified :box `(:line-width 4 :color ,zenburn/bg-0))
 ;; Global
@@ -66,3 +73,6 @@
 ;; Battery
 (set-face-attribute 'sml/charging nil :foreground zenburn/green)
 (set-face-attribute 'sml/discharging nil :foreground zenburn/red)
+
+
+(provide 'init-mode-line)

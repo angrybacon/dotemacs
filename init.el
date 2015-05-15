@@ -40,7 +40,7 @@
 ;;; Code:
 
 
-;; Custom variables
+;; Set custom variables
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -51,7 +51,7 @@
  )
 
 
-;; Custom faces
+;; Set custom faces
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -60,8 +60,18 @@
  )
 
 
-;; Loaded first so useless UI elements don't make UI flicker
-(load "~/.emacs.d/init-interface.el")
+;; Load path to initialization files
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+
+
+;; Initialize the interface first so it does not flicker
+(require 'init-interface)
+
+
+;; Check Emacs' version
+(when (version<= emacs-version "24")
+  (unless (yes-or-no-p (concat "Your Emacs is getting old. Some functionalities may not work, continue ? "))
+    (kill-emacs)))
 
 
 ;; Initializing package manager with Melpa (Emacs > 24)
@@ -76,17 +86,16 @@
   (setq exec-path (append exec-path '("/usr/local/bin"))))
 
 
-;; Loading partials into current session
-(load "~/.emacs.d/init-aliases.el")
-(load "~/.emacs.d/init-palettes.el")
-(load "~/.emacs.d/init-modes.el")
-(load "~/.emacs.d/init-skeletons.el")
-(load "~/.emacs.d/init-shortcuts.el")
-(load "~/.emacs.d/init-theme.el")
-
-
-;; Loaded last because of some elements above being required
-(load "~/.emacs.d/init-mode-line.el")
+;; Load initialization partials
+(require 'init-aliases)
+(require 'init-palettes)
+(require 'init-modes)
+(require 'init-modes)
+(require 'init-javascript)
+(require 'init-skeletons)
+(require 'init-shortcuts)
+(require 'init-theme)
+(require 'init-mode-line)
 
 
 ;;; init.el ends here

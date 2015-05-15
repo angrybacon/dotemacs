@@ -35,8 +35,9 @@
 
 
 ;; Helm (https://github.com/emacs-helm/helm)
-(setq helm-mode-line-string "")
-(add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
+(with-eval-after-load 'helm
+  (setq helm-mode-line-string "")
+  (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages))
 
 ;; Projectile (https://github.com/bbatsov/projectile)
 (setq
@@ -81,11 +82,14 @@
 
 
 ;; Web Mode (http://web-mode.org/)
-(setq
- web-mode-markup-indent-offset 2
- web-mode-css-indent-offset 2
- web-mode-code-indent-offset 2)
-;; (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(with-eval-after-load 'web-mode
+  (setq
+   web-mode-markup-indent-offset 2
+   web-mode-css-indent-offset 2
+   web-mode-code-indent-offset 2)
+  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+  (define-key web-mode-map (kbd "M-;") 'comment-dwim))
+
 
 
 ;; Golden Ratio (https://github.com/roman/golden-ratio.el)
@@ -135,3 +139,14 @@
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.txt\\'" . markdown-mode))
+
+
+;; JSON reformat (https://github.com/gongo/json-reformat)
+(setq auto-mode-alist (cons '("\\.json$" . json-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.jason$" . json-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.jshintrc$" . json-mode) auto-mode-alist))
+;; NOTE: will be fixed soon (https://github.com/joshwnj/json-mode/issues/32)
+(setq json-reformat:indent-width 2)
+
+
+(provide 'init-modes)
