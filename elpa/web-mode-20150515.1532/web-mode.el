@@ -3,8 +3,8 @@
 
 ;; Copyright 2011-2015 François-Xavier Bois
 
-;; Version: 11.1.06
-;; Package-Version: 20150514.1115
+;; Version: 11.1.08
+;; Package-Version: 20150515.1532
 ;; Author: François-Xavier Bois <fxbois AT Google Mail Service>
 ;; Maintainer: François-Xavier Bois
 ;; Created: July 2011
@@ -27,7 +27,7 @@
 
 ;;---- CONSTS ------------------------------------------------------------------
 
-(defconst web-mode-version "11.1.06"
+(defconst web-mode-version "11.1.08"
   "Web Mode version.")
 
 ;;---- GROUPS ------------------------------------------------------------------
@@ -1538,11 +1538,12 @@ Must be used in conjunction with web-mode-enable-block-face."
 
 (defvar web-mode-javascript-font-lock-keywords
   (list
+   '("@\\([[:alnum:]_]+\\)\\>" 0 'web-mode-keyword-face)
    (cons (concat "\\<\\(" web-mode-javascript-keywords "\\)\\>")
          '(0 'web-mode-keyword-face))
    (cons (concat "\\<\\(" web-mode-javascript-constants "\\)\\>")
          '(0 'web-mode-constant-face))
-   '("\\<\\(new\\|instanceof\\) \\([[:alnum:]_.]+\\)\\>" 2 'web-mode-type-face)
+   '("\\<\\(new\\|instanceof\\|class\\) \\([[:alnum:]_.]+\\)\\>" 2 'web-mode-type-face)
    '("\\<\\([[:alnum:]_]+\\):[ ]*function[ ]*(" 1 'web-mode-function-name-face)
    '("\\<function[ ]+\\([[:alnum:]_]+\\)" 1 'web-mode-function-name-face)
    '("\\<\\([[:alnum:]_]+\\)([^)]*)[ ]*{" 1 'web-mode-function-name-face)
@@ -4240,7 +4241,6 @@ the environment as needed for ac-sources, right before they're used.")
             (put-text-property beg end 'part-element t)
             (web-mode-scan-elements beg end)
             (web-mode-scan-expr-literal beg end)
-
             (goto-char beg)
             (let (token-beg token-end)
               (while (web-mode-part-sf "/*" end t)
@@ -4411,7 +4411,9 @@ the environment as needed for ac-sources, right before they're used.")
           (backward-char)
           (if (web-mode-closing-paren reg-end)
               (forward-char)
-            (setq continue nil))
+            ;;(setq continue nil)
+            (forward-char)
+            ) ;if
           )
          (t
           (setq continue nil)
@@ -4585,7 +4587,6 @@ the environment as needed for ac-sources, right before they're used.")
     nil)
 
    ((and (member web-mode-engine '("php" "asp"))
-         ;;web-mode-engine-token-regexp
          (get-text-property beg 'block-side)
          (get-text-property end 'block-side)
          (> beg (point-min))
@@ -4594,8 +4595,7 @@ the environment as needed for ac-sources, right before they're used.")
     ;;(message "invalidate block")
     (web-mode-invalidate-block-region beg end))
 
-   ((and ;;web-mode-enable-part-partial-invalidation
-         (or (member web-mode-content-type '("css" "jsx" "javascript"))
+   ((and (or (member web-mode-content-type '("css" "jsx" "javascript"))
              (and (get-text-property beg 'part-side)
                   (get-text-property end 'part-side)
                   (> beg (point-min))
@@ -4607,8 +4607,7 @@ the environment as needed for ac-sources, right before they're used.")
     ;;   (setq chunk (buffer-substring-no-properties beg end))
     ;;   (not (string-match-p "\\*/\\|</" chunk))
     ;;   )
-
-    ;;      (message "invalidate part")
+    ;;(message "invalidate part (%S > %S)" beg end)
     (web-mode-invalidate-part-region beg end))
 
    (t
@@ -4619,7 +4618,7 @@ the environment as needed for ac-sources, right before they're used.")
 
   )
 
-;; Note : il est important d'identifier des caractères en fin de ligne
+;; NOTE: il est important d'identifier des caractères en fin de ligne
 ;; web-mode-block-tokenize travaille en effet sur les fins de lignes pour
 ;; les commentaires de type //
 (defun web-mode-invalidate-block-region (pos-beg pos-end)
@@ -4675,48 +4674,37 @@ the environment as needed for ac-sources, right before they're used.")
             part-end (web-mode-part-end-position pos-beg))
       ;;(message "language(%S) pos-beg(%S) pos-end(%S) part-beg(%S) part-end(%S)"
       ;;       language pos-beg pos-end part-beg part-end)
-      (if (and part-beg part-end
-               (>= pos-beg part-beg)
-               (<= pos-end part-end)
-               (> part-end part-beg))
-          (progn
-            (goto-char pos-beg)
-            (cond
-             ((member language '("javascript" "json" "jsx"))
-              (if (web-mode-javascript-rsb "[;{}(][ ]*\n" part-beg)
-                  (setq beg (match-end 0))
-                (setq beg part-beg))
-              (goto-char pos-end)
-              (if (web-mode-javascript-rsf "[;{})][ ]*\n" part-end)
-                  (progn
-                    ;;(setq end (1- (match-end 0)))
-                    (setq end (match-end 0))
-                    ;;(message "END=%S" end)
-                    )
-                (setq end part-end))
-              )
-             ((string= language "css")
-              (let (rule1 rule2)
-                (setq rule1 (web-mode-css-rule-current pos-beg))
-                (setq rule2 rule1)
-                (when (> pos-end (cdr rule1))
-                  (setq rule2 (web-mode-css-rule-current pos-end)))
-                (setq beg (car rule1)
-                      end (cdr rule2))
-                )
-              ;;(message "rule-beg(%S) rule-end(%S)" beg end)
-              )
-             (t
-              (setq beg part-beg
-                    end part-end))
-             ) ;cond
-            ;;(message "beg(%S) end(%S)" beg end)
-            (web-mode-scan-region beg end language)
-            ;; (message "[%S] scan-region beg=%S end=%S" language beg end)
-            ) ;progn
-        ;;(message "pos-beg(%S) pos-end(%S)" pos-beg pos-end)
-        (web-mode-invalidate-region pos-beg pos-end)
-        ) ;if
+      (goto-char pos-beg)
+      (cond
+       ((not (and part-beg part-end
+                  (>= pos-beg part-beg)
+                  (<= pos-end part-end)
+                  (> part-end part-beg)))
+        (web-mode-invalidate-region pos-beg pos-end))
+       ((member language '("javascript" "json" "jsx"))
+        (if (web-mode-javascript-rsb "[;{}(][ ]*\n" part-beg)
+            (setq beg (match-end 0))
+          (setq beg part-beg))
+        (goto-char pos-end)
+        (if (web-mode-javascript-rsf "[;{})][ ]*\n" part-end)
+            (setq end (match-end 0))
+          (setq end part-end))
+        (web-mode-scan-region beg end language))
+       ((string= language "css")
+        (let (rule1 rule2)
+          (setq rule1 (web-mode-css-rule-current pos-beg))
+          (setq rule2 rule1)
+          (when (> pos-end (cdr rule1))
+            (setq rule2 (web-mode-css-rule-current pos-end)))
+          (setq beg (car rule1)
+                end (cdr rule2))
+          )
+        (web-mode-scan-region beg end language))
+       (t
+        (setq beg part-beg
+              end part-end)
+        (web-mode-scan-region beg end language))
+       ) ;cond
       )))
 
 (defun web-mode-invalidate-region (reg-beg reg-end)
@@ -4738,9 +4726,9 @@ the environment as needed for ac-sources, right before they're used.")
         (cond
          ((bobp)
           (setq continue nil))
-         ;; Note: Going back to the previous start tag is necessary
-         ;;       when inserting a part end tag (e.g. </script>).
-         ;;       Indeed, parts must be identified asap.
+         ;; NOTE: Going back to the previous start tag is necessary
+         ;; when inserting a part end tag (e.g. </script>).
+         ;; Indeed, parts must be identified asap.
          ((and (progn (back-to-indentation) t)
                (get-text-property (point) 'tag-beg)
                (eq (get-text-property (point) 'tag-type) 'start))
@@ -6570,6 +6558,11 @@ the environment as needed for ac-sources, right before they're used.")
             (looking-at ",[ \t\n]*")
             (setq offset (- offset (length (match-string-no-properties 0)))))
            ))
+
+         ((and (member language '("javascript" "jsx" "ejs"))
+               (string-match-p "^@[[:alpha:]]+" prev-line))
+          (setq offset prev-indentation)
+          )
 
          ((and (string= language "php") (string-match-p "^->" curr-line))
           (cond
@@ -10606,7 +10599,9 @@ Pos should be in a tag."
       (when (or (null ret)
                 (and (not (get-text-property (point) 'part-token))
                      (not (get-text-property (point) 'part-element))
-                     (not (get-text-property (point) 'block-side)))
+                     (not (get-text-property (point) 'block-side))
+                     ;;(not (get-text-property (point) 'part-element))
+                     )
                 )
         (setq continue nil)
         ) ;when
@@ -11035,14 +11030,11 @@ Pos should be in a tag."
     (put-text-property (point-min) (point-max) 'invisible nil)
     (remove-overlays)
     (setq font-lock-unfontify-region-function 'font-lock-default-unfontify-region)
-    ;;(unload-feature 'web-mode t)
     (load "web-mode.el")
     (setq web-mode-change-beg nil
           web-mode-change-end nil)
     (web-mode)
-    ;;(font-lock-refresh-defaults)
-    ) ;silent
-  )
+    ))
 
 (defun web-mode-trace (msg)
   (let (sub)
@@ -11065,9 +11057,10 @@ Pos should be in a tag."
   (interactive)
   (let (symbols out)
     (setq out (format
-               "[point=%S engine=%S content-type=%S language-at-pos=%S]\n"
+               "[point=%S engine=%S minor=%S content-type=%S language-at-pos=%S]\n"
                (point)
                web-mode-engine
+               web-mode-minor-engine
                web-mode-content-type
                (web-mode-language-at-pos (point))))
     (setq symbols (append web-mode-scan-properties '(font-lock-face face)))

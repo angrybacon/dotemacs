@@ -495,7 +495,7 @@
 		  ((:url . "http://elpa.gnu.org/packages/scroll-restore.html")
 		   (:keywords "scrolling"))])
  (seq .
-      [(1 5)
+      [(1 7)
        nil "Sequence manipulation functions" single
        ((:url . "http://elpa.gnu.org/packages/seq.html")
 	(:keywords "sequences"))])
