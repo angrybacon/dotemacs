@@ -1,21 +1,21 @@
 # Elisp
-/*.elc
+*.elc
 
 
 # Emacs
-/*~
-/auto-save-list/
+*~
+auto-save-list/
 
 
 # Multiple cursors
-/vendor/multiple-cursors/mc-lists.el
+vendor/multiple-cursors/mc-lists.el
 
 
 # Projectile
-/.projectile
-/projectile.cache
-/projectile-bookmarks.eld
+.projectile
+projectile.cache
+projectile-bookmarks.eld
 
 
 # Web browser
-/url/
+url/
