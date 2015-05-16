@@ -1,25 +1,18 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Define skeletons for different type of files
+;; Settings for OSX builds only
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(define-skeleton me/header-for-python
-  "Prompt the user for package information and build a header with it."
-  ""
-  > "# -*- coding: utf-8 -*-" \n \n \n
-  > "__author__ = " me/name \n
-  > "__email__ = " (setq email (skeleton-read (concat "Email (" me/email "): "))) | me/email \n
-  > "__copyright__ = Copyright (C) 2015 " me/name \n
-  > "__license__ = " (setq license (skeleton-read "License (MIT): ")) "MIT" \n
-  > "__version__ = " (setq version (skeleton-read "Version (0.1): ")) | "0.1" \n
-  > \n)
-
-(define-auto-insert "\\.py\\'" 'me/header-for-python)
+(when (eq system-type 'darwin)
+  (setq
+   exec-path (append exec-path '("/usr/local/bin"))  ; Add path to binaries installed with Homebrew
+   ns-command-modifier 'meta                         ; Map the Meta key to the `cmd' key
+   ns-option-modifier nil))                          ; Disable the `alt' key
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End of init-skeletons.el
+;; End of init-osx.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-skeletons)
+(provide 'init-osx)

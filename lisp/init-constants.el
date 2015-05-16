@@ -1,25 +1,20 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Define skeletons for different type of files
+;; Use these constants to customize Emacs
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(define-skeleton me/header-for-python
-  "Prompt the user for package information and build a header with it."
-  ""
-  > "# -*- coding: utf-8 -*-" \n \n \n
-  > "__author__ = " me/name \n
-  > "__email__ = " (setq email (skeleton-read (concat "Email (" me/email "): "))) | me/email \n
-  > "__copyright__ = Copyright (C) 2015 " me/name \n
-  > "__license__ = " (setq license (skeleton-read "License (MIT): ")) "MIT" \n
-  > "__version__ = " (setq version (skeleton-read "Version (0.1): ")) | "0.1" \n
-  > \n)
-
-(define-auto-insert "\\.py\\'" 'me/header-for-python)
+;; FIXME: I don't think these should be constants
+(defconst me/name                 "Mathieu Marques"             "My full name.")
+(defconst me/email                "mathieumarques78@gmail.com"  "My email address.")
+(defconst me/font-family-default  "Monaco"                      "The font family to use for default strings.")
+(defconst me/font-family-header   "Monaco"                      "The font family to use for header strings.")
+(defconst me/font-size-default    120                           "The font size to use for default strings.")
+(defconst me/font-size-header     140                           "The font size to use for header strings.")
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End of init-skeletons.el
+;; End of init-constants.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-skeletons)
+(provide 'init-constants)

@@ -38,6 +38,9 @@
 (with-eval-after-load 'helm
   (setq helm-mode-line-string "")
   (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages))
+;; Shortcuts for Helm
+(define-key global-map (kbd "C-c m") 'helm-imenu)
+(define-key global-map (kbd "C-x b") 'helm-buffers-list)
 
 ;; Projectile (https://github.com/bbatsov/projectile)
 (setq
@@ -147,6 +150,8 @@
 (setq auto-mode-alist (cons '("\\.jshintrc$" . json-mode) auto-mode-alist))
 ;; NOTE: will be fixed soon (https://github.com/joshwnj/json-mode/issues/32)
 (setq json-reformat:indent-width 2)
+
+
 
 
 (provide 'init-modes)

@@ -40,32 +40,15 @@
 ;;; Code:
 
 
-;; Set custom variables
+;;─────────────────────────────────────────────────────────────────────────────
+;; Settings
+;;─────────────────────────────────────────────────────────────────────────────
+
+
+;; Custom variables
+;; FIXME: This should be removed after `mode-line' has been fixed.
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default))
- )
-
-
-;; Set custom faces
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
-
-;; Load path to initialization files
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-
-
-;; Initialize the interface first so it does not flicker
-(require 'init-interface)
+ '(custom-safe-themes '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
 
 
 ;; Check Emacs' version
@@ -74,28 +57,69 @@
     (kill-emacs)))
 
 
-;; Initializing package manager with Melpa (Emacs > 24)
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (package-initialize)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t))
+;; Load path of all initialization files
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 
-;; Append path for binaries installed with Homebrew (OS X)
-(when (eq system-type 'darwin)
-  (setq exec-path (append exec-path '("/usr/local/bin"))))
-
-
-;; Load initialization partials
+;; Initialize general configuration first
+(require 'init-constants)
+(require 'init-interface)
+(require 'init-osx)
 (require 'init-aliases)
+(require 'init-melpa)
 (require 'init-palettes)
+
+
+;; Initialize partials
 (require 'init-modes)
-(require 'init-modes)
-(require 'init-javascript)
-(require 'init-skeletons)
 (require 'init-shortcuts)
 (require 'init-theme)
 (require 'init-mode-line)
 
 
-;;; init.el ends here
+;;─────────────────────────────────────────────────────────────────────────────
+;; End of init.el
+;;─────────────────────────────────────────────────────────────────────────────
+
+
+;; Company face customization
+(with-eval-after-load 'company
+  (set-face-attribute 'company-tooltip-common nil :inherit 'company-tooltip)
+  (set-face-attribute 'company-tooltip-common-selection nil :inherit 'company-tooltip-selection))
+
+
+;; Helm face customization
+(with-eval-after-load 'helm
+  (when (member "Monaco" (font-family-list))
+    (set-face-attribute 'helm-header nil :font "Monaco-12")
+    (set-face-attribute 'helm-source-header nil :font "Monaco-14"))
+  (set-face-attribute 'helm-header nil :italic t)
+  (set-face-attribute 'helm-source-header nil :foreground zenburn/blue :background zenburn/bg :box nil)
+  (set-face-attribute 'helm-match nil :foreground "gold1"))
+(with-eval-after-load 'helm-command
+  (set-face-attribute 'helm-M-x-key nil :underline nil))
+
+
+;; Magit face customization
+(with-eval-after-load 'magit
+  (when (member "Monaco" (font-family-list)) (set-face-attribute 'magit-section-title nil :font "Monaco-14"))
+  (set-face-attribute 'magit-section-title nil :weight 'unspecified :foreground zenburn/blue))
+
+
+;; Fringe face customization
+(with-eval-after-load 'fringe
+  (set-face-attribute 'fringe nil :background zenburn/bg :foreground zenburn/bg+2))
+
+
+;; Whitespace face customization
+(with-eval-after-load 'whitespace
+  (set-face-attribute 'whitespace-empty nil :background zenburn/bg+1)
+  (set-face-attribute 'whitespace-indentation nil :background zenburn/bg+1 :foreground zenburn/red)
+  (set-face-attribute 'whitespace-space-after-tab nil :background zenburn/bg+1 :foreground zenburn/red)
+  (set-face-attribute 'whitespace-space-before-tab nil :background zenburn/bg+1 :foreground zenburn/red)
+  (set-face-attribute 'whitespace-tab nil :background zenburn/bg+1 :foreground zenburn/red)
+  (set-face-attribute 'whitespace-trailing nil :background zenburn/bg+1 :foreground zenburn/red)
+  (set-face-attribute 'whitespace-space nil :background 'unspecified :foreground zenburn/bg+2))
+
+
+(provide 'init)

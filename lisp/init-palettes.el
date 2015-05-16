@@ -1,4 +1,8 @@
+;;─────────────────────────────────────────────────────────────────────────────
 ;; Jazz palette (https://github.com/donderom/jazz-theme)
+;;─────────────────────────────────────────────────────────────────────────────
+
+
 (defconst jazz/bg+3      "#606060"  "Jazz palette: bg+3.")
 (defconst jazz/bg+2      "#505050"  "Jazz palette: bg+2.")
 (defconst jazz/bg+1      "#202020"  "Jazz palette: bg+1.")
@@ -18,7 +22,11 @@
 (defconst jazz/yellow    "#909737"  "Jazz palette: yellow.")
 
 
+;;─────────────────────────────────────────────────────────────────────────────
 ;; Solarized palette (http://ethanschoonover.com/solarized#the-values)
+;;─────────────────────────────────────────────────────────────────────────────
+
+
 (defconst solarized/base+3   "#FDF6E3"  "Solarized palette: base3.")
 (defconst solarized/base+2   "#EEE8D5"  "Solarized palette: base2.")
 (defconst solarized/base+1   "#93A1A1"  "Solarized palette: base1.")
@@ -37,7 +45,11 @@
 (defconst solarized/green    "#859900"  "Solarized palette: green.")
 
 
+;;─────────────────────────────────────────────────────────────────────────────
 ;; Zenburn palette (https://github.com/bbatsov/zenburn-emacs)
+;;─────────────────────────────────────────────────────────────────────────────
+
+
 (defconst zenburn/bg+3      "#6F6F6F"  "Zenburn palette: bg+3.")
 (defconst zenburn/bg+2      "#5F5F5F"  "Zenburn palette: bg+2.")
 (defconst zenburn/bg+1      "#4F4F4F"  "Zenburn palette: bg+1.")
@@ -74,6 +86,11 @@
 (defconst zenburn/yellow    "#F0DFAF"  "Zenburn palette: yellow.")
 (defconst zenburn/yellow-1  "#E0CF9F"  "Zenburn palette: yellow-1.")
 (defconst zenburn/yellow-2  "#D0BF8F"  "Zenburn palette: yellow-2.")
+
+
+;;─────────────────────────────────────────────────────────────────────────────
+;; End of init-palettes.el
+;;─────────────────────────────────────────────────────────────────────────────
 
 
 (provide 'init-palettes)
