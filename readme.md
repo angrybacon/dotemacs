@@ -8,15 +8,15 @@ Have fun tinkering : j
 Notes
 =====
 
-This has been tested with railwaycat's [Emacs Mac port for Homebrew](https://github.com/railwaycat/homebrew-emacsmacport/releases) and should work with any build.
+This has been tested with railwaycat's [Emacs Mac port for Homebrew](https://github.com/railwaycat/homebrew-emacsmacport) and should work with any build.
 
 Features
 ========
 
-*Work in progress*
+*Coming soon™*
 
 Installation
 ============
 
-1. Install Emacs
+1. Install [Emacs 24 or above](https://github.com/railwaycat/homebrew-emacsmacport/releases)
 1. Copy `dotemacs/` content into `~/.emacs.d/`.
