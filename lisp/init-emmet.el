@@ -1,21 +1,25 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Use these constants to customize Emacs
+;; Add Emmet support
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; FIXME: I don't think these should be constants.
+;; Configure `emmet-mode' (https://github.com/smihica/emmet-mode)
 
-(defconst me/name                 "Mathieu Marques"             "My full name.")
-(defconst me/email                "mathieumarques78@gmail.com"  "My email address.")
-(defconst me/font-family-default  "Monaco"                      "The font family to use for default strings.")
-(defconst me/font-family-header   "Monaco"                      "The font family to use for header strings.")
-(defconst me/font-size-default    120                           "The font size to use for default strings.")
-(defconst me/font-size-header     140                           "The font size to use for header strings.")
+;; (with-eval-after-load 'emmet-mode
+  (setq
+   emmet-preview-default nil
+   emmet-move-cursor-between-quotes t)
+  (add-hook 'css-mode-hook 'emmet-mode)
+  (add-hook 'sgml-mode-hook 'emmet-mode)
+  (add-hook 'web-mode-hook 'emmet-mode)
+  (global-set-key (kbd "<M-left>") 'emmet-prev-edit-point)
+(global-set-key (kbd "<M-right>") 'emmet-next-edit-point)
+;; )
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End of init-constants.el
+;; End init-emmet.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-constants)
+(provide 'init-emmet)

@@ -1,55 +1,4 @@
-;; SCSS mode (https://github.com/antonj/scss-mode/)
-(setq scss-compile-at-save nil)
-(add-to-list 'auto-mode-alist '("\\.less\\'" . scss-mode))
-(add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
-(add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
 
-
-;; Emmet (https://github.com/smihica/emmet-mode)
-(setq
- emmet-preview-default nil
- emmet-move-cursor-between-quotes t)
-(add-hook 'sgml-mode-hook 'emmet-mode)
-(add-hook 'css-mode-hook 'emmet-mode)
-(add-hook 'web-mode-hook 'emmet-mode)
-(global-set-key (kbd "<M-left>") 'emmet-prev-edit-point)
-(global-set-key (kbd "<M-right>") 'emmet-next-edit-point)
-;; (eval-after-load "scss-mode"
-;;   '(define-key emmet-mode-keymap (kbd "C-S-c C-S-c") nil))
-;; (eval-after-load "emmet-mode"
-;;   (lambda ()
-;;     (define-key emmet-mode-keymap (kbd "C-m") 'emmet-expand-line)
-;;     (define-key emmet-mode-keymap (kbd "C-j") nil)))
-
-
-;; Multiple cursors (https://github.com/magnars/multiple-cursors.el)
-(setq mc/list-file "~/.emacs.d/elpa/multiple-cursors/mc-lists.el")
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-
-
-;; Expand region (https://github.com/magnars/expand-region.el)
-(global-set-key (kbd "C-=") 'er/expand-region)
-(pending-delete-mode t)
-
-
-;; Helm (https://github.com/emacs-helm/helm)
-(with-eval-after-load 'helm
-  (setq helm-mode-line-string "")
-  (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages))
-;; Shortcuts for Helm
-(define-key global-map (kbd "C-c m") 'helm-imenu)
-(define-key global-map (kbd "C-x b") 'helm-buffers-list)
-
-;; Projectile (https://github.com/bbatsov/projectile)
-(setq
- projectile-enable-caching t
- projectile-remember-window-configs t
- projectile-mode-line '(:eval (format " %s" (projectile-project-name))))
-(projectile-global-mode)
-(helm-projectile-on)
-(global-set-key (kbd "M-x") 'helm-M-x)
 
 
 ;; Company (https://github.com/company-mode/company-mode)
@@ -148,7 +97,7 @@
 (setq auto-mode-alist (cons '("\\.json$" . json-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.jason$" . json-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.jshintrc$" . json-mode) auto-mode-alist))
-;; NOTE: will be fixed soon (https://github.com/joshwnj/json-mode/issues/32)
+;; NOTE: This will be fixed with https://github.com/joshwnj/json-mode/issues/32.
 (setq json-reformat:indent-width 2)
 
 

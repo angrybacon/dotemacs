@@ -1,21 +1,28 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Use these constants to customize Emacs
+;; Enable incremental completion and selection narrowing
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; FIXME: I don't think these should be constants.
+;; Configure `helm' (https://github.com/emacs-helm/helm)
 
-(defconst me/name                 "Mathieu Marques"             "My full name.")
-(defconst me/email                "mathieumarques78@gmail.com"  "My email address.")
-(defconst me/font-family-default  "Monaco"                      "The font family to use for default strings.")
-(defconst me/font-family-header   "Monaco"                      "The font family to use for header strings.")
-(defconst me/font-size-default    120                           "The font size to use for default strings.")
-(defconst me/font-size-header     140                           "The font size to use for header strings.")
+(with-eval-after-load 'helm
+  (setq helm-mode-line-string "")
+  (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
+  (define-key global-map (kbd "C-c m") 'helm-imenu)
+  (define-key global-map (kbd "C-x b") 'helm-buffers-list))
+
+;; (with-eval-after-load 'helm-command
+(global-set-key (kbd "M-x") 'helm-M-x)
+;; )
+
+;; (with-eval-after-load 'helm-projectile
+(helm-projectile-on)
+;; )
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End of init-constants.el
+;; End init-helm.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-constants)
+(provide 'init-helm)

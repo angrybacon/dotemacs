@@ -22,18 +22,7 @@
 
 ;;; Commentary:
 
-;; Please copy `.emacs.d/' folder in your home folder, `~/'.
-;;
-;; Major features:
-;;
-;; - `zenburn':           smooth palette and pastel feel
-;; - `multiple-cursors':  dynamically add new cursors
-;; - `projectile':        manage project files
-;; - `helm':              improve interactive actions
-;; - `company':           auto-completion
-;; - `autopair':          automatically add closing parenthesis and related
-;; - `org':               note taking made easier
-;; - `smart-mode-line':   prettier mode-line
+;; To install, clone `dotemacs/' in your home folder `~/.emacs.d/'.
 ;;
 ;; If you have any issue using the following code, please refer to the package's README.
 
@@ -41,7 +30,7 @@
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Settings
+;; Bootstrap configuration
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
@@ -50,37 +39,51 @@
 (custom-set-variables
  '(custom-safe-themes '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
 
-
 ;; Check Emacs' version
 (when (version<= emacs-version "24")
   (unless (yes-or-no-p (concat "Your Emacs is getting old. Some functionalities may not work, continue ? "))
     (kill-emacs)))
 
-
-;; Load path of all initialization files
+;; Load dependency paths
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 
-;; Initialize general configuration first
+;;─────────────────────────────────────────────────────────────────────────────
+;; Load partials
+;;─────────────────────────────────────────────────────────────────────────────
+
+
+;; Initialize the core
 (require 'init-constants)
 (require 'init-interface)
+(require 'init-elpa)
 (require 'init-osx)
-(require 'init-aliases)
-(require 'init-melpa)
 (require 'init-palettes)
 
+;; Initialize the partials
+(require 'init-aliases)
+(require 'init-css)
+(require 'init-emmet)
+(require 'init-expand-region)
+(require 'init-helm)
+(require 'init-multiple-cursors)
+(require 'init-projectile)
 
-;; Initialize partials
+;; TODO: This needs cleaning.
+(require 'init-javascript)
+(require 'init-mode-line)
 (require 'init-modes)
 (require 'init-shortcuts)
 (require 'init-theme)
-(require 'init-mode-line)
+(require 'init-smart-mode-line)
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
 ;; End of init.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
+
+;; TODO: This needs cleaning
 
 ;; Company face customization
 (with-eval-after-load 'company

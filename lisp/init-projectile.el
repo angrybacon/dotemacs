@@ -1,21 +1,22 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Use these constants to customize Emacs
+;; Enable incremental completion and selection narrowing
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; FIXME: I don't think these should be constants.
+;; Configure `projectile' (https://github.com/bbatsov/projectile)
 
-(defconst me/name                 "Mathieu Marques"             "My full name.")
-(defconst me/email                "mathieumarques78@gmail.com"  "My email address.")
-(defconst me/font-family-default  "Monaco"                      "The font family to use for default strings.")
-(defconst me/font-family-header   "Monaco"                      "The font family to use for header strings.")
-(defconst me/font-size-default    120                           "The font size to use for default strings.")
-(defconst me/font-size-header     140                           "The font size to use for header strings.")
+;; (with-eval-after-load 'projectile
+  (setq
+   projectile-enable-caching t
+   projectile-remember-window-configs t
+   projectile-mode-line '(:eval (format " %s" (projectile-project-name))))
+(projectile-global-mode)
+;; )
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End of init-constants.el
+;; End init-projectile.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-constants)
+(provide 'init-projectile)
