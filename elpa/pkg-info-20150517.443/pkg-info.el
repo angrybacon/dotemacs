@@ -1,13 +1,13 @@
 ;;; pkg-info.el --- Information about packages       -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2013, 2014  Sebastian Wiesner
+;; Copyright (C) 2013-2015  Sebastian Wiesner <swiesner@lunaryorn.com>
 
 ;; Author: Sebastian Wiesner <swiesner@lunaryorn.com>
 ;; URL: https://github.com/lunaryorn/pkg-info.el
+;; Package-Version: 20150517.443
 ;; Keywords: convenience
-;; Version: 20140610.630
-;; X-Original-Version: 0.6-cvs
-;; Package-Requires: ((epl "0.4"))
+;; Version: 0.7-cvs
+;; Package-Requires: ((epl "0.8"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -41,6 +41,14 @@
 ;;
 ;; `pkg-info-version-info' returns complete version information for a specific
 ;; package.
+;;
+;; `pkg-info-get-melpa-recipe' gets the MELPA recipe for a package.
+;;
+;; `pkg-info-get-melpa-fetcher' gets the fetcher used to build a package on
+;; MELPA.
+;;
+;; `pkg-info-wiki-package-p' determines whether a package was build from
+;; EmacsWiki on MELPA.
 
 ;;; Code:
 
@@ -48,6 +56,10 @@
 
 (require 'lisp-mnt)
 (require 'find-func)
+(require 'json)                         ; `json-read'
+(require 'url-http)                     ; `url-http-parse-response'
+
+(defvar url-http-end-of-headers)
 
 
 ;;; Version information
@@ -221,7 +233,7 @@ If SHOW is non-nil, show the version in the minibuffer.
 Return the version as list, or nil if PACKAGE is not installed."
   (interactive (list (pkg-info--read-package) t))
   (let* ((name (if (stringp package) (intern package) package))
-         (package (epl-find-installed-package name)))
+         (package (car (epl-find-installed-packages name))))
     (unless package
       (error "Can't find installed package %s" name))
     (pkg-info--show-version-and-return (epl-package-version package) show)))
@@ -268,6 +280,46 @@ version."
                               (pkg-info-format-version pkg-version))
                     (pkg-info-format-version lib-version))))
     (pkg-info--show-version-and-return version show)))
+
+(defconst pkg-info-melpa-recipe-url "http://melpa.org/recipes.json"
+  "The URL from which to fetch MELPA recipes.")
+
+(defvar pkg-info-melpa-recipes nil
+  "An alist of MELPA recipes.")
+
+(defun pkg-info-retrieve-melpa-recipes ()
+  "Retrieve MELPA recipes from MELPA archive."
+  (let ((buffer (url-retrieve-synchronously pkg-info-melpa-recipe-url)))
+    (with-current-buffer buffer
+      (unwind-protect
+          (let ((response-code (url-http-parse-response)))
+            (unless (equal response-code 200)
+              (error "Failed to retrieve MELPA recipes from %s (code %s)"
+                     pkg-info-melpa-recipe-url response-code))
+            (goto-char url-http-end-of-headers)
+            (json-read))
+        (when (and buffer (buffer-live-p buffer))
+          (kill-buffer buffer))))))
+
+(defun pkg-info-get-melpa-recipes ()
+  "Get MELPA recipes."
+  (setq pkg-info-melpa-recipes
+        (or pkg-info-melpa-recipes
+            (pkg-info-retrieve-melpa-recipes))))
+
+(defun pkg-info-get-melpa-recipe (package)
+  "Get the MELPA recipe for PACKAGE.
+
+Return nil if PACKAGE is not on MELPA."
+  (cdr (assq package (pkg-info-get-melpa-recipes))))
+
+(defun pkg-info-get-melpa-fetcher (package)
+  "Get the MELPA fetcher for PACKAGE."
+  (cdr (assq 'fetcher (pkg-info-get-melpa-recipe package))))
+
+(defun pkg-info-wiki-package-p (package)
+  "Determine whether PACKAGE is build from the EmacsWiki."
+  (equal (pkg-info-get-melpa-fetcher package) "wiki"))
 
 (provide 'pkg-info)
 

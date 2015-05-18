@@ -4,7 +4,7 @@
 
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/projectile
-;; Package-Version: 20150509.414
+;; Package-Version: 20150517.1305
 ;; Keywords: project, convenience
 ;; Version: 0.13.0-cvs
 ;; Package-Requires: ((dash "1.5.0") (pkg-info "0.4"))
@@ -2137,6 +2137,10 @@ with a prefix ARG."
                               (compilation-read-command default-cmd)
                             default-cmd)))
     (puthash project-root compilation-cmd projectile-compilation-cmd-map)
+    (save-some-buffers (not compilation-ask-about-save)
+                       (lambda ()
+                         (projectile-project-buffer-p (current-buffer)
+                                                      project-root)))
     (compilation-start compilation-cmd)))
 
 (defadvice compilation-find-file (around projectile-compilation-find-file)

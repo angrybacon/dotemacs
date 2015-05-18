@@ -1,12 +1,9 @@
 ;;; pkg-info-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads (pkg-info-version-info pkg-info-package-version
-;;;;;;  pkg-info-defining-library-version pkg-info-defining-library-original-version
-;;;;;;  pkg-info-library-version pkg-info-library-original-version)
-;;;;;;  "pkg-info" "pkg-info.el" (21569 26362 90074 748000))
+;;;### (autoloads nil "pkg-info" "pkg-info.el" (21849 54556 0 0))
 ;;; Generated autoloads from pkg-info.el
 
 (autoload 'pkg-info-library-original-version "pkg-info" "\
@@ -116,16 +113,9 @@ version.
 
 ;;;***
 
-;;;### (autoloads nil nil ("pkg-info-pkg.el") (21569 26362 186708
-;;;;;;  858000))
-
-;;;***
-
-(provide 'pkg-info-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; pkg-info-autoloads.el ends here
