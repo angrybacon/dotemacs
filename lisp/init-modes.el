@@ -23,8 +23,9 @@
 (global-highlight-parentheses-mode t)
 
 
-;; Autopair (https://github.com/capitaomorte/autopair)
-(autopair-global-mode)
+;; Smartparent (https://github.com/Fuco1/smartparens)
+(require 'smartparens-config)
+(smartparens-global-mode 1)
 
 
 ;; Org (http://orgmode.org/)
