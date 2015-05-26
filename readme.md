@@ -8,6 +8,9 @@ Have fun tinkering : j
 Notes
 =====
 
+**Recent changes to the way I initialize the different packages, some bug appeared in my Emacs setup.
+They are marked with a *TOFIX* comment.**
+
 This has been tested with railwaycat's [Emacs Mac port for Homebrew](https://github.com/railwaycat/homebrew-emacsmacport) and should work with any build.
 
 Features
