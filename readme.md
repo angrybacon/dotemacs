@@ -18,6 +18,11 @@ Features
 
 *Coming soon™*
 
+Screenshots
+===========
+
+*Coming soon™*
+
 Installation
 ============
 
