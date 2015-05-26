@@ -1,28 +1,31 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Configure Emacs for CSS buffers
+;; Add support for intelligent parentheses
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; Built-in
-(use-package css-mode
-  :init
-  (setq css-indent-offset 2))
+;; http://www.emacswiki.org/emacs/HighlightParentheses
+(use-package highlight-parentheses
+  :ensure t
+  ;; :init
+  ;; (setq hl-paren-colors `(,zenburn/orange ,zenburn/red+1 ,zenburn/red-1 ,zenburn/red-2))
+  :config
+  (define-globalized-minor-mode global-highlight-parentheses-mode
+    highlight-parentheses-mode (lambda () (highlight-parentheses-mode t)))
+  (global-highlight-parentheses-mode t))
 
 
-;; https://github.com/antonj/scss-mode/
-(use-package scss-mode
+;; https://github.com/Fuco1/smartparens
+(use-package smartparens
   :ensure t
   :init
-  (setq scss-compile-at-save nil)
-  (add-to-list 'auto-mode-alist '("\\.css\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.less\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode)))
+  (require 'smartparens-config)
+  :config
+  (smartparens-global-mode 1))
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-css.el
+;; End init-parentheses.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-css)
+(provide 'init-parentheses)

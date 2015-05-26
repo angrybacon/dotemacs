@@ -3,18 +3,19 @@
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; Configure `emmet-mode' (https://github.com/smihica/emmet-mode)
-
-;; (with-eval-after-load 'emmet-mode
+;; https://github.com/smihica/emmet-mode
+(use-package emmet-mode
+  :ensure t
+  :init
   (setq
    emmet-preview-default nil
    emmet-move-cursor-between-quotes t)
   (add-hook 'css-mode-hook 'emmet-mode)
   (add-hook 'sgml-mode-hook 'emmet-mode)
   (add-hook 'web-mode-hook 'emmet-mode)
-  (global-set-key (kbd "<M-left>") 'emmet-prev-edit-point)
-(global-set-key (kbd "<M-right>") 'emmet-next-edit-point)
-;; )
+  :bind
+  (("<M-left>" . emmet-prev-edit-point)
+   ("<M-right>" . emmet-next-edit-point)))
 
 
 ;;─────────────────────────────────────────────────────────────────────────────

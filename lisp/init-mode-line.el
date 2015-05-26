@@ -24,15 +24,15 @@
 
 
 ;; Change the minor mode strings
-(delight 'autopair-mode               " autopair"               "autopair")
-(delight 'company-mode                " company"                "company")
-(delight 'eldoc-mode                  " eldoc"                  "eldoc-mode")
-(delight 'emmet-mode                  " emmet"                  "emmet-mode")
-(delight 'golden-ratio-mode           " golden-ratio"           "golden-ratio")
-(delight 'highlight-parentheses-mode  " highlight-parentheses"  "highlight-parentheses")
-(delight 'magit-auto-revert-mode      " magit"                  "magit")
-(delight 'smooth-scroll-mode          " smooth-scroll"          "smooth-scroll")
-(delight 'subword-mode                " subword"                "subword")
+;; (delight 'autopair-mode               " autopair"               "autopair")
+;; (delight 'company-mode                " company"                "company")
+;; (delight 'eldoc-mode                  " eldoc"                  "eldoc-mode")
+;; (delight 'emmet-mode                  " emmet"                  "emmet-mode")
+;; (delight 'golden-ratio-mode           " golden-ratio"           "golden-ratio")
+;; (delight 'highlight-parentheses-mode  " highlight-parentheses"  "highlight-parentheses")
+;; (delight 'magit-auto-revert-mode      " magit"                  "magit")
+;; (delight 'smooth-scroll-mode          " smooth-scroll"          "smooth-scroll")
+;; (delight 'subword-mode                " subword"                "subword")
 
 
 (provide 'init-mode-line)

@@ -1,28 +1,21 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Configure Emacs for CSS buffers
+;; Configure Emacs for Markdown buffers
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; Built-in
-(use-package css-mode
-  :init
-  (setq css-indent-offset 2))
-
-
-;; https://github.com/antonj/scss-mode/
-(use-package scss-mode
+;; http://jblevins.org/projects/markdown-mode/
+(use-package markdown-mode
   :ensure t
   :init
-  (setq scss-compile-at-save nil)
-  (add-to-list 'auto-mode-alist '("\\.css\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.less\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode)))
+  (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+  (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+  (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+  (add-to-list 'auto-mode-alist '("\\.txt\\'" . markdown-mode)))
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-css.el
+;; End init-markdown.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-css)
+(provide 'init-markdown)

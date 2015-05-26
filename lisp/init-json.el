@@ -1,28 +1,23 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Configure Emacs for CSS buffers
+;; Configure Emacs for JSON buffers
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; Built-in
-(use-package css-mode
-  :init
-  (setq css-indent-offset 2))
-
-
-;; https://github.com/antonj/scss-mode/
-(use-package scss-mode
+;; https://github.com/gongo/json-reformat
+(use-package json-mode
   :ensure t
   :init
-  (setq scss-compile-at-save nil)
-  (add-to-list 'auto-mode-alist '("\\.css\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.less\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode)))
+  (setq
+   ;; NOTE: This will be fixed with https://github.com/joshwnj/json-mode/issues/32.
+   json-reformat:indent-width 2
+   auto-mode-alist (cons '("\\.json$" . json-mode) auto-mode-alist)
+   auto-mode-alist (cons '("\\.jason$" . json-mode) auto-mode-alist)
+   auto-mode-alist (cons '("\\.jshintrc$" . json-mode) auto-mode-alist)))
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-css.el
+;; End init-json.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-css)
+(provide 'init-json)

@@ -1,28 +1,20 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Configure Emacs for CSS buffers
+;; Configure Emacs for Org buffers
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; Built-in
-(use-package css-mode
-  :init
-  (setq css-indent-offset 2))
-
-
-;; https://github.com/antonj/scss-mode/
-(use-package scss-mode
+;; http://orgmode.org/
+(use-package org
   :ensure t
-  :init
-  (setq scss-compile-at-save nil)
-  (add-to-list 'auto-mode-alist '("\\.css\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.less\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode)))
+  :bind
+  (("C-c l" . org-store-link)
+   ("C-c a" . org-agenda)
+   ("C-c b" . org-iswitchb)))
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-css.el
+;; End init-org.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-css)
+(provide 'init-org)

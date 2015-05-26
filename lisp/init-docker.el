@@ -1,28 +1,18 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Configure Emacs for CSS buffers
+;; Configure Emacs for Docker buffers
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; Built-in
-(use-package css-mode
-  :init
-  (setq css-indent-offset 2))
-
-
-;; https://github.com/antonj/scss-mode/
-(use-package scss-mode
+;; https://github.com/spotify/dockerfile-mode
+(use-package dockerfile-mode
   :ensure t
   :init
-  (setq scss-compile-at-save nil)
-  (add-to-list 'auto-mode-alist '("\\.css\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.less\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode)))
+  (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-css.el
+;; End init-docker.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-css)
+(provide 'init-docker)

@@ -1,5 +1,5 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Define skeletons for different type of files
+;; Define skeletons for different types of buffer
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
@@ -13,6 +13,7 @@
   > "__license__ = " (setq license (skeleton-read "License (MIT): ")) "MIT" \n
   > "__version__ = " (setq version (skeleton-read "Version (0.1): ")) | "0.1" \n
   > \n)
+
 
 (define-auto-insert "\\.py\\'" 'me/header-for-python)
 

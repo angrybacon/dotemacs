@@ -1,28 +1,24 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Configure Emacs for CSS buffers
+;; Add support for quick jump within buffer
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; Built-in
-(use-package css-mode
-  :init
-  (setq css-indent-offset 2))
-
-
-;; https://github.com/antonj/scss-mode/
-(use-package scss-mode
+;; https://github.com/winterTTr/ace-jump-mode
+(use-package ace-jump-mode
   :ensure t
   :init
-  (setq scss-compile-at-save nil)
-  (add-to-list 'auto-mode-alist '("\\.css\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.less\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode)))
+  (autoload 'ace-jump-mode-pop-mark "ace-jump-mode" "Ace jump back" t)
+  :bind
+  (("C-f" . ace-jump-mode)
+   ("C-c f" . ace-jump-mode-pop-mark))
+  :config
+  (ace-jump-mode-enable-mark-sync))
+
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-css.el
+;; End init-ace-jump.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-css)
+(provide 'init-ace-jump)

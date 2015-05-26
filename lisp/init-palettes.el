@@ -1,5 +1,5 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Jazz palette (https://github.com/donderom/jazz-theme)
+;; Jazz palette: https://github.com/donderom/jazz-theme
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
@@ -23,7 +23,7 @@
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Solarized palette (http://ethanschoonover.com/solarized#the-values)
+;; Solarized palette: http://ethanschoonover.com/solarized#the-values
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
@@ -46,7 +46,7 @@
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Zenburn palette (https://github.com/bbatsov/zenburn-emacs)
+;; Zenburn palette: https://github.com/bbatsov/zenburn-emacs
 ;;─────────────────────────────────────────────────────────────────────────────
 
 

@@ -1,17 +1,22 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Enable incremental completion and selection narrowing
+;; Add support for project management
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; Configure `projectile' (https://github.com/bbatsov/projectile)
-
-;; (with-eval-after-load 'projectile
+;; https://github.com/bbatsov/projectile
+(use-package projectile
+  :ensure t
+  :init
   (setq
    projectile-enable-caching t
    projectile-remember-window-configs t
    projectile-mode-line '(:eval (format " %s" (projectile-project-name))))
-(projectile-global-mode)
-;; )
+  :config
+
+  (use-package helm-projectile
+    :config
+    (helm-projectile-on))
+  (projectile-global-mode))
 
 
 ;;─────────────────────────────────────────────────────────────────────────────

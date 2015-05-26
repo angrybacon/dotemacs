@@ -1,28 +1,24 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Configure Emacs for CSS buffers
+;; Add support for autocompletion
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; Built-in
-(use-package css-mode
-  :init
-  (setq css-indent-offset 2))
-
-
-;; https://github.com/antonj/scss-mode/
-(use-package scss-mode
+;; https://github.com/company-mode/company-mode
+(use-package company
   :ensure t
   :init
-  (setq scss-compile-at-save nil)
-  (add-to-list 'auto-mode-alist '("\\.css\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.less\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode)))
+  (setq
+   company-minimum-prefix-length 1
+   company-idle-delay 0.1)
+  (add-hook 'after-init-hook 'global-company-mode)
+  :config
+  (set-face-attribute 'company-tooltip-common nil :inherit 'company-tooltip)
+  (set-face-attribute 'company-tooltip-common-selection nil :inherit 'company-tooltip-selection))
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-css.el
+;; End init-company.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-css)
+(provide 'init-company)

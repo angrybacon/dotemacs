@@ -1,28 +1,27 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Configure Emacs for CSS buffers
+;; Visualize blank characters
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
 ;; Built-in
-(use-package css-mode
+(use-package whitespace
   :init
-  (setq css-indent-offset 2))
+  (setq whitespace-style
+        '(face tabs spaces trailing space-before-tab indentation empty space-after-tab space-mark tab-mark))
+  :config
+  (set-face-attribute 'whitespace-empty nil :background zenburn/bg+1)
+  (set-face-attribute 'whitespace-indentation nil :background zenburn/bg+1 :foreground zenburn/red)
+  (set-face-attribute 'whitespace-space-after-tab nil :background zenburn/bg+1 :foreground zenburn/red)
+  (set-face-attribute 'whitespace-space-before-tab nil :background zenburn/bg+1 :foreground zenburn/red)
+  (set-face-attribute 'whitespace-tab nil :background zenburn/bg+1 :foreground zenburn/red)
+  (set-face-attribute 'whitespace-trailing nil :background zenburn/bg+1 :foreground zenburn/red)
+  (set-face-attribute 'whitespace-space nil :background 'unspecified :foreground zenburn/bg+2))
 
-
-;; https://github.com/antonj/scss-mode/
-(use-package scss-mode
-  :ensure t
-  :init
-  (setq scss-compile-at-save nil)
-  (add-to-list 'auto-mode-alist '("\\.css\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.less\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode)))
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-css.el
+;; End init-whitespace.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-css)
+(provide 'init-whitespace)

@@ -1,23 +1,30 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Enable incremental completion and selection narrowing
+;; Add incremental completion and selection narrowing
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; Configure `helm' (https://github.com/emacs-helm/helm)
-
-(with-eval-after-load 'helm
+;; https://github.com/emacs-helm/helm
+(use-package helm
+  :ensure t
+  :init
   (setq helm-mode-line-string "")
-  (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
-  (define-key global-map (kbd "C-c m") 'helm-imenu)
-  (define-key global-map (kbd "C-x b") 'helm-buffers-list))
+  :bind
+  (("C-c m" . helm-imenu)
+   ("C-x b" . helm-buffers-list))
+  :config
+  ;; TOFIX: Doesn't apply when restarting Emacs
+  (when (member "Monaco" (font-family-list))
+    (set-face-attribute 'helm-header nil :font "Monaco-12")
+    (set-face-attribute 'helm-source-header nil :font "Monaco-14"))
+  (set-face-attribute 'helm-header nil :italic t)
+  (set-face-attribute 'helm-source-header nil :foreground zenburn/blue :background zenburn/bg :box nil)
+  (set-face-attribute 'helm-match nil :foreground "gold1")
 
-;; (with-eval-after-load 'helm-command
-(global-set-key (kbd "M-x") 'helm-M-x)
-;; )
-
-;; (with-eval-after-load 'helm-projectile
-(helm-projectile-on)
-;; )
+  (use-package helm-command
+    :bind
+    ("M-x" . helm-M-x)
+    :config
+    (set-face-attribute 'helm-M-x-key nil :underline nil)))
 
 
 ;;─────────────────────────────────────────────────────────────────────────────

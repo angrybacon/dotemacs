@@ -1,28 +1,31 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Configure Emacs for CSS buffers
+;; Configure Emacs for HTML buffers
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
 ;; Built-in
-(use-package css-mode
+(use-package sgml-mode
   :init
-  (setq css-indent-offset 2))
+  (setq sgml-basic-offset 2))
 
 
-;; https://github.com/antonj/scss-mode/
-(use-package scss-mode
+;; http://web-mode.org/
+(use-package web-mode
   :ensure t
   :init
-  (setq scss-compile-at-save nil)
-  (add-to-list 'auto-mode-alist '("\\.css\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.less\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode)))
+  (setq
+   web-mode-markup-indent-offset 2
+   web-mode-css-indent-offset 2
+   web-mode-code-indent-offset 2)
+  ;; (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+  :bind
+  ("M-;" . comment-dwim))
+
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-css.el
+;; End init-html.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-css)
+(provide 'init-html)

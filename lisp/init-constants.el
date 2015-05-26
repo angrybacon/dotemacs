@@ -5,6 +5,7 @@
 
 ;; FIXME: I don't think these should be constants.
 
+
 (defconst me/name                 "Mathieu Marques"             "My full name.")
 (defconst me/email                "mathieumarques78@gmail.com"  "My email address.")
 (defconst me/font-family-default  "Monaco"                      "The font family to use for default strings.")
