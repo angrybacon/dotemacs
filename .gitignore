@@ -17,5 +17,9 @@ projectile.cache
 projectile-bookmarks.eld
 
 
+# Tramp
+tramp
+
+
 # Web browser
 url/
