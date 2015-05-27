@@ -1,19 +1,22 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Configure Emacs for Docker buffers
+;; Configure Emacs for Lisp buffers
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; https://github.com/spotify/dockerfile-mode
-(use-package dockerfile-mode
-  :ensure t
-  :delight dockerfile-mode "dockerfile"
-  :init
-  (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
+;; Built-in
+(use-package lisp-mode
+  :delight lisp-interaction-mode "lisp")
+
+
+;; Built-in
+;; TOFIX: Could not load emacs-lisp-mode
+(use-package emacs-lisp-mode
+  :delight emacs-lisp-mode "elisp")
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-docker.el
+;; End init-lisp.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-docker)
+(provide 'init-lisp)

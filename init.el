@@ -63,18 +63,23 @@
 
 
 ;; Initialize the partials
-(require 'init-ace-jump)
 (require 'init-aliases)
 (require 'init-company)
 (require 'init-css)
+(require 'init-cursor)
+(require 'init-dired)
 (require 'init-docker)
 (require 'init-emmet)
 (require 'init-expand-region)
+;; (require 'init-fundamental)
 (require 'init-git)
 (require 'init-golden-ratio)
 (require 'init-helm)
+(require 'init-help)
 (require 'init-html)
+(require 'init-javascript)
 (require 'init-json)
+;; (require 'init-lisp)
 (require 'init-markdown)
 (require 'init-multiple-cursors)
 (require 'init-org)
@@ -82,14 +87,14 @@
 (require 'init-parentheses)
 (require 'init-projectile)
 (require 'init-python)
+(require 'init-shell)
 (require 'init-theme)
 (require 'init-utilities)
 (require 'init-whitespace)
 
 
 ;; TODO: This needs cleaning.
-(require 'init-javascript)
-(require 'init-mode-line)
+;; (require 'init-mode-line)
 (require 'init-smart-mode-line)
 
 

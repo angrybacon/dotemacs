@@ -6,6 +6,7 @@
 ;; https://github.com/gongo/json-reformat
 (use-package json-mode
   :ensure t
+  :delight json-mode "json"
   :init
   (setq
    ;; NOTE: This will be fixed with https://github.com/joshwnj/json-mode/issues/32.

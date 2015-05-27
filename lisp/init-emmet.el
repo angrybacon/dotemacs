@@ -6,6 +6,7 @@
 ;; https://github.com/smihica/emmet-mode
 (use-package emmet-mode
   :ensure t
+  :diminish emmet-mode
   :init
   (setq
    emmet-preview-default nil

@@ -1,19 +1,16 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Configure Emacs for Docker buffers
+;; Configure Emacs for Shell buffers
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; https://github.com/spotify/dockerfile-mode
-(use-package dockerfile-mode
-  :ensure t
-  :delight dockerfile-mode "dockerfile"
-  :init
-  (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
+;; Built-in
+(use-package eshell
+  :delight eshell-mode "eshell")
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-docker.el
+;; End init-shell.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-docker)
+(provide 'init-shell)

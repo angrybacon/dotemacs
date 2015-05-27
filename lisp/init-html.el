@@ -5,6 +5,7 @@
 
 ;; Built-in
 (use-package sgml-mode
+  :delight html-mode "html"
   :init
   (setq sgml-basic-offset 2))
 
@@ -12,6 +13,7 @@
 ;; http://web-mode.org/
 (use-package web-mode
   :ensure t
+  :delight web-mode "web"
   :init
   (setq
    web-mode-markup-indent-offset 2

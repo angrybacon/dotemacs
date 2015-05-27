@@ -6,6 +6,7 @@
 ;; https://github.com/roman/golden-ratio.el
 (use-package golden-ratio
   :ensure t
+  :diminish golden-ratio-mode
   :init
   (setq golden-ratio-adjust-factor .9)
   :config

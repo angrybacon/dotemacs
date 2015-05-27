@@ -1,19 +1,17 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Configure Emacs for Docker buffers
+;; Configure Emacs for Fundamental buffers
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; https://github.com/spotify/dockerfile-mode
-(use-package dockerfile-mode
-  :ensure t
-  :delight dockerfile-mode "dockerfile"
-  :init
-  (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
+;; Built-in
+;; TOFIX: Could not load fundamental
+(use-package fundamental
+  :delight fundamental-mode "fundamental")
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-docker.el
+;; End init-fundamental.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-docker)
+(provide 'init-fundamental)

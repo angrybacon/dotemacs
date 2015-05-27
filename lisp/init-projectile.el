@@ -6,6 +6,7 @@
 ;; https://github.com/bbatsov/projectile
 (use-package projectile
   :ensure t
+  :diminish projectile-mode
   :init
   (setq
    projectile-enable-caching t

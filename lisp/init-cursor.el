@@ -3,6 +3,11 @@
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
+;; Built-in
+(use-package subword
+  :diminish subword-mode)
+
+
 ;; https://github.com/winterTTr/ace-jump-mode
 (use-package ace-jump-mode
   :ensure t
@@ -17,8 +22,8 @@
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-ace-jump.el
+;; End init-cursor.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-ace-jump)
+(provide 'init-cursor)

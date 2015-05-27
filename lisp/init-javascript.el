@@ -1,4 +1,18 @@
+;;─────────────────────────────────────────────────────────────────────────────
+;; Configure Emacs for JavaScript buffers
+;;─────────────────────────────────────────────────────────────────────────────
+
+
+;; Built-in
+(use-package js
+  :delight js-mode "js")
+
+
+;;─────────────────────────────────────────────────────────────────────────────
 ;; Create `imenu' entries for AngularJS elements
+;;─────────────────────────────────────────────────────────────────────────────
+
+
 (setq javascript-common-imenu-regex-list
       '(("Config" "[. \t]config([ \t]*function *( *\\([^\)]+\\)" 1)
         ("Config" "[. \t]config([ \t]*\\[ *['\"]\\([^'\"]+\\)" 1)
@@ -27,6 +41,11 @@
   "Initialize custom `imenu' entries for AngularJS elements."
   (setq imenu-create-index-function 'me/make-imenu-index-for-js))
 (add-hook 'js-mode-hook 'me/js-mode-hook)
+
+
+;;─────────────────────────────────────────────────────────────────────────────
+;; End init-javascript.el
+;;─────────────────────────────────────────────────────────────────────────────
 
 
 (provide 'init-javascript)

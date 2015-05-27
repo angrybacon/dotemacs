@@ -2,7 +2,7 @@
 (setq
  display-time-format "%I:%M"
  display-time-load-average-threshold 1.0
- rm-whitelist '("")
+ ;; rm-whitelist '("")
  sml/projectile-replacement-format "[%s] "
  sml/use-projectile-p 'before-prefixes
  sml/battery-format "%p%% "

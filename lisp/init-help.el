@@ -1,19 +1,16 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Configure Emacs for Docker buffers
+;; Add support for Help operations
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; https://github.com/spotify/dockerfile-mode
-(use-package dockerfile-mode
-  :ensure t
-  :delight dockerfile-mode "dockerfile"
-  :init
-  (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
+;; Built-in
+(use-package help
+  :delight help-mode "help")
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-docker.el
+;; End init-help.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-docker)
+(provide 'init-help)

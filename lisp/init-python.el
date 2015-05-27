@@ -5,6 +5,7 @@
 
 ;; Built-in
 (use-package python
+  :delight python-mode "python"
   :config
   (when (executable-find "ipython")
     (setq

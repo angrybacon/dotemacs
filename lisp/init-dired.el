@@ -1,19 +1,16 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Configure Emacs for Docker buffers
+;; Configure Emacs for Dired buffers
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; https://github.com/spotify/dockerfile-mode
-(use-package dockerfile-mode
-  :ensure t
-  :delight dockerfile-mode "dockerfile"
-  :init
-  (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
+;; Built-in
+(use-package dired
+  :delight dired-mode "dired")
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-docker.el
+;; End of init-dired.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-docker)
+(provide 'init-dired)
