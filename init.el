@@ -71,7 +71,9 @@
 (require 'init-docker)
 (require 'init-emmet)
 (require 'init-expand-region)
+
 ;; (require 'init-fundamental)
+
 (require 'init-git)
 (require 'init-golden-ratio)
 (require 'init-helm)
@@ -79,7 +81,9 @@
 (require 'init-html)
 (require 'init-javascript)
 (require 'init-json)
+
 ;; (require 'init-lisp)
+
 (require 'init-markdown)
 (require 'init-multiple-cursors)
 (require 'init-org)
