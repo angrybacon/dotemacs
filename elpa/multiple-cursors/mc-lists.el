@@ -7,6 +7,7 @@
         autopair-insert-or-skip-quote
         autopair-newline
         autopair-skip-close-maybe
+        comment-dwim
         electric-newline-and-maybe-indent
         emmet-expand-line
         emmet-next-edit-point
@@ -15,6 +16,7 @@
         insert-parentheses
         kill-region
         markdown-exdent-or-delete
+        me/goto-next-block
         me/goto-previous-block
         sgml-slash
         subword-left
@@ -25,6 +27,7 @@
       '(
         beginning-of-visual-line
         eval-print-last-sexp
+        find-file
         mac-mwheel-scroll
         mac-previous-buffer
         mouse-drag-vertical-line
