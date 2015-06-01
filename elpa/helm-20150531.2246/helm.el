@@ -431,13 +431,13 @@ will reuse the same window scheme than the one of last session unless
 (defcustom helm-split-window-default-side 'below
   "The default side to display `helm-buffer'.
 Must be one acceptable arg for `split-window' SIDE,
-that is 'below, 'above, 'left or 'right.
+that is `below', `above', `left' or `right'.
 
-Other acceptable values are 'same which always display `helm-buffer'
-in current window and 'other that display `helm-buffer' below if only one
+Other acceptable values are `same' which always display `helm-buffer'
+in current window and `other' that display `helm-buffer' below if only one
 window or in `other-window-for-scrolling' if available.
 
-A nil value as same effect as 'below.
+A nil value as same effect as `below'.
 If `helm-full-frame' is non--nil, it take precedence on this.
 
 See also `helm-split-window-in-side-p' and `helm-always-two-windows' that
@@ -461,10 +461,15 @@ NOTE: this have no effect if `helm-split-window-preferred-function' is not
   "When non--nil helm will use two windows in this frame.
 That is one window to display `helm-buffer' and one to display
 `helm-current-buffer'.
+
 Note: this have no effect when `helm-split-window-in-side-p' is non--nil,
 or when `helm-split-window-default-side' is set to 'same.
+
 When `helm-autoresize-mode' is enabled, setting this to nil
-will have no effect until this mode will be disabled."
+will have no effect.
+
+Also when non-nil it overhides the effect of `helm-split-window-default-side'
+set to `other'."
   :group 'helm
   :type 'boolean)
 
@@ -692,9 +697,8 @@ can be set here with `helm-set-local-variable'.")
 
 (defvar helm-after-initialize-hook nil
   "Run after helm initialization.
-This hook run inside `helm-buffer' once created.
-Variables are initialized and the `helm-buffer' is created.
-But the `helm-buffer' has no contents.")
+This hook run after `helm-buffer' is created but not from `helm-buffer'
+so the hook have to specify in which buffer it should run.")
 
 (defvar helm-update-hook nil
   "Run after the helm buffer was updated according the new input pattern.
@@ -2191,7 +2195,12 @@ It uses `switch-to-buffer' or `pop-to-buffer' depending of value of
           (and (eq helm-split-window-default-side 'same)
                (one-window-p t)))
       (progn (delete-other-windows) (switch-to-buffer buffer))
-    (when (and (or helm-always-two-windows helm-autoresize-mode)
+    (when (and (or helm-always-two-windows helm-autoresize-mode
+                   (and (not helm-split-window-in-side-p)
+                        (eq (save-selected-window
+                              (funcall helm-split-window-preferred-function
+                                       (selected-window)))
+                            (get-buffer-window helm-current-buffer))))
                (not (eq helm-split-window-default-side 'same))
                (not (minibufferp helm-current-buffer))
                (not helm-split-window-in-side-p))

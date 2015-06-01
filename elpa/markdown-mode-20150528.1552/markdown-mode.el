@@ -28,7 +28,7 @@
 ;; Maintainer: Jason R. Blevins <jrblevin@sdf.org>
 ;; Created: May 24, 2007
 ;; Version: 2.0
-;; Package-Version: 20150523.2036
+;; Package-Version: 20150528.1552
 ;; Keywords: Markdown, GitHub Flavored Markdown, itex
 ;; URL: http://jblevins.org/projects/markdown-mode/
 
@@ -4693,9 +4693,9 @@ if ARG is omitted or nil."
   ;; Separating out each condition into a separate function so that users can
   ;; override if desired (with remove-hook)
   (add-hook 'fill-nobreak-predicate
-            'markdown-inside-link-text-p :local t)
+            'markdown-inside-link-text-p nil t)
   (add-hook 'fill-nobreak-predicate
-            'markdown-line-is-reference-definition-p :local t)
+            'markdown-line-is-reference-definition-p nil t)
 
   ;; Indentation
   (setq indent-line-function markdown-indent-function)
@@ -4722,9 +4722,12 @@ if ARG is omitted or nil."
   ;; do the initial link fontification
   (markdown-fontify-buffer-wiki-links))
 
-;;;###autoload(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-;;;###autoload(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
-;;;###autoload(add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
+;;;###autoload
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+;;;###autoload
+(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+;;;###autoload
+(add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
 
 
 ;;; GitHub Flavored Markdown Mode  ============================================

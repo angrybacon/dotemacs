@@ -3,7 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "markdown-mode" "markdown-mode.el" (21860 59748
+;;;### (autoloads nil "markdown-mode" "markdown-mode.el" (21868 18521
 ;;;;;;  0 0))
 ;;; Generated autoloads from markdown-mode.el
 
@@ -11,8 +11,11 @@
 Major mode for editing Markdown files.
 
 \(fn)" t nil)
+
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+
 (add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
 
 (autoload 'gfm-mode "markdown-mode" "\

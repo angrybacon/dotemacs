@@ -4,7 +4,7 @@
 
 ;; Author: Syohei YOSHIDA <syohex@gmail.com>
 ;; URL: https://github.com/syohex/emacs-helm-ag
-;; Package-Version: 20150507.324
+;; Package-Version: 20150529.236
 ;; Version: 0.38
 ;; Package-Requires: ((helm "1.5.6") (cl-lib "0.5"))
 
@@ -744,6 +744,9 @@ Special commands:
   (when (helm-ag--has-c-u-preffix-p)
     (helm-grep-get-file-extensions helm-do-ag--default-target)))
 
+(defsubst helm-ag--windows-p ()
+  (memq system-type '(ms-dos windows-nt)))
+
 (defsubst helm-do-ag--is-target-one-directory-p (targets)
   (and (listp targets) (= (length targets) 1) (file-directory-p (car targets))))
 
@@ -772,7 +775,7 @@ Special commands:
     (helm-ag--save-current-context)
     (helm-attrset 'name (helm-ag--helm-header helm-ag--default-directory)
                   helm-source-do-ag)
-    (if (not one-directory-p)
+    (if (or (helm-ag--windows-p) (not one-directory-p)) ;; Path argument must be specified on Windows
         (helm-do-ag--helm)
       (let* ((helm-ag--default-directory
               (file-name-as-directory (car helm-do-ag--default-target)))

@@ -3,7 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "smartparens" "smartparens.el" (21860 59743
+;;;### (autoloads nil "smartparens" "smartparens.el" (21868 18516
 ;;;;;;  0 0))
 ;;; Generated autoloads from smartparens.el
 
@@ -118,6 +118,17 @@ See `smartparens-mode' for more information on Smartparens mode.
 (autoload 'turn-on-smartparens-mode "smartparens" "\
 Turn on `smartparens-mode'.
 
+This function is used to turn on `smartparens-global-mode'.
+
+By default `smartparens-global-mode' ignores buffers with
+`mode-class' set to special, but only if they are also not comint
+buffers.
+
+Additionally, buffers on `sp-ignore-modes-list' are ignored.
+
+You can still turn on smartparens in these mode manually (or
+in mode's startup-hook etc.) by calling `smartparens-mode'.
+
 \(fn)" t nil)
 
 (autoload 'turn-off-smartparens-mode "smartparens" "\
@@ -170,7 +181,7 @@ Turn off `show-smartparens-mode'.
 ;;;### (autoloads nil nil ("smartparens-config.el" "smartparens-haskell.el"
 ;;;;;;  "smartparens-html.el" "smartparens-latex.el" "smartparens-lua.el"
 ;;;;;;  "smartparens-pkg.el" "smartparens-python.el" "smartparens-ruby.el")
-;;;;;;  (21860 59743 247995 0))
+;;;;;;  (21868 18516 114705 0))
 
 ;;;***
 
