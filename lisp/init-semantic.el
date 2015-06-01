@@ -3,18 +3,19 @@
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; https://github.com/tuhdo/semantic-stickyfunc-enhance
-(use-package stickyfunc-enhance
-  :ensure t
+(use-package semantic
   :init
-  (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
+  (setq
+   semanticdb-default-save-directory "semanticdb"
+   semantic-idle-breadcrumbs-separator " > ")
   :config
-  (semantic-mode 1))
+  (semantic-mode t)
+  (global-semantic-idle-breadcrumbs-mode t))
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-semantic-stickyfunc.el
+;; End init-semantic.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-semantic-stickyfunc)
+(provide 'init-semantic)

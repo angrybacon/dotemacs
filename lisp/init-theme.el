@@ -35,7 +35,7 @@
 (set-face-attribute 'font-lock-comment-face nil :foreground zenburn/fg-1 :italic t)
 (set-face-attribute 'font-lock-comment-delimiter-face nil :italic t)
 (set-face-attribute 'fringe nil :background zenburn/bg :foreground zenburn/bg+2)
-(set-face-attribute 'header-line nil :background 'unspecified :foreground zenburn/blue :bold t :box nil)
+(set-face-attribute 'header-line nil :background zenburn/bg+0 :box `(:line-width 4 :color ,zenburn/bg+0))
 (set-face-attribute 'isearch nil :foreground "gold1" :background 'unspecified)
 (set-face-attribute 'lazy-highlight nil :foreground "gold3" :background 'unspecified)
 (set-face-attribute 'region nil :foreground zenburn/green)
