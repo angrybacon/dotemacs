@@ -72,6 +72,7 @@
 (require 'init-emmet)
 (require 'init-expand-region)
 
+;;TOFIX
 ;; (require 'init-fundamental)
 
 (require 'init-git)
@@ -82,6 +83,7 @@
 (require 'init-javascript)
 (require 'init-json)
 
+;;TOFIX
 ;; (require 'init-lisp)
 
 (require 'init-markdown)
@@ -92,13 +94,13 @@
 (require 'init-projectile)
 (require 'init-python)
 (require 'init-shell)
+(require 'init-semantic-stickyfunc)
 (require 'init-theme)
 (require 'init-utilities)
 (require 'init-whitespace)
 
 
 ;; TODO: This needs cleaning.
-;; (require 'init-mode-line)
 (require 'init-smart-mode-line)
 
 
