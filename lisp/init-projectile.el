@@ -6,7 +6,6 @@
 ;; https://github.com/bbatsov/projectile
 (use-package projectile
   :ensure t
-  :diminish projectile-mode
   :init
   (setq
    projectile-enable-caching t
@@ -17,6 +16,7 @@
   (use-package helm-projectile
     :config
     (helm-projectile-on))
+
   (projectile-global-mode))
 
 

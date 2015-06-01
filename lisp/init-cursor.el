@@ -3,11 +3,6 @@
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; Built-in
-(use-package subword
-  :diminish subword-mode)
-
-
 ;; https://github.com/winterTTr/ace-jump-mode
 (use-package ace-jump-mode
   :ensure t
