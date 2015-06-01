@@ -27,9 +27,6 @@
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; OPTIMIZE: This could be evaluated once Emacs has been intialized
-
-
 (set-face-attribute 'font-lock-doc-face nil :italic t)
 (set-face-attribute 'font-lock-constant-face nil :foreground zenburn/green-1)
 (set-face-attribute 'font-lock-comment-face nil :foreground zenburn/fg-1 :italic t)

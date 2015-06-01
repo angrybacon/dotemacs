@@ -101,7 +101,7 @@
 
 
 ;; TODO: This needs cleaning.
-(require 'init-smart-mode-line)
+(require 'init-mode-line)
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
