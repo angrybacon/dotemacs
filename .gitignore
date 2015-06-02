@@ -17,6 +17,10 @@ projectile.cache
 projectile-bookmarks.eld
 
 
+# Semantic
+semanticdb/
+
+
 # Tramp
 tramp
 

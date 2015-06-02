@@ -6,7 +6,7 @@
 (use-package semantic
   :init
   (setq
-   semanticdb-default-save-directory "semanticdb"
+   semanticdb-default-save-directory "~/.emacs.d/semanticdb/"
    semantic-idle-breadcrumbs-separator " > ")
   :config
   (semantic-mode t)
