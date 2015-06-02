@@ -40,6 +40,8 @@
 (defun me/js-mode-hook ()
   "Initialize custom `imenu' entries for AngularJS elements."
   (setq imenu-create-index-function 'me/make-imenu-index-for-js))
+
+
 (add-hook 'js-mode-hook 'me/js-mode-hook)
 
 

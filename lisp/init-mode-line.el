@@ -15,16 +15,18 @@
    sml/battery-format "%p%% "
    sml/show-remote nil
    sml/vc-mode-show-backend nil
-   sml/theme 'automatic)
+   sml/theme 'dark)
   :config
   (sml/setup)
 
+  ;; Customize built-in faces
   (when (member "Monaco" (font-family-list))
     (set-face-attribute 'mode-line nil :font "Monaco-12")
     (set-face-attribute 'mode-line-inactive nil :font "Monaco-12"))
   (set-face-attribute 'mode-line nil :background zenburn/bg-1 :box `(:line-width 4 :color ,zenburn/bg-1))
   (set-face-attribute 'mode-line-inactive nil :background zenburn/bg-0 :slant 'unspecified :box `(:line-width 4 :color ,zenburn/bg-0))
 
+  ;; Customize smart-mode-line faces
   (set-face-attribute 'sml/charging nil :foreground zenburn/green)
   (set-face-attribute 'sml/discharging nil :foreground zenburn/red)
   (set-face-attribute 'sml/filename nil :foreground zenburn/yellow)

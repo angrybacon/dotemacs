@@ -12,7 +12,8 @@
   (("C-c m" . helm-imenu)
    ("C-x b" . helm-buffers-list))
   :config
-  ;; TOFIX: Doesn't apply when restarting Emacs
+
+  ;; TOFIX: Will be overwritten by zenburn theme
   (when (member "Monaco" (font-family-list))
     (set-face-attribute 'helm-header nil :font "Monaco-12")
     (set-face-attribute 'helm-source-header nil :font "Monaco-14"))
