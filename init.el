@@ -35,9 +35,14 @@
 
 
 ;; Custom variables
-;; FIXME: This should be removed after `mode-line' has been fixed.
 (custom-set-variables
- '(custom-safe-themes '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default))))
 
 
 ;; Check Emacs' version
@@ -71,6 +76,7 @@
 (require 'init-docker)
 (require 'init-emmet)
 (require 'init-expand-region)
+(require 'init-flycheck)
 
 ;;TOFIX
 ;; (require 'init-fundamental)
@@ -87,6 +93,7 @@
 ;; (require 'init-lisp)
 
 (require 'init-markdown)
+(require 'init-mode-line)
 (require 'init-multiple-cursors)
 (require 'init-org)
 (require 'init-osx)
@@ -100,10 +107,9 @@
 (require 'init-whitespace)
 
 
-;; TODO: This needs cleaning.
-(require 'init-mode-line)
-
-
 ;;─────────────────────────────────────────────────────────────────────────────
 ;; End of init.el
 ;;─────────────────────────────────────────────────────────────────────────────
+
+
+(provide 'init)

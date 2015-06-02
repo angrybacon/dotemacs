@@ -8,7 +8,10 @@ Have fun tinkering : j
 Notes
 =====
 
-This has been tested with railwaycat's [Emacs Mac port for Homebrew](https://github.com/railwaycat/homebrew-emacsmacport) and should work with any build.
+This has been tested with railwaycat's [Emacs Mac port for Homebrew][railwaycat-emacs] and should work with any
+build.
+
+[railwaycat-emacs]: https://github.com/railwaycat/homebrew-emacsmacport
 
 Features
 ========
@@ -23,5 +26,12 @@ Screenshots
 Installation
 ============
 
-1. Install [Emacs 24 or above](https://github.com/railwaycat/homebrew-emacsmacport/releases)
-1. Copy `dotemacs/` content into `~/.emacs.d/`.
+1. Install [Emacs 24 or above][railwaycat-emacs-releases]
+1. Install `flycheck` dependencies (optionnal):
+
+  - Python: `pip install flake8`'
+  - SCSS: ``gem install scss_lint scss_lint_reporter_checkstyle``
+
+1. Clone `dotemacs/` into `~/.emacs.d/`.
+
+[railwaycat-emacs-realeases]: https://github.com/railwaycat/homebrew-emacsmacport/releases
