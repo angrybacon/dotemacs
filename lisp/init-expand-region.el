@@ -6,11 +6,10 @@
 ;; https://github.com/magnars/expand-region.el
 (use-package expand-region
   :ensure t
+  :init
+  (pending-delete-mode t)
   :bind
-  ("C-=" . er/expand-region)
-  :config
-  ;; TOFIX: Doesn't apply when restarting Emacs
-  (pending-delete-mode t))
+  ("C-=" . er/expand-region))
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
