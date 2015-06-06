@@ -25,7 +25,7 @@
 (scroll-bar-mode -1)                             ; Remove scroll bar
 (menu-bar-mode -1)                               ; Remove menu bar
 (tool-bar-mode -1)                               ; Remove the toolbar
-(fringe-mode '(8 . 0))                           ; Display left fringe
+(fringe-mode '(12 . 0))                          ; Display left fringe
 (line-number-mode 1)                             ; Display line number of the cursor current position
 (column-number-mode 1)                           ; Display column number of the cursor current position
 (display-battery-mode 1)                         ; Display battery level in the mode-line
