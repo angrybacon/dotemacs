@@ -37,7 +37,9 @@
   (set-face-attribute 'sml/modified nil :foreground zenburn/red :weight 'unspecified)
   (set-face-attribute 'sml/prefix nil :foreground zenburn/orange)
   (set-face-attribute 'sml/read-only nil :foreground zenburn/blue)
-  (set-face-attribute 'sml/vc-edited nil :foreground zenburn/yellow))
+  (set-face-attribute 'sml/vc-edited nil :foreground zenburn/yellow)
+
+  )
 
 
 ;;─────────────────────────────────────────────────────────────────────────────

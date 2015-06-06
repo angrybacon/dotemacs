@@ -5,6 +5,7 @@
 
 (defun me/goto-previous-buffer ()
   "Jump to previous buffer."
+
   (interactive)
   (other-window -1))
 
@@ -19,6 +20,7 @@
 
 (defun me/goto-previous-block ()
   "Jump to previous paragraph."
+
   (interactive)
   (skip-chars-backward "\n")
   (when (not (search-backward-regexp "\n[[:blank:]]*\n" nil t)) (goto-char (point-min)))
@@ -27,6 +29,7 @@
 
 (defun me/goto-next-block ()
   "Jump to next paragraph."
+
   (interactive)
   (skip-chars-forward "\n")
   (when (not (search-forward-regexp "\n[[:blank:]]*\n" nil t)) (goto-char (point-max)))
@@ -44,6 +47,7 @@
 
 (defun me/move-line-up ()
   "Move up the current line under point."
+
   (interactive)
   (transpose-lines 1)
   (forward-line -2)
@@ -52,6 +56,7 @@
 
 (defun me/move-line-down ()
   "Move down the current line under point."
+
   (interactive)
   (forward-line 1)
   (transpose-lines 1)
