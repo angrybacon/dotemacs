@@ -1,8 +1,8 @@
 (1
  (ace-window .
-	     [(0 8 1)
+	     [(0 9 0)
 	      ((avy
-		(0 1 0)))
+		(0 2 0)))
 	      "Quickly switch windows." single
 	      ((:url . "https://github.com/abo-abo/ace-window")
 	       (:keywords "window" "location"))])
