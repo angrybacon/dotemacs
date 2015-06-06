@@ -38,7 +38,7 @@
 ;; Goodies
 (global-subword-mode t)                          ; Iterate through CamelCase words
 (mouse-avoidance-mode 'animate)                  ; Move pointer when point reaches cursor location
-(set-frame-parameter nil 'fullscreen 'fullboth)  ; Pseudo fullscreen (only tested with OS X)
+;; (set-frame-parameter nil 'fullscreen 'fullboth)  ; Pseudo fullscreen (only tested with OS X)
 
 
 ;;─────────────────────────────────────────────────────────────────────────────

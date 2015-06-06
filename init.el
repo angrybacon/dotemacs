@@ -65,6 +65,7 @@
 (require 'init-interface)
 (require 'init-elpa)
 (require 'init-palettes)
+(require 'init-theme)
 
 
 ;; Initialize the partials
@@ -99,7 +100,6 @@
 (require 'init-python)
 (require 'init-semantic)
 (require 'init-shell)
-(require 'init-theme)
 (require 'init-utilities)
 (require 'init-whitespace)
 
