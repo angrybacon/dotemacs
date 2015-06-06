@@ -79,7 +79,7 @@
 (require 'init-expand-region)
 (require 'init-flycheck)
 
-;;TOFIX
+;;FIXME
 ;; (require 'init-fundamental)
 
 (require 'init-git)
@@ -89,10 +89,6 @@
 (require 'init-html)
 (require 'init-javascript)
 (require 'init-json)
-
-;;TOFIX
-;; (require 'init-lisp)
-
 (require 'init-markdown)
 (require 'init-mode-line)
 (require 'init-multiple-cursors)

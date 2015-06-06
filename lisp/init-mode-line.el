@@ -3,7 +3,15 @@
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; Smart Mode Line (https://github.com/Malabarba/smart-mode-line)
+;; https://github.com/antonio/delight.el
+(use-package delight
+  :init
+  (delight 'emacs-lisp-mode "emacs-lisp")
+  (delight 'lisp-interaction-mode "lisp-interaction")
+  (delight 'messages-buffer-mode "messages"))
+
+
+;; https://github.com/Malabarba/smart-mode-line
 (use-package smart-mode-line
   :init
   (setq
@@ -19,13 +27,16 @@
   :config
   (sml/setup)
 
+  ;; FIXME: Overwritten by Zenburn theme
   ;; Customize built-in faces
-  (when (member "Monaco" (font-family-list))
-    (set-face-attribute 'mode-line nil :font "Monaco-12")
-    (set-face-attribute 'mode-line-inactive nil :font "Monaco-12"))
+  (when (member me/font-family-mode-line (font-family-list))
+    (set-face-attribute 'mode-line nil :font me/font-family-mode-line :height me/font-size-mode-line)
+    (set-face-attribute 'mode-line-inactive nil :font me/font-family-mode-line :height me/font-size-mode-line))
   (set-face-attribute 'mode-line nil :background zenburn/bg-1 :box `(:line-width 4 :color ,zenburn/bg-1))
-  (set-face-attribute 'mode-line-inactive nil :background zenburn/bg-0 :slant 'unspecified :box `(:line-width 4 :color ,zenburn/bg-0))
+  (set-face-attribute 'mode-line-inactive nil :background zenburn/bg-0 :slant 'unspecified
+                      :box `(:line-width 4 :color ,zenburn/bg-0))
 
+  ;; FIXME: Overwritten by Zenburn theme
   ;; Customize smart-mode-line faces
   (set-face-attribute 'sml/charging nil :foreground zenburn/green)
   (set-face-attribute 'sml/discharging nil :foreground zenburn/red)

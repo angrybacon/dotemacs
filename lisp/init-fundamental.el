@@ -4,8 +4,8 @@
 
 
 ;; Built-in
-;; TOFIX: Could not load fundamental
-(use-package fundamental
+;; FIXME: "Could not load fundamental"
+(use-package simple
   :delight fundamental-mode "fundamental")
 
 

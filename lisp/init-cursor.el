@@ -9,8 +9,8 @@
   :init
   (autoload 'ace-jump-mode-pop-mark "ace-jump-mode" "Ace jump back" t)
   :bind
-  (("C-f" . ace-jump-mode)
-   ("C-c f" . ace-jump-mode-pop-mark))
+  (("C-c a f" . ace-jump-mode)
+   ("C-c a b" . ace-jump-mode-pop-mark))
   :config
   (ace-jump-mode-enable-mark-sync))
 

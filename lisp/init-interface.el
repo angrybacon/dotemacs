@@ -5,37 +5,38 @@
 
 ;; Global default settings
 (setq-default
- show-trailing-whitespace 1                      ; Display trailing whitespaces
+ show-trailing-whitespace t                      ; Display trailing whitespaces
  indent-tabs-mode nil                            ; Stop using tabs to indent
- indicate-empty-lines 1)                         ; Indicate empty line (require left fringe)
+ indicate-empty-lines t)                         ; Indicate empty line in the fringe
 
 
 ;; Buffer local settings
 (setq
- inhibit-startup-screen 1                        ; Remove start-up screen
+ inhibit-startup-screen t                        ; Remove start-up screen
+ initial-buffer-choice me/initial-buffer         ; Open specified file on start-up
  scroll-step 1                                   ; Line by line scrolling
  default-tab-width 4                             ; Set width for tabs
- x-select-enable-clipboard 1                     ; Merge both system's and Emacs' clipboard
+ x-select-enable-clipboard t                     ; Merge both system's and Emacs' clipboard
  sgml-basic-offset 4                             ; Set indent to 4 spaces
- mouse-yank-at-point 1                           ; Yank at mouse cursor rather than click location
+ mouse-yank-at-point t                           ; Yank at mouse cursor rather than click location
  ad-redefinition-action 'accept)                 ; Turn off the warnings due to functions being redefined
 
 
 ;; Toggle interface elements
-(scroll-bar-mode -1)                             ; Remove scroll bar
-(menu-bar-mode -1)                               ; Remove menu bar
-(tool-bar-mode -1)                               ; Remove the toolbar
+(scroll-bar-mode -1)                             ; Disable scroll bar
+(menu-bar-mode nil)                              ; Disable menu bar
+(tool-bar-mode -1)                               ; Disable the toolbar
 (fringe-mode '(12 . 0))                          ; Display left fringe
-(line-number-mode 1)                             ; Display line number of the cursor current position
-(column-number-mode 1)                           ; Display column number of the cursor current position
-(display-battery-mode 1)                         ; Display battery level in the mode-line
-(display-time-mode 1)                            ; Display time clock in the mode-line
-(global-hl-line-mode 1)                          ; Hightlight current line
-(global-whitespace-mode 0)                       ; Hightlight spaces and tabs characters
+(line-number-mode t)                             ; Display line number of the cursor current position
+(column-number-mode t)                           ; Display column number of the cursor current position
+(display-battery-mode t)                         ; Display battery level in the mode-line
+(display-time-mode t)                            ; Display time clock in the mode-line
+(global-hl-line-mode t)                          ; Hightlight current line
+(global-whitespace-mode 0)                       ; Hightlight blank characters
 
 
 ;; Goodies
-(global-subword-mode 1)                          ; Iterate through CamelCase words
+(global-subword-mode t)                          ; Iterate through CamelCase words
 (mouse-avoidance-mode 'animate)                  ; Move pointer when point reaches cursor location
 (set-frame-parameter nil 'fullscreen 'fullboth)  ; Pseudo fullscreen (only tested with OS X)
 
@@ -78,6 +79,8 @@
 
 (add-hook 'emacs-lisp-mode-hook 'me/highlight-hex-strings)
 (add-hook 'emmet-mode-hook 'me/highlight-hex-strings)
+(add-hook 'json-mode-hook 'me/highlight-hex-strings)
+(add-hook 'markdown-mode-hook 'me/highlight-hex-strings)
 (add-hook 'python-mode-hook 'me/highlight-hex-strings)
 
 

@@ -6,10 +6,15 @@
 ;; https://github.com/magit/magit
 (use-package magit
   :ensure t
-  ;; TOFIX: I can't make multiple call to :delight
+
+  ;; FIXME: I can't make multiple call to :delight
+  ;;        See https://github.com/jwiegley/use-package/pull/206
   :delight magit-status-mode "magit-status"
-  ;; magit-commit-mode "magit-commit"
-  ;; magit-log-mode "magit-log"
+
+  ;; '((magit-commit-mode "magit-commit")
+  ;;   (magit-log-mode "magit-log")
+  ;;   (magit-status-mode "magit-status"))
+
   :init
   (setq
    magit-show-child-count t
@@ -18,7 +23,8 @@
   :bind
   ("C-c g" . magit-status)
   :config
-  (when (member "Monaco" (font-family-list)) (set-face-attribute 'magit-section-title nil :font "Monaco-14"))
+  (when (member me/font-family-header (font-family-list))
+    (set-face-attribute 'magit-section-title nil :font me/font-family-header :height me/font-size-header))
   (set-face-attribute 'magit-section-title nil :weight 'unspecified :foreground zenburn/blue))
 
 
