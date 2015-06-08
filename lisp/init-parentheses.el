@@ -19,8 +19,19 @@
   :ensure t
   :init
   (require 'smartparens-config)
+  (setq sp-autoinsert-quote-if-followed-by-closing-pair t)
+  (sp-pair "{" "}" :wrap "C-(")
+  (sp-pair "[" "]" :wrap "C-5")
+  (sp-pair "{{" "}}")
+  (sp-pair "[[" "]]")
   :config
-  (smartparens-global-mode 1))
+  (smartparens-global-mode 1)
+  :bind*
+  (("M-<backspace>" . sp-unwrap-sexp)
+   ("M-<left>" . sp-forward-barf-sexp)
+   ("M-<right>" . sp-forward-slurp-sexp)
+   ("C-M-<left>" . sp-backward-slurp-sexp)
+   ("C-M-<right>" . sp-backward-barf-sexp)))
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
