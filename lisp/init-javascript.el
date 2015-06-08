@@ -5,7 +5,7 @@
 
 ;; Built-in
 (use-package js
-  :delight js-mode "js")
+  :delight js-mode "JS")
 
 
 ;;─────────────────────────────────────────────────────────────────────────────

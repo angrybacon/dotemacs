@@ -9,11 +9,12 @@
 
   ;; FIXME: I can't make multiple call to :delight
   ;;        See https://github.com/jwiegley/use-package/pull/206
-  :delight magit-status-mode "magit-status"
+  :delight magit-status-mode "Magit Status"
 
-  ;; '((magit-commit-mode "magit-commit")
-  ;;   (magit-log-mode "magit-log")
-  ;;   (magit-status-mode "magit-status"))
+  ;; '((magit-mode "Magit")
+  ;;   (magit-commit-mode "Magit Commit")
+  ;;   (magit-log-mode "Magit Log")
+  ;;   (magit-status-mode "Magit Status"))
 
   :init
   (setq
@@ -30,11 +31,11 @@
 
 ;; https://github.com/magit/git-modes
 (use-package gitattributes-mode
-  :delight gitattributes-mode "gitattributes")
+  :delight gitattributes-mode "Git Attributes")
 (use-package gitconfig-mode
-  :delight gitconfig-mode "gitconfig")
+  :delight gitconfig-mode "Git Config")
 (use-package gitignore-mode
-  :delight gitignore-mode "gitignore")
+  :delight gitignore-mode "Git Ignore")
 
 
 ;;─────────────────────────────────────────────────────────────────────────────

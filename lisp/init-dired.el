@@ -5,7 +5,7 @@
 
 ;; Built-in
 (use-package dired
-  :delight dired-mode "dired")
+  :delight dired-mode "Dired")
 
 
 ;;─────────────────────────────────────────────────────────────────────────────

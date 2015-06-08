@@ -5,7 +5,7 @@
 
 ;; Built-in
 (use-package eshell
-  :delight eshell-mode "eshell")
+  :delight eshell-mode "Eshell")
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
