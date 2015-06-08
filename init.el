@@ -1,11 +1,9 @@
-;;; init.el --- My Emacs configuration files         -*- lexical-binding: t; -*-
+;;; init.el --- My Emacs configuration files.        -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2014 Mathieu Marques
+;; Copyright (C) 2015  Mathieu Marques
 
-;; Author: Mathieu Marques <mathieumarques78@gmail.com>
-;; Created: 24 Oct 2014
-;; Keywords: convenience
-;; Homepage: https://bitbucket.org/angrybacon/dotemacs
+;; Author: Mathieu Marques <angrybacon@sandman.local>
+;; Keywords: convenience, faces, lisp, tools
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -22,9 +20,13 @@
 
 ;;; Commentary:
 
-;; To install, clone `dotemacs/' in your home folder `~/.emacs.d/'.
+;; To install, clone `dotemacs/' into `~/.emacs.d/'.
 ;;
-;; If you have any issue using the following code, please refer to the package's README.
+;; Following lines load several packages to configure my Emacs experience. I
+;; work quite often with Python, HTML, SCSS and JavaScript code. My
+;; configuration is stronlgy Web-oriented.
+;;
+;; See `readme.md' for more details.
 
 ;;; Code:
 
@@ -104,3 +106,6 @@
 
 
 (provide 'init)
+
+
+;;; init.el ends here
