@@ -13,16 +13,12 @@
   (add-hook 'scss-mode-hook 'flycheck-mode)
   (add-hook 'python-mode-hook 'flycheck-mode)
   :config
-
-  ;; FIXME: Overwritten by Zenburn theme
   (set-face-attribute 'company-tooltip-common nil :inherit 'company-tooltip)
   (set-face-attribute 'flycheck-error nil :underline zenburn/red-2)
   (set-face-attribute 'flycheck-fringe-error nil :foreground zenburn/red-2)
   (set-face-attribute 'flycheck-fringe-warning nil :foreground zenburn/orange)
   (set-face-attribute 'flycheck-info nil :underline zenburn/cyan)
-  (set-face-attribute 'flycheck-warning nil :underline zenburn/orange)
-
-  )
+  (set-face-attribute 'flycheck-warning nil :underline zenburn/orange))
 
 
 ;;─────────────────────────────────────────────────────────────────────────────

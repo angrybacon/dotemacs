@@ -3,12 +3,10 @@
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-;; (use-package zenburn-theme
-;;   :ensure t
-;;   :init
-;;   (load-theme 'zenburn t))
-
-(load-theme 'zenburn t)
+(use-package zenburn-theme
+  :ensure t
+  :init
+  (load-theme 'zenburn t))
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
@@ -35,8 +33,8 @@
 (set-face-attribute 'font-lock-comment-delimiter-face nil :italic t)
 (set-face-attribute 'fringe nil :background zenburn/bg :foreground zenburn/bg+2)
 (set-face-attribute 'header-line nil :background zenburn/bg+0 :box `(:line-width 4 :color ,zenburn/bg+0))
-(set-face-attribute 'isearch nil :foreground zenburn/yellow :background 'unspecified)
-(set-face-attribute 'lazy-highlight nil :foreground zenburn/yellow-1 :background 'unspecified)
+(set-face-attribute 'isearch nil :foreground zenburn/green+2 :background zenburn/bg-2)
+(set-face-attribute 'lazy-highlight nil :foreground zenburn/green+2 :background zenburn/bg-1)
 (set-face-attribute 'region nil :foreground zenburn/green)
 (set-face-attribute 'show-paren-match nil :background 'unspecified)
 (set-face-attribute 'show-paren-mismatch nil :background 'unspecified)

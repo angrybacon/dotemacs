@@ -12,12 +12,9 @@
    company-idle-delay 0.1)
   (add-hook 'after-init-hook 'global-company-mode)
   :config
-
-  ;; FIXME: Overwritten by Zenburn theme
   (set-face-attribute 'company-tooltip-common nil :inherit 'company-tooltip)
-  (set-face-attribute 'company-tooltip-common-selection nil :inherit 'company-tooltip-selection)
+  (set-face-attribute 'company-tooltip-common-selection nil :inherit 'company-tooltip-selection))
 
-  )
 
 ;;─────────────────────────────────────────────────────────────────────────────
 ;; End init-company.el
