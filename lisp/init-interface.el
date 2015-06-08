@@ -28,9 +28,9 @@
 (tool-bar-mode -1)                               ; Disable the toolbar
 (fringe-mode '(12 . 0))                          ; Display left fringe
 (line-number-mode t)                             ; Display line number of the cursor current position
-(column-number-mode t)                           ; Display column number of the cursor current position
+(column-number-mode nil)                         ; Hide column number of the cursor current position
 (display-battery-mode t)                         ; Display battery level in the mode-line
-(display-time-mode t)                            ; Display time clock in the mode-line
+(display-time-mode t)                            ; Display time in the mode-line
 (global-hl-line-mode t)                          ; Hightlight current line
 (global-whitespace-mode 0)                       ; Hightlight blank characters
 
