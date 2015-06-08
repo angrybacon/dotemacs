@@ -1,6 +1,6 @@
-;;; init.el --- My Emacs configuration files.        -*- lexical-binding: t; -*-
+;;; init.el --- My Emacs configuration files.
 
-;; Copyright (C) 2015  Mathieu Marques
+;; Copyright (C) 2014 Mathieu Marques
 
 ;; Author: Mathieu Marques <angrybacon@sandman.local>
 ;; Keywords: convenience, faces, lisp, tools
