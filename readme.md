@@ -42,7 +42,7 @@ Below are the most notable features supported:
   replace, search, grep)
 - IPython integration
 - Add semantic breadcrumbs in the header line
-- Any many more goodies
+- And many more goodies
 
 For more information about how stuff work, read the source Luke! For each
 package, I have left links to their website.
