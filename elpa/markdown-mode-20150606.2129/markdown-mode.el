@@ -29,7 +29,7 @@
 ;; Maintainer: Jason R. Blevins <jrblevin@sdf.org>
 ;; Created: May 24, 2007
 ;; Version: 2.0
-;; Package-Version: 20150603.1303
+;; Package-Version: 20150606.2129
 ;; Keywords: Markdown, GitHub Flavored Markdown, itex
 ;; URL: http://jblevins.org/projects/markdown-mode/
 
@@ -709,6 +709,7 @@
 ;;     general improvements.
 ;;   * Matt McClure <matthewlmcclure@gmail.com> for a patch to prevent
 ;;     overwriting source files with .html extensions upon export.
+;;   * Roger Bolsius <roger.bolsius@gmail.com> for ordered list improvements.
 
 ;;; Bugs:
 
@@ -921,6 +922,11 @@ and `iso-latin-1'.  Use `list-coding-systems' for more choices."
   :type '(choice (const :tag "At the end of the document" end)
                  (const :tag "Immediately after the current block" immediately)
                  (const :tag "Before next header" header)))
+
+(defcustom markdown-unordered-list-item-prefix "  * "
+  "String inserted before unordered list items."
+  :group 'markdown
+  :type 'string)
 
 
 ;;; Font Lock =================================================================
@@ -2982,7 +2988,7 @@ Otherwise, do normal delete by repeating
       (while (< (point) end)
         (back-to-indentation)
         (unless (looking-at "[ \t]*$")
-	  (setq mincol (min mincol (current-column))))
+          (setq mincol (min mincol (current-column))))
         (forward-line 1)
         ))
     mincol))
@@ -3755,7 +3761,7 @@ increase the indentation by one level."
           (progn
             (unless (markdown-cur-line-blank-p)
               (insert "\n"))
-            (insert "* "))
+            (insert markdown-unordered-list-item-prefix))
         ;; Compute indentation for a new list item
         (setq item-indent (nth 2 bounds))
         (setq marker (nth 4 bounds))
@@ -3774,11 +3780,21 @@ increase the indentation by one level."
             ;; the argument was nil, "new-indent = item-indent" is the same,
             ;; so we don't need special treatment. Neat.
             (save-excursion
-              (while (not (looking-at (concat new-indent "\\([0-9]+\\)\\.")))
-                (forward-line -1)))
-            (insert (concat new-indent
-                            (int-to-string (1+ (string-to-number (match-string 1))))
-                            ". "))))
+              (while (and (not (looking-at (concat new-indent "\\([0-9]+\\)\\(\\.[ \t]*\\)")))
+                          (>= (forward-line -1) 0))))
+            (let* ((old-prefix (match-string 1))
+                   (old-spacing (match-string 2))
+                   (new-prefix (if old-prefix
+                                   (int-to-string (1+ (string-to-number old-prefix)))
+                                 "1"))
+                   (space-adjust (- (length old-prefix) (length new-prefix)))
+                   (new-spacing (if (and (match-string 2)
+                                         (not (string-match "\t" old-spacing))
+                                         (< space-adjust 0)
+                                         (> space-adjust (- 1 (length (match-string 2)))))
+                                    (substring (match-string 2) 0 space-adjust)
+                                  (or old-spacing ". "))))
+              (insert (concat new-indent new-prefix new-spacing)))))
          ;; Unordered list
          ((string-match "[\\*\\+-]" marker)
           (insert new-indent marker)))))))

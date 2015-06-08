@@ -2408,6 +2408,10 @@ Please don't use it.
   :keymap (and helm-alive-p helm-map)
   (unless helm-alive-p (setq helm--minor-mode nil)))
 
+(defun helm--reset-default-pattern ()
+  (setq helm-pattern "")
+  (setq helm--maybe-use-default-as-input nil))
+
 (defun helm-read-pattern-maybe (any-prompt any-input
                                 any-preselect any-resume any-keymap
                                 any-default any-history)
@@ -2470,14 +2474,14 @@ For ANY-PRESELECT ANY-RESUME ANY-KEYMAP ANY-DEFAULT ANY-HISTORY, See `helm'."
         (if (or source-delayed-p source-process-p)
             ;; Reset pattern to next update.
             (with-helm-after-update-hook
-              (setq helm-pattern "")
-              (setq helm--maybe-use-default-as-input nil))
+              (helm--reset-default-pattern))
             ;; Reset pattern right now.
-            (setq helm-pattern "")
-            (setq helm--maybe-use-default-as-input nil)
-            (and (helm-empty-buffer-p)
-                 (null helm-quit-if-no-candidate)
-                 (helm-force-update))))
+            (helm--reset-default-pattern))
+        ;; Ensure force-update when no candidates
+        ;; when we start with an empty pattern.
+        (and (helm-empty-buffer-p)
+             (null helm-quit-if-no-candidate)
+             (helm-force-update)))
       ;; Handle `helm-execute-action-at-once-if-one' and
       ;; `helm-quit-if-no-candidate' now only for not--delayed sources.
       (cond ((and helm-execute-action-at-once-if-one
@@ -2839,7 +2843,8 @@ ARGS is (cand1 cand2 ...) or ((disp1 . real1) (disp2 . real2) ...)
        (if (and (listp it)
                 (not (functionp it))) ;; Don't treat lambda's as list.
            (cl-loop for f in it
-                 do (setq ,candidate (funcall f ,candidate)))
+                 do (setq ,candidate (funcall f ,candidate))
+                 finally return ,candidate)
          (setq ,candidate (funcall it ,candidate)))))
 
 (defun helm--initialize-one-by-one-candidates (candidates source)
@@ -2847,9 +2852,8 @@ ARGS is (cand1 cand2 ...) or ((disp1 . real1) (disp2 . real2) ...)
 Return CANDIDATES when pattern is empty."
   (helm-aif (and (string= helm-pattern "")
                  (assoc-default 'filter-one-by-one source))
-      (cl-loop for cand in candidates
-            do (helm--maybe-process-filter-one-by-one-candidate cand source)
-            collect cand)
+      (cl-loop for cand in candidates collect
+               (helm--maybe-process-filter-one-by-one-candidate cand source))
     candidates))
 
 (defun helm-process-filtered-candidate-transformer-maybe
