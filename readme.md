@@ -28,31 +28,31 @@ Below are the most notable features supported:
 
 - Theming
 
-  - Non-aggressive palette and pastel tones with [Zenburn][zenburn]
-  - Prettify the mode line: less useless information, more room for actual
-    information
+    - Non-aggressive palette and pastel tones with [Zenburn][zenburn]
+    - Prettify the mode line: less useless information, more room for actual
+      information
 
 - Languages
 
-  - IPython integration
-  - Autocompletion in most languages (still wondering which backend to use with
-    Python)
-  - Use linters for Python and Sass
+    - IPython integration
+    - Autocompletion in most languages (still wondering which backend to use
+      with Python)
+    - Use linters for Python and Sass
 
 - Web
 
-  - Support for HTML, Sass, Less, JavaScript, AngularJS and JSON files
-  - [Emmet][emmet] support for HTML, CSS-like files
+    - Support for HTML, Sass, Less, JavaScript, AngularJS and JSON files
+    - [Emmet][emmet] support for HTML, CSS-like files
 
 - Goodies
 
-  - Git integration
-  - Support for multiple cursors
-  - Parentheses are now smarter than you
-  - Add a incremental selection framework to fuzzily narrow down choices
-  - Add semantic breadcrumbs in the header line
-  - Add a project interface to issue actions within a project structure (eg.
-    replace, search, grep)
+    - Git integration
+    - Support for multiple cursors
+    - Parentheses are now smarter than you
+    - Add a incremental selection framework to fuzzily narrow down choices
+    - Add semantic breadcrumbs in the header line
+    - Add a project interface to issue actions within a project structure (eg.
+      replace, search, grep)
 
 For more information about how stuff work, read the source Luke! For each
 package, I have left a link to their website.
