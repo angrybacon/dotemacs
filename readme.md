@@ -26,26 +26,39 @@ Features
 
 Below are the most notable features supported:
 
-- Non-aggressive palette and pastel tones with Zenburn
-- Autocompletion in most major modes (still wondering which backend to use with
-  Python)
-- Support for Web oriented technologies: Dockerfile, HTML, JavaScript,
-  AngularJS, SCSS, JSON, Markdown, Python
-- Emmet support for HTML, CSS, Less and Sass files
-- Use linters for Python and Sass
-- Git integration
-- Add a pretty selecting framework to fuzzily narrow down choices
-- Prettify the mode line: less useless information, more room for actual information
-- Support multiple cursors
-- Parentheses are now smarter than you
-- Add a project interface to issue actions within a project structure (eg.
-  replace, search, grep)
-- IPython integration
-- Add semantic breadcrumbs in the header line
-- Any many more goodies
+- Theming
+
+  - Non-aggressive palette and pastel tones with [Zenburn][zenburn]
+  - Prettify the mode line: less useless information, more room for actual
+    information
+
+- Languages
+
+  - IPython integration
+  - Autocompletion in most languages (still wondering which backend to use with
+    Python)
+  - Use linters for Python and Sass
+
+- Web
+
+  - Support for HTML, Sass, Less, JavaScript, AngularJS and JSON files
+  - [Emmet][emmet] support for HTML, CSS-like files
+
+- Goodies
+
+  - Git integration
+  - Support for multiple cursors
+  - Parentheses are now smarter than you
+  - Add a incremental selection framework to fuzzily narrow down choices
+  - Add semantic breadcrumbs in the header line
+  - Add a project interface to issue actions within a project structure (eg.
+    replace, search, grep)
 
 For more information about how stuff work, read the source Luke! For each
-package, I have left links to their website.
+package, I have left a link to their website.
+
+[zenburn]: http://kippura.org/zenburnpage/
+[emmet]: http://emmet.io/
 
 Installation
 ============
@@ -72,7 +85,6 @@ errors whithin each buffer. See below for the linters I personally use:
 ```bash
 # Python
 pip install flake8
-
 
 # SCSS
 gem install scss_lint scss_lint_reporter_checkstyle
