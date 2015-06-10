@@ -1,5 +1,5 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Jump to previous buffer, as opposed to default behavior of `other-window'
+;; Jump to other buffers
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
@@ -10,7 +10,10 @@
   (other-window -1))
 
 
-(define-key global-map (kbd "C-x p") 'me/goto-previous-buffer)
+(global-set-key (kbd "C-M-<left>") 'windmove-left)
+(global-set-key (kbd "C-M-<right>") 'windmove-right)
+(global-set-key (kbd "C-M-<up>") 'windmove-up)
+(global-set-key (kbd "C-M-<down>") 'windmove-down)
 
 
 ;;─────────────────────────────────────────────────────────────────────────────

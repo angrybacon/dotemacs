@@ -18,6 +18,7 @@
 
   :init
   (setq
+   magit-last-seen-setup-instructions "1.4.0"
    magit-show-child-count t
    magit-stage-all-confirm nil
    magit-unstage-all-confirm nil)
