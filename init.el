@@ -96,8 +96,11 @@
 (require 'init-python)
 (require 'init-semantic)
 (require 'init-shell)
-(require 'init-utilities)
 (require 'init-whitespace)
+
+
+;; Add custom binds
+(require 'init-binds)
 
 
 ;;─────────────────────────────────────────────────────────────────────────────

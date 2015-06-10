@@ -3,13 +3,6 @@
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(defun me/goto-previous-buffer ()
-  "Jump to previous buffer."
-
-  (interactive)
-  (other-window -1))
-
-
 (global-set-key (kbd "C-M-<left>") 'windmove-left)
 (global-set-key (kbd "C-M-<right>") 'windmove-right)
 (global-set-key (kbd "C-M-<up>") 'windmove-up)
@@ -72,8 +65,8 @@
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End of init-utilities.el
+;; End of init-binds.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
-(provide 'init-utilities)
+(provide 'init-binds)
