@@ -44,6 +44,7 @@
 (declare-function eshell-send-input "esh-mode" (&optional use-region queue-p no-newline))
 (declare-function eshell-kill-input "esh-mode")
 (declare-function eshell-bol "esh-mode")
+(declare-function eshell-quote-argument "esh-arg.el")
 (declare-function helm-ls-git-ls "ext:helm-ls-git")
 (declare-function helm-hg-find-files-in-project "ext:helm-ls-hg")
 (declare-function helm-gid "helm-id-utils.el")
@@ -703,9 +704,9 @@ will not be loaded first time you use this."
            (command (helm-comp-read
                      "Command: "
                      (cl-loop for (a . c) in eshell-command-aliases-list
-                           when (string-match "\\(\\$1\\|\\$\\*\\)$" (car c))
-                           collect (propertize a 'help-echo (car c)) into ls
-                           finally return (sort ls 'string<))
+                              when (string-match "\\(\\$1\\|\\$\\*\\)$" (car c))
+                              collect (propertize a 'help-echo (car c)) into ls
+                              finally return (sort ls 'string<))
                      :buffer "*helm eshell on file*"
                      :name "Eshell command"
                      :keymap helm-esh-on-file-map
@@ -721,9 +722,9 @@ will not be loaded first time you use this."
           ;; Two time C-u from `helm-comp-read' mean print to current-buffer.
           ;; i.e `eshell-command' will use this value.
           (setq current-prefix-arg '(16))
-        ;; Else reset the value of `current-prefix-arg'
-        ;; to avoid printing in current-buffer.
-        (setq current-prefix-arg nil))
+          ;; Else reset the value of `current-prefix-arg'
+          ;; to avoid printing in current-buffer.
+          (setq current-prefix-arg nil))
       (if (and (or
                 ;; One prefix-arg have been passed before `helm-comp-read'.
                 ;; If map have been set with C-u C-u (value == '(16))
@@ -741,29 +742,30 @@ will not be loaded first time you use this."
           ;; Run eshell-command with ALL marked files as arguments.
           ;; This wont work on remote files, because tramp handlers depends
           ;; on `default-directory' (limitation).
-          (let ((mapfiles (mapconcat 'shell-quote-argument cand-list " ")))
+          (let ((mapfiles (mapconcat 'eshell-quote-argument cand-list " ")))
             (if (string-match "'%s'\\|\"%s\"\\|%s" command)
                 (setq cmd-line (format command mapfiles)) ; See [1]
-              (setq cmd-line (format "%s %s" command mapfiles)))
+                (setq cmd-line (format "%s %s" command mapfiles)))
             (helm-log "%S" cmd-line)
             (eshell-command cmd-line))
 
-        ;; Run eshell-command on EACH marked files.
-        ;; To work with tramp handler we have to call
-        ;; COMMAND on basename of each file, using
-        ;; its basedir as `default-directory'.
-        (cl-loop for f in cand-list
-              for dir = (and (not (string-match ffap-url-regexp f))
-                             (helm-basedir f))
-              for file = (format "'%s'" (if (and dir (file-remote-p dir))
-                                            (helm-basename f) f))
-              for com = (if (string-match "'%s'\\|\"%s\"\\|%s" command)
-                            ;; [1] This allow to enter other args AFTER filename
-                            ;; i.e <command %s some_more_args>
-                            (format command file)
-                          (format "%s %s" command file))
-              do (let ((default-directory (or dir default-directory)))
-                   (eshell-command com)))))))
+          ;; Run eshell-command on EACH marked files.
+          ;; To work with tramp handler we have to call
+          ;; COMMAND on basename of each file, using
+          ;; its basedir as `default-directory'.
+          (cl-loop for f in cand-list
+                   for dir = (and (not (string-match ffap-url-regexp f))
+                                  (helm-basedir f))
+                   for file = (eshell-quote-argument
+                               (format "%s" (if (and dir (file-remote-p dir))
+                                                (helm-basename f) f)))
+                   for com = (if (string-match "'%s'\\|\"%s\"\\|%s" command)
+                                 ;; [1] This allow to enter other args AFTER filename
+                                 ;; i.e <command %s some_more_args>
+                                 (format command file)
+                                 (format "%s %s" command file))
+                   do (let ((default-directory (or dir default-directory)))
+                        (eshell-command com)))))))
 
 (defun helm-find-files-eshell-command-on-file (_candidate)
   "Run `eshell-command' on CANDIDATE or marked candidates.
@@ -1232,12 +1234,13 @@ The checksum is copied to kill-ring."
     (message "Checksum copied to kill-ring.")))
 
 (defun helm-ff-toggle-basename (_candidate)
-  (setq helm-ff-transformer-show-only-basename
-        (not helm-ff-transformer-show-only-basename))
-  (let* ((cand   (helm-get-selection nil t))
-         (target (if helm-ff-transformer-show-only-basename
-                     (helm-basename cand) cand)))
-    (helm-force-update (regexp-quote target))))
+  (with-helm-buffer
+    (setq helm-ff-transformer-show-only-basename
+          (not helm-ff-transformer-show-only-basename))
+    (let* ((cand   (helm-get-selection nil t))
+           (target (if helm-ff-transformer-show-only-basename
+                       (helm-basename cand) cand)))
+      (helm-force-update (regexp-quote target)))))
 
 (defun helm-ff-run-toggle-basename ()
   (interactive)
@@ -2306,6 +2309,8 @@ Use it for non--interactive calls of `helm-find-files'."
           :input fname
           :case-fold-search helm-file-name-case-fold-search
           :preselect preselect
+          :ff-transformer-show-only-basename
+          helm-ff-transformer-show-only-basename
           :default def
           :prompt "Find Files or Url: "
           :buffer "*Helm Find Files*")))
@@ -3273,8 +3278,9 @@ Run all sources defined in `helm-for-files-preferred-list'."
   (unless helm-source-buffers-list
     (setq helm-source-buffers-list
           (helm-make-source "Buffers" 'helm-source-buffers)))
-  (let ((helm-ff-transformer-show-only-basename nil))
-    (helm :sources helm-for-files-preferred-list :buffer "*helm for files*")))
+  (helm :sources helm-for-files-preferred-list
+        :ff-transformer-show-only-basename nil
+        :buffer "*helm for files*"))
 
 ;;;###autoload
 (defun helm-multi-files ()
@@ -3288,7 +3294,6 @@ locate."
           (helm-make-source "Buffers" 'helm-source-buffers)))
   (setq helm-multi-files--toggle-locate nil)
   (let ((sources (remove 'helm-source-locate helm-for-files-preferred-list))
-        (helm-ff-transformer-show-only-basename nil)
         (old-key (lookup-key
                   helm-map
                   (read-kbd-macro helm-multi-files-toggle-locate-binding))))
@@ -3297,6 +3302,7 @@ locate."
         'helm-multi-files-toggle-to-locate))
     (unwind-protect
          (helm :sources sources
+               :ff-transformer-show-only-basename nil
                :buffer "*helm multi files*")
       (define-key helm-map (kbd helm-multi-files-toggle-locate-binding)
         old-key))))
@@ -3305,8 +3311,9 @@ locate."
 (defun helm-recentf ()
   "Preconfigured `helm' for `recentf'."
   (interactive)
-  (let ((helm-ff-transformer-show-only-basename nil))
-    (helm-other-buffer 'helm-source-recentf "*helm recentf*")))
+  (helm :sources 'helm-source-recentf
+        :ff-transformer-show-only-basename nil
+        :buffer "*helm recentf*"))
 
 (provide 'helm-files)
 
