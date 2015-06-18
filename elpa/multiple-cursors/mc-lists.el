@@ -18,7 +18,11 @@
         markdown-exdent-or-delete
         me/goto-next-block
         me/goto-previous-block
+        me/move-line-up
         sgml-slash
+        sp-forward-barf-sexp
+        sp-forward-slurp-sexp
+        sp-unwrap-sexp
         subword-left
         subword-right
         ))
