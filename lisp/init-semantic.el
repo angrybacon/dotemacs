@@ -9,9 +9,10 @@
    semanticdb-default-save-directory "~/.emacs.d/semanticdb/"
    semantic-idle-breadcrumbs-separator " > ")
   :config
-  (semantic-mode t)
-  (global-semantic-idle-breadcrumbs-mode t))
-
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (semantic-mode t)
+              (global-semantic-idle-breadcrumbs-mode t))))
 
 ;;─────────────────────────────────────────────────────────────────────────────
 ;; End init-semantic.el
