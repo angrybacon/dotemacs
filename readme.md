@@ -14,7 +14,7 @@ Notes
 =====
 
 
-This has been tested with railwaycat's [Emacs Mac port for Homebrew][railwaycat-emacs]
+This has been tested with [railwaycat's Mac port][railwaycat-emacs]
 and should work with any build.
 
 [railwaycat-emacs]: https://github.com/railwaycat/homebrew-emacsmacport
@@ -35,14 +35,15 @@ Below are the most notable features supported:
 
 - Theming
 
-    - [`zenburn-theme`][zenburn-theme]: Non-aggressive palette and pastel tones with [Zenburn][zenburn]
-    - [`smart-mode-line`][smart-mode-line]: Prettify the mode line: less useless information, more room for
-      actual information
+    - [`zenburn-theme`][zenburn-theme]: Non-aggressive palette and pastel tones
+      with [Zenburn][zenburn]
+    - [`smart-mode-line`][smart-mode-line]: Prettify the mode line: less useless
+      information, more room for actual information
 
 - Languages
 
-    - [`company`][company]: Autocompletion in most languages (still testing different backend
-      for Python)
+    - [`company`][company]: Autocompletion in most languages (still testing
+      different backend for Python)
     - [`flycheck`][flycheck]: Use linters for Python and Sass
     - IPython integration (work in progress)
 
@@ -56,12 +57,13 @@ Below are the most notable features supported:
     - [`magit`][magit]: Git integration
     - [`mutliple-cursors`][mutliple-cursors]: Support for multiple cursors
     - [`smartparens`][smartparens]: Parentheses are now smarter than you
-    - [`helm`][helm]: Add a incremental selection framework to fuzzily narrow down choices
-    - [`projectile`][projectile]: Add a project interface to issue actions within a project structure (eg.
-      replace, search, grep)
+    - [`helm`][helm]: Add a incremental selection framework to fuzzily narrow
+      down choices
+    - [`projectile`][projectile]: Add a project interface to issue actions
+      within a project structure (eg. replace, search, grep)
     - Add semantic breadcrumbs in the header line
 
-For more information about how stuff work, read the source Luke! For each
+For more information about how stuff works, read the source Luke! For each
 package, I have left a link to their website.
 
 [company]: https://github.com/company-mode/company-mode
