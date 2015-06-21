@@ -43,21 +43,21 @@ Below are the most notable features supported:
 
     - [`company`][company]: Autocompletion in most languages (still testing different backend
       for Python)
-    - [flycheck][flycheck]: Use linters for Python and Sass
+    - [`flycheck`][flycheck]: Use linters for Python and Sass
     - IPython integration (work in progress)
 
 - Web
 
-    - [emmet][emmet]: Add Emmet support for HTML, CSS-like files
+    - [`emmet`][emmet]: Add Emmet support for HTML, CSS-like files
     - Support for HTML, Sass, Less, JavaScript, AngularJS and JSON files
 
 - Goodies
 
-    - [magit][magit]: Git integration
-    - [mutliple-cursors][mutliple-cursors]: Support for multiple cursors
-    - [smartparens][smartparens]: Parentheses are now smarter than you
-    - [helm][helm]: Add a incremental selection framework to fuzzily narrow down choices
-    - [projectile][projectile]: Add a project interface to issue actions within a project structure (eg.
+    - [`magit`][magit]: Git integration
+    - [`mutliple-cursors`][mutliple-cursors]: Support for multiple cursors
+    - [`smartparens`][smartparens]: Parentheses are now smarter than you
+    - [`helm`][helm]: Add a incremental selection framework to fuzzily narrow down choices
+    - [`projectile`][projectile]: Add a project interface to issue actions within a project structure (eg.
       replace, search, grep)
     - Add semantic breadcrumbs in the header line
 
