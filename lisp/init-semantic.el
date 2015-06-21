@@ -12,7 +12,7 @@
   (add-hook 'python-mode-hook
             (lambda ()
               (semantic-mode t)
-              (global-semantic-idle-breadcrumbs-mode t))))
+              (semantic-idle-breadcrumbs-mode t))))
 
 ;;─────────────────────────────────────────────────────────────────────────────
 ;; End init-semantic.el
