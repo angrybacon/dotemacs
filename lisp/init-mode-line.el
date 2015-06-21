@@ -1,15 +1,20 @@
 ;;─────────────────────────────────────────────────────────────────────────────
-;; Add incremental completion and selection narrowing
+;; Customize the mode line
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
 ;; https://github.com/antonio/delight.el
 (use-package delight
   :init
-  (delight 'emacs-lisp-mode "Emacs Lisp")
-  (delight 'lisp-interaction-mode "Lisp Interaction"))
+  (delight '((emacs-lisp-mode "Emacs Lisp")
+             (lisp-interaction-mode "Lisp Interaction")
+             (magit-commit-mode "Magit Commit")
+             (magit-log-mode "Magit Log")
+             (magit-mode "Magit")
+             (magit-status-mode "Magit Status"))))
 
 
+;; https://github.com/Malabarba/smart-mode-line/
 (use-package smart-mode-line
   :init
   (setq

@@ -6,16 +6,6 @@
 ;; https://github.com/magit/magit
 (use-package magit
   :ensure t
-
-  ;; FIXME: I can't make multiple call to :delight
-  ;;        See https://github.com/jwiegley/use-package/pull/206
-  :delight magit-status-mode "Magit Status"
-
-  ;; '((magit-mode "Magit")
-  ;;   (magit-commit-mode "Magit Commit")
-  ;;   (magit-log-mode "Magit Log")
-  ;;   (magit-status-mode "Magit Status"))
-
   :init
   (setq
    magit-last-seen-setup-instructions "1.4.0"
