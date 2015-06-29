@@ -55,7 +55,7 @@ Below are the most notable features supported:
 - Goodies
 
     - [`magit`][magit]: Git integration
-    - [`mutliple-cursors`][mutliple-cursors]: Support for multiple cursors
+    - [`multiple-cursors`][multiple-cursors]: Support for multiple cursors
     - [`smartparens`][smartparens]: Parentheses are now smarter than you
     - [`helm`][helm]: Add a incremental selection framework to fuzzily narrow
       down choices
