@@ -6,11 +6,8 @@
 ;; http://www.emacswiki.org/emacs/HighlightParentheses
 (use-package highlight-parentheses
   :ensure t
-
-  ;; TODO: Zenburn'ize pair colors
-  ;; :init
-  ;; (setq hl-paren-colors `(,zenburn/orange ,zenburn/red+1 ,zenburn/red-1 ,zenburn/red-2))
-
+  :init
+  (setq hl-paren-colors `(,zenburn/green+2 ,zenburn/green ,zenburn/green-1))
   :config
   (define-globalized-minor-mode global-highlight-parentheses-mode
     highlight-parentheses-mode (lambda () (highlight-parentheses-mode t)))
@@ -24,7 +21,7 @@
   (require 'smartparens-config)
   (setq sp-autoinsert-quote-if-followed-by-closing-pair t)
 
-  ;; FIXME: This will mess up with M-x
+  ;; FIXME: This will mess up with Helm's M-x
   ;; (sp-pair "(" ")" :wrap "C-(")
   ;; (sp-pair "{" "}" :wrap "C-{")
   ;; (sp-pair "[" "]" :wrap "C-[")
