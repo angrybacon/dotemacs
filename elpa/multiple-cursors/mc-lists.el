@@ -30,6 +30,7 @@
 (setq mc/cmds-to-run-once
       '(
         beginning-of-visual-line
+        count-words-region
         eval-print-last-sexp
         find-file
         helm-M-x
