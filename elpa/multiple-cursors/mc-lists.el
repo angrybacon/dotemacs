@@ -32,6 +32,7 @@
         beginning-of-visual-line
         eval-print-last-sexp
         find-file
+        helm-M-x
         mac-mwheel-scroll
         mac-previous-buffer
         mouse-drag-vertical-line

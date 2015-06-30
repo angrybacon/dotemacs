@@ -7,7 +7,10 @@
 (setq-default
  show-trailing-whitespace t                      ; Display trailing whitespaces
  indent-tabs-mode nil                            ; Stop using tabs to indent
- indicate-empty-lines t)                         ; Indicate empty line in the fringe
+ indicate-empty-lines t                          ; Indicate empty line in the fringe
+ battery-mode-line-format "%p"                   ; Format the battery level string
+ display-time-format "%H:%M"                     ; Format the time string
+ display-time-default-load-average nil)          ; Hide the time load
 
 
 ;; Buffer local settings
@@ -33,11 +36,15 @@
 (display-time-mode t)                            ; Display time in the mode-line
 (global-hl-line-mode t)                          ; Hightlight current line
 (global-whitespace-mode 0)                       ; Hightlight blank characters
+(display-time-mode t)                            ; Enable the time display
 
 
 ;; Goodies
 (global-subword-mode t)                          ; Iterate through CamelCase words
 (mouse-avoidance-mode 'animate)                  ; Move pointer when point reaches cursor location
+
+
+;; FIXME: This messes up on railwaycat's build
 ;; (set-frame-parameter nil 'fullscreen 'fullboth)  ; Pseudo fullscreen (only tested with OS X)
 
 
