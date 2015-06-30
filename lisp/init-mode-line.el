@@ -19,7 +19,7 @@
   :init
   (setq
    powerline-height 18
-   powerline-default-separator (quote slant))
+   powerline-default-separator 'wave)
 
   ;; Define new faces for elements on an active powerline
   (defface my/pl-battery-charging-face '((t (:inherit powerline-active1)))
@@ -31,7 +31,7 @@
   (defface my/pl-buffer-name-face '((t (:inherit powerline-active2)))
     "Face used for the buffer name."
     :group 'powerline)
-  (defface my/pl-buffer-status-face '((t (:inherit powerline-active2)))
+  (defface my/pl-buffer-status-face '((t (:inherit powerline-active1)))
     "Face used for the buffer status."
     :group 'powerline)
   (defface my/pl-major-mode-face '((t (:inherit nil)))
@@ -66,7 +66,7 @@
   (defface my/pl-buffer-name-inactive-face '((t (:inherit powerline-inactive2)))
     "Face used for the buffer name, in an inactive powerline."
     :group 'powerline)
-  (defface my/pl-buffer-status-inactive-face '((t (:inherit powerline-inactive2)))
+  (defface my/pl-buffer-status-inactive-face '((t (:inherit powerline-inactive1)))
     "Face used for the buffer status, in an inactive powerline."
     :group 'powerline)
   (defface my/pl-major-mode-inactive-face '((t (:inherit nil)))
@@ -97,11 +97,14 @@
    '("%e"
      (:eval
       (let* ((active (powerline-selected-window-active))
+
+             ;; NOTE: Will cripple Emacs
+             ;; (charging (string-equal "AC" (cdr (assoc 76 (funcall battery-status-function)))))
+
+             ;; Define faces for mode-line elements
              (mode-line-face (if active 'mode-line 'mode-line-inactive))
              (mode-line-major-face (if active 'powerline-active1 'powerline-inactive1))
              (mode-line-minor-face (if active 'powerline-active2 'powerline-inactive2))
-
-             ;; Define helper faces for mode-line elements
              (battery-charging-face
               (if active 'my/pl-battery-charging-face 'my/pl-battery-charging-inactive-face))
              (battery-discharging-face
@@ -117,7 +120,7 @@
              (time-face (if active 'my/pl-time-face 'my/pl-time-inactive-face))
              (vc-branch-face (if active 'my/pl-vc-branch-face 'my/pl-vc-branch-inactive-face))
 
-             ;; Define helper faces for separators
+             ;; Define faces for separators
              (separator-left (intern (format "powerline-%s-%s"
                                              (powerline-current-separator)
                                              (car powerline-default-separator-dir))))
@@ -137,6 +140,7 @@
                    (powerline-raw (powerline-vc vc-branch-face) vc-branch-face)
 
                    (powerline-raw "]" project-delimiter-face)
+                   (powerline-raw "%+" buffer-status-face 'l)
                    (powerline-raw " " mode-line-major-face)
                    (funcall separator-left mode-line-major-face mode-line-minor-face)
 
@@ -145,7 +149,6 @@
 
                    (powerline-raw ":" line-separator-face)
                    (powerline-raw "%l" line-number-face)
-                   (powerline-raw "%+" buffer-status-face 'l)
                    (when (and (boundp 'which-func-mode) which-func-mode)
                      (powerline-raw which-func-format mode-line-minor-face 'l))))
 
@@ -153,11 +156,13 @@
              (rhs (list
                    (funcall separator-right mode-line-minor-face mode-line-major-face)
                    (powerline-raw " " mode-line-major-face)
+
+                   ;; FIXME: I cannot add a percent character with `battery-mode-line-format'
                    (powerline-raw (concat battery-mode-line-string "%%") battery-discharging-face 'r)
+
                    (funcall separator-right mode-line-major-face mode-line-face)
                    (powerline-raw " " nil)
-                   (powerline-raw display-time-string time-face 'r)
-                   )))
+                   (powerline-raw display-time-string time-face 'r))))
 
         ;; Build the result
         (concat (powerline-render lhs)
@@ -166,7 +171,7 @@
 
   :config
 
-  ;; FIXME: The mode-line is slightly thinner when using Helm. Maybe make Helm use powerline?
+  ;; FIXME: The mode-line is slightly thinner when using Helm. How to make Helm use powerline?
 
   ;; Customize fonts within a mode-line
   (when (member me/font-family-mode-line (font-family-list))
@@ -175,28 +180,30 @@
 
   ;; Customize faces for an active mode-line
   (set-face-attribute 'mode-line nil :foreground zenburn/green+1 :box `(:line-width 2 :color ,zenburn/bg-1))
+  (set-face-attribute 'powerline-active2 nil :background zenburn/bg+0)
   (set-face-attribute 'my/pl-battery-charging-face nil :foreground zenburn/green)
   (set-face-attribute 'my/pl-battery-discharging-face nil :foreground zenburn/red)
-  (set-face-attribute 'my/pl-buffer-name-face nil :foreground zenburn/yellow)
+  (set-face-attribute 'my/pl-buffer-name-face nil :foreground zenburn/green+1)
   (set-face-attribute 'my/pl-buffer-status-face nil :foreground zenburn/red)
   (set-face-attribute 'my/pl-major-mode-face nil :foreground zenburn/fg)
   (set-face-attribute 'my/pl-line-number-face nil :foreground zenburn/fg)
   (set-face-attribute 'my/pl-line-separator-face nil :foreground zenburn/fg)
   (set-face-attribute 'my/pl-project-delimiter-face nil :foreground zenburn/bg+3)
-  (set-face-attribute 'my/pl-project-name-face nil :foreground zenburn/blue-2)
+  (set-face-attribute 'my/pl-project-name-face nil :foreground zenburn/blue-1)
   (set-face-attribute 'my/pl-time-face nil :foreground zenburn/fg)
   (set-face-attribute 'my/pl-vc-branch-face nil :foreground zenburn/bg+3)
 
   ;; Customize faces for an inactive mode-line
   (set-face-attribute 'mode-line-inactive nil :foreground zenburn/fg-1
                       :box `(:line-width 2 :color ,zenburn/bg-0) :slant 'unspecified)
+  (set-face-attribute 'powerline-inactive2 nil :background zenburn/bg+2)
   (set-face-attribute 'my/pl-battery-charging-inactive-face nil :foreground zenburn/yellow)
   (set-face-attribute 'my/pl-battery-discharging-inactive-face nil :foreground zenburn/bg+3)
   (set-face-attribute 'my/pl-buffer-name-inactive-face nil :foreground zenburn/fg)
   (set-face-attribute 'my/pl-buffer-status-inactive-face nil :foreground zenburn/red)
   (set-face-attribute 'my/pl-major-mode-inactive-face nil :foreground zenburn/bg+3)
-  (set-face-attribute 'my/pl-line-number-inactive-face nil :foreground zenburn/bg+1)
-  (set-face-attribute 'my/pl-line-separator-inactive-face nil :foreground zenburn/bg+1)
+  (set-face-attribute 'my/pl-line-number-inactive-face nil :foreground zenburn/bg+0)
+  (set-face-attribute 'my/pl-line-separator-inactive-face nil :foreground zenburn/bg+0)
   (set-face-attribute 'my/pl-project-delimiter-inactive-face nil :foreground zenburn/bg+3)
   (set-face-attribute 'my/pl-project-name-inactive-face nil :foreground zenburn/bg+3)
   (set-face-attribute 'my/pl-time-inactive-face nil :foreground zenburn/bg+3)
