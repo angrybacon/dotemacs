@@ -4,7 +4,7 @@
 
 ;; Author: Syohei YOSHIDA <syohex@gmail.com>
 ;; URL: https://github.com/syohex/emacs-helm-ag
-;; Package-Version: 20150627.2339
+;; Package-Version: 20150629.2352
 ;; Version: 0.39
 ;; Package-Requires: ((helm "1.5.6") (cl-lib "0.5"))
 
@@ -102,6 +102,11 @@ They are specified to `--ignore' options."
   :type 'boolean
   :group 'helm-ag)
 
+(defcustom helm-ag-use-agignore nil
+  "Use .agignore where is at project root if it exists."
+  :type 'boolean
+  :group 'helm-ag)
+
 (defvar helm-ag--command-history '())
 (defvar helm-ag--context-stack nil)
 (defvar helm-ag--default-directory nil)
@@ -115,6 +120,7 @@ They are specified to `--ignore' options."
 (defvar helm-ag--search-this-file-p nil)
 (defvar helm-ag--default-target nil)
 (defvar helm-ag--buffer-search nil)
+(defvar helm-ag--command-feature nil)
 (defvar helm-do-ag--extensions nil)
 
 (defun helm-ag--save-current-context ()
@@ -176,6 +182,13 @@ They are specified to `--ignore' options."
   (cl-loop for target in targets
            collect (file-relative-name target)))
 
+(defun helm-ag--root-agignore ()
+  (let ((root (helm-ag--project-root)))
+    (when root
+      (let ((default-directory root))
+        (when (file-exists-p ".agignore")
+          (expand-file-name (concat default-directory ".agignore")))))))
+
 (defun helm-ag--construct-command (this-file)
   (let* ((commands (split-string helm-ag-base-command nil t))
          (command (car commands))
@@ -183,6 +196,9 @@ They are specified to `--ignore' options."
     (when helm-ag-command-option
       (let ((ag-options (split-string helm-ag-command-option nil t)))
         (setq args (append args ag-options))))
+    (when helm-ag-use-agignore
+      (helm-aif (helm-ag--root-agignore)
+          (setq args (append args (list "-p" it)))))
     (when helm-ag-ignore-patterns
       (setq args (append args (mapcar 'helm-ag--construct-ignore-option
                                       helm-ag-ignore-patterns))))
@@ -631,34 +647,54 @@ Continue searching the parent directory? "))
         (helm :sources (list source) :buffer "*helm-ag*"
               :keymap helm-ag-map)))))
 
-(defsubst helm-ag--join-patterns (input)
-  (mapconcat 'identity (split-string input) ".*"))
+(defun helm-ag--join-patterns (input)
+  (let ((patterns (split-string input)))
+    (if (= (length patterns) 1)
+        (car patterns)
+      (cl-case helm-ag--command-feature
+        (pt input)
+        (pt-regexp (mapconcat 'identity patterns ".*"))
+        (otherwise (mapconcat (lambda (s) (concat "(?=.*" s ".*)")) patterns ""))))))
+
+(defun helm-ag--do-ag-highlight-patterns (input)
+  (if helm-ag--command-feature
+      (list (helm-ag--join-patterns input))
+    (cl-loop with regexp = (helm-ag--pcre-to-elisp-regexp input)
+             for pattern in (split-string regexp)
+             when (helm-ag--validate-regexp pattern)
+             collect pattern)))
 
 (defun helm-ag--do-ag-propertize ()
   (with-helm-window
     (goto-char (point-min))
-    (let ((regexp (helm-ag--pcre-to-elisp-regexp (helm-ag--join-patterns helm-input))))
-      (when (helm-ag--validate-regexp regexp)
-        (cl-loop with one-file-p = (helm-ag--search-only-one-file-p)
-                 while (not (eobp))
-                 do
-                 (progn
-                   (let ((start (point))
-                         (bound (line-end-position))
-                         file-end line-end)
-                     (when (or one-file-p (search-forward ":" bound t))
-                       (setq file-end (1- (point)))
-                       (when (search-forward ":" bound t)
-                         (setq line-end (1- (point)))
-                         (unless one-file-p
-                           (set-text-properties start file-end '(face helm-moccur-buffer)))
-                         (set-text-properties (1+ file-end) line-end
-                                              '(face helm-grep-lineno))
+    (let ((patterns (helm-ag--do-ag-highlight-patterns helm-input)))
+      (cl-loop with one-file-p = (helm-ag--search-only-one-file-p)
+               while (not (eobp))
+               do
+               (progn
+                 (let ((start (point))
+                       (bound (line-end-position))
+                       file-end line-end)
+                   (when (or one-file-p (search-forward ":" bound t))
+                     (setq file-end (1- (point)))
+                     (when (search-forward ":" bound t)
+                       (setq line-end (1- (point)))
+                       (unless one-file-p
+                         (set-text-properties start file-end '(face helm-moccur-buffer)))
+                       (set-text-properties (1+ file-end) line-end
+                                            '(face helm-grep-lineno))
 
-                         (when (re-search-forward regexp bound t)
-                           (set-text-properties (match-beginning 0) (match-end 0)
-                                                '(face helm-match))))))
-                   (forward-line 1)))))
+                       (let ((curpoint (point)))
+                         (dolist (pattern patterns)
+                           (let ((last-point (point)))
+                             (while (re-search-forward pattern bound t)
+                               (set-text-properties (match-beginning 0) (match-end 0)
+                                                    '(face helm-match))
+                               (when (= last-point (point))
+                                 (forward-char 1))
+                               (setq last-point (point)))
+                             (goto-char curpoint)))))))
+                 (forward-line 1))))
     (goto-char (point-min))
     (helm-display-mode-line (helm-get-current-source))))
 
@@ -676,6 +712,9 @@ Continue searching the parent directory? "))
       (setq cmds (append cmds (split-string helm-ag-command-option nil t))))
     (when helm-ag--extra-options
       (setq cmds (append cmds (split-string helm-ag--extra-options))))
+    (when helm-ag-use-agignore
+      (helm-aif (helm-ag--root-agignore)
+          (setq cmds (append cmds (list "-p" it)))))
     (when helm-do-ag--extensions
       (setq cmds (append cmds (helm-ag--construct-extension-options))))
     (setq cmds (append cmds (list "--" (helm-ag--join-patterns pattern))))
@@ -757,6 +796,13 @@ Continue searching the parent directory? "))
                                'helm-ag--extra-options-history)))
       (setq helm-ag--extra-options option))))
 
+(defun helm-ag--set-command-feature ()
+  (setq helm-ag--command-feature
+        (when (string-prefix-p "pt" helm-ag-base-command)
+          (if (string-match-p "-e" helm-ag-base-command)
+              'pt-regexp
+            'pt))))
+
 (defun helm-ag--do-ag-searched-extensions ()
   (when (and current-prefix-arg (= (abs (prefix-numeric-value current-prefix-arg)) 4))
     (helm-grep-get-file-extensions helm-ag--default-target)))
@@ -795,6 +841,7 @@ Continue searching the parent directory? "))
          (one-directory-p (helm-do-ag--is-target-one-directory-p
                            helm-ag--default-target)))
     (helm-ag--set-do-ag-option)
+    (helm-ag--set-command-feature)
     (helm-ag--save-current-context)
     (helm-attrset 'search-this-file this-file helm-source-do-ag)
     (helm-attrset 'name (helm-ag--helm-header helm-ag--default-directory)

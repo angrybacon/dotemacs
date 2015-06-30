@@ -48,7 +48,7 @@
 		     ((:url . "http://github.com/Malabarba/aggressive-indent-mode")
 		      (:keywords "indent" "lisp" "maint" "tools"))])
  (ahungry-theme .
-		[(1 0 6)
+		[(1 0 7)
 		 ((emacs
 		   (24)))
 		 "Ahungry color theme for Emacs.  Make sure to (load-theme 'ahungry)." tar
@@ -553,7 +553,7 @@
 	     ((:url . "http://elpa.gnu.org/packages/svg-clock.html")
 	      (:keywords "demo" "svg" "clock"))])
  (swiper .
-	 [(0 4 1)
+	 [(0 5 1)
 	  ((emacs
 	    (24 1)))
 	  "Isearch with an overview. Oh, man!" tar
