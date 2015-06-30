@@ -66,7 +66,7 @@ website.
 [flycheck]: https://github.com/flycheck/flycheck
 [helm]: https://github.com/emacs-helm/helm
 [magit]: https://github.com/magit/magit
-[mutliple-cursors]: https://github.com/magnars/multiple-cursors.el
+[multiple-cursors]: https://github.com/magnars/multiple-cursors.el
 [powerline]: https://github.com/milkypostman/powerline
 [projectile]: https://github.com/bbatsov/projectile
 [smartparens]: https://github.com/Fuco1/smartparens
