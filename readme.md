@@ -96,7 +96,7 @@ Flycheck
 --------
 
 
-I use [flycheck][flycheck] as linter framework to display syntax warnings and errors whithin each buffer. See
+I use [`flycheck`][flycheck] as linter framework to display syntax warnings and errors whithin each buffer. See
 below for the linters I personally use:
 
 ```bash
