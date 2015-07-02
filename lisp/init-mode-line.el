@@ -167,7 +167,8 @@
     (set-face-attribute 'mode-line-inactive nil :font me/font-family-mode-line :height me/font-size-mode-line))
 
   ;; Customize faces for an active mode-line
-  (set-face-attribute 'mode-line nil :foreground zenburn/green+1 :box `(:line-width 2 :color ,zenburn/bg-1))
+  (set-face-attribute 'mode-line nil :background zenburn/bg-1 :box `(:line-width 2 :color ,zenburn/bg-1))
+  (set-face-attribute 'powerline-active1 nil :background zenburn/bg-0)
   (set-face-attribute 'powerline-active2 nil :background zenburn/bg+0)
   (set-face-attribute 'my/pl-battery-face nil :foreground zenburn/bg+3)
   (set-face-attribute 'my/pl-battery-charging-face nil :foreground zenburn/green)
@@ -183,17 +184,18 @@
   (set-face-attribute 'my/pl-vc-branch-face nil :foreground zenburn/bg+3)
 
   ;; Customize faces for an inactive mode-line
-  (set-face-attribute 'mode-line-inactive nil :foreground zenburn/fg-1
-                      :box `(:line-width 2 :color ,zenburn/bg-0) :slant 'unspecified)
-  (set-face-attribute 'powerline-inactive2 nil :background zenburn/bg+2)
+  (set-face-attribute 'mode-line-inactive nil :background zenburn/bg-0
+                      :box `(:line-width 2 :color ,zenburn/bg-0))
+  (set-face-attribute 'powerline-inactive1 nil :background zenburn/bg+0)
+  (set-face-attribute 'powerline-inactive2 nil :background zenburn/bg+1)
   (set-face-attribute 'my/pl-battery-inactive-face nil :foreground zenburn/bg+3)
   (set-face-attribute 'my/pl-battery-charging-inactive-face nil :foreground zenburn/bg+3)
   (set-face-attribute 'my/pl-battery-discharging-inactive-face nil :foreground zenburn/bg+3)
   (set-face-attribute 'my/pl-buffer-name-inactive-face nil :foreground zenburn/fg)
   (set-face-attribute 'my/pl-buffer-status-inactive-face nil :foreground zenburn/red)
   (set-face-attribute 'my/pl-major-mode-inactive-face nil :foreground zenburn/bg+3)
-  (set-face-attribute 'my/pl-line-number-inactive-face nil :foreground zenburn/bg+0)
-  (set-face-attribute 'my/pl-line-separator-inactive-face nil :foreground zenburn/bg+0)
+  (set-face-attribute 'my/pl-line-number-inactive-face nil :foreground zenburn/bg)
+  (set-face-attribute 'my/pl-line-separator-inactive-face nil :foreground zenburn/bg)
   (set-face-attribute 'my/pl-project-delimiter-inactive-face nil :foreground zenburn/bg+3)
   (set-face-attribute 'my/pl-project-name-inactive-face nil :foreground zenburn/bg+3)
   (set-face-attribute 'my/pl-time-inactive-face nil :foreground zenburn/bg+3)
