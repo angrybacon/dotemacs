@@ -18,6 +18,7 @@
   ("C-c g" . magit-status)
   :config
   (when (member me/font-family-header (font-family-list))
+    (set-face-attribute 'magit-popup-heading nil :font me/font-family-header :height me/font-size-header)
     (set-face-attribute 'magit-section-heading nil :font me/font-family-header :height me/font-size-header))
   (set-face-attribute 'magit-diff-added nil :background zenburn/green-1 :foreground zenburn/green+2)
   (set-face-attribute 'magit-diff-added-highlight nil :background zenburn/green-1 :foreground zenburn/green+2)
