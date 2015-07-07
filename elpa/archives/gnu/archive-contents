@@ -48,7 +48,7 @@
 		     ((:url . "http://github.com/Malabarba/aggressive-indent-mode")
 		      (:keywords "indent" "lisp" "maint" "tools"))])
  (ahungry-theme .
-		[(1 0 7)
+		[(1 0 8)
 		 ((emacs
 		   (24)))
 		 "Ahungry color theme for Emacs.  Make sure to (load-theme 'ahungry)." tar
@@ -447,7 +447,7 @@
 	    ((:url . "http://elpa.gnu.org/packages/omn-mode.html")
 	     (:keywords))])
  (org .
-      [(20150629)
+      [(20150706)
        nil "Outline-based notes management and organizer" tar nil])
  (osc .
       [(0 1)
