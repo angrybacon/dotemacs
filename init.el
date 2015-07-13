@@ -97,6 +97,7 @@
 (require 'init-semantic)
 (require 'init-shell)
 (require 'init-whitespace)
+(require 'init-yaml)
 
 
 ;; Add custom binds
