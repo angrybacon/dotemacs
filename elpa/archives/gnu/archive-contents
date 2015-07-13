@@ -48,7 +48,7 @@
 		     ((:url . "http://github.com/Malabarba/aggressive-indent-mode")
 		      (:keywords "indent" "lisp" "maint" "tools"))])
  (ahungry-theme .
-		[(1 0 8)
+		[(1 0 9)
 		 ((emacs
 		   (24)))
 		 "Ahungry color theme for Emacs.  Make sure to (load-theme 'ahungry)." tar
@@ -156,7 +156,7 @@
 	 ((:url . "http://elpa.gnu.org/packages/crisp.html")
 	  (:keywords "emulations" "brief" "crisp"))])
  (csv-mode .
-	   [(1 4)
+	   [(1 5)
 	    nil "Major mode for editing comma/char separated values" single
 	    ((:url . "http://centaur.maths.qmul.ac.uk/Emacs/")
 	     (:keywords "convenience"))])
@@ -334,7 +334,7 @@
 	       ((:url . "http://elpa.gnu.org/packages/jgraph-mode.html")
 		(:keywords "tex" "wp"))])
  (js2-mode .
-	   [(20150202)
+	   [(20150713)
 	    ((emacs
 	      (24 1))
 	     (cl-lib
@@ -347,6 +347,11 @@
 	 nil "jump to previous insertion points" single
 	 ((:url . "http://elpa.gnu.org/packages/jumpc.html")
 	  (:keywords))])
+ (landmark .
+	   [(1 0)
+	    nil "Neural-network robot that learns landmarks" single
+	    ((:url . "http://elpa.gnu.org/packages/landmark.html")
+	     (:keywords "games" "neural network" "adaptive search" "chemotaxis"))])
  (let-alist .
 	    [(1 0 4)
 	     nil "Easily let-bind values of an assoc-list by their names" single
@@ -447,7 +452,7 @@
 	    ((:url . "http://elpa.gnu.org/packages/omn-mode.html")
 	     (:keywords))])
  (org .
-      [(20150706)
+      [(20150713)
        nil "Outline-based notes management and organizer" tar nil])
  (osc .
       [(0 1)
@@ -500,7 +505,7 @@
 		  ((:url . "http://elpa.gnu.org/packages/scroll-restore.html")
 		   (:keywords "scrolling"))])
  (seq .
-      [(1 7)
+      [(1 8)
        nil "Sequence manipulation functions" single
        ((:url . "http://elpa.gnu.org/packages/seq.html")
 	(:keywords "sequences"))])
