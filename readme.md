@@ -107,4 +107,10 @@ pip install flake8
 gem install scss_lint scss_lint_reporter_checkstyle
 ```
 
+You can configure the way linters check buffers with their own configuration files. You may refer to their
+documentation.
+
+- `flake8`: `~/.flake8rc`
+- `scss-lint`: `~/.scss-lint.yml`
+
 [flycheck]: https://github.com/flycheck/flycheck
