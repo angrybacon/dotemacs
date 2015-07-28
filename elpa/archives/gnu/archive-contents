@@ -414,7 +414,7 @@
 	((:keywords "hypermedia")
 	 (:url . "http://mwolson.org/projects/EmacsMuse.html"))])
  (names .
-	[(20150618 0)
+	[(20150723 0)
 	 ((emacs
 	   (24 1))
 	  (cl-lib
@@ -452,7 +452,7 @@
 	    ((:url . "http://elpa.gnu.org/packages/omn-mode.html")
 	     (:keywords))])
  (org .
-      [(20150713)
+      [(20150727)
        nil "Outline-based notes management and organizer" tar nil])
  (osc .
       [(0 1)
@@ -636,7 +636,7 @@
 	      ((:keywords "http" "server" "network")
 	       (:url . "https://github.com/eschulte/emacs-web-server"))])
  (websocket .
-	    [(1 4)
+	    [(1 5)
 	     nil "Emacs WebSocket client and server" tar
 	     ((:keywords "communication" "websocket" "server")
 	      (:url . "http://elpa.gnu.org/packages/websocket.html"))])

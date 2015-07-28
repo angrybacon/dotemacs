@@ -25,6 +25,7 @@
         sp-unwrap-sexp
         subword-left
         subword-right
+        tab-to-tab-stop
         ))
 
 (setq mc/cmds-to-run-once
