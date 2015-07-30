@@ -6,8 +6,9 @@
 ;; https://github.com/antonio/delight.el
 (use-package delight
   :init
-  (delight '((emacs-lisp-mode "Emacs Lisp")
-             (lisp-interaction-mode "Lisp Interaction")
+  ;; FIXME: Doesn't work
+  (delight '((emacs-lisp-mode "Emacs Lisp Test")
+             (lisp-interaction-mode "Lisp Interaction Test")
              (magit-mode "Magit Test")
              (magit-commit-mode "Magit Commit Test")
              (magit-log-mode "Magit Log Test")
