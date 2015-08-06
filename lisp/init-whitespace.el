@@ -1,13 +1,21 @@
 ;;─────────────────────────────────────────────────────────────────────────────
+;; Beginning of init-whitespace.el
+;;─────────────────────────────────────────────────────────────────────────────
+
+
+(require 'use-package)
+(defvar zenburn/bg+2)
+(defvar zenburn/bg+1)
+(defvar zenburn/red)
+
+
+;;─────────────────────────────────────────────────────────────────────────────
 ;; Visualize blank characters
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
 ;; Built-in
 (use-package whitespace
-  :init
-  (setq whitespace-style
-        '(face tabs spaces trailing space-before-tab indentation empty space-after-tab space-mark tab-mark))
   :config
   (set-face-attribute 'whitespace-empty nil :background zenburn/bg+1)
   (set-face-attribute 'whitespace-indentation nil :background zenburn/bg+1 :foreground zenburn/red)
@@ -19,7 +27,7 @@
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-whitespace.el
+;; End of init-whitespace.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 

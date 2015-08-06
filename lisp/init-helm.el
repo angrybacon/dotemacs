@@ -1,4 +1,20 @@
 ;;─────────────────────────────────────────────────────────────────────────────
+;; Beginning of init-helm.el
+;;─────────────────────────────────────────────────────────────────────────────
+
+
+(require 'use-package)
+(defvar me/font-family-default)
+(defvar me/font-family-header)
+(defvar me/font-size-default)
+(defvar me/font-size-header)
+(defvar zenburn/bg)
+(defvar zenburn/blue)
+(defvar zenburn/green+2)
+(defvar zenburn/red)
+
+
+;;─────────────────────────────────────────────────────────────────────────────
 ;; Add incremental completion and selection narrowing
 ;;─────────────────────────────────────────────────────────────────────────────
 
@@ -8,8 +24,8 @@
   :ensure t
   :init
   (setq
-   helm-mode-line-string ""
-   helm-google-suggest-use-curl-p t)
+   helm-google-suggest-use-curl-p t
+   helm-mode-line-string "")
   :bind
   (("C-c h b" . helm-buffers-list)
    ("C-c h m" . helm-imenu)
@@ -30,7 +46,7 @@
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-helm.el
+;; End of init-helm.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 

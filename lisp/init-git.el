@@ -1,4 +1,18 @@
 ;;─────────────────────────────────────────────────────────────────────────────
+;; Beginning of init-git.el
+;;─────────────────────────────────────────────────────────────────────────────
+
+
+(require 'use-package)
+(defvar me/font-family-header)
+(defvar me/font-size-header)
+(defvar zenburn/red)
+(defvar zenburn/red-4)
+(defvar zenburn/green+2)
+(defvar zenburn/green-1)
+
+
+;;─────────────────────────────────────────────────────────────────────────────
 ;; Add support for Git operations
 ;;─────────────────────────────────────────────────────────────────────────────
 
@@ -9,11 +23,7 @@
   :init
   (setq
    magit-refs-show-commit-count (quote all)
-   magit-section-show-child-count t
-   ;; magit-last-seen-setup-instructions "1.4.0"
-   ;; magit-stage-all-confirm nil
-   ;; magit-unstage-all-confirm nil
-   )
+   magit-section-show-child-count t)
   :bind
   ("C-c g" . magit-status)
   :config
@@ -36,7 +46,7 @@
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-git.el
+;; End of init-git.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 

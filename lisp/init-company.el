@@ -1,4 +1,12 @@
 ;;─────────────────────────────────────────────────────────────────────────────
+;; Beginning of init-company.el
+;;─────────────────────────────────────────────────────────────────────────────
+
+
+(require 'use-package)
+
+
+;;─────────────────────────────────────────────────────────────────────────────
 ;; Add support for autocompletion
 ;;─────────────────────────────────────────────────────────────────────────────
 
@@ -8,8 +16,8 @@
   :ensure t
   :init
   (setq
-   company-minimum-prefix-length 1
-   company-idle-delay 0.1)
+   company-idle-delay 0.1
+   company-minimum-prefix-length 1)
   (add-hook 'emacs-lisp-mode-hook 'company-mode)
   (add-hook 'html-mode-hook 'company-mode)
   (add-hook 'python-mode-hook 'company-mode)
@@ -20,7 +28,7 @@
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-company.el
+;; End of init-company.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 

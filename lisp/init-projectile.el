@@ -1,4 +1,12 @@
 ;;─────────────────────────────────────────────────────────────────────────────
+;; Beginning of init-projectile.el
+;;─────────────────────────────────────────────────────────────────────────────
+
+
+(require 'use-package)
+
+
+;;─────────────────────────────────────────────────────────────────────────────
 ;; Add support for project management
 ;;─────────────────────────────────────────────────────────────────────────────
 
@@ -9,7 +17,6 @@
   :init
   (setq
    projectile-enable-caching t
-   projectile-remember-window-configs t
    projectile-mode-line '(:eval (format " %s" (projectile-project-name))))
   :config
 

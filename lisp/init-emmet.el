@@ -1,4 +1,12 @@
 ;;─────────────────────────────────────────────────────────────────────────────
+;; Beginning of init-emmet.el
+;;─────────────────────────────────────────────────────────────────────────────
+
+
+(require 'use-package)
+
+
+;;─────────────────────────────────────────────────────────────────────────────
 ;; Add Emmet support
 ;;─────────────────────────────────────────────────────────────────────────────
 
@@ -8,8 +16,8 @@
   :ensure t
   :init
   (setq
-   emmet-preview-default nil
-   emmet-move-cursor-between-quotes t)
+   emmet-move-cursor-between-quotes t
+   emmet-preview-default nil)
   (add-hook 'css-mode-hook 'emmet-mode)
   (add-hook 'sgml-mode-hook 'emmet-mode)
   (add-hook 'web-mode-hook 'emmet-mode)
@@ -19,7 +27,7 @@
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-emmet.el
+;; End of init-emmet.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 

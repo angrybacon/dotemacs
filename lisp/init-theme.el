@@ -1,4 +1,23 @@
 ;;─────────────────────────────────────────────────────────────────────────────
+;; Beginning of init-theme.el
+;;─────────────────────────────────────────────────────────────────────────────
+
+
+(require 'use-package)
+(defvar me/font-family-default)
+(defvar me/font-size-default)
+(defvar zenburn/bg+2)
+(defvar zenburn/bg+0)
+(defvar zenburn/bg)
+(defvar zenburn/bg-1)
+(defvar zenburn/bg-2)
+(defvar zenburn/fg-1)
+(defvar zenburn/green+2)
+(defvar zenburn/green)
+(defvar zenburn/green-1)
+
+
+;;─────────────────────────────────────────────────────────────────────────────
 ;; Set the color theme
 ;;─────────────────────────────────────────────────────────────────────────────
 

@@ -1,4 +1,12 @@
 ;;─────────────────────────────────────────────────────────────────────────────
+;; Beginning of init-html.el
+;;─────────────────────────────────────────────────────────────────────────────
+
+
+(require 'use-package)
+
+
+;;─────────────────────────────────────────────────────────────────────────────
 ;; Configure Emacs for HTML buffers
 ;;─────────────────────────────────────────────────────────────────────────────
 
@@ -16,17 +24,15 @@
   :delight web-mode "Web"
   :init
   (setq
-   web-mode-markup-indent-offset 2
+   web-mode-code-indent-offset 2
    web-mode-css-indent-offset 2
-   web-mode-code-indent-offset 2)
-  ;; (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+   web-mode-markup-indent-offset 2)
   :bind
   ("M-;" . comment-dwim))
 
 
-
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-html.el
+;; End of init-html.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 

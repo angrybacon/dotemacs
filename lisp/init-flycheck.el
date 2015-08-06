@@ -1,4 +1,14 @@
 ;;─────────────────────────────────────────────────────────────────────────────
+;; Beginning of init-flycheck.el
+;;─────────────────────────────────────────────────────────────────────────────
+
+
+(require 'use-package)
+(defvar zenburn/orange)
+(defvar zenburn/red-2)
+
+
+;;─────────────────────────────────────────────────────────────────────────────
 ;; Add support for on-the-fly snytax checking
 ;;─────────────────────────────────────────────────────────────────────────────
 
@@ -7,12 +17,13 @@
 (use-package flycheck
   :ensure t
   :init
-  (setq flycheck-check-syntax-automatically '(save mode-enabled)
-        flycheck-flake8rc "~/.flake8rc"
-        flycheck-pylintrc "~/.pylintrc")
+  (setq
+   flycheck-check-syntax-automatically '(save mode-enabled)
+   flycheck-flake8rc "~/.flake8rc"
+   flycheck-pylintrc "~/.pylintrc")
   ;; TODO: Find a linter for JavaScript
   ;; TODO: Fix linters for HTML and Emacs Lisp
-  ;; (add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
+  (add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
   ;; (add-hook 'html-mode-hook 'flycheck-mode)
   (add-hook 'python-mode-hook 'flycheck-mode)
   (add-hook 'scss-mode-hook 'flycheck-mode)
@@ -25,7 +36,7 @@
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-flycheck.elé
+;; End of init-flycheck.elé
 ;;─────────────────────────────────────────────────────────────────────────────
 
 

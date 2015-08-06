@@ -1,42 +1,49 @@
 ;;─────────────────────────────────────────────────────────────────────────────
+;; Beginning of init-interface.el
+;;─────────────────────────────────────────────────────────────────────────────
+
+
+(defvar me/initial-buffer)
+
+
+;;─────────────────────────────────────────────────────────────────────────────
 ;; Initialize the interface settings
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
 ;; Global default settings
 (setq-default
- show-trailing-whitespace t                      ; Display trailing whitespaces
+ battery-mode-line-format "%p"                   ; Format the battery level string
+ display-time-default-load-average nil           ; Hide the time load
+ display-time-format "%H:%M"                     ; Format the time string
  indent-tabs-mode nil                            ; Stop using tabs to indent
  indicate-empty-lines t                          ; Indicate empty line in the fringe
- battery-mode-line-format "%p"                   ; Format the battery level string
- display-time-format "%H:%M"                     ; Format the time string
- display-time-default-load-average nil)          ; Hide the time load
+ show-trailing-whitespace t)                     ; Display trailing whitespaces
 
 
 ;; Buffer local settings
 (setq
+ ad-redefinition-action 'accept                  ; Turn off the warnings due to functions being redefined
  inhibit-startup-screen t                        ; Remove start-up screen
  initial-buffer-choice me/initial-buffer         ; Open specified file on start-up
- scroll-step 1                                   ; Line by line scrolling
- default-tab-width 4                             ; Set width for tabs
- x-select-enable-clipboard t                     ; Merge both system's and Emacs' clipboard
- sgml-basic-offset 4                             ; Set indent to 4 spaces
  mouse-yank-at-point t                           ; Yank at mouse cursor rather than click location
- ad-redefinition-action 'accept)                 ; Turn off the warnings due to functions being redefined
+ scroll-step 1                                   ; Line by line scrolling
+ ;; sgml-basic-offset 4                             ; Set indent to 4 spaces
+ tab-width 4                                     ; Set width for tabs
+ x-select-enable-clipboard t)                    ; Merge both system's and Emacs' clipboard
 
 
 ;; Toggle interface elements
-(scroll-bar-mode -1)                             ; Disable scroll bar
-(menu-bar-mode nil)                              ; Disable menu bar
-(tool-bar-mode -1)                               ; Disable the toolbar
-(fringe-mode '(12 . 0))                          ; Display left fringe
-(line-number-mode t)                             ; Display line number of the cursor current position
 (column-number-mode nil)                         ; Hide column number of the cursor current position
 (display-battery-mode t)                         ; Display battery level in the mode-line
-(display-time-mode t)                            ; Display time in the mode-line
+(display-time-mode t)                            ; Enable the time representation
+(fringe-mode '(12 . 0))                          ; Display left fringe
 (global-hl-line-mode t)                          ; Hightlight current line
 (global-whitespace-mode 0)                       ; Hightlight blank characters
-(display-time-mode t)                            ; Enable the time display
+(line-number-mode t)                             ; Display line number of the cursor current position
+(menu-bar-mode nil)                              ; Disable menu bar
+(scroll-bar-mode -1)                             ; Disable scroll bar
+(tool-bar-mode -1)                               ; Disable the toolbar
 
 
 ;; Goodies

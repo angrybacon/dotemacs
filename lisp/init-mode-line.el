@@ -1,4 +1,27 @@
 ;;─────────────────────────────────────────────────────────────────────────────
+;; Beginning of init-mode-line.el
+;;─────────────────────────────────────────────────────────────────────────────
+
+
+(require 'use-package)
+(defvar me/font-family-mode-line)
+(defvar me/font-size-mode-line)
+(defvar zenburn/bg+3)
+(defvar zenburn/bg+1)
+(defvar zenburn/bg+0)
+(defvar zenburn/bg-0)
+(defvar zenburn/bg-1)
+(defvar zenburn/blue+1)
+(defvar zenburn/blue-1)
+(defvar zenburn/fg)
+(defvar zenburn/green+1)
+(defvar zenburn/green)
+(defvar zenburn/orange)
+(defvar zenburn/red+1)
+(defvar zenburn/red)
+
+
+;;─────────────────────────────────────────────────────────────────────────────
 ;; Customize the mode line
 ;;─────────────────────────────────────────────────────────────────────────────
 
@@ -6,21 +29,21 @@
 ;; https://github.com/antonio/delight.el
 (use-package delight
   :init
-  ;; FIXME: Doesn't work
-  (delight '((emacs-lisp-mode "Emacs Lisp Test")
-             (lisp-interaction-mode "Lisp Interaction Test")
-             (magit-mode "Magit Test")
-             (magit-commit-mode "Magit Commit Test")
-             (magit-log-mode "Magit Log Test")
-             (magit-popup-mode "Magit Popup Test")
-             (magit-status-mode "Magit Status Test"))))
+  (delight '((emacs-lisp-mode "Emacs Lisp")
+             (lisp-interaction-mode "Lisp Interaction")
+             (magit-mode "Magit")
+             (magit-commit-mode "Magit Commit")
+             (magit-log-mode "Magit Log")
+             (magit-popup-mode "Magit Popup")
+             (magit-status-mode "Magit Status"))))
 
 
 ;; https://github.com/milkypostman/powerline
 (use-package powerline
   :init
-  (setq powerline-height 18
-        powerline-default-separator 'wave)
+  (setq
+   powerline-default-separator 'wave
+   powerline-height 18)
 
   ;; Define new faces for elements on an active powerline
   (defface me/pl-battery-face '((t (:inherit powerline-active1)))
@@ -284,7 +307,7 @@
 
 
 ;;─────────────────────────────────────────────────────────────────────────────
-;; End init-mode-line.el
+;; End of init-mode-line.el
 ;;─────────────────────────────────────────────────────────────────────────────
 
 
