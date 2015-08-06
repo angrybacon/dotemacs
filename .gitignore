@@ -4,6 +4,7 @@
 
 # Emacs
 *~
+.dir-locals.el
 auto-save-list/
 
 
