@@ -1805,7 +1805,7 @@ to `projectile-grep-default-files'."
                (fboundp 'vc-git-grep))
           (vc-git-grep search-regexp (or files "") root-dir)
         ;; paths for find-grep should relative and without trailing /
-        (let ((grep-find-ignored-directories
+        (let ((grep-ignored-directories
                (-union (--map (directory-file-name (file-relative-name it root-dir))
                               (projectile-ignored-directories))
                        grep-find-ignored-directories))

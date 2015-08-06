@@ -452,7 +452,7 @@
 	    ((:url . "http://elpa.gnu.org/packages/omn-mode.html")
 	     (:keywords))])
  (org .
-      [(20150727)
+      [(20150803)
        nil "Outline-based notes management and organizer" tar nil])
  (osc .
       [(0 1)
@@ -628,6 +628,13 @@
 	       nil "General interface for text checkers" single
 	       ((:url . "https://github.com/tlikonen/wcheck-mode")
 		(:keywords "text" "spell" "check" "languages" "ispell"))])
+ (wconf .
+	[(0 2 0)
+	 ((emacs
+	   (24 4)))
+	 "Minimal window layout manager" single
+	 ((:url . "https://github.com/ilohmar/wconf")
+	  (:keywords "windows" "frames" "layout"))])
  (web-server .
 	     [(0 1 1)
 	      ((emacs
