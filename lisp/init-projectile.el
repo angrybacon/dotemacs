@@ -14,6 +14,8 @@
   :config
 
   (use-package helm-projectile
+    :init
+    (require 'grep)
     :config
     (helm-projectile-on))
 
