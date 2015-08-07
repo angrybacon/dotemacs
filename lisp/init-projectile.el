@@ -7,6 +7,7 @@
 
 
 (defvar project-name nil)
+(put 'project-name 'safe-local-variable #'stringp)
 
 
 (defun projectile-project-name--prefer-mine (orig-fun &rest args)
