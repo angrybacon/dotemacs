@@ -4,6 +4,8 @@
 
 
 (require 'use-package)
+
+
 (defvar semantic-idle-breadcrumbs-separator)
 (defvar semanticdb-default-save-directory)
 

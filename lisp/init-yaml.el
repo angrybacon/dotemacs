@@ -13,7 +13,7 @@
 
 ;; https://github.com/yoshiki/yaml-mode
 (use-package yaml-mode
-  :delight yaml-mode "YAML Test"
+  :delight yaml-mode "YAML"
   :init (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 
 
