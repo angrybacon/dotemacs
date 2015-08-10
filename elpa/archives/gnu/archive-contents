@@ -37,7 +37,7 @@
 		 nil "Indent and dedent Lisp code, automatically adjust close parens" tar
 		 ((:url . "http://elpa.gnu.org/packages/adjust-parens.html"))])
  (aggressive-indent .
-		    [(1 1)
+		    [(1 1 2)
 		     ((emacs
 		       (24 1))
 		      (names
@@ -65,7 +65,7 @@
 			((:url . "http://www.gnuvola.org/software/aa2u/")
 			 (:keywords "ascii" "unicode" "box-drawing"))])
  (auctex .
-	 [(11 88 6)
+	 [(11 88 7)
 	  nil "Integrated environment for *TeX*" tar
 	  ((:url . "http://www.gnu.org/software/auctex/"))])
  (aumix-mode .
@@ -227,6 +227,15 @@
 	     nil "Emacs Does Interactive Prolog" single
 	     ((:url . "http://elpa.gnu.org/packages/ediprolog.html")
 	      (:keywords "languages" "processes"))])
+ (el-search .
+	    [(0 0 2)
+	     ((emacs
+	       (25))
+	      (cl-lib
+	       (0)))
+	     "Expression based incremental search for emacs-lisp-mode" single
+	     ((:url . "http://elpa.gnu.org/packages/el-search.html")
+	      (:keywords "lisp"))])
  (eldoc-eval .
 	     [(0 1)
 	      nil "Enable eldoc support when minibuffer is in use." single
@@ -447,12 +456,12 @@
 	  ((:url . "http://elpa.gnu.org/packages/oauth2.html")
 	   (:keywords "comm"))])
  (omn-mode .
-	   [(1 0)
+	   [(1 1)
 	    nil "Support for OWL Manchester Notation" single
 	    ((:url . "http://elpa.gnu.org/packages/omn-mode.html")
 	     (:keywords))])
  (org .
-      [(20150803)
+      [(20150805)
        nil "Outline-based notes management and organizer" tar nil])
  (osc .
       [(0 1)
@@ -460,7 +469,7 @@
        ((:url . "http://elpa.gnu.org/packages/osc.html")
 	(:keywords "comm" "processes" "multimedia"))])
  (pabbrev .
-	  [(4 2)
+	  [(4 2 1)
 	   nil "Predictive abbreviation expansion" single
 	   ((:url . "http://elpa.gnu.org/packages/pabbrev.html")
 	    (:keywords))])
@@ -530,7 +539,7 @@
 	   ((:keywords "games")
 	    (:url . "http://elpa.gnu.org/packages/sokoban.html"))])
  (sotlisp .
-	  [(1 1)
+	  [(1 2)
 	   ((emacs
 	     (24 1)))
 	   "Write lisp at the speed of thought." single
