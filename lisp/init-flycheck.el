@@ -24,9 +24,9 @@
    flycheck-flake8rc "~/.flake8rc"
    flycheck-pylintrc "~/.pylintrc")
   ;; TODO: Find a linter for JavaScript
-  ;; TODO: Fix linters for HTML and Emacs Lisp
+  ;; TODO: Fix linters for HTML
   (add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
-  ;; (add-hook 'html-mode-hook 'flycheck-mode)
+  (add-hook 'html-mode-hook 'flycheck-mode)
   (add-hook 'python-mode-hook 'flycheck-mode)
   (add-hook 'scss-mode-hook 'flycheck-mode)
   :config
