@@ -10,6 +10,7 @@
 
 (define-skeleton me/header-for-python
   "Prompt the user for package information and build a header with it."
+
   ""
   > "# -*- coding: utf-8 -*-" \n \n \n
   > "__author__ = " user-full-name \n

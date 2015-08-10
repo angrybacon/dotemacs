@@ -40,10 +40,13 @@
 
 ;; https://github.com/magit/git-modes
 (use-package gitattributes-mode
+  :ensure t
   :delight gitattributes-mode "Git Attributes")
 (use-package gitconfig-mode
+  :ensure t
   :delight gitconfig-mode "Git Config")
 (use-package gitignore-mode
+  :ensure t
   :delight gitignore-mode "Git Ignore")
 
 

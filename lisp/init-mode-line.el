@@ -30,6 +30,7 @@
 
 ;; https://github.com/antonio/delight.el
 (use-package delight
+  :ensure t
   :init
   (delight '((emacs-lisp-mode "Emacs Lisp")
              (lisp-interaction-mode "Lisp Interaction")
@@ -42,6 +43,7 @@
 
 ;; https://github.com/milkypostman/powerline
 (use-package powerline
+  :ensure t
   :init
   (setq
    powerline-default-separator 'wave
@@ -255,6 +257,7 @@
   ;; Colorize the battery load string on update
   (defadvice battery-update (before me/pl-colorize-battery-advice activate)
     "Colorize the battery load string depending on its status (dis/charging)."
+
     (if (string-equal "AC" (cdr (assoc 76 (funcall battery-status-function))))
         (copy-face 'me/pl-battery-charging-face 'me/pl-battery-face)
       (copy-face 'me/pl-battery-discharging-face 'me/pl-battery-face)))
