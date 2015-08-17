@@ -88,7 +88,7 @@
        ((:keywords "point" "location")
 	(:url . "https://github.com/abo-abo/avy"))])
  (bug-hunter .
-	     [(0 5)
+	     [(1 0)
 	      ((seq
 		(1 3))
 	       (cl-lib
@@ -461,13 +461,24 @@
 	    ((:url . "http://elpa.gnu.org/packages/omn-mode.html")
 	     (:keywords))])
  (org .
-      [(20150805)
-       nil "Outline-based notes management and organizer" tar nil])
+      [(8 3 1)
+       ((emacs
+	 (23 2)))
+       "Outline-based notes management and organizer" tar
+       ((:keywords "outlines" "hypermedia" "calendar" "wp")
+	(:url . "http://orgmode.org"))])
  (osc .
       [(0 1)
        nil "Open Sound Control protocol library" single
        ((:url . "http://elpa.gnu.org/packages/osc.html")
 	(:keywords "comm" "processes" "multimedia"))])
+ (other-frame-window .
+		     [(1 0 1)
+		      ((emacs
+			(24 4)))
+		      "Minor mode to enable global prefix keys for other frame/window buffer placement" single
+		      ((:url . "http://elpa.gnu.org/packages/other-frame-window.html")
+		       (:keywords "frame" "window"))])
  (pabbrev .
 	  [(4 2 1)
 	   nil "Predictive abbreviation expansion" single
@@ -546,7 +557,7 @@
 	   ((:url . "https://github.com/Malabarba/speed-of-thought-lisp")
 	    (:keywords "convenience" "lisp"))])
  (spinner .
-	  [(1 3 1)
+	  [(1 4)
 	   nil "Add spinners and progress-bars to the mode-line for ongoing operations" single
 	   ((:url . "https://github.com/Malabarba/spinner.el")
 	    (:keywords "processes" "mode-line"))])
