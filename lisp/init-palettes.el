@@ -1,13 +1,4 @@
-;;─────────────────────────────────────────────────────────────────────────────
-;; Beginning of init-palettes.el
-;;─────────────────────────────────────────────────────────────────────────────
-
-
-;;─────────────────────────────────────────────────────────────────────────────
 ;; Jazz palette: https://github.com/donderom/jazz-theme
-;;─────────────────────────────────────────────────────────────────────────────
-
-
 (defconst jazz/bg+3      "#606060"  "Jazz palette: #606060 (bg+3).")
 (defconst jazz/bg+2      "#505050"  "Jazz palette: #505050 (bg+2).")
 (defconst jazz/bg+1      "#202020"  "Jazz palette: #202020 (bg+1).")
@@ -27,11 +18,7 @@
 (defconst jazz/yellow    "#909737"  "Jazz palette: #909737 (yellow).")
 
 
-;;─────────────────────────────────────────────────────────────────────────────
 ;; Solarized palette: http://ethanschoonover.com/solarized#the-values
-;;─────────────────────────────────────────────────────────────────────────────
-
-
 (defconst solarized/base+3   "#FDF6E3"  "Solarized palette: #FDF6E3 (base+3).")
 (defconst solarized/base+2   "#EEE8D5"  "Solarized palette: #EEE8D5 (base+2).")
 (defconst solarized/base+1   "#93A1A1"  "Solarized palette: #93A1A1 (base+1).")
@@ -50,11 +37,7 @@
 (defconst solarized/green    "#859900"  "Solarized palette: #859900 (green).")
 
 
-;;─────────────────────────────────────────────────────────────────────────────
 ;; Zenburn palette: https://github.com/bbatsov/zenburn-emacs
-;;─────────────────────────────────────────────────────────────────────────────
-
-
 (defconst zenburn/bg+3      "#6F6F6F"  "Zenburn palette: #6F6F6F (bg+3).")
 (defconst zenburn/bg+2      "#5F5F5F"  "Zenburn palette: #5F5F5F (bg+2).")
 (defconst zenburn/bg+1      "#4F4F4F"  "Zenburn palette: #4F4F4F (bg+1).")
@@ -91,11 +74,6 @@
 (defconst zenburn/yellow    "#F0DFAF"  "Zenburn palette: #F0DFAF (yellow).")
 (defconst zenburn/yellow-1  "#E0CF9F"  "Zenburn palette: #E0CF9F (yellow-1).")
 (defconst zenburn/yellow-2  "#D0BF8F"  "Zenburn palette: #D0BF8F (yellow-2).")
-
-
-;;─────────────────────────────────────────────────────────────────────────────
-;; End of init-palettes.el
-;;─────────────────────────────────────────────────────────────────────────────
 
 
 (provide 'init-palettes)

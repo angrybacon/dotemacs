@@ -1,8 +1,3 @@
-;;─────────────────────────────────────────────────────────────────────────────
-;; Beginning of init-helm.el
-;;─────────────────────────────────────────────────────────────────────────────
-
-
 (require 'use-package)
 
 
@@ -14,11 +9,6 @@
 (defvar zenburn/blue)
 (defvar zenburn/green+2)
 (defvar zenburn/red)
-
-
-;;─────────────────────────────────────────────────────────────────────────────
-;; Add incremental completion and selection narrowing
-;;─────────────────────────────────────────────────────────────────────────────
 
 
 ;; https://github.com/emacs-helm/helm
@@ -45,11 +35,6 @@
     ("M-x" . helm-M-x)
     :config
     (set-face-attribute 'helm-M-x-key nil :foreground zenburn/red :underline nil)))
-
-
-;;─────────────────────────────────────────────────────────────────────────────
-;; End of init-helm.el
-;;─────────────────────────────────────────────────────────────────────────────
 
 
 (provide 'init-helm)

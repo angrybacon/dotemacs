@@ -1,14 +1,4 @@
-;;─────────────────────────────────────────────────────────────────────────────
-;; Beginning of init-interface.el
-;;─────────────────────────────────────────────────────────────────────────────
-
-
 (defvar me/initial-buffer)
-
-
-;;─────────────────────────────────────────────────────────────────────────────
-;; Initialize the interface settings
-;;─────────────────────────────────────────────────────────────────────────────
 
 
 ;; Global default settings
@@ -55,13 +45,9 @@
 ;; (set-frame-parameter nil 'fullscreen 'fullboth)  ; Pseudo fullscreen (only tested with OS X)
 
 
-;;─────────────────────────────────────────────────────────────────────────────
-;; Sort directories first while in dired mode
-;;─────────────────────────────────────────────────────────────────────────────
-
-
 (defun me/list-directories-first ()
   "Display directories first in `dired-mode'."
+
   (save-excursion
     (let (buffer-read-only)
       (forward-line 2)
@@ -74,13 +60,9 @@
   (me/list-directories-first))
 
 
-;;─────────────────────────────────────────────────────────────────────────────
-;; Highlight hexadecimal color strings
-;;─────────────────────────────────────────────────────────────────────────────
-
-
 (defun me/highlight-hex-strings ()
   "Find and highlight hexadecimal color strings with a colored background."
+
   (interactive)
   (font-lock-add-keywords nil
    '(("#[abcdefABCDEF[:digit:]]\\{6\\}"
@@ -96,11 +78,6 @@
 (add-hook 'json-mode-hook 'me/highlight-hex-strings)
 (add-hook 'markdown-mode-hook 'me/highlight-hex-strings)
 (add-hook 'python-mode-hook 'me/highlight-hex-strings)
-
-
-;;─────────────────────────────────────────────────────────────────────────────
-;; End of init-interface.el
-;;─────────────────────────────────────────────────────────────────────────────
 
 
 (provide 'init-interface)

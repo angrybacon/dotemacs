@@ -1,8 +1,3 @@
-;;─────────────────────────────────────────────────────────────────────────────
-;; Beginning of init-mode-line.el
-;;─────────────────────────────────────────────────────────────────────────────
-
-
 (require 'use-package)
 
 
@@ -23,15 +18,11 @@
 (defvar zenburn/red)
 
 
-;;─────────────────────────────────────────────────────────────────────────────
-;; Customize the mode line
-;;─────────────────────────────────────────────────────────────────────────────
-
-
 ;; https://github.com/antonio/delight.el
 (use-package delight
   :ensure t
   :init
+  ;; FIXME: The mode-line doesn't these changes into account
   (delight '((emacs-lisp-mode "Emacs Lisp")
              (lisp-interaction-mode "Lisp Interaction")
              (magit-mode "Magit")
@@ -157,13 +148,14 @@
 
   ;; Shamelessly taken from spacemacs
   (defmacro me/flycheck-lighter (error)
+
     "Return a formatted string describing the ERROR (error, warning, info) count."
     `(let* ((error-counts (flycheck-count-errors flycheck-current-errors))
             (errorp (flycheck-has-current-errors-p ',error))
             (count (or (cdr (assq ',error error-counts)) "?"))
             (running (eq 'running flycheck-last-status-change)))
        (if (or errorp running) (format "• %s" count))))
-       ;; (format "%s" count)))
+
 
   ;; Define the mode-line format
   (setq-default
@@ -191,11 +183,9 @@
              (vc-branch-face (if active 'me/pl-vc-branch-face 'me/pl-vc-branch-inactive-face))
 
              ;; Define faces for separators
-             (separator-left (intern (format "powerline-%s-%s"
-                                             (powerline-current-separator)
+             (separator-left (intern (format "powerline-%s-%s" (powerline-current-separator)
                                              (car powerline-default-separator-dir))))
-             (separator-right (intern (format "powerline-%s-%s"
-                                              (powerline-current-separator)
+             (separator-right (intern (format "powerline-%s-%s" (powerline-current-separator)
                                               (cdr powerline-default-separator-dir))))
 
              ;; List all the elements on the left
@@ -203,8 +193,7 @@
                    (list
                     (powerline-major-mode major-mode-face 'l)
                     (powerline-raw " " nil)
-                    (funcall separator-left mode-line-face mode-line-major-face)
-                    )
+                    (funcall separator-left mode-line-face mode-line-major-face))
                    (list
                     (powerline-raw "[" project-delimiter-face 'l)
                     (powerline-raw (projectile-project-name) project-name-face)
@@ -217,9 +206,7 @@
                     (powerline-raw ":" line-separator-face)
                     (powerline-raw "%l" line-number-face)
                     (powerline-raw " " mode-line-major-face)
-                    (funcall separator-left mode-line-major-face mode-line-minor-face)
-                    )
-                   ))
+                    (funcall separator-left mode-line-major-face mode-line-minor-face))))
 
              ;; List all the elements on the right
              (rhs (append
@@ -231,20 +218,17 @@
                       (powerline-raw (me/flycheck-lighter error) flycheck-error-face 'r)
                       (powerline-raw (me/flycheck-lighter warning) flycheck-warning-face 'r)
                       (powerline-raw (me/flycheck-lighter info) flycheck-info-face'r)
-                      (funcall separator-right mode-line-major-face mode-line-minor-face)
-                      ))
+                      (funcall separator-right mode-line-major-face mode-line-minor-face)))
                    (list
                     (funcall separator-right mode-line-minor-face mode-line-major-face)
                     (powerline-raw " " mode-line-major-face)
                     ;; FIXME: I cannot add a percent character with `battery-mode-line-format'
                     ;; FIXME: Some red color is automatically added under 11% battery load
-                    (powerline-raw (concat battery-mode-line-string "%%") battery-face 'r)
-                    )
+                    (powerline-raw (concat battery-mode-line-string "%%") battery-face 'r))
                    (list
                     (funcall separator-right mode-line-major-face mode-line-face)
                     (powerline-raw " " nil)
-                    (powerline-raw display-time-string time-face 'r)
-                    ))))
+                    (powerline-raw display-time-string time-face 'r)))))
 
         ;; Build the result
         (concat (powerline-render lhs)
@@ -309,11 +293,6 @@
   (set-face-attribute 'me/pl-project-name-inactive-face nil :foreground zenburn/bg+3)
   (set-face-attribute 'me/pl-time-inactive-face nil :foreground zenburn/bg+3)
   (set-face-attribute 'me/pl-vc-branch-inactive-face nil :foreground zenburn/bg+3))
-
-
-;;─────────────────────────────────────────────────────────────────────────────
-;; End of init-mode-line.el
-;;─────────────────────────────────────────────────────────────────────────────
 
 
 (provide 'init-mode-line)

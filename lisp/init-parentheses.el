@@ -1,19 +1,9 @@
-;;─────────────────────────────────────────────────────────────────────────────
-;; Beginning of init-parentheses.el
-;;─────────────────────────────────────────────────────────────────────────────
-
-
 (require 'use-package)
 
 
 (defvar zenburn/green+2)
 (defvar zenburn/green)
 (defvar zenburn/green-1)
-
-
-;;─────────────────────────────────────────────────────────────────────────────
-;; Add support for intelligent parentheses
-;;─────────────────────────────────────────────────────────────────────────────
 
 
 ;; http://www.emacswiki.org/emacs/HighlightParentheses
@@ -49,11 +39,6 @@
    ("M-<right>" . sp-forward-slurp-sexp)
    ("M-S-<left>" . sp-backward-slurp-sexp)
    ("M-S-<right>" . sp-backward-barf-sexp)))
-
-
-;;─────────────────────────────────────────────────────────────────────────────
-;; End init-parentheses.el
-;;─────────────────────────────────────────────────────────────────────────────
 
 
 (provide 'init-parentheses)

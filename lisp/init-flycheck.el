@@ -1,18 +1,8 @@
-;;─────────────────────────────────────────────────────────────────────────────
-;; Beginning of init-flycheck.el
-;;─────────────────────────────────────────────────────────────────────────────
-
-
 (require 'use-package)
 
 
 (defvar zenburn/orange)
 (defvar zenburn/red-2)
-
-
-;;─────────────────────────────────────────────────────────────────────────────
-;; Add support for on-the-fly snytax checking
-;;─────────────────────────────────────────────────────────────────────────────
 
 
 ;; https://github.com/flycheck/flycheck
@@ -35,11 +25,6 @@
   (set-face-attribute 'flycheck-fringe-warning nil :foreground zenburn/orange)
   (set-face-attribute 'flycheck-info nil :background 'unspecified)
   (set-face-attribute 'flycheck-warning nil :underline zenburn/orange))
-
-
-;;─────────────────────────────────────────────────────────────────────────────
-;; End of init-flycheck.elé
-;;─────────────────────────────────────────────────────────────────────────────
 
 
 (provide 'init-flycheck)

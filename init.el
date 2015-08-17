@@ -1,9 +1,11 @@
-;;; init.el --- My Emacs configuration files.
+;;; init.el --- My Emacs configuration files
 
-;; Copyright (C) 2014 Mathieu Marques
+;; Copyright (C) 2014-2015 Mathieu Marques
 
-;; Author: Mathieu Marques <angrybacon@sandman.local>
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: 16 Oct 2014
 ;; Keywords: convenience, faces, lisp, tools
+;; Homepage: https://bitbucket.org/angrybacon/dotemacs
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -23,17 +25,12 @@
 ;; To install, clone `dotemacs/' into `~/.emacs.d/'.
 ;;
 ;; Following lines load several packages to configure my Emacs experience. I
-;; work quite often with Python, HTML, SCSS and JavaScript code. My
-;; configuration is stronlgy Web-oriented.
+;; work quite often with Python, HTML, SCSS and JavaScript code.
+;; My configuration is stronlgy Web-oriented.
 ;;
 ;; See `readme.md' for more details.
 
 ;;; Code:
-
-
-;;─────────────────────────────────────────────────────────────────────────────
-;; Bootstrap configuration
-;;─────────────────────────────────────────────────────────────────────────────
 
 
 ;; Custom variables
@@ -48,17 +45,12 @@
 
 ;; Check Emacs' version
 (when (version<= emacs-version "24")
-  (unless (yes-or-no-p (concat "Your Emacs is getting old. Some functionalities may not work, continue ? "))
+  (unless (yes-or-no-p (concat "Your Emacs is getting old. Some functionalities may not work, continue? "))
     (kill-emacs)))
 
 
 ;; Load dependency paths
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-
-
-;;─────────────────────────────────────────────────────────────────────────────
-;; Load partials
-;;─────────────────────────────────────────────────────────────────────────────
 
 
 ;; Initialize the core configuration
@@ -71,6 +63,7 @@
 
 ;; Initialize the partials
 (require 'init-aliases)
+(require 'init-binds)
 (require 'init-comments)
 (require 'init-company)
 (require 'init-css)
@@ -97,18 +90,6 @@
 (require 'init-shell)
 (require 'init-whitespace)
 (require 'init-yaml)
-
-
-;; Add custom binds
-(require 'init-binds)
-
-
-;;─────────────────────────────────────────────────────────────────────────────
-;; End of init.el
-;;─────────────────────────────────────────────────────────────────────────────
-
-
-(provide 'init)
 
 
 ;;; init.el ends here

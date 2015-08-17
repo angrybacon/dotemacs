@@ -1,14 +1,4 @@
-;;─────────────────────────────────────────────────────────────────────────────
-;; Beginning of init-company.el
-;;─────────────────────────────────────────────────────────────────────────────
-
-
 (require 'use-package)
-
-
-;;─────────────────────────────────────────────────────────────────────────────
-;; Add support for autocompletion
-;;─────────────────────────────────────────────────────────────────────────────
 
 
 ;; https://github.com/company-mode/company-mode
@@ -25,11 +15,6 @@
   :config
   (set-face-attribute 'company-tooltip-common nil :inherit 'company-tooltip)
   (set-face-attribute 'company-tooltip-common-selection nil :inherit 'company-tooltip-selection))
-
-
-;;─────────────────────────────────────────────────────────────────────────────
-;; End of init-company.el
-;;─────────────────────────────────────────────────────────────────────────────
 
 
 (provide 'init-company)
