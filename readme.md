@@ -19,8 +19,9 @@ This has been tested with [Yamamoto Mitsuharu's Mac port][yamamoto-emacs] and sh
 Screenshots
 ===========
 
+![dotemacs.2015-08-18.png](https://bitbucket.org/repo/noxGbL/images/1027694942-dotemacs.2015-08-18.png)
 
-*Coming soon™*
+*More coming soon™*
 
 
 Features
