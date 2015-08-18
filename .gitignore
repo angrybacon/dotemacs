@@ -12,6 +12,10 @@ auto-save-list/
 vendor/multiple-cursors/mc-lists.el
 
 
+# OSX
+.DS_Store
+
+
 # Projectile
 .projectile
 projectile.cache
