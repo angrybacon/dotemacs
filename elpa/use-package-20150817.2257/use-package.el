@@ -6,7 +6,7 @@
 ;; Maintainer: John Wiegley <jwiegley@gmail.com>
 ;; Created: 17 Jun 2012
 ;; Version: 2.0
-;; Package-Version: 20150814.1353
+;; Package-Version: 20150817.2257
 ;; Package-Requires: ((bind-key "1.0") (diminish "0.44"))
 ;; Keywords: dotemacs startup speed config package
 ;; URL: https://github.com/jwiegley/use-package
@@ -911,7 +911,7 @@ deferred until the prefix key sequence is pressed."
              config-body)
           `((if (not ,(use-package-load-name name t))
                 (ignore
-                 (message (format "Could not load %s" name)))
+                 (message (format "Could not load %s" ',name)))
               ,@config-body)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

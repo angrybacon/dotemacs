@@ -13,7 +13,7 @@
 
 ;; Package-Requires: ((emacs "24.4") (dash "2.11.0") (with-editor "20150816"))
 ;; Keywords: git tools vc
-;; Package-Version: 20150816.1046
+;; Package-Version: 20150817.2213
 ;; Homepage: https://github.com/magit/magit
 
 ;; This file is not part of GNU Emacs.
@@ -102,7 +102,7 @@
 ;; files.
 
 ;; Finally this package highlights style errors, like lines that are
-;; to long, or when the second line is not empty.  It may even nag you
+;; too long, or when the second line is not empty.  It may even nag you
 ;; when you attempt to finish the commit without having fixed these
 ;; issues.  Some people like that nagging, I don't, so you'll have to
 ;; enable it.  Which brings me to the last point.  Like any

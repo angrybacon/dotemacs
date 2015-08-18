@@ -7,7 +7,7 @@
 ;; Maintainer: Sebastian Wiesner <swiesner@lunaryorn.com>
 ;; URL: https://www.flycheck.org
 ;; Keywords: convenience, languages, tools
-;; Version: 0.24
+;; Version: 0.25-cvs
 ;; Package-Requires: ((dash "2.4.0") (pkg-info "0.4") (let-alist "1.0.1") (cl-lib "0.3") (emacs "24.3"))
 
 ;; This file is not part of GNU Emacs.
@@ -2415,8 +2415,9 @@ checks."
   (let* ((syntax-check flycheck-current-syntax-check)
          (checker (flycheck-syntax-check-checker syntax-check))
          (errors (flycheck-relevant-errors
-                  (flycheck-filter-errors
-                   (flycheck-assert-error-list-p errors) checker))))
+                  (flycheck-expand-error-file-names
+                   (flycheck-filter-errors
+                    (flycheck-assert-error-list-p errors) checker)))))
     (unless (flycheck-disable-excessive-checker checker errors)
       (flycheck-report-current-errors errors))
     (let ((next-checker (flycheck-get-next-checker-for-buffer checker)))
@@ -2901,6 +2902,14 @@ with `flycheck-process-error-functions'."
   "Remove all error information from the current buffer."
   (setq flycheck-current-errors nil)
   (flycheck-report-status 'not-checked))
+
+(defun flycheck-expand-error-file-names (errors)
+  "Expand all relative file names in ERRORS."
+  (mapc (lambda (err)
+          (-when-let (filename (flycheck-error-filename err))
+            (setf (flycheck-error-filename err) (expand-file-name filename))))
+        errors)
+  errors)
 
 (defun flycheck-relevant-error-p (err)
   "Determine whether ERR is relevant for the current buffer.
@@ -4890,11 +4899,10 @@ ERR is in BUFFER-FILES, replace it with the return value of the
 function `buffer-file-name'."
   (flycheck-error-with-buffer err
     (-when-let (filename (flycheck-error-filename err))
-      (setq filename (expand-file-name filename))
-      (when (-any? (apply-partially #'flycheck-same-files-p filename)
+      (when (-any? (apply-partially #'flycheck-same-files-p
+                                    (expand-file-name filename))
                    buffer-files)
-        (setq filename (buffer-file-name)))
-      (setf (flycheck-error-filename err) filename)))
+        (setf (flycheck-error-filename err) (buffer-file-name)))))
   err)
 
 
@@ -7708,7 +7716,7 @@ See URL `http://www.gnu.org/software/bash/'."
   "A Zsh syntax checker using the Zsh shell.
 
 See URL `http://www.zsh.org/'."
-  :command ("zsh" "-n" "-d" "-f" source)
+  :command ("zsh" "--no-exec" "--no-globalrcs" "--no-rcs" source)
   :error-patterns
   ((error line-start (file-name) ":" line ": " (message) line-end))
   :modes sh-mode
