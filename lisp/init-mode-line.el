@@ -48,7 +48,8 @@
 (use-package delight
   :ensure t
   :init
-  ;; FIXME: The mode-line doesn't these changes into account
+
+  ;; FIXME: The mode-line doesn't take these changes into account
   (delight '((emacs-lisp-mode "Emacs Lisp")
              (lisp-interaction-mode "Lisp Interaction")
              (magit-mode "Magit")

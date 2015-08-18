@@ -76,6 +76,13 @@
 ;;=============================================================================
 
 
+(add-hook 'emacs-lisp-mode-hook 'me/highlight-hex-strings)
+(add-hook 'emmet-mode-hook 'me/highlight-hex-strings)
+(add-hook 'json-mode-hook 'me/highlight-hex-strings)
+(add-hook 'markdown-mode-hook 'me/highlight-hex-strings)
+(add-hook 'python-mode-hook 'me/highlight-hex-strings)
+
+
 (defun me/list-directories-first ()
   "Display directories first in `dired-mode'."
   (save-excursion
@@ -100,14 +107,6 @@
           (match-end 0)
           'face (list :background (match-string-no-properties 0)))))))
   (font-lock-fontify-buffer))
-
-
-;; TODO: Can I put this above definitions?
-(add-hook 'emacs-lisp-mode-hook 'me/highlight-hex-strings)
-(add-hook 'emmet-mode-hook 'me/highlight-hex-strings)
-(add-hook 'json-mode-hook 'me/highlight-hex-strings)
-(add-hook 'markdown-mode-hook 'me/highlight-hex-strings)
-(add-hook 'python-mode-hook 'me/highlight-hex-strings)
 
 
 (provide 'init-interface)
