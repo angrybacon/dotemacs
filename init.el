@@ -75,10 +75,10 @@
 
 ;; Initialize the partials
 (require 'init-aliases)
-(require 'init-binds)
 (require 'init-comments)
 (require 'init-company)
 (require 'init-css)
+(require 'init-cursor)
 (require 'init-dired)
 (require 'init-docker)
 (require 'init-emmet)
