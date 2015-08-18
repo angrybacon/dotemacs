@@ -1,3 +1,24 @@
+;;; init-html.el --- My Emacs configuration
+
+;; Copyright (C) 2015 Mathieu Marques
+
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: 27 May 2015
+;; Keywords: abbrev, convenience
+;; Homepage: https://bitbucket.org/angrybacon/dotemacs
+
+;;; Commentary:
+
+;; Configure HTML and Web modes.
+
+;;; Code:
+
+
+;;=============================================================================
+;; Configure HTML mode
+;;=============================================================================
+
+
 (require 'use-package)
 
 
@@ -8,7 +29,12 @@
   (setq sgml-basic-offset 2))
 
 
-;; http://web-mode.org/
+;;=============================================================================
+;; Configure Web mode
+;;=============================================================================
+
+
+;; Website: http://web-mode.org/
 (use-package web-mode
   :ensure t
   :delight web-mode "Web"
@@ -22,3 +48,4 @@
 
 
 (provide 'init-html)
+;;; init-html.el ends here

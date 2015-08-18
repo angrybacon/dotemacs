@@ -1,7 +1,28 @@
+;;; init-emmet.el --- My Emacs configuration
+
+;; Copyright (C) 2015 Mathieu Marques
+
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: 18 May 2015
+;; Keywords: convenience, faces
+;; Homepage: https://bitbucket.org/angrybacon/dotemacs
+
+;;; Commentary:
+
+;; Add integration for Emmet within Emacs.
+
+;;; Code:
+
+
+;;=============================================================================
+;; Configure Emmet mode
+;;=============================================================================
+
+
 (require 'use-package)
 
 
-;; https://github.com/smihica/emmet-mode
+;; Website: https://github.com/smihica/emmet-mode
 (use-package emmet-mode
   :ensure t
   :init
@@ -17,3 +38,4 @@
 
 
 (provide 'init-emmet)
+;;; init-emmet.el ends here

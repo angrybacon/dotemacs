@@ -1,6 +1,26 @@
+;;; init-skeletons.el --- My Emacs configuration
+
+;; Copyright (C) 2015 Mathieu Marques
+
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: 16 May 2015
+;; Keywords: convenience, maint
+;; Homepage: https://bitbucket.org/angrybacon/dotemacs
+
+;;; Commentary:
+
+;; Define skeletons for automatically inserted snippets.
+
+;;; Code:
+
+
+;;=============================================================================
+;; Define skeletons
+;;=============================================================================
+
+
 (define-skeleton me/header-for-python
   "Prompt the user for package information and build a header with it."
-
   ""
   > "# -*- coding: utf-8 -*-" \n \n \n
   > "__author__ = " user-full-name \n
@@ -15,3 +35,4 @@
 
 
 (provide 'init-skeletons)
+;;; init-skeletons.el ends here

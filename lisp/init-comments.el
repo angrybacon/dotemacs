@@ -1,4 +1,24 @@
+;;; init-comments.el --- My Emacs configuration
+
+;; Copyright (C) 2015 Mathieu Marques
+
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: 6 Jun 2015
+;; Keywords: convenience, faces, outlines
+;; Homepage: https://bitbucket.org/angrybacon/dotemacs
+
+;;; Commentary:
+
+;; Change the way comments look.
+
+;;; Code:
+
+
+;;=============================================================================
 ;; Highlight TODO-like comments
+;;=============================================================================
+
+
 (add-hook 'prog-mode-hook
           (lambda ()
             (font-lock-add-keywords nil
@@ -7,3 +27,4 @@
 
 
 (provide 'init-comments)
+;;; init-comments.el ends here

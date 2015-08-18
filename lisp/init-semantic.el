@@ -1,8 +1,34 @@
-(require 'use-package)
+;;; init-semantic.el --- My Emacs configuration
+
+;; Copyright (C) 2015 Mathieu Marques
+
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: 1 Jun 2015
+;; Keywords: convenience
+;; Homepage: https://bitbucket.org/angrybacon/dotemacs
+
+;;; Commentary:
+
+;; Todo.
+
+;;; Code:
+
+
+;;=============================================================================
+;; Silence byte-compiler
+;;=============================================================================
 
 
 ;; (defvar semantic-idle-breadcrumbs-separator)
 ;; (defvar semanticdb-default-save-directory)
+
+
+;;=============================================================================
+;; Add semantic breadcrumbs
+;;=============================================================================
+
+
+;; (require 'use-package)
 
 
 ;; Built-in
@@ -21,3 +47,4 @@
 
 
 (provide 'init-semantic)
+;;; init-semantic.el ends here

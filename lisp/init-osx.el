@@ -1,5 +1,31 @@
+;;; init-psx.el --- My Emacs configuration
+
+;; Copyright (C) 2015 Mathieu Marques
+
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: 16 May 2015
+;; Keywords: convenience
+;; Homepage: https://bitbucket.org/angrybacon/dotemacs
+
+;;; Commentary:
+
+;; Add OSX-specific settigns
+
+;;; Code:
+
+
+;;=============================================================================
+;; Silence byte-compiler
+;;=============================================================================
+
+
 (defvar ns-command-modifier)
 (defvar ns-option-modifier)
+
+
+;;=============================================================================
+;; Add OSX-specific settings
+;;=============================================================================
 
 
 (when (eq system-type 'darwin)
@@ -10,3 +36,4 @@
 
 
 (provide 'init-osx)
+;;; init-osx.el ends here

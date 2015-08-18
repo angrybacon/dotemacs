@@ -1,7 +1,28 @@
+;;; init-org.el --- My Emacs configuration
+
+;; Copyright (C) 2015 Mathieu Marques
+
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: 27 May 2015
+;; Keywords: abbrev, convenience, outlines
+;; Homepage: https://bitbucket.org/angrybacon/dotemacs
+
+;;; Commentary:
+
+;; Enhance note-taking workflow.
+
+;;; Code:
+
+
+;;=============================================================================
+;; Configure Org mode
+;;=============================================================================
+
+
 (require 'use-package)
 
 
-;; http://orgmode.org/
+;; Website: http://orgmode.org/
 (use-package org
   :ensure t
   :delight org-mode "Org"
@@ -12,3 +33,4 @@
 
 
 (provide 'init-org)
+;;; init-org.el ends here

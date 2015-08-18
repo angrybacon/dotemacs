@@ -1,4 +1,22 @@
-(require 'use-package)
+;;; init-parentheses.el --- My Emacs configuration
+
+;; Copyright (C) 2015 Mathieu Marques
+
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: 27 May 2015
+;; Keywords: abbrev, convenience, faces
+;; Homepage: https://bitbucket.org/angrybacon/dotemacs
+
+;;; Commentary:
+
+;; Configure behavior of parentheses, brackets and the like.
+
+;;; Code:
+
+
+;;=============================================================================
+;; Silence byte-compiler
+;;=============================================================================
 
 
 (defvar zenburn/green+2)
@@ -6,7 +24,15 @@
 (defvar zenburn/green-1)
 
 
-;; http://www.emacswiki.org/emacs/HighlightParentheses
+;;=============================================================================
+;; Configure Highlight Parentheses
+;;=============================================================================
+
+
+(require 'use-package)
+
+
+;; Website: http://www.emacswiki.org/emacs/HighlightParentheses
 (use-package highlight-parentheses
   :ensure t
   :init
@@ -17,7 +43,12 @@
   (global-highlight-parentheses-mode t))
 
 
-;; https://github.com/Fuco1/smartparens
+;;=============================================================================
+;; Configure Smartparens
+;;=============================================================================
+
+
+;; Website: https://github.com/Fuco1/smartparens
 (use-package smartparens
   :ensure t
   :init
@@ -42,3 +73,4 @@
 
 
 (provide 'init-parentheses)
+;;; init-parentheses.el ends here

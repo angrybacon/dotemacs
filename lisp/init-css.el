@@ -1,3 +1,24 @@
+;;; init-css.el --- My Emacs configuration
+
+;; Copyright (C) 2015 Mathieu Marques
+
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: 18 May 2015
+;; Keywords: convenience
+;; Homepage: https://bitbucket.org/angrybacon/dotemacs
+
+;;; Commentary:
+
+;; Configure CSS and SCSS modes.
+
+;;; Code:
+
+
+;;=============================================================================
+;; Configure CSS mode
+;;=============================================================================
+
+
 (require 'use-package)
 
 
@@ -8,7 +29,12 @@
   (setq css-indent-offset 2))
 
 
-;; https://github.com/antonj/scss-mode/
+;;=============================================================================
+;; Configure SCSS mode
+;;=============================================================================
+
+
+;; Website: https://github.com/antonj/scss-mode/
 (use-package scss-mode
   :ensure t
   :delight scss-mode "SCSS"
@@ -21,3 +47,4 @@
 
 
 (provide 'init-css)
+;;; init-css.el ends here

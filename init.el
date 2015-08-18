@@ -1,10 +1,10 @@
-;;; init.el --- My Emacs configuration files
+;;; init.el --- My Emacs configuration
 
-;; Copyright (C) 2014-2015 Mathieu Marques
+;; Copyright (C) 2014 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: 16 Oct 2014
-;; Keywords: convenience, faces, lisp, tools
+;; Keywords: abbrev, convenience, faces, maint, outlines, vc
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -22,23 +22,30 @@
 
 ;;; Commentary:
 
-;; To install, clone `dotemacs/' into `~/.emacs.d/'.
+;; To install, clone dotemacs/ into ~/.emacs.d/.
 ;;
 ;; Following lines load several packages to configure my Emacs experience. I
-;; work quite often with Python, HTML, SCSS and JavaScript code.
-;; My configuration is stronlgy Web-oriented.
+;; work quite often with Python, HTML, SCSS and JavaScript code. My
+;; configuration is stronlgy Web-oriented.
 ;;
-;; See `readme.md' for more details.
+;; Custom key binding conventions:
+;; - C-c h: `helm'
+;; - C-c g: `magit'
+;; - C-c o: `org'
+;; - C-c p: `projectile'
+;;
+;; See readme.md for more details.
 
 ;;; Code:
 
 
+;;=============================================================================
+;; Bootstrap configuration
+;;=============================================================================
+
+
 ;; Custom variables
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
 
@@ -47,6 +54,11 @@
 (when (version<= emacs-version "24")
   (unless (yes-or-no-p (concat "Your Emacs is getting old. Some functionalities may not work, continue? "))
     (kill-emacs)))
+
+
+;;=============================================================================
+;; Load partials
+;;=============================================================================
 
 
 ;; Load dependency paths
@@ -70,7 +82,6 @@
 (require 'init-dired)
 (require 'init-docker)
 (require 'init-emmet)
-(require 'init-expand-region)
 (require 'init-flycheck)
 (require 'init-git)
 (require 'init-golden-ratio)
@@ -80,7 +91,6 @@
 (require 'init-json)
 (require 'init-markdown)
 (require 'init-mode-line)
-(require 'init-multiple-cursors)
 (require 'init-org)
 (require 'init-osx)
 (require 'init-parentheses)
@@ -92,4 +102,5 @@
 (require 'init-yaml)
 
 
+(provide 'init)
 ;;; init.el ends here

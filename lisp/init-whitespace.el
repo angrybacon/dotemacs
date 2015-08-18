@@ -1,9 +1,35 @@
-(require 'use-package)
+;;; init-whitespace.el --- My Emacs configuration
+
+;; Copyright (C) 2015 Mathieu Marques
+
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: 23 May 2015
+;; Keywords: convenience, faces
+;; Homepage: https://bitbucket.org/angrybacon/dotemacs
+
+;;; Commentary:
+
+;; Highlight whitespace-like characters.
+
+;;; Code:
+
+
+;;=============================================================================
+;; Silence byte-compiler
+;;=============================================================================
 
 
 (defvar zenburn/bg+2)
 (defvar zenburn/bg+1)
 (defvar zenburn/red)
+
+
+;;=============================================================================
+;; Configure Whitespace mode
+;;=============================================================================
+
+
+(require 'use-package)
 
 
 ;; Built-in
@@ -19,3 +45,4 @@
 
 
 (provide 'init-whitespace)
+;;; init-whitespace.el ends here

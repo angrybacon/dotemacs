@@ -1,7 +1,28 @@
+;;; init-json.el --- My Emacs configuration
+
+;; Copyright (C) 2015 Mathieu Marques
+
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: 18 May 2015
+;; Keywords: convenience
+;; Homepage: https://bitbucket.org/angrybacon/dotemacs
+
+;;; Commentary:
+
+;; Configure JSON mode.
+
+;;; Code:
+
+
+;;=============================================================================
+;; Configure JSON mode
+;;=============================================================================
+
+
 (require 'use-package)
 
 
-;; https://github.com/gongo/json-reformat
+;; Website: https://github.com/gongo/json-reformat
 (use-package json-mode
   :ensure t
   :delight json-mode "JSON"
@@ -15,3 +36,4 @@
 
 
 (provide 'init-json)
+;;; init-json.el ends here

@@ -1,4 +1,22 @@
-(require 'use-package)
+;;; init-mode-line.el --- My Emacs configuration
+
+;; Copyright (C) 2015 Mathieu Marques
+
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: 1 Jun 2015
+;; Keywords: convenience, faces, maint
+;; Homepage: https://bitbucket.org/angrybacon/dotemacs
+
+;;; Commentary:
+
+;; Prettify the mode-line.
+
+;;; Code:
+
+
+;;=============================================================================
+;; Silence byte-compiler
+;;=============================================================================
 
 
 (defvar me/font-family-mode-line)
@@ -18,7 +36,15 @@
 (defvar zenburn/red)
 
 
-;; https://github.com/antonio/delight.el
+;;=============================================================================
+;; Configure Delight
+;;=============================================================================
+
+
+(require 'use-package)
+
+
+;; Website: https://github.com/antonio/delight.el
 (use-package delight
   :ensure t
   :init
@@ -32,7 +58,12 @@
              (magit-status-mode "Magit Status"))))
 
 
-;; https://github.com/milkypostman/powerline
+;;=============================================================================
+;; Configure Powerline
+;;=============================================================================
+
+
+;; Website: https://github.com/milkypostman/powerline
 (use-package powerline
   :ensure t
   :init
@@ -296,3 +327,4 @@
 
 
 (provide 'init-mode-line)
+;;; init-mode-line.el ends here

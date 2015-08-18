@@ -1,4 +1,22 @@
-(require 'use-package)
+;;; init-theme.el --- My Emacs configuration
+
+;; Copyright (C) 2015 Mathieu Marques
+
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: 18 May 2015
+;; Keywords: convenience, faces
+;; Homepage: https://bitbucket.org/angrybacon/dotemacs
+
+;;; Commentary:
+
+;; Configure the theme.
+
+;;; Code:
+
+
+;;=============================================================================
+;; Silence byte-compiler
+;;=============================================================================
 
 
 (defvar me/font-family-default)
@@ -14,10 +32,23 @@
 (defvar zenburn/green-1)
 
 
+;;=============================================================================
+;; Configure the theme
+;;=============================================================================
+
+
+(require 'use-package)
+
+
 (use-package zenburn-theme
   :ensure t
   :init
   (load-theme 'zenburn t))
+
+
+;;=============================================================================
+;; Overwrite face attributes
+;;=============================================================================
 
 
 (set-face-attribute 'default nil :height me/font-size-default)
@@ -44,3 +75,4 @@
 
 
 (provide 'init-theme)
+;;; init-theme.el ends here

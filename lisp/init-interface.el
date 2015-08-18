@@ -1,4 +1,30 @@
+;;; init-interface.el --- My Emacs configuration
+
+;; Copyright (C) 2015 Mathieu Marques
+
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: 16 May 2015
+;; Keywords: convenience, faces
+;; Homepage: https://bitbucket.org/angrybacon/dotemacs
+
+;;; Commentary:
+
+;; Enable or disable several interface components.
+
+;;; Code:
+
+
+;;=============================================================================
+;; Silence byte-compiler
+;;=============================================================================
+
+
 (defvar me/initial-buffer)
+
+
+;;=============================================================================
+;; Configure interface components
+;;=============================================================================
 
 
 ;; Global default settings
@@ -41,13 +67,17 @@
 (mouse-avoidance-mode 'animate)                  ; Move pointer when point reaches cursor location
 
 
-;; FIXME: This messes up on railwaycat's build
+;; FIXME: This messes up on Yamamoto Mitsuharu's build
 ;; (set-frame-parameter nil 'fullscreen 'fullboth)  ; Pseudo fullscreen (only tested with OS X)
+
+
+;;=============================================================================
+;; Define helpers
+;;=============================================================================
 
 
 (defun me/list-directories-first ()
   "Display directories first in `dired-mode'."
-
   (save-excursion
     (let (buffer-read-only)
       (forward-line 2)
@@ -62,7 +92,6 @@
 
 (defun me/highlight-hex-strings ()
   "Find and highlight hexadecimal color strings with a colored background."
-
   (interactive)
   (font-lock-add-keywords nil
    '(("#[abcdefABCDEF[:digit:]]\\{6\\}"
@@ -73,6 +102,7 @@
   (font-lock-fontify-buffer))
 
 
+;; TODO: Can I put this above definitions?
 (add-hook 'emacs-lisp-mode-hook 'me/highlight-hex-strings)
 (add-hook 'emmet-mode-hook 'me/highlight-hex-strings)
 (add-hook 'json-mode-hook 'me/highlight-hex-strings)
@@ -81,3 +111,4 @@
 
 
 (provide 'init-interface)
+;;; init-interface.el ends here

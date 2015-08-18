@@ -1,4 +1,22 @@
-(require 'use-package)
+;;; init-git.el --- My Emacs configuration
+
+;; Copyright (C) 2015 Mathieu Marques
+
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: 27 May 2015
+;; Keywords: abbrev, convenience, faces, vc
+;; Homepage: https://bitbucket.org/angrybacon/dotemacs
+
+;;; Commentary:
+
+;; Add integration for Git within Emacs.
+
+;;; Code:
+
+
+;;=============================================================================
+;; Silence byte-compiler
+;;=============================================================================
 
 
 (defvar me/font-family-header)
@@ -9,7 +27,15 @@
 (defvar zenburn/green-1)
 
 
-;; https://github.com/magit/magit
+;;=============================================================================
+;; Configure Magit
+;;=============================================================================
+
+
+(require 'use-package)
+
+
+;; Website: https://github.com/magit/magit
 (use-package magit
   :ensure t
   :init
@@ -28,7 +54,12 @@
   (set-face-attribute 'magit-diff-removed-highlight nil :background zenburn/red-4 :foreground zenburn/red))
 
 
-;; https://github.com/magit/git-modes
+;;=============================================================================
+;; Configure Git modes
+;;=============================================================================
+
+
+;; Website: https://github.com/magit/git-modes
 (use-package gitattributes-mode
   :ensure t
   :delight gitattributes-mode "Git Attributes")
@@ -41,3 +72,4 @@
 
 
 (provide 'init-git)
+;;; init-git.el ends here

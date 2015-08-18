@@ -1,22 +1,47 @@
-(require 'use-package)
+;;; init-flycheck.el --- My Emacs configuration
+
+;; Copyright (C) 2015 Mathieu Marques
+
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: 2 Jun 2015
+;; Keywords: convenience, faces
+;; Homepage: https://bitbucket.org/angrybacon/dotemacs
+
+;;; Commentary:
+
+;; Enable linters for several modes.
+
+;;; Code:
+
+
+;;=============================================================================
+;; Silence byte-compiler
+;;=============================================================================
 
 
 (defvar zenburn/orange)
 (defvar zenburn/red-2)
 
 
-;; https://github.com/flycheck/flycheck
+;;=============================================================================
+;; Configure FlyCheck
+;;=============================================================================
+
+
+(require 'use-package)
+
+
+;; Website: https://github.com/flycheck/flycheck
 (use-package flycheck
   :ensure t
   :init
   (setq
    flycheck-check-syntax-automatically '(save mode-enabled)
+   flycheck-jshintrc "~/.jshintrc"
    flycheck-flake8rc "~/.flake8rc"
    flycheck-pylintrc "~/.pylintrc")
-  ;; TODO: Find a linter for JavaScript
-  ;; TODO: Fix linters for HTML
   (add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
-  (add-hook 'html-mode-hook 'flycheck-mode)
+  (add-hook 'js-mode-hook 'flycheck-mode)
   (add-hook 'python-mode-hook 'flycheck-mode)
   (add-hook 'scss-mode-hook 'flycheck-mode)
   :config
@@ -28,3 +53,4 @@
 
 
 (provide 'init-flycheck)
+;;; init-flycheck.el ends here

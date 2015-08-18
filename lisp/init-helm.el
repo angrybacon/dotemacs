@@ -1,4 +1,22 @@
-(require 'use-package)
+;;; init-helm.el --- My Emacs configuration
+
+;; Copyright (C) 2015 Mathieu Marques
+
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: 18 May 2015
+;; Keywords: abbrev, convenience, faces
+;; Homepage: https://bitbucket.org/angrybacon/dotemacs
+
+;;; Commentary:
+
+;; Enable incremental completion and selection narrowing framework.
+
+;;; Code:
+
+
+;;=============================================================================
+;; Silence byte-compiler
+;;=============================================================================
 
 
 (defvar me/font-family-default)
@@ -11,7 +29,15 @@
 (defvar zenburn/red)
 
 
-;; https://github.com/emacs-helm/helm
+;;=============================================================================
+;; Configure Helm
+;;=============================================================================
+
+
+(require 'use-package)
+
+
+;; Website: https://github.com/emacs-helm/helm
 (use-package helm
   :ensure t
   :init
@@ -38,3 +64,4 @@
 
 
 (provide 'init-helm)
+;;; init-helm.el ends here

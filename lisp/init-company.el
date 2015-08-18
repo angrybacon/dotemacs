@@ -1,7 +1,28 @@
+;;; init-company.el --- My Emacs configuration
+
+;; Copyright (C) 2015 Mathieu Marques
+
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: 27 May 2015
+;; Keywords: convenience, faces
+;; Homepage: https://bitbucket.org/angrybacon/dotemacs
+
+;;; Commentary:
+
+;; Enable code completion.
+
+;;; Code:
+
+
+;;=============================================================================
+;; Configure Company mode
+;;=============================================================================
+
+
 (require 'use-package)
 
 
-;; https://github.com/company-mode/company-mode
+;; Website: https://github.com/company-mode/company-mode
 (use-package company
   :ensure t
   :init
@@ -18,3 +39,4 @@
 
 
 (provide 'init-company)
+;;; init-company.el ends here
