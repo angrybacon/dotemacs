@@ -56,6 +56,9 @@
   (set-face-attribute 'helm-source-header nil :foreground zenburn/blue :background zenburn/bg :box nil)
   (set-face-attribute 'helm-match nil :foreground zenburn/green+2 :weight 'normal)
 
+  (use-package helm-ag
+    :ensure t)
+
   (use-package helm-command
     :bind
     ("M-x" . helm-M-x)

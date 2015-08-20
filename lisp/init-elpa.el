@@ -26,11 +26,14 @@
   (package-initialize)
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
-    (package-install 'use-package)))
+    (package-install 'use-package))
+  (unless (package-installed-p 'delight)
+    (package-refresh-contents)
+    (package-install 'delight)))
 
 
-;; (eval-when-compile
-;;   (require 'use-package))
+(eval-when-compile
+  (require 'use-package))
 
 
 (provide 'init-elpa)

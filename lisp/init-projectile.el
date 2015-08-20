@@ -46,6 +46,7 @@
     (or project-name (apply orig-fun args)))
 
   (use-package helm-projectile
+    :ensure t
     :init
     (require 'grep)
     :config
