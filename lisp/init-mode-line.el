@@ -269,14 +269,14 @@
 
   :config
 
-  ;; TODO: This should set faces for the inactive powerline as well
   ;; Colorize the battery load string on update
   (defadvice battery-update (before me/pl-colorize-battery-advice activate)
     "Colorize the battery load string depending on its status (dis/charging)."
-
     (if (string-equal "AC" (cdr (assoc 76 (funcall battery-status-function))))
-        (copy-face 'me/pl-battery-charging-face 'me/pl-battery-face)
-      (copy-face 'me/pl-battery-discharging-face 'me/pl-battery-face)))
+        (progn (copy-face 'me/pl-battery-charging-face 'me/pl-battery-face)
+               (copy-face 'me/pl-battery-charging-inactive-face 'me/pl-battery-inactive-face))
+      (progn (copy-face 'me/pl-battery-discharging-face 'me/pl-battery-face)
+             (copy-face 'me/pl-battery-charging-inactive-face 'me/pl-battery-inactive-face))))
 
   ;; FIXME: The mode-line is slightly thinner when using Helm. How to make Helm use powerline?
 
