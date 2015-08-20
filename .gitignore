@@ -4,6 +4,7 @@
 .dir-locals.el
 auto-save-list/
 elpa/
+elpa.ori/
 
 
 # Multiple cursors
