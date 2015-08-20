@@ -93,7 +93,7 @@
 (use-package multiple-cursors
   :ensure t
   :init
-  (setq mc/list-file "~/.emacs.d/elpa/multiple-cursors/mc-lists.el")
+  (setq mc/list-file (expand-file-name ".multiple-cursors-lists.el" user-emacs-directory))
   :bind
   (("C-S-c C-S-c" . mc/edit-lines)
    ("C-<" . mc/mark-previous-like-this)
