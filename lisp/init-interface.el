@@ -84,7 +84,7 @@
 
 
 (defun me/list-directories-first ()
-  "Display directories first in `dired-mode'."
+  "Sort by directory first."
   (save-excursion
     (let (buffer-read-only)
       (forward-line 2)
@@ -92,8 +92,8 @@
     (set-buffer-modified-p nil)))
 
 
-(defadvice dired-readin
-  (after dired-after-updating-hook first () activate)
+(defadvice dired-readin (after dired-after-updating-hook first () activate)
+  "List directories first in `dired-mode'."
   (me/list-directories-first))
 
 
