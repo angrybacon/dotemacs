@@ -1,15 +1,13 @@
-# Elisp
-*.elc
-
-
-# Emacs
+# Default
 *~
+*.elc
 .dir-locals.el
 auto-save-list/
+elpa/
 
 
 # Multiple cursors
-vendor/multiple-cursors/mc-lists.el
+.multiple-cursors-lists.el
 
 
 # OSX
