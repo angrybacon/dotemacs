@@ -31,19 +31,19 @@
 ;; (require 'use-package)
 
 
-;; Built-in
-;; (use-package semantic
+;; Website: https://github.com/tuhdo/semantic-stickyfunc-enhance
+;; (use-package stickyfunc-enhance
+;;   :ensure t
 ;;   :init
-;;   (setq
-;;    semantic-idle-breadcrumbs-separator " > "
-;;    semanticdb-default-save-directory "~/.emacs.d/semanticdb/")
+;;   (require 'stickyfunc-enhance)
+;;   (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
 ;;   :config
-;;   ;; FIXME: This is not restricted to Python buffers
-;;   (add-hook 'python-mode-hook
-;;             (lambda ()
-;;               ;; TODO: Find a mode that display a namespace of the top line, instead of item at cursor position
-;;               (semantic-mode t)
-;;               (semantic-idle-breadcrumbs-mode t))))
+;;   (defun me/enable-semantic-maybe ()
+;;     "Maybe enable `semantic-mode'."
+;;     (if (derived-mode-p 'python-mode)
+;;         (semantic-mode 1)
+;;       (semantic-mode -1)))
+;;   (add-hook 'change-major-mode-hook #'me/enable-semantic-maybe))
 
 
 (provide 'init-semantic)
