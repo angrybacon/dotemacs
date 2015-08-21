@@ -15,10 +15,11 @@
 
 
 ;;=============================================================================
-;; Silence byte-compiler
+;; Silence the byte-compiler
 ;;=============================================================================
 
 
+(require 'use-package)
 (defvar me/font-family-default)
 (defvar me/font-family-header)
 (defvar me/font-size-default)
@@ -32,9 +33,6 @@
 ;;=============================================================================
 ;; Configure Helm
 ;;=============================================================================
-
-
-(require 'use-package)
 
 
 ;; Website: https://github.com/emacs-helm/helm

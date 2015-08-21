@@ -15,10 +15,11 @@
 
 
 ;;=============================================================================
-;; Silence byte-compiler
+;; Silence the byte-compiler
 ;;=============================================================================
 
 
+(require 'use-package)
 (defvar zenburn/green+2)
 (defvar zenburn/green)
 (defvar zenburn/green-1)
@@ -27,9 +28,6 @@
 ;;=============================================================================
 ;; Configure Highlight Parentheses
 ;;=============================================================================
-
-
-(require 'use-package)
 
 
 ;; Website: http://www.emacswiki.org/emacs/HighlightParentheses

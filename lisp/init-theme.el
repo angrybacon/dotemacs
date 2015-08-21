@@ -15,10 +15,11 @@
 
 
 ;;=============================================================================
-;; Silence byte-compiler
+;; Silence the byte-compiler
 ;;=============================================================================
 
 
+(require 'use-package)
 (defvar me/font-family-default)
 (defvar me/font-size-default)
 (defvar zenburn/bg+2)
@@ -37,9 +38,7 @@
 ;;=============================================================================
 
 
-(require 'use-package)
-
-
+;; Website: https://github.com/bbatsov/zenburn-emacs
 (use-package zenburn-theme
   :ensure t
   :init

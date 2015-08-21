@@ -15,10 +15,11 @@
 
 
 ;;=============================================================================
-;; Silence byte-compiler
+;; Silence the byte-compiler
 ;;=============================================================================
 
 
+;; (require 'use-package)
 ;; (defvar semantic-idle-breadcrumbs-separator)
 ;; (defvar semanticdb-default-save-directory)
 
@@ -26,9 +27,6 @@
 ;;=============================================================================
 ;; Add semantic breadcrumbs
 ;;=============================================================================
-
-
-;; (require 'use-package)
 
 
 ;; Website: https://github.com/tuhdo/semantic-stickyfunc-enhance

@@ -15,10 +15,11 @@
 
 
 ;;=============================================================================
-;; Silence byte-compiler
+;; Silence the byte-compiler
 ;;=============================================================================
 
 
+(require 'use-package)
 (defvar me/font-family-mode-line)
 (defvar me/font-size-mode-line)
 (defvar zenburn/bg+3)
@@ -39,9 +40,6 @@
 ;;=============================================================================
 ;; Configure Delight
 ;;=============================================================================
-
-
-(require 'use-package)
 
 
 ;; Website: https://github.com/antonio/delight.el

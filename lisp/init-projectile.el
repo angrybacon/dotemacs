@@ -15,10 +15,11 @@
 
 
 ;;=============================================================================
-;; Silence byte-compiler
+;; Silence the byte-compiler
 ;;=============================================================================
 
 
+(require 'use-package)
 (defvar project-name nil)
 (put 'project-name 'safe-local-variable #'stringp)
 
@@ -26,9 +27,6 @@
 ;;=============================================================================
 ;; Configure Projectile
 ;;=============================================================================
-
-
-(require 'use-package)
 
 
 ;; Website: https://github.com/bbatsov/projectile
