@@ -28,7 +28,7 @@
 ;; work quite often with Python, HTML, SCSS and JavaScript code. My
 ;; configuration is stronlgy Web-oriented.
 ;;
-;; Custom key binding conventions:
+;; Custom key binding prefixing conventions:
 ;; - C-c h: `helm'
 ;; - C-c g: `magit'
 ;; - C-c o: `org'
