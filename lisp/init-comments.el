@@ -19,10 +19,11 @@
 ;;=============================================================================
 
 
-(add-hook 'prog-mode-hook
+;; (add-hook 'prog-mode-hook
+(add-hook 'change-major-mode-hook
           (lambda ()
             (font-lock-add-keywords nil
-              '(("\\<\\(FIX\\(ME\\)?\\|HACK\\|NOTE\\|OPTIMIZE\\|TODO\\|XXX\\|WTF\\):"
+              '(("\\<\\(FIX\\(ME\\)?\\|HACK\\|NOTE\\|OPTIMIZE\\|TODO\\|XXX\\|WTF\\) +?:"
                  1 font-lock-warning-face t)))))
 
 
