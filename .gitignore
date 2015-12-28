@@ -1,33 +1,22 @@
-# Default
-*~
-*.elc
+# Emacs
 .dir-locals.el
 auto-save-list/
 elpa/
-elpa.ori/
-
+games/
+semanticdb/
+url/
 
 # Multiple cursors
 .multiple-cursors-lists.el
 
-
 # OSX
 .DS_Store
-
 
 # Projectile
 .projectile
 projectile.cache
 projectile-bookmarks.eld
 
-
-# Semantic
-semanticdb/
-
-
-# Tramp
-tramp
-
-
-# Web browser
-url/
+# Trash files
+*~
+*.elc
