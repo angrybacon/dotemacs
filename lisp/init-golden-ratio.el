@@ -31,7 +31,9 @@
 (use-package golden-ratio
   :ensure t
   :init
-  (setq golden-ratio-adjust-factor .9)
+  (setq
+   golden-ratio-adjust-factor .8
+   split-width-threshold nil)
   :config
   (golden-ratio-mode 1))
 
