@@ -15,53 +15,6 @@
 
 
 ;;=============================================================================
-;; Add Jazz palette: https://github.com/donderom/jazz-theme
-;;=============================================================================
-
-
-(defconst jazz/bg+3      "#606060"  "Jazz palette: #606060 (bg+3).")
-(defconst jazz/bg+2      "#505050"  "Jazz palette: #505050 (bg+2).")
-(defconst jazz/bg+1      "#202020"  "Jazz palette: #202020 (bg+1).")
-(defconst jazz/bg        "#151515"  "Jazz palette: #151515 (bg).")
-(defconst jazz/bg-1      "#101010"  "Jazz palette: #101010 (bg-1).")
-(defconst jazz/blue+1    "#5C737C"  "Jazz palette: #5C737C (blue+1).")
-(defconst jazz/blue      "#385E6B"  "Jazz palette: #385E6B (blue).")
-(defconst jazz/cyan      "#34676F"  "Jazz palette: #34676F (cyan).")
-(defconst jazz/fg        "#C6A57B"  "Jazz palette: #C6A57B (fg).")
-(defconst jazz/green+1   "#7E9960"  "Jazz palette: #7E9960 (green+1).")
-(defconst jazz/green     "#546A29"  "Jazz palette: #546A29 (green).")
-(defconst jazz/magenta   "#7F355E"  "Jazz palette: #7F355E (magenta).")
-(defconst jazz/orange    "#BA5B34"  "Jazz palette: #BA5B34 (orange).")
-(defconst jazz/red+1     "#8D4A4A"  "Jazz palette: #8D4A4A (red+1).")
-(defconst jazz/red       "#953331"  "Jazz palette: #953331 (red).")
-(defconst jazz/yellow+1  "#96A62D"  "Jazz palette: #96A62D (yellow+).")
-(defconst jazz/yellow    "#909737"  "Jazz palette: #909737 (yellow).")
-
-
-;;=============================================================================
-;; Add Solarized palette: http://ethanschoonover.com/solarized#the-values
-;;=============================================================================
-
-
-(defconst solarized/base+3   "#FDF6E3"  "Solarized palette: #FDF6E3 (base+3).")
-(defconst solarized/base+2   "#EEE8D5"  "Solarized palette: #EEE8D5 (base+2).")
-(defconst solarized/base+1   "#93A1A1"  "Solarized palette: #93A1A1 (base+1).")
-(defconst solarized/base+0   "#839496"  "Solarized palette: #839496 (base+0).")
-(defconst solarized/base-0   "#657B83"  "Solarized palette: #657B83 (base-0).")
-(defconst solarized/base-1   "#586E75"  "Solarized palette: #586E75 (base-1).")
-(defconst solarized/base-2   "#073642"  "Solarized palette: #073642 (base-2).")
-(defconst solarized/base-3   "#002B36"  "Solarized palette: #002B36 (base-3).")
-(defconst solarized/yellow   "#B58900"  "Solarized palette: #B58900 (yellow).")
-(defconst solarized/orange   "#CB4B16"  "Solarized palette: #CB4B16 (orange).")
-(defconst solarized/red      "#DC322F"  "Solarized palette: #DC322F (red).")
-(defconst solarized/magenta  "#D33682"  "Solarized palette: #D33682 (magenta).")
-(defconst solarized/violet   "#6C71C4"  "Solarized palette: #6C71C4 (violet).")
-(defconst solarized/blue     "#268BD2"  "Solarized palette: #268BD2 (blue).")
-(defconst solarized/cyan     "#2AA198"  "Solarized palette: #2AA198 (cyan).")
-(defconst solarized/green    "#859900"  "Solarized palette: #859900 (green).")
-
-
-;;=============================================================================
 ;; Add Zenburn palette: https://github.com/bbatsov/zenburn-emacs
 ;;=============================================================================
 

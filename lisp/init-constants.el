@@ -19,12 +19,13 @@
 
 
 ;; Set identity
-(setq user-full-name "Mathieu Marques")
-(setq user-mail-address "mathieumarques78@gmail.com")
+(setq-default
+ user-full-name "Mathieu Marques"
+ user-mail-address "mathieumarques78@gmail.com")
 
 
 ;; Constants
-;; NOTE: I don't think these should be constants.
+;; NOTE: Thse probably shouldn't be constants.
 (defconst me/font-family-default    "Monaco"  "The font to use for default text.")
 (defconst me/font-family-header     "Monaco"  "The font to use for headers.")
 (defconst me/font-family-mode-line  "Monaco"  "The font to use for the mode line.")

@@ -23,14 +23,15 @@
 
 
 ;;=============================================================================
-;; Configure Dockerfile mode
+;; Configure Dockerfile Mode
 ;;=============================================================================
 
 
 ;; Website: https://github.com/spotify/dockerfile-mode
 (use-package dockerfile-mode
-  :ensure t
   :delight dockerfile-mode "Dockerfile"
+  :ensure t
+
   :init
   (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
 

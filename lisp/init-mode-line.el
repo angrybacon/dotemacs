@@ -45,8 +45,8 @@
 ;; Website: https://github.com/antonio/delight.el
 (use-package delight
   :ensure t
-  :init
 
+  :init
   ;; FIXME: The mode-line doesn't take these changes into account
   (delight '((emacs-lisp-mode "Emacs Lisp")
              (lisp-interaction-mode "Lisp Interaction")
@@ -65,6 +65,7 @@
 ;; Website: https://github.com/milkypostman/powerline
 (use-package powerline
   :ensure t
+
   :init
   (setq
    powerline-default-separator 'wave
@@ -136,10 +137,12 @@
   (defface me/pl-buffer-name-inactive-face '((t (:inherit powerline-inactive1)))
     "Face used for the buffer name, in an inactive powerline."
     :group 'me/powerline)
-  (defface me/pl-buffer-name-modified-inactive-face '((t (:inherit me/pl-buffer-name-inactive-face)))
+  (defface me/pl-buffer-name-modified-inactive-face
+    '((t (:inherit me/pl-buffer-name-inactive-face)))
     "Face used for the buffer name, modified and in an inactive powerlin."
     :group 'me/powerline)
-  (defface me/pl-buffer-name-readonly-inactive-face '((t (:inherit me/pl-buffer-name-inactive-face)))
+  (defface me/pl-buffer-name-readonly-inactive-face
+    '((t (:inherit me/pl-buffer-name-inactive-face)))
     "Face used for the buffer name, readonly and in an inactive powerline."
     :group 'me/powerline)
   (defface me/pl-buffer-status-inactive-face '((t (:inherit powerline-inactive1)))
@@ -176,16 +179,14 @@
     "Face used for the version control branch, in an inactive powerline."
     :group 'me/powerline)
 
-  ;; Shamelessly taken from spacemacs
   (defmacro me/flycheck-lighter (error)
-
     "Return a formatted string describing the ERROR (error, warning, info) count."
+    ;; NOTE: Shamelessly taken from spacemacs
     `(let* ((error-counts (flycheck-count-errors flycheck-current-errors))
             (errorp (flycheck-has-current-errors-p ',error))
             (count (or (cdr (assq ',error error-counts)) "?"))
             (running (eq 'running flycheck-last-status-change)))
        (if (or errorp running) (format "• %s" count))))
-
 
   ;; Define the mode-line format
   (setq-default
@@ -199,16 +200,23 @@
              (mode-line-major-face (if active 'powerline-active1 'powerline-inactive1))
              (mode-line-minor-face (if active 'powerline-active2 'powerline-inactive2))
              (battery-face (if active 'me/pl-battery-face 'me/pl-battery-inactive-face))
-             (buffer-name-face (if active 'me/pl-buffer-name-face 'me/pl-buffer-name-inactive-face))
-             (buffer-status-face (if active 'me/pl-buffer-status-face 'me/pl-buffer-status-inactive-face))
+             (buffer-name-face
+              (if active 'me/pl-buffer-name-face 'me/pl-buffer-name-inactive-face))
+             (buffer-status-face
+              (if active 'me/pl-buffer-status-face 'me/pl-buffer-status-inactive-face))
              (flycheck-error-face (if active 'me/pl-fc-error-face 'me/pl-fc-error-inactive-face))
              (flycheck-info-face (if active 'me/pl-fc-info-face 'me/pl-fc-info-inactive-face))
-             (flycheck-warning-face (if active 'me/pl-fc-warning-face 'me/pl-fc-warning-inactive-face))
+             (flycheck-warning-face
+              (if active 'me/pl-fc-warning-face 'me/pl-fc-warning-inactive-face))
              (major-mode-face (if active 'me/pl-major-mode-face 'me/pl-major-mode-inactive-face))
-             (line-number-face (if active 'me/pl-line-number-face 'me/pl-line-number-inactive-face))
-             (line-separator-face (if active 'me/pl-line-separator-face 'me/pl-line-separator-inactive-face))
-             (project-delimiter-face (if active 'me/pl-project-delimiter-face 'me/pl-project-delimiter-inactive-face))
-             (project-name-face (if active 'me/pl-project-name-face 'me/pl-project-name-inactive-face))
+             (line-number-face
+              (if active 'me/pl-line-number-face 'me/pl-line-number-inactive-face))
+             (line-separator-face
+              (if active 'me/pl-line-separator-face 'me/pl-line-separator-inactive-face))
+             (project-delimiter-face
+              (if active 'me/pl-project-delimiter-face 'me/pl-project-delimiter-inactive-face))
+             (project-name-face
+              (if active 'me/pl-project-name-face 'me/pl-project-name-inactive-face))
              (time-face (if active 'me/pl-time-face 'me/pl-time-inactive-face))
              (vc-branch-face (if active 'me/pl-vc-branch-face 'me/pl-vc-branch-inactive-face))
 
@@ -222,7 +230,7 @@
              (lhs (append
                    (list
                     (powerline-major-mode major-mode-face 'l)
-                    (powerline-raw " " nil)
+                    (powerline-raw " ")
                     (funcall separator-left mode-line-face mode-line-major-face))
                    (list
                     (powerline-raw "[" project-delimiter-face 'l)
@@ -241,7 +249,8 @@
              ;; List all the elements on the right
              (rhs (append
                    (when (and (bound-and-true-p flycheck-mode)
-                              (or flycheck-current-errors (eq 'running flycheck-last-status-change)))
+                              (or flycheck-current-errors
+                                  (eq 'running flycheck-last-status-change)))
                      (list
                       (funcall separator-right mode-line-minor-face mode-line-major-face)
                       (powerline-raw " " mode-line-major-face)
@@ -280,11 +289,14 @@
 
   ;; Customize fonts within a mode-line
   (when (member me/font-family-mode-line (font-family-list))
-    (set-face-attribute 'mode-line nil :font me/font-family-mode-line :height me/font-size-mode-line)
-    (set-face-attribute 'mode-line-inactive nil :font me/font-family-mode-line :height me/font-size-mode-line))
+    (set-face-attribute 'mode-line nil
+                        :font me/font-family-mode-line :height me/font-size-mode-line)
+    (set-face-attribute 'mode-line-inactive nil
+                        :font me/font-family-mode-line :height me/font-size-mode-line))
 
   ;; Customize faces for an active mode-line
-  (set-face-attribute 'mode-line nil :background zenburn/bg-1 :box `(:line-width 2 :color ,zenburn/bg-1))
+  (set-face-attribute 'mode-line nil
+                      :background zenburn/bg-1 :box `(:line-width 2 :color ,zenburn/bg-1))
   (set-face-attribute 'powerline-active1 nil :background zenburn/bg-0)
   (set-face-attribute 'powerline-active2 nil :background zenburn/bg+0)
   (set-face-attribute 'me/pl-battery-face nil :foreground zenburn/bg+3)
@@ -304,8 +316,8 @@
   (set-face-attribute 'me/pl-vc-branch-face nil :foreground zenburn/bg+3)
 
   ;; Customize faces for an inactive mode-line
-  (set-face-attribute 'mode-line-inactive nil :background zenburn/bg-0
-                      :box `(:line-width 2 :color ,zenburn/bg-0))
+  (set-face-attribute 'mode-line-inactive nil
+                      :background zenburn/bg-0 :box `(:line-width 2 :color ,zenburn/bg-0))
   (set-face-attribute 'powerline-inactive1 nil :background zenburn/bg+0)
   (set-face-attribute 'powerline-inactive2 nil :background zenburn/bg+1)
   (set-face-attribute 'me/pl-battery-inactive-face nil :foreground zenburn/bg+3)

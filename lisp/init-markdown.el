@@ -23,14 +23,15 @@
 
 
 ;;=============================================================================
-;; Configure Markdown mode
+;; Configure Markdown Mode
 ;;=============================================================================
 
 
 ;; Website: http://jblevins.org/projects/markdown-mode/
 (use-package markdown-mode
-  :ensure t
   :delight markdown-mode "Markdown"
+  :ensure t
+
   :init
   (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
   (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))

@@ -23,14 +23,15 @@
 
 
 ;;=============================================================================
-;; Configure YAML mode
+;; Configure YAML Mode
 ;;=============================================================================
 
 
 ;; Website: https://github.com/yoshiki/yaml-mode
 (use-package yaml-mode
-  :ensure t
   :delight yaml-mode "YAML"
+  :ensure t
+
   :init (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 
 

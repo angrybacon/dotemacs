@@ -23,14 +23,15 @@
 
 
 ;;=============================================================================
-;; Configure Org mode
+;; Configure Org Mode
 ;;=============================================================================
 
 
 ;; Website: http://orgmode.org/
 (use-package org
-  :ensure t
   :delight org-mode "Org"
+  :ensure t
+
   :bind
   (("C-c o a" . org-agenda)
    ("C-c o b" . org-iswitchb)

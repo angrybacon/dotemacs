@@ -76,29 +76,33 @@
 
 
 ;;=============================================================================
-;; Enable selection increasing by semantic units
+;; Configure Expand Region
 ;;=============================================================================
 
 
 ;; Website: https://github.com/magnars/expand-region.el
 (use-package expand-region
   :ensure t
+
   :init
   (pending-delete-mode t)
+
   :bind
   ("C-=" . er/expand-region))
 
 
 ;;=============================================================================
-;; Enable multiple cursors
+;; Configure Multiple Cursors
 ;;=============================================================================
 
 
 ;; Website: https://github.com/magnars/multiple-cursors.el
 (use-package multiple-cursors
   :ensure t
+
   :init
   (setq mc/list-file (expand-file-name ".multiple-cursors-lists.el" user-emacs-directory))
+
   :bind
   (("C-S-c C-S-c" . mc/edit-lines)
    ("C-<" . mc/mark-previous-like-this)

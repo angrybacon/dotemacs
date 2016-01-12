@@ -23,13 +23,13 @@
 
 
 ;;=============================================================================
-;; Configure Python mode
+;; Configure Python Mode
 ;;=============================================================================
 
 
 ;; Built-in
 (use-package python
-  :delight python-mode "Python")
+  :delight python-mode "Python Test")
 
 
 (provide 'init-python)
