@@ -20,26 +20,25 @@
 
 
 (require 'use-package)
-(defvar zenburn/bg+2)
-(defvar zenburn/bg+1)
-(defvar zenburn/red)
+(defvar zenburn/red-1)
 
 
 ;;=============================================================================
-;; Configure Whitespace mode
+;; Configure Whitespace Mode
 ;;=============================================================================
 
 
 ;; Built-in
 (use-package whitespace
+
+  :init
+  (setq whitespace-style '(face empty tab trailing))
+
   :config
-  (set-face-attribute 'whitespace-empty nil :background zenburn/bg+1)
-  (set-face-attribute 'whitespace-indentation nil :background zenburn/bg+1 :foreground zenburn/red)
-  (set-face-attribute 'whitespace-space-after-tab nil :background zenburn/bg+1 :foreground zenburn/red)
-  (set-face-attribute 'whitespace-space-before-tab nil :background zenburn/bg+1 :foreground zenburn/red)
-  (set-face-attribute 'whitespace-tab nil :background zenburn/bg+1 :foreground zenburn/red)
-  (set-face-attribute 'whitespace-trailing nil :background zenburn/bg+1 :foreground zenburn/red)
-  (set-face-attribute 'whitespace-space nil :background 'unspecified :foreground zenburn/bg+2))
+  (set-face-attribute 'whitespace-empty nil :background zenburn/red-1)
+  (set-face-attribute 'whitespace-tab nil :background zenburn/red-1)
+  (set-face-attribute 'whitespace-trailing nil :background zenburn/red-1)
+  (global-whitespace-mode 1))
 
 
 (provide 'init-whitespace)
