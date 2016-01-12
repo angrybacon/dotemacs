@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: log
+# key: l
+# binding: direct-keybinding
+# expand-env: ((yas-indent-line 'fixed))
+# --
+console.log(${1:'asdf'});

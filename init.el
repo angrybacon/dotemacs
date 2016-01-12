@@ -24,9 +24,9 @@
 
 ;; To install, clone dotemacs/ into ~/.emacs.d/.
 ;;
-;; Following lines load several packages to configure my Emacs experience. I
-;; work quite often with Python, HTML, SCSS and JavaScript code. My
-;; configuration is stronlgy Web-oriented.
+;; Following lines load several packages to configure my Emacs experience.
+;; I work quite often with Python, HTML, SCSS and JavaScript code.
+;; My configuration is stronlgy Web-oriented.
 ;;
 ;; Custom key binding prefixing conventions:
 ;; - C-c h: `helm'
@@ -52,7 +52,7 @@
 
 ;; Check Emacs' version
 (when (version<= emacs-version "24")
-  (unless (yes-or-no-p (concat "Your Emacs is getting old. Some functionalities may not work, continue? "))
+  (unless (yes-or-no-p (concat "Your Emacs is getting old. Features may not work, continue? "))
     (kill-emacs)))
 
 
@@ -96,10 +96,10 @@
 (require 'init-parentheses)
 (require 'init-projectile)
 (require 'init-python)
-(require 'init-semantic)
 (require 'init-shell)
 (require 'init-whitespace)
 (require 'init-yaml)
+(require 'init-yasnippet)
 
 
 (provide 'init)

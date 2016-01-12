@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: var
+# key: v
+# binding: direct-keybinding
+# expand-env: ((yas-indent-line 'fixed))
+# --
+var ${1:foobar} = $0;
