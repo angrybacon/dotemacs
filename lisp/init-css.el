@@ -23,32 +23,46 @@
 
 
 ;;=============================================================================
-;; Configure CSS mode
+;; Configure CSS Mode
 ;;=============================================================================
 
 
 ;; Built-in
 (use-package css-mode
   :delight css-mode "CSS"
+
   :init
   (setq css-indent-offset 2))
 
 
 ;;=============================================================================
-;; Configure SCSS mode
+;; Configure SCSS Mode
 ;;=============================================================================
 
 
 ;; Website: https://github.com/antonj/scss-mode/
 (use-package scss-mode
+  :delight scss-mode "SCSS Test"
   :ensure t
-  :delight scss-mode "SCSS"
+
   :init
   (setq scss-compile-at-save nil)
   (add-to-list 'auto-mode-alist '("\\.css\\'" . scss-mode))
   (add-to-list 'auto-mode-alist '("\\.less\\'" . scss-mode))
   (add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
   (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode)))
+
+
+;;=============================================================================
+;; Configure Helm CSS SCSS
+;;=============================================================================
+
+
+;; Website: https://github.com/ShingoFukuyama/helm-css-scss
+(use-package helm-css-scss
+  :ensure t
+  ;; TODO: https://github.com/bbatsov/zenburn-emacs/issues/220
+  )
 
 
 (provide 'init-css)
