@@ -23,13 +23,26 @@
 
 
 ;;=============================================================================
-;; Configure JavaScript mode
+;; Configure JS Mode
 ;;=============================================================================
 
 
 ;; Built-in
 (use-package js
   :delight js-mode "JavaScript")
+
+
+;;=============================================================================
+;; Configure Tern
+;;=============================================================================
+
+
+;; Website: http://ternjs.net/doc/manual.html#emacs
+(use-package tern
+  :ensure t
+
+  :config
+  (add-hook 'js-mode-hook (lambda () (tern-mode t))))
 
 
 (provide 'init-javascript)
