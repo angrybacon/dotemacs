@@ -15,14 +15,6 @@
 
 
 ;;=============================================================================
-;; Silence the byte-compiler
-;;=============================================================================
-
-
-(defvar me/initial-buffer)
-
-
-;;=============================================================================
 ;; Configure interface components
 ;;=============================================================================
 
@@ -36,7 +28,6 @@
  indent-tabs-mode nil                            ; Stop using tabs to indent
  indicate-empty-lines t                          ; Indicate unused lines in the fringe
  inhibit-startup-screen t                        ; Remove start-up screen
- initial-buffer-choice me/initial-buffer         ; Open specified file on start-up
  initial-scratch-message ""                      ; Empty the initial *scratch* buffer
  mouse-yank-at-point t                           ; Yank at mouse cursor rather than click location
  require-final-newline 'visit                    ; Add a newline at EOF on visit
@@ -46,25 +37,9 @@
  x-select-enable-clipboard t)                    ; Merge both system's and Emacs' clipboard
 
 
-;; Toggle components
-(column-number-mode 0)                           ; Hide column number
-(display-battery-mode 1)                         ; Display battery level in the mode-line
-(display-time-mode 1)                            ; Enable the time representation
-(fringe-mode '(10 . 10))                         ; Display left fringe
-(global-hl-line-mode 1)                          ; Hightlight current line
-(line-number-mode 1)                             ; Display line number
-(menu-bar-mode 0)                                ; Disable menu bar
-(scroll-bar-mode 0)                              ; Disable scroll bar
-(tool-bar-mode 0)                                ; Disable the toolbar
-
-
 ;; Goodies
 (global-subword-mode 1)                          ; Iterate through CamelCase words
 (mouse-avoidance-mode 'animate)                  ; Move pointer when point reaches cursor location
-
-
-;; FIXME: This messes up on Yamamoto Mitsuharu's build
-;; (set-frame-parameter nil 'fullscreen 'fullboth)  ; Pseudo fullscreen (only tested with OS X)
 
 
 ;;=============================================================================

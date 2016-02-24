@@ -26,13 +26,6 @@
 ;;
 ;; Following lines load several packages to configure my Emacs experience.
 ;; I work quite often with Python, HTML, SCSS and JavaScript code.
-;; My configuration is stronlgy Web-oriented.
-;;
-;; Custom key binding prefixing conventions:
-;; - C-c h: `helm'
-;; - C-c g: `magit'
-;; - C-c o: `org'
-;; - C-c p: `projectile'
 ;;
 ;; See readme.md for more details.
 
@@ -40,20 +33,48 @@
 
 
 ;;=============================================================================
+;; Check Emacs' version
+;;=============================================================================
+
+
+(when (version<= emacs-version "24")
+  (unless (yes-or-no-p (concat "Your Emacs is getting old. Features may not work, continue? "))
+    (kill-emacs)))
+
+
+;;=============================================================================
 ;; Bootstrap configuration
 ;;=============================================================================
 
 
-;; Custom variables
-(custom-set-variables
- '(custom-safe-themes
-   '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+(set-frame-parameter nil 'fullscreen 'fullboth)  ; Higher garbage collector treshold
+(setq-default gc-cons-threshold 100000000)       ; Pseudo fullscreen
 
 
-;; Check Emacs' version
-(when (version<= emacs-version "24")
-  (unless (yes-or-no-p (concat "Your Emacs is getting old. Features may not work, continue? "))
-    (kill-emacs)))
+;;=============================================================================
+;; Initialize benchmarks
+;;=============================================================================
+
+
+(let ((benchmark-init.el "~/.emacs.d/elpa/benchmark-init-20150905.238/benchmark-init.el"))
+  (when (file-exists-p benchmark-init.el)
+    (load benchmark-init.el)))
+
+
+;;=============================================================================
+;; Toggle UI components
+;;=============================================================================
+
+
+(column-number-mode 0)    ; Hide column number
+(display-battery-mode 1)  ; Display battery level in the mode-line
+(display-time-mode 1)     ; Enable the time representation
+(fringe-mode '(10 . 10))  ; Display left fringe
+(global-hl-line-mode 1)   ; Hightlight current line
+(line-number-mode 1)      ; Display line number
+(menu-bar-mode 0)         ; Disable menu bar
+(scroll-bar-mode 0)       ; Disable scroll bar
+(tool-bar-mode 0)         ; Disable the toolbar
 
 
 ;;=============================================================================
@@ -65,41 +86,43 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 
-;; Initialize the core configuration
-(require 'init-constants)
-(require 'init-interface)
-(require 'init-elpa)
-(require 'init-palettes)
-(require 'init-theme)
+;; Load dependencies
+(let ((file-name-handler-alist nil))
 
+  ;; Initialize the core configuration
+  (require 'init-constants)
+  (require 'init-elpa)
+  (require 'init-interface)
+  (require 'init-palettes)
+  (require 'init-theme)
 
-;; Initialize the partials
-(require 'init-aliases)
-(require 'init-comments)
-(require 'init-company)
-(require 'init-css)
-(require 'init-cursor)
-(require 'init-dired)
-(require 'init-docker)
-(require 'init-emmet)
-(require 'init-flycheck)
-(require 'init-git)
-(require 'init-golden-ratio)
-(require 'init-helm)
-(require 'init-html)
-(require 'init-javascript)
-(require 'init-json)
-(require 'init-markdown)
-(require 'init-mode-line)
-(require 'init-org)
-(require 'init-osx)
-(require 'init-parentheses)
-(require 'init-projectile)
-(require 'init-python)
-(require 'init-shell)
-(require 'init-whitespace)
-(require 'init-yaml)
-(require 'init-yasnippet)
+  ;; Initialize the partials
+  (require 'init-aliases)
+  (require 'init-comments)
+  (require 'init-company)
+  (require 'init-css)
+  (require 'init-cursor)
+  (require 'init-dired)
+  (require 'init-docker)
+  (require 'init-emmet)
+  (require 'init-flycheck)
+  (require 'init-git)
+  (require 'init-golden-ratio)
+  (require 'init-helm)
+  (require 'init-html)
+  (require 'init-javascript)
+  (require 'init-json)
+  (require 'init-markdown)
+  (require 'init-mode-line)
+  (require 'init-org)
+  (require 'init-osx)
+  (require 'init-parentheses)
+  (require 'init-projectile)
+  (require 'init-python)
+  (require 'init-shell)
+  (require 'init-whitespace)
+  (require 'init-yaml)
+  (require 'init-yasnippet))
 
 
 (provide 'init)
