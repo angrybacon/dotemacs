@@ -15,14 +15,6 @@
 
 
 ;;=============================================================================
-;; Silence the byte-compiler
-;;=============================================================================
-
-
-(require 'use-package)
-
-
-;;=============================================================================
 ;; Configure Golden Ratio
 ;;=============================================================================
 
@@ -31,9 +23,11 @@
 (use-package golden-ratio
   :ensure t
 
+  :defines me/golden-ratio-factor
+
   :init
   (setq
-   golden-ratio-adjust-factor .8
+   golden-ratio-adjust-factor me/golden-ratio-factor
    split-width-threshold nil)
 
   :config

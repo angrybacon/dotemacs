@@ -15,28 +15,24 @@
 
 
 ;;=============================================================================
-;; Silence the byte-compiler
-;;=============================================================================
-
-
-(require 'use-package)
-(defvar project-name nil)
-(put 'project-name 'safe-local-variable #'stringp)
-
-
-;;=============================================================================
 ;; Configure Projectile
 ;;=============================================================================
+
+
+(defvar project-name nil)
 
 
 ;; Website: https://github.com/bbatsov/projectile
 (use-package projectile
   :ensure t
 
+  :functions projectile-project-name--prefer-mine
+
   :init
   (setq
    projectile-enable-caching t
    projectile-mode-line '(:eval (format " %s" (projectile-project-name))))
+  (put 'project-name 'safe-local-variable #'stringp)
   (advice-add 'projectile-project-name :around #'projectile-project-name--prefer-mine)
 
   :config

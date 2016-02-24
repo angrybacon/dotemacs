@@ -15,16 +15,6 @@
 
 
 ;;=============================================================================
-;; Silence the byte-compiler
-;;=============================================================================
-
-
-(require 'use-package)
-(defvar zenburn/orange)
-(defvar zenburn/red-2)
-
-
-;;=============================================================================
 ;; Configure Flycheck
 ;;=============================================================================
 
@@ -32,6 +22,10 @@
 ;; Website: https://github.com/flycheck/flycheck
 (use-package flycheck
   :ensure t
+
+  :defines
+  (zenburn/orange
+   zenburn/red-2)
 
   :init
   (setq

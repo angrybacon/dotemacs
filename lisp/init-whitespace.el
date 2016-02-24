@@ -15,21 +15,14 @@
 
 
 ;;=============================================================================
-;; Silence the byte-compiler
-;;=============================================================================
-
-
-(require 'use-package)
-(defvar zenburn/red-1)
-
-
-;;=============================================================================
 ;; Configure Whitespace Mode
 ;;=============================================================================
 
 
 ;; Built-in
 (use-package whitespace
+
+  :defines zenburn/red-1
 
   :init
   (setq whitespace-style '(face empty tab trailing))

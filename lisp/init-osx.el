@@ -15,21 +15,14 @@
 
 
 ;;=============================================================================
-;; Silence the byte-compiler
+;; Add OSX-specific settings
 ;;=============================================================================
 
 
 (defvar ns-command-modifier)
 (defvar ns-option-modifier)
-
-
-;;=============================================================================
-;; Add OSX-specific settings
-;;=============================================================================
-
-
 (when (eq system-type 'darwin)
-  (setq
+  (setq-default
    exec-path (append exec-path '("/usr/local/bin"))  ; Add path to binaries installed with Homebrew
    ns-command-modifier 'meta                         ; Map the Meta key to the `cmd' key
    ns-option-modifier nil))                          ; Disable the `alt' key

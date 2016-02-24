@@ -15,14 +15,6 @@
 
 
 ;;=============================================================================
-;; Silence the byte-compiler
-;;=============================================================================
-
-
-(require 'use-package)
-
-
-;;=============================================================================
 ;; Configure Company Mode
 ;;=============================================================================
 
@@ -52,11 +44,11 @@
     :ensure t
 
     :init
-    (add-to-list 'company-backends 'company-tern)
     (setq-default
      company-tern-meta-as-single-line t
      company-tern-property-marker " *"
-     company-tooltip-align-annotations t)))
+     company-tooltip-align-annotations t)
+    (add-to-list 'company-backends 'company-tern)))
 
 
 (provide 'init-company)

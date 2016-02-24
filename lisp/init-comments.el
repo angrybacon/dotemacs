@@ -19,7 +19,7 @@
 ;;=============================================================================
 
 
-;; (add-hook 'prog-mode-hook
+;; FIXME: Doesn't work everywhere
 (add-hook 'change-major-mode-hook
           (lambda ()
             (font-lock-add-keywords nil

@@ -15,17 +15,6 @@
 
 
 ;;=============================================================================
-;; Silence the byte-compiler
-;;=============================================================================
-
-
-(require 'use-package)
-(defvar zenburn/green+2)
-(defvar zenburn/green)
-(defvar zenburn/green-1)
-
-
-;;=============================================================================
 ;; Configure Highlight Parentheses
 ;;=============================================================================
 
@@ -34,13 +23,18 @@
 (use-package highlight-parentheses
   :ensure t
 
+  :defines
+  (zenburn/green+2
+   zenburn/green
+   zenburn/green-1)
+
   :init
   (setq hl-paren-colors `(,zenburn/green+2 ,zenburn/green ,zenburn/green-1))
 
   :config
   (define-globalized-minor-mode global-highlight-parentheses-mode
-    highlight-parentheses-mode (lambda () (highlight-parentheses-mode 1)))
-  (global-highlight-parentheses-mode 1))
+    highlight-parentheses-mode (lambda () (highlight-parentheses-mode t)))
+  (global-highlight-parentheses-mode t))
 
 
 ;;=============================================================================
