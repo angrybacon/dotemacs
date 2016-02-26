@@ -63,14 +63,14 @@
 
 ;; Website: https://github.com/magit/git-modes
 (use-package gitattributes-mode
-  :delight gitattributes-mode "Git Attributes")
-  :ensure t
+  :delight gitattributes-mode "Git Attributes"
+  :ensure t)
 (use-package gitconfig-mode
-  :delight gitconfig-mode "Git Config")
-  :ensure t
+  :delight gitconfig-mode "Git Config"
+  :ensure t)
 (use-package gitignore-mode
-  :delight gitignore-mode "Git Ignore")
-  :ensure t
+  :delight gitignore-mode "Git Ignore"
+  :ensure t)
 
 
 (provide 'init-git)
