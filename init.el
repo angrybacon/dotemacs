@@ -33,6 +33,31 @@
 
 
 ;;=============================================================================
+;; Toggle UI components
+;;=============================================================================
+
+
+(tool-bar-mode 0)         ; Disable/enable the toolbar
+(menu-bar-mode 0)         ; Disable/enable menu bar
+(scroll-bar-mode 0)       ; Disable/enable scroll bar
+(fringe-mode '(10 . 10))  ; Disable/enable vertical fringes
+(display-battery-mode 0)  ; Hide/show battery level
+(display-time-mode 1)     ; Hide/Show time representation
+(column-number-mode 0)    ; Hide/show column number
+(line-number-mode 1)      ; Hide/show line number
+(global-hl-line-mode 1)   ; Hightlight current line
+
+
+;;=============================================================================
+;; Bootstrap configuration
+;;=============================================================================
+
+
+(setq-default gc-cons-threshold 100000000)       ; Higher garbage collector treshold
+(set-frame-parameter nil 'fullscreen 'fullboth)  ; Pseudo fullscreen
+
+
+;;=============================================================================
 ;; Check Emacs' version
 ;;=============================================================================
 
@@ -43,16 +68,7 @@
 
 
 ;;=============================================================================
-;; Bootstrap configuration
-;;=============================================================================
-
-
-(set-frame-parameter nil 'fullscreen 'fullboth)  ; Higher garbage collector treshold
-(setq-default gc-cons-threshold 100000000)       ; Pseudo fullscreen
-
-
-;;=============================================================================
-;; Initialize benchmarks
+;; Benchmark initialization
 ;;=============================================================================
 
 
@@ -62,27 +78,11 @@
 
 
 ;;=============================================================================
-;; Toggle UI components
-;;=============================================================================
-
-
-(column-number-mode 0)    ; Hide column number
-(display-battery-mode 1)  ; Display battery level in the mode-line
-(display-time-mode 1)     ; Enable the time representation
-(fringe-mode '(10 . 10))  ; Display left fringe
-(global-hl-line-mode 1)   ; Hightlight current line
-(line-number-mode 1)      ; Display line number
-(menu-bar-mode 0)         ; Disable menu bar
-(scroll-bar-mode 0)       ; Disable scroll bar
-(tool-bar-mode 0)         ; Disable the toolbar
-
-
-;;=============================================================================
 ;; Load partials
 ;;=============================================================================
 
 
-;; Load dependency paths
+;; Load path of dependencies
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 
