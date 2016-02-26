@@ -22,15 +22,11 @@
 ;; Website: http://orgmode.org/
 (use-package org
   :delight org-mode "Org"
-  :ensure t
-
-  :init
-  (setq-default org-support-shift-select t)
-
   :bind
   (("C-c o a" . org-agenda)
    ("C-c o b" . org-iswitchb)
-   ("C-c o l" . org-store-link)))
+   ("C-c o l" . org-store-link))
+  :init (setq-default org-support-shift-select t))
 
 
 (provide 'init-org)

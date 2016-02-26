@@ -21,17 +21,12 @@
 
 ;; Website: https://github.com/roman/golden-ratio.el
 (use-package golden-ratio
-  :ensure t
-
-  :defines me/golden-ratio-factor
-
+  :defines (me/golden-ratio-factor)
   :init
-  (setq
+  (setq-default
    golden-ratio-adjust-factor me/golden-ratio-factor
    split-width-threshold nil)
-
-  :config
-  (golden-ratio-mode 1))
+  :config (golden-ratio-mode 1))
 
 
 (provide 'init-golden-ratio)

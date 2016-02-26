@@ -19,8 +19,8 @@
 ;;=============================================================================
 
 
-(defvar ns-command-modifier)
-(defvar ns-option-modifier)
+;; (defvar ns-command-modifier)
+;; (defvar ns-option-modifier)
 (when (eq system-type 'darwin)
   (setq-default
    exec-path (append exec-path '("/usr/local/bin"))  ; Add path to binaries installed with Homebrew

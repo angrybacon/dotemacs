@@ -20,20 +20,17 @@
 
 
 (when (>= emacs-major-version 24)
-  (require 'package)
-  (setq package-enable-at-startup nil)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+  (setq-default package-enable-at-startup nil)
   (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package))
   (unless (package-installed-p 'delight)
     (package-refresh-contents)
-    (package-install 'delight)))
-
-
-(eval-when-compile
-  (require 'use-package))
+    (package-install 'delight))
+  (setq-default use-package-always-ensure t))
+(eval-when-compile (require 'use-package))
 
 
 (provide 'init-elpa)

@@ -21,6 +21,7 @@
 
 ;; Built-in
 (use-package dired
+  :ensure nil
   :delight dired-mode "Dired")
 
 

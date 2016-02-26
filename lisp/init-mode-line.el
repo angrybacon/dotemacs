@@ -20,19 +20,7 @@
 
 
 ;; Website: https://github.com/antonio/delight.el
-;; (use-package delight
-;;   :ensure t
-
-;;   :init
-;;   ;; FIXME: The mode-line doesn't take these changes into account
-;;   (delight
-;;    '((emacs-lisp-mode "Emacs Lisp")
-;;      (lisp-interaction-mode "Lisp Interaction")
-;;      (magit-mode "Magit")
-;;      (magit-commit-mode "Magit Commit")
-;;      (magit-log-mode "Magit Log")
-;;      (magit-popup-mode "Magit Popup")
-;;      (magit-status-mode "Magit Status"))))
+(use-package delight)
 
 
 ;;=============================================================================
@@ -42,7 +30,6 @@
 
 ;; Website: https://github.com/milkypostman/powerline
 (use-package powerline
-  :ensure t
 
   :defines
   (me/font-family-mode-line
@@ -58,12 +45,9 @@
    zenburn/orange
    zenburn/red)
 
-  :init
-  (setq-default
-   powerline-default-separator 'wave
-   powerline-height 18)
+  :preface
 
-  ;; Define new faces for elements on an active powerline
+  ;; Define new faces for elements on an active buffer
   (defface me/fc-error-face '((t (:inherit powerline-active1)))
     "Face used for the error count."
     :group 'me/powerline)
@@ -80,7 +64,7 @@
     "Face used for the version control string."
     :group 'me/powerline)
 
-  ;; Define new faces for elements on an inactive powerline
+  ;; Define new faces for elements on an inactive buffer
   (defface me/fc-error-inactive-face '((t (:inherit powerline-inactive1)))
     "Face used for the error count, in an inactive buffer."
     :group 'me/powerline)
@@ -97,7 +81,7 @@
     "Face used for the version control string, in an inactive buffer."
     :group 'me/powerline)
 
-
+  ;; Light flycheck indicators
   (defmacro me/flycheck-lighter (error)
     "Return a formatted string describing the ERROR (error, warning, info) count."
     ;; NOTE: Shamelessly taken from spacemacs
@@ -106,6 +90,13 @@
             (count (or (cdr (assq ',error error-counts)) "?"))
             (running (eq 'running flycheck-last-status-change)))
        (if (or errorp running) (format "• %s" count))))
+
+  :init
+
+  ;; Customize appearance
+  (setq-default
+   powerline-default-separator 'wave
+   powerline-height 18)
 
   ;; Define the mode-line format
   (setq-default
@@ -197,18 +188,13 @@
   ;;       (copy-face 'me/battery-discharging-face 'me/battery-face)
   ;;       (copy-face 'me/battery-charging-inactive-face 'me/battery-inactive-face))))
 
-  ;; FIXME: The mode-line is slightly thinner when using Helm. How to make Helm use powerline?
-
-  ;; Customize fonts within a mode-line
-  (when (member me/font-family-mode-line (font-family-list))
-    (set-face-attribute
-     'mode-line nil :font me/font-family-mode-line :height me/font-size-mode-line)
-    (set-face-attribute
-     'mode-line-inactive nil :font me/font-family-mode-line :height me/font-size-mode-line))
-
-  ;; Customize faces for an active mode-line
-  (set-face-attribute
-   'mode-line nil :background zenburn/bg-1 :foreground zenburn/green :box nil)
+  ;; Customize faces for active buffers
+  (set-face-attribute 'mode-line nil
+                      :box nil :background zenburn/bg-1 :font me/font-family-mode-line
+                      :foreground zenburn/green :height me/font-size-mode-line)
+  (set-face-attribute 'mode-line-inactive nil
+                      :box nil :background zenburn/bg-1 :font me/font-family-mode-line
+                      :foreground zenburn/bg+3 :height me/font-size-mode-line)
   (set-face-attribute 'powerline-active1 nil :background zenburn/bg-0 :foreground zenburn/fg)
   (set-face-attribute 'powerline-active2 nil :background zenburn/bg+1)
   (set-face-attribute 'me/fc-error-face nil :foreground zenburn/red)
@@ -217,9 +203,7 @@
   (set-face-attribute 'me/projectile-face nil :foreground zenburn/blue-1)
   (set-face-attribute 'me/vc-face nil :foreground zenburn/bg+3)
 
-  ;; Customize faces for an inactive mode-line
-  (set-face-attribute
-   'mode-line-inactive nil :background zenburn/bg-1 :foreground zenburn/bg+3 :box nil)
+  ;; Customize faces for inactive buffers
   (set-face-attribute 'powerline-inactive1 nil :background zenburn/bg-0)
   (set-face-attribute 'powerline-inactive2 nil :background zenburn/bg+1))
 

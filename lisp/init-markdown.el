@@ -22,13 +22,7 @@
 ;; Website: http://jblevins.org/projects/markdown-mode/
 (use-package markdown-mode
   :delight markdown-mode "Markdown"
-  :ensure t
-
-  :init
-  (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-  (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-  (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
-  (add-to-list 'auto-mode-alist '("\\.txt\\'" . markdown-mode)))
+  :mode ("\\.markdown\\'" "\\.md\\'" "\\.txt\\'"))
 
 
 (provide 'init-markdown)

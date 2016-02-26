@@ -22,9 +22,7 @@
 ;; Built-in
 (use-package sgml-mode
   :delight html-mode "HTML"
-
-  :init
-  (setq sgml-basic-offset 2))
+  :init (setq-default sgml-basic-offset 2))
 
 
 (provide 'init-html)

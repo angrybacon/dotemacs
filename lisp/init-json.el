@@ -22,15 +22,10 @@
 ;; Website: https://github.com/gongo/json-reformat
 (use-package json-mode
   :delight json-mode "JSON"
-  :ensure t
-
+  :mode "\\.json\\'"
   :init
-  (setq
-   ;; FIXME: This will be fixed with https://github.com/joshwnj/json-mode/issues/32.
-   auto-mode-alist (cons '("\\.jason$" . json-mode) auto-mode-alist)
-   auto-mode-alist (cons '("\\.jshintrc$" . json-mode) auto-mode-alist)
-   auto-mode-alist (cons '("\\.json$" . json-mode) auto-mode-alist)
-   json-reformat:indent-width 2))
+  ;; FIXME: This will be fixed with https://github.com/joshwnj/json-mode/issues/32.
+  (setq-default json-reformat:indent-width 2))
 
 
 (provide 'init-json)

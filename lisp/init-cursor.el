@@ -19,6 +19,10 @@
 ;;=============================================================================
 
 
+(global-set-key (kbd "C-s") 'isearch-forward-regexp)
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-M-s") 'isearch-forward)
+(global-set-key (kbd "C-M-r") 'isearch-backward)
 (global-set-key (kbd "C-M-<left>") 'windmove-left)
 (global-set-key (kbd "C-M-<right>") 'windmove-right)
 (global-set-key (kbd "C-M-<up>") 'windmove-up)
@@ -74,13 +78,8 @@
 
 ;; Website: https://github.com/magnars/expand-region.el
 (use-package expand-region
-  :ensure t
-
-  :init
-  (pending-delete-mode t)
-
-  :bind
-  ("C-=" . er/expand-region))
+  :bind ("C-=" . er/expand-region)
+  :init (pending-delete-mode t))
 
 
 ;;=============================================================================
@@ -90,15 +89,13 @@
 
 ;; Website: https://github.com/magnars/multiple-cursors.el
 (use-package multiple-cursors
-  :ensure t
-
-  :init
-  (setq mc/list-file (expand-file-name ".multiple-cursors-lists.el" user-emacs-directory))
-
   :bind
   (("C-S-c C-S-c" . mc/edit-lines)
    ("C-<" . mc/mark-previous-like-this)
-   ("C->" . mc/mark-next-like-this)))
+   ("C->" . mc/mark-next-like-this))
+  :init
+  (setq-default
+   mc/list-file (expand-file-name ".multiple-cursors-lists.el" user-emacs-directory)))
 
 
 (provide 'init-cursor)

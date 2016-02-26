@@ -22,9 +22,7 @@
 ;; Website: https://github.com/yoshiki/yaml-mode
 (use-package yaml-mode
   :delight yaml-mode "YAML"
-  :ensure t
-
-  :init (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
+  :mode "\\.yml\\'")
 
 
 (provide 'init-yaml)

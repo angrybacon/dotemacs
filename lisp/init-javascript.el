@@ -31,10 +31,8 @@
 
 ;; Website: http://ternjs.net/doc/manual.html#emacs
 (use-package tern
-  :ensure t
-
-  :config
-  (add-hook 'js-mode-hook (lambda () (tern-mode t))))
+  :defer t
+  :config (add-hook 'js-mode-hook 'tern-mode))
 
 
 (provide 'init-javascript)

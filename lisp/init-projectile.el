@@ -24,36 +24,30 @@
 
 ;; Website: https://github.com/bbatsov/projectile
 (use-package projectile
-  :ensure t
 
-  :functions projectile-project-name--prefer-mine
+  :defines
+  (projectile-enable-caching
+   projectile-mode-line)
 
-  :init
-  (setq
+  :functions (projectile-project-name--prefer-mine)
+
+  :config
+  (setq-default
    projectile-enable-caching t
    projectile-mode-line '(:eval (format " %s" (projectile-project-name))))
   (put 'project-name 'safe-local-variable #'stringp)
   (advice-add 'projectile-project-name :around #'projectile-project-name--prefer-mine)
-
-  :config
-
   (defun projectile-project-name--prefer-mine (orig-fun &rest args)
     "Prefer `project-name' over default Projectile project string."
     (or project-name (apply orig-fun args)))
-
   (projectile-global-mode)
 
+  ;;======================================
   ;; Configure Helm Projectile
-  ;; =====================================
+  ;;======================================
 
   (use-package helm-projectile
-    :ensure t
-
-    :init
-    (require 'grep)
-
-    :config
-    (helm-projectile-on)))
+    :config (helm-projectile-on)))
 
 
 (provide 'init-projectile)

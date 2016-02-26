@@ -46,13 +46,10 @@
 ;;=============================================================================
 
 
-(add-hook 'emacs-lisp-mode-hook 'me/highlight-hex-strings)
-(add-hook 'emmet-mode-hook 'me/highlight-hex-strings)
-(add-hook 'json-mode-hook 'me/highlight-hex-strings)
-(add-hook 'markdown-mode-hook 'me/highlight-hex-strings)
-(add-hook 'python-mode-hook 'me/highlight-hex-strings)
+(add-hook 'prog-mode-hook 'me/highlight-hex-strings)
 
 
+;; FIXME: Merge?
 (defun me/list-directories-first ()
   "Sort by directory first."
   (save-excursion
@@ -86,7 +83,8 @@
 
 ;; Built-in
 (use-package uniquify
-  :init (setq uniquify-buffer-name-style 'forward))
+  :ensure nil
+  :init (setq-default uniquify-buffer-name-style 'forward))
 
 
 

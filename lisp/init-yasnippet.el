@@ -21,17 +21,13 @@
 
 ;; Website: https://github.com/capitaomorte/yasnippet
 (use-package yasnippet
-  :ensure t
-
-  :init
-  (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-
-  :config
-  (yas-global-mode 1)
-  ;; FIXME: Use :bindmap?
-  (define-key yas-minor-mode-map (kbd "<tab>") nil)
-  (define-key yas-minor-mode-map (kbd "TAB") nil)
-  (define-key yas-minor-mode-map (kbd "<C-return>") 'yas-expand))
+  :bind
+  (:map yas-minor-mode-map
+        ("<tab>" . nil)
+        ("TAB" . nil)
+        ("C-return" . yas-expand))
+  :init (setq-default yas-snippet-dirs '("~/.emacs.d/snippets"))
+  :config (yas-global-mode 1))
 
 
 (provide 'init-yasnippet)

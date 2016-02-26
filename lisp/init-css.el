@@ -22,9 +22,7 @@
 ;; Built-in
 (use-package css-mode
   :delight css-mode "CSS"
-
-  :init
-  (setq css-indent-offset 2))
+  :init (setq-default css-indent-offset 2))
 
 
 ;;=============================================================================
@@ -34,15 +32,9 @@
 
 ;; Website: https://github.com/antonj/scss-mode/
 (use-package scss-mode
-  :delight scss-mode "SCSS Test"
-  :ensure t
-
-  :init
-  (setq scss-compile-at-save nil)
-  (add-to-list 'auto-mode-alist '("\\.css\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.less\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
-  (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode)))
+  :delight scss-mode "SCSS"
+  :mode ("\\.css\\'" "\\.sass\\'" "\\.scss\\'")
+  :init (setq-default scss-compile-at-save nil))
 
 
 ;;=============================================================================
@@ -52,7 +44,6 @@
 
 ;; Website: https://github.com/ShingoFukuyama/helm-css-scss
 (use-package helm-css-scss
-  :ensure t
   ;; TODO: https://github.com/bbatsov/zenburn-emacs/issues/220
   )
 

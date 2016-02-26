@@ -22,10 +22,7 @@
 ;; Website: https://github.com/spotify/dockerfile-mode
 (use-package dockerfile-mode
   :delight dockerfile-mode "Dockerfile"
-  :ensure t
-
-  :init
-  (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
+  :mode "Dockerfile\\'")
 
 
 (provide 'init-docker)

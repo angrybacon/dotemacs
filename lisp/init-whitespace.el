@@ -21,12 +21,9 @@
 
 ;; Built-in
 (use-package whitespace
-
-  :defines zenburn/red-1
-
+  :defines (zenburn/red-1)
   :init
-  (setq whitespace-style '(face empty tab trailing))
-
+  (setq-default whitespace-style '(face empty tab trailing))
   :config
   (set-face-attribute 'whitespace-empty nil :background zenburn/red-1)
   (set-face-attribute 'whitespace-tab nil :background zenburn/red-1)

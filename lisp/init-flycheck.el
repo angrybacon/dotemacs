@@ -21,14 +21,15 @@
 
 ;; Website: https://github.com/flycheck/flycheck
 (use-package flycheck
-  :ensure t
+
+  :defer t
 
   :defines
   (zenburn/orange
    zenburn/red-2)
 
   :init
-  (setq
+  (setq-default
    flycheck-check-syntax-automatically '(save mode-enabled)
    flycheck-jshintrc "~/.jshintrc"
    flycheck-flake8rc "~/.flake8rc"
