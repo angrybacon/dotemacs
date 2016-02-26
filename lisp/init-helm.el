@@ -15,23 +15,6 @@
 
 
 ;;=============================================================================
-;; Silence the byte-compiler
-;;=============================================================================
-
-
-(require 'use-package)
-(defvar me/font-family-default)
-(defvar me/font-family-header)
-(defvar me/font-size-default)
-(defvar me/font-size-header)
-(defvar zenburn/bg)
-(defvar zenburn/bg+3)
-(defvar zenburn/green+2)
-(defvar zenburn/red)
-(defvar zenburn/yellow)
-
-
-;;=============================================================================
 ;; Configure Helm
 ;;=============================================================================
 
@@ -40,11 +23,21 @@
 (use-package helm
   :ensure t
 
+  :defines
+  (me/font-family-default
+   me/font-family-header
+   me/font-size-default
+   me/font-size-header
+   zenburn/bg
+   zenburn/bg+3
+   zenburn/green+2
+   zenburn/yellow)
+
   :init
-  (setq
+  (setq-default
    helm-always-two-windows t
    helm-display-header-line nil
-   ;; helm-mode-line-string ""
+   helm-mode-line-string nil
    helm-net-prefer-curl t
    helm-ff-skip-boring-files t
    helm-split-window-default-side 'left)
@@ -58,16 +51,16 @@
   (helm-mode 1)
   (helm-push-mark-mode 1)
   (when (member me/font-family-header (font-family-list))
-    (set-face-attribute 'helm-header nil
-                        :font me/font-family-default :height me/font-size-default)
-    (set-face-attribute 'helm-source-header nil
-                        :font me/font-family-header :height me/font-size-header))
+    (set-face-attribute
+     'helm-header nil :font me/font-family-default :height me/font-size-default)
+    (set-face-attribute
+     'helm-source-header nil :font me/font-family-header :height me/font-size-header))
   (set-face-attribute 'helm-header nil :italic t)
-  (set-face-attribute 'helm-source-header nil
-                      :foreground zenburn/yellow :background zenburn/bg :box nil)
+  (set-face-attribute
+   'helm-source-header nil :foreground zenburn/yellow :background zenburn/bg :box nil)
   (set-face-attribute 'helm-match nil :foreground zenburn/green+2 :weight 'normal)
-  (set-face-attribute 'helm-ff-dotted-directory nil
-                      :background 'unspecified :foreground zenburn/bg+3)
+  (set-face-attribute
+   'helm-ff-dotted-directory nil :background 'unspecified :foreground zenburn/bg+3)
 
   ;; Configure Helm Ag
   ;; =====================================
@@ -79,8 +72,10 @@
   ;; =====================================
 
   (use-package helm-command
-    :bind
-    ("M-x" . helm-M-x)
+
+    :defines zenburn/red
+
+    :bind ("M-x" . helm-M-x)
 
     :config
     (set-face-attribute 'helm-M-x-key nil :foreground zenburn/red :underline nil)))
