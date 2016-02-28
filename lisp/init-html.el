@@ -1,26 +1,22 @@
-;;; init-html.el --- My Emacs configuration
+;;; init-html.el --- All about HTML
 
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: 27 May 2015
-;; Keywords: abbrev, convenience
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
-
-;;; Commentary:
-
-;; Configure HTML and Web modes.
 
 ;;; Code:
 
 
 ;;=============================================================================
-;; Configure SGML Mode
+;; Configure HTML mode
 ;;=============================================================================
 
 
 ;; Built-in
-(use-package sgml-mode
+(use-package html-mode
+  :ensure nil
   :delight html-mode "HTML"
   :init (setq-default sgml-basic-offset 2))
 
