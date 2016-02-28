@@ -1,15 +1,10 @@
-;;; init-cursor.el --- My Emacs configuration
+;;; init-cursor.el --- Add helpers to move the cursor around
 
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: 16 May 2015
-;; Keywords: abbrev, convenience, maint
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
-
-;;; Commentary:
-
-;; Add helpers to move the cursor around.
 
 ;;; Code:
 

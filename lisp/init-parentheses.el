@@ -1,15 +1,10 @@
-;;; init-parentheses.el --- My Emacs configuration
+;;; init-parentheses.el --- Configure behavior of parentheses, brackets and the like
 
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: 27 May 2015
-;; Keywords: abbrev, convenience, faces
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
-
-;;; Commentary:
-
-;; Configure behavior of parentheses, brackets and the like.
 
 ;;; Code:
 

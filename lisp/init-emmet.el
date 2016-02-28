@@ -1,21 +1,16 @@
-;;; init-emmet.el --- My Emacs configuration
+;;; init-emmet.el --- Add integration for Emmet within Emacs
 
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: 18 May 2015
-;; Keywords: convenience, faces
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
-
-;;; Commentary:
-
-;; Add integration for Emmet within Emacs.
 
 ;;; Code:
 
 
 ;;=============================================================================
-;; Configure Emmet Mode
+;; Configure Emmet mode
 ;;=============================================================================
 
 

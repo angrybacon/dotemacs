@@ -1,14 +1,10 @@
-;;; init-connstants.el --- My Emacs configuration
+;;; init-connstants.el --- Customize these constants for further reference
 
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: 16 May 2015
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
-
-;;; Commentary:
-
-;; Customize these constants for further reference.
 
 ;;; Code:
 

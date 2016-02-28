@@ -1,4 +1,4 @@
-;;; init-flycheck.el --- Enable linters for several modes.
+;;; init-flycheck.el --- Enable linters for several modes
 
 ;; Copyright (C) 2015 Mathieu Marques
 

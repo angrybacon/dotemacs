@@ -1,21 +1,16 @@
-;;; init-theme.el --- My Emacs configuration
+;;; init-theme.el --- Configure the theme
 
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: 18 May 2015
-;; Keywords: convenience, faces
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
-
-;;; Commentary:
-
-;; Configure the theme.
 
 ;;; Code:
 
 
 ;;=============================================================================
-;; Configure the theme
+;; Configure Zenburn theme
 ;;=============================================================================
 
 

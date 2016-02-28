@@ -1,15 +1,10 @@
-;;; init-yasnippet.el --- My Emacs configuration
+;;; init-yasnippet.el --- Enable interactive templates
 
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: 29 December 2015
-;; Keywords: abbrev, convenience
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
-
-;;; Commentary:
-
-;; Enable incremental completion and selection narrowing framework.
 
 ;;; Code:
 

@@ -1,21 +1,16 @@
-;;; init-yaml.el --- My Emacs configuration
+;;; init-yaml.el --- All about YAML
 
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: 13 Jul 2015
-;; Keywords: convenience
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
-
-;;; Commentary:
-
-;; Configure YAML mode.
 
 ;;; Code:
 
 
 ;;=============================================================================
-;; Configure YAML Mode
+;; Configure YAML mode
 ;;=============================================================================
 
 

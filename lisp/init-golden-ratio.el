@@ -1,15 +1,10 @@
-;;; init-golden-ratio.el --- My Emacs configuration
+;;; init-golden-ratio.el --- Resize active window on focus
 
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: 27 May 2015
-;; Keywords: convenience
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
-
-;;; Commentary:
-
-;; Resize active window on focus.
 
 ;;; Code:
 

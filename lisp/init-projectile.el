@@ -1,15 +1,10 @@
-;;; init-projectile.el --- My Emacs configuration
+;;; init-projectile.el --- Add integration for project-related features within Emacs
 
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created:  May 2015
-;; Keywords: convenience
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
-
-;;; Commentary:
-
-;; Add integration for project-related features within Emacs.
 
 ;;; Code:
 
@@ -19,11 +14,10 @@
 ;;=============================================================================
 
 
-(defvar project-name nil)
-
-
 ;; Website: https://github.com/bbatsov/projectile
 (use-package projectile
+
+  :preface (defvar project-name nil)
 
   :defines
   (projectile-enable-caching

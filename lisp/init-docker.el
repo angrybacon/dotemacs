@@ -1,21 +1,16 @@
-;;; init-docker.el --- My Emacs configuration
+;;; init-docker.el --- All about Docker
 
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: 27 May 2015
-;; Keywords: convenience
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
-
-;;; Commentary:
-
-;; Configure Dockerfile mode.
 
 ;;; Code:
 
 
 ;;=============================================================================
-;; Configure Dockerfile Mode
+;; Configure Dockerfile mode
 ;;=============================================================================
 
 

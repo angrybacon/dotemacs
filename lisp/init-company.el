@@ -1,21 +1,16 @@
-;;; init-company.el --- My Emacs configuration
+;;; init-company.el --- Enable code completion
 
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: 27 May 2015
-;; Keywords: convenience, faces
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
-
-;;; Commentary:
-
-;; Enable code completion.
 
 ;;; Code:
 
 
 ;;=============================================================================
-;; Configure Company Mode
+;; Configure Company
 ;;=============================================================================
 
 

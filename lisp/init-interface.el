@@ -1,15 +1,10 @@
-;;; init-interface.el --- My Emacs configuration
+;;; init-interface.el --- Enable or disable several interface components
 
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: 16 May 2015
-;; Keywords: convenience, faces
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
-
-;;; Commentary:
-
-;; Enable or disable several interface components.
 
 ;;; Code:
 
@@ -77,7 +72,7 @@
 
 
 ;;=============================================================================
-;; Uniquify buffers
+;; Configure Uniquify
 ;;=============================================================================
 
 

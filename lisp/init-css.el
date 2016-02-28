@@ -1,21 +1,16 @@
-;;; init-css.el --- My Emacs configuration
+;;; init-css.el --- All about CSS
 
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: 18 May 2015
-;; Keywords: convenience
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
-
-;;; Commentary:
-
-;; Configure CSS and SCSS modes.
 
 ;;; Code:
 
 
 ;;=============================================================================
-;; Configure CSS Mode
+;; Configure CSS mode
 ;;=============================================================================
 
 
@@ -26,7 +21,7 @@
 
 
 ;;=============================================================================
-;; Configure SCSS Mode
+;; Configure SCSS mode
 ;;=============================================================================
 
 

@@ -1,15 +1,10 @@
-;;; init-psx.el --- My Emacs configuration
+;;; init-psx.el --- Enhance OSX experience
 
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: 16 May 2015
-;; Keywords: convenience
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
-
-;;; Commentary:
-
-;; Add OSX-specific settigns
 
 ;;; Code:
 
@@ -19,8 +14,8 @@
 ;;=============================================================================
 
 
-;; (defvar ns-command-modifier)
-;; (defvar ns-option-modifier)
+(defvar ns-command-modifier)
+(defvar ns-option-modifier)
 (when (eq system-type 'darwin)
   (setq-default
    exec-path (append exec-path '("/usr/local/bin"))  ; Add path to binaries installed with Homebrew

@@ -1,15 +1,10 @@
-;;; init-helm.el --- My Emacs configuration
+;;; init-helm.el --- Enable incremental completion and selection narrowing framework
 
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: 18 May 2015
-;; Keywords: abbrev, convenience, faces
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
-
-;;; Commentary:
-
-;; Enable incremental completion and selection narrowing framework.
 
 ;;; Code:
 
