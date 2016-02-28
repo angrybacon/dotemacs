@@ -1,15 +1,10 @@
-;;; init-mode-line.el --- My Emacs configuration
+;;; init-mode-line.el --- Prettify the mode-line
 
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: 1 Jun 2015
-;; Keywords: convenience, faces, maint
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
-
-;;; Commentary:
-
-;; Prettify the mode-line.
 
 ;;; Code:
 
@@ -20,7 +15,23 @@
 
 
 ;; Website: https://github.com/antonio/delight.el
-(use-package delight)
+(use-package delight
+
+  ;; NOTE: There are conflicts between `delight' and `powerline'.
+  ;;       Following code is copied and adapted from
+  ;;       http://emacs.stackexchange.com/q/20605/2397.
+
+  :preface (defvar inhibit-mode-name-delight)
+  :init (setq-default inhibit-mode-name-delight t)
+  :config
+  (ad-disable-advice 'format-mode-line 'around 'delighted-modes-are-glum)
+  (ad-activate 'format-mode-line)
+  (defadvice powerline-major-mode (around delight-powerline-major-mode activate)
+    (let ((inhibit-mode-name-delight nil))
+      ad-do-it))
+  (defadvice powerline-minor-modes (around delight-powerline-minor-modes activate)
+    (let ((inhibit-mode-name-delight nil))
+      ad-do-it)))
 
 
 ;;=============================================================================

@@ -1,15 +1,10 @@
-;;; init-git.el --- My Emacs configuration
+;;; init-git.el --- Add integration for Git within Emacs
 
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: 27 May 2015
-;; Keywords: abbrev, convenience, faces, vc
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
-
-;;; Commentary:
-
-;; Add integration for Git within Emacs.
 
 ;;; Code:
 
@@ -23,6 +18,7 @@
 (use-package magit
 
   :defer t
+  :delight magit-mode "Magit"
 
   :defines
   (me/font-family-header
@@ -40,6 +36,12 @@
    magit-section-show-child-count t)
 
   :config
+  (delight
+   '((magit-commit-mode "Magit Commit")
+     (magit-diff-mode "Magit Diff")
+     (magit-log-mode "Magit Log")
+     (magit-popup-mode "Magit Popup")
+     (magit-status-mode "Magit Status")))
   (set-face-attribute 'magit-diff-added nil
                       :background zenburn/green-1 :foreground zenburn/green+2)
   (set-face-attribute 'magit-diff-added-highlight nil
