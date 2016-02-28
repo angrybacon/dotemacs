@@ -1,15 +1,10 @@
-;;; init-flycheck.el --- My Emacs configuration
+;;; init-flycheck.el --- Enable linters for several modes.
 
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: 2 Jun 2015
-;; Keywords: convenience, faces
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
-
-;;; Commentary:
-
-;; Enable linters for several modes.
 
 ;;; Code:
 
@@ -31,6 +26,7 @@
   :init
   (setq-default
    flycheck-check-syntax-automatically '(save mode-enabled)
+   flycheck-disabled-checkers '(emacs-lisp-checkdoc)
    flycheck-jshintrc "~/.jshintrc"
    flycheck-flake8rc "~/.flake8rc"
    flycheck-pylintrc "~/.pylintrc")
