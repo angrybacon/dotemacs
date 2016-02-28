@@ -41,12 +41,8 @@
 ;;=============================================================================
 
 
-(add-hook 'prog-mode-hook 'me/highlight-hex-strings)
-
-
-;; FIXME: Merge?
-(defun me/list-directories-first ()
-  "Sort by directory first."
+(defadvice dired-readin (after dired-after-updating-hook first () activate)
+  "List directories first in `diared-mode'."
   (save-excursion
     (let (buffer-read-only)
       (forward-line 2)
@@ -54,11 +50,7 @@
     (set-buffer-modified-p nil)))
 
 
-(defadvice dired-readin (after dired-after-updating-hook first () activate)
-  "List directories first in `dired-mode'."
-  (me/list-directories-first))
-
-
+(add-hook 'prog-mode-hook 'me/highlight-hex-strings)
 (defun me/highlight-hex-strings ()
   "Find and highlight hexadecimal color strings with a colored background."
   (interactive)

@@ -3,7 +3,7 @@
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
-;; Created: 1 Jun 2015
+;; Created: 1 June 2015
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
 
 ;;; Code:
@@ -16,16 +16,8 @@
 
 ;; Website: https://github.com/antonio/delight.el
 (use-package delight
-
-  ;; NOTE: There are conflicts between `delight' and `powerline'.
-  ;;       Following code is copied and adapted from
-  ;;       http://emacs.stackexchange.com/q/20605/2397.
-
-  :preface (defvar inhibit-mode-name-delight)
-  :init (setq-default inhibit-mode-name-delight t)
   :config
-  (ad-disable-advice 'format-mode-line 'around 'delighted-modes-are-glum)
-  (ad-activate 'format-mode-line)
+  ;; NOTE: Or use https://www.emacswiki.org/emacs/delight-powerline.el?
   (defadvice powerline-major-mode (around delight-powerline-major-mode activate)
     (let ((inhibit-mode-name-delight nil))
       ad-do-it))

@@ -3,7 +3,7 @@
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
-;; Created:  May 2015
+;; Created: 18 May 2015
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
 
 ;;; Code:
@@ -34,14 +34,18 @@
   (defun projectile-project-name--prefer-mine (orig-fun &rest args)
     "Prefer `project-name' over default Projectile project string."
     (or project-name (apply orig-fun args)))
-  (projectile-global-mode)
+  (projectile-global-mode))
 
-  ;;======================================
-  ;; Configure Helm Projectile
-  ;;======================================
 
-  (use-package helm-projectile
-    :config (helm-projectile-on)))
+;;======================================
+;; Configure Helm Projectile
+;;======================================
+
+
+(use-package helm-projectile
+  :defer t
+  :after (helm projectile)
+  :config (helm-projectile-on))
 
 
 (provide 'init-projectile)

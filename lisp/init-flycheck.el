@@ -3,7 +3,7 @@
 ;; Copyright (C) 2015 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
-;; Created: 2 Jun 2015
+;; Created: 2 June 2015
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
 
 ;;; Code:
