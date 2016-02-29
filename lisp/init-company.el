@@ -16,11 +16,10 @@
 
 ;; Website: https://github.com/company-mode/company-mode
 (use-package company
-  :init
+  :config
   (setq-default
    company-idle-delay .1
    company-minimum-prefix-length 1)
-  :config
   (add-hook 'prog-mode-hook 'company-mode)
   (set-face-attribute 'company-tooltip-common nil :inherit 'company-tooltip)
   (set-face-attribute 'company-tooltip-common-selection nil :inherit 'company-tooltip-selection))
