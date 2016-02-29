@@ -44,13 +44,24 @@
    zenburn/blue+1
    zenburn/blue-1
    zenburn/fg
+   zenburn/fg-1
+   zenburn/green+1
    zenburn/green
    zenburn/orange
    zenburn/red)
 
   :preface
 
-  ;; Define new faces for elements on an active buffer
+  ;; Define new faces for elements
+  (defface me/buffer-clean-face '((t (:inherit powerline-active1)))
+    "Face used for the buffer string: clean."
+    :group 'me/powerline)
+  (defface me/buffer-read-only-face '((t (:inherit powerline-active1)))
+    "Face used for the buffer string: read only."
+    :group 'me/powerline)
+  (defface me/buffer-modified-face '((t (:inherit powerline-active1)))
+    "Face used for the buffer string: modified."
+    :group 'me/powerline)
   (defface me/fc-error-face '((t (:inherit powerline-active1)))
     "Face used for the error count."
     :group 'me/powerline)
@@ -60,28 +71,14 @@
   (defface me/fc-warning-face '((t (:inherit powerline-active1)))
     "Face used for the warning count."
     :group 'me/powerline)
+  (defface me/line-number-face '((t (:inherit powerline-active1)))
+    "Face used for the line number string."
+    :group 'me/powerline)
   (defface me/projectile-face '((t (:inherit powerline-active1)))
     "Face used for the projectile string."
     :group 'me/powerline)
   (defface me/vc-face '((t (:inherit powerline-active1)))
     "Face used for the version control string."
-    :group 'me/powerline)
-
-  ;; Define new faces for elements on an inactive buffer
-  (defface me/fc-error-inactive-face '((t (:inherit powerline-inactive1)))
-    "Face used for the error count, in an inactive buffer."
-    :group 'me/powerline)
-  (defface me/fc-info-inactive-face '((t (:inherit powerline-inactive1)))
-    "Face used for the info count, in an inactive buffer."
-    :group 'me/powerline)
-  (defface me/fc-warning-inactive-face '((t (:inherit powerline-inactive1)))
-    "Face used for the warning count, in an inactive buffer."
-    :group 'me/powerline)
-  (defface me/projectile-inactive-face '((t (:inherit powerline-inactive1)))
-    "Face used for the projectile string, in an inactive buffer."
-    :group 'me/powerline)
-  (defface me/vc-inactive-face '((t (:inherit powerline-inactive1)))
-    "Face used for the version control string, in an inactive buffer."
     :group 'me/powerline)
 
   ;; Light flycheck indicators
@@ -109,14 +106,22 @@
       (let* ((active (powerline-selected-window-active))
 
              ;; Define faces for mode-line elements
-             (fc-error-face (if active 'me/fc-error-face 'me/fc-error-inactive-face))
-             (fc-info-face (if active 'me/fc-info-face 'me/fc-info-inactive-face))
-             (fc-warning-face (if active 'me/fc-warning-face 'me/fc-warning-inactive-face))
+             (buffer-face
+              (if active
+                  (cond
+                   (buffer-read-only 'me/buffer-read-only-face)
+                   ((buffer-modified-p) 'me/buffer-modified-face)
+                   (t 'me/buffer-clean-face))
+                'powerline-inactive1))
+             (fc-error-face (if active 'me/fc-error-face 'powerline-inactive1))
+             (fc-info-face (if active 'me/fc-info-face 'powerline-inactive1))
+             (fc-warning-face (if active 'me/fc-warning-face 'powerline-inactive1))
+             (line-number-face (if active 'me/line-number-face 'powerline-inactive1))
              (mode-line-1-face (if active 'mode-line 'mode-line-inactive))
              (mode-line-2-face (if active 'powerline-active1 'powerline-inactive1))
              (mode-line-3-face (if active 'powerline-active2 'powerline-inactive2))
-             (projectile-face (if active 'me/projectile-face 'me/projectile-inactive-face))
-             (vc-face (if active 'me/vc-face 'me/vc-inactive-face))
+             (projectile-face (if active 'me/projectile-face 'powerline-inactive1))
+             (vc-face (if active 'me/vc-face 'powerline-inactive1))
 
              ;; Define faces for separators
              (separator-left
@@ -138,11 +143,8 @@
                 (powerline-raw " " mode-line-1-face)
                 (funcall separator-left mode-line-1-face mode-line-2-face))
                (list
-                (powerline-raw "%b" mode-line-2-face 'l)
-                (powerline-raw ":" mode-line-2-face)
-                (powerline-raw "%l" mode-line-2-face)
-                ;; TODO: Use color semantics rather than a character for bufffer status
-                (powerline-raw "%*" mode-line-2-face 'l)
+                (powerline-raw "%b" buffer-face 'l)
+                (powerline-raw ":%l" line-number-face)
                 (powerline-raw " " mode-line-2-face)
                 (funcall separator-left mode-line-2-face mode-line-3-face))))
 
@@ -191,7 +193,7 @@
   ;;       (copy-face 'me/battery-discharging-face 'me/battery-face)
   ;;       (copy-face 'me/battery-charging-inactive-face 'me/battery-inactive-face))))
 
-  ;; Customize faces for active buffers
+  ;; Customize faces
   (set-face-attribute 'mode-line nil
                       :box nil :background zenburn/bg-1 :font me/font-family-mode-line
                       :foreground zenburn/green :height me/font-size-mode-line)
@@ -200,15 +202,17 @@
                       :foreground zenburn/bg+3 :height me/font-size-mode-line)
   (set-face-attribute 'powerline-active1 nil :background zenburn/bg-0 :foreground zenburn/fg)
   (set-face-attribute 'powerline-active2 nil :background zenburn/bg+1)
+  (set-face-attribute 'powerline-inactive1 nil :background zenburn/bg-0)
+  (set-face-attribute 'powerline-inactive2 nil :background zenburn/bg+1)
+  (set-face-attribute 'me/buffer-clean-face nil :foreground zenburn/fg)
+  (set-face-attribute 'me/buffer-modified-face nil :foreground zenburn/red)
+  (set-face-attribute 'me/buffer-read-only-face nil :foreground zenburn/fg-1)
   (set-face-attribute 'me/fc-error-face nil :foreground zenburn/red)
   (set-face-attribute 'me/fc-info-face nil :foreground zenburn/blue+1)
   (set-face-attribute 'me/fc-warning-face nil :foreground zenburn/orange)
+  (set-face-attribute 'me/line-number-face nil :foreground zenburn/bg+3)
   (set-face-attribute 'me/projectile-face nil :foreground zenburn/blue-1)
-  (set-face-attribute 'me/vc-face nil :foreground zenburn/bg+3)
-
-  ;; Customize faces for inactive buffers
-  (set-face-attribute 'powerline-inactive1 nil :background zenburn/bg-0)
-  (set-face-attribute 'powerline-inactive2 nil :background zenburn/bg+1))
+  (set-face-attribute 'me/vc-face nil :foreground zenburn/bg+3))
 
 
 (provide 'init-mode-line)
