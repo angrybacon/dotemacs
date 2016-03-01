@@ -42,11 +42,11 @@
    zenburn/bg-0
    zenburn/bg-1
    zenburn/blue+1
-   zenburn/blue-1
+   zenburn/blue
    zenburn/fg
    zenburn/fg-1
-   zenburn/green+1
    zenburn/green
+   zenburn/magenta
    zenburn/orange
    zenburn/red)
 
@@ -71,6 +71,9 @@
   (defface me/fc-warning-face '((t (:inherit powerline-active1)))
     "Face used for the warning count."
     :group 'me/powerline)
+  (defface me/hud-face '((t (:inherit powerline-active1)))
+    "Face used for the XPM of relative buffer location."
+    :group 'me/powerline)
   (defface me/line-number-face '((t (:inherit powerline-active1)))
     "Face used for the line number string."
     :group 'me/powerline)
@@ -91,7 +94,7 @@
             (running (eq 'running flycheck-last-status-change)))
        (if (or errorp running) (format "• %s" count))))
 
-  :init
+  :config
 
   ;; Customize appearance
   (setq-default
@@ -116,6 +119,7 @@
              (fc-error-face (if active 'me/fc-error-face 'powerline-inactive1))
              (fc-info-face (if active 'me/fc-info-face 'powerline-inactive1))
              (fc-warning-face (if active 'me/fc-warning-face 'powerline-inactive1))
+             (hud-face 'me/hud-face)
              (line-number-face (if active 'me/line-number-face 'powerline-inactive1))
              (mode-line-1-face (if active 'mode-line 'mode-line-inactive))
              (mode-line-2-face (if active 'powerline-active1 'powerline-inactive1))
@@ -172,7 +176,8 @@
                (list
                 (funcall separator-right mode-line-2-face mode-line-1-face)
                 (powerline-raw " " mode-line-1-face)
-                (powerline-raw display-time-string mode-line-1-face 'r)))))
+                (powerline-raw display-time-string mode-line-1-face 'r)
+                (powerline-hud hud-face mode-line-2-face 2)))))
 
         ;; Build the result
         (concat
@@ -180,38 +185,36 @@
          (powerline-fill mode-line-3-face (powerline-width rhs))
          (powerline-render rhs))))))
 
-  :config
+  ;; :config
 
-  ;; Colorize the battery load string on update
-  ;; (defadvice battery-update (before me/colorize-battery-advice activate)
-  ;;   "Colorize the battery load string depending on its status (dis/charging)."
-  ;;   (if (string-equal "AC" (cdr (assoc 76 (funcall battery-status-function))))
-  ;;       (progn
-  ;;         (copy-face 'me/battery-charging-face 'me/battery-face)
-  ;;         (copy-face 'me/battery-charging-inactive-face 'me/battery-inactive-face))
-  ;;     (progn
-  ;;       (copy-face 'me/battery-discharging-face 'me/battery-face)
-  ;;       (copy-face 'me/battery-charging-inactive-face 'me/battery-inactive-face))))
+  (defadvice vc-mode-line (after strip-backend () activate)
+    "Strip backend from the VC information."
+    (when (stringp vc-mode)
+      (let ((vc-text (replace-regexp-in-string "^ Git." ":" vc-mode)))
+        (setq vc-mode vc-text))))
 
   ;; Customize faces
   (set-face-attribute 'mode-line nil
-                      :box nil :background zenburn/bg-1 :font me/font-family-mode-line
-                      :foreground zenburn/green :height me/font-size-mode-line)
+                      :box `(:line-width 2 :color ,zenburn/bg-1)
+                      :background zenburn/bg-1 :font me/font-family-mode-line
+                      :foreground zenburn/fg :height me/font-size-mode-line)
   (set-face-attribute 'mode-line-inactive nil
-                      :box nil :background zenburn/bg-1 :font me/font-family-mode-line
+                      :box `(:line-width 2 :color ,zenburn/bg-1)
+                      :background zenburn/bg-1 :font me/font-family-mode-line
                       :foreground zenburn/bg+3 :height me/font-size-mode-line)
   (set-face-attribute 'powerline-active1 nil :background zenburn/bg-0 :foreground zenburn/fg)
   (set-face-attribute 'powerline-active2 nil :background zenburn/bg+1)
   (set-face-attribute 'powerline-inactive1 nil :background zenburn/bg-0)
   (set-face-attribute 'powerline-inactive2 nil :background zenburn/bg+1)
-  (set-face-attribute 'me/buffer-clean-face nil :foreground zenburn/fg)
+  (set-face-attribute 'me/buffer-clean-face nil :foreground zenburn/green)
   (set-face-attribute 'me/buffer-modified-face nil :foreground zenburn/red)
-  (set-face-attribute 'me/buffer-read-only-face nil :foreground zenburn/fg-1)
+  (set-face-attribute 'me/buffer-read-only-face nil :foreground zenburn/magenta)
   (set-face-attribute 'me/fc-error-face nil :foreground zenburn/red)
   (set-face-attribute 'me/fc-info-face nil :foreground zenburn/blue+1)
   (set-face-attribute 'me/fc-warning-face nil :foreground zenburn/orange)
+  (set-face-attribute 'me/hud-face nil :background zenburn/fg-1)
   (set-face-attribute 'me/line-number-face nil :foreground zenburn/bg+3)
-  (set-face-attribute 'me/projectile-face nil :foreground zenburn/blue-1)
+  (set-face-attribute 'me/projectile-face nil :foreground zenburn/blue)
   (set-face-attribute 'me/vc-face nil :foreground zenburn/bg+3))
 
 

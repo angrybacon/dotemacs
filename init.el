@@ -40,6 +40,8 @@
 ;; Better default
 (setq-default
  ad-redefinition-action 'accept                  ; Silence warnings for redefined functions
+ display-time-default-load-average nil           ; Don't display load average
+ display-time-format "%H:%M"                     ; Format the time string
  gc-cons-threshold 100000000                     ; Higher garbage collector treshold
  indent-tabs-mode nil                            ; Stop using tabs to indent
  indicate-empty-lines t                          ; Indicate unused lines in the fringe
