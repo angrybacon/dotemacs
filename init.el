@@ -33,28 +33,36 @@
 
 
 ;;=============================================================================
-;; Toggle UI components
-;;=============================================================================
-
-
-(tool-bar-mode 0)         ; Disable/enable the toolbar
-(menu-bar-mode 0)         ; Disable/enable menu bar
-(scroll-bar-mode 0)       ; Disable/enable scroll bar
-(fringe-mode '(10 . 10))  ; Disable/enable vertical fringes
-(display-battery-mode 0)  ; Hide/show battery level
-(display-time-mode 1)     ; Hide/Show time representation
-(column-number-mode 0)    ; Hide/show column number
-(line-number-mode 1)      ; Hide/show line number
-(global-hl-line-mode 1)   ; Hightlight current line
-
-
-;;=============================================================================
 ;; Bootstrap configuration
 ;;=============================================================================
 
 
-(setq-default gc-cons-threshold 100000000)       ; Higher garbage collector treshold
-(set-frame-parameter nil 'fullscreen 'fullboth)  ; Pseudo fullscreen
+;; Better default
+(setq-default
+ ad-redefinition-action 'accept                  ; Silence warnings for redefined functions
+ gc-cons-threshold 100000000                     ; Higher garbage collector treshold
+ indent-tabs-mode nil                            ; Stop using tabs to indent
+ indicate-empty-lines t                          ; Indicate unused lines in the fringe
+ inhibit-startup-screen t                        ; Remove start-up screen
+ initial-scratch-message ""                      ; Empty the initial *scratch* buffer
+ mouse-yank-at-point t                           ; Yank at point rather than cursor
+ require-final-newline 'visit                    ; Add a newline at EOF on visit
+ scroll-step 1                                   ; Line by line scrolling
+ show-trailing-whitespace nil                    ; Display trailing whitespaces
+ tab-width 4                                     ; Set width for tabs
+ x-select-enable-clipboard t)                    ; Merge system's and Emacs' clipboard
+
+;; Toggle UI components
+(tool-bar-mode 0)                                ; Disable/enable the toolbar
+(menu-bar-mode 0)                                ; Disable/enable menu bar
+(scroll-bar-mode 0)                              ; Disable/enable scroll bar
+(fringe-mode '(10 . 10))                         ; Disable/enable vertical fringes
+(display-battery-mode 0)                         ; Hide/show battery level
+(display-time-mode 1)                            ; Hide/Show time representation
+(column-number-mode 0)                           ; Hide/show column number
+(line-number-mode 1)                             ; Hide/show line number
+(global-hl-line-mode 1)                          ; Hightlight current line
+(set-frame-parameter nil 'fullscreen 'fullboth)  ; Enable pseudo fullscreen
 
 
 ;;=============================================================================
