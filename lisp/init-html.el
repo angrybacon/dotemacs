@@ -15,7 +15,7 @@
 
 
 ;; Built-in
-(use-package html-mode
+(use-package sgml-mode
   :ensure nil
   :delight html-mode "HTML"
   :init (setq-default sgml-basic-offset 2))
