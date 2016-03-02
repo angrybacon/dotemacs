@@ -16,13 +16,21 @@
 
 ;; Website: https://github.com/capitaomorte/yasnippet
 (use-package yasnippet
+
+  :functions (yas-reload-all)
+
   :bind
   (:map yas-minor-mode-map
-        ("<tab>" . nil)
         ("TAB" . nil)
-        ("C-return" . yas-expand))
-  :init (setq-default yas-snippet-dirs '("~/.emacs.d/snippets"))
-  :config (yas-global-mode 1))
+        ("<tab>" . nil)
+        ("<C-return>" . yas-expand))
+
+  :init
+  (setq-default yas-snippet-dirs '("~/.emacs.d/snippets"))
+  (add-hook 'prog-mode-hook #'yas-minor-mode)
+
+  :config
+  (yas-reload-all))
 
 
 (provide 'init-yasnippet)
