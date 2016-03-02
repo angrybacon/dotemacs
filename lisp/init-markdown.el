@@ -17,7 +17,14 @@
 ;; Website: http://jblevins.org/projects/markdown-mode/
 (use-package markdown-mode
   :delight markdown-mode "Markdown"
-  :mode ("\\.markdown\\'" "\\.md\\'" "\\.txt\\'"))
+  :mode
+  ("INSTALL\\'"
+   "CONTRIBUTORS\\'"
+   "LICENSE\\'"
+   "README\\'"
+   "\\.markdown\\'"
+   "\\.md\\'"
+   "\\.txt\\'"))
 
 
 (provide 'init-markdown)
