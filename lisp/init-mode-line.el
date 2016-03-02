@@ -115,7 +115,9 @@
                    (buffer-read-only 'me/buffer-read-only-face)
                    ((buffer-modified-p) 'me/buffer-modified-face)
                    (t 'me/buffer-clean-face))
-                'powerline-inactive1))
+                (cond
+                 ((buffer-modified-p) 'me/buffer-modified-face)
+                 (t ''powerline-inactive1))))
              (fc-error-face (if active 'me/fc-error-face 'powerline-inactive1))
              (fc-info-face (if active 'me/fc-info-face 'powerline-inactive1))
              (fc-warning-face (if active 'me/fc-warning-face 'powerline-inactive1))
