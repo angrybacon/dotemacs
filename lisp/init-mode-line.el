@@ -45,12 +45,17 @@
    zenburn/blue
    zenburn/fg
    zenburn/fg-1
+   zenburn/green+2
    zenburn/green
+   zenburn/green-1
    zenburn/magenta
    zenburn/orange
    zenburn/red)
 
   :preface
+
+  ;; Configure the the mode-line
+  (defvar me/powerline-hud nil)
 
   ;; Define new faces for elements
   (defface me/buffer-clean-face '((t (:inherit powerline-active1)))
@@ -179,7 +184,7 @@
                 (funcall separator-right mode-line-2-face mode-line-1-face)
                 (powerline-raw " " mode-line-1-face)
                 (powerline-raw display-time-string mode-line-1-face 'r)
-                (powerline-hud hud-face mode-line-2-face 2)))))
+                (if me/powerline-hud (powerline-hud hud-face mode-line-2-face 2))))))
 
         ;; Build the result
         (concat
@@ -198,8 +203,8 @@
   ;; Customize faces
   (set-face-attribute 'mode-line nil
                       :box `(:line-width 2 :color ,zenburn/bg-1)
-                      :background zenburn/bg-1 :font me/font-family-mode-line
-                      :foreground zenburn/fg :height me/font-size-mode-line)
+                      :background zenburn/green-1 :font me/font-family-mode-line
+                      :foreground zenburn/green+2 :height me/font-size-mode-line)
   (set-face-attribute 'mode-line-inactive nil
                       :box `(:line-width 2 :color ,zenburn/bg-1)
                       :background zenburn/bg-1 :font me/font-family-mode-line
