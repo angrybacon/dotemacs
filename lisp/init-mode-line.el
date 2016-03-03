@@ -104,7 +104,8 @@
   ;; Customize appearance
   (setq-default
    powerline-default-separator 'wave
-   powerline-height 18)
+   powerline-height 18
+   me/powerline-hud nil)
 
   ;; Define the mode-line format
   (setq-default
