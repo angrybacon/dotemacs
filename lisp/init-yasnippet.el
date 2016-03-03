@@ -17,13 +17,17 @@
 ;; Website: https://github.com/capitaomorte/yasnippet
 (use-package yasnippet
 
+  :after emmet
+
   :functions (yas-reload-all)
 
-  :bind
-  (:map yas-minor-mode-map
-        ("TAB" . nil)
-        ("<tab>" . nil)
-        ("<C-return>" . yas-expand))
+  :bind (:map yas-minor-mode-map
+              ("TAB" . nil)
+              ("<tab>" . nil))
+
+  ;; FIXME: This should override emmet trigger
+  :bind* (:map yas-minor-mode-map
+               ("<C-return>" . yas-expand))
 
   :init
   (setq-default yas-snippet-dirs '("~/.emacs.d/snippets"))
