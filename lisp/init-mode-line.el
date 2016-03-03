@@ -104,7 +104,7 @@
   ;; Customize appearance
   (setq-default
    powerline-default-separator 'wave
-   powerline-height 18
+   powerline-height 20
    me/powerline-hud nil)
 
   ;; Define the mode-line format
@@ -203,11 +203,11 @@
 
   ;; Customize faces
   (set-face-attribute 'mode-line nil
-                      :box `(:line-width 2 :color ,zenburn/bg-1)
+                      :box `(:line-width 1 :color ,zenburn/bg-1)
                       :background zenburn/green-1 :font me/font-family-mode-line
                       :foreground zenburn/green+2 :height me/font-size-mode-line)
   (set-face-attribute 'mode-line-inactive nil
-                      :box `(:line-width 2 :color ,zenburn/bg-1)
+                      :box `(:line-width 1 :color ,zenburn/bg-1)
                       :background zenburn/bg-1 :font me/font-family-mode-line
                       :foreground zenburn/bg+3 :height me/font-size-mode-line)
   (set-face-attribute 'powerline-active1 nil :background zenburn/bg-0 :foreground zenburn/fg)
