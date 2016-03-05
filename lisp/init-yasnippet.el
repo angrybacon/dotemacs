@@ -26,6 +26,7 @@
               ("<tab>" . nil))
 
   ;; FIXME: This should override emmet trigger
+  ;;        https://github.com/emacsmirror/emacswiki.org/blob/master/minor-mode-hack.el
   :bind* (:map yas-minor-mode-map
                ("<C-return>" . yas-expand))
 
