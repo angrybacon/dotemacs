@@ -50,7 +50,8 @@
    zenburn/green-1
    zenburn/magenta
    zenburn/orange
-   zenburn/red)
+   zenburn/red
+   zenburn/red-1)
 
   :preface
 
@@ -217,7 +218,7 @@
   (set-face-attribute 'me/buffer-clean-face nil :foreground zenburn/green)
   (set-face-attribute 'me/buffer-modified-face nil :foreground zenburn/red)
   (set-face-attribute 'me/buffer-read-only-face nil :foreground zenburn/magenta)
-  (set-face-attribute 'me/fc-error-face nil :foreground zenburn/red)
+  (set-face-attribute 'me/fc-error-face nil :foreground zenburn/red-1)
   (set-face-attribute 'me/fc-info-face nil :foreground zenburn/blue+1)
   (set-face-attribute 'me/fc-warning-face nil :foreground zenburn/orange)
   (set-face-attribute 'me/hud-face nil :background zenburn/fg-1)
