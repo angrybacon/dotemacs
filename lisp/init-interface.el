@@ -54,7 +54,7 @@
 ;; Built-in
 (use-package uniquify
   :ensure nil
-  :init (setq-default uniquify-buffer-name-style 'forward))
+  :config (setq-default uniquify-buffer-name-style 'forward))
 
 
 
