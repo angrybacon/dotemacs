@@ -75,5 +75,15 @@
   :config (set-face-attribute 'helm-M-x-key nil :foreground zenburn/red :underline nil))
 
 
+;;======================================
+;; Configure Helm Descbinds
+;;======================================
+
+
+(use-package helm-descbinds
+  :bind ("C-h k" . helm-descbinds)
+  :config (setq-default helm-descbinds-window-style 'split-window))
+
+
 (provide 'init-helm)
 ;;; init-helm.el ends here
