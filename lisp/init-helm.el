@@ -22,8 +22,9 @@
    me/font-family-header
    me/font-size-default
    me/font-size-header
-   zenburn/bg
    zenburn/bg+3
+   zenburn/bg+0
+   zenburn/bg
    zenburn/green+2
    zenburn/yellow)
 
@@ -50,6 +51,7 @@
   (set-face-attribute 'helm-header nil
                       :font me/font-family-default :height me/font-size-default :italic t)
   (set-face-attribute 'helm-match nil :foreground zenburn/green+2 :weight 'normal)
+  (set-face-attribute 'helm-selection nil :background zenburn/bg+0)
   (set-face-attribute 'helm-source-header nil
                       :box nil :background zenburn/bg :font me/font-family-header
                       :foreground zenburn/yellow :height me/font-size-header))
