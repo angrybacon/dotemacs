@@ -85,5 +85,14 @@
   :config (setq-default helm-descbinds-window-style 'split-window))
 
 
+;;======================================
+;; Configure Helm Describe Modes
+;;======================================
+
+
+(use-package helm-describe-modes
+  :bind ("C-h m" . helm-describe-modes))
+
+
 (provide 'init-helm)
 ;;; init-helm.el ends here
