@@ -28,15 +28,18 @@
    zenburn/yellow)
 
   :bind
-  (("C-c h b" . helm-buffers-list)
-   ("C-c h k" . helm-show-kill-ring)
+  (("C-c h k" . helm-show-kill-ring)
    ("C-c h g" . helm-google-suggest)
-   ("C-c h m" . helm-imenu))
+   ("C-c h m" . helm-imenu)
+   ("C-x b" . helm-buffers-list))
 
   :config
   (setq-default
    helm-always-two-windows t
    helm-display-header-line nil
+   helm-M-x-fuzzy-match t
+   helm-mode-fuzzy-match t
+   helm-completion-in-region-fuzzy-match t
    helm-mode-line-string nil
    helm-net-prefer-curl t
    helm-ff-skip-boring-files t
