@@ -1,32 +1,24 @@
 DotEmacs
 ========
 
-
-This repository contains my personal Emacs configuration. It was originally meant for personal uses and to help me keep my Emacs files when moving onto another machine. I've kept this repository public for other Emacs lovers.
+This repository contains my personal Emacs configuration. It was originally meant for personal uses
+and to help me keep track of my Emacs files accross several machines. I've kept this repository
+public for other Emacs lovers.
 
 Have fun tinkering : j
-
-
-Notes
-=====
-
-
-This has been tested with [Yamamoto Mitsuharu's Mac port][yamamoto-emacs] and should work with any build.
-
-[yamamoto-emacs]: https://github.com/railwaycat/homebrew-emacsmacport
-
 
 Screenshots
 ===========
 
-![dotemacs.2015-08-18.png](https://bitbucket.org/repo/noxGbL/images/1027694942-dotemacs.2015-08-18.png)
+My Emacs configuration is a living mixture of files and is modified on a daily basis. As such, the
+following screenshots might not reflect `:master`.
+
+![dotemacs.2016-03-14.png](http://i.imgur.com/eZcEvzOl.png)
 
 More coming *soon*™
 
-
 Features
 ========
-
 
 Below are the most notable features supported:
 
@@ -34,35 +26,33 @@ Below are the most notable features supported:
 
     - [`zenburn-theme`][zenburn-theme]: Non-aggressive palette and pastel tones with
       [Zenburn][zenburn]
-    - [`powerline`][powerline]: Prettify the mode line with a custom template: less useless
-      information, more room for actual information
+    - [`powerline`][powerline]: Prettify the mode line with a hand-made template (major mode,
+      buffer name with semantic colors, project name, VC branch name, time)
 
 - Languages
 
-    - [`company`][company]: Autocompletion in most languages (still testing different backend for
-      Python)
-    - [`flycheck`][flycheck]: Use linters for Python and Sass
-
-- Web
-
-    - [`emmet`][emmet]: Add Emmet support for HTML, CSS-like files
-    - Support for HTML, Sass, Less, JavaScript, AngularJS and JSON files
+    - [`company`][company]: Autocompletion for most languages
+    - [`flycheck`][flycheck]: Lint errors, warnings and notes
 
 - Goodies
 
+    - [`emmet-mode`][emmet-mode]: Add support for [Emmet][emmet] on HTML and CSS-like files
     - [`magit`][magit]: Git integration
-    - [`multiple-cursors`][multiple-cursors]: Support for multiple cursors
-    - [`smartparens`][smartparens]: Parentheses are now smarter than you
-    - [`helm`][helm]: Add a incremental selection framework to fuzzily narrow down choices
+    - [`multiple-cursors`][multiple-cursors]: Add support for multiple cursors
+    - [`smartparens`][smartparens]: Supposedly smarter parentheses (still looking for better
+      though)
+    - [`helm`][helm]: Add an incremental selection framework to fuzzily narrow down choices
     - [`projectile`][projectile]: Add a project interface to issue actions within a project
       structure (eg. replace, search, grep)
-    - Add semantic breadcrumbs in the header line
+
+And many more.
 
 For more information about how stuff works, read the source Luke! For each package, I have left a
-    link to their website.
+link to their website.
 
 [company]: https://github.com/company-mode/company-mode
-[emmet]: https://github.com/smihica/emmet-mode
+[emmet]: http://emmet.io/
+[emmet-mode]: https://github.com/smihica/emmet-mode
 [flycheck]: https://github.com/flycheck/flycheck
 [helm]: https://github.com/emacs-helm/helm
 [magit]: https://github.com/magit/magit
@@ -73,28 +63,21 @@ For more information about how stuff works, read the source Luke! For each packa
 [zenburn]: http://kippura.org/zenburnpage/
 [zenburn-theme]: https://github.com/bbatsov/zenburn-emacs
 
-
 Installation
 ============
-
 
 Emacs
 -----
 
-
-1. I use [Yamamoto Mitsuharu's Mac port][yamamoto-emacs-releases]. The configuration files should
+1. I use [Mitsuharu Yamamoto's Mac port][github-emacs]. The configuration files *should*
    work with any build nonetheless. In any case, install Emacs 24 or above.
-
 1. Clone `dotemacs/` into `~/.emacs.d/`.
-
 1. Edit `~/.emacs.d/lisp/init-constants.el` to suit your needs.
 
-[yamamoto-emacs-releases]: https://github.com/railwaycat/homebrew-emacsmacport/releases
-
+[github-emacs]: https://github.com/railwaycat/homebrew-emacsmacport
 
 Flycheck
 --------
-
 
 I use [`flycheck`][flycheck] as linter framework to display syntax warnings and errors whithin each
 buffer. See below for the linters I personally use:
@@ -108,7 +91,7 @@ gem install scss_lint scss_lint_reporter_checkstyle
 ```
 
 You can configure the way linters check buffers with their own configuration files. You may refer
-to their documentation.
+to their very documentation.
 
 - `flake8`: `~/.flake8rc`
 - `scss-lint`: `~/.scss-lint.yml`
