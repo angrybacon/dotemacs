@@ -55,7 +55,7 @@
 
   :preface
 
-  ;; Configure the the mode-line
+  ;; Configure the mode-line
   (defvar me/powerline-hud nil)
 
   ;; Define new faces for elements
@@ -90,7 +90,14 @@
     "Face used for the version control string."
     :group 'me/powerline)
 
-  ;; Light flycheck indicators
+  :config
+
+  (defadvice vc-mode-line (after me/vc-mode-line () activate)
+    "Strip backend from the VC information."
+    (when (stringp vc-mode)
+      (let ((vc-text (replace-regexp-in-string "^ Git." ":" vc-mode)))
+        (setq vc-mode vc-text))))
+
   (defmacro me/flycheck-lighter (error)
     "Return a formatted string describing the ERROR (error, warning, info) count."
     ;; NOTE: Shamelessly taken from spacemacs
@@ -99,8 +106,6 @@
             (count (or (cdr (assq ',error error-counts)) "?"))
             (running (eq 'running flycheck-last-status-change)))
        (if (or errorp running) (format "• %s" count))))
-
-  :config
 
   ;; Customize appearance
   (setq-default
@@ -193,14 +198,6 @@
          (powerline-render lhs)
          (powerline-fill mode-line-3-face (powerline-width rhs))
          (powerline-render rhs))))))
-
-  ;; :config
-
-  (defadvice vc-mode-line (after strip-backend () activate)
-    "Strip backend from the VC information."
-    (when (stringp vc-mode)
-      (let ((vc-text (replace-regexp-in-string "^ Git." ":" vc-mode)))
-        (setq vc-mode vc-text))))
 
   ;; Customize faces
   (set-face-attribute 'mode-line nil
