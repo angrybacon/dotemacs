@@ -26,8 +26,7 @@
    zenburn/bg-1
    zenburn/blue
    zenburn/fg-1
-   zenburn/green
-   zenburn/green-1)
+   zenburn/green)
 
   :config
   (load-theme 'zenburn t)
@@ -38,8 +37,8 @@
   ;; (set-face-attribute 'custom-variable-tag nil :foreground zenburn/blue)
   (set-face-attribute 'default nil :font me/font-family-default :height me/font-size-default)
   (set-face-attribute 'font-lock-doc-face nil :italic t)
-  (set-face-attribute 'font-lock-comment-face nil :foreground zenburn/fg-1 :italic t)
-  (set-face-attribute 'font-lock-comment-delimiter-face nil :foreground zenburn/green-1 :italic t)
+  (set-face-attribute 'font-lock-comment-face nil :italic t)
+  (set-face-attribute 'font-lock-comment-delimiter-face nil :foreground zenburn/bg+3 :italic t)
   (set-face-attribute 'font-lock-function-name-face nil :foreground zenburn/blue)
   (set-face-attribute 'fringe nil :background zenburn/bg :foreground zenburn/bg+3)
   (set-face-attribute 'hl-line nil :background zenburn/bg+0)
