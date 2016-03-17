@@ -31,7 +31,8 @@
   :delight json-mode "JSON"
   :config
   ;; FIXME: This will be fixed with https://github.com/joshwnj/json-mode/issues/32.
-  (setq-default json-reformat:indent-width 2))
+  ;; (setq-default json-reformat:indent-width 2)
+  (add-hook 'json-mode-hook (lambda () (setq-local js-indent-level 2))))
 
 
 ;;=============================================================================
