@@ -32,7 +32,7 @@
   (("C-c h k" . helm-show-kill-ring)
    ("C-c h g" . helm-google-suggest)
    ("C-c h m" . helm-imenu)
-   ("C-x b" . helm-buffers-list))
+   ("C-c h r" . helm-resume))
 
   :config
 
@@ -44,12 +44,7 @@
   (setq-default
    helm-always-two-windows t
    helm-display-header-line nil
-   helm-M-x-fuzzy-match t
-   helm-mode-fuzzy-match t
-   helm-completion-in-region-fuzzy-match t
    helm-mode-line-string nil
-   helm-net-prefer-curl t
-   helm-ff-skip-boring-files t
    helm-split-window-default-side 'left)
 
   ;; Customize faces
@@ -64,6 +59,56 @@
                       :foreground zenburn/yellow :height me/font-size-header))
 
 
+;; https://github.com/emacs-helm/helm/blob/master/helm-buffers.el
+(use-package helm-buffers
+  :ensure helm
+  :defer t
+  :config (setq-default helm-buffers-fuzzy-matching t))
+
+
+;; https://github.com/emacs-helm/helm/blob/master/helm-color.el
+(use-package helm-color
+  :ensure helm
+  :defer t
+  :bind ("C-c h c" . helm-colors))
+
+
+;; https://github.com/emacs-helm/helm/blob/master/helm-command.el
+(use-package helm-command
+  :ensure helm
+  :defer t
+  :defines (zenburn/orange)
+  :bind ([remap execute-extended-command] . helm-M-x)
+  :config
+  (setq-default helm-M-x-fuzzy-match t)
+  (set-face-attribute 'helm-M-x-key nil :foreground zenburn/orange :underline nil))
+
+
+;; https://github.com/emacs-helm/helm/blob/master/helm-misc.el
+(use-package helm-misc
+  :ensure helm
+  :defer t
+  :bind ([remap switch-to-buffer] . helm-mini))
+
+
+;; https://github.com/emacs-helm/helm/blob/master/helm-mode.el
+(use-package helm-mode
+  :ensure helm
+  :defer t
+  :config
+  (setq-default
+   helm-completion-in-region-fuzzy-match t
+   helm-mode-fuzzy-match t))
+
+
+;; https://github.com/emacs-helm/helm/blob/master/helm-net.el
+(use-package helm-net
+  :ensure helm
+  :defer t
+  :config
+  (setq-default helm-net-prefer-curl t))
+
+
 ;;=============================================================================
 ;; Configure helm-ag
 ;;=============================================================================
@@ -72,35 +117,49 @@
 (use-package helm-ag)
 
 
-;;======================================
-;; Configure helm-command
-;;======================================
+;;=============================================================================
+;; Configure helm-css-scss
+;;=============================================================================
 
 
-(use-package helm-command
-  :ensure nil
-  :defines zenburn/red
-  :bind ("M-x" . helm-M-x)
-  :config (set-face-attribute 'helm-M-x-key nil :foreground zenburn/red :underline nil))
+;; https://github.com/ShingoFukuyama/helm-css-scss
+(use-package helm-css-scss
+  ;; WARNING: https://github.com/ShingoFukuyama/helm-css-scss/issues/7
+  ;; TODO: Fix Zenburn palette (ttps://github.com/bbatsov/zenburn-emacs/issues/220)
+  :defer t
+  :bind ("C-c h s" . helm-css-scss)
+  :config (setq-default helm-css-scss-split-direction 'split-window-horizontally))
 
 
-;;======================================
+;;=============================================================================
 ;; Configure helm-descbinds
-;;======================================
+;;=============================================================================
 
 
+;; https://github.com/emacs-helm/helm-descbinds
 (use-package helm-descbinds
   :bind ("C-h k" . helm-descbinds)
   :config (setq-default helm-descbinds-window-style 'split-window))
 
 
-;;======================================
+;;=============================================================================
 ;; Configure helm-describe-modes
-;;======================================
+;;=============================================================================
 
 
 (use-package helm-describe-modes
   :bind ("C-h m" . helm-describe-modes))
+
+
+;;=============================================================================
+;; Configure helm-projectile
+;;=============================================================================
+
+
+;; https://github.com/bbatsov/helm-projectile
+(use-package helm-projectile
+  :after helm
+  :config (helm-projectile-on))
 
 
 (provide 'init-helm)

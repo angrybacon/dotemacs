@@ -16,14 +16,14 @@
 
 ;; http://jblevins.org/projects/markdown-mode/
 (use-package markdown-mode
-  :delight markdown-mode "Markdown"
   :mode
   ("INSTALL\\'"
    "CONTRIBUTORS\\'"
    "LICENSE\\'"
    "README\\'"
    "\\.markdown\\'"
-   "\\.md\\'"))
+   "\\.md\\'")
+  :delight markdown-mode "Markdown")
 
 
 (provide 'init-markdown)

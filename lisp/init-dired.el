@@ -17,7 +17,13 @@
 ;; Built-in
 (use-package dired
   :ensure nil
-  :delight dired-mode "Dired")
+  :delight dired-mode "Dired"
+  :config
+  (setq-default
+   dired-auto-revert-buffer t
+   dired-listing-switches "-alh"
+   dired-ls-F-marks-symlinks nil
+   dired-recursive-copies 'always))
 
 
 (provide 'init-dired)

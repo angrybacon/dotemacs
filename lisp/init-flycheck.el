@@ -20,8 +20,9 @@
   :defer t
 
   :defines
-  (zenburn/orange
-   zenburn/red-2)
+  (zenburn/blue+1
+   zenburn/orange
+   zenburn/red-1)
 
   :init
   (setq-default
@@ -36,11 +37,12 @@
   (add-hook 'scss-mode-hook 'flycheck-mode)
 
   :config
-  (set-face-attribute 'flycheck-error nil :underline zenburn/red-2)
-  (set-face-attribute 'flycheck-fringe-error nil :foreground zenburn/red-2)
-  (set-face-attribute 'flycheck-fringe-warning nil :foreground zenburn/orange)
-  (set-face-attribute 'flycheck-info nil :background 'unspecified)
-  (set-face-attribute 'flycheck-warning nil :underline zenburn/orange))
+  (set-face-attribute 'flycheck-error nil :underline zenburn/red-1)
+  (set-face-attribute 'flycheck-info nil :underline zenburn/blue+1)
+  (set-face-attribute 'flycheck-warning nil :underline zenburn/orange)
+  (set-face-attribute 'flycheck-fringe-error nil :foreground zenburn/red-1)
+  (set-face-attribute 'flycheck-fringe-info nil :foreground zenburn/blue+1)
+  (set-face-attribute 'flycheck-fringe-warning nil :foreground zenburn/orange))
 
 
 (provide 'init-flycheck)

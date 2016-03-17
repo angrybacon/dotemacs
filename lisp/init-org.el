@@ -18,10 +18,14 @@
 (use-package org
   :delight org-mode "Org"
   :bind
-  (("C-c o a" . org-agenda)
+  (("C-c o a" . org-agenda-list)
    ("C-c o b" . org-iswitchb)
-   ("C-c o l" . org-store-link))
   :init (setq-default org-support-shift-select t))
+   ("C-c o c" . org-captur)
+   ("C-c o f" . org-cycle-agenda-files)
+   ("C-c o l" . org-store-link)
+   ("C-c o s" . org-search-view)
+   ("C-c o t" . org-todo-list))
 
 
 (provide 'init-org)

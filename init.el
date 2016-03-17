@@ -40,6 +40,8 @@
 ;; Better default
 (setq-default
  ad-redefinition-action 'accept                  ; Silence warnings for redefined functions
+ confirm-kill-emacs 'y-or-n-p                    ; Confirm before exiting Emacs
+ delete-by-moving-to-trash t                     ; Delete files to trash
  display-time-default-load-average nil           ; Don't display load average
  display-time-format "%H:%M"                     ; Format the time string
  gc-cons-threshold 100000000                     ; Higher garbage collector treshold

@@ -32,6 +32,7 @@
 (use-package magit
 
   :defer t
+
   :delight magit-mode "Magit"
 
   :defines
@@ -42,22 +43,32 @@
    zenburn/green+2
    zenburn/green-1)
 
-  :bind ("C-c g" . magit-status)
+  :bind
+  (("C-c g b" . magit-blame)
+   ("C-c g l" . magit-log)
+   ("C-c g p" . magit-pull)
+   ("C-c g s" . magit-status))
 
   :init
-  (setq-default
-   magit-refs-show-commit-count (quote all)
-   magit-section-show-child-count t)
 
-  :config
+  ;; Use better defaults
+  (setq-default
+   magit-display-buffer-function 'me/magit-display-buffer-function
+   magit-refs-show-commit-count (quote all)
+   magit-section-show-child-count t
+   magit-set-upstream-on-push 'askifnotset
+   magit-revision-show-gravatars t)
+
+  ;; Customize lighters
   (delight
-   '((magit-commit-mode "Magit Commit")
-     (magit-diff-mode "Magit Diff")
+   '((magit-diff-mode "Magit Diff")
      (magit-log-mode "Magit Log")
      (magit-popup-mode "Magit Popup")
      (magit-status-mode "Magit Status")))
-  (set-face-attribute 'magit-diff-added nil
-                      :background zenburn/green-1 :foreground zenburn/green+2)
+
+  ;; Customize faces
+  (set-face-attribute
+   'magit-diff-added nil :background zenburn/green-1 :foreground zenburn/green+2)
   (set-face-attribute 'magit-diff-added-highlight nil
                       :background zenburn/green-1 :foreground zenburn/green+2)
   (set-face-attribute 'magit-diff-removed nil
