@@ -10,7 +10,7 @@
 
 
 ;;=============================================================================
-;; Configure JS
+;; Configure js
 ;;=============================================================================
 
 
@@ -20,28 +20,28 @@
 
 
 ;;=============================================================================
-;; Configure Tern
+;; Configure json-mode
 ;;=============================================================================
 
 
-;; Website: http://ternjs.net/doc/manual.html#emacs
-(use-package tern
-  :defer t
-  :config (add-hook 'js-mode-hook 'tern-mode))
-
-
-;;=============================================================================
-;; Configure JSON mode
-;;=============================================================================
-
-
-;; Website: https://github.com/gongo/json-reformat
+;; https://github.com/joshwnj/json-mode
 (use-package json-mode
   :delight json-mode "JSON"
   :mode "\\.json\\'"
-  :init
+  :config
   ;; FIXME: This will be fixed with https://github.com/joshwnj/json-mode/issues/32.
   (setq-default json-reformat:indent-width 2))
+
+
+;;=============================================================================
+;; Configure tern
+;;=============================================================================
+
+
+;; http://ternjs.net/doc/manual.html#emacs
+(use-package tern
+  :defer t
+  :config (add-hook 'js-mode-hook 'tern-mode))
 
 
 (provide 'init-javascript)

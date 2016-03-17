@@ -10,11 +10,11 @@
 
 
 ;;=============================================================================
-;; Configure Helm
+;; Configure helm
 ;;=============================================================================
 
 
-;; Website: https://github.com/emacs-helm/helm
+;; https://github.com/emacs-helm/helm
 (use-package helm
 
   :defines
@@ -58,7 +58,7 @@
 
 
 ;;======================================
-;; Configure Helm Ag
+;; Configure helm-ag
 ;;======================================
 
 
@@ -66,7 +66,7 @@
 
 
 ;;======================================
-;; Configure Helm Command
+;; Configure helm-command
 ;;======================================
 
 
@@ -78,7 +78,7 @@
 
 
 ;;======================================
-;; Configure Helm Descbinds
+;; Configure helm-descbinds
 ;;======================================
 
 
@@ -88,7 +88,7 @@
 
 
 ;;======================================
-;; Configure Helm Describe Modes
+;; Configure helm-describe-modes
 ;;======================================
 
 

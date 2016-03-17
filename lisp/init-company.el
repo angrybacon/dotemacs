@@ -10,11 +10,11 @@
 
 
 ;;=============================================================================
-;; Configure Company
+;; Configure company
 ;;=============================================================================
 
 
-;; Website: https://github.com/company-mode/company-mode
+;; https://github.com/company-mode/company-mode
 (use-package company
   :config
   (setq-default
@@ -26,10 +26,11 @@
 
 
 ;;=============================================================================
-;; Configure Company Tern
+;; Configure company-tern
 ;;=============================================================================
 
 
+;; https://github.com/proofit404/company-tern
 (use-package company-tern
   :defer t
   :init

@@ -10,11 +10,11 @@
 
 
 ;;=============================================================================
-;; Configure Delight
+;; Configure delight
 ;;=============================================================================
 
 
-;; Website: https://github.com/antonio/delight.el
+;; https://github.com/antonio/delight.el
 (use-package delight
   :config
   ;; NOTE: Or use https://www.emacswiki.org/emacs/delight-powerline.el?
@@ -27,11 +27,11 @@
 
 
 ;;=============================================================================
-;; Configure Powerline
+;; Configure powerline
 ;;=============================================================================
 
 
-;; Website: https://github.com/milkypostman/powerline
+;; https://github.com/milkypostman/powerline
 (use-package powerline
 
   :defines

@@ -10,7 +10,7 @@
 
 
 ;;=============================================================================
-;; Define key bindings
+;; Set key bindings
 ;;=============================================================================
 
 
@@ -67,7 +67,7 @@
 
 
 ;;=============================================================================
-;; Configure Expand Region
+;; Configure aggressive-indent
 ;;=============================================================================
 
 
@@ -78,11 +78,11 @@
 
 
 ;;=============================================================================
-;; Configure Multiple Cursors
+;; Configure multiple-cursors
 ;;=============================================================================
 
 
-;; Website: https://github.com/magnars/multiple-cursors.el
+;; https://github.com/magnars/multiple-cursors.el
 (use-package multiple-cursors
   :bind
   (("C-S-c C-S-c" . mc/edit-lines)

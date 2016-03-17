@@ -10,11 +10,11 @@
 
 
 ;;=============================================================================
-;; Configure Golden Ratio
+;; Configure golden-ratio
 ;;=============================================================================
 
 
-;; Website: https://github.com/roman/golden-ratio.el
+;; https://github.com/roman/golden-ratio.el
 (use-package golden-ratio
   :defines (me/golden-ratio-factor)
   :init

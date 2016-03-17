@@ -10,11 +10,11 @@
 
 
 ;;=============================================================================
-;; Configure Highlight Parentheses
+;; Configure highlight-parentheses
 ;;=============================================================================
 
 
-;; Website: http://www.emacswiki.org/emacs/HighlightParentheses
+;; http://www.emacswiki.org/emacs/HighlightParentheses
 (use-package highlight-parentheses
   :defines
   (zenburn/green+2
@@ -28,11 +28,11 @@
 
 
 ;;=============================================================================
-;; Configure Smartparens
+;; Configure smartparens
 ;;=============================================================================
 
 
-;; Website: https://github.com/Fuco1/smartparens
+;; https://github.com/Fuco1/smartparens
 (use-package smartparens
 
   :defer t

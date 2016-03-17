@@ -10,11 +10,11 @@
 
 
 ;;=============================================================================
-;; Configure Org
+;; Configure org
 ;;=============================================================================
 
 
-;; Website: http://orgmode.org/
+;; http://orgmode.org/
 (use-package org
   :delight org-mode "Org"
   :bind

@@ -10,11 +10,11 @@
 
 
 ;;=============================================================================
-;; Configure Flycheck
+;; Configure flycheck
 ;;=============================================================================
 
 
-;; Website: https://github.com/flycheck/flycheck
+;; https://github.com/flycheck/flycheck
 (use-package flycheck
 
   :defer t

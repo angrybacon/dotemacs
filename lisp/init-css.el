@@ -10,7 +10,7 @@
 
 
 ;;=============================================================================
-;; Configure CSS mode
+;; Configure css-mode
 ;;=============================================================================
 
 
@@ -21,26 +21,15 @@
 
 
 ;;=============================================================================
-;; Configure SCSS mode
+;; Configure scss-mode
 ;;=============================================================================
 
 
-;; Website: https://github.com/antonj/scss-mode/
+;; https://github.com/antonj/scss-mode/
 (use-package scss-mode
   :delight scss-mode "SCSS"
   :mode ("\\.css\\'" "\\.sass\\'" "\\.scss\\'")
   :init (setq-default scss-compile-at-save nil))
-
-
-;;=============================================================================
-;; Configure Helm CSS SCSS
-;;=============================================================================
-
-
-;; Website: https://github.com/ShingoFukuyama/helm-css-scss
-(use-package helm-css-scss
-  ;; TODO: https://github.com/bbatsov/zenburn-emacs/issues/220
-  )
 
 
 (provide 'init-css)

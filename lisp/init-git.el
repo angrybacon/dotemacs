@@ -10,11 +10,25 @@
 
 
 ;;=============================================================================
-;; Configure Magit
+;; Configure gitattributes-mode, gitconfig-mode, gitignore-mode
 ;;=============================================================================
 
 
-;; Website: https://github.com/magit/magit
+;; https://github.com/magit/git-modes
+(use-package gitattributes-mode
+  :delight gitattributes-mode "Git Attributes")
+(use-package gitconfig-mode
+  :delight gitconfig-mode "Git Config")
+(use-package gitignore-mode
+  :delight gitignore-mode "Git Ignore")
+
+
+;;=============================================================================
+;; Configure magit
+;;=============================================================================
+
+
+;; https://github.com/magit/magit
 (use-package magit
 
   :defer t
@@ -54,20 +68,6 @@
                       :font me/font-family-header :height me/font-size-header)
   (set-face-attribute 'magit-section-heading nil
                       :font me/font-family-header :height me/font-size-header))
-
-
-;;=============================================================================
-;; Configure Git modes
-;;=============================================================================
-
-
-;; Website: https://github.com/magit/git-modes
-(use-package gitattributes-mode
-  :delight gitattributes-mode "Git Attributes")
-(use-package gitconfig-mode
-  :delight gitconfig-mode "Git Config")
-(use-package gitignore-mode
-  :delight gitignore-mode "Git Ignore")
 
 
 (provide 'init-git)

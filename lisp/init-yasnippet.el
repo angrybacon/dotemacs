@@ -10,11 +10,11 @@
 
 
 ;;=============================================================================
-;; Configure YASnippet
+;; Configure yasnippet
 ;;=============================================================================
 
 
-;; Website: https://github.com/capitaomorte/yasnippet
+;; https://github.com/capitaomorte/yasnippet
 (use-package yasnippet
 
   :after emmet

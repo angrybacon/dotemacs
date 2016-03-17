@@ -25,7 +25,7 @@
 ;; (when (member me/font-family-header (font-family-list))
 ;;   (set-face-attribute 'helm-header nil :font me/font-family-default)
 ;;   (set-face-attribute 'helm-source-header nil :font me/font-family-header))
-;; NOTE: These probably shouldn't be constants.
+;; NOTE: These probably shouldn't be constants, should they?
 (defconst me/font-family-default    "Monaco"  "The font to use for default text.")
 (defconst me/font-family-header     "Monaco"  "The font to use for headers.")
 (defconst me/font-family-mode-line  "Monaco"  "The font to use for the mode line.")

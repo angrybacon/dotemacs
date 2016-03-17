@@ -10,11 +10,11 @@
 
 
 ;;=============================================================================
-;; Configure Zenburn theme
+;; Configure zenburn-theme
 ;;=============================================================================
 
 
-;; Website: https://github.com/bbatsov/zenburn-emacs
+;; https://github.com/bbatsov/zenburn-emacs
 (use-package zenburn-theme
 
   :defines

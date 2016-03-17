@@ -10,8 +10,8 @@ Have fun tinkering : j
 Screenshots
 ===========
 
-My Emacs configuration is a living mixture of files and is modified on a daily basis. As such, the
-following screenshots might not reflect `:master`.
+My Emacs configuration is a living mixture of files that are modified on a daily basis. As such,
+the following screenshots might not reflect `:master`.
 
 ![dotemacs.2016-03-14.png](http://i.imgur.com/BN8dIS9l.png)
 

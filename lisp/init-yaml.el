@@ -10,11 +10,11 @@
 
 
 ;;=============================================================================
-;; Configure YAML mode
+;; Configure yaml-mode
 ;;=============================================================================
 
 
-;; Website: https://github.com/yoshiki/yaml-mode
+;; https://github.com/yoshiki/yaml-mode
 (use-package yaml-mode
   :delight yaml-mode "YAML"
   :mode "\\.yml\\'")

@@ -10,11 +10,11 @@
 
 
 ;;=============================================================================
-;; Configure Dockerfile mode
+;; Configure dockerfile-mode
 ;;=============================================================================
 
 
-;; Website: https://github.com/spotify/dockerfile-mode
+;; https://github.com/spotify/dockerfile-mode
 (use-package dockerfile-mode
   :delight dockerfile-mode "Dockerfile"
   :mode "Dockerfile\\'")

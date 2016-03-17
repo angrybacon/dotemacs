@@ -10,11 +10,11 @@
 
 
 ;;=============================================================================
-;; Configure Emmet mode
+;; Configure emmet-mode
 ;;=============================================================================
 
 
-;; Website: https://github.com/smihica/emmet-mode
+;; https://github.com/smihica/emmet-mode
 (use-package emmet-mode
   :bind
   (:map emmet-mode-keymap

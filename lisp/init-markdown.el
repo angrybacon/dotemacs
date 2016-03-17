@@ -10,11 +10,11 @@
 
 
 ;;=============================================================================
-;; Configure Markdown mode
+;; Configure markdown-mode
 ;;=============================================================================
 
 
-;; Website: http://jblevins.org/projects/markdown-mode/
+;; http://jblevins.org/projects/markdown-mode/
 (use-package markdown-mode
   :delight markdown-mode "Markdown"
   :mode
@@ -23,8 +23,7 @@
    "LICENSE\\'"
    "README\\'"
    "\\.markdown\\'"
-   "\\.md\\'"
-   "\\.txt\\'"))
+   "\\.md\\'"))
 
 
 (provide 'init-markdown)

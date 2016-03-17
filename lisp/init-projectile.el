@@ -10,11 +10,11 @@
 
 
 ;;=============================================================================
-;; Configure Projectile
+;; Configure projectile
 ;;=============================================================================
 
 
-;; Website: https://github.com/bbatsov/projectile
+;; https://github.com/bbatsov/projectile
 (use-package projectile
 
   :preface (defvar project-name nil)
@@ -38,7 +38,7 @@
 
 
 ;;======================================
-;; Configure Helm Projectile
+;; Configure helm-projectile
 ;;======================================
 
 
