@@ -16,8 +16,9 @@
 
 ;; Built-in
 (use-package css-mode
+  :defer t
   :delight css-mode "CSS"
-  :init (setq-default css-indent-offset 2))
+  :config (setq-default css-indent-offset 2))
 
 
 ;;=============================================================================
@@ -27,9 +28,10 @@
 
 ;; https://github.com/antonj/scss-mode/
 (use-package scss-mode
-  :delight scss-mode "SCSS"
   :mode ("\\.css\\'" "\\.sass\\'" "\\.scss\\'")
-  :init (setq-default scss-compile-at-save nil))
+  :delight scss-mode "SCSS"
+  ;; TODO: Change comment delimiters for SCSS files.
+  :config (setq-default scss-compile-at-save nil))
 
 
 (provide 'init-css)

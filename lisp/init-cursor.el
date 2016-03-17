@@ -17,6 +17,7 @@
 
 ;; https://github.com/magnars/expand-region.el
 (use-package expand-region
+  :defer t
   :bind ("C-=" . er/expand-region)
   :init (pending-delete-mode t))
 
@@ -28,6 +29,7 @@
 
 ;; https://github.com/magnars/multiple-cursors.el
 (use-package multiple-cursors
+  :defer t
   :bind
   (("C-S-c C-S-c" . mc/edit-lines)
    ("C->" . mc/mark-next-like-this)

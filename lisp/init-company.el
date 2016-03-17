@@ -16,6 +16,7 @@
 
 ;; https://github.com/company-mode/company-mode
 (use-package company
+  :defer t
   :init (global-company-mode)
   :config
   (setq-default
@@ -31,12 +32,12 @@
 ;; https://github.com/proofit404/company-tern
 (use-package company-tern
   :defer t
-  :init
+  :init (add-to-list 'company-backends 'company-tern)
+  :config
   (setq-default
    company-tern-meta-as-single-line t
    company-tern-property-marker " *"
-   company-tooltip-align-annotations t)
-  (add-to-list 'company-backends 'company-tern))
+   company-tooltip-align-annotations t))
 
 
 (provide 'init-company)

@@ -17,6 +17,7 @@
 ;; Built-in
 (use-package dired
   :ensure nil
+  :defer t
   :delight dired-mode "Dired"
   :config
   (setq-default

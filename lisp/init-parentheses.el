@@ -43,13 +43,12 @@
    ("M-<right>" . sp-forward-slurp-sexp)
    ("M-S-<left>" . sp-backward-slurp-sexp)
    ("M-S-<right>" . sp-backward-barf-sexp))
-  :init
-  (require 'smartparens-config)
-  (setq-default sp-autoinsert-quote-if-followed-by-closing-pair t)
+  :init (require 'smartparens-config)
   :config
+  (smartparens-global-mode 1)
+  (setq-default sp-autoinsert-quote-if-followed-by-closing-pair t)
   (sp-pair "{{" "}}")
-  (sp-pair "[[" "]]")
-  (smartparens-global-mode 1))
+  (sp-pair "[[" "]]"))
 
 
 (provide 'init-parentheses)

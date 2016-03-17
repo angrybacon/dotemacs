@@ -17,6 +17,8 @@
 ;; https://github.com/emacs-helm/helm
 (use-package helm
 
+  :defer t
+
   :defines
   (me/font-family-default
    me/font-family-header
@@ -114,7 +116,9 @@
 ;;=============================================================================
 
 
-(use-package helm-ag)
+;; https://github.com/syohex/emacs-helm-ag
+(use-package helm-ag
+  :defer t)
 
 
 ;;=============================================================================
@@ -138,6 +142,7 @@
 
 ;; https://github.com/emacs-helm/helm-descbinds
 (use-package helm-descbinds
+  :defer t
   :bind ("C-h k" . helm-descbinds)
   :config (setq-default helm-descbinds-window-style 'split-window))
 
@@ -147,7 +152,9 @@
 ;;=============================================================================
 
 
+;; https://github.com/emacs-helm/helm-describe-modes
 (use-package helm-describe-modes
+  :defer t
   :bind ("C-h m" . helm-describe-modes))
 
 

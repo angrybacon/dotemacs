@@ -16,6 +16,7 @@
 
 ;; Built-in
 (use-package python
+  :defer t
   :delight python-mode "Python")
 
 

@@ -17,6 +17,7 @@
 ;; Built-in
 (use-package lisp-mode
   :ensure nil
+  :defer t
   :config
   (delight
    '((emacs-lisp-mode "Emacs Lisp")

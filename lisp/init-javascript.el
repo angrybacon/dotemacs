@@ -16,6 +16,7 @@
 
 ;; Built-in
 (use-package js
+  :defer t
   :delight js-mode "JavaScript")
 
 
@@ -26,8 +27,8 @@
 
 ;; https://github.com/joshwnj/json-mode
 (use-package json-mode
-  :delight json-mode "JSON"
   :mode "\\.json\\'"
+  :delight json-mode "JSON"
   :config
   ;; FIXME: This will be fixed with https://github.com/joshwnj/json-mode/issues/32.
   (setq-default json-reformat:indent-width 2))

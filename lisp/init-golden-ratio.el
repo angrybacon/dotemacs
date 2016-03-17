@@ -16,13 +16,14 @@
 
 ;; https://github.com/roman/golden-ratio.el
 (use-package golden-ratio
+  :defer t
   :defines (me/golden-ratio-factor)
-  :init
+  :init (golden-ratio-mode 1)
+  :config
   (setq-default
    ;; TODO: Find a sane way to determine the ratio factor.
    golden-ratio-adjust-factor me/golden-ratio-factor
-   split-width-threshold nil)
-  :config (golden-ratio-mode 1))
+   split-width-threshold nil))
 
 
 (provide 'init-golden-ratio)

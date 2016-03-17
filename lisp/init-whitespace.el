@@ -16,14 +16,14 @@
 
 ;; Built-in
 (use-package whitespace
+  :defer t
   :defines (zenburn/red-1)
-  :init
-  (setq-default whitespace-style '(face empty tab trailing))
+  :init (global-whitespace-mode 1)
   :config
+  (setq-default whitespace-style '(face empty tab trailing))
   (set-face-attribute 'whitespace-empty nil :background zenburn/red-1)
   (set-face-attribute 'whitespace-tab nil :background zenburn/red-1)
-  (set-face-attribute 'whitespace-trailing nil :background zenburn/red-1)
-  (global-whitespace-mode 1))
+  (set-face-attribute 'whitespace-trailing nil :background zenburn/red-1))
 
 
 (provide 'init-whitespace)
