@@ -10,6 +10,32 @@
 
 
 ;;=============================================================================
+;;=============================================================================
+;; Configure expand-region
+;;=============================================================================
+
+
+;; https://github.com/magnars/expand-region.el
+(use-package expand-region
+  :bind ("C-=" . er/expand-region)
+  :init (pending-delete-mode t))
+
+
+;;=============================================================================
+;; Configure multiple-cursors
+;;=============================================================================
+
+
+;; https://github.com/magnars/multiple-cursors.el
+(use-package multiple-cursors
+  :bind
+  (("C-S-c C-S-c" . mc/edit-lines)
+   ("C->" . mc/mark-next-like-this)
+   ("C-<" . mc/mark-previous-like-this))
+  :init (setq-default mc/list-file (expand-file-name ".multiple-cursors.el" user-emacs-directory)))
+
+
+;;=============================================================================
 ;; Set key bindings
 ;;=============================================================================
 
@@ -24,8 +50,8 @@
 (global-set-key (kbd "C-M-<down>") 'windmove-down)
 (global-set-key (kbd "<C-up>") 'me/goto-previous-block)
 (global-set-key (kbd "<C-down>") 'me/goto-next-block)
-(global-set-key (kbd "<M-up>") 'me/move-line-up)
-(global-set-key (kbd "<M-down>") 'me/move-line-down)
+(global-set-key (kbd "<M-up>") 'me/swap-line-up)
+(global-set-key (kbd "<M-down>") 'me/swap-line-down)
 
 
 ;;=============================================================================
@@ -49,7 +75,7 @@
   (skip-chars-forward "\n"))
 
 
-(defun me/move-line-down ()
+(defun me/swap-line-down ()
   "Move down the current line under point."
   (interactive)
   (forward-line 1)
@@ -58,39 +84,12 @@
   (indent-according-to-mode))
 
 
-(defun me/move-line-up ()
+(defun me/swap-line-up ()
   "Move up the current line under point."
   (interactive)
   (transpose-lines 1)
   (forward-line -2)
   (indent-according-to-mode))
-
-
-;;=============================================================================
-;; Configure aggressive-indent
-;;=============================================================================
-
-
-;; Website: https://github.com/magnars/expand-region.el
-(use-package expand-region
-  :bind ("C-=" . er/expand-region)
-  :init (pending-delete-mode t))
-
-
-;;=============================================================================
-;; Configure multiple-cursors
-;;=============================================================================
-
-
-;; https://github.com/magnars/multiple-cursors.el
-(use-package multiple-cursors
-  :bind
-  (("C-S-c C-S-c" . mc/edit-lines)
-   ("C-<" . mc/mark-previous-like-this)
-   ("C->" . mc/mark-next-like-this))
-  :init
-  (setq-default
-   mc/list-file (expand-file-name ".multiple-cursors-lists.el" user-emacs-directory)))
 
 
 (provide 'init-cursor)

@@ -16,8 +16,8 @@
 
 ;; https://github.com/yoshiki/yaml-mode
 (use-package yaml-mode
-  :delight yaml-mode "YAML"
-  :mode "\\.yml\\'")
+  :mode "\\.yml\\'"
+  :delight yaml-mode "YAML")
 
 
 (provide 'init-yaml)

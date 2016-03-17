@@ -34,22 +34,17 @@
 
 ;; https://github.com/Fuco1/smartparens
 (use-package smartparens
-
   :defer t
-
   :functions (sp-pair)
-
   :bind
   (("M-<backspace>" . sp-unwrap-sexp)
    ("M-<left>" . sp-forward-barf-sexp)
    ("M-<right>" . sp-forward-slurp-sexp)
    ("M-S-<left>" . sp-backward-slurp-sexp)
    ("M-S-<right>" . sp-backward-barf-sexp))
-
   :init
   (require 'smartparens-config)
   (setq-default sp-autoinsert-quote-if-followed-by-closing-pair t)
-
   :config
   (sp-pair "{{" "}}")
   (sp-pair "[[" "]]")

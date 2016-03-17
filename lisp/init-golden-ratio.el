@@ -19,6 +19,7 @@
   :defines (me/golden-ratio-factor)
   :init
   (setq-default
+   ;; TODO: Find a sane way to determine the ratio factor.
    golden-ratio-adjust-factor me/golden-ratio-factor
    split-width-threshold nil)
   :config (golden-ratio-mode 1))

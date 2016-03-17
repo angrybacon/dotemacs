@@ -35,6 +35,12 @@
    ("C-x b" . helm-buffers-list))
 
   :config
+
+
+  ;; Activate Helm
+  (helm-mode 1)
+
+  ;; Use better defaults
   (setq-default
    helm-always-two-windows t
    helm-display-header-line nil
@@ -45,7 +51,8 @@
    helm-net-prefer-curl t
    helm-ff-skip-boring-files t
    helm-split-window-default-side 'left)
-  (helm-mode 1)
+
+  ;; Customize faces
   (set-face-attribute 'helm-ff-dotted-directory nil
                       :background 'unspecified :foreground zenburn/bg+3)
   (set-face-attribute 'helm-header nil
@@ -57,9 +64,9 @@
                       :foreground zenburn/yellow :height me/font-size-header))
 
 
-;;======================================
+;;=============================================================================
 ;; Configure helm-ag
-;;======================================
+;;=============================================================================
 
 
 (use-package helm-ag)

@@ -1,4 +1,6 @@
 # Emacs
+*~
+*.elc
 .dir-locals.el
 auto-save-list/
 elpa/
@@ -6,17 +8,11 @@ games/
 semanticdb/
 url/
 
-# Multiple cursors
-.multiple-cursors-lists.el
-
-# OSX
-.DS_Store
-
-# Projectile
+# Third-party packages
+.multiple-cursors.el
 .projectile
 projectile.cache
 projectile-bookmarks.eld
 
-# Trash files
-*~
-*.elc
+# OSX
+.DS_Store
