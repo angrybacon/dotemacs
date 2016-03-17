@@ -17,9 +17,9 @@
 ;;https://github.com/Malabarba/aggressive-indent-mode
 (use-package aggressive-indent
   :init (add-hook 'html-mode-hook
-            (lambda ()
-              (let ((global-aggressive-indent-mode nil))
-                (aggressive-indent-mode 1))))
+                  (lambda ()
+                    (let ((global-aggressive-indent-mode nil))
+                      (aggressive-indent-mode 1))))
   :config
   (global-aggressive-indent-mode 1)
   (setq-default aggressive-indent-comments-too t)

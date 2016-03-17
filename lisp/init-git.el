@@ -36,8 +36,6 @@
 
   :defer t
 
-  :delight magit-mode "Magit"
-
   :defines
   (me/font-family-header
    me/font-size-header

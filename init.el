@@ -69,6 +69,10 @@
 (set-frame-parameter nil 'fullscreen 'fullboth)  ; Enable pseudo fullscreen
 
 
+;; Define aliases
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+
 ;;=============================================================================
 ;; Check Emacs' version
 ;;=============================================================================
@@ -109,7 +113,6 @@
   (require 'init-theme)
 
   ;; Initialize the partials
-  (require 'init-aliases)
   (require 'init-company)
   (require 'init-css)
   (require 'init-cursor)
