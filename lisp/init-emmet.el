@@ -16,6 +16,7 @@
 
 ;; https://github.com/smihica/emmet-mode
 (use-package emmet-mode
+  :defer t
   :init
   (add-hook 'css-mode-hook 'emmet-mode)
   (add-hook 'sgml-mode-hook 'emmet-mode)
