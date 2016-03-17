@@ -16,15 +16,16 @@
 
 ;; http://www.emacswiki.org/emacs/HighlightParentheses
 (use-package highlight-parentheses
+  :disabled t
   :defines
   (zenburn/green+2
    zenburn/green
    zenburn/green-1)
-  :preface
+  :init (setq-default hl-paren-colors `(,zenburn/green+2 ,zenburn/green ,zenburn/green-1))
+  :config
   (define-globalized-minor-mode global-highlight-parentheses-mode
     highlight-parentheses-mode (lambda () (highlight-parentheses-mode t)))
-  :init (setq-default hl-paren-colors `(,zenburn/green+2 ,zenburn/green ,zenburn/green-1))
-  :config (global-highlight-parentheses-mode t))
+  (global-highlight-parentheses-mode t))
 
 
 ;;=============================================================================
