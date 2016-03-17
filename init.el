@@ -108,7 +108,6 @@
 
   ;; Initialize the partials
   (require 'init-aliases)
-  (require 'init-comments)
   (require 'init-company)
   (require 'init-css)
   (require 'init-cursor)
