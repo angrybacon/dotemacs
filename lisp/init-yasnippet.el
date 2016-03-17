@@ -16,26 +16,18 @@
 
 ;; https://github.com/capitaomorte/yasnippet
 (use-package yasnippet
-
-  :after emmet
-
+  :defines (yas-minor-mode-map)
   :functions (yas-reload-all)
-
-  :bind (:map yas-minor-mode-map
-              ("TAB" . nil)
-              ("<tab>" . nil))
-
   ;; FIXME: This should override emmet trigger
   ;;        https://github.com/emacsmirror/emacswiki.org/blob/master/minor-mode-hack.el
   :bind* (:map yas-minor-mode-map
                ("<C-return>" . yas-expand))
-
-  :init
-  (setq-default yas-snippet-dirs '("~/.emacs.d/snippets"))
-  (add-hook 'prog-mode-hook #'yas-minor-mode)
-
+  :init (add-hook 'prog-mode-hook 'yas-minor-mode)
   :config
-  (yas-reload-all))
+  (setq-default yas-snippet-dirs '("~/.emacs.d/snippets"))
+  (yas-reload-all)
+  (unbind-key "TAB" yas-minor-mode-map)
+  (unbind-key "<tab>" yas-minor-mode-map))
 
 
 (provide 'init-yasnippet)

@@ -132,7 +132,8 @@
   (require 'init-python)
   (require 'init-whitespace)
   (require 'init-yaml)
-  (require 'init-yasnippet))
+  ;; (require 'init-yasnippet)
+  )
 
 
 (provide 'init)
