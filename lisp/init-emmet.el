@@ -16,16 +16,15 @@
 
 ;; https://github.com/smihica/emmet-mode
 (use-package emmet-mode
-  :bind
-  (:map emmet-mode-keymap
-        ("C-M-<left>" . nil)
-        ("C-M-<right>" . nil))
   :init
+  (add-hook 'css-mode-hook 'emmet-mode)
+  (add-hook 'sgml-mode-hook 'emmet-mode)
+  :config
   (setq-default
    emmet-move-cursor-between-quotes t
    emmet-preview-default nil)
-  (add-hook 'css-mode-hook 'emmet-mode)
-  (add-hook 'sgml-mode-hook 'emmet-mode))
+  (unbind-key "C-M-<left>" emmet-mode-keymap)
+  (unbind-key "C-M-<right>" emmet-mode-keymap))
 
 
 (provide 'init-emmet)
