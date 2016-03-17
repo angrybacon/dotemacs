@@ -19,5 +19,18 @@
   :delight python-mode "Python")
 
 
+;;=============================================================================
+;; Configure pip-requirements
+;;=============================================================================
+
+
+;; https://github.com/Wilfred/pip-requirements.el
+(use-package pip-requirements
+  :defer t
+  :delight pip-requirements-mode "PyPA Requirements"
+  ;; FIXME: http://emacs.stackexchange.com/q/21019/2397
+  )
+
+
 (provide 'init-python)
 ;;; init-python.el ends here
