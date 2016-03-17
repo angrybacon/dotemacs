@@ -52,7 +52,24 @@
    ("C-c g p" . magit-pull)
    ("C-c g s" . magit-status))
 
-  :init
+  :config
+
+  (defun me/magit-display-buffer-function (buffer)
+    "Render some magit modes in the currently selected buffer."
+    (display-buffer
+     buffer
+     (cond ((and (derived-mode-p 'magit-mode)
+                 (eq (with-current-buffer buffer major-mode)
+                     'magit-status-mode))
+            nil)
+           ((memq (with-current-buffer buffer major-mode)
+                  '(magit-process-mode
+                    magit-revision-mode
+                    magit-diff-mode
+                    magit-stash-mode))
+            nil)
+           (t
+            '(display-buffer-same-window)))))
 
   ;; Use better defaults
   (setq-default
