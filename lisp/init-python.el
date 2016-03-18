@@ -29,8 +29,7 @@
 (use-package pip-requirements
   :defer t
   :delight pip-requirements-mode "PyPA Requirements"
-  ;; FIXME: http://emacs.stackexchange.com/q/21019/2397
-  )
+  :config (add-hook 'pip-requirements-mode-hook (lambda () (setq-local completion-ignore-case t))))
 
 
 (provide 'init-python)
