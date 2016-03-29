@@ -2,6 +2,7 @@
 *~
 *.elc
 .dir-locals.el
+recentf
 auto-save-list/
 elpa/
 games/

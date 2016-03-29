@@ -44,7 +44,7 @@
  delete-by-moving-to-trash t                     ; Delete files to trash
  display-time-default-load-average nil           ; Don't display load average
  display-time-format "%H:%M"                     ; Format the time string
- gc-cons-threshold 100000000                     ; Higher garbage collector treshold
+ gc-cons-threshold 100000000                     ; Increase garbage collector treshold
  indent-tabs-mode nil                            ; Stop using tabs to indent
  indicate-empty-lines t                          ; Indicate unused lines in the fringe
  inhibit-startup-screen t                        ; Remove start-up screen
@@ -56,16 +56,19 @@
  tab-width 4                                     ; Set width for tabs
  x-select-enable-clipboard t)                    ; Merge system's and Emacs' clipboard
 
+
 ;; Toggle UI components
-(tool-bar-mode 0)                                ; Disable/enable the toolbar
-(menu-bar-mode 0)                                ; Disable/enable menu bar
-(scroll-bar-mode 0)                              ; Disable/enable scroll bar
-(fringe-mode '(10 . 10))                         ; Disable/enable vertical fringes
-(display-battery-mode 0)                         ; Hide/show battery level
-(display-time-mode 1)                            ; Hide/Show time representation
-(column-number-mode 0)                           ; Hide/show column number
-(line-number-mode 1)                             ; Hide/show line number
+(when window-system
+  (menu-bar-mode 0)                              ; Disable the menu bar
+  (scroll-bar-mode 0)                            ; Disable the scroll bar
+  (tool-bar-mode 0)                              ; Disable the tool bar
+  (tooltip-mode 0))                              ; Disable the tooltips
+(column-number-mode 0)                           ; Hide the column number
+(display-battery-mode 0)                         ; Hide the battery level
+(display-time-mode 1)                            ; Hide the time representation
+(fringe-mode '(10 . 10))                         ; Show vertical fringes
 (global-hl-line-mode 1)                          ; Hightlight current line
+(line-number-mode 1)                             ; Show the line number
 (set-frame-parameter nil 'fullscreen 'fullboth)  ; Enable pseudo fullscreen
 
 
@@ -79,7 +82,7 @@
 
 
 (when (version<= emacs-version "24")
-  (unless (yes-or-no-p (concat "Your Emacs is getting old. Features may not work, continue? "))
+  (unless (yes-or-no-p "Your Emacs is getting old. Some things may be disabled, continue? ")
     (kill-emacs)))
 
 
@@ -88,6 +91,7 @@
 ;;=============================================================================
 
 
+;; FIXME: Find a way to dynamically look for benchmark-init.el
 (let ((benchmark-init.el "~/.emacs.d/elpa/benchmark-init-20150905.238/benchmark-init.el"))
   (when (file-exists-p benchmark-init.el)
     (load benchmark-init.el)))
