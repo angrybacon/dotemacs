@@ -1,4 +1,4 @@
-;;; init-palettes.el --- Add theme palettes
+;;; init-palette.el --- Configure the palette
 
 ;; Copyright (C) 2015 Mathieu Marques
 
@@ -52,5 +52,18 @@
 (defconst zenburn/yellow-2  "#D0BF8F"  "Zenburn palette: #D0BF8F.")
 
 
-(provide 'init-palettes)
-;;; init-palettes.el ends here
+;;=============================================================================
+;; Configure rainbow-mode
+;;=============================================================================
+
+
+;; https://julien.danjou.info/projects/emacs-packages#rainbow-mode
+(use-package rainbow-mode
+  :defer t
+  :init (add-hook 'prog-mode-hook 'rainbow-mode)
+  :config
+  (setq-default rainbow-x-colors-major-mode-list '()))
+
+
+(provide 'init-palette)
+;;; init-palette.el ends here

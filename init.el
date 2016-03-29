@@ -27,7 +27,7 @@
 ;; Following lines load several packages to configure my Emacs experience.
 ;; I work quite often with Python, HTML, SCSS and JavaScript code.
 ;;
-;; See readme.md for more details.
+;; See README.md for more details.
 
 ;;; Code:
 
@@ -40,7 +40,7 @@
 ;; Better default
 (setq-default
  ad-redefinition-action 'accept                  ; Silence warnings for redefined functions
- confirm-kill-emacs 'y-or-n-p                    ; Confirm before exiting Emacs
+ confirm-kill-emacs 'yes-or-no-p                 ; Confirm before exiting Emacs
  delete-by-moving-to-trash t                     ; Delete files to trash
  display-time-default-load-average nil           ; Don't display load average
  display-time-format "%H:%M"                     ; Format the time string
@@ -82,7 +82,7 @@
 
 
 (when (version<= emacs-version "24")
-  (unless (yes-or-no-p "Your Emacs is getting old. Some things may be disabled, continue? ")
+  (unless (yes-or-no-p "Your Emacs is getting old. Things may break, continue? ")
     (kill-emacs)))
 
 
@@ -102,18 +102,15 @@
 ;;=============================================================================
 
 
-;; Load path of dependencies
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-
-
 ;; Load dependencies
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (let ((file-name-handler-alist nil))
 
   ;; Initialize the core configuration
   (require 'init-constants)
   (require 'init-elpa)
   (require 'init-interface)
-  (require 'init-palettes)
+  (require 'init-palette)
   (require 'init-theme)
 
   ;; Initialize the partials
