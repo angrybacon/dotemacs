@@ -20,8 +20,7 @@
   :defer t
 
   :defines
-  (;; me/font-family
-   me/font-size-default
+  (me/font-size-default
    me/font-size-header
    zenburn/bg+3
    zenburn/bg+0
@@ -37,6 +36,10 @@
 
   :config
 
+  (defadvice helm-display-mode-line (after me/helm-display-mode-line activate)
+    "Customize mode-line for helm buffers."
+    ;; TODO: Add relevant information in the mode-line.
+    )
 
   ;; Activate Helm
   (helm-mode 1)
@@ -51,16 +54,9 @@
   ;; Customize faces
   (set-face-attribute 'helm-ff-dotted-directory nil
                       :background 'unspecified :foreground zenburn/bg+3)
-  (set-face-attribute 'helm-header nil :height me/font-size-default :italic t)
   (set-face-attribute 'helm-match nil :foreground zenburn/green+2 :weight 'normal)
-  (set-face-attribute 'helm-selection nil :background zenburn/bg+0)
   (set-face-attribute 'helm-source-header nil
-                      :box nil :background zenburn/bg :foreground zenburn/yellow
-                      :height me/font-size-header)
-  ;; (when (member me/font-family (font-family-list))
-  ;;   (set-face-attribute 'helm-header nil :font me/font-family)
-  ;;   (set-face-attribute 'helm-source-header nil :font me/font-family))
-  )
+                      :box nil :background 'unspecified :height me/font-size-header))
 
 
 ;; https://github.com/emacs-helm/helm/blob/master/helm-buffers.el

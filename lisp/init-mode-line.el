@@ -36,8 +36,7 @@
 (use-package powerline
 
   :defines
-  (;; me/font-family
-   me/font-size-mode-line
+  (me/font-size-mode-line
    zenburn/bg+3
    zenburn/bg+1
    zenburn/bg-0
@@ -222,11 +221,7 @@
   (set-face-attribute 'me/hud-face nil :background zenburn/fg-1)
   (set-face-attribute 'me/line-number-face nil :foreground zenburn/bg+3)
   (set-face-attribute 'me/projectile-face nil :foreground zenburn/blue)
-  (set-face-attribute 'me/vc-face nil :foreground zenburn/bg+3)
-  ;; (when (member me/font-family (font-family-list))
-  ;;   (set-face-attribute 'mode-line nil :font me/font-family)
-  ;;   (set-face-attribute 'mode-line-inactive nil :font me/font-family))
-  )
+  (set-face-attribute 'me/vc-face nil :foreground zenburn/bg+3))
 
 
 (provide 'init-mode-line)

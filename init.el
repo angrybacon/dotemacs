@@ -119,6 +119,7 @@
   (require 'init-company)
   (require 'init-css)
   (require 'init-cursor)
+  (require 'init-customize)
   (require 'init-dired)
   (require 'init-docker)
   (require 'init-emmet)

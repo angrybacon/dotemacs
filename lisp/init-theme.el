@@ -30,10 +30,6 @@
 
   :config
   (load-theme 'zenburn t)
-  ;; FIXME: Invalid faces
-  ;; (set-face-attribute 'custom-group-tag nil :foreground zenburn/blue)
-  ;; (set-face-attribute 'custom-state nil :foreground zenburn/green+4)
-  ;; (set-face-attribute 'custom-variable-tag nil :foreground zenburn/blue)
   (set-face-attribute 'default nil :height me/font-size-default)
   (set-face-attribute 'font-lock-doc-face nil :italic t)
   (set-face-attribute 'font-lock-comment-face nil :italic t)
