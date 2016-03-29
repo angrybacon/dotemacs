@@ -107,10 +107,10 @@
 (let ((file-name-handler-alist nil))
 
   ;; Initialize the core configuration
-  (require 'init-constants)
   (require 'init-elpa)
   (require 'init-interface)
   (require 'init-palette)
+  (require 'init-secret)
   (require 'init-theme)
 
   ;; Initialize the partials

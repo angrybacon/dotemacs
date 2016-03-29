@@ -1,4 +1,4 @@
-;;; init-connstants.el --- Customize these constants for further reference
+;;; init-secret.el --- Customize these constants for further reference
 
 ;; Copyright (C) 2015 Mathieu Marques
 
@@ -7,6 +7,9 @@
 ;; Homepage: https://bitbucket.org/angrybacon/dotemacs
 
 ;;; Code:
+
+
+;; TODO: Make this optionnal.
 
 
 ;;=============================================================================
@@ -29,5 +32,5 @@
 (defconst me/golden-ratio-factor    .8        "The factor to split windows with.")
 
 
-(provide 'init-constants)
-;;; init-constants.el ends here
+(provide 'init-secret)
+;;; init-secret.el ends here
