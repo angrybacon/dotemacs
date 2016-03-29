@@ -36,7 +36,7 @@
 (use-package powerline
 
   :defines
-  (me/font-family-mode-line
+  (;; me/font-family
    me/font-size-mode-line
    zenburn/bg+3
    zenburn/bg+1
@@ -203,12 +203,12 @@
   ;; Customize faces
   (set-face-attribute 'mode-line nil
                       :box `(:line-width 1 :color ,zenburn/bg-1)
-                      :background zenburn/green-1 :font me/font-family-mode-line
-                      :foreground zenburn/green+2 :height me/font-size-mode-line)
+                      :background zenburn/green-1 :foreground zenburn/green+2
+                      :height me/font-size-mode-line)
   (set-face-attribute 'mode-line-inactive nil
                       :box `(:line-width 1 :color ,zenburn/bg-1)
-                      :background zenburn/bg-1 :font me/font-family-mode-line
-                      :foreground zenburn/bg+3 :height me/font-size-mode-line)
+                      :background zenburn/bg-1 :foreground zenburn/bg+3
+                      :height me/font-size-mode-line)
   (set-face-attribute 'powerline-active1 nil :background zenburn/bg-0 :foreground zenburn/fg)
   (set-face-attribute 'powerline-active2 nil :background zenburn/bg+1)
   (set-face-attribute 'powerline-inactive1 nil :background zenburn/bg-0)
@@ -222,7 +222,11 @@
   (set-face-attribute 'me/hud-face nil :background zenburn/fg-1)
   (set-face-attribute 'me/line-number-face nil :foreground zenburn/bg+3)
   (set-face-attribute 'me/projectile-face nil :foreground zenburn/blue)
-  (set-face-attribute 'me/vc-face nil :foreground zenburn/bg+3))
+  (set-face-attribute 'me/vc-face nil :foreground zenburn/bg+3)
+  ;; (when (member me/font-family (font-family-list))
+  ;;   (set-face-attribute 'mode-line nil :font me/font-family)
+  ;;   (set-face-attribute 'mode-line-inactive nil :font me/font-family))
+  )
 
 
 (provide 'init-mode-line)

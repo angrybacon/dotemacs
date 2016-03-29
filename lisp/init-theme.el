@@ -18,7 +18,7 @@
 (use-package zenburn-theme
 
   :defines
-  (me/font-family-default
+  (me/font-family
    me/font-size-default
    zenburn/bg+3
    zenburn/bg+0
@@ -30,12 +30,11 @@
 
   :config
   (load-theme 'zenburn t)
-  ;; FIXME: Invalid face
-  ;; (set-face-attribute 'custom-group-tag nil
-  ;;                     :font me/font-family-default :foreground zenburn/blue)
+  ;; FIXME: Invalid faces
+  ;; (set-face-attribute 'custom-group-tag nil :foreground zenburn/blue)
   ;; (set-face-attribute 'custom-state nil :foreground zenburn/green+4)
   ;; (set-face-attribute 'custom-variable-tag nil :foreground zenburn/blue)
-  (set-face-attribute 'default nil :font me/font-family-default :height me/font-size-default)
+  (set-face-attribute 'default nil :height me/font-size-default)
   (set-face-attribute 'font-lock-doc-face nil :italic t)
   (set-face-attribute 'font-lock-comment-face nil :italic t)
   (set-face-attribute 'font-lock-comment-delimiter-face nil :foreground zenburn/bg+3 :italic t)
@@ -43,7 +42,9 @@
   (set-face-attribute 'fringe nil :background zenburn/bg :foreground zenburn/bg+3)
   (set-face-attribute 'hl-line nil :background zenburn/bg+0)
   (set-face-attribute 'region nil :foreground zenburn/green)
-  (set-face-attribute 'vertical-border nil :foreground zenburn/bg-1))
+  (set-face-attribute 'vertical-border nil :foreground zenburn/bg-1)
+  (when (member me/font-family (font-family-list))
+    (set-face-attribute 'default nil :font me/font-family)))
 
 
 (provide 'init-theme)

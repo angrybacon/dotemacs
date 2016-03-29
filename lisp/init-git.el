@@ -37,8 +37,7 @@
   :defer t
 
   :defines
-  (me/font-family-header
-   me/font-size-header
+  (me/font-size-header
    zenburn/red
    zenburn/red-4
    zenburn/green+2
@@ -85,18 +84,16 @@
      (magit-status-mode "Magit Status")))
 
   ;; Customize faces
-  (set-face-attribute
-   'magit-diff-added nil :background zenburn/green-1 :foreground zenburn/green+2)
+  (set-face-attribute 'magit-diff-added nil
+                      :background zenburn/green-1 :foreground zenburn/green+2)
   (set-face-attribute 'magit-diff-added-highlight nil
                       :background zenburn/green-1 :foreground zenburn/green+2)
   (set-face-attribute 'magit-diff-removed nil
                       :background zenburn/red-4 :foreground zenburn/red)
   (set-face-attribute 'magit-diff-removed-highlight nil
                       :background zenburn/red-4 :foreground zenburn/red)
-  (set-face-attribute 'magit-popup-heading nil
-                      :font me/font-family-header :height me/font-size-header)
-  (set-face-attribute 'magit-section-heading nil
-                      :font me/font-family-header :height me/font-size-header))
+  (set-face-attribute 'magit-popup-heading nil :height me/font-size-header)
+  (set-face-attribute 'magit-section-heading nil :height me/font-size-header))
 
 
 (provide 'init-git)
