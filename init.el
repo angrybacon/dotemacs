@@ -54,6 +54,7 @@
  scroll-step 1                                   ; Line by line scrolling
  show-trailing-whitespace nil                    ; Display trailing whitespaces
  tab-width 4                                     ; Set width for tabs
+ uniquify-buffer-name-style 'forward             ; Uniquify buffer names
  x-select-enable-clipboard t)                    ; Merge system's and Emacs' clipboard
 
 
@@ -68,7 +69,9 @@
 (display-time-mode 1)                            ; Hide the time representation
 (fringe-mode '(10 . 10))                         ; Show vertical fringes
 (global-hl-line-mode 1)                          ; Hightlight current line
+(global-subword-mode 1)                          ; Iterate through CamelCase words
 (line-number-mode 1)                             ; Show the line number
+(mouse-avoidance-mode 'animate)                  ; Move pointer when point reaches cursor location
 (set-frame-parameter nil 'fullscreen 'fullboth)  ; Enable pseudo fullscreen
 
 
@@ -108,7 +111,6 @@
 
   ;; Initialize the core configuration
   (require 'init-elpa)
-  (require 'init-interface)
   (require 'init-palette)
   (require 'init-secret)
   (require 'init-theme)
