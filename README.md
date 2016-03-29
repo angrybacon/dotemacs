@@ -1,5 +1,4 @@
-DotEmacs
-========
+# DotEmacs
 
 This repository contains my personal Emacs configuration. It was originally meant for personal uses
 and to help me keep track of my Emacs files accross several machines. I've kept this repository
@@ -7,8 +6,7 @@ public for other Emacs lovers.
 
 Have fun tinkering : j
 
-Screenshots
-===========
+# Screenshots
 
 My Emacs configuration is a living mixture of files that are modified on a daily basis. As such,
 the following screenshots might not reflect `:master`.
@@ -17,38 +15,37 @@ the following screenshots might not reflect `:master`.
 
 More coming *soon*™
 
-Features
-========
+# Features
 
 Below are the most notable features supported:
 
-- Theming
+- Appearance
 
-    - [`zenburn-theme`][zenburn-theme]: Non-aggressive palette and pastel tones with
+    - [`zenburn-theme`][zenburn-theme]: non-aggressive palette and pastel tones with
       [Zenburn][zenburn]
-    - [`powerline`][powerline]: Prettify the mode line with a hand-made template (major mode,
-      buffer name with semantic colors, project name, VC branch name, time)
+    - [`powerline`][powerline]: prettier mode line
 
 - Languages
 
-    - [`company`][company]: Autocompletion for most languages
-    - [`flycheck`][flycheck]: Lint errors, warnings and notes
+    - [`company`][company]: autocompletion for most languages
+    - [`flycheck`][flycheck]: lint errors, warnings and notes
+    - [`tern`][tern]: code analysis and error reporting for JavaScript
 
 - Goodies
 
-    - [`emmet-mode`][emmet-mode]: Add support for [Emmet][emmet] on HTML and CSS-like files
-    - [`magit`][magit]: Git integration
-    - [`multiple-cursors`][multiple-cursors]: Add support for multiple cursors
-    - [`smartparens`][smartparens]: Supposedly smarter parentheses (still looking for better
-      though)
-    - [`helm`][helm]: Add an incremental selection framework to fuzzily narrow down choices
-    - [`projectile`][projectile]: Add a project interface to issue actions within a project
-      structure (eg. replace, search, grep)
+    - [`emmet-mode`][emmet-mode]: support for [Emmet][emmet] on HTML and CSS-like files
+    - [`helm`][helm]: incremental selection framework to fuzzily narrow down choices
+    - [`magit`][magit]: git integration
+    - [`multiple-cursors`][multiple-cursors]: support for multiple cursors
+    - [`projectile`][projectile]: project interface to issue actions within a project structure
+      (eg. replace, search, grep)
+    - [`smartparens`][smartparens]: supposedly smarter parentheses (still looking for a better
+      implementation though)
 
 And many more.
 
-For more information about how stuff works, read the source Luke! For each package, I have left a
-link to their website.
+For more information about how things works, read the source Luke!
+For each package, I have left a link to their website.
 
 [company]: https://github.com/company-mode/company-mode
 [emmet]: http://emmet.io/
@@ -60,14 +57,13 @@ link to their website.
 [powerline]: https://github.com/milkypostman/powerline
 [projectile]: https://github.com/bbatsov/projectile
 [smartparens]: https://github.com/Fuco1/smartparens
+[tern]: http://ternjs.net/doc/manual.html#emacs
 [zenburn]: http://kippura.org/zenburnpage/
 [zenburn-theme]: https://github.com/bbatsov/zenburn-emacs
 
-Installation
-============
+# Installation
 
-Emacs
------
+## Emacs
 
 1. I use [Mitsuharu Yamamoto's Mac port][github-emacs]. The configuration files *should*
    work with any build nonetheless. In any case, install Emacs 24 or above.
@@ -76,8 +72,7 @@ Emacs
 
 [github-emacs]: https://github.com/railwaycat/homebrew-emacsmacport
 
-Flycheck
---------
+## Flycheck
 
 I use [`flycheck`][flycheck] as linter framework to display syntax warnings and errors whithin each
 buffer. See below for the linters I personally use:
