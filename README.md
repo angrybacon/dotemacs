@@ -21,9 +21,9 @@ Below are the most notable features supported:
 
 - Appearance
 
+    - [`powerline`][powerline]: prettier mode line
     - [`zenburn-theme`][zenburn-theme]: non-aggressive palette and pastel tones with
       [Zenburn][zenburn]
-    - [`powerline`][powerline]: prettier mode line
 
 - Languages
 
@@ -68,7 +68,7 @@ For each package, I have left a link to their website.
 1. I use [Mitsuharu Yamamoto's Mac port][github-emacs]. The configuration files *should*
    work with any build nonetheless. In any case, install Emacs 24 or above.
 1. Clone `dotemacs/` into `~/.emacs.d/`.
-1. Edit `~/.emacs.d/lisp/init-constants.el` to suit your needs.
+1. Edit `~/.emacs.d/lisp/init-secret.el` to suit your needs.
 
 [github-emacs]: https://github.com/railwaycat/homebrew-emacsmacport
 

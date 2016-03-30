@@ -60,6 +60,7 @@
 
 ;; Toggle UI components
 (when window-system
+  (blink-cursor-mode 0)                          ; Disable the cursor blinking
   (menu-bar-mode 0)                              ; Disable the menu bar
   (scroll-bar-mode 0)                            ; Disable the scroll bar
   (tool-bar-mode 0)                              ; Disable the tool bar
