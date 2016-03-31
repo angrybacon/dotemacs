@@ -17,7 +17,8 @@
 ;; Built-in
 (use-package js
   :defer t
-  :delight js-mode "JavaScript")
+  :delight js-mode "JavaScript"
+  :config (setq-default js-indent-level 2))
 
 
 ;;=============================================================================
