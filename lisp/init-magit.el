@@ -73,8 +73,7 @@
    magit-display-buffer-function 'me/magit-display-buffer-function
    magit-refs-show-commit-count (quote all)
    magit-section-show-child-count t
-   magit-set-upstream-on-push 'askifnotset
-   magit-revision-show-gravatars t)
+   magit-set-upstream-on-push 'askifnotset)
 
   ;; Customize lighters
   (delight
