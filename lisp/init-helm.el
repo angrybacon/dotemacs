@@ -88,7 +88,7 @@
 (use-package helm-misc
   :ensure helm
   :defer t
-  :bind ([remap switch-to-buffer] . helm-mini))
+  :bind ([remap switch-to-buffer] . helm-buffers-list))
 
 
 ;; https://github.com/emacs-helm/helm/blob/master/helm-mode.el
