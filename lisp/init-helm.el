@@ -14,6 +14,9 @@
 ;;=============================================================================
 
 
+;; TODO: Make helm-list-faces-display
+
+
 ;; https://github.com/emacs-helm/helm
 (use-package helm
 
@@ -84,6 +87,14 @@
   (set-face-attribute 'helm-M-x-key nil :foreground zenburn/orange :underline nil))
 
 
+;; https://github.com/emacs-helm/helm/blob/master/helm-grep.el
+(use-package helm-grep
+  :ensure helm
+  :defer t
+  :defines (zenburn/bg+3)
+  :config (set-face-attribute 'helm-grep-lineno nil :foreground zenburn/bg+3))
+
+
 ;; https://github.com/emacs-helm/helm/blob/master/helm-misc.el
 (use-package helm-misc
   :ensure helm
@@ -107,6 +118,14 @@
   :defer t
   :config
   (setq-default helm-net-prefer-curl t))
+
+
+;; https://github.com/emacs-helm/helm/blob/master/helm-regexp.el
+(use-package helm-regexp
+  :ensure helm
+  :defer t
+  :defines (zenburn/blue)
+  :config (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn/blue))
 
 
 ;;=============================================================================
