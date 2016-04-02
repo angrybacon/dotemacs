@@ -76,8 +76,10 @@
 (set-frame-parameter nil 'fullscreen 'fullboth)  ; Enable pseudo fullscreen
 
 
-;; Define aliases
-(defalias 'yes-or-no-p 'y-or-n-p)
+;; Other goodies
+(defalias 'yes-or-no-p 'y-or-n-p)                ; Replace yes/no with the shorter y/n
+(put 'downcase-region 'disabled nil)             ; Enable downcase-region
+(put 'upcase-region 'disabled nil)               ; Enable upcase-region
 
 
 ;;=============================================================================

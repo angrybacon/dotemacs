@@ -184,7 +184,6 @@
                 (funcall separator-right mode-line-3-face mode-line-2-face)
                 (powerline-raw " " mode-line-2-face)
                 (powerline-raw (projectile-project-name) projectile-face)
-                ;; TODO: Remove VC backend
                 (powerline-vc vc-face)
                 (powerline-raw " " mode-line-2-face))
                (list

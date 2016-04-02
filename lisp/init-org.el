@@ -21,7 +21,7 @@
   :bind
   (("C-c o a" . org-agenda-list)
    ("C-c o b" . org-iswitchb)
-   ("C-c o c" . org-captur)
+   ("C-c o c" . org-capture)
    ("C-c o f" . org-cycle-agenda-files)
    ("C-c o l" . org-store-link)
    ("C-c o s" . org-search-view)
