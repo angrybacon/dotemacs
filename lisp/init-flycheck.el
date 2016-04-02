@@ -39,6 +39,7 @@
   (setq-default
    flycheck-check-syntax-automatically '(save mode-enabled)
    flycheck-disabled-checkers '(emacs-lisp-checkdoc)
+   flycheck-display-errors-delay .3
    flycheck-flake8rc "~/.flake8rc"
    flycheck-jshintrc "~/.jshintrc"
    flycheck-pylintrc "~/.pylintrc")
