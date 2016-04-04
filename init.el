@@ -82,25 +82,10 @@
 (put 'upcase-region 'disabled nil)               ; Enable upcase-region
 
 
-;;=============================================================================
 ;; Check Emacs' version
-;;=============================================================================
-
-
 (when (version<= emacs-version "24")
-  (unless (yes-or-no-p "Your Emacs is getting old. Things may break, continue? ")
+  (unless (yes-or-no-p "Your Emacs is getting old. Kitten may be killed, continue? ")
     (kill-emacs)))
-
-
-;;=============================================================================
-;; Benchmark initialization
-;;=============================================================================
-
-
-;; FIXME: Find a way to dynamically look for benchmark-init.el
-(let ((benchmark-init.el "~/.emacs.d/elpa/benchmark-init-20150905.238/benchmark-init.el"))
-  (when (file-exists-p benchmark-init.el)
-    (load benchmark-init.el)))
 
 
 ;;=============================================================================
@@ -111,6 +96,12 @@
 ;; Load dependencies
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (let ((file-name-handler-alist nil))
+
+  ;; Benchmark initialization
+  ;; FIXME: Find a way to dynamically look for benchmark-init.el
+  (let ((benchmark-init.el "~/.emacs.d/elpa/benchmark-init-20150905.238/benchmark-init.el"))
+    (when (file-exists-p benchmark-init.el)
+      (load benchmark-init.el)))
 
   ;; Initialize the core configuration
   (require 'init-elpa)
@@ -125,10 +116,10 @@
   (require 'init-customize)
   (require 'init-dired)
   (require 'init-docker)
-  (require 'init-emmet)
   (require 'init-flycheck)
   (require 'init-golden-ratio)
   (require 'init-helm)
+  (require 'init-hippie)
   (require 'init-html)
   (require 'init-javascript)
   (require 'init-lisp)
@@ -141,9 +132,7 @@
   (require 'init-projectile)
   (require 'init-python)
   (require 'init-whitespace)
-  (require 'init-yaml)
-  ;; (require 'init-yasnippet)
-  )
+  (require 'init-yaml))
 
 
 (provide 'init)
