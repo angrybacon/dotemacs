@@ -11,7 +11,7 @@ Have fun tinkering : j
 My Emacs configuration is a living mixture of files that are modified on a daily basis. As such,
 the following screenshots might not reflect `:master`.
 
-![dotemacs.2016-03-14.png](http://i.imgur.com/BN8dIS9l.png)
+![dotemacs.2016-03-14.png](http://i.imgur.com/BN8dIS9.png)
 
 More coming *soon*™
 
