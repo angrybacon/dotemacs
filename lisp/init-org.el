@@ -25,7 +25,14 @@
    ("C-c o l" . org-store-link)
    ("C-c o s" . org-search-view)
    ("C-c o t" . org-todo-list))
-  :config (setq-default org-support-shift-select t))
+  :config
+  (setq-default org-support-shift-select t)
+  (unbind-key "<C-S-down>" org-mode-map)
+  (unbind-key "<C-S-up>" org-mode-map)
+  (unbind-key "<M-down>" org-mode-map)
+  (unbind-key "<M-up>" org-mode-map)
+  (unbind-key "<S-down>" org-mode-map)
+  (unbind-key "<S-up>" org-mode-map))
 
 
 (provide 'init-org)

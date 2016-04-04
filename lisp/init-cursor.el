@@ -93,7 +93,8 @@
   (forward-line 1)
   (transpose-lines 1)
   (forward-line -1)
-  (indent-according-to-mode))
+  (indent-according-to-mode)
+  (delete-trailing-whitespace))
 
 
 (defun me/swap-line-up ()
@@ -101,7 +102,8 @@
   (interactive)
   (transpose-lines 1)
   (forward-line -2)
-  (indent-according-to-mode))
+  (indent-according-to-mode)
+  (delete-trailing-whitespace))
 
 
 (provide 'init-cursor)
