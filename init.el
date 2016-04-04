@@ -105,7 +105,6 @@
 
   ;; Initialize the core configuration
   (require 'init-elpa)
-  (require 'init-palette)
   (require 'init-secret)
   (require 'init-theme)
 
