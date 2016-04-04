@@ -18,16 +18,9 @@
 (use-package dired
 
   :ensure nil
-  :defer t
   :delight dired-mode "Dired"
 
   :config
-
-  (setq-default
-   dired-auto-revert-buffer t
-   dired-listing-switches "-alh"
-   dired-ls-F-marks-symlinks nil
-   dired-recursive-copies 'always)
 
   (defadvice dired-readin (after dired-after-updating-hook first () activate)
     "Sort dired listings with directories first before adding marks."
@@ -35,7 +28,13 @@
       (let (buffer-read-only)
         (forward-line 2) ;; beyond dir. header
         (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
-      (set-buffer-modified-p nil))))
+      (set-buffer-modified-p nil)))
+
+  (setq-default
+   dired-auto-revert-buffer t
+   dired-listing-switches "-alh"
+   dired-ls-F-marks-symlinks nil
+   dired-recursive-copies 'always))
 
 
 (provide 'init-dired)

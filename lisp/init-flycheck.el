@@ -17,8 +17,6 @@
 ;; https://github.com/flycheck/flycheck
 (use-package flycheck
 
-  :defer t
-
   :defines
   (zenburn/blue+1
    zenburn/orange

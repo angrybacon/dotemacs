@@ -16,7 +16,6 @@
 
 ;; https://github.com/antonio/delight.el
 (use-package delight
-  :defer t
   :config
   ;; NOTE: Or use https://www.emacswiki.org/emacs/delight-powerline.el?
   (defadvice powerline-major-mode (around delight-powerline-major-mode activate)
@@ -34,6 +33,8 @@
 
 ;; https://github.com/milkypostman/powerline
 (use-package powerline
+
+  :demand t
 
   :defines
   (me/font-size-mode-line

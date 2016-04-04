@@ -28,8 +28,10 @@
    zenburn/fg-1
    zenburn/green)
 
+  :init (load-theme 'zenburn t)
+
   :config
-  (load-theme 'zenburn t)
+  ;; (load-theme 'zenburn t)
   (set-face-attribute 'default nil :height me/font-size-default)
   (set-face-attribute 'font-lock-doc-face nil :italic t)
   (set-face-attribute 'font-lock-comment-face nil :italic t)

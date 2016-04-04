@@ -16,7 +16,6 @@
 
 ;; http://orgmode.org/
 (use-package org
-  :defer t
   :delight org-mode "Org"
   :bind
   (("C-c o a" . org-agenda-list)

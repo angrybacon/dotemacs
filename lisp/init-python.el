@@ -16,7 +16,6 @@
 
 ;; Built-in
 (use-package python
-  :defer t
   :delight python-mode "Python")
 
 
@@ -27,7 +26,6 @@
 
 ;; https://github.com/Wilfred/pip-requirements.el
 (use-package pip-requirements
-  :defer t
   :delight pip-requirements-mode "PyPA Requirements"
   :config (add-hook 'pip-requirements-mode-hook (lambda () (setq-local completion-ignore-case t))))
 

@@ -17,6 +17,8 @@
 ;; https://github.com/bbatsov/projectile
 (use-package projectile
 
+  :demand t
+
   :defines
   (projectile-enable-caching
    projectile-mode-line)

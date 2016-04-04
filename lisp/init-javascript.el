@@ -16,7 +16,6 @@
 
 ;; Built-in
 (use-package js
-  :defer t
   :delight js-mode "JavaScript"
   :config (setq-default js-indent-level 2))
 
@@ -43,7 +42,6 @@
 
 ;; http://ternjs.net/doc/manual.html#emacs
 (use-package tern
-  :defer t
   :config (add-hook 'js-mode-hook 'tern-mode))
 
 

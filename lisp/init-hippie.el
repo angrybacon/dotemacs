@@ -16,7 +16,6 @@
 
 ;; https://github.com/smihica/emmet-mode
 (use-package emmet-mode
-  :defer t
   :init
   (add-hook 'css-mode-hook 'emmet-mode)
   (add-hook 'sgml-mode-hook 'emmet-mode)
@@ -35,7 +34,6 @@
 ;; Built-in
 (use-package hippie-exp
   :ensure nil
-  :defer t
   :bind ("<C-return>" . hippie-expand)
   :config
   (setq-default hippie-expand-try-functions-list
@@ -49,7 +47,6 @@
 
 ;; https://github.com/capitaomorte/yasnippet
 (use-package yasnippet
-  :defer t
   :init
   (add-hook 'js-mode-hook 'yas-minor-mode)
   (add-hook 'sgml-mode-hook 'yas-minor-mode)

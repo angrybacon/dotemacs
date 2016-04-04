@@ -16,13 +16,10 @@
 
 ;; https://github.com/magit/git-modes
 (use-package gitattributes-mode
-  :defer t
   :delight gitattributes-mode "Git Attributes")
 (use-package gitconfig-mode
-  :defer t
   :delight gitconfig-mode "Git Config")
 (use-package gitignore-mode
-  :defer t
   :delight gitignore-mode "Git Ignore")
 
 
@@ -33,8 +30,6 @@
 
 ;; https://github.com/magit/magit
 (use-package magit
-
-  :defer t
 
   :defines
   (me/font-size-header

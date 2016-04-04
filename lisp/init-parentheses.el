@@ -35,7 +35,6 @@
 
 ;; https://github.com/Fuco1/smartparens
 (use-package smartparens
-  :defer t
   :functions (sp-pair)
   :bind
   (("M-<backspace>" . sp-unwrap-sexp)

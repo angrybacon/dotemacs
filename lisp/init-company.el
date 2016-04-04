@@ -16,7 +16,6 @@
 
 ;; https://github.com/company-mode/company-mode
 (use-package company
-  :defer t
   :init (global-company-mode)
   :config
   (setq-default
@@ -31,7 +30,6 @@
 
 ;; https://github.com/proofit404/company-tern
 (use-package company-tern
-  :defer t
   :init (add-to-list 'company-backends 'company-tern)
   :config
   (setq-default

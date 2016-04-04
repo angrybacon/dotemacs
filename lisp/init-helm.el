@@ -20,8 +20,6 @@
 ;; https://github.com/emacs-helm/helm
 (use-package helm
 
-  :defer t
-
   :defines
   (me/font-size-default
    me/font-size-header
@@ -65,21 +63,18 @@
 ;; https://github.com/emacs-helm/helm/blob/master/helm-buffers.el
 (use-package helm-buffers
   :ensure helm
-  :defer t
   :config (setq-default helm-buffers-fuzzy-matching t))
 
 
 ;; https://github.com/emacs-helm/helm/blob/master/helm-color.el
 (use-package helm-color
   :ensure helm
-  :defer t
   :bind ("C-c h c" . helm-colors))
 
 
 ;; https://github.com/emacs-helm/helm/blob/master/helm-command.el
 (use-package helm-command
   :ensure helm
-  :defer t
   :defines (zenburn/orange)
   :bind ([remap execute-extended-command] . helm-M-x)
   :config
@@ -90,7 +85,6 @@
 ;; https://github.com/emacs-helm/helm/blob/master/helm-grep.el
 (use-package helm-grep
   :ensure helm
-  :defer t
   :defines (zenburn/bg+3)
   :config (set-face-attribute 'helm-grep-lineno nil :foreground zenburn/bg+3))
 
@@ -98,14 +92,12 @@
 ;; https://github.com/emacs-helm/helm/blob/master/helm-misc.el
 (use-package helm-misc
   :ensure helm
-  :defer t
   :bind ([remap switch-to-buffer] . helm-buffers-list))
 
 
 ;; https://github.com/emacs-helm/helm/blob/master/helm-mode.el
 (use-package helm-mode
   :ensure helm
-  :defer t
   :config
   (setq-default
    helm-completion-in-region-fuzzy-match t
@@ -115,7 +107,6 @@
 ;; https://github.com/emacs-helm/helm/blob/master/helm-net.el
 (use-package helm-net
   :ensure helm
-  :defer t
   :config
   (setq-default helm-net-prefer-curl t))
 
@@ -123,7 +114,6 @@
 ;; https://github.com/emacs-helm/helm/blob/master/helm-regexp.el
 (use-package helm-regexp
   :ensure helm
-  :defer t
   :defines (zenburn/blue)
   :config (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn/blue))
 
@@ -134,8 +124,7 @@
 
 
 ;; https://github.com/syohex/emacs-helm-ag
-(use-package helm-ag
-  :defer t)
+(use-package helm-ag)
 
 
 ;;=============================================================================
@@ -147,7 +136,6 @@
 (use-package helm-css-scss
   ;; WARNING: https://github.com/ShingoFukuyama/helm-css-scss/issues/7
   ;; TODO: Fix Zenburn palette (ttps://github.com/bbatsov/zenburn-emacs/issues/220)
-  :defer t
   :bind ("C-c h s" . helm-css-scss)
   :config (setq-default helm-css-scss-split-direction 'split-window-horizontally))
 
@@ -159,7 +147,6 @@
 
 ;; https://github.com/emacs-helm/helm-descbinds
 (use-package helm-descbinds
-  :defer t
   :bind ([remap describe-key] . helm-descbinds)
   :config (setq-default helm-descbinds-window-style 'split-window))
 
@@ -171,7 +158,6 @@
 
 ;; https://github.com/emacs-helm/helm-describe-modes
 (use-package helm-describe-modes
-  :defer t
   :bind ([remap describe-mode] . helm-describe-modes))
 
 
@@ -182,7 +168,6 @@
 
 ;; https://github.com/yasuyk/helm-flycheck
 (use-package helm-flycheck
-  :defer t
   :bind ("C-c h f" . helm-flycheck))
 
 

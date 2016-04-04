@@ -28,7 +28,9 @@
     (package-install 'use-package)))
 (eval-when-compile
   (require 'use-package)
-  (setq-default use-package-always-ensure t))
+  (setq-default
+   use-package-always-defer t
+   use-package-always-ensure t))
 
 
 (provide 'init-elpa)

@@ -16,7 +16,6 @@
 
 ;; Built-in
 (use-package whitespace
-  :defer t
   :defines (zenburn/red-1)
   :init (global-whitespace-mode 1)
   :config

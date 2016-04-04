@@ -16,7 +16,6 @@
 
 ;; https://github.com/roman/golden-ratio.el
 (use-package golden-ratio
-  :defer t
   :defines (me/golden-ratio-factor)
   :init (golden-ratio-mode 1)
   :config

@@ -16,7 +16,6 @@
 
 ;; Built-in
 (use-package css-mode
-  :defer t
   :delight css-mode "CSS"
   :config (setq-default css-indent-offset 2))
 

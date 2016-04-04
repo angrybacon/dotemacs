@@ -18,7 +18,6 @@
 (use-package cus-edit
 
   :ensure nil
-  :defer t
 
   :defines
   (me/font-family
