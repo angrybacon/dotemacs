@@ -4,4 +4,4 @@
 # binding: direct-keybinding
 # expand-env: ((yas-indent-line 'fixed))
 # --
-console.log($0);
+console.log($0;
