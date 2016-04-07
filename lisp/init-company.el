@@ -20,7 +20,8 @@
   :config
   (setq-default
    company-idle-delay .2
-   company-minimum-prefix-length 1))
+   company-minimum-prefix-length 1
+   company-tooltip-align-annotations t))
 
 
 ;;=============================================================================
@@ -34,8 +35,7 @@
   :config
   (setq-default
    company-tern-meta-as-single-line t
-   company-tern-property-marker " *"
-   company-tooltip-align-annotations t))
+   company-tern-property-marker " *"))
 
 
 (provide 'init-company)
