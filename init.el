@@ -115,6 +115,7 @@
   (require 'init-customize)
   (require 'init-dired)
   (require 'init-docker)
+  (require 'init-eww)
   (require 'init-flycheck)
   (require 'init-golden-ratio)
   (require 'init-helm)

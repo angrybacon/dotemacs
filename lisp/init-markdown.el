@@ -14,8 +14,9 @@
 ;;=============================================================================
 
 
-;; http://jblevins.org/projects/markdown-mode/
+;; https://github.com/jrblevin/markdown-mode
 (use-package markdown-mode
+  :delight markdown-mode "Markdown"
   :mode
   ("INSTALL\\'"
    "CONTRIBUTORS\\'"
@@ -23,7 +24,7 @@
    "README\\'"
    "\\.markdown\\'"
    "\\.md\\'")
-  :delight markdown-mode "Markdown")
+  :config (setq-default markdown-asymmetric-header t))
 
 
 (provide 'init-markdown)
