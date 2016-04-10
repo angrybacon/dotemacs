@@ -147,7 +147,7 @@
 
 ;; https://github.com/emacs-helm/helm-descbinds
 (use-package helm-descbinds
-  :bind ([remap describe-key] . helm-descbinds)
+  :bind ("C-c h k" . helm-descbinds)
   :config (setq-default helm-descbinds-window-style 'split-window))
 
 
@@ -158,7 +158,7 @@
 
 ;; https://github.com/emacs-helm/helm-describe-modes
 (use-package helm-describe-modes
-  :bind ([remap describe-mode] . helm-describe-modes))
+  :bind ("C-c h m" . helm-describe-modes))
 
 
 ;;=============================================================================
