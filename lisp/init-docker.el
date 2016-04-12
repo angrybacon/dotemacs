@@ -16,8 +16,8 @@
 
 ;; https://github.com/spotify/dockerfile-mode
 (use-package dockerfile-mode
-  :mode "Dockerfile\\'"
-  :delight dockerfile-mode "Dockerfile")
+  :delight dockerfile-mode "Dockerfile"
+  :mode "Dockerfile\\'")
 
 
 (provide 'init-docker)
