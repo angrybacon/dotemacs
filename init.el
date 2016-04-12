@@ -44,6 +44,7 @@
  delete-by-moving-to-trash t                     ; Delete files to trash
  display-time-default-load-average nil           ; Don't display load average
  display-time-format "%H:%M"                     ; Format the time string
+ fill-column 90                                  ; Set width for automatic line breaking
  gc-cons-threshold 100000000                     ; Increase garbage collector treshold
  indent-tabs-mode nil                            ; Stop using tabs to indent
  indicate-empty-lines t                          ; Indicate unused lines in the fringe
@@ -65,6 +66,7 @@
   (scroll-bar-mode 0)                            ; Disable the scroll bar
   (tool-bar-mode 0)                              ; Disable the tool bar
   (tooltip-mode 0))                              ; Disable the tooltips
+(auto-fill-mode 1)                               ; Enable automatic line breaking
 (column-number-mode 0)                           ; Hide the column number
 (display-battery-mode 0)                         ; Hide the battery level
 (display-time-mode 1)                            ; Hide the time representation
