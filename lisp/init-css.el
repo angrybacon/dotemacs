@@ -27,8 +27,8 @@
 
 ;; https://github.com/antonj/scss-mode/
 (use-package scss-mode
-  :mode ("\\.css\\'" "\\.sass\\'" "\\.scss\\'")
   :delight scss-mode "SCSS"
+  :mode ("\\.css\\'" "\\.sass\\'" "\\.scss\\'")
   ;; TODO: Change comment delimiters for SCSS files.
   :config (setq-default scss-compile-at-save nil))
 
