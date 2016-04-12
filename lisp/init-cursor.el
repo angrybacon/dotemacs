@@ -23,6 +23,20 @@
 
 
 ;;=============================================================================
+;; Configure avy
+;;=============================================================================
+
+
+;; https://github.com/abo-abo/avy
+(use-package avy
+  :bind ("C-s" . avy-goto-char-2)
+  :config
+  (setq-default
+   avy-all-windows nil
+   avy-background t))
+
+
+;;=============================================================================
 ;; Configure expand-region
 ;;=============================================================================
 
@@ -52,10 +66,8 @@
 ;;=============================================================================
 
 
-(global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-r") 'isearch-backward-regexp)
-(global-set-key (kbd "C-M-s") 'isearch-forward)
-(global-set-key (kbd "C-M-r") 'isearch-backward)
+(global-set-key (kbd "C-S-s") 'isearch-forward-regexp)
+(global-set-key (kbd "C-S-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-M-<left>") 'windmove-left)
 (global-set-key (kbd "C-M-<right>") 'windmove-right)
 (global-set-key (kbd "C-M-<up>") 'windmove-up)
