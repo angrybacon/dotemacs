@@ -29,7 +29,11 @@
 (use-package scss-mode
   :delight scss-mode "SCSS"
   :mode ("\\.css\\'" "\\.sass\\'" "\\.scss\\'")
-  ;; TODO: Change comment delimiters for SCSS files.
+  :init
+  (add-hook 'scss-mode-hook
+            (lambda ()
+              (setq-local comment-end "")
+              (setq-local comment-start "//")))
   :config (setq-default scss-compile-at-save nil))
 
 
