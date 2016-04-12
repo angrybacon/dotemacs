@@ -32,7 +32,7 @@
   :bind
   (("C-c h k" . helm-show-kill-ring)
    ("C-c h g" . helm-google-suggest)
-   ("C-c h m" . helm-imenu)
+   ("C-c h i" . helm-imenu)
    ("C-c h r" . helm-resume))
 
   :config
@@ -147,7 +147,7 @@
 
 ;; https://github.com/emacs-helm/helm-descbinds
 (use-package helm-descbinds
-  :bind ("C-c h k" . helm-descbinds)
+  :bind ([remap describe-key] . helm-descbinds)
   :config (setq-default helm-descbinds-window-style 'split-window))
 
 
@@ -158,7 +158,7 @@
 
 ;; https://github.com/emacs-helm/helm-describe-modes
 (use-package helm-describe-modes
-  :bind ("C-c h m" . helm-describe-modes))
+  :bind ([remap describe-mode] . helm-describe-modes))
 
 
 ;;=============================================================================
