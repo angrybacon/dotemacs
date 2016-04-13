@@ -1,10 +1,10 @@
-* DotEmacs
+#+TITLE: DotEmacs
 
-> TODO
+*TODO*
 
-** Bootstrap
+* Bootstrap
 
-*** Use better default
+** Use better default
 
 #+BEGIN_SRC emacs-lisp
 (setq-default
@@ -28,7 +28,7 @@
  x-select-enable-clipboard t)                    ; Merge system's and Emacs' clipboard
 #+END_SRC
 
-*** Toggle UI components
+** Toggle UI components
 
 #+BEGIN_SRC emacs-lisp
 (when window-system
@@ -52,7 +52,7 @@
 (set-frame-parameter nil 'fullscreen 'fullboth)  ; Enable pseudo fullscreen
 #+END_SRC
 
-*** Enable other goodies
+** Enable other goodies
 
 #+BEGIN_SRC emacs-lisp
 (defalias 'yes-or-no-p 'y-or-n-p)                ; Replace yes/no prompts with the shorter y/n
@@ -60,7 +60,7 @@
 (put 'upcase-region 'disabled nil)               ; Enable upcase-region
 #+END_SRC
 
-*** Validate Emacs' version
+** Validate Emacs' version
 
 #+BEGIN_SRC emacs-lisp
 (when (version<= emacs-version "24")
@@ -68,9 +68,9 @@
     (kill-emacs)))
 #+END_SRC
 
-*** Benchmark startup time
+** Benchmark startup time
 
-> FIXME: Find a way to dynamically look for benchmark-init.el
+*FIXME*: Find a way to dynamically look for benchmark-init.el
 
 #+BEGIN_SRC emacs-lisp
 (let ((benchmark-init.el "~/.emacs.d/elpa/benchmark-init-20150905.238/benchmark-init.el"))
@@ -78,9 +78,9 @@
     (load benchmark-init.el)))
 #+END_SRC
 
-*** Set constants
+** Set constants
 
-> TODO: Make this optionnal.
+*TODO*: Make this optionnal.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default
@@ -97,7 +97,7 @@
 (defconst me/golden-ratio-factor    .8        "The factor to split windows with.")
 #+END_SRC
 
-*** Initialize MELPA
+** Initialize MELPA
 
 #+BEGIN_SRC emacs-lisp
 (when (>= emacs-major-version 24)
@@ -119,9 +119,9 @@
    use-package-always-ensure t))
 #+END_SRC
 
-** Theme
+* Theme
 
-*** Set the color palette
+** Set the color palette
 
 Zenburn palette: https://github.com/bbatsov/zenburn-emacs
 
@@ -164,7 +164,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
 (defconst zenburn/yellow-2  "#D0BF8F"  "Zenburn palette: #D0BF8F.")
 #+END_SRC
 
-*** Configure Zenburn
+** Configure Zenburn
 
 #+BEGIN_SRC emacs-lisp
 ;; https://github.com/bbatsov/zenburn-emacs
@@ -200,9 +200,9 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
     (set-face-attribute 'default nil :font me/font-family)))
 #+END_SRC
 
-** Features
+* Features
 
-*** company
+** company
 
 #+BEGIN_SRC emacs-lisp
 ;; https://github.com/company-mode/company-mode
@@ -225,7 +225,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
    company-tern-property-marker " *"))
 #+END_SRC
 
-*** css
+** css
 
 #+BEGIN_SRC emacs-lisp
 ;; Built-in
@@ -247,7 +247,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
   :config (setq-default scss-compile-at-save nil))
 #+END_SRC
 
-*** cursor
+** cursor
 
 #+BEGIN_SRC emacs-lisp
 ;;https://github.com/Malabarba/aggressive-indent-mode
@@ -346,7 +346,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
   (delete-trailing-whitespace))
 #+END_SRC
 
-*** customize
+** customize
 
 #+BEGIN_SRC emacs-lisp
 ;; Built-in
@@ -369,7 +369,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
     (set-face-attribute 'custom-group-tag nil :font me/font-family)))
 #+END_SRC
 
-*** dired
+** dired
 
 #+BEGIN_SRC emacs-lisp
 ;; Built-in
@@ -395,7 +395,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
    dired-recursive-copies 'always))
 #+END_SRC
 
-*** docker
+** docker
 
 #+BEGIN_SRC emacs-lisp
 ;; https://github.com/spotify/dockerfile-mode
@@ -404,7 +404,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
   :mode "Dockerfile\\'")
 #+END_SRC
 
-*** eww
+** eww
 
 #+BEGIN_SRC emacs-lisp
 ;; Built-in
@@ -414,7 +414,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
   :config (setq eww-header-line-format " %t: %u"))
 #+END_SRC
 
-*** flycheck
+** flycheck
 
 #+BEGIN_SRC emacs-lisp
 ;; https://github.com/flycheck/flycheck
@@ -452,7 +452,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
   (set-face-attribute 'flycheck-fringe-warning nil :foreground zenburn/orange))
 #+END_SRC
 
-*** golden-ratio
+** golden-ratio
 
 #+BEGIN_SRC emacs-lisp
 ;; https://github.com/roman/golden-ratio.el
@@ -466,7 +466,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
    split-width-threshold nil))
 #+END_SRC
 
-*** helm
+** helm
 
 #+BEGIN_SRC emacs-lisp
 ;; TODO: Make helm-list-faces-display
@@ -592,7 +592,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
   :config (helm-projectile-on))
 #+END_SRC
 
-*** hippie
+** hippie
 
 #+BEGIN_SRC emacs-lisp
 ;; https://github.com/smihica/emmet-mode
@@ -627,7 +627,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
   (unbind-key "<tab>" yas-minor-mode-map))
 #+END_SRC
 
-*** html
+** html
 
 #+BEGIN_SRC emacs-lisp
 ;; Built-in
@@ -637,7 +637,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
   :config (setq-default sgml-basic-offset 2))
 #+END_SRC
 
-*** javascript
+** javascript
 
 #+BEGIN_SRC emacs-lisp
 ;; Built-in
@@ -659,7 +659,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
   :config (add-hook 'js-mode-hook 'tern-mode))
 #+END_SRC
 
-*** lisp
+** lisp
 
 #+BEGIN_SRC emacs-lisp
 ;; Built-in
@@ -672,7 +672,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
      (lisp-interaction-mode "Lisp Interaction"))))
 #+END_SRC
 
-*** magit
+** magit
 
 #+BEGIN_SRC emacs-lisp
 ;; https://github.com/magit/git-modes
@@ -745,7 +745,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
   (set-face-attribute 'magit-section-heading nil :height me/font-size-header))
 #+END_SRC
 
-*** markdown
+** markdown
 
 #+BEGIN_SRC emacs-lisp
 ;; https://github.com/jrblevin/markdown-mode
@@ -761,7 +761,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
   :config (setq-default markdown-asymmetric-header t))
 #+END_SRC
 
-*** mode-line
+** mode-line
 
 #+BEGIN_SRC emacs-lisp
 ;; https://github.com/antonio/delight.el
@@ -968,7 +968,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
   (set-face-attribute 'me/vc-face nil :foreground zenburn/bg+3))
 #+END_SRC
 
-*** org
+** org
 
 #+BEGIN_SRC emacs-lisp
 ;; http://orgmode.org/
@@ -1001,7 +1001,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
   (define-key org-mode-map (kbd "<M-return>") 'org-insert-heading-after-current))
 #+END_SRC
 
-*** osx
+** osx
 
 #+BEGIN_SRC emacs-lisp
 (defvar ns-command-modifier)
@@ -1013,7 +1013,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
    ns-option-modifier nil))                          ; Disable the `alt' key
 #+END_SRC
 
-*** parentheses
+** parentheses
 
 #+BEGIN_SRC emacs-lisp
 ;; http://www.emacswiki.org/emacs/HighlightParentheses
@@ -1046,7 +1046,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
   (sp-pair "[[" "]]"))
 #+END_SRC
 
-*** projectile
+** projectile
 
 #+BEGIN_SRC emacs-lisp
 ;; https://github.com/bbatsov/projectile
@@ -1072,7 +1072,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
    projectile-mode-line '(:eval (projectile-project-name))))
 #+END_SRC
 
-*** python
+** python
 
 #+BEGIN_SRC emacs-lisp
 ;; Built-in
@@ -1085,7 +1085,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
   :config (add-hook 'pip-requirements-mode-hook (lambda () (setq-local completion-ignore-case t))))
 #+END_SRC
 
-*** rainbow-mode
+** rainbow-mode
 
 #+BEGIN_SRC emacs-lisp
 ;; https://julien.danjou.info/projects/emacs-packages#rainbow-mode
@@ -1094,7 +1094,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
   :config (setq-default rainbow-x-colors-major-mode-list '()))
 #+END_SRC
 
-*** whitespace
+** whitespace
 
 #+BEGIN_SRC emacs-lisp
 ;; Built-in
@@ -1108,7 +1108,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
   (set-face-attribute 'whitespace-trailing nil :background zenburn/red-1))
 #+END_SRC
 
-*** yaml
+** yaml
 
 #+BEGIN_SRC emacs-lisp
 ;; https://github.com/yoshiki/yaml-mode
