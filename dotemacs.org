@@ -1,0 +1,1118 @@
+* DotEmacs
+
+> TODO
+
+** Bootstrap
+
+*** Use better default
+
+#+BEGIN_SRC emacs-lisp
+(setq-default
+ ad-redefinition-action 'accept                  ; Silence warnings for redefined functions
+ confirm-kill-emacs 'yes-or-no-p                 ; Confirm before exiting Emacs
+ delete-by-moving-to-trash t                     ; Delete files to trash
+ display-time-default-load-average nil           ; Don't display load average
+ display-time-format "%H:%M"                     ; Format the time string
+ fill-column 90                                  ; Set width for automatic line breaking
+ gc-cons-threshold 100000000                     ; Increase garbage collector treshold
+ indent-tabs-mode nil                            ; Stop using tabs to indent
+ indicate-empty-lines t                          ; Indicate unused lines in the fringe
+ inhibit-startup-screen t                        ; Remove start-up screen
+ initial-scratch-message ""                      ; Empty the initial *scratch* buffer
+ mouse-yank-at-point t                           ; Yank at point rather than cursor
+ require-final-newline 'visit                    ; Add a newline at EOF on visit
+ scroll-step 1                                   ; Line by line scrolling
+ show-trailing-whitespace nil                    ; Display trailing whitespaces
+ tab-width 4                                     ; Set width for tabs
+ uniquify-buffer-name-style 'forward             ; Uniquify buffer names
+ x-select-enable-clipboard t)                    ; Merge system's and Emacs' clipboard
+#+END_SRC
+
+*** Toggle UI components
+
+#+BEGIN_SRC emacs-lisp
+(when window-system
+  (blink-cursor-mode 0)                          ; Disable the cursor blinking
+  (menu-bar-mode 0)                              ; Disable the menu bar
+  (scroll-bar-mode 0)                            ; Disable the scroll bar
+  (tool-bar-mode 0)                              ; Disable the tool bar
+  (tooltip-mode 0))                              ; Disable the tooltips
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(auto-fill-mode 1)                               ; Enable automatic line breaking
+(column-number-mode 0)                           ; Hide the column number
+(display-battery-mode 0)                         ; Hide the battery level
+(display-time-mode 1)                            ; Hide the time representation
+(fringe-mode '(10 . 10))                         ; Show vertical fringes
+(global-hl-line-mode 1)                          ; Hightlight current line
+(global-subword-mode 1)                          ; Iterate through CamelCase words
+(line-number-mode 1)                             ; Show the line number
+(mouse-avoidance-mode 'animate)                  ; Move pointer to avoid collision with point
+(set-frame-parameter nil 'fullscreen 'fullboth)  ; Enable pseudo fullscreen
+#+END_SRC
+
+*** Enable other goodies
+
+#+BEGIN_SRC emacs-lisp
+(defalias 'yes-or-no-p 'y-or-n-p)                ; Replace yes/no prompts with the shorter y/n
+(put 'downcase-region 'disabled nil)             ; Enable downcase-region
+(put 'upcase-region 'disabled nil)               ; Enable upcase-region
+#+END_SRC
+
+*** Validate Emacs' version
+
+#+BEGIN_SRC emacs-lisp
+(when (version<= emacs-version "24")
+  (unless (yes-or-no-p "Your Emacs is getting old. Kitten may be killed, continue? ")
+    (kill-emacs)))
+#+END_SRC
+
+*** Benchmark startup time
+
+> FIXME: Find a way to dynamically look for benchmark-init.el
+
+#+BEGIN_SRC emacs-lisp
+(let ((benchmark-init.el "~/.emacs.d/elpa/benchmark-init-20150905.238/benchmark-init.el"))
+  (when (file-exists-p benchmark-init.el)
+    (load benchmark-init.el)))
+#+END_SRC
+
+*** Set constants
+
+> TODO: Make this optionnal.
+
+#+BEGIN_SRC emacs-lisp
+(setq-default
+ user-full-name "Mathieu Marques"
+ user-mail-address "mathieumarques78@gmail.com")
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+;; NOTE: These probably shouldn't be constants, should they?
+(defconst me/font-family            "Monaco"  "The font to use.")
+(defconst me/font-size-default      120       "The font size to use for default text.")
+(defconst me/font-size-header       140       "The font size to use for headers.")
+(defconst me/font-size-mode-line    120       "The font size to use for the mode line.")
+(defconst me/golden-ratio-factor    .8        "The factor to split windows with.")
+#+END_SRC
+
+*** Initialize MELPA
+
+#+BEGIN_SRC emacs-lisp
+(when (>= emacs-major-version 24)
+  (setq-default
+   load-prefer-newer t
+   package-enable-at-startup nil)
+  (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+  (unless (package-installed-p 'delight)
+    (package-refresh-contents)
+    (package-install 'delight))
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package)))
+(eval-when-compile
+  (require 'use-package)
+  (setq-default
+   use-package-always-defer t
+   use-package-always-ensure t))
+#+END_SRC
+
+** Theme
+
+*** Set the color palette
+
+Zenburn palette: https://github.com/bbatsov/zenburn-emacs
+
+#+BEGIN_SRC emacs-lisp
+(defconst zenburn/bg+3      "#6F6F6F"  "Zenburn palette: #6F6F6F.")
+(defconst zenburn/bg+2      "#5F5F5F"  "Zenburn palette: #5F5F5F.")
+(defconst zenburn/bg+1      "#4F4F4F"  "Zenburn palette: #4F4F4F.")
+(defconst zenburn/bg+0      "#494949"  "Zenburn palette: #494949.")
+(defconst zenburn/bg        "#3F3F3F"  "Zenburn palette: #3F3F3F.")
+(defconst zenburn/bg-0      "#383838"  "Zenburn palette: #383838.")
+(defconst zenburn/bg-1      "#2B2B2B"  "Zenburn palette: #2B2B2B.")
+(defconst zenburn/bg-2      "#000000"  "Zenburn palette: #000000.")
+(defconst zenburn/blue+1    "#94BFF3"  "Zenburn palette: #94BFF3.")
+(defconst zenburn/blue      "#8CD0D3"  "Zenburn palette: #8CD0D3.")
+(defconst zenburn/blue-1    "#7CB8BB"  "Zenburn palette: #7CB8BB.")
+(defconst zenburn/blue-2    "#6CA0A3"  "Zenburn palette: #6CA0A3.")
+(defconst zenburn/blue-3    "#5C888B"  "Zenburn palette: #5C888B.")
+(defconst zenburn/blue-4    "#4C7073"  "Zenburn palette: #4C7073.")
+(defconst zenburn/blue-5    "#366060"  "Zenburn palette: #366060.")
+(defconst zenburn/cyan      "#93E0E3"  "Zenburn palette: #93E0E3.")
+(defconst zenburn/fg+1      "#FFFFEF"  "Zenburn palette: #FFFFEF.")
+(defconst zenburn/fg        "#DCDCCC"  "Zenburn palette: #DCDCCC.")
+(defconst zenburn/fg-1      "#656555"  "Zenburn palette: #656555.")
+(defconst zenburn/green+4   "#BFEBBF"  "Zenburn palette: #BFEBBF.")
+(defconst zenburn/green+3   "#AFD8AF"  "Zenburn palette: #AFD8AF.")
+(defconst zenburn/green+2   "#9FC59F"  "Zenburn palette: #9FC59F.")
+(defconst zenburn/green+1   "#8FB28F"  "Zenburn palette: #8FB28F.")
+(defconst zenburn/green     "#7F9F7F"  "Zenburn palette: #7F9F7F.")
+(defconst zenburn/green-1   "#5F7F5F"  "Zenburn palette: #5F7F5F.")
+(defconst zenburn/magenta   "#DC8CC3"  "Zenburn palette: #DC8CC3.")
+(defconst zenburn/orange    "#DFAF8F"  "Zenburn palette: #DFAF8F.")
+(defconst zenburn/red+1     "#DCA3A3"  "Zenburn palette: #DCA3A3.")
+(defconst zenburn/red       "#CC9393"  "Zenburn palette: #CC9393.")
+(defconst zenburn/red-1     "#BC8383"  "Zenburn palette: #BC8383.")
+(defconst zenburn/red-2     "#AC7373"  "Zenburn palette: #AC7373.")
+(defconst zenburn/red-3     "#9C6363"  "Zenburn palette: #9C6363.")
+(defconst zenburn/red-4     "#8C5353"  "Zenburn palette: #8C5353.")
+(defconst zenburn/yellow    "#F0DFAF"  "Zenburn palette: #F0DFAF.")
+(defconst zenburn/yellow-1  "#E0CF9F"  "Zenburn palette: #E0CF9F.")
+(defconst zenburn/yellow-2  "#D0BF8F"  "Zenburn palette: #D0BF8F.")
+#+END_SRC
+
+*** Configure Zenburn
+
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/bbatsov/zenburn-emacs
+(use-package zenburn-theme
+
+  :defines
+  (me/font-family
+   me/font-size-default
+   me/font-size-header
+   zenburn/bg+3
+   zenburn/bg+0
+   zenburn/bg
+   zenburn/bg-1
+   zenburn/blue
+   zenburn/fg-1
+   zenburn/green)
+
+  :init (load-theme 'zenburn t)
+
+  :config
+  (set-face-attribute 'default nil :height me/font-size-default)
+  (set-face-attribute 'font-lock-doc-face nil :italic t)
+  (set-face-attribute 'font-lock-comment-face nil :italic t)
+  (set-face-attribute 'font-lock-comment-delimiter-face nil :foreground zenburn/bg+3 :italic t)
+  (set-face-attribute 'font-lock-function-name-face nil :foreground zenburn/blue)
+  (set-face-attribute 'fringe nil :background zenburn/bg :foreground zenburn/bg+3)
+  (set-face-attribute 'header-line nil
+                      :box `(:line-width 1 :color ,zenburn/bg-1) :height me/font-size-header)
+  (set-face-attribute 'hl-line nil :background zenburn/bg+0)
+  (set-face-attribute 'region nil :foreground zenburn/green)
+  (set-face-attribute 'vertical-border nil :foreground zenburn/bg-1)
+  (when (member me/font-family (font-family-list))
+    (set-face-attribute 'default nil :font me/font-family)))
+#+END_SRC
+
+** Features
+
+*** company
+
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/company-mode/company-mode
+(use-package company
+  :init (global-company-mode)
+  :config
+  (setq-default
+   company-idle-delay .2
+   company-minimum-prefix-length 1
+   company-tooltip-align-annotations t))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/proofit404/company-tern
+(use-package company-tern
+  :init (add-to-list 'company-backends 'company-tern)
+  :config
+  (setq-default
+   company-tern-meta-as-single-line t
+   company-tern-property-marker " *"))
+#+END_SRC
+
+*** css
+
+#+BEGIN_SRC emacs-lisp
+;; Built-in
+(use-package css-mode
+  :delight css-mode "CSS"
+  :config (setq-default css-indent-offset 2))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/antonj/scss-mode/
+(use-package scss-mode
+  :delight scss-mode "SCSS"
+  :mode ("\\.css\\'" "\\.sass\\'" "\\.scss\\'")
+  :init
+  (add-hook 'scss-mode-hook
+            (lambda ()
+              (setq-local comment-end "")
+              (setq-local comment-start "//")))
+  :config (setq-default scss-compile-at-save nil))
+#+END_SRC
+
+*** cursor
+
+#+BEGIN_SRC emacs-lisp
+;;https://github.com/Malabarba/aggressive-indent-mode
+(use-package aggressive-indent
+  :init (global-aggressive-indent-mode 1)
+  :config
+  (setq-default aggressive-indent-comments-too t)
+  (add-to-list 'aggressive-indent-excluded-modes 'scss-mode))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/abo-abo/avy
+(use-package avy
+  :bind ("C-s" . avy-goto-char-2)
+  :config
+  (setq-default
+   avy-all-windows nil
+   avy-background t))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/magnars/expand-region.el
+(use-package expand-region
+  :bind ("C-=" . er/expand-region)
+  :init (pending-delete-mode t))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/magnars/multiple-cursors.el
+(use-package multiple-cursors
+  :bind
+  (("C-S-c C-S-c" . mc/edit-lines)
+   ("C->" . mc/mark-next-like-this)
+   ("C-<" . mc/mark-previous-like-this))
+  :init (setq-default mc/list-file (expand-file-name ".multiple-cursors.el" user-emacs-directory)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+;; Built-in
+(use-package newcomment
+  :ensure nil
+  :bind ("M-RET" . comment-indent-new-line)
+  :config
+  (setq-default
+   comment-auto-fill-only-comments t
+   comment-multi-line t))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+;; Set key bindings
+(global-set-key (kbd "C-S-s") 'isearch-forward-regexp)
+(global-set-key (kbd "C-S-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-M-<left>") 'windmove-left)
+(global-set-key (kbd "C-M-<right>") 'windmove-right)
+(global-set-key (kbd "C-M-<up>") 'windmove-up)
+(global-set-key (kbd "C-M-<down>") 'windmove-down)
+(global-set-key (kbd "<C-up>") 'me/goto-previous-block)
+(global-set-key (kbd "<C-down>") 'me/goto-next-block)
+(global-set-key (kbd "<M-up>") 'me/swap-line-up)
+(global-set-key (kbd "<M-down>") 'me/swap-line-down)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+
+;; Define helpers
+
+(defun me/goto-next-block ()
+  "Jump to next paragraph."
+  (interactive)
+  (skip-chars-forward "\n")
+  (when (not (search-forward-regexp "\n[[:blank:]]*\n" nil t)) (goto-char (point-max)))
+  (skip-chars-forward "\n"))
+
+(defun me/goto-previous-block ()
+  "Jump to previous paragraph."
+  (interactive)
+  (skip-chars-backward "\n")
+  (when (not (search-backward-regexp "\n[[:blank:]]*\n" nil t)) (goto-char (point-min)))
+  (skip-chars-forward "\n"))
+
+(defun me/swap-line-down ()
+  "Move down the current line under point."
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1)
+  (indent-according-to-mode)
+  (delete-trailing-whitespace))
+
+(defun me/swap-line-up ()
+  "Move up the current line under point."
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2)
+  (indent-according-to-mode)
+  (delete-trailing-whitespace))
+#+END_SRC
+
+*** customize
+
+#+BEGIN_SRC emacs-lisp
+;; Built-in
+(use-package cus-edit
+
+  :ensure nil
+
+  :defines
+  (me/font-family
+   me/font-size-header
+   zenburn/blue
+   zenburn/green+4
+   zenburn/yellow)
+
+  :config
+  (set-face-attribute 'custom-group-tag nil :foreground zenburn/yellow :height me/font-size-header)
+  (set-face-attribute 'custom-state nil :foreground zenburn/green+4)
+  (set-face-attribute 'custom-variable-tag nil :foreground zenburn/blue)
+  (when (member me/font-family (font-family-list))
+    (set-face-attribute 'custom-group-tag nil :font me/font-family)))
+#+END_SRC
+
+*** dired
+
+#+BEGIN_SRC emacs-lisp
+;; Built-in
+(use-package dired
+
+  :ensure nil
+  :delight dired-mode "Dired"
+
+  :config
+
+  (defadvice dired-readin (after dired-after-updating-hook first () activate)
+    "Sort dired listings with directories first before adding marks."
+    (save-excursion
+      (let (buffer-read-only)
+        (forward-line 2) ;; beyond dir. header
+        (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
+      (set-buffer-modified-p nil)))
+
+  (setq-default
+   dired-auto-revert-buffer t
+   dired-listing-switches "-alh"
+   dired-ls-F-marks-symlinks nil
+   dired-recursive-copies 'always))
+#+END_SRC
+
+*** docker
+
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/spotify/dockerfile-mode
+(use-package dockerfile-mode
+  :delight dockerfile-mode "Dockerfile"
+  :mode "Dockerfile\\'")
+#+END_SRC
+
+*** eww
+
+#+BEGIN_SRC emacs-lisp
+;; Built-in
+(use-package eww
+  :ensure nil
+  :delight eww-mode "Emacs Web Wowser"
+  :config (setq eww-header-line-format " %t: %u"))
+#+END_SRC
+
+*** flycheck
+
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/flycheck/flycheck
+(use-package flycheck
+
+  :defines
+  (zenburn/blue+1
+   zenburn/orange
+   zenburn/red-1)
+
+  :bind
+  (("C-c e l" . list-flycheck-errors)
+   ("C-c e p" . flycheck-previous-error)
+   ("C-c e n" . flycheck-next-error))
+
+  :init
+  (add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
+  (add-hook 'js-mode-hook 'flycheck-mode)
+  (add-hook 'python-mode-hook 'flycheck-mode)
+  (add-hook 'scss-mode-hook 'flycheck-mode)
+
+  :config
+  (setq-default
+   flycheck-check-syntax-automatically '(save mode-enabled)
+   flycheck-disabled-checkers '(emacs-lisp-checkdoc)
+   flycheck-display-errors-delay .3
+   flycheck-flake8rc "~/.flake8rc"
+   flycheck-jshintrc "~/.jshintrc"
+   flycheck-pylintrc "~/.pylintrc")
+  (set-face-attribute 'flycheck-error nil :underline zenburn/red-1)
+  (set-face-attribute 'flycheck-info nil :underline zenburn/blue+1)
+  (set-face-attribute 'flycheck-warning nil :underline zenburn/orange)
+  (set-face-attribute 'flycheck-fringe-error nil :foreground zenburn/red-1)
+  (set-face-attribute 'flycheck-fringe-info nil :foreground zenburn/blue+1)
+  (set-face-attribute 'flycheck-fringe-warning nil :foreground zenburn/orange))
+#+END_SRC
+
+*** golden-ratio
+
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/roman/golden-ratio.el
+(use-package golden-ratio
+  :defines (me/golden-ratio-factor)
+  :init (golden-ratio-mode 1)
+  :config
+  (setq-default
+   ;; TODO: Find a sane way to determine the ratio factor.
+   golden-ratio-adjust-factor me/golden-ratio-factor
+   split-width-threshold nil))
+#+END_SRC
+
+*** helm
+
+#+BEGIN_SRC emacs-lisp
+;; TODO: Make helm-list-faces-display
+
+;; https://github.com/emacs-helm/helm
+(use-package helm
+
+  :defines
+  (me/font-size-default
+   me/font-size-header
+   zenburn/bg+3
+   zenburn/bg+0
+   zenburn/bg
+   zenburn/green+2
+   zenburn/yellow)
+
+  :bind
+  (("C-c h k" . helm-show-kill-ring)
+   ("C-c h g" . helm-google-suggest)
+   ("C-c h i" . helm-imenu)
+   ("C-c h r" . helm-resume))
+
+  :config
+
+  (defadvice helm-display-mode-line (after me/helm-display-mode-line activate)
+    "Customize mode-line for helm buffers."
+    ;; TODO: Add relevant information in the mode-line.
+    )
+
+  ;; Activate Helm
+  (helm-mode 1)
+
+  ;; Use better defaults
+  (setq-default
+   helm-always-two-windows t
+   helm-display-header-line nil
+   helm-mode-line-string nil
+   helm-split-window-default-side 'left)
+
+  ;; Customize faces
+  (set-face-attribute 'helm-ff-dotted-directory nil
+                      :background 'unspecified :foreground zenburn/bg+3)
+  (set-face-attribute 'helm-match nil :foreground zenburn/green+2 :weight 'normal)
+  (set-face-attribute 'helm-source-header nil
+                      :box nil :background 'unspecified :height me/font-size-header))
+
+;; https://github.com/emacs-helm/helm/blob/master/helm-buffers.el
+(use-package helm-buffers
+  :ensure helm
+  :config (setq-default helm-buffers-fuzzy-matching t))
+
+;; https://github.com/emacs-helm/helm/blob/master/helm-color.el
+(use-package helm-color
+  :ensure helm
+  :bind ("C-c h c" . helm-colors))
+
+;; https://github.com/emacs-helm/helm/blob/master/helm-command.el
+(use-package helm-command
+  :ensure helm
+  :defines (zenburn/orange)
+  :bind ([remap execute-extended-command] . helm-M-x)
+  :config
+  (setq-default helm-M-x-fuzzy-match t)
+  (set-face-attribute 'helm-M-x-key nil :foreground zenburn/orange :underline nil))
+
+;; https://github.com/emacs-helm/helm/blob/master/helm-grep.el
+(use-package helm-grep
+  :ensure helm
+  :defines (zenburn/bg+3)
+  :config (set-face-attribute 'helm-grep-lineno nil :foreground zenburn/bg+3))
+
+;; https://github.com/emacs-helm/helm/blob/master/helm-misc.el
+(use-package helm-misc
+  :ensure helm
+  :bind ([remap switch-to-buffer] . helm-buffers-list))
+
+;; https://github.com/emacs-helm/helm/blob/master/helm-mode.el
+(use-package helm-mode
+  :ensure helm
+  :config
+  (setq-default
+   helm-completion-in-region-fuzzy-match t
+   helm-mode-fuzzy-match t))
+
+;; https://github.com/emacs-helm/helm/blob/master/helm-net.el
+(use-package helm-net
+  :ensure helm
+  :config
+  (setq-default helm-net-prefer-curl t))
+
+;; https://github.com/emacs-helm/helm/blob/master/helm-regexp.el
+(use-package helm-regexp
+  :ensure helm
+  :defines (zenburn/blue)
+  :config (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn/blue))
+
+;; https://github.com/syohex/emacs-helm-ag
+(use-package helm-ag)
+
+;; https://github.com/ShingoFukuyama/helm-css-scss
+(use-package helm-css-scss
+  ;; WARNING: https://github.com/ShingoFukuyama/helm-css-scss/issues/7
+  ;; TODO: Fix Zenburn palette (ttps://github.com/bbatsov/zenburn-emacs/issues/220)
+  :bind ("C-c h s" . helm-css-scss)
+  :config (setq-default helm-css-scss-split-direction 'split-window-horizontally))
+
+;; https://github.com/emacs-helm/helm-descbinds
+(use-package helm-descbinds
+  :bind ([remap describe-key] . helm-descbinds)
+  :config (setq-default helm-descbinds-window-style 'split-window))
+
+;; https://github.com/emacs-helm/helm-describe-modes
+(use-package helm-describe-modes
+  :bind ([remap describe-mode] . helm-describe-modes))
+
+;; https://github.com/yasuyk/helm-flycheck
+(use-package helm-flycheck
+  :bind ("C-c h f" . helm-flycheck))
+
+;; https://github.com/bbatsov/helm-projectile
+(use-package helm-projectile
+  :after helm
+  :config (helm-projectile-on))
+#+END_SRC
+
+*** hippie
+
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/smihica/emmet-mode
+(use-package emmet-mode
+  :init
+  (add-hook 'css-mode-hook 'emmet-mode)
+  (add-hook 'sgml-mode-hook 'emmet-mode)
+  :config
+  (setq-default emmet-move-cursor-between-quote t)
+  (unbind-key "<C-return>" emmet-mode-keymap)
+  (unbind-key "C-M-<left>" emmet-mode-keymap)
+  (unbind-key "C-M-<right>" emmet-mode-keymap))
+
+;; Built-in
+(use-package hippie-exp
+  :ensure nil
+  :bind ("<C-return>" . hippie-expand)
+  :config
+  (setq-default hippie-expand-try-functions-list
+                '(yas-hippie-try-expand emmet-expand-line)))
+
+;; https://github.com/capitaomorte/yasnippet
+(use-package yasnippet
+  :init
+  (add-hook 'js-mode-hook 'yas-minor-mode)
+  (add-hook 'org-mode-hook 'yas-minor-mode)
+  (add-hook 'sgml-mode-hook 'yas-minor-mode)
+  :config
+  (setq-default yas-snippet-dirs '("~/.emacs.d/snippets"))
+  (yas-reload-all)
+  (unbind-key "TAB" yas-minor-mode-map)
+  (unbind-key "<tab>" yas-minor-mode-map))
+#+END_SRC
+
+*** html
+
+#+BEGIN_SRC emacs-lisp
+;; Built-in
+(use-package sgml-mode
+  :ensure nil
+  :delight html-mode "HTML"
+  :config (setq-default sgml-basic-offset 2))
+#+END_SRC
+
+*** javascript
+
+#+BEGIN_SRC emacs-lisp
+;; Built-in
+(use-package js
+  :delight js-mode "JavaScript"
+  :config (setq-default js-indent-level 2))
+
+;; https://github.com/joshwnj/json-mode
+(use-package json-mode
+  :delight json-mode "JSON"
+  :mode "\\.json\\'"
+  :config
+  ;; FIXME: This will be fixed with https://github.com/joshwnj/json-mode/issues/32.
+  ;; (setq-default json-reformat:indent-width 2)
+  (add-hook 'json-mode-hook (lambda () (setq-local js-indent-level 2))))
+
+;; http://ternjs.net/doc/manual.html#emacs
+(use-package tern
+  :config (add-hook 'js-mode-hook 'tern-mode))
+#+END_SRC
+
+*** lisp
+
+#+BEGIN_SRC emacs-lisp
+;; Built-in
+(use-package lisp-mode
+  :ensure nil
+  :delight lisp-mode "Lisp"
+  :config
+  (delight
+   '((emacs-lisp-mode "Emacs Lisp")
+     (lisp-interaction-mode "Lisp Interaction"))))
+#+END_SRC
+
+*** magit
+
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/magit/git-modes
+(use-package gitattributes-mode
+  :delight gitattributes-mode "Git Attributes")
+(use-package gitconfig-mode
+  :delight gitconfig-mode "Git Config")
+(use-package gitignore-mode
+  :delight gitignore-mode "Git Ignore")
+
+;; https://github.com/magit/magit
+(use-package magit
+
+  :defines
+  (me/font-size-header
+   zenburn/red
+   zenburn/red-4
+   zenburn/green+2
+   zenburn/green-1)
+
+  :bind
+  (("C-c g b" . magit-blame)
+   ("C-c g l" . magit-log)
+   ("C-c g p" . magit-pull)
+   ("C-c g s" . magit-status))
+
+  :config
+
+  (defun me/magit-display-buffer-function (buffer)
+    "Render some magit modes in the currently selected buffer."
+    (display-buffer
+     buffer
+     (cond ((and (derived-mode-p 'magit-mode)
+                 (eq (with-current-buffer buffer major-mode)
+                     'magit-status-mode))
+            nil)
+           ((memq (with-current-buffer buffer major-mode)
+                  '(magit-process-mode
+                    magit-revision-mode
+                    magit-diff-mode
+                    magit-stash-mode))
+            nil)
+           (t
+            '(display-buffer-same-window)))))
+
+  ;; Use better defaults
+  (setq-default
+   magit-display-buffer-function 'me/magit-display-buffer-function
+   magit-refs-show-commit-count (quote all)
+   magit-section-show-child-count t
+   magit-set-upstream-on-push 'askifnotset)
+
+  ;; Customize lighters
+  (delight
+   '((magit-diff-mode "Magit Diff")
+     (magit-log-mode "Magit Log")
+     (magit-popup-mode "Magit Popup")
+     (magit-status-mode "Magit Status")))
+
+  ;; Customize faces
+  (set-face-attribute 'magit-diff-added nil
+                      :background zenburn/green-1 :foreground zenburn/green+2)
+  (set-face-attribute 'magit-diff-added-highlight nil
+                      :background zenburn/green-1 :foreground zenburn/green+2)
+  (set-face-attribute 'magit-diff-removed nil
+                      :background zenburn/red-4 :foreground zenburn/red)
+  (set-face-attribute 'magit-diff-removed-highlight nil
+                      :background zenburn/red-4 :foreground zenburn/red)
+  (set-face-attribute 'magit-popup-heading nil :height me/font-size-header)
+  (set-face-attribute 'magit-section-heading nil :height me/font-size-header))
+#+END_SRC
+
+*** markdown
+
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/jrblevin/markdown-mode
+(use-package markdown-mode
+  :delight markdown-mode "Markdown"
+  :mode
+  ("INSTALL\\'"
+   "CONTRIBUTORS\\'"
+   "LICENSE\\'"
+   "README\\'"
+   "\\.markdown\\'"
+   "\\.md\\'")
+  :config (setq-default markdown-asymmetric-header t))
+#+END_SRC
+
+*** mode-line
+
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/antonio/delight.el
+(use-package delight
+  :config
+  ;; NOTE: Or use https://www.emacswiki.org/emacs/delight-powerline.el?
+  (defadvice powerline-major-mode (around delight-powerline-major-mode activate)
+    (let ((inhibit-mode-name-delight nil))
+      ad-do-it))
+  (defadvice powerline-minor-modes (around delight-powerline-minor-modes activate)
+    (let ((inhibit-mode-name-delight nil))
+      ad-do-it)))
+
+;; https://github.com/milkypostman/powerline
+(use-package powerline
+
+  :demand t
+
+  :defines
+  (me/font-size-mode-line
+   zenburn/bg+3
+   zenburn/bg+1
+   zenburn/bg-0
+   zenburn/bg-1
+   zenburn/blue+1
+   zenburn/blue
+   zenburn/fg
+   zenburn/fg-1
+   zenburn/green+2
+   zenburn/green
+   zenburn/green-1
+   zenburn/magenta
+   zenburn/orange
+   zenburn/red
+   zenburn/red-1)
+
+  :preface
+
+  ;; Configure the mode-line
+  (defvar me/powerline-hud nil)
+
+  ;; Define new faces for elements
+  (defface me/buffer-clean-face '((t (:inherit powerline-active1)))
+    "Face used for the buffer string: clean."
+    :group 'me/powerline)
+  (defface me/buffer-read-only-face '((t (:inherit powerline-active1)))
+    "Face used for the buffer string: read only."
+    :group 'me/powerline)
+  (defface me/buffer-modified-face '((t (:inherit powerline-active1)))
+    "Face used for the buffer string: modified."
+    :group 'me/powerline)
+  (defface me/fc-error-face '((t (:inherit powerline-active1)))
+    "Face used for the error count."
+    :group 'me/powerline)
+  (defface me/fc-info-face '((t (:inherit powerline-active1)))
+    "Face used for the info count."
+    :group 'me/powerline)
+  (defface me/fc-warning-face '((t (:inherit powerline-active1)))
+    "Face used for the warning count."
+    :group 'me/powerline)
+  (defface me/hud-face '((t (:inherit powerline-active1)))
+    "Face used for the XPM of relative buffer location."
+    :group 'me/powerline)
+  (defface me/line-number-face '((t (:inherit powerline-active1)))
+    "Face used for the line number string."
+    :group 'me/powerline)
+  (defface me/projectile-face '((t (:inherit powerline-active1)))
+    "Face used for the projectile string."
+    :group 'me/powerline)
+  (defface me/vc-face '((t (:inherit powerline-active1)))
+    "Face used for the version control string."
+    :group 'me/powerline)
+
+  :config
+
+  (defadvice vc-mode-line (after me/vc-mode-line () activate)
+    "Strip backend from the VC information."
+    (when (stringp vc-mode)
+      (let ((vc-text (replace-regexp-in-string "^ Git." ":" vc-mode)))
+        (setq vc-mode vc-text))))
+
+  (defmacro me/flycheck-lighter (error)
+    "Return a formatted string describing the ERROR (error, warning, info) count."
+    ;; NOTE: Shamelessly taken from spacemacs
+    `(let* ((error-counts (flycheck-count-errors flycheck-current-errors))
+            (errorp (flycheck-has-current-errors-p ',error))
+            (count (or (cdr (assq ',error error-counts)) "?"))
+            (running (eq 'running flycheck-last-status-change)))
+       (if (or errorp running) (format "• %s" count))))
+
+  ;; Customize appearance
+  (setq-default
+   powerline-default-separator 'wave
+   powerline-height 20
+   me/powerline-hud nil)
+
+  ;; Define the mode-line format
+  (setq-default
+   mode-line-format
+   '("%e"
+     (:eval
+      (let* ((active (powerline-selected-window-active))
+
+             ;; Define faces for mode-line elements
+             (buffer-face
+              (if active
+                  (cond
+                   (buffer-read-only 'me/buffer-read-only-face)
+                   ((buffer-modified-p) 'me/buffer-modified-face)
+                   (t 'me/buffer-clean-face))
+                (cond
+                 ((buffer-modified-p) 'me/buffer-modified-face)
+                 (t ''powerline-inactive1))))
+             (fc-error-face (if active 'me/fc-error-face 'powerline-inactive1))
+             (fc-info-face (if active 'me/fc-info-face 'powerline-inactive1))
+             (fc-warning-face (if active 'me/fc-warning-face 'powerline-inactive1))
+             (hud-face 'me/hud-face)
+             (line-number-face (if active 'me/line-number-face 'powerline-inactive1))
+             (mode-line-1-face (if active 'mode-line 'mode-line-inactive))
+             (mode-line-2-face (if active 'powerline-active1 'powerline-inactive1))
+             (mode-line-3-face (if active 'powerline-active2 'powerline-inactive2))
+             (projectile-face (if active 'me/projectile-face 'powerline-inactive1))
+             (vc-face (if active 'me/vc-face 'powerline-inactive1))
+
+             ;; Define faces for separators
+             (separator-left
+              (intern
+               (format
+                "powerline-%s-%s"
+                (powerline-current-separator) (car powerline-default-separator-dir))))
+             (separator-right
+              (intern
+               (format
+                "powerline-%s-%s"
+                (powerline-current-separator) (cdr powerline-default-separator-dir))))
+
+             ;; List left elements
+             (lhs
+              (append
+               (list
+                (powerline-major-mode mode-line-1-face 'l)
+                (powerline-raw " " mode-line-1-face)
+                (funcall separator-left mode-line-1-face mode-line-2-face))
+               (list
+                (powerline-raw "%b" buffer-face 'l)
+                (powerline-raw ":%l" line-number-face)
+                (powerline-raw " " mode-line-2-face)
+                (funcall separator-left mode-line-2-face mode-line-3-face))))
+
+             ;; List right elements
+             (rhs
+              (append
+               (when (and
+                      (bound-and-true-p flycheck-mode)
+                      (or flycheck-current-errors (eq 'running flycheck-last-status-change)))
+                 (list
+                  (funcall separator-right mode-line-3-face mode-line-2-face)
+                  (powerline-raw " " mode-line-2-face)
+                  (powerline-raw (me/flycheck-lighter error) fc-error-face 'r)
+                  (powerline-raw (me/flycheck-lighter warning) fc-warning-face 'r)
+                  (powerline-raw (me/flycheck-lighter info) fc-info-face 'r)
+                  (funcall separator-left mode-line-2-face mode-line-3-face)
+                  (powerline-raw "  " mode-line-3-face)))
+               (list
+                (funcall separator-right mode-line-3-face mode-line-2-face)
+                (powerline-raw " " mode-line-2-face)
+                (powerline-raw (projectile-project-name) projectile-face)
+                (powerline-vc vc-face)
+                (powerline-raw " " mode-line-2-face))
+               (list
+                (funcall separator-right mode-line-2-face mode-line-1-face)
+                (powerline-raw " " mode-line-1-face)
+                (powerline-raw display-time-string mode-line-1-face 'r)
+                (if me/powerline-hud (powerline-hud hud-face mode-line-2-face 2))))))
+
+        ;; Build the result
+        (concat
+         (powerline-render lhs)
+         (powerline-fill mode-line-3-face (powerline-width rhs))
+         (powerline-render rhs))))))
+
+  ;; Customize faces
+  (set-face-attribute 'mode-line nil
+                      :box `(:line-width 1 :color ,zenburn/bg-1)
+                      :background zenburn/green-1 :foreground zenburn/green+2
+                      :height me/font-size-mode-line)
+  (set-face-attribute 'mode-line-inactive nil
+                      :box `(:line-width 1 :color ,zenburn/bg-1)
+                      :background zenburn/bg-1 :foreground zenburn/bg+3
+                      :height me/font-size-mode-line)
+  (set-face-attribute 'powerline-active1 nil :background zenburn/bg-0 :foreground zenburn/fg)
+  (set-face-attribute 'powerline-active2 nil :background zenburn/bg+1)
+  (set-face-attribute 'powerline-inactive1 nil :background zenburn/bg-0)
+  (set-face-attribute 'powerline-inactive2 nil :background zenburn/bg+1)
+  (set-face-attribute 'me/buffer-clean-face nil :foreground zenburn/green)
+  (set-face-attribute 'me/buffer-modified-face nil :foreground zenburn/red)
+  (set-face-attribute 'me/buffer-read-only-face nil :foreground zenburn/magenta)
+  (set-face-attribute 'me/fc-error-face nil :foreground zenburn/red-1)
+  (set-face-attribute 'me/fc-info-face nil :foreground zenburn/blue+1)
+  (set-face-attribute 'me/fc-warning-face nil :foreground zenburn/orange)
+  (set-face-attribute 'me/hud-face nil :background zenburn/fg-1)
+  (set-face-attribute 'me/line-number-face nil :foreground zenburn/bg+3)
+  (set-face-attribute 'me/projectile-face nil :foreground zenburn/blue)
+  (set-face-attribute 'me/vc-face nil :foreground zenburn/bg+3))
+#+END_SRC
+
+*** org
+
+#+BEGIN_SRC emacs-lisp
+;; http://orgmode.org/
+(use-package org
+  :delight org-mode "Org"
+
+  :defines
+  (zenburn/bg+0
+   zenburn/bg+1)
+
+  :bind
+  (("C-c o a" . org-agenda-list)
+   ("C-c o b" . org-iswitchb)
+   ("C-c o c" . org-capture)
+   ("C-c o f" . org-cycle-agenda-files)
+   ("C-c o l" . org-store-link)
+   ("C-c o s" . org-search-view)
+   ("C-c o t" . org-todo-list))
+
+  :config
+  (setq-default
+   org-src-fontify-natively t
+   org-support-shift-select 'always)
+  (set-face-attribute 'org-block-background nil :background zenburn/bg+1)
+  (set-face-attribute 'org-block-begin-line nil :background zenburn/bg+0)
+  (set-face-attribute 'org-block-end-line nil :background zenburn/bg+0)
+  (unbind-key "<C-return>" org-mode-map)
+  (unbind-key "<C-S-down>" org-mode-map)
+  (unbind-key "<C-S-up>" org-mode-map)
+  (define-key org-mode-map (kbd "<M-return>") 'org-insert-heading-after-current))
+#+END_SRC
+
+*** osx
+
+#+BEGIN_SRC emacs-lisp
+(defvar ns-command-modifier)
+(defvar ns-option-modifier)
+(when (eq system-type 'darwin)
+  (setq-default
+   exec-path (append exec-path '("/usr/local/bin"))  ; Add path to binaries installed with Homebrew
+   ns-command-modifier 'meta                         ; Map the Meta key to the `cmd' key
+   ns-option-modifier nil))                          ; Disable the `alt' key
+#+END_SRC
+
+*** parentheses
+
+#+BEGIN_SRC emacs-lisp
+;; http://www.emacswiki.org/emacs/HighlightParentheses
+(use-package highlight-parentheses
+  :disabled t
+  :defines
+  (zenburn/green+2
+   zenburn/green
+   zenburn/green-1)
+  :init (setq-default hl-paren-colors `(,zenburn/green+2 ,zenburn/green ,zenburn/green-1))
+  :config
+  (define-globalized-minor-mode global-highlight-parentheses-mode
+    highlight-parentheses-mode (lambda () (highlight-parentheses-mode t)))
+  (global-highlight-parentheses-mode t))
+
+;; https://github.com/Fuco1/smartparens
+(use-package smartparens
+  :functions (sp-pair)
+  :bind
+  (("M-<backspace>" . sp-unwrap-sexp)
+   ("M-<left>" . sp-forward-barf-sexp)
+   ("M-<right>" . sp-forward-slurp-sexp)
+   ("M-S-<left>" . sp-backward-slurp-sexp)
+   ("M-S-<right>" . sp-backward-barf-sexp))
+  :init (require 'smartparens-config)
+  :config
+  (smartparens-global-mode 1)
+  (setq-default sp-autoinsert-quote-if-followed-by-closing-pair t)
+  (sp-pair "{{" "}}")
+  (sp-pair "[[" "]]"))
+#+END_SRC
+
+*** projectile
+
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/bbatsov/projectile
+(use-package projectile
+
+  :demand t
+
+  :defines
+  (projectile-enable-caching
+   projectile-mode-line)
+
+  :functions (me/projectile-project-name)
+
+  :config
+  (defun me/projectile-project-name (orig-fun &rest args)
+    "Prefer `me/project-name' over default Projectile project string."
+    (or me/project-name (apply orig-fun args)))
+  (projectile-global-mode)
+  (advice-add 'projectile-project-name :around #'me/projectile-project-name)
+  (setq-default
+   projectile-completion-system 'helm
+   projectile-enable-caching t
+   projectile-mode-line '(:eval (projectile-project-name))))
+#+END_SRC
+
+*** python
+
+#+BEGIN_SRC emacs-lisp
+;; Built-in
+(use-package python
+  :delight python-mode "Python")
+
+;; https://github.com/Wilfred/pip-requirements.el
+(use-package pip-requirements
+  :delight pip-requirements-mode "PyPA Requirements"
+  :config (add-hook 'pip-requirements-mode-hook (lambda () (setq-local completion-ignore-case t))))
+#+END_SRC
+
+*** rainbow-mode
+
+#+BEGIN_SRC emacs-lisp
+;; https://julien.danjou.info/projects/emacs-packages#rainbow-mode
+(use-package rainbow-mode
+  :init (add-hook 'prog-mode-hook 'rainbow-mode)
+  :config (setq-default rainbow-x-colors-major-mode-list '()))
+#+END_SRC
+
+*** whitespace
+
+#+BEGIN_SRC emacs-lisp
+;; Built-in
+(use-package whitespace
+  :defines (zenburn/red-1)
+  :init (global-whitespace-mode 1)
+  :config
+  (setq-default whitespace-style '(face empty tab trailing))
+  (set-face-attribute 'whitespace-empty nil :background zenburn/red-1)
+  (set-face-attribute 'whitespace-tab nil :background zenburn/red-1)
+  (set-face-attribute 'whitespace-trailing nil :background zenburn/red-1))
+#+END_SRC
+
+*** yaml
+
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/yoshiki/yaml-mode
+(use-package yaml-mode
+  :delight yaml-mode "YAML"
+  :mode "\\.yml\\'")
+#+END_SRC
