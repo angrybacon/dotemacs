@@ -666,6 +666,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
 (use-package lisp-mode
   :ensure nil
   :delight lisp-mode "Lisp"
+  :bind ("C-c C-c" . eval-region)
   :config
   (delight
    '((emacs-lisp-mode "Emacs Lisp")
