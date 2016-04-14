@@ -989,16 +989,19 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
    ("C-c o s" . org-search-view)
    ("C-c o t" . org-todo-list))
 
+  :init (add-hook 'org-mode-hook 'turn-on-auto-fill)
+
   :config
   (setq-default
    org-edit-src-content-indentation 0
    org-src-fontify-natively t
    org-src-window-setup 'current-window
    org-support-shift-select 'always
-   org-startup-folded nil)
   (set-face-attribute 'org-block-background nil :background zenburn/bg+1)
   (set-face-attribute 'org-block-begin-line nil :background zenburn/bg+0)
   (set-face-attribute 'org-block-end-line nil :background zenburn/bg+0)
+   org-startup-folded nil
+   org-startup-truncated nil)
   (unbind-key "<C-return>" org-mode-map)
   (unbind-key "<C-S-down>" org-mode-map)
   (unbind-key "<C-S-up>" org-mode-map)
