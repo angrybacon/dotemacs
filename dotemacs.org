@@ -1,7 +1,7 @@
 #+TITLE: DotEmacs
 
-*TODO*: This is a first try at literate programming, I will be documenting the shit out of
-it soon enough.
+*TODO*: This is a first try at literate programming, I will be documenting the shit
+out of it soon enough.
 
 * Bootstrap
 ** Use better default

@@ -47,7 +47,7 @@ My Helm setup uses `ag` instead of `grep` to lookup files.
 Flycheck
 --------
 
-I use [`flycheck`][github-flycheck] as linter framework to display syntax warnings and
+I use [Flycheck][github-flycheck] as linter framework to display syntax warnings and
 errors whithin each buffer.
 
 <!-- language: lang-sh -->
