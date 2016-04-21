@@ -4,7 +4,6 @@
 it soon enough.
 
 * Bootstrap
-
 ** Use better default
 
 #+BEGIN_SRC emacs-lisp
@@ -95,7 +94,9 @@ it soon enough.
 (defconst me/font-size-default      120       "The font size to use for default text.")
 (defconst me/font-size-header       140       "The font size to use for headers.")
 (defconst me/font-size-mode-line    120       "The font size to use for the mode line.")
-(defconst me/golden-ratio-factor    .8        "The factor to split windows with.")
+(defconst me/golden-ratio-factor-1  .8        "A factor to split windows with: 16/10 (bi-split).")
+(defconst me/golden-ratio-factor-2  .805      "A factor to split windows with: 16/9 (bi-split).")
+(defconst me/golden-ratio-factor-3  .53       "A factor to split windows with: 16/9 (tri-split).")
 #+END_SRC
 
 ** Initialize MELPA
@@ -121,7 +122,6 @@ it soon enough.
 #+END_SRC
 
 * Theme
-
 ** Set the color palette
 
 Zenburn palette: https://github.com/bbatsov/zenburn-emacs
@@ -202,7 +202,6 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
 #+END_SRC
 
 * Features
-
 ** company
 
 #+BEGIN_SRC emacs-lisp
@@ -461,11 +460,13 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
 ;; https://github.com/roman/golden-ratio.el
 (use-package golden-ratio
   :defines (me/golden-ratio-factor)
+
   :init (golden-ratio-mode 1)
+
   :config
   (setq-default
    ;; TODO: Find a sane way to determine the ratio factor.
-   golden-ratio-adjust-factor me/golden-ratio-factor
+   golden-ratio-adjust-factor me/golden-ratio-factor-1
    split-width-threshold nil))
 #+END_SRC
 
