@@ -262,7 +262,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
 #+BEGIN_SRC emacs-lisp
 ;; https://github.com/abo-abo/avy
 (use-package avy
-  :bind ("C-s" . avy-goto-char-2)
+  :bind ("C-s" . avy-goto-char)
   :config
   (setq-default
    avy-all-windows nil
