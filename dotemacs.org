@@ -539,7 +539,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
 (use-package helm-grep
   :ensure helm
   :defines (zenburn/bg+3)
-  :config (set-face-attribute 'helm-grep-lineno nil :foreground zenburn/bg+3))
+  :config (set-face-attribute 'helm-grep-lineno nil :foreground zenburn/yellow-2))
 
 ;; https://github.com/emacs-helm/helm/blob/master/helm-misc.el
 (use-package helm-misc
