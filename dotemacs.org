@@ -764,6 +764,7 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
    "\\.markdown\\'"
    "\\.md\\'")
   :config (setq-default markdown-asymmetric-header t))
+  :init (add-hook 'markdown-mode-hook 'turn-on-auto-fill)
 #+END_SRC
 
 ** mode-line
