@@ -992,7 +992,9 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
    ("C-c o s" . org-search-view)
    ("C-c o t" . org-todo-list))
 
-  :init (add-hook 'org-mode-hook 'turn-on-auto-fill)
+  :init
+  (add-hook 'org-mode-hook 'turn-on-auto-fill)
+  (add-hook 'org-mode-hook 'whitespace-turn-on)
 
   :config
   (setq-default
