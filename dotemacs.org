@@ -1002,11 +1002,11 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
    org-src-fontify-natively t
    org-src-window-setup 'current-window
    org-support-shift-select 'always
-  (set-face-attribute 'org-block-background nil :background zenburn/bg+1)
-  (set-face-attribute 'org-block-begin-line nil :background zenburn/bg+0)
-  (set-face-attribute 'org-block-end-line nil :background zenburn/bg+0)
    org-startup-folded nil
    org-startup-truncated nil)
+  (set-face-attribute 'org-block-background nil :background zenburn/bg+2)
+  (set-face-attribute 'org-block-begin-line nil :background zenburn/bg+0)
+  (set-face-attribute 'org-block-end-line nil :background zenburn/bg+0)
   (unbind-key "<C-return>" org-mode-map)
   (unbind-key "<C-S-down>" org-mode-map)
   (unbind-key "<C-S-up>" org-mode-map)
