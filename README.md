@@ -1,62 +1,28 @@
 DotEmacs
 ========
 
-This repository contains my personal Emacs configuration. It was originally meant for personal uses
-and to help me keep track of my Emacs files accross several machines. I've kept this repository
-public for other Emacs lovers.
+This repository contains my personal Emacs configuration.
 
 Have fun tinkering : j
+
+What the .el
+============
+
+If you are wondering where has gone all of the Lisp, fear not, for it is
+automagically tangled from an Org file into a fresh Lisp file with the help of the
+all powerful `org` package. This is called literate programming.
+
+Head over to the actual configuration: `dotemacs.org`.
 
 Screenshots
 ===========
 
-My Emacs configuration is a living mixture of files that are modified on a daily basis. As such,
-the following screenshots might not reflect `:master`.
+My Emacs configuration is a living mixture that I edit on a daily basis. As such, the
+following screenshots might not reflect exactly what is on `:master`.
 
 ![dotemacs.2016-03-14.png](http://i.imgur.com/BN8dIS9.png)
 
 More coming *soon*™
-
-Features
-========
-
-Below are the most notable features supported:
-
-- Appearance
-
-    - [`powerline`][powerline]: prettier mode line
-    - [`zenburn-theme`][zenburn-theme]: non-aggressive palette with pastel tones
-
-- Languages
-
-    - [`company`][company]: autocompletion for most languages
-    - [`flycheck`][flycheck]: lint errors, warnings and notes
-    - [`tern`][tern]: code analysis and error reporting for JavaScript
-
-- Goodies
-
-    - [`emmet-mode`][emmet-mode]: support for Emmet on HTML and CSS-like files
-    - [`helm`][helm]: incremental selection framework to fuzzily narrow down choices
-    - [`magit`][magit]: git integration
-    - [`multiple-cursors`][multiple-cursors]: support for multiple cursors
-    - [`projectile`][projectile]: project interface to issue actions within a project structure
-
-And many more.
-
-For more information about how things works, read the source Luke!
-For each package, I have left a link to their website.
-
-[company]: https://github.com/company-mode/company-mode
-[emmet-mode]: https://github.com/smihica/emmet-mode
-[flycheck]: https://github.com/flycheck/flycheck
-[helm]: https://github.com/emacs-helm/helm
-[magit]: https://github.com/magit/magit
-[multiple-cursors]: https://github.com/magnars/multiple-cursors.el
-[powerline]: https://github.com/milkypostman/powerline
-[projectile]: https://github.com/bbatsov/projectile
-[smartparens]: https://github.com/Fuco1/smartparens
-[tern]: http://ternjs.net/doc/manual.html#emacs
-[zenburn-theme]: https://github.com/bbatsov/zenburn-emacs
 
 Installation
 ============
@@ -64,29 +30,30 @@ Installation
 Emacs
 -----
 
-1. I use [Mitsuharu Yamamoto's Mac port][github-emacs]. The configuration files *should*
-   work with any build nonetheless. In any case, install Emacs 24 or above.
+1. I use [Yamamoto Mitsuharu's port][github-mitsuharu]. The configuration files
+   *should* work with any build nonetheless. In any case, install Emacs 24 or above.
 1. Clone `dotemacs/` into `~/.emacs.d/`.
-1. Edit `~/.emacs.d/lisp/init-secret.el` to suit your needs.
+1. Edit `~/.emacs.d/dotemacs.org` (Bootstrap > Set constants) to suit your needs.
 
-[github-emacs]: https://github.com/railwaycat/homebrew-emacsmacport
+Ag
+--
+
+My Helm setup uses `ag` instead of `grep` to lookup files.
+
+<!-- language: lang-sh -->
+
+    brew install the_silver_searcher
 
 Flycheck
 --------
 
-I use [`flycheck`][flycheck] as linter framework to display syntax warnings and errors whithin each
-buffer. See below for the linters I personally use:
+I use [`flycheck`][github-flycheck] as linter framework to display syntax warnings and
+errors whithin each buffer.
 
-<!-- language: lang-el -->
+<!-- language: lang-sh -->
 
-    # Python (~/.flake8rc)
     pip install flake8
-
-    # SCSS (~/.scss-lint.yml)
     gem install scss_lint scss_lint_reporter_checkstyle
 
-
-You can configure the way linters check buffers with their own configuration files. You may refer
-to their very documentation.
-
-[flycheck]: https://github.com/flycheck/flycheck
+[github-flycheck]: https://github.com/flycheck/flycheck
+[github-mitsuharu]: https://github.com/railwaycat/homebrew-emacsmacport
