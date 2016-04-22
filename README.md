@@ -27,22 +27,26 @@ More coming *soon*™
 Installation
 ============
 
+I primarily use Emacs on OS X, but I trust your google-fu to find the equivalent for
+the next commands to run on your setup.
+
 Emacs
 -----
 
 1. I use [Yamamoto Mitsuharu's port][github-mitsuharu]. The configuration files
    *should* work with any build nonetheless. In any case, install Emacs 24 or above.
 1. Clone `dotemacs/` into `~/.emacs.d/`.
-1. Edit `~/.emacs.d/dotemacs.org` (Bootstrap > Set constants) to suit your needs.
+1. Edit constants from within `~/.emacs.d/dotemacs.org` (Bootstrap > Set constants)
+   to suit your needs.
 
 Ag
 --
 
 My Helm setup uses `ag` instead of `grep` to lookup files.
 
-<!-- language: lang-sh -->
-
-    brew install the_silver_searcher
+``` shell
+brew install the_silver_searcher
+```
 
 Flycheck
 --------
@@ -50,10 +54,10 @@ Flycheck
 I use [Flycheck][github-flycheck] as linter framework to display syntax warnings and
 errors whithin each buffer.
 
-<!-- language: lang-sh -->
-
-    pip install flake8
-    gem install scss_lint scss_lint_reporter_checkstyle
+``` shell
+pip install flake8
+gem install scss_lint scss_lint_reporter_checkstyle
+```
 
 [github-flycheck]: https://github.com/flycheck/flycheck
 [github-mitsuharu]: https://github.com/railwaycat/homebrew-emacsmacport
