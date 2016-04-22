@@ -1,6 +1,6 @@
 #+TITLE: DotEmacs
 
-*TODO*: This is a first try at literate programming, I will be documenting the shit
+- *TODO*: This is a first try at literate programming, I will be documenting the shit
 out of it soon enough.
 
 * Bootstrap
@@ -72,10 +72,10 @@ Some UI elements are rather invasive and oppose to the no-mouse philosophy.
 
 ** Benchmark startup time
 
-*FIXME*: Find a way to dynamically look for =benchmark-init.el=.
+- *FIXME*: Find a way to dynamically look for =benchmark-init.el=.
 
-Currently 1.5 seconds.
-But this is cheating: this snippet of code should live in =init.el=.
+Currently 1.5 seconds start-up time.
+But this is cheating: this snippet of code should live as early as in =init.el=.
 
 #+BEGIN_SRC emacs-lisp
 (let ((benchmark-init.el
@@ -86,8 +86,8 @@ But this is cheating: this snippet of code should live in =init.el=.
 
 ** Set constants
 
-*TODO*: Extract this outside of the version control. People should be able to use
-        their own =secret.el=.
+- *TODO*: Extract this outside of the version control. People should be able to use
+          their own =secret.el=.
 
 This is the section where you input your personal preferences.
 It also allows for consistency amongst all of the Emacs experience.
@@ -110,12 +110,10 @@ It also allows for consistency amongst all of the Emacs experience.
 
 ** Initialize MELPA
 
-*FIXME*: What if emacs-major-version < 24?
-*FIXME*: It sometimes does an extra =package-refresh-contents=.
+- *FIXME*: What if emacs-major-version < 24?
+- *FIXME*: It sometimes does an extra =package-refresh-contents=.
 
 Dependency checks and [[https://melpa.org][MELPA]] initialization, sugar-wrapped.
-
-As the author put it:
 
 #+BEGIN_SRC emacs-lisp
 (when (>= emacs-major-version 24)
@@ -135,6 +133,8 @@ As the author put it:
 In order to have unified package declaration in my Emacs files, I use [[https://github.com/jwiegley/use-package][=use-package=]].
 It allows for isolation and clarity.
 
+As the author put it:
+
 #+BEGIN_QUOTE
 The =use-package= macro allows you to isolate package configuration in your =.emacs=
 file in a way that is both performance-oriented and, well, tidy. I created it because
@@ -152,9 +152,14 @@ functionality!
 #+END_SRC
 
 * Theme
-** Set the color palette
+** Set a color palette
 
-Zenburn palette: https://github.com/bbatsov/zenburn-emacs
+I like to have an accessible copy of my active theme's color codes.
+That way, I can fix other packages' colors while still using the same color codes and
+keep consistency everywhere.
+
+This method is considered safe because I am using the all-famous [[https://github.com/bbatsov/zenburn-emacs][Zenburn palette]]. It
+is very /unlikely/ that any of its tones will ever change.
 
 #+BEGIN_SRC emacs-lisp
 (defconst zenburn/bg+3      "#6F6F6F"  "Zenburn palette: #6F6F6F.")
@@ -197,6 +202,8 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
 
 ** Configure Zenburn
 
+Load =zenburn-theme= and fix some high-level faces to match my personal preferences.
+
 #+BEGIN_SRC emacs-lisp
 ;; https://github.com/bbatsov/zenburn-emacs
 (use-package zenburn-theme
@@ -219,11 +226,13 @@ Zenburn palette: https://github.com/bbatsov/zenburn-emacs
   (set-face-attribute 'default nil :height me/font-size-default)
   (set-face-attribute 'font-lock-doc-face nil :italic t)
   (set-face-attribute 'font-lock-comment-face nil :italic t)
-  (set-face-attribute 'font-lock-comment-delimiter-face nil :foreground zenburn/bg+3 :italic t)
+  (set-face-attribute 'font-lock-comment-delimiter-face nil
+                      :foreground zenburn/bg+3 :italic t)
   (set-face-attribute 'font-lock-function-name-face nil :foreground zenburn/blue)
   (set-face-attribute 'fringe nil :background zenburn/bg :foreground zenburn/bg+3)
   (set-face-attribute 'header-line nil
-                      :box `(:line-width 1 :color ,zenburn/bg-1) :height me/font-size-header)
+                      :box `(:line-width 1 :color ,zenburn/bg-1)
+                      :height me/font-size-header)
   (set-face-attribute 'hl-line nil :background zenburn/bg+0)
   (set-face-attribute 'region nil :foreground zenburn/green)
   (set-face-attribute 'vertical-border nil :foreground zenburn/bg-1)
