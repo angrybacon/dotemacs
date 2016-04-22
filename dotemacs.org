@@ -13,7 +13,7 @@ out of it soon enough.
  delete-by-moving-to-trash t                     ; Delete files to trash
  display-time-default-load-average nil           ; Don't display load average
  display-time-format "%H:%M"                     ; Format the time string
- fill-column 90                                  ; Set width for automatic line breaking
+ fill-column 85                                  ; Set width for automatic line breaking
  gc-cons-threshold 100000000                     ; Increase garbage collector treshold
  indent-tabs-mode nil                            ; Stop using tabs to indent
  indicate-empty-lines t                          ; Indicate unused lines in the fringe
@@ -30,10 +30,11 @@ out of it soon enough.
 
 ** Toggle UI components
 
+Some UI elements are rather invasive and oppose to the no-mouse philosophy.
+
 #+BEGIN_SRC emacs-lisp
 (when window-system
   (blink-cursor-mode 0)                          ; Disable the cursor blinking
-  (menu-bar-mode 0)                              ; Disable the menu bar
   (scroll-bar-mode 0)                            ; Disable the scroll bar
   (tool-bar-mode 0)                              ; Disable the tool bar
   (tooltip-mode 0))                              ; Disable the tooltips
@@ -48,11 +49,12 @@ out of it soon enough.
 (global-hl-line-mode 1)                          ; Hightlight current line
 (global-subword-mode 1)                          ; Iterate through CamelCase words
 (line-number-mode 1)                             ; Show the line number
+(menu-bar-mode 0)                                ; Disable the menu bar
 (mouse-avoidance-mode 'animate)                  ; Move pointer to avoid collision with point
 (set-frame-parameter nil 'fullscreen 'fullboth)  ; Enable pseudo fullscreen
 #+END_SRC
 
-** Enable other goodies
+** Enable some more goodies
 
 #+BEGIN_SRC emacs-lisp
 (defalias 'yes-or-no-p 'y-or-n-p)                ; Replace yes/no prompts with the shorter y/n
@@ -70,17 +72,25 @@ out of it soon enough.
 
 ** Benchmark startup time
 
-*FIXME*: Find a way to dynamically look for benchmark-init.el
+*FIXME*: Find a way to dynamically look for =benchmark-init.el=.
+
+Currently 1.5 seconds.
+But this is cheating: this snippet of code should live in =init.el=.
 
 #+BEGIN_SRC emacs-lisp
-(let ((benchmark-init.el "~/.emacs.d/elpa/benchmark-init-20150905.238/benchmark-init.el"))
+(let ((benchmark-init.el
+       "~/.emacs.d/elpa/benchmark-init-20150905.238/benchmark-init.el"))
   (when (file-exists-p benchmark-init.el)
     (load benchmark-init.el)))
 #+END_SRC
 
 ** Set constants
 
-*TODO*: Make this optionnal.
+*TODO*: Extract this outside of the version control. People should be able to use
+        their own =secret.el=.
+
+This is the section where you input your personal preferences.
+It also allows for consistency amongst all of the Emacs experience.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default
@@ -89,17 +99,23 @@ out of it soon enough.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-;; NOTE: These probably shouldn't be constants, should they?
 (defconst me/font-family            "Monaco"  "The font to use.")
 (defconst me/font-size-default      120       "The font size to use for default text.")
 (defconst me/font-size-header       140       "The font size to use for headers.")
 (defconst me/font-size-mode-line    120       "The font size to use for the mode line.")
-(defconst me/golden-ratio-factor-1  .8        "A factor to split windows with: 16/10 (bi-split).")
-(defconst me/golden-ratio-factor-2  .805      "A factor to split windows with: 16/9 (bi-split).")
-(defconst me/golden-ratio-factor-3  .53       "A factor to split windows with: 16/9 (tri-split).")
+(defconst me/golden-ratio-factor-1  .8        "A factor for 16/10 displays: bi-split.")
+(defconst me/golden-ratio-factor-2  .805      "A factor for 16/9 displays: bi-split.")
+(defconst me/golden-ratio-factor-3  .53       "A factor for 16/9 displays: tri-split.")
 #+END_SRC
 
 ** Initialize MELPA
+
+*FIXME*: What if emacs-major-version < 24?
+*FIXME*: It sometimes does an extra =package-refresh-contents=.
+
+Dependency checks and [[https://melpa.org][MELPA]] initialization, sugar-wrapped.
+
+As the author put it:
 
 #+BEGIN_SRC emacs-lisp
 (when (>= emacs-major-version 24)
@@ -114,6 +130,20 @@ out of it soon enough.
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package)))
+#+END_SRC
+
+In order to have unified package declaration in my Emacs files, I use [[https://github.com/jwiegley/use-package][=use-package=]].
+It allows for isolation and clarity.
+
+#+BEGIN_QUOTE
+The =use-package= macro allows you to isolate package configuration in your =.emacs=
+file in a way that is both performance-oriented and, well, tidy. I created it because
+I have over 80 packages that I use in Emacs, and things were getting difficult to
+manage. Yet with this utility my total load time is around 2 seconds, with no loss of
+functionality!
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
 (eval-when-compile
   (require 'use-package)
   (setq-default
