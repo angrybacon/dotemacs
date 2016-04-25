@@ -1,7 +1,7 @@
 #+TITLE: DotEmacs
 
 - *TODO*: This is a first try at literate programming, I will be documenting the shit
-out of it soon enough.
+          out of it soon enough.
 
 * Bootstrap
 ** Use better default
@@ -57,7 +57,7 @@ Some UI elements are rather invasive and oppose to the no-mouse philosophy.
 ** Enable some more goodies
 
 #+BEGIN_SRC emacs-lisp
-(defalias 'yes-or-no-p 'y-or-n-p)                ; Replace yes/no prompts with the shorter y/n
+(fset 'yes-or-no-p 'y-or-n-p)                    ; Replace yes/no prompts with the shorter y/n
 (put 'downcase-region 'disabled nil)             ; Enable downcase-region
 (put 'upcase-region 'disabled nil)               ; Enable upcase-region
 #+END_SRC
@@ -1079,12 +1079,15 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
   (zenburn/green+2
    zenburn/green
    zenburn/green-1)
-  :init (setq-default hl-paren-colors `(,zenburn/green+2 ,zenburn/green ,zenburn/green-1))
+  :init
+  (setq-default hl-paren-colors `(,zenburn/green+2 ,zenburn/green ,zenburn/green-1))
   :config
   (define-globalized-minor-mode global-highlight-parentheses-mode
     highlight-parentheses-mode (lambda () (highlight-parentheses-mode t)))
   (global-highlight-parentheses-mode t))
+#+END_SRC
 
+#+BEGIN_SRC emacs-lisp
 ;; https://github.com/Fuco1/smartparens
 (use-package smartparens
   :functions (sp-pair)
@@ -1100,6 +1103,12 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
   (setq-default sp-autoinsert-quote-if-followed-by-closing-pair t)
   (sp-pair "{{" "}}")
   (sp-pair "[[" "]]"))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/Fanael/rainbow-delimiters
+(use-package rainbow-delimiters
+  :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+END_SRC
 
 ** projectile
