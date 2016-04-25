@@ -25,6 +25,7 @@
  show-trailing-whitespace nil                    ; Display trailing whitespaces
  tab-width 4                                     ; Set width for tabs
  uniquify-buffer-name-style 'forward             ; Uniquify buffer names
+ window-combination-resize t                     ; Resize windows proportionally
  x-select-enable-clipboard t)                    ; Merge system's and Emacs' clipboard
 #+END_SRC
 
@@ -41,7 +42,6 @@ Some UI elements are rather invasive and oppose to the no-mouse philosophy.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(auto-fill-mode 1)                               ; Enable automatic line breaking
 (column-number-mode 0)                           ; Hide the column number
 (display-battery-mode 0)                         ; Hide the battery level
 (display-time-mode 1)                            ; Hide the time representation
