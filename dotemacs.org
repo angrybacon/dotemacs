@@ -1,6 +1,6 @@
 #+TITLE: DotEmacs
 
-- *TODO*: This is a first try at literate programming, I will be documenting the shit
+- *TODO*: this is a first try at literate programming, I will be documenting the shit
           out of it soon enough.
 
 * Bootstrap
@@ -180,7 +180,7 @@ I like to have an accessible copy of my active theme's color codes.
 That way, I can fix other packages' colors while still using the same color codes and
 keep consistency everywhere.
 
-This method is considered safe because I am using the all-famous [[https://github.com/bbatsov/zenburn-emacs][Zenburn palette]]. It
+This method is considered safe because I am using the all-famous [[https://github.com/bbatsov/zenburn-emacs][Zenburn]] palette. It
 is very /unlikely/ that any of its tones will ever change.
 
 #+BEGIN_SRC emacs-lisp
@@ -263,14 +263,18 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 #+END_SRC
 
 * Features
-** company
 
-Auto-completion at point. Display a small popin containing the candidates.
+Features are alphabetically sorted because, well, I'm fussy. And they're easier to
+find that way... so there's that.
 
-Packages:
-
+** Auto-Completion
+:PROPERTIES:
+:CUSTOM_ID: auto-completion
+:END:
 - =company-mode=: https://github.com/company-mode/company-mode
 - =company-tern=: https://github.com/proofit404/company-tern
+
+Auto-completion at point. Display a small popin containing the candidates.
 
 #+BEGIN_SRC emacs-lisp
 (use-package company
@@ -289,17 +293,16 @@ Packages:
    company-tern-property-marker " *"))
 #+END_SRC
 
-** css
+** CSS
+
+- =css-mode=: built-in
+- =scss-mode=: https://github.com/antonj/scss-mode/
 
 #+BEGIN_SRC emacs-lisp
-;; Built-in
 (use-package css-mode
   :delight css-mode "CSS"
   :config (setq-default css-indent-offset 2))
-#+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-;; https://github.com/antonj/scss-mode/
 (use-package scss-mode
   :delight scss-mode "SCSS"
   :mode ("\\.css\\'" "\\.sass\\'" "\\.scss\\'")
@@ -311,52 +314,11 @@ Packages:
   :config (setq-default scss-compile-at-save nil))
 #+END_SRC
 
-** cursor
+** Comments
+
+- =newcomment=: built-in
 
 #+BEGIN_SRC emacs-lisp
-;;https://github.com/Malabarba/aggressive-indent-mode
-(use-package aggressive-indent
-  :init (global-aggressive-indent-mode 1)
-  :config
-  (setq-default aggressive-indent-comments-too t)
-  (add-to-list 'aggressive-indent-excluded-modes 'scss-mode))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-;; https://github.com/abo-abo/avy
-(use-package avy
-  :bind ("C-s" . avy-goto-char)
-  :config
-  (setq-default
-   avy-all-windows nil
-   avy-background t))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-;; https://github.com/magnars/expand-region.el
-(use-package expand-region
-  :bind ("C-=" . er/expand-region)
-  :init (pending-delete-mode t))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-;; https://github.com/magnars/multiple-cursors.el
-(use-package multiple-cursors
-  :bind
-  (("C-S-<mouse-1>" . mc/add-cursor-on-click)
-   ("C-S-a C-S-a" . mc/vertical-align-with-space)
-   ("C-S-c C-S-c" . mc/edit-lines)
-   ("C-<" . mc/mark-previous-like-this)
-   ("C->" . mc/mark-next-like-this)
-   ("C-'" . mc-hide-unmatched-lines-mode))
-  :init
-  (setq-default
-   mc/edit-lines-empty-lines 'ignore
-   mc/list-file (expand-file-name ".multiple-cursors.el" user-emacs-directory)))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-;; Built-in
 (use-package newcomment
   :ensure nil
   :bind ("M-RET" . comment-indent-new-line)
@@ -366,62 +328,14 @@ Packages:
    comment-multi-line t))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-;; Set key bindings
-(global-set-key (kbd "C-S-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-S-r") 'isearch-backward-regexp)
-(global-set-key (kbd "C-M-<left>") 'windmove-left)
-(global-set-key (kbd "C-M-<right>") 'windmove-right)
-(global-set-key (kbd "C-M-<up>") 'windmove-up)
-(global-set-key (kbd "C-M-<down>") 'windmove-down)
-(global-set-key (kbd "<C-up>") 'me/goto-previous-block)
-(global-set-key (kbd "<C-down>") 'me/goto-next-block)
-(global-set-key (kbd "<M-up>") 'me/swap-line-up)
-(global-set-key (kbd "<M-down>") 'me/swap-line-down)
-#+END_SRC
+** Customization
+
+- =cus-edit=: built-in
+
+This merely changes face attributes and Zenburn customization buffers a little
+more. Should I just try a pull request over [[https://github.com/bbatsov/zenburn-emacs][zenburn-emacs]]?
 
 #+BEGIN_SRC emacs-lisp
-
-;; Define helpers
-
-(defun me/goto-next-block ()
-  "Jump to next paragraph."
-  (interactive "^")
-  (skip-chars-forward "\n")
-  (unless (search-forward-regexp "\n[[:blank:]]*\n" nil t)
-    (goto-char (point-max)))
-  (skip-chars-forward "\n"))
-
-(defun me/goto-previous-block ()
-  "Jump to previous paragraph."
-  (interactive "^")
-  (skip-chars-backward "\n")
-  (unless (search-backward-regexp "\n[[:blank:]]*\n" nil t)
-    (goto-char (point-min)))
-  (skip-chars-forward "\n"))
-
-(defun me/swap-line-down ()
-  "Move down the current line under point."
-  (interactive)
-  (forward-line 1)
-  (transpose-lines 1)
-  (forward-line -1)
-  (indent-according-to-mode)
-  (delete-trailing-whitespace))
-
-(defun me/swap-line-up ()
-  "Move up the current line under point."
-  (interactive)
-  (transpose-lines 1)
-  (forward-line -2)
-  (indent-according-to-mode)
-  (delete-trailing-whitespace))
-#+END_SRC
-
-** customize
-
-#+BEGIN_SRC emacs-lisp
-;; Built-in
 (use-package cus-edit
 
   :ensure nil
@@ -441,10 +355,13 @@ Packages:
     (set-face-attribute 'custom-group-tag nil :font me/font-family)))
 #+END_SRC
 
-** dired
+** Dired
+
+- =dired=: built-in
+
+Configure Dired buffers. Amongst many other things, Emacs is also a file explorer.
 
 #+BEGIN_SRC emacs-lisp
-;; Built-in
 (use-package dired
 
   :ensure nil
@@ -467,29 +384,263 @@ Packages:
    dired-recursive-copies 'always))
 #+END_SRC
 
-** docker
+** Docker
+
+- =dockerfile-mode=: https://github.com/spotify/dockerfile-mode
 
 #+BEGIN_SRC emacs-lisp
-;; https://github.com/spotify/dockerfile-mode
 (use-package dockerfile-mode
   :delight dockerfile-mode "Dockerfile"
   :mode "Dockerfile\\'")
 #+END_SRC
 
-** eww
+** EWW
+
+- =eww=: built-in
+
+EWW stands for Emacs Web Wowser. Yeah that's right... Emacs is also a Web
+browser, text-based that is.
 
 #+BEGIN_SRC emacs-lisp
-;; Built-in
 (use-package eww
   :ensure nil
   :delight eww-mode "Emacs Web Wowser"
   :config (setq eww-header-line-format " %t: %u"))
 #+END_SRC
 
-** flycheck
+** Expand
+
+- =emmet-mode=: https://github.com/smihica/emmet-mode
+- =hippie-exp=: built-in
+- =yasnippet=: https://github.com/capitaomorte/yasnippet
+
+HippieExpand manages expansions a la [[http://emmet.io/][Emmet]]. So I've gathered all features that look
+anywhere close to this behavior for it to handle under the same bind, that is
+=C-RET=. Basically I made a DWIM for expand-like completion out of it.
 
 #+BEGIN_SRC emacs-lisp
-;; https://github.com/flycheck/flycheck
+(use-package emmet-mode
+  :init
+  (add-hook 'css-mode-hook 'emmet-mode)
+  (add-hook 'sgml-mode-hook 'emmet-mode)
+  :config
+  (setq-default emmet-move-cursor-between-quote t)
+  (unbind-key "<C-return>" emmet-mode-keymap)
+  (unbind-key "C-M-<left>" emmet-mode-keymap)
+  (unbind-key "C-M-<right>" emmet-mode-keymap))
+
+(use-package hippie-exp
+  :ensure nil
+  :bind ("<C-return>" . hippie-expand)
+  :config
+  (setq-default hippie-expand-try-functions-list
+                '(yas-hippie-try-expand emmet-expand-line)))
+
+(use-package yasnippet
+  :init
+  (add-hook 'js-mode-hook 'yas-minor-mode)
+  (add-hook 'org-mode-hook 'yas-minor-mode)
+  (add-hook 'sgml-mode-hook 'yas-minor-mode)
+  :config
+  (setq-default yas-snippet-dirs '("~/.emacs.d/snippets"))
+  (yas-reload-all)
+  (unbind-key "TAB" yas-minor-mode-map)
+  (unbind-key "<tab>" yas-minor-mode-map))
+#+END_SRC
+
+** Helm
+
+- *TODO*: Make helm-list-faces-display.
+- *TODO*: Fix the mode-line for Helm buffers.
+
+- =helm=: https://github.com/emacs-helm/helm
+- =helm-buffers=: https://github.com/emacs-helm/helm/blob/master/helm-buffers.el
+- =helm-color=: https://github.com/emacs-helm/helm/blob/master/helm-color.el
+- =helm-command=: https://github.com/emacs-helm/helm/blob/master/helm-command.el
+- =helm-grep=: https://github.com/emacs-helm/helm/blob/master/helm-grep.el
+- =helm-misc=: https://github.com/emacs-helm/helm/blob/master/helm-misc.el
+- =helm-mode=: https://github.com/emacs-helm/helm/blob/master/helm-mode.el
+- =helm-net=: https://github.com/emacs-helm/helm/blob/master/helm-net.el
+- =helm-regexp=: https://github.com/emacs-helm/helm/blob/master/helm-regexp.el
+
+Helm is a beast. Although heavily, it replaces =ido-mode= in many ways.
+
+#+BEGIN_QUOTE
+=Helm= is an Emacs framework for incremental completions and narrowing selections. It
+helps to rapidly complete file names, buffer names, or any other Emacs interactions
+requiring selecting an item from a list of possible choices.
+
+Helm is a fork of =anything.el=, which was originally written by Tamas Patrovic and
+can be considered to be its successor. =Helm= cleans the legacy code that is leaner,
+modular, and unchained from constraints of backward compatibility.
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package helm
+
+  :defines
+  (me/font-size-default
+   me/font-size-header
+   zenburn/bg+3
+   zenburn/bg+0
+   zenburn/bg
+   zenburn/green+2
+   zenburn/yellow)
+
+  :bind
+  (("C-c h k" . helm-show-kill-ring)
+   ("C-c h g" . helm-google-suggest)
+   ("C-c h i" . helm-imenu)
+   ("C-c h r" . helm-resume))
+
+  :config
+  (helm-mode 1)
+  (setq-default
+   helm-always-two-windows t
+   helm-display-header-line nil
+   helm-mode-line-string nil
+   helm-split-window-default-side 'left)
+  (set-face-attribute 'helm-ff-dotted-directory nil
+                      :background 'unspecified :foreground zenburn/bg+3)
+  (set-face-attribute 'helm-match nil :foreground zenburn/green+2 :weight 'normal)
+  (set-face-attribute 'helm-source-header nil
+                      :box nil :background 'unspecified :height me/font-size-header))
+#+END_SRC
+
+Helm sub-modules can be customized separately. Many basic Emacs commands have their
+Helm equivalents.
+
+#+BEGIN_SRC emacs-lisp
+(use-package helm-buffers
+  :ensure helm
+  :config (setq-default helm-buffers-fuzzy-matching t))
+
+(use-package helm-color
+  :ensure helm
+  :bind ("C-c h c" . helm-colors))
+
+(use-package helm-command
+  :ensure helm
+  :defines (zenburn/orange)
+  :bind ([remap execute-extended-command] . helm-M-x)
+  :config
+  (setq-default helm-M-x-fuzzy-match t)
+  (set-face-attribute 'helm-M-x-key nil :foreground zenburn/orange :underline nil))
+
+(use-package helm-grep
+  :ensure helm
+  :defines (zenburn/bg+3)
+  :config (set-face-attribute 'helm-grep-lineno nil :foreground zenburn/yellow-2))
+
+(use-package helm-misc
+  :ensure helm
+  :bind ([remap switch-to-buffer] . helm-buffers-list))
+
+(use-package helm-mode
+  :ensure helm
+  :config
+  (setq-default
+   helm-completion-in-region-fuzzy-match t
+   helm-mode-fuzzy-match t))
+
+(use-package helm-net
+  :ensure helm
+  :config
+  (setq-default helm-net-prefer-curl t))
+
+(use-package helm-regexp
+  :ensure helm
+  :defines (zenburn/blue)
+  :config (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn/blue))
+#+END_SRC
+** Helm Plugins
+
+- *NOTE*: Does not respect =helm-split-window-default-side=.
+          https://github.com/ShingoFukuyama/helm-css-scss/issues/7
+- *TODO*: Fix Zenburn palette.
+          https://github.com/bbatsov/zenburn-emacs/issues/220
+
+- =helm-ag=: https://github.com/syohex/emacs-helm-ag
+- =helm-css-scss=: https://github.com/ShingoFukuyama/helm-css-scss
+- =helm-descbinds=: https://github.com/emacs-helm/helm-descbinds
+- =helm-describe-modes=: https://github.com/emacs-helm/helm-describe-modes
+- =helm-flycheck=: https://github.com/yasuyk/helm-flycheck
+- =helm-projectile=: https://github.com/bbatsov/helm-projectile
+
+Fourth-party packages for Helm.
+
+#+BEGIN_SRC emacs-lisp
+(use-package helm-ag)
+
+(use-package helm-css-scss
+  :bind ("C-c h s" . helm-css-scss)
+  :config (setq-default helm-css-scss-split-direction 'split-window-horizontally))
+
+(use-package helm-descbinds
+  :bind ([remap describe-key] . helm-descbinds)
+  :config (setq-default helm-descbinds-window-style 'split-window))
+
+(use-package helm-describe-modes
+  :bind ([remap describe-mode] . helm-describe-modes))
+
+(use-package helm-flycheck
+  :bind ("C-c h f" . helm-flycheck))
+
+(use-package helm-projectile
+  :after helm
+  :config (helm-projectile-on))
+#+END_SRC
+
+** HTML
+
+- =sgml-mode=: built-in
+
+HTML mode is defined in =sgml-mode.el=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package sgml-mode
+  :ensure nil
+  :delight html-mode "HTML"
+  :config (setq-default sgml-basic-offset 2))
+#+END_SRC
+
+** JavaScript
+
+- *FIXME*: Indent level is broken.
+           https://github.com/joshwnj/json-mode/issues/32
+
+- =js-mode=: built-in
+- =json-mode=: https://github.com/joshwnj/json-mode
+- =tern=: http://ternjs.net/doc/manual.html#emacs
+
+Tern is a code-analysis engine for JavaScript. I use it to check syntax and grammar
+in my JavaScript code. With [[#auto-completion][company]], it can also provide candidates for variables and
+properties.
+
+#+BEGIN_SRC emacs-lisp
+(use-package js
+  :delight js-mode "JavaScript"
+  :config (setq-default js-indent-level 2))
+
+(use-package json-mode
+  :delight json-mode "JSON"
+  :mode "\\.json\\'"
+  :config
+  (add-hook 'json-mode-hook (lambda () (setq-local js-indent-level 2))))
+
+(use-package tern
+  :config (add-hook 'js-mode-hook 'tern-mode))
+#+END_SRC
+
+** Linters
+
+- =flycheck=: https://github.com/flycheck/flycheck
+
+Flycheck lints warnings and errors directly within buffers. It can check a lot of
+different syntaxes, as long as you make sure that Emacs has access to the binaries
+(see [[./README.md][README.md]]).
+
+#+BEGIN_SRC emacs-lisp
 (use-package flycheck
 
   :defines
@@ -524,215 +675,11 @@ Packages:
   (set-face-attribute 'flycheck-fringe-warning nil :foreground zenburn/orange))
 #+END_SRC
 
-** golden-ratio
+** Lisp
+
+- =lisp-mode=: built-in
 
 #+BEGIN_SRC emacs-lisp
-;; https://github.com/roman/golden-ratio.el
-(use-package golden-ratio
-  :init (golden-ratio-mode 1)
-  :config
-  (setq-default
-   golden-ratio-adjust-factor me/golden-ratio-adjust-factor-1
-   split-width-threshold nil))
-#+END_SRC
-
-** helm
-
-#+BEGIN_SRC emacs-lisp
-;; TODO: Make helm-list-faces-display
-
-;; https://github.com/emacs-helm/helm
-(use-package helm
-
-  :defines
-  (me/font-size-default
-   me/font-size-header
-   zenburn/bg+3
-   zenburn/bg+0
-   zenburn/bg
-   zenburn/green+2
-   zenburn/yellow)
-
-  :bind
-  (("C-c h k" . helm-show-kill-ring)
-   ("C-c h g" . helm-google-suggest)
-   ("C-c h i" . helm-imenu)
-   ("C-c h r" . helm-resume))
-
-  :config
-
-  (defadvice helm-display-mode-line (after me/helm-display-mode-line activate)
-    "Customize mode-line for helm buffers."
-    ;; TODO: Add relevant information in the mode-line.
-    )
-
-  ;; Activate Helm
-  (helm-mode 1)
-
-  ;; Use better defaults
-  (setq-default
-   helm-always-two-windows t
-   helm-display-header-line nil
-   helm-mode-line-string nil
-   helm-split-window-default-side 'left)
-
-  ;; Customize faces
-  (set-face-attribute 'helm-ff-dotted-directory nil
-                      :background 'unspecified :foreground zenburn/bg+3)
-  (set-face-attribute 'helm-match nil :foreground zenburn/green+2 :weight 'normal)
-  (set-face-attribute 'helm-source-header nil
-                      :box nil :background 'unspecified :height me/font-size-header))
-
-;; https://github.com/emacs-helm/helm/blob/master/helm-buffers.el
-(use-package helm-buffers
-  :ensure helm
-  :config (setq-default helm-buffers-fuzzy-matching t))
-
-;; https://github.com/emacs-helm/helm/blob/master/helm-color.el
-(use-package helm-color
-  :ensure helm
-  :bind ("C-c h c" . helm-colors))
-
-;; https://github.com/emacs-helm/helm/blob/master/helm-command.el
-(use-package helm-command
-  :ensure helm
-  :defines (zenburn/orange)
-  :bind ([remap execute-extended-command] . helm-M-x)
-  :config
-  (setq-default helm-M-x-fuzzy-match t)
-  (set-face-attribute 'helm-M-x-key nil :foreground zenburn/orange :underline nil))
-
-;; https://github.com/emacs-helm/helm/blob/master/helm-grep.el
-(use-package helm-grep
-  :ensure helm
-  :defines (zenburn/bg+3)
-  :config (set-face-attribute 'helm-grep-lineno nil :foreground zenburn/yellow-2))
-
-;; https://github.com/emacs-helm/helm/blob/master/helm-misc.el
-(use-package helm-misc
-  :ensure helm
-  :bind ([remap switch-to-buffer] . helm-buffers-list))
-
-;; https://github.com/emacs-helm/helm/blob/master/helm-mode.el
-(use-package helm-mode
-  :ensure helm
-  :config
-  (setq-default
-   helm-completion-in-region-fuzzy-match t
-   helm-mode-fuzzy-match t))
-
-;; https://github.com/emacs-helm/helm/blob/master/helm-net.el
-(use-package helm-net
-  :ensure helm
-  :config
-  (setq-default helm-net-prefer-curl t))
-
-;; https://github.com/emacs-helm/helm/blob/master/helm-regexp.el
-(use-package helm-regexp
-  :ensure helm
-  :defines (zenburn/blue)
-  :config (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn/blue))
-
-;; https://github.com/syohex/emacs-helm-ag
-(use-package helm-ag)
-
-;; https://github.com/ShingoFukuyama/helm-css-scss
-(use-package helm-css-scss
-  ;; WARNING: https://github.com/ShingoFukuyama/helm-css-scss/issues/7
-  ;; TODO: Fix Zenburn palette (ttps://github.com/bbatsov/zenburn-emacs/issues/220)
-  :bind ("C-c h s" . helm-css-scss)
-  :config (setq-default helm-css-scss-split-direction 'split-window-horizontally))
-
-;; https://github.com/emacs-helm/helm-descbinds
-(use-package helm-descbinds
-  :bind ([remap describe-key] . helm-descbinds)
-  :config (setq-default helm-descbinds-window-style 'split-window))
-
-;; https://github.com/emacs-helm/helm-describe-modes
-(use-package helm-describe-modes
-  :bind ([remap describe-mode] . helm-describe-modes))
-
-;; https://github.com/yasuyk/helm-flycheck
-(use-package helm-flycheck
-  :bind ("C-c h f" . helm-flycheck))
-
-;; https://github.com/bbatsov/helm-projectile
-(use-package helm-projectile
-  :after helm
-  :config (helm-projectile-on))
-#+END_SRC
-
-** hippie
-
-#+BEGIN_SRC emacs-lisp
-;; https://github.com/smihica/emmet-mode
-(use-package emmet-mode
-  :init
-  (add-hook 'css-mode-hook 'emmet-mode)
-  (add-hook 'sgml-mode-hook 'emmet-mode)
-  :config
-  (setq-default emmet-move-cursor-between-quote t)
-  (unbind-key "<C-return>" emmet-mode-keymap)
-  (unbind-key "C-M-<left>" emmet-mode-keymap)
-  (unbind-key "C-M-<right>" emmet-mode-keymap))
-
-;; Built-in
-(use-package hippie-exp
-  :ensure nil
-  :bind ("<C-return>" . hippie-expand)
-  :config
-  (setq-default hippie-expand-try-functions-list
-                '(yas-hippie-try-expand emmet-expand-line)))
-
-;; https://github.com/capitaomorte/yasnippet
-(use-package yasnippet
-  :init
-  (add-hook 'js-mode-hook 'yas-minor-mode)
-  (add-hook 'org-mode-hook 'yas-minor-mode)
-  (add-hook 'sgml-mode-hook 'yas-minor-mode)
-  :config
-  (setq-default yas-snippet-dirs '("~/.emacs.d/snippets"))
-  (yas-reload-all)
-  (unbind-key "TAB" yas-minor-mode-map)
-  (unbind-key "<tab>" yas-minor-mode-map))
-#+END_SRC
-
-** html
-
-#+BEGIN_SRC emacs-lisp
-;; Built-in
-(use-package sgml-mode
-  :ensure nil
-  :delight html-mode "HTML"
-  :config (setq-default sgml-basic-offset 2))
-#+END_SRC
-
-** javascript
-
-#+BEGIN_SRC emacs-lisp
-;; Built-in
-(use-package js
-  :delight js-mode "JavaScript"
-  :config (setq-default js-indent-level 2))
-
-;; https://github.com/joshwnj/json-mode
-(use-package json-mode
-  :delight json-mode "JSON"
-  :mode "\\.json\\'"
-  :config
-  ;; FIXME: This will be fixed with https://github.com/joshwnj/json-mode/issues/32.
-  ;; (setq-default json-reformat:indent-width 2)
-  (add-hook 'json-mode-hook (lambda () (setq-local js-indent-level 2))))
-
-;; http://ternjs.net/doc/manual.html#emacs
-(use-package tern
-  :config (add-hook 'js-mode-hook 'tern-mode))
-#+END_SRC
-
-** lisp
-
-#+BEGIN_SRC emacs-lisp
-;; Built-in
 (use-package lisp-mode
   :ensure nil
   :delight lisp-mode "Lisp"
@@ -742,6 +689,7 @@ Packages:
    '((emacs-lisp-mode "Emacs Lisp")
      (lisp-interaction-mode "Lisp Interaction"))))
 #+END_SRC
+
 
 ** magit
 
@@ -1140,6 +1088,121 @@ Packages:
   (sp-pair "[[" "]]"))
 #+END_SRC
 
+** Point
+
+- =aggressive-indent-mode=: https://github.com/Malabarba/aggressive-indent-mode
+- =avy=: https://github.com/abo-abo/avy
+- =expand-region=: https://github.com/magnars/expand-region.el
+- =multiple-cursors=: https://github.com/magnars/multiple-cursors.el
+
+Maintain indenting levels at all times, sort of. It is not recommended, and
+explicitely off by default, to activate =aggressive-indent-mode= in some modes such
+as =html-mode= for performance issues.
+
+#+BEGIN_SRC emacs-lisp
+(use-package aggressive-indent
+  :init (global-aggressive-indent-mode 1)
+  :config
+  (setq-default aggressive-indent-comments-too t)
+  (add-to-list 'aggressive-indent-excluded-modes 'scss-mode))
+#+END_SRC
+
+Jump to a specific position in the buffer using a char-based decision tree.
+
+#+BEGIN_SRC emacs-lisp
+(use-package avy
+  :bind ("C-s" . avy-goto-char)
+  :config
+  (setq-default
+   avy-all-windows nil
+   avy-background t))
+#+END_SRC
+
+Increase region by semantic units. It tries to be smart about it and adapt to the
+structure of the current major mode.
+
+#+BEGIN_SRC emacs-lisp
+(use-package expand-region
+  :bind ("C-=" . er/expand-region)
+  :init (pending-delete-mode t))
+#+END_SRC
+
+Enable multiple cursors at once. Some witchcraft at work here.
+
+#+BEGIN_SRC emacs-lisp
+(use-package multiple-cursors
+  :bind
+  (("C-S-<mouse-1>" . mc/add-cursor-on-click)
+   ;; ("C-S-a C-S-a" . mc/vertical-align-with-space)
+   ("C-S-c C-S-c" . mc/edit-lines)
+   ("C-<" . mc/mark-previous-like-this)
+   ("C->" . mc/mark-next-like-this)
+   ("C-'" . mc-hide-unmatched-lines-mode))
+  :init
+  (setq-default
+   mc/edit-lines-empty-lines 'ignore
+   mc/list-file (expand-file-name ".multiple-cursors.el" user-emacs-directory)))
+#+END_SRC
+
+I disagree with Emacs' definition of paragraphs so I redefined the way it should jump
+from one block to another.
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "<C-down>") 'me/goto-next-block)
+(global-set-key (kbd "<C-up>") 'me/goto-previous-block)
+
+(defun me/goto-next-block ()
+  "Jump to next paragraph."
+  (interactive "^")
+  (skip-chars-forward "\n")
+  (unless (search-forward-regexp "\n[[:blank:]]*\n" nil t)
+    (goto-char (point-max)))
+  (skip-chars-forward "\n"))
+
+(defun me/goto-previous-block ()
+  "Jump to previous paragraph."
+  (interactive "^")
+  (skip-chars-backward "\n")
+  (unless (search-backward-regexp "\n[[:blank:]]*\n" nil t)
+    (goto-char (point-min)))
+  (skip-chars-forward "\n"))
+#+END_SRC
+
+Swap current line with the previous/next one.
+
+- *TODO*: Handle regions.
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "<M-down>") 'me/swap-line-down)
+(global-set-key (kbd "<M-up>") 'me/swap-line-up)
+
+(defun me/swap-line-down ()
+  "Move down the current line under point."
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1)
+  (indent-according-to-mode)
+  (delete-trailing-whitespace))
+
+(defun me/swap-line-up ()
+  "Move up the current line under point."
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2)
+  (indent-according-to-mode)
+  (delete-trailing-whitespace))
+#+END_SRC
+
+Bind commands to move around windows.
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-M-<left>") 'windmove-left)
+(global-set-key (kbd "C-M-<right>") 'windmove-right)
+(global-set-key (kbd "C-M-<up>") 'windmove-up)
+(global-set-key (kbd "C-M-<down>") 'windmove-down)
+#+END_SRC
+
 ** projectile
 
 #+BEGIN_SRC emacs-lisp
@@ -1200,6 +1263,22 @@ Packages:
   (set-face-attribute 'whitespace-empty nil :background zenburn/red-1)
   (set-face-attribute 'whitespace-tab nil :background zenburn/red-1)
   (set-face-attribute 'whitespace-trailing nil :background zenburn/red-1))
+#+END_SRC
+
+** Windows
+
+- =golden-ratio=: https://github.com/roman/golden-ratio.el
+
+Adjust the size of every windows and focus the active one. It uses the mathematical
+golden ratio somewhere in its formulas.
+
+#+BEGIN_SRC emacs-lisp
+(use-package golden-ratio
+  :init (golden-ratio-mode 1)
+  :config
+  (setq-default
+   golden-ratio-adjust-factor me/golden-ratio-adjust-factor-1
+   split-width-threshold nil))
 #+END_SRC
 
 ** yaml
