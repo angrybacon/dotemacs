@@ -383,7 +383,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 
 (defun me/goto-next-block ()
   "Jump to next paragraph."
-  (interactive)
+  (interactive "^")
   (skip-chars-forward "\n")
   (unless (search-forward-regexp "\n[[:blank:]]*\n" nil t)
     (goto-char (point-max)))
@@ -391,7 +391,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 
 (defun me/goto-previous-block ()
   "Jump to previous paragraph."
-  (interactive)
+  (interactive "^")
   (skip-chars-backward "\n")
   (unless (search-backward-regexp "\n[[:blank:]]*\n" nil t)
     (goto-char (point-min)))
@@ -1075,6 +1075,8 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
   (set-face-attribute 'org-block-background nil :background zenburn/bg+2)
   (set-face-attribute 'org-block-begin-line nil :background zenburn/bg+0)
   (set-face-attribute 'org-block-end-line nil :background zenburn/bg+0)
+  (unbind-key "C-a" org-mode-map)
+  (unbind-key "C-e" org-mode-map)
   (unbind-key "<C-return>" org-mode-map)
   (unbind-key "<C-S-down>" org-mode-map)
   (unbind-key "<C-S-up>" org-mode-map)
