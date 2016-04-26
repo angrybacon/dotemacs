@@ -3,9 +3,17 @@
 :CUSTOM_ID: dotemacs
 :END:
 
+#+BEGIN_CENTER
+*[[#bootstrap][Bootstrap]]* | *[[#theme][Theme]]* | *[[#features][Features]]*
+#+END_CENTER
+-----
+
 - *TODO*: Add a list of all added shortcuts.
 
 * Bootstrap
+:PROPERTIES:
+:CUSTOM_ID: bootstrap
+:END:
 ** Use better default
 
 #+BEGIN_SRC emacs-lisp
@@ -176,6 +184,9 @@ functionality!
 #+END_SRC
 
 * Theme
+:PROPERTIES:
+:CUSTOM_ID: theme
+:END:
 ** Set a color palette
 
 I like to have an accessible copy of my active theme's color codes.
@@ -265,6 +276,9 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 #+END_SRC
 
 * Features
+:PROPERTIES:
+:CUSTOM_ID: features
+:END:
 
 - *TODO*: Should probably gather all the =delight=ing action at the same place.
 
@@ -275,6 +289,7 @@ find that way... so there's that.
 :PROPERTIES:
 :CUSTOM_ID: features.auto-completion
 :END:
+
 - =company-mode=: https://github.com/company-mode/company-mode
 - =company-tern=: https://github.com/proofit404/company-tern
 
@@ -1334,4 +1349,6 @@ golden ratio somewhere in its formulas.
   :mode "\\.yml\\'")
 #+END_SRC
 
-[[#dotemacs][Back to top]]
+-----
+
+*[[#dotemacs][Back to top]]*
