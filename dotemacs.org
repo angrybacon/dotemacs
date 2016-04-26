@@ -6,9 +6,6 @@
 #+BEGIN_CENTER
 *[[#bootstrap][Bootstrap]]* | *[[#theme][Theme]]* | *[[#features][Features]]*
 #+END_CENTER
------
-
-- *TODO*: Add a list of all added shortcuts.
 
 * Bootstrap
 :PROPERTIES:
@@ -280,6 +277,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 :CUSTOM_ID: features
 :END:
 
+- *TODO*: Add a list of all custom shortcuts.
 - *TODO*: Should probably gather all the =delight=ing action at the same place.
 
 Features are alphabetically sorted because, well, I'm fussy. And they're easier to
