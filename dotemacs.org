@@ -87,18 +87,16 @@ But this is cheating: this snippet of code should live as early as in =init.el=.
 
 ** Set constants
 
+I load =.secret.el= to keep sensible things out of version control.
+For instance, you could overwrite the following variables and set your identity by
+customizing both =user-full-name= and =user-mail-address=.
+
 #+BEGIN_SRC emacs-lisp
 (defvar me/font-family            "Monaco"  "The font to use.")
 (defvar me/font-size-default      120       "The font size to use for default text.")
 (defvar me/font-size-header       140       "The font size to use for headers.")
 (defvar me/font-size-mode-line    120       "The font size to use for the mode line.")
-#+END_SRC
 
-I load =.secret.el= to keep sensible things out of version control. For instance, you
-could overwrite the following variables and set your identity by customizing both
-=user-full-name= and =user-mail-address=.
-
-#+BEGIN_SRC emacs-lisp
 (let ((secret.el (expand-file-name ".secret.el" user-emacs-directory)))
   (when (file-exists-p secret.el)
     (load secret.el)))
