@@ -318,10 +318,16 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 ;; https://github.com/magnars/multiple-cursors.el
 (use-package multiple-cursors
   :bind
-  (("C-S-c C-S-c" . mc/edit-lines)
+  (("C-S-<mouse-1>" . mc/add-cursor-on-click)
+   ("C-S-a C-S-a" . mc/vertical-align-with-space)
+   ("C-S-c C-S-c" . mc/edit-lines)
+   ("C-<" . mc/mark-previous-like-this)
    ("C->" . mc/mark-next-like-this)
-   ("C-<" . mc/mark-previous-like-this))
-  :init (setq-default mc/list-file (expand-file-name ".multiple-cursors.el" user-emacs-directory)))
+   ("C-'" . mc-hide-unmatched-lines-mode))
+  :init
+  (setq-default
+   mc/edit-lines-empty-lines 'ignore
+   mc/list-file (expand-file-name ".multiple-cursors.el" user-emacs-directory)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -1088,6 +1094,12 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+;; https://github.com/Fanael/rainbow-delimiters
+(use-package rainbow-delimiters
+  :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
 ;; https://github.com/Fuco1/smartparens
 (use-package smartparens
   :functions (sp-pair)
@@ -1103,12 +1115,6 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
   (setq-default sp-autoinsert-quote-if-followed-by-closing-pair t)
   (sp-pair "{{" "}}")
   (sp-pair "[[" "]]"))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-;; https://github.com/Fanael/rainbow-delimiters
-(use-package rainbow-delimiters
-  :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+END_SRC
 
 ** projectile
