@@ -1,6 +1,11 @@
 #+TITLE: DotEmacs
+:PROPERTIES:
+:CUSTOM_ID: dotemacs
+:END:
 
+#+BEGIN_CENTER
 *[[#bootstrap][Bootstrap]]* | *[[#theme][Theme]]* | *[[#features][Features]]*
+#+END_CENTER
 
 * Bootstrap
 :PROPERTIES:
@@ -74,7 +79,7 @@ Some UI elements are rather invasive and oppose to the no-mouse philosophy.
 
 ** Benchmark startup time
 
-*FIXME*: Find a way to dynamically look for =benchmark-init.el=.
+- *FIXME*: Find a way to dynamically look for =benchmark-init.el=.
 
 Currently 1.5 seconds start-up time.
 But this is cheating: this snippet of code should live as early as in =init.el=.
@@ -107,7 +112,7 @@ customizing both =user-full-name= and =user-mail-address=.
 I have different physical displays at home and at work. Call =golden-ratio-adjust=
 with the following values.
 
-*TODO*: Find a way to automatically adjust depending on the current display.
+- *TODO*: Find a way to automatically adjust depending on the current display.
 
 #+BEGIN_SRC emacs-lisp
 (defconst me/golden-ratio-adjust-factor-1  .8    "A factor for 16/10: bi-split.")
@@ -134,8 +139,8 @@ with the following values.
 
 ** Initialize MELPA
 
-*FIXME*: What if emacs-major-version < 24?\\
-*FIXME*: It sometimes does an extra =package-refresh-contents=.
+- *FIXME*: What if emacs-major-version < 24?
+- *FIXME*: It sometimes does an extra =package-refresh-contents=.
 
 Dependency checks and [[https://melpa.org][MELPA]] initialization, sugar-wrapped.
 
@@ -275,7 +280,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 - *TODO*: Add a list of all custom shortcuts.
 - *TODO*: Should probably gather all the =delight=ing action at the same place.
 
-Features are alphabetically sorted because, well, I'm fussy. And they' are easier to
+Features are alphabetically sorted because, well, I'm fussy. And they're easier to
 find that way... so there's that.
 
 ** Auto-Completion
@@ -283,8 +288,8 @@ find that way... so there's that.
 :CUSTOM_ID: features.auto-completion
 :END:
 
-=company-mode=: https://github.com/company-mode/company-mode\\
-=company-tern=: https://github.com/proofit404/company-tern
+- =company-mode=: https://github.com/company-mode/company-mode
+- =company-tern=: https://github.com/proofit404/company-tern
 
 Auto-completion at point. Display a small popin containing the candidates.
 
@@ -307,8 +312,8 @@ Auto-completion at point. Display a small popin containing the candidates.
 
 ** CSS
 
-=css-mode=: built-in\\
-=scss-mode=: https://github.com/antonj/scss-mode/
+- =css-mode=: built-in
+- =scss-mode=: https://github.com/antonj/scss-mode/
 
 #+BEGIN_SRC emacs-lisp
 (use-package css-mode
@@ -328,7 +333,7 @@ Auto-completion at point. Display a small popin containing the candidates.
 
 ** Comments
 
-=newcomment=: built-in
+- =newcomment=: built-in
 
 #+BEGIN_SRC emacs-lisp
 (use-package newcomment
@@ -342,7 +347,7 @@ Auto-completion at point. Display a small popin containing the candidates.
 
 ** Customization
 
-=cus-edit=: built-in
+- =cus-edit=: built-in
 
 This merely changes face attributes and Zenburn customization buffers a little
 more. Should I just try a pull request over [[https://github.com/bbatsov/zenburn-emacs][zenburn-emacs]]?
@@ -369,7 +374,7 @@ more. Should I just try a pull request over [[https://github.com/bbatsov/zenburn
 
 ** Dired
 
-=dired=: built-in
+- =dired=: built-in
 
 Configure Dired buffers. Amongst many other things, Emacs is also a file explorer.
 
@@ -398,7 +403,7 @@ Configure Dired buffers. Amongst many other things, Emacs is also a file explore
 
 ** Docker
 
-=dockerfile-mode=: https://github.com/spotify/dockerfile-mode
+- =dockerfile-mode=: https://github.com/spotify/dockerfile-mode
 
 #+BEGIN_SRC emacs-lisp
 (use-package dockerfile-mode
@@ -408,7 +413,7 @@ Configure Dired buffers. Amongst many other things, Emacs is also a file explore
 
 ** EWW
 
-=eww=: built-in
+- =eww=: built-in
 
 EWW stands for Emacs Web Wowser. Yeah that's right... Emacs is also a Web
 browser, text-based that is.
@@ -422,9 +427,9 @@ browser, text-based that is.
 
 ** Expand
 
-=emmet-mode=: https://github.com/smihica/emmet-mode\\
-=hippie-exp=: built-in\\
-=yasnippet=: https://github.com/capitaomorte/yasnippet
+- =emmet-mode=: https://github.com/smihica/emmet-mode
+- =hippie-exp=: built-in
+- =yasnippet=: https://github.com/capitaomorte/yasnippet
 
 HippieExpand manages expansions a la [[http://emmet.io/][Emmet]]. So I've gathered all features that look
 anywhere close to this behavior for it to handle under the same bind, that is
@@ -462,8 +467,8 @@ anywhere close to this behavior for it to handle under the same bind, that is
 
 ** Git
 
-=magit=: https://github.com/magit/magit\\
-=git*-mode=: https://github.com/magit/git-modes
+- =magit=: https://github.com/magit/magit
+- =git*-mode=: https://github.com/magit/git-modes
 
 Magit provide Git facilities directly from within Emacs.
 
@@ -547,18 +552,18 @@ Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.h
 
 ** Helm
 
-*TODO*: Make helm-list-faces-display.\\
-*TODO*: Fix the mode-line for Helm buffers.
+- *TODO*: Make helm-list-faces-display.
+- *TODO*: Fix the mode-line for Helm buffers.
 
-=helm=: https://github.com/emacs-helm/helm\\
-=helm-buffers=: https://github.com/emacs-helm/helm/blob/master/helm-buffers.el\\
-=helm-color=: https://github.com/emacs-helm/helm/blob/master/helm-color.el\\
-=helm-command=: https://github.com/emacs-helm/helm/blob/master/helm-command.el\\
-=helm-grep=: https://github.com/emacs-helm/helm/blob/master/helm-grep.el\\
-=helm-misc=: https://github.com/emacs-helm/helm/blob/master/helm-misc.el\\
-=helm-mode=: https://github.com/emacs-helm/helm/blob/master/helm-mode.el\\
-=helm-net=: https://github.com/emacs-helm/helm/blob/master/helm-net.el\\
-=helm-regexp=: https://github.com/emacs-helm/helm/blob/master/helm-regexp.el
+- =helm=: https://github.com/emacs-helm/helm
+- =helm-buffers=: https://github.com/emacs-helm/helm/blob/master/helm-buffers.el
+- =helm-color=: https://github.com/emacs-helm/helm/blob/master/helm-color.el
+- =helm-command=: https://github.com/emacs-helm/helm/blob/master/helm-command.el
+- =helm-grep=: https://github.com/emacs-helm/helm/blob/master/helm-grep.el
+- =helm-misc=: https://github.com/emacs-helm/helm/blob/master/helm-misc.el
+- =helm-mode=: https://github.com/emacs-helm/helm/blob/master/helm-mode.el
+- =helm-net=: https://github.com/emacs-helm/helm/blob/master/helm-net.el
+- =helm-regexp=: https://github.com/emacs-helm/helm/blob/master/helm-regexp.el
 
 Helm is a beast. Although heavily, it replaces =ido-mode= in many ways.
 
@@ -653,17 +658,17 @@ Helm equivalents.
 
 ** Helm Plugins
 
-*NOTE*: Does not respect =helm-split-window-default-side=.\\
-        https://github.com/ShingoFukuyama/helm-css-scss/issues/7\\
-*TODO*: Fix Zenburn palette.\\
-        https://github.com/bbatsov/zenburn-emacs/issues/220
+- *NOTE*: Does not respect =helm-split-window-default-side=.
+          https://github.com/ShingoFukuyama/helm-css-scss/issues/7
+- *TODO*: Fix Zenburn palette.
+          https://github.com/bbatsov/zenburn-emacs/issues/220
 
-=helm-ag=: https://github.com/syohex/emacs-helm-ag\\
-=helm-css-scss=: https://github.com/ShingoFukuyama/helm-css-scss\\
-=helm-descbinds=: https://github.com/emacs-helm/helm-descbinds\\
-=helm-describe-modes=: https://github.com/emacs-helm/helm-describe-modes\\
-=helm-flycheck=: https://github.com/yasuyk/helm-flycheck\\
-=helm-projectile=: https://github.com/bbatsov/helm-projectile
+- =helm-ag=: https://github.com/syohex/emacs-helm-ag
+- =helm-css-scss=: https://github.com/ShingoFukuyama/helm-css-scss
+- =helm-descbinds=: https://github.com/emacs-helm/helm-descbinds
+- =helm-describe-modes=: https://github.com/emacs-helm/helm-describe-modes
+- =helm-flycheck=: https://github.com/yasuyk/helm-flycheck
+- =helm-projectile=: https://github.com/bbatsov/helm-projectile
 
 Fourth-party packages for Helm.
 
@@ -691,7 +696,7 @@ Fourth-party packages for Helm.
 
 ** HTML
 
-=sgml-mode=: built-in
+- =sgml-mode=: built-in
 
 HTML mode is defined in =sgml-mode.el=.
 
@@ -704,12 +709,12 @@ HTML mode is defined in =sgml-mode.el=.
 
 ** JavaScript
 
-*FIXME*: Indent level is broken.\\
-         https://github.com/joshwnj/json-mode/issues/32
+- *FIXME*: Indent level is broken.
+           https://github.com/joshwnj/json-mode/issues/32
 
-=js-mode=: built-in\\
-=json-mode=: https://github.com/joshwnj/json-mode\\
-=tern=: http://ternjs.net/doc/manual.html#emacs
+- =js-mode=: built-in
+- =json-mode=: https://github.com/joshwnj/json-mode
+- =tern=: http://ternjs.net/doc/manual.html#emacs
 
 Tern is a code-analysis engine for JavaScript. I use it to check syntax and grammar
 in my JavaScript code. With [[#features.auto-completion][company]], it can also provide candidates for variables and
@@ -732,7 +737,7 @@ properties.
 
 ** Linters
 
-=flycheck=: https://github.com/flycheck/flycheck
+- =flycheck=: https://github.com/flycheck/flycheck
 
 Flycheck lints warnings and errors directly within buffers. It can check a lot of
 different syntaxes, as long as you make sure that Emacs has access to the binaries
@@ -775,7 +780,7 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
 
 ** Lisp
 
-=lisp-mode=: built-in
+- =lisp-mode=: built-in
 
 #+BEGIN_SRC emacs-lisp
 (use-package lisp-mode
@@ -790,7 +795,7 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
 
 ** Markdown
 
-=markdown-mode=: https://github.com/jrblevin/markdown-mode
+- =markdown-mode=: https://github.com/jrblevin/markdown-mode
 
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
@@ -811,10 +816,10 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
 
 ** Mode-line
 
-*TODO*: Check out https://www.emacswiki.org/emacs/delight-powerline.el.
+- *TODO*: Check out https://www.emacswiki.org/emacs/delight-powerline.el.
 
-=delight=: https://github.com/antonio/delight.el\\
-=powerline=: https://github.com/milkypostman/powerline
+- =delight=: https://github.com/antonio/delight.el
+- =powerline=: https://github.com/milkypostman/powerline
 
 Brace yourself, this is quite big and possible sub-optimal. I use =powerline= to
 customize the =mode-line= a la Vim.
@@ -1022,7 +1027,7 @@ customize the =mode-line= a la Vim.
 
 ** Org
 
-=org=: http://orgmode.org/
+- =org=: http://orgmode.org/
 
 This very file is organized with =org-mode=. I am definitely not a power user of Org,
 but I'm getting there. :)
@@ -1088,8 +1093,8 @@ Augment Emacs experience for OS X users.
 
 ** Parentheses
 
-=rainbow-delimiters=: https://github.com/Fanael/rainbow-delimiters\\
-=smartparens=: https://github.com/Fuco1/smartparens
+- =rainbow-delimiters=: https://github.com/Fanael/rainbow-delimiters
+- =smartparens=: https://github.com/Fuco1/smartparens
 
 Highlight parenthese-like delimiters in a rainbow fashion. It ease the reading when
 dealing with mismatched parentheses.
@@ -1100,7 +1105,7 @@ dealing with mismatched parentheses.
 #+END_SRC
 
 I am still looking for the perfect parenthese management setup as of today... No
-package seem to be pleasing my person.
+package seem to be please my person.
 
 #+BEGIN_SRC emacs-lisp
 (use-package smartparens
@@ -1121,9 +1126,9 @@ package seem to be pleasing my person.
 
 ** Point
 
-=avy=: https://github.com/abo-abo/avy\\
-=expand-region=: https://github.com/magnars/expand-region.el\\
-=multiple-cursors=: https://github.com/magnars/multiple-cursors.el
+- =avy=: https://github.com/abo-abo/avy
+- =expand-region=: https://github.com/magnars/expand-region.el
+- =multiple-cursors=: https://github.com/magnars/multiple-cursors.el
 
 Jump to a specific position in the buffer using a char-based decision tree.
 
@@ -1186,9 +1191,9 @@ from one block to another.
   (skip-chars-forward "\n"))
 #+END_SRC
 
-*TODO*: Handle regions.
-
 Swap current line with the previous/next one.
+
+- *TODO*: Handle regions.
 
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "<M-down>") 'me/swap-line-down)
@@ -1223,9 +1228,9 @@ Bind commands to move around windows.
 
 ** Projectile
 
-*TODO*: Try with =:init= instead of =:demand=.
+- *TODO*: Try with =:init= instead of =:demand=.
 
-=projectile=: https://github.com/bbatsov/projectile
+- =projectile=: https://github.com/bbatsov/projectile
 
 Projectile brings project-level facilities to Emacs such as grep, find and replace.
 
@@ -1262,8 +1267,8 @@ performance sake an indexing mechanism backed by external commands exists as wel
 
 ** Python
 
-=python=: built-in\\
-=pip-requirements=: https://github.com/Wilfred/pip-requirements.el
+- =python=: built-in
+- =pip-requirements=: https://github.com/Wilfred/pip-requirements.el
 
 #+BEGIN_SRC emacs-lisp
 (use-package python
@@ -1276,8 +1281,8 @@ performance sake an indexing mechanism backed by external commands exists as wel
 
 ** Quality of Life
 
-=aggressive-indent-mode=: https://github.com/Malabarba/aggressive-indent-mode\\
-=rainbow-mode=: https://julien.danjou.info/projects/emacs-packages#rainbow-mode
+- =aggressive-indent-mode=: https://github.com/Malabarba/aggressive-indent-mode
+- =rainbow-mode=: https://julien.danjou.info/projects/emacs-packages#rainbow-mode
 
 Maintain indenting levels at all times, sort of. It is not recommended, and
 explicitely off by default, to activate =aggressive-indent-mode= in some modes such
@@ -1301,7 +1306,7 @@ Colorize colors as text with their value.
 
 ** Whitespaces
 
-=whitespace=: built-in
+- =whitespace=: built-in
 
 Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
@@ -1318,7 +1323,7 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
 ** Windows
 
-=golden-ratio=: https://github.com/roman/golden-ratio.el
+- =golden-ratio=: https://github.com/roman/golden-ratio.el
 
 Adjust the size of every windows and focus the active one. It uses the mathematical
 golden ratio somewhere in its formulas.
@@ -1334,7 +1339,7 @@ golden ratio somewhere in its formulas.
 
 ** YAML
 
-=yaml-mode=: https://github.com/yoshiki/yaml-mode
+- =yaml-mode=: https://github.com/yoshiki/yaml-mode
 
 #+BEGIN_SRC emacs-lisp
 (use-package yaml-mode
