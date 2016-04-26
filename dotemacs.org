@@ -113,30 +113,21 @@ with the following values.
 (defconst me/golden-ratio-adjust-factor-3  .805  "A factor for 16/9: bi-split.")
 (defconst me/golden-ratio-adjust-factor-4  .53   "A factor for 16/9: tri-split.")
 
-(global-set-key (kbd "<f5>") #'me/golden-ratio-adjust-1)
-(global-set-key (kbd "<f6>") #'me/golden-ratio-adjust-2)
-(global-set-key (kbd "<f7>") #'me/golden-ratio-adjust-3)
-(global-set-key (kbd "<f8>") #'me/golden-ratio-adjust-4)
+(global-set-key (kbd "<f5>") (lambda ()
+                               (interactive)
+                               (golden-ratio-adjust me/golden-ratio-adjust-factor-1)))
 
-(defun me/golden-ratio-adjust-1 ()
-  "Adjust `golden-ratio-adjust-factor' for a 16/10 display to be equally bi-split."
-  (interactive)
-  (golden-ratio-adjust me/golden-ratio-adjust-factor-1))
+(global-set-key (kbd "<f6>") (lambda ()
+                               (interactive)
+                               (golden-ratio-adjust me/golden-ratio-adjust-factor-2)))
 
-(defun me/golden-ratio-adjust-2 ()
-  "Adjust `golden-ratio-adjust-factor' for a 16/10 display to be equally tri-split."
-  (interactive)
-  (golden-ratio-adjust me/golden-ratio-adjust-factor-2))
+(global-set-key (kbd "<f7>") (lambda ()
+                               (interactive)
+                               (golden-ratio-adjust me/golden-ratio-adjust-factor-3)))
 
-(defun me/golden-ratio-adjust-3 ()
-  "Adjust `golden-ratio-adjust-factor' for a 16/9 display to be equally bi-split."
-  (interactive)
-  (golden-ratio-adjust me/golden-ratio-adjust-factor-3))
-
-(defun me/golden-ratio-adjust-4 ()
-  "Adjust `golden-ratio-adjust-factor' for a 16/9 display to be equally tri-split."
-  (interactive)
-  (golden-ratio-adjust me/golden-ratio-adjust-factor-4))
+(global-set-key (kbd "<f8>") (lambda ()
+                               (interactive)
+                               (golden-ratio-adjust me/golden-ratio-adjust-factor-4)))
 #+END_SRC
 
 ** Initialize MELPA
@@ -535,13 +526,11 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 #+BEGIN_SRC emacs-lisp
 ;; https://github.com/roman/golden-ratio.el
 (use-package golden-ratio
-  :defines (me/golden-ratio-factor)
-
   :init (golden-ratio-mode 1)
-
   :config
-  (me/golden-ratio-adjust-1)
-  (setq-default split-width-threshold nil))
+  (setq-default
+   golden-ratio-adjust-factor me/golden-ratio-adjust-factor-1
+   split-width-threshold nil))
 #+END_SRC
 
 ** helm
