@@ -265,8 +265,14 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 * Features
 ** company
 
+Auto-completion at point. Display a small popin containing the candidates.
+
+Packages:
+
+- =company-mode=: https://github.com/company-mode/company-mode
+- =company-tern=: https://github.com/proofit404/company-tern
+
 #+BEGIN_SRC emacs-lisp
-;; https://github.com/company-mode/company-mode
 (use-package company
   :init (global-company-mode)
   :config
@@ -274,10 +280,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
    company-idle-delay .2
    company-minimum-prefix-length 1
    company-tooltip-align-annotations t))
-#+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-;; https://github.com/proofit404/company-tern
 (use-package company-tern
   :init (add-to-list 'company-backends 'company-tern)
   :config
