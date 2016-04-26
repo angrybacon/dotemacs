@@ -1,7 +1,9 @@
 #+TITLE: DotEmacs
+:PROPERTIES:
+:CUSTOM_ID: dotemacs
+:END:
 
-- *TODO*: this is a first try at literate programming, I will be documenting the shit
-          out of it soon enough.
+- *TODO*: Add a list of all added shortcuts.
 
 * Bootstrap
 ** Use better default
@@ -264,12 +266,14 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 
 * Features
 
+- *TODO*: Should probably gather all the =delight=ing action at the same place.
+
 Features are alphabetically sorted because, well, I'm fussy. And they're easier to
 find that way... so there's that.
 
 ** Auto-Completion
 :PROPERTIES:
-:CUSTOM_ID: auto-completion
+:CUSTOM_ID: features.auto-completion
 :END:
 - =company-mode=: https://github.com/company-mode/company-mode
 - =company-tern=: https://github.com/proofit404/company-tern
@@ -448,6 +452,91 @@ anywhere close to this behavior for it to handle under the same bind, that is
   (unbind-key "<tab>" yas-minor-mode-map))
 #+END_SRC
 
+** Git
+
+- =magit=: https://github.com/magit/magit
+- =git*-mode=: https://github.com/magit/git-modes
+
+Magit provide Git facilities directly from within Emacs.
+
+#+BEGIN_QUOTE
+Magit is an interface to the version control system [[https://git-scm.com/][Git]], implemented as an [[https://www.gnu.org/software/emacs][Emacs]]
+package. Magit aspires to be a complete Git porcelain. While we cannot (yet) claim
+that Magit wraps and improves upon each and every Git command, it is complete enough
+to allow even experienced Git users to perform almost all of their daily version
+control tasks directly from within Emacs. While many fine Git clients exist, only
+Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package magit
+
+  :defines
+  (me/font-size-header
+   zenburn/red
+   zenburn/red-4
+   zenburn/green+2
+   zenburn/green-1)
+
+  :bind
+  (("C-c g b" . magit-blame)
+   ("C-c g l" . magit-log)
+   ("C-c g p" . magit-pull)
+   ("C-c g s" . magit-status))
+
+  :config
+
+  (defun me/magit-display-buffer-function (buffer)
+    "Render some magit modes in the currently selected buffer."
+    (display-buffer
+     buffer
+     (cond ((and (derived-mode-p 'magit-mode)
+                 (eq (with-current-buffer buffer major-mode)
+                     'magit-status-mode))
+            nil)
+           ((memq (with-current-buffer buffer major-mode)
+                  '(magit-process-mode
+                    magit-revision-mode
+                    magit-diff-mode
+                    magit-stash-mode))
+            nil)
+           (t
+            '(display-buffer-same-window)))))
+
+  ;; Use better defaults
+  (setq-default
+   magit-display-buffer-function 'me/magit-display-buffer-function
+   magit-refs-show-commit-count (quote all)
+   magit-section-show-child-count t
+   magit-set-upstream-on-push 'askifnotset)
+
+  ;; Customize lighters
+  (delight
+   '((magit-diff-mode "Magit Diff")
+     (magit-log-mode "Magit Log")
+     (magit-popup-mode "Magit Popup")
+     (magit-status-mode "Magit Status")))
+
+  ;; Customize faces
+  (set-face-attribute 'magit-diff-added nil
+                      :background zenburn/green-1 :foreground zenburn/green+2)
+  (set-face-attribute 'magit-diff-added-highlight nil
+                      :background zenburn/green-1 :foreground zenburn/green+2)
+  (set-face-attribute 'magit-diff-removed nil
+                      :background zenburn/red-4 :foreground zenburn/red)
+  (set-face-attribute 'magit-diff-removed-highlight nil
+                      :background zenburn/red-4 :foreground zenburn/red)
+  (set-face-attribute 'magit-popup-heading nil :height me/font-size-header)
+  (set-face-attribute 'magit-section-heading nil :height me/font-size-header))
+
+(use-package gitattributes-mode
+  :delight gitattributes-mode "Git Attributes")
+(use-package gitconfig-mode
+  :delight gitconfig-mode "Git Config")
+(use-package gitignore-mode
+  :delight gitignore-mode "Git Ignore")
+#+END_SRC
+
 ** Helm
 
 - *TODO*: Make helm-list-faces-display.
@@ -553,6 +642,7 @@ Helm equivalents.
   :defines (zenburn/blue)
   :config (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn/blue))
 #+END_SRC
+
 ** Helm Plugins
 
 - *NOTE*: Does not respect =helm-split-window-default-side=.
@@ -614,7 +704,7 @@ HTML mode is defined in =sgml-mode.el=.
 - =tern=: http://ternjs.net/doc/manual.html#emacs
 
 Tern is a code-analysis engine for JavaScript. I use it to check syntax and grammar
-in my JavaScript code. With [[#auto-completion][company]], it can also provide candidates for variables and
+in my JavaScript code. With [[#features.auto-completion][company]], it can also provide candidates for variables and
 properties.
 
 #+BEGIN_SRC emacs-lisp
@@ -690,84 +780,11 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
      (lisp-interaction-mode "Lisp Interaction"))))
 #+END_SRC
 
+** Markdown
 
-** magit
-
-#+BEGIN_SRC emacs-lisp
-;; https://github.com/magit/git-modes
-(use-package gitattributes-mode
-  :delight gitattributes-mode "Git Attributes")
-(use-package gitconfig-mode
-  :delight gitconfig-mode "Git Config")
-(use-package gitignore-mode
-  :delight gitignore-mode "Git Ignore")
-
-;; https://github.com/magit/magit
-(use-package magit
-
-  :defines
-  (me/font-size-header
-   zenburn/red
-   zenburn/red-4
-   zenburn/green+2
-   zenburn/green-1)
-
-  :bind
-  (("C-c g b" . magit-blame)
-   ("C-c g l" . magit-log)
-   ("C-c g p" . magit-pull)
-   ("C-c g s" . magit-status))
-
-  :config
-
-  (defun me/magit-display-buffer-function (buffer)
-    "Render some magit modes in the currently selected buffer."
-    (display-buffer
-     buffer
-     (cond ((and (derived-mode-p 'magit-mode)
-                 (eq (with-current-buffer buffer major-mode)
-                     'magit-status-mode))
-            nil)
-           ((memq (with-current-buffer buffer major-mode)
-                  '(magit-process-mode
-                    magit-revision-mode
-                    magit-diff-mode
-                    magit-stash-mode))
-            nil)
-           (t
-            '(display-buffer-same-window)))))
-
-  ;; Use better defaults
-  (setq-default
-   magit-display-buffer-function 'me/magit-display-buffer-function
-   magit-refs-show-commit-count (quote all)
-   magit-section-show-child-count t
-   magit-set-upstream-on-push 'askifnotset)
-
-  ;; Customize lighters
-  (delight
-   '((magit-diff-mode "Magit Diff")
-     (magit-log-mode "Magit Log")
-     (magit-popup-mode "Magit Popup")
-     (magit-status-mode "Magit Status")))
-
-  ;; Customize faces
-  (set-face-attribute 'magit-diff-added nil
-                      :background zenburn/green-1 :foreground zenburn/green+2)
-  (set-face-attribute 'magit-diff-added-highlight nil
-                      :background zenburn/green-1 :foreground zenburn/green+2)
-  (set-face-attribute 'magit-diff-removed nil
-                      :background zenburn/red-4 :foreground zenburn/red)
-  (set-face-attribute 'magit-diff-removed-highlight nil
-                      :background zenburn/red-4 :foreground zenburn/red)
-  (set-face-attribute 'magit-popup-heading nil :height me/font-size-header)
-  (set-face-attribute 'magit-section-heading nil :height me/font-size-header))
-#+END_SRC
-
-** markdown
+- =markdown-mode=: https://github.com/jrblevin/markdown-mode
 
 #+BEGIN_SRC emacs-lisp
-;; https://github.com/jrblevin/markdown-mode
 (use-package markdown-mode
   :delight markdown-mode "Markdown"
   :mode
@@ -784,13 +801,19 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
   (setq-default markdown-asymmetric-header t))
 #+END_SRC
 
-** mode-line
+** Mode-line
+
+- *TODO*: Check out https://www.emacswiki.org/emacs/delight-powerline.el.
+
+- =delight=: https://github.com/antonio/delight.el
+- =powerline=: https://github.com/milkypostman/powerline
+
+Brace yourself, this is quite big and possible sub-optimal. I use =powerline= to
+customize the =mode-line= a la Vim.
 
 #+BEGIN_SRC emacs-lisp
-;; https://github.com/antonio/delight.el
 (use-package delight
   :config
-  ;; NOTE: Or use https://www.emacswiki.org/emacs/delight-powerline.el?
   (defadvice powerline-major-mode (around delight-powerline-major-mode activate)
     (let ((inhibit-mode-name-delight nil))
       ad-do-it))
@@ -798,7 +821,6 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
     (let ((inhibit-mode-name-delight nil))
       ad-do-it)))
 
-;; https://github.com/milkypostman/powerline
 (use-package powerline
 
   :demand t
@@ -868,7 +890,6 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
 
   (defmacro me/flycheck-lighter (error)
     "Return a formatted string describing the ERROR (error, warning, info) count."
-    ;; NOTE: Shamelessly taken from spacemacs
     `(let* ((error-counts (flycheck-count-errors flycheck-current-errors))
             (errorp (flycheck-has-current-errors-p ',error))
             (count (or (cdr (assq ',error error-counts)) "?"))
@@ -991,10 +1012,19 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
   (set-face-attribute 'me/vc-face nil :foreground zenburn/bg+3))
 #+END_SRC
 
-** org
+** Org
+
+- =org=: http://orgmode.org/
+
+This very file is organized with =org-mode=. I am definitely not a power user of Org,
+but I'm getting there. :)
+
+#+BEGIN_QUOTE
+Org mode is for keeping notes, maintaining TODO lists, planning projects, and
+authoring documents with a fast and effective plain-text system.
+#+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
-;; http://orgmode.org/
 (use-package org
   :delight org-mode "Org"
 
@@ -1034,7 +1064,9 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
   (define-key org-mode-map (kbd "<M-return>") 'org-insert-heading-after-current))
 #+END_SRC
 
-** osx
+** OS X
+
+Augment Emacs experience for OS X users.
 
 #+BEGIN_SRC emacs-lisp
 (defvar ns-command-modifier)
@@ -1046,32 +1078,23 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
    ns-option-modifier nil))                          ; Disable the `alt' key
 #+END_SRC
 
-** parentheses
+** Parentheses
+
+- =rainbow-delimiters=: https://github.com/Fanael/rainbow-delimiters
+- =smartparens=: https://github.com/Fuco1/smartparens
+
+Highlight parenthese-like delimiters in a rainbow fashion. It ease the reading when
+dealing with mismatched parentheses.
 
 #+BEGIN_SRC emacs-lisp
-;; http://www.emacswiki.org/emacs/HighlightParentheses
-(use-package highlight-parentheses
-  :disabled t
-  :defines
-  (zenburn/green+2
-   zenburn/green
-   zenburn/green-1)
-  :init
-  (setq-default hl-paren-colors `(,zenburn/green+2 ,zenburn/green ,zenburn/green-1))
-  :config
-  (define-globalized-minor-mode global-highlight-parentheses-mode
-    highlight-parentheses-mode (lambda () (highlight-parentheses-mode t)))
-  (global-highlight-parentheses-mode t))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-;; https://github.com/Fanael/rainbow-delimiters
 (use-package rainbow-delimiters
   :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+END_SRC
 
+I am still looking for the perfect parenthese management setup as of today... No
+package seem to be please my person.
+
 #+BEGIN_SRC emacs-lisp
-;; https://github.com/Fuco1/smartparens
 (use-package smartparens
   :functions (sp-pair)
   :bind
@@ -1090,22 +1113,9 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
 
 ** Point
 
-- =aggressive-indent-mode=: https://github.com/Malabarba/aggressive-indent-mode
 - =avy=: https://github.com/abo-abo/avy
 - =expand-region=: https://github.com/magnars/expand-region.el
 - =multiple-cursors=: https://github.com/magnars/multiple-cursors.el
-
-Maintain indenting levels at all times, sort of. It is not recommended, and
-explicitely off by default, to activate =aggressive-indent-mode= in some modes such
-as =html-mode= for performance issues.
-
-#+BEGIN_SRC emacs-lisp
-(use-package aggressive-indent
-  :init (global-aggressive-indent-mode 1)
-  :config
-  (setq-default aggressive-indent-comments-too t)
-  (add-to-list 'aggressive-indent-excluded-modes 'scss-mode))
-#+END_SRC
 
 Jump to a specific position in the buffer using a char-based decision tree.
 
@@ -1203,10 +1213,23 @@ Bind commands to move around windows.
 (global-set-key (kbd "C-M-<down>") 'windmove-down)
 #+END_SRC
 
-** projectile
+** Projectile
+
+- *TODO*: Try with =:init= instead of =:demand=.
+
+- =projectile=: https://github.com/bbatsov/projectile
+
+Projectile brings project-level facilities to Emacs such as grep, find and replace.
+
+#+BEGIN_QUOTE
+Projectile is a project interaction library for Emacs. Its goal is to provide a nice
+set of features operating on a project level without introducing external
+dependencies (when feasible). For instance - finding project files has a portable
+implementation written in pure Emacs Lisp without the use of GNU find (but for
+performance sake an indexing mechanism backed by external commands exists as well).
+#+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
-;; https://github.com/bbatsov/projectile
 (use-package projectile
 
   :demand t
@@ -1229,32 +1252,52 @@ Bind commands to move around windows.
    projectile-mode-line '(:eval (projectile-project-name))))
 #+END_SRC
 
-** python
+** Python
+
+- =python=: built-in
+- =pip-requirements=: https://github.com/Wilfred/pip-requirements.el
 
 #+BEGIN_SRC emacs-lisp
-;; Built-in
 (use-package python
   :delight python-mode "Python")
 
-;; https://github.com/Wilfred/pip-requirements.el
 (use-package pip-requirements
   :delight pip-requirements-mode "PyPA Requirements"
   :config (add-hook 'pip-requirements-mode-hook (lambda () (setq-local completion-ignore-case t))))
 #+END_SRC
 
-** rainbow-mode
+** Quality of Life
+
+- =aggressive-indent-mode=: https://github.com/Malabarba/aggressive-indent-mode
+- =rainbow-mode=: https://julien.danjou.info/projects/emacs-packages#rainbow-mode
+
+Maintain indenting levels at all times, sort of. It is not recommended, and
+explicitely off by default, to activate =aggressive-indent-mode= in some modes such
+as =html-mode= for performance issues.
 
 #+BEGIN_SRC emacs-lisp
-;; https://julien.danjou.info/projects/emacs-packages#rainbow-mode
+(use-package aggressive-indent
+  :init (global-aggressive-indent-mode 1)
+  :config
+  (setq-default aggressive-indent-comments-too t)
+  (add-to-list 'aggressive-indent-excluded-modes 'scss-mode))
+#+END_SRC
+
+Colorize colors as text with their value.
+
+#+BEGIN_SRC emacs-lisp
 (use-package rainbow-mode
   :init (add-hook 'prog-mode-hook 'rainbow-mode)
   :config (setq-default rainbow-x-colors-major-mode-list '()))
 #+END_SRC
 
-** whitespace
+** Whitespaces
+
+- =whitespace=: built-in
+
+Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
 #+BEGIN_SRC emacs-lisp
-;; Built-in
 (use-package whitespace
   :defines (zenburn/red-1)
   :init (global-whitespace-mode 1)
@@ -1281,11 +1324,14 @@ golden ratio somewhere in its formulas.
    split-width-threshold nil))
 #+END_SRC
 
-** yaml
+** YAML
+
+- =yaml-mode=: https://github.com/yoshiki/yaml-mode
 
 #+BEGIN_SRC emacs-lisp
-;; https://github.com/yoshiki/yaml-mode
 (use-package yaml-mode
   :delight yaml-mode "YAML"
   :mode "\\.yml\\'")
 #+END_SRC
+
+[[#dotemacs][Back to top]]
