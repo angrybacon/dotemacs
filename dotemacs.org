@@ -1,20 +1,20 @@
 #+TITLE: DotEmacs
 
-*[[#1-bootstrap][1. Bootstrap]]* |
-*[[#2-theme][2. Theme]]* |
-*[[#3-features][3. Features]]*
+*[[#a-bootstrap][A. Bootstrap]]* |
+*[[#b-theme][B. Theme]]* |
+*[[#c-features][C. Features]]*
 
-* 1. Bootstrap
+* a. Bootstrap
 
-*[[#a-use-better-default][a. Use better default]]* |
-*[[#b-toggle-ui-components][b. Toggle UI components]]* |
-*[[#c-enable-some-more-goodies][c. Enable some more goodies]]* |
-*[[#d-validate-emacs-version][d. Validate Emacs' version]]* |
-*[[#e-benchmark-startup-time][e. Benchmark startup time]]* |
-*[[#f-set-constants][f. Set constants]]* |
-*[[#g-initialize-melpa][g. Initialize MELPA]]*
+1. *[[#1-use-better-default][Use better default]]*
+1. *[[#2-toggle-ui-components][Toggle UI components]]*
+1. *[[#3-enable-some-more-goodies][Enable some more goodies]]*
+1. *[[#4-validate-emacs-version][Validate Emacs' version]]*
+1. *[[#5-benchmark-startup-time][Benchmark startup time]]*
+1. *[[#6-set-constants][Set constants]]*
+1. *[[#7-initialize-melpa][Initialize MELPA]]*
 
-** a. Use better default
+** 1. Use better default
 
 #+BEGIN_SRC emacs-lisp
 (setq-default
@@ -39,7 +39,7 @@
  x-select-enable-clipboard t)                    ; Merge system's and Emacs' clipboard
 #+END_SRC
 
-** b. Toggle UI components
+** 2. Toggle UI components
 
 Some UI elements are rather invasive and oppose to the no-mouse philosophy.
 
@@ -64,7 +64,7 @@ Some UI elements are rather invasive and oppose to the no-mouse philosophy.
 (set-frame-parameter nil 'fullscreen 'fullboth)  ; Enable pseudo fullscreen
 #+END_SRC
 
-** c. Enable some more goodies
+** 3. Enable some more goodies
 
 #+BEGIN_SRC emacs-lisp
 (fset 'yes-or-no-p 'y-or-n-p)                    ; Replace yes/no prompts with the shorter y/n
@@ -72,7 +72,7 @@ Some UI elements are rather invasive and oppose to the no-mouse philosophy.
 (put 'upcase-region 'disabled nil)               ; Enable upcase-region
 #+END_SRC
 
-** d. Validate Emacs' version
+** 4. Validate Emacs' version
 
 #+BEGIN_SRC emacs-lisp
 (when (version<= emacs-version "24")
@@ -80,7 +80,7 @@ Some UI elements are rather invasive and oppose to the no-mouse philosophy.
     (kill-emacs)))
 #+END_SRC
 
-** e. Benchmark startup time
+** 5. Benchmark startup time
 
 - *FIXME*: Find a way to dynamically look for =benchmark-init.el=.
 
@@ -95,7 +95,7 @@ But this is cheating: this snippet of code should live as early as in =init.el=.
     (load benchmark-init.el)))
 #+END_SRC
 
-** f. Set constants
+** 6. Set constants
 
 I load =.secret.el= to keep sensible things out of version control.
 For instance, you could overwrite the following variables and set your identity by
@@ -112,7 +112,7 @@ customizing both =user-full-name= and =user-mail-address=.
     (load secret.el)))
 #+END_SRC
 
-** g. Initialize MELPA
+** 7. Initialize MELPA
 
 - *FIXME*: What if emacs-major-version < 24?
 - *FIXME*: It sometimes does an extra =package-refresh-contents=.
@@ -153,7 +153,7 @@ functionality!
    use-package-always-ensure t))
 #+END_SRC
 
-* 2. Theme
+* b. Theme
 ** Set a color palette
 
 I like to have an accessible copy of my active theme's color codes.
@@ -230,7 +230,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
     (set-face-attribute 'default nil :font me/font-family)))
 #+END_SRC
 
-* 3. Features
+* c. Features
 
 - *TODO*: Add a list of all custom shortcuts.
 - *TODO*: Should probably gather all the =delight=ing action at the same place.
