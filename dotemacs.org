@@ -1,9 +1,20 @@
 #+TITLE: DotEmacs
 
-*[[#bootstrap][1. Bootstrap]]* | *[[#theme][2. Theme]]* | *[[#features][3. Features]]*
+*[[#1-bootstrap][1. Bootstrap]]* |
+*[[#2-theme][2. Theme]]* |
+*[[#3-features][3. Features]]*
 
 * 1. Bootstrap
-** Use better default
+
+*[[#a-use-better-default][a. Use better default]]* |
+*[[#b-toggle-ui-components][b. Toggle UI components]]* |
+*[[#c-enable-some-more-goodies][c. Enable some more goodies]]* |
+*[[#d-validate-emacs-version][d. Validate Emacs' version]]* |
+*[[#e-benchmark-startup-time][e. Benchmark startup time]]* |
+*[[#f-set-constants][f. Set constants]]* |
+*[[#g-initialize-melpa][g. Initialize MELPA]]*
+
+** a. Use better default
 
 #+BEGIN_SRC emacs-lisp
 (setq-default
@@ -28,7 +39,7 @@
  x-select-enable-clipboard t)                    ; Merge system's and Emacs' clipboard
 #+END_SRC
 
-** Toggle UI components
+** b. Toggle UI components
 
 Some UI elements are rather invasive and oppose to the no-mouse philosophy.
 
@@ -53,7 +64,7 @@ Some UI elements are rather invasive and oppose to the no-mouse philosophy.
 (set-frame-parameter nil 'fullscreen 'fullboth)  ; Enable pseudo fullscreen
 #+END_SRC
 
-** Enable some more goodies
+** c. Enable some more goodies
 
 #+BEGIN_SRC emacs-lisp
 (fset 'yes-or-no-p 'y-or-n-p)                    ; Replace yes/no prompts with the shorter y/n
@@ -61,7 +72,7 @@ Some UI elements are rather invasive and oppose to the no-mouse philosophy.
 (put 'upcase-region 'disabled nil)               ; Enable upcase-region
 #+END_SRC
 
-** Validate Emacs' version
+** d. Validate Emacs' version
 
 #+BEGIN_SRC emacs-lisp
 (when (version<= emacs-version "24")
@@ -69,7 +80,7 @@ Some UI elements are rather invasive and oppose to the no-mouse philosophy.
     (kill-emacs)))
 #+END_SRC
 
-** Benchmark startup time
+** e. Benchmark startup time
 
 - *FIXME*: Find a way to dynamically look for =benchmark-init.el=.
 
@@ -84,7 +95,7 @@ But this is cheating: this snippet of code should live as early as in =init.el=.
     (load benchmark-init.el)))
 #+END_SRC
 
-** Set constants
+** f. Set constants
 
 I load =.secret.el= to keep sensible things out of version control.
 For instance, you could overwrite the following variables and set your identity by
@@ -101,7 +112,7 @@ customizing both =user-full-name= and =user-mail-address=.
     (load secret.el)))
 #+END_SRC
 
-** Initialize MELPA
+** g. Initialize MELPA
 
 - *FIXME*: What if emacs-major-version < 24?
 - *FIXME*: It sometimes does an extra =package-refresh-contents=.
