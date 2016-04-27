@@ -4,7 +4,7 @@
 *[[#b-theme][B. Theme]]* |
 *[[#c-features][C. Features]]*
 
-* a. Bootstrap
+* A. Bootstrap
 
 1. *[[#1-use-better-default][Use better default]]*
 1. *[[#2-toggle-ui-components][Toggle UI components]]*
@@ -153,8 +153,12 @@ functionality!
    use-package-always-ensure t))
 #+END_SRC
 
-* b. Theme
-** Set a color palette
+* B. Theme
+
+1. *[[1-set-a-color-palette][Set a color palette]]*
+1. *[[2-configure-zenburn][Configure Zenburn]]*
+
+** 1. Set a color palette
 
 I like to have an accessible copy of my active theme's color codes.
 That way, I can fix other packages' colors while still using the same color codes and
@@ -202,7 +206,7 @@ is very /unlikely/ that any of its tones will ever change.
 (defconst zenburn/yellow-2  "#D0BF8F"  "Zenburn palette: #D0BF8F.")
 #+END_SRC
 
-** Configure Zenburn
+** 2. Configure Zenburn
 
 Load =zenburn-theme= and fix some high-level faces to match my personal preferences.
 
@@ -230,7 +234,35 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
     (set-face-attribute 'default nil :font me/font-family)))
 #+END_SRC
 
-* c. Features
+* C. Features
+
+1. *[[1-auto-completion][Auto-Completion]]*
+1. *[[2-css][CSS]]*
+1. *[[3-comments][Comments]]*
+1. *[[4-customization][Customization]]*
+1. *[[5-dired][Dired]]*
+1. *[[6-docker][Docker]]*
+1. *[[7-eww][EWW]]*
+1. *[[8-expand][Expand]]*
+1. *[[9-git][Git]]*
+1. *[[10-helm][Helm]]*
+1. *[[11-helm-plugins][Helm Plugins]]*
+1. *[[12-html][HTML]]*
+1. *[[13-javascript][JavaScript]]*
+1. *[[14-linters][Linters]]*
+1. *[[15-lisp][Lisp]]*
+1. *[[16-markdown][Markdown]]*
+1. *[[17-mode-line][Mode-line]]*
+1. *[[18-org][Org]]*
+1. *[[19-os-x][OS X]]*
+1. *[[20-parentheses][Parentheses]]*
+1. *[[21-point][Point]]*
+1. *[[22-projectile][Projectile]]*
+1. *[[23-python][Python]]*
+1. *[[24-quality-of-life][Quality of Life]]*
+1. *[[25-whitespaces][Whitespaces]]*
+1. *[[26-windows][Windows]]*
+1. *[[27-yaml][YAML]]*
 
 - *TODO*: Add a list of all custom shortcuts.
 - *TODO*: Should probably gather all the =delight=ing action at the same place.
@@ -238,7 +270,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 Features are alphabetically sorted because, well, I'm fussy. And they're easier to
 find that way... so there's that.
 
-** Auto-Completion
+** 1. Auto-Completion
 
 Auto-completion at point. Display a small popin containing the candidates.
 
@@ -262,7 +294,7 @@ Auto-completion at point. Display a small popin containing the candidates.
    company-tern-property-marker " *"))
 #+END_SRC
 
-** CSS
+** 2. CSS
 
 - =css-mode=: built-in
 - =scss-mode=: https://github.com/antonj/scss-mode/
@@ -283,7 +315,7 @@ Auto-completion at point. Display a small popin containing the candidates.
   :config (setq-default scss-compile-at-save nil))
 #+END_SRC
 
-** Comments
+** 3. Comments
 
 - =newcomment=: built-in
 
@@ -297,7 +329,7 @@ Auto-completion at point. Display a small popin containing the candidates.
    comment-multi-line t))
 #+END_SRC
 
-** Customization
+** 4. Customization
 
 This merely changes face attributes and Zenburn customization buffers a little
 more. Should I just try a pull request over [[https://github.com/bbatsov/zenburn-emacs][zenburn-emacs]]?
@@ -315,7 +347,7 @@ more. Should I just try a pull request over [[https://github.com/bbatsov/zenburn
     (set-face-attribute 'custom-group-tag nil :font me/font-family)))
 #+END_SRC
 
-** Dired
+** 5. Dired
 
 Configure Dired buffers. Amongst many other things, Emacs is also a file explorer.
 
@@ -344,7 +376,7 @@ Configure Dired buffers. Amongst many other things, Emacs is also a file explore
    dired-recursive-copies 'always))
 #+END_SRC
 
-** Docker
+** 6. Docker
 
 - =dockerfile-mode=: https://github.com/spotify/dockerfile-mode
 
@@ -354,7 +386,7 @@ Configure Dired buffers. Amongst many other things, Emacs is also a file explore
   :mode "Dockerfile\\'")
 #+END_SRC
 
-** EWW
+** 7. EWW
 
 EWW stands for Emacs Web Wowser. Yeah that's right... Emacs is also a Web
 browser, text-based that is.
@@ -368,7 +400,7 @@ browser, text-based that is.
   :config (setq eww-header-line-format " %t: %u"))
 #+END_SRC
 
-** Expand
+** 8. Expand
 
 HippieExpand manages expansions a la [[http://emmet.io/][Emmet]]. So I've gathered all features that look
 anywhere close to this behavior for it to handle under the same bind, that is
@@ -408,7 +440,7 @@ anywhere close to this behavior for it to handle under the same bind, that is
   (unbind-key "<tab>" yas-minor-mode-map))
 #+END_SRC
 
-** Git
+** 9. Git
 
 Magit provide Git facilities directly from within Emacs.
 
@@ -486,7 +518,7 @@ Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.h
   :delight gitignore-mode "Git Ignore")
 #+END_SRC
 
-** Helm
+** 10. Helm
 
 - *TODO*: Make helm-list-faces-display.
 - *TODO*: Fix the mode-line for Helm buffers.
@@ -580,7 +612,7 @@ Helm equivalents.
   :config (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn/blue))
 #+END_SRC
 
-** Helm Plugins
+** 11. Helm Plugins
 
 - *NOTE*: Does not respect =helm-split-window-default-side=
           (https://github.com/ShingoFukuyama/helm-css-scss/issues/7).
@@ -618,7 +650,7 @@ Fourth-party packages for Helm.
   :config (helm-projectile-on))
 #+END_SRC
 
-** HTML
+** 12. HTML
 
 HTML mode is defined in =sgml-mode.el=.
 
@@ -631,7 +663,7 @@ HTML mode is defined in =sgml-mode.el=.
   :config (setq-default sgml-basic-offset 2))
 #+END_SRC
 
-** JavaScript
+** 13. JavaScript
 
 - *FIXME*: Indent level is broken
            (https://github.com/joshwnj/json-mode/issues/32).
@@ -659,7 +691,7 @@ properties.
   :config (add-hook 'js-mode-hook 'tern-mode))
 #+END_SRC
 
-** Linters
+** 14. Linters
 
 Flycheck lints warnings and errors directly within buffers. It can check a lot of
 different syntaxes, as long as you make sure that Emacs has access to the binaries
@@ -697,7 +729,7 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
   (set-face-attribute 'flycheck-fringe-warning nil :foreground zenburn/orange))
 #+END_SRC
 
-** Lisp
+** 15. Lisp
 
 - =lisp-mode=: built-in
 
@@ -712,7 +744,7 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
      (lisp-interaction-mode "Lisp Interaction"))))
 #+END_SRC
 
-** Markdown
+** 16. Markdown
 
 - =markdown-mode=: https://github.com/jrblevin/markdown-mode
 
@@ -733,7 +765,7 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
   (setq-default markdown-asymmetric-header t))
 #+END_SRC
 
-** Mode-line
+** 17. Mode-line
 
 - *TODO*: Check out https://www.emacswiki.org/emacs/delight-powerline.el.
 
@@ -926,7 +958,7 @@ customize the =mode-line= a la Vim.
   (set-face-attribute 'me/vc-face nil :foreground zenburn/bg+3))
 #+END_SRC
 
-** Org
+** 18. Org
 
 This very file is organized with =org-mode=. I am definitely not a power user of Org,
 but I'm getting there. :)
@@ -972,7 +1004,7 @@ authoring documents with a fast and effective plain-text system.
   (define-key org-mode-map (kbd "<M-return>") 'org-insert-heading-after-current))
 #+END_SRC
 
-** OS X
+** 19. OS X
 
 Augment Emacs experience for OS X users.
 
@@ -986,7 +1018,7 @@ Augment Emacs experience for OS X users.
    ns-option-modifier nil))                          ; Disable the `alt' key
 #+END_SRC
 
-** Parentheses
+** 20. Parentheses
 
 Highlight parenthese-like delimiters in a rainbow fashion. It ease the reading when
 dealing with mismatched parentheses.
@@ -1023,7 +1055,7 @@ package seem to be please my person.
   (sp-pair "[[" "]]"))
 #+END_SRC
 
-** Point
+** 21. Point
 
 Jump to a specific position in the buffer using a char-based decision tree.
 
@@ -1142,7 +1174,7 @@ Bind commands to move around windows.
 (global-set-key (kbd "C-M-<down>") 'windmove-down)
 #+END_SRC
 
-** Projectile
+** 22. Projectile
 
 - *TODO*: Try with =:init= instead of =:demand=.
 
@@ -1175,7 +1207,7 @@ performance sake an indexing mechanism backed by external commands exists as wel
    projectile-mode-line '(:eval (projectile-project-name))))
 #+END_SRC
 
-** Python
+** 23. Python
 
 - =python=: built-in
 - =pip-requirements=: https://github.com/Wilfred/pip-requirements.el
@@ -1189,7 +1221,7 @@ performance sake an indexing mechanism backed by external commands exists as wel
   :config (add-hook 'pip-requirements-mode-hook (lambda () (setq-local completion-ignore-case t))))
 #+END_SRC
 
-** Quality of Life
+** 24. Quality of Life
 
 Maintain indenting levels at all times, sort of. It is not recommended, and
 explicitely off by default, to activate =aggressive-indent-mode= in some modes such
@@ -1214,7 +1246,7 @@ Colorize colors as text with their value.
   :config (setq-default rainbow-x-colors-major-mode-list '()))
 #+END_SRC
 
-** Whitespaces
+** 25. Whitespaces
 
 Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
@@ -1230,7 +1262,7 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
   (set-face-attribute 'whitespace-trailing nil :background zenburn/red-1))
 #+END_SRC
 
-** Windows
+** 26. Windows
 
 - *TODO*: Find a way to automatically adjust =golden-ratio-adjust-factor= depending
           on the current display.
@@ -1275,7 +1307,7 @@ golden ratio somewhere in its formulas.
    split-width-threshold nil))
 #+END_SRC
 
-** YAML
+** 27. YAML
 
 - =yaml-mode=: https://github.com/yoshiki/yaml-mode
 
