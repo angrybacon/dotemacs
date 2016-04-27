@@ -720,7 +720,6 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
 (use-package lisp-mode
   :ensure nil
   :delight lisp-mode "Lisp"
-  :bind ("C-c C-c" . eval-region)
   :config
   (delight
    '((emacs-lisp-mode "Emacs Lisp")
@@ -1045,6 +1044,7 @@ Jump to a specific position in the buffer using a char-based decision tree.
 - =avy=: https://github.com/abo-abo/avy
 - =expand-region=: https://github.com/magnars/expand-region.el
 - =multiple-cursors=: https://github.com/magnars/multiple-cursors.el
+- =selected=: https://github.com/Kungsgeten/selected.el
 
 #+BEGIN_SRC emacs-lisp
 (use-package avy
@@ -1072,8 +1072,6 @@ Enable multiple cursors at once. Some witchcraft at work here.
   (("C-S-<mouse-1>" . mc/add-cursor-on-click)
    ("C-S-c C-S-a" . mc/vertical-align-with-space)
    ("C-S-c C-S-c" . mc/edit-lines)
-   ("C-<" . mc/mark-previous-like-this)
-   ("C->" . mc/mark-next-like-this)
    ("C-S-c C-S-l" . mc/insert-letters)
    ("C-S-c C-S-n" . mc/insert-numbers)
    ("C-'" . mc-hide-unmatched-lines-mode))
@@ -1081,6 +1079,36 @@ Enable multiple cursors at once. Some witchcraft at work here.
   (setq-default
    mc/edit-lines-empty-lines 'ignore
    mc/list-file (expand-file-name ".multiple-cursors.el" user-emacs-directory)))
+#+END_SRC
+
+- *FIXME*: selected.el is yet to be available through MELPA.
+
+Enable new custom binds when region is active.
+
+#+BEGIN_SRC emacs-lisp
+(let ((selected.el (expand-file-name "selected.el" user-emacs-directory)))
+  (when (file-exists-p selected.el)
+    (load selected.el)))
+
+(use-package selected
+  :ensure nil
+  :defines selected-keymap
+  :commands selected-minor-mode
+  :bind
+  (:map selected-keymap
+        ("C-c C-c" . eval-region)
+        ("<M-left>" . indent-rigidly-left)
+        ("<M-right>" . indent-rigidly-right)
+        ("<" . mc/mark-previous-like-this)
+        (">" . mc/mark-next-like-this)
+        ("C-f" . fill-region)
+        ("C-c c" . capitalize-region)
+        ("C-c l" . downcase-region)
+        ("C-c u" . upcase-region)
+        ("C-g" . selected-off)
+        ("C-s r" . reverse-region)
+        ("C-s s" . sort-lines)
+        ("C-s w" . me/sort-words)))
 #+END_SRC
 
 I disagree with Emacs' definition of paragraphs so I redefined the way it should jump
