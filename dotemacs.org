@@ -639,10 +639,10 @@ Helm equivalents.
 
 ** Helm Plugins
 
-- *NOTE*: Does not respect =helm-split-window-default-side=.
-          https://github.com/ShingoFukuyama/helm-css-scss/issues/7
-- *TODO*: Fix Zenburn palette.
-          https://github.com/bbatsov/zenburn-emacs/issues/220
+- *NOTE*: Does not respect =helm-split-window-default-side=
+          (https://github.com/ShingoFukuyama/helm-css-scss/issues/7).
+- *TODO*: Fix Zenburn palette
+          (https://github.com/bbatsov/zenburn-emacs/issues/220).
 
 Fourth-party packages for Helm.
 
@@ -690,8 +690,8 @@ HTML mode is defined in =sgml-mode.el=.
 
 ** JavaScript
 
-- *FIXME*: Indent level is broken.
-           https://github.com/joshwnj/json-mode/issues/32
+- *FIXME*: Indent level is broken
+           (https://github.com/joshwnj/json-mode/issues/32).
 
 Tern is a code-analysis engine for JavaScript. I use it to check syntax and grammar
 in my JavaScript code. With [[#features.auto-completion][company]], it can also provide candidates for variables and
@@ -1035,9 +1035,7 @@ authoring documents with a fast and effective plain-text system.
    ("C-c o s" . org-search-view)
    ("C-c o t" . org-todo-list))
 
-  :init
-  (add-hook 'org-mode-hook 'turn-on-auto-fill)
-  (add-hook 'org-mode-hook 'whitespace-turn-on)
+  :init (add-hook 'org-mode-hook 'turn-on-auto-fill)
 
   :config
   (setq-default
@@ -1137,10 +1135,12 @@ Enable multiple cursors at once. Some witchcraft at work here.
 (use-package multiple-cursors
   :bind
   (("C-S-<mouse-1>" . mc/add-cursor-on-click)
-   ;; ("C-S-a C-S-a" . mc/vertical-align-with-space)
+   ("C-S-c C-S-a" . mc/vertical-align-with-space)
    ("C-S-c C-S-c" . mc/edit-lines)
    ("C-<" . mc/mark-previous-like-this)
    ("C->" . mc/mark-next-like-this)
+   ("C-S-c C-S-l" . mc/insert-letters)
+   ("C-S-c C-S-n" . mc/insert-numbers)
    ("C-'" . mc-hide-unmatched-lines-mode))
   :init
   (setq-default
@@ -1170,6 +1170,21 @@ from one block to another.
   (unless (search-backward-regexp "\n[[:blank:]]*\n" nil t)
     (goto-char (point-min)))
   (skip-chars-forward "\n"))
+#+END_SRC
+
+Sort words in region.
+
+#+BEGIN_SRC emacs-lisp
+(defun me/sort-words (reverse beg end)
+  "Sort words in region alphabetically, in REVERSE if negative.
+Prefixed with negative \\[universal-argument], sorts in reverse.
+
+The variable `sort-fold-case' determines whether alphabetic case
+affects the sort order.
+
+See `sort-regexp-fields'."
+  (interactive "*P\nr")
+  (sort-regexp-fields reverse "\\w+" "\\&" beg end))
 #+END_SRC
 
 - *TODO*: Handle regions.
