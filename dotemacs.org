@@ -101,34 +101,6 @@ customizing both =user-full-name= and =user-mail-address=.
     (load secret.el)))
 #+END_SRC
 
-- *TODO*: Find a way to automatically adjust depending on the current display.
-
-I have different physical displays at home and at work. Call =golden-ratio-adjust=
-with the following values.
-
-#+BEGIN_SRC emacs-lisp
-(defconst me/golden-ratio-adjust-factor-1  .8    "A factor for 16/10: bi-split.")
-(defconst me/golden-ratio-adjust-factor-2  .525  "A factor for 16/10: tri-split.")
-(defconst me/golden-ratio-adjust-factor-3  .805  "A factor for 16/9: bi-split.")
-(defconst me/golden-ratio-adjust-factor-4  .53   "A factor for 16/9: tri-split.")
-
-(global-set-key (kbd "<f5>") (lambda ()
-                               (interactive)
-                               (golden-ratio-adjust me/golden-ratio-adjust-factor-1)))
-
-(global-set-key (kbd "<f6>") (lambda ()
-                               (interactive)
-                               (golden-ratio-adjust me/golden-ratio-adjust-factor-2)))
-
-(global-set-key (kbd "<f7>") (lambda ()
-                               (interactive)
-                               (golden-ratio-adjust me/golden-ratio-adjust-factor-3)))
-
-(global-set-key (kbd "<f8>") (lambda ()
-                               (interactive)
-                               (golden-ratio-adjust me/golden-ratio-adjust-factor-4)))
-#+END_SRC
-
 ** Initialize MELPA
 
 - *FIXME*: What if emacs-major-version < 24?
@@ -227,18 +199,6 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 ;; https://github.com/bbatsov/zenburn-emacs
 (use-package zenburn-theme
 
-  :defines
-  (me/font-family
-   me/font-size-default
-   me/font-size-header
-   zenburn/bg+3
-   zenburn/bg+0
-   zenburn/bg
-   zenburn/bg-1
-   zenburn/blue
-   zenburn/fg-1
-   zenburn/green)
-
   :init (load-theme 'zenburn t)
 
   :config
@@ -335,16 +295,7 @@ more. Should I just try a pull request over [[https://github.com/bbatsov/zenburn
 
 #+BEGIN_SRC emacs-lisp
 (use-package cus-edit
-
   :ensure nil
-
-  :defines
-  (me/font-family
-   me/font-size-header
-   zenburn/blue
-   zenburn/green+4
-   zenburn/yellow)
-
   :config
   (set-face-attribute 'custom-group-tag nil :foreground zenburn/yellow :height me/font-size-header)
   (set-face-attribute 'custom-state nil :foreground zenburn/green+4)
@@ -465,13 +416,6 @@ Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.h
 #+BEGIN_SRC emacs-lisp
 (use-package magit
 
-  :defines
-  (me/font-size-header
-   zenburn/red
-   zenburn/red-4
-   zenburn/green+2
-   zenburn/green-1)
-
   :bind
   (("C-c g b" . magit-blame)
    ("C-c g l" . magit-log)
@@ -561,15 +505,6 @@ modular, and unchained from constraints of backward compatibility.
 #+BEGIN_SRC emacs-lisp
 (use-package helm
 
-  :defines
-  (me/font-size-default
-   me/font-size-header
-   zenburn/bg+3
-   zenburn/bg+0
-   zenburn/bg
-   zenburn/green+2
-   zenburn/yellow)
-
   :bind
   (("C-c h k" . helm-show-kill-ring)
    ("C-c h g" . helm-google-suggest)
@@ -604,7 +539,6 @@ Helm equivalents.
 
 (use-package helm-command
   :ensure helm
-  :defines (zenburn/orange)
   :bind ([remap execute-extended-command] . helm-M-x)
   :config
   (setq-default helm-M-x-fuzzy-match t)
@@ -612,7 +546,6 @@ Helm equivalents.
 
 (use-package helm-grep
   :ensure helm
-  :defines (zenburn/bg+3)
   :config (set-face-attribute 'helm-grep-lineno nil :foreground zenburn/yellow-2))
 
 (use-package helm-misc
@@ -633,7 +566,6 @@ Helm equivalents.
 
 (use-package helm-regexp
   :ensure helm
-  :defines (zenburn/blue)
   :config (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn/blue))
 #+END_SRC
 
@@ -727,11 +659,6 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
 
-  :defines
-  (zenburn/blue+1
-   zenburn/orange
-   zenburn/red-1)
-
   :bind
   (("C-c e l" . list-flycheck-errors)
    ("C-c e p" . flycheck-previous-error)
@@ -818,24 +745,6 @@ customize the =mode-line= a la Vim.
 (use-package powerline
 
   :demand t
-
-  :defines
-  (me/font-size-mode-line
-   zenburn/bg+3
-   zenburn/bg+1
-   zenburn/bg-0
-   zenburn/bg-1
-   zenburn/blue+1
-   zenburn/blue
-   zenburn/fg
-   zenburn/fg-1
-   zenburn/green+2
-   zenburn/green
-   zenburn/green-1
-   zenburn/magenta
-   zenburn/orange
-   zenburn/red
-   zenburn/red-1)
 
   :preface
 
@@ -1022,10 +931,6 @@ authoring documents with a fast and effective plain-text system.
 (use-package org
   :delight org-mode "Org"
 
-  :defines
-  (zenburn/bg+0
-   zenburn/bg+1)
-
   :bind
   (("C-c o a" . org-agenda-list)
    ("C-c o b" . org-iswitchb)
@@ -1088,14 +993,18 @@ package seem to be please my person.
 
 #+BEGIN_SRC emacs-lisp
 (use-package smartparens
-  :functions (sp-pair)
+
+  :functions sp-pair
+
   :bind
   (("M-<backspace>" . sp-unwrap-sexp)
    ("M-<left>" . sp-forward-barf-sexp)
    ("M-<right>" . sp-forward-slurp-sexp)
    ("M-S-<left>" . sp-backward-slurp-sexp)
    ("M-S-<right>" . sp-backward-barf-sexp))
+
   :init (require 'smartparens-config)
+
   :config
   (smartparens-global-mode 1)
   (setq-default sp-autoinsert-quote-if-followed-by-closing-pair t)
@@ -1240,15 +1149,9 @@ performance sake an indexing mechanism backed by external commands exists as wel
 
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
-
   :demand t
-
-  :defines
-  (projectile-enable-caching
-   projectile-mode-line)
-
+  :defines me/project-name
   :functions (me/projectile-project-name)
-
   :config
   (defun me/projectile-project-name (orig-fun &rest args)
     "Prefer `me/project-name' over default Projectile project string."
@@ -1308,7 +1211,6 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
 #+BEGIN_SRC emacs-lisp
 (use-package whitespace
-  :defines (zenburn/red-1)
   :init (global-whitespace-mode 1)
   :config
   (setq-default whitespace-style '(face empty tab trailing))
@@ -1319,6 +1221,9 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
 ** Windows
 
+- *TODO*: Find a way to automatically adjust =golden-ratio-adjust-factor= depending
+          on the current display.
+
 Adjust the size of every windows and focus the active one. It uses the mathematical
 golden ratio somewhere in its formulas.
 
@@ -1326,7 +1231,33 @@ golden ratio somewhere in its formulas.
 
 #+BEGIN_SRC emacs-lisp
 (use-package golden-ratio
+
+  :preface
+  (defconst me/golden-ratio-adjust-factor-1  .8    "A factor for 16/10: bi-split.")
+  (defconst me/golden-ratio-adjust-factor-2  .525  "A factor for 16/10: tri-split.")
+  (defconst me/golden-ratio-adjust-factor-3  .805  "A factor for 16/9: bi-split.")
+  (defconst me/golden-ratio-adjust-factor-4  .53   "A factor for 16/9: tri-split.")
+  (defun me/golden-ratio-adjust-1 ()
+    (interactive)
+    (golden-ratio-adjust me/golden-ratio-adjust-factor-1))
+  (defun me/golden-ratio-adjust-2 ()
+    (interactive)
+    (golden-ratio-adjust me/golden-ratio-adjust-factor-2))
+  (defun me/golden-ratio-adjust-3 ()
+    (interactive)
+    (golden-ratio-adjust me/golden-ratio-adjust-factor-3))
+  (defun me/golden-ratio-adjust-4 ()
+    (interactive)
+    (golden-ratio-adjust me/golden-ratio-adjust-factor-4))
+
+  :bind
+  (("<f5>" . me/golden-ratio-adjust-1)
+   ("<f6>" . me/golden-ratio-adjust-2)
+   ("<f7>" . me/golden-ratio-adjust-3)
+   ("<f8>" . me/golden-ratio-adjust-4))
+
   :init (golden-ratio-mode 1)
+
   :config
   (setq-default
    golden-ratio-adjust-factor me/golden-ratio-adjust-factor-1
