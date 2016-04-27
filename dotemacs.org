@@ -134,7 +134,7 @@ Dependency checks and [[https://melpa.org][MELPA]] initialization, sugar-wrapped
     (package-install 'use-package)))
 #+END_SRC
 
-In order to have unified package declaration in my Emacs files, I use [[https://github.com/jwiegley/use-package][=use-package=]].
+In order to have unified package declaration in my Emacs files, I use [[https://github.com/jwiegley/use-package][use-package]].
 It allows for isolation and clarity.
 
 #+BEGIN_QUOTE
@@ -164,8 +164,8 @@ I like to have an accessible copy of my active theme's color codes.
 That way, I can fix other packages' colors while still using the same color codes and
 keep consistency everywhere.
 
-This method is considered safe because I am using the all-famous [[https://github.com/bbatsov/zenburn-emacs][Zenburn]] palette. It
-is very /unlikely/ that any of its tones will ever change.
+This method is considered safe because I am using the all-famous [[https://github.com/bbatsov/zenburn-emacs][Zenburn Emacs port]]
+palette. It is very /unlikely/ that any of its tones will ever change.
 
 #+BEGIN_SRC emacs-lisp
 (defconst zenburn/bg+3      "#6F6F6F"  "Zenburn palette: #6F6F6F.")
@@ -211,11 +211,8 @@ is very /unlikely/ that any of its tones will ever change.
 Load =zenburn-theme= and fix some high-level faces to match my personal preferences.
 
 #+BEGIN_SRC emacs-lisp
-;; https://github.com/bbatsov/zenburn-emacs
 (use-package zenburn-theme
-
   :init (load-theme 'zenburn t)
-
   :config
   (set-face-attribute 'default nil :height me/font-size-default)
   (set-face-attribute 'font-lock-doc-face nil :italic t)
@@ -242,25 +239,25 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 1. *[[#4-customization][Customization]]*
 1. *[[#5-dired][Dired]]*
 1. *[[#6-docker][Docker]]*
-1. *[[#7-eww][EWW]]*
-1. *[[#8-expand][Expand]]*
-1. *[[#9-git][Git]]*
-1. *[[#10-helm][Helm]]*
-1. *[[#11-helm-plugins][Helm Plugins]]*
-1. *[[#12-html][HTML]]*
-1. *[[#13-javascript][JavaScript]]*
-1. *[[#14-linters][Linters]]*
-1. *[[#15-lisp][Lisp]]*
-1. *[[#16-markdown][Markdown]]*
-1. *[[#17-mode-line][Mode-line]]*
-1. *[[#18-org][Org]]*
-1. *[[#19-os-x][OS X]]*
-1. *[[#20-parentheses][Parentheses]]*
-1. *[[#21-point][Point]]*
-1. *[[#22-projectile][Projectile]]*
-1. *[[#23-python][Python]]*
-1. *[[#24-quality-of-life][Quality of Life]]*
-1. *[[#25-whitespaces][Whitespaces]]*
+1. *[[#7-expand][Expand]]*
+1. *[[#8-git][Git]]*
+1. *[[#9-helm][Helm]]*
+1. *[[#10-helm-plugins][Helm Plugins]]*
+1. *[[#11-html][HTML]]*
+1. *[[#12-javascript][JavaScript]]*
+1. *[[#13-linters][Linters]]*
+1. *[[#14-lisp][Lisp]]*
+1. *[[#15-markdown][Markdown]]*
+1. *[[#16-mode-line][Mode-line]]*
+1. *[[#17-org][Org]]*
+1. *[[#18-os-x][OS X]]*
+1. *[[#19-parentheses][Parentheses]]*
+1. *[[#20-point][Point]]*
+1. *[[#21-projectile][Projectile]]*
+1. *[[#22-python][Python]]*
+1. *[[#23-quality-of-life][Quality of Life]]*
+1. *[[#24-whitespaces][Whitespaces]]*
+1. *[[#25-web-browsing][Web Browsing]]*
 1. *[[#26-windows][Windows]]*
 1. *[[#27-yaml][YAML]]*
 
@@ -386,21 +383,7 @@ Configure Dired buffers. Amongst many other things, Emacs is also a file explore
   :mode "Dockerfile\\'")
 #+END_SRC
 
-** 7. EWW
-
-EWW stands for Emacs Web Wowser. Yeah that's right... Emacs is also a Web
-browser, text-based that is.
-
-- =eww=: built-in
-
-#+BEGIN_SRC emacs-lisp
-(use-package eww
-  :ensure nil
-  :delight eww-mode "Emacs Web Wowser"
-  :config (setq eww-header-line-format " %t: %u"))
-#+END_SRC
-
-** 8. Expand
+** 7. Expand
 
 HippieExpand manages expansions a la [[http://emmet.io/][Emmet]]. So I've gathered all features that look
 anywhere close to this behavior for it to handle under the same bind, that is
@@ -440,7 +423,7 @@ anywhere close to this behavior for it to handle under the same bind, that is
   (unbind-key "<tab>" yas-minor-mode-map))
 #+END_SRC
 
-** 9. Git
+** 8. Git
 
 Magit provide Git facilities directly from within Emacs.
 
@@ -518,7 +501,7 @@ Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.h
   :delight gitignore-mode "Git Ignore")
 #+END_SRC
 
-** 10. Helm
+** 9. Helm
 
 - *TODO*: Make helm-list-faces-display.
 - *TODO*: Fix the mode-line for Helm buffers.
@@ -612,7 +595,7 @@ Helm equivalents.
   :config (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn/blue))
 #+END_SRC
 
-** 11. Helm Plugins
+** 10. Helm Plugins
 
 - *NOTE*: Does not respect =helm-split-window-default-side=
           (https://github.com/ShingoFukuyama/helm-css-scss/issues/7).
@@ -650,7 +633,7 @@ Fourth-party packages for Helm.
   :config (helm-projectile-on))
 #+END_SRC
 
-** 12. HTML
+** 11. HTML
 
 HTML mode is defined in =sgml-mode.el=.
 
@@ -663,14 +646,14 @@ HTML mode is defined in =sgml-mode.el=.
   :config (setq-default sgml-basic-offset 2))
 #+END_SRC
 
-** 13. JavaScript
+** 12. JavaScript
 
 - *FIXME*: Indent level is broken
            (https://github.com/joshwnj/json-mode/issues/32).
 
 Tern is a code-analysis engine for JavaScript. I use it to check syntax and grammar
-in my JavaScript code. With [[#features.auto-completion][company]], it can also provide candidates for variables and
-properties.
+in my JavaScript code. With an auto-complete frontend, it can also provide candidates
+for variables and properties.
 
 - =js-mode=: built-in
 - =json-mode=: https://github.com/joshwnj/json-mode
@@ -691,7 +674,7 @@ properties.
   :config (add-hook 'js-mode-hook 'tern-mode))
 #+END_SRC
 
-** 14. Linters
+** 13. Linters
 
 Flycheck lints warnings and errors directly within buffers. It can check a lot of
 different syntaxes, as long as you make sure that Emacs has access to the binaries
@@ -729,7 +712,7 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
   (set-face-attribute 'flycheck-fringe-warning nil :foreground zenburn/orange))
 #+END_SRC
 
-** 15. Lisp
+** 14. Lisp
 
 - =lisp-mode=: built-in
 
@@ -744,7 +727,7 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
      (lisp-interaction-mode "Lisp Interaction"))))
 #+END_SRC
 
-** 16. Markdown
+** 15. Markdown
 
 - =markdown-mode=: https://github.com/jrblevin/markdown-mode
 
@@ -765,7 +748,7 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
   (setq-default markdown-asymmetric-header t))
 #+END_SRC
 
-** 17. Mode-line
+** 16. Mode-line
 
 - *TODO*: Check out https://www.emacswiki.org/emacs/delight-powerline.el.
 
@@ -958,7 +941,7 @@ customize the =mode-line= a la Vim.
   (set-face-attribute 'me/vc-face nil :foreground zenburn/bg+3))
 #+END_SRC
 
-** 18. Org
+** 17. Org
 
 This very file is organized with =org-mode=. I am definitely not a power user of Org,
 but I'm getting there. :)
@@ -1004,7 +987,7 @@ authoring documents with a fast and effective plain-text system.
   (define-key org-mode-map (kbd "<M-return>") 'org-insert-heading-after-current))
 #+END_SRC
 
-** 19. OS X
+** 18. OS X
 
 Augment Emacs experience for OS X users.
 
@@ -1018,7 +1001,7 @@ Augment Emacs experience for OS X users.
    ns-option-modifier nil))                          ; Disable the `alt' key
 #+END_SRC
 
-** 20. Parentheses
+** 19. Parentheses
 
 Highlight parenthese-like delimiters in a rainbow fashion. It ease the reading when
 dealing with mismatched parentheses.
@@ -1055,7 +1038,7 @@ package seem to be please my person.
   (sp-pair "[[" "]]"))
 #+END_SRC
 
-** 21. Point
+** 20. Point
 
 Jump to a specific position in the buffer using a char-based decision tree.
 
@@ -1174,7 +1157,7 @@ Bind commands to move around windows.
 (global-set-key (kbd "C-M-<down>") 'windmove-down)
 #+END_SRC
 
-** 22. Projectile
+** 21. Projectile
 
 - *TODO*: Try with =:init= instead of =:demand=.
 
@@ -1207,7 +1190,7 @@ performance sake an indexing mechanism backed by external commands exists as wel
    projectile-mode-line '(:eval (projectile-project-name))))
 #+END_SRC
 
-** 23. Python
+** 22. Python
 
 - =python=: built-in
 - =pip-requirements=: https://github.com/Wilfred/pip-requirements.el
@@ -1221,7 +1204,7 @@ performance sake an indexing mechanism backed by external commands exists as wel
   :config (add-hook 'pip-requirements-mode-hook (lambda () (setq-local completion-ignore-case t))))
 #+END_SRC
 
-** 24. Quality of Life
+** 23. Quality of Life
 
 Maintain indenting levels at all times, sort of. It is not recommended, and
 explicitely off by default, to activate =aggressive-indent-mode= in some modes such
@@ -1246,7 +1229,7 @@ Colorize colors as text with their value.
   :config (setq-default rainbow-x-colors-major-mode-list '()))
 #+END_SRC
 
-** 25. Whitespaces
+** 24. Whitespaces
 
 Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
@@ -1260,6 +1243,20 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
   (set-face-attribute 'whitespace-empty nil :background zenburn/red-1)
   (set-face-attribute 'whitespace-tab nil :background zenburn/red-1)
   (set-face-attribute 'whitespace-trailing nil :background zenburn/red-1))
+#+END_SRC
+
+** 25. Web Browsing
+
+EWW stands for Emacs Web Wowser. Yeah that's right... Emacs is also a Web
+browser, text-based that is.
+
+- =eww=: built-in
+
+#+BEGIN_SRC emacs-lisp
+(use-package eww
+  :ensure nil
+  :delight eww-mode "Emacs Web Wowser"
+  :config (setq eww-header-line-format " %t: %u"))
 #+END_SRC
 
 ** 26. Windows
