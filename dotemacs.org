@@ -1,8 +1,8 @@
 #+TITLE: DotEmacs
 
-*[[#bootstrap][Bootstrap]]* | *[[#theme][Theme]]* | *[[#features][Features]]*
+*[[#bootstrap][1. Bootstrap]]* | *[[#theme][2. Theme]]* | *[[#features][3. Features]]*
 
-* Bootstrap
+* 1. Bootstrap
 ** Use better default
 
 #+BEGIN_SRC emacs-lisp
@@ -142,7 +142,7 @@ functionality!
    use-package-always-ensure t))
 #+END_SRC
 
-* Theme
+* 2. Theme
 ** Set a color palette
 
 I like to have an accessible copy of my active theme's color codes.
@@ -219,7 +219,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
     (set-face-attribute 'default nil :font me/font-family)))
 #+END_SRC
 
-* Features
+* 3. Features
 
 - *TODO*: Add a list of all custom shortcuts.
 - *TODO*: Should probably gather all the =delight=ing action at the same place.
