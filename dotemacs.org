@@ -155,8 +155,8 @@ functionality!
 
 * B. Theme
 
-1. *[[1-set-a-color-palette][Set a color palette]]*
-1. *[[2-configure-zenburn][Configure Zenburn]]*
+1. *[[#1-set-a-color-palette][Set a color palette]]*
+1. *[[#2-configure-zenburn][Configure Zenburn]]*
 
 ** 1. Set a color palette
 
@@ -236,33 +236,33 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 
 * C. Features
 
-1. *[[1-auto-completion][Auto-Completion]]*
-1. *[[2-css][CSS]]*
-1. *[[3-comments][Comments]]*
-1. *[[4-customization][Customization]]*
-1. *[[5-dired][Dired]]*
-1. *[[6-docker][Docker]]*
-1. *[[7-eww][EWW]]*
-1. *[[8-expand][Expand]]*
-1. *[[9-git][Git]]*
-1. *[[10-helm][Helm]]*
-1. *[[11-helm-plugins][Helm Plugins]]*
-1. *[[12-html][HTML]]*
-1. *[[13-javascript][JavaScript]]*
-1. *[[14-linters][Linters]]*
-1. *[[15-lisp][Lisp]]*
-1. *[[16-markdown][Markdown]]*
-1. *[[17-mode-line][Mode-line]]*
-1. *[[18-org][Org]]*
-1. *[[19-os-x][OS X]]*
-1. *[[20-parentheses][Parentheses]]*
-1. *[[21-point][Point]]*
-1. *[[22-projectile][Projectile]]*
-1. *[[23-python][Python]]*
-1. *[[24-quality-of-life][Quality of Life]]*
-1. *[[25-whitespaces][Whitespaces]]*
-1. *[[26-windows][Windows]]*
-1. *[[27-yaml][YAML]]*
+1. *[[#1-auto-completion][Auto-Completion]]*
+1. *[[#2-css][CSS]]*
+1. *[[#3-comments][Comments]]*
+1. *[[#4-customization][Customization]]*
+1. *[[#5-dired][Dired]]*
+1. *[[#6-docker][Docker]]*
+1. *[[#7-eww][EWW]]*
+1. *[[#8-expand][Expand]]*
+1. *[[#9-git][Git]]*
+1. *[[#10-helm][Helm]]*
+1. *[[#11-helm-plugins][Helm Plugins]]*
+1. *[[#12-html][HTML]]*
+1. *[[#13-javascript][JavaScript]]*
+1. *[[#14-linters][Linters]]*
+1. *[[#15-lisp][Lisp]]*
+1. *[[#16-markdown][Markdown]]*
+1. *[[#17-mode-line][Mode-line]]*
+1. *[[#18-org][Org]]*
+1. *[[#19-os-x][OS X]]*
+1. *[[#20-parentheses][Parentheses]]*
+1. *[[#21-point][Point]]*
+1. *[[#22-projectile][Projectile]]*
+1. *[[#23-python][Python]]*
+1. *[[#24-quality-of-life][Quality of Life]]*
+1. *[[#25-whitespaces][Whitespaces]]*
+1. *[[#26-windows][Windows]]*
+1. *[[#27-yaml][YAML]]*
 
 - *TODO*: Add a list of all custom shortcuts.
 - *TODO*: Should probably gather all the =delight=ing action at the same place.
