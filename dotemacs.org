@@ -1093,7 +1093,6 @@ Enable new custom binds when region is active.
 (use-package selected
   :ensure nil
   :defines selected-keymap
-  :commands selected-minor-mode
   :bind
   (:map selected-keymap
         ("C-c C-c" . eval-region)
@@ -1108,7 +1107,8 @@ Enable new custom binds when region is active.
         ("C-g" . selected-off)
         ("C-s r" . reverse-region)
         ("C-s s" . sort-lines)
-        ("C-s w" . me/sort-words)))
+        ("C-s w" . me/sort-words))
+  :config (selected-global-mode))
 #+END_SRC
 
 I disagree with Emacs' definition of paragraphs so I redefined the way it should jump
