@@ -1010,7 +1010,9 @@ dealing with mismatched parentheses.
 
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
-  :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+  :init
+  (add-hook 'scss-mode-hook #'rainbow-delimiters-mode))
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+END_SRC
 
 I am still looking for the perfect parenthese management setup as of today... No
