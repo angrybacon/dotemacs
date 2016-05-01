@@ -1093,32 +1093,61 @@ Enable multiple cursors at once. Some witchcraft at work here.
 
 - *FIXME*: selected.el is yet to be available through MELPA.
 
-Enable new custom binds when region is active.
+Enable new custom binds when region is active. I've also added a few helpers to use
+with =selected=.
 
 #+BEGIN_SRC emacs-lisp
-(let ((selected.el (expand-file-name "selected.el" user-emacs-directory)))
-  (when (file-exists-p selected.el)
-    (load selected.el)))
-
 (use-package selected
-  :ensure nil
   :defines selected-keymap
   :bind
   (:map selected-keymap
         ("C-c C-c" . eval-region)
-        ("<M-left>" . indent-rigidly-left)
-        ("<M-right>" . indent-rigidly-right)
+        ("<M-left>" . me/indent-rigidly-left-and-keep-mark)
+        ("<M-right>" . me/indent-rigidly-right-and-keep-mark)
         ("<" . mc/mark-previous-like-this)
         (">" . mc/mark-next-like-this)
-        ("C-f" . fill-region)
+        ("C-b" . me/browse-url-and-kill-mark)
         ("C-c c" . capitalize-region)
         ("C-c l" . downcase-region)
         ("C-c u" . upcase-region)
+        ("C-f" . fill-region)
         ("C-g" . selected-off)
         ("C-s r" . reverse-region)
         ("C-s s" . sort-lines)
         ("C-s w" . me/sort-words))
   :config (selected-global-mode))
+
+(defun me/browse-url-and-kill-mark (url &rest args)
+  "Ask a WWW browser to load URL.
+ Call `browse-url' and kill mark."
+  (interactive (browse-url-interactive-arg "URL: "))
+  (apply #'browse-url url args)
+  (setq deactivate-mark t))
+
+(defun me/indent-rigidly-left-and-keep-mark (beg end)
+  "Indent all lines between BEG and END leftward by one space.
+ Call `indent-rigidly-left' and keep mark."
+  (interactive "r")
+  (indent-rigidly-left beg end)
+  (setq deactivate-mark nil))
+
+(defun me/indent-rigidly-right-and-keep-mark (beg end)
+  "Indent all lines between BEG and END rightward by one space.
+ Call `indent-rigidly-right' and keep mark."
+  (interactive "r")
+  (indent-rigidly-right beg end)
+  (setq deactivate-mark nil))
+
+(defun me/sort-words (reverse beg end)
+  "Sort words in region alphabetically, in REVERSE if negative.
+Prefixed with negative \\[universal-argument], sorts in reverse.
+
+The variable `sort-fold-case' determines whether alphabetic case
+affects the sort order.
+
+See `sort-regexp-fields'."
+  (interactive "*P\nr")
+  (sort-regexp-fields reverse "\\w+" "\\&" beg end))
 #+END_SRC
 
 I disagree with Emacs' definition of paragraphs so I redefined the way it should jump
@@ -1143,21 +1172,6 @@ from one block to another.
   (unless (search-backward-regexp "\n[[:blank:]]*\n" nil t)
     (goto-char (point-min)))
   (skip-chars-forward "\n"))
-#+END_SRC
-
-Sort words in region.
-
-#+BEGIN_SRC emacs-lisp
-(defun me/sort-words (reverse beg end)
-  "Sort words in region alphabetically, in REVERSE if negative.
-Prefixed with negative \\[universal-argument], sorts in reverse.
-
-The variable `sort-fold-case' determines whether alphabetic case
-affects the sort order.
-
-See `sort-regexp-fields'."
-  (interactive "*P\nr")
-  (sort-regexp-fields reverse "\\w+" "\\&" beg end))
 #+END_SRC
 
 - *TODO*: Handle regions.
