@@ -1011,8 +1011,9 @@ dealing with mismatched parentheses.
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
   :init
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'scss-mode-hook #'rainbow-delimiters-mode))
-  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+
 #+END_SRC
 
 I am still looking for the perfect parenthese management setup as of today... No
@@ -1066,6 +1067,9 @@ structure of the current major mode.
   :init (pending-delete-mode t))
 #+END_SRC
 
+- *NOTE*: =me/insert-numbers= won't be needed anymore
+          (https://github.com/magnars/multiple-cursors.el/issues/248).
+
 Enable multiple cursors at once. Some witchcraft at work here.
 
 #+BEGIN_SRC emacs-lisp
@@ -1080,7 +1084,11 @@ Enable multiple cursors at once. Some witchcraft at work here.
   :init
   (setq-default
    mc/edit-lines-empty-lines 'ignore
-   mc/list-file (expand-file-name ".multiple-cursors.el" user-emacs-directory)))
+   mc/list-file (expand-file-name ".multiple-cursors.el" user-emacs-directory))
+  :config
+  (advice-add #'mc/insert-numbers :around #'me/insert-number)
+  (defun me/insert-number (fun arg)
+    (funcall fun (if arg arg 1))))
 #+END_SRC
 
 - *FIXME*: selected.el is yet to be available through MELPA.
