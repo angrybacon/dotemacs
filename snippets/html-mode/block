@@ -1,8 +1,5 @@
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: block
+# -*- mode: snippet -*-
 # key: b
-# binding: direct-keybinding
-# expand-env: ((yas-indent-line 'auto))
 # --
 <!-- Start $1 -->
 $0

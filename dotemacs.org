@@ -18,7 +18,7 @@
 
 #+BEGIN_SRC emacs-lisp
 (setq-default
- ad-redefinition-action 'accept                  ; Silence warnings for redefined functions
+ ad-redefinition-action 'accept                  ; Silence warnings for redefinition
  confirm-kill-emacs 'yes-or-no-p                 ; Confirm before exiting Emacs
  delete-by-moving-to-trash t                     ; Delete files to trash
  display-time-default-load-average nil           ; Don't display load average
@@ -27,7 +27,7 @@
  gc-cons-threshold 100000000                     ; Increase garbage collector treshold
  indent-tabs-mode nil                            ; Stop using tabs to indent
  indicate-empty-lines t                          ; Indicate unused lines in the fringe
- inhibit-startup-screen t                        ; Remove start-up screen
+ inhibit-startup-screen t                        ; Disable start-up screen
  initial-scratch-message ""                      ; Empty the initial *scratch* buffer
  mouse-yank-at-point t                           ; Yank at point rather than cursor
  require-final-newline 'visit                    ; Add a newline at EOF on visit
@@ -1091,7 +1091,7 @@ Enable multiple cursors at once. Some witchcraft at work here.
     (funcall fun (if arg arg 1))))
 #+END_SRC
 
-- *FIXME*: selected.el is yet to be available through MELPA.
+- *TODO*: Make a help buffer.
 
 Enable new custom binds when region is active. I've also added a few helpers to use
 with =selected=.
@@ -1183,7 +1183,7 @@ Swap current line with the previous/next one.
 (global-set-key (kbd "<M-up>") 'me/swap-line-up)
 
 (defun me/swap-line-down ()
-  "Move down the current line under point."
+  "Move down the line under point."
   (interactive)
   (forward-line 1)
   (transpose-lines 1)
@@ -1192,7 +1192,7 @@ Swap current line with the previous/next one.
   (delete-trailing-whitespace))
 
 (defun me/swap-line-up ()
-  "Move up the current line under point."
+  "Move up the line under point."
   (interactive)
   (transpose-lines 1)
   (forward-line -2)

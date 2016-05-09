@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# group: vanilla
+# key: v
+# --
+var ${1} = $0;

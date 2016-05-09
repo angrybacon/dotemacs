@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# group: vanilla
+# key: i
+# --
+(function() {
+  'use strict';
+
+  $0
+})();

@@ -1,8 +1,5 @@
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: source
+# -*- mode: snippet -*-
 # key: s
-# binding: direct-keybinding
-# expand-env: ((yas-indent-line 'fixed))
 # --
 #+BEGIN_SRC $1
 $0

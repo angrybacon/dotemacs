@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# group: vanilla
+# key: l
+# --
+console.log($0;

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# group: vanilla
+# key: f
+# --
+function$1($2) {
+  $0
+}
