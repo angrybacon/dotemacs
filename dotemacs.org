@@ -31,7 +31,8 @@ Here is what I consider better defaults for my own experience.
  initial-scratch-message ""                      ; Empty the initial *scratch* buffer
  mouse-yank-at-point t                           ; Yank at point rather than cursor
  require-final-newline 'visit                    ; Add a newline at EOF on visit
- scroll-step 1                                   ; Line by line scrolling
+ scroll-conservatively 9999                      ; Disable re-center when scrolling
+ scroll-margin 1                                 ; Add a window margin when scrolling
  show-trailing-whitespace nil                    ; Display trailing whitespaces
  tab-width 4                                     ; Set width for tabs
  uniquify-buffer-name-style 'forward             ; Uniquify buffer names
