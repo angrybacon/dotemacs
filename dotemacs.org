@@ -85,7 +85,7 @@ Reset garbage colelctor treshold after initialization is finished.
 
 - *FIXME*: Find a way to dynamically look for =benchmark-init.el=.
 
-Currently 1.5 seconds start-up time.
+Currently 1.4 seconds start-up time.
 But this is cheating: this snippet of code should live as early as in =init.el=.
 
 #+BEGIN_SRC emacs-lisp
@@ -1130,7 +1130,7 @@ with =selected=.
   :defines selected-keymap
   :bind
   (:map selected-keymap
-        ("C-c C-c" . eval-region)
+        ("C-c C-c" . me/eval-region-and-kill-mark)
         ("<M-left>" . me/indent-rigidly-left-and-keep-mark)
         ("<M-right>" . me/indent-rigidly-right-and-keep-mark)
         ("<" . mc/mark-previous-like-this)
@@ -1145,6 +1145,14 @@ with =selected=.
         ("C-s s" . sort-lines)
         ("C-s w" . me/sort-words))
   :init (selected-global-mode))
+
+(defun me/eval-region-and-kill-mark (beg end)
+  "Execute the region as Lisp code.
+ Call `eval-region' and kill mark. Move back to the beginning of the region."
+  (interactive "r")
+  (eval-region beg end)
+  (setq deactivate-mark t)
+  (goto-char beg))
 
 (defun me/browse-url-and-kill-mark (url &rest args)
   "Ask a WWW browser to load URL.
