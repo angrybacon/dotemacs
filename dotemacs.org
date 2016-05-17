@@ -1,4 +1,5 @@
 #+TITLE: DotEmacs
+#+AUTHOR: Mathieu Marques
 
 A. *[[#a-bootstrap][Bootstrap]]* |
 B. *[[#b-theme][Theme]]* |
@@ -86,8 +87,8 @@ Reset garbage colelctor treshold after initialization is finished.
 
 - *FIXME*: Find a way to dynamically look for =benchmark-init.el=.
 
-Currently 1.4 seconds start-up time.
-But this is cheating: this snippet of code should live as early as in =init.el=.
+Currently 1.4 seconds start-up time. But this is cheating: this snippet of code
+should live as early as in =init.el=.
 
 #+BEGIN_SRC emacs-lisp
 (let ((benchmark-init.el
