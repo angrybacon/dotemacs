@@ -1,6 +1,7 @@
 # Emacs
 *~
 *.elc
+.custom.el
 .dir-locals.el
 .secret.el
 dotemacs.el

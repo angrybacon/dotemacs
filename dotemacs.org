@@ -10,8 +10,9 @@ C. *[[#c-features][Features]]*
 1. *[[#1-use-better-default][Use better default]]*
 2. *[[#2-validate-emacs-version][Validate Emacs' version]]*
 3. *[[#3-benchmark-startup-time][Benchmark startup time]]*
-4. *[[#4-set-constants][Set constants]]*
-5. *[[#5-initialize-melpa][Initialize MELPA]]*
+4. *[[#4-load-custom.el][Load =custom.el=]]*
+5. *[[#5-load-secret.el][Load =secret.el=]]*
+6. *[[#6-initialize-melpa][Initialize MELPA]]*
 
 ** 1. Use better defaults
 
@@ -75,6 +76,16 @@ Reset garbage colelctor treshold after initialization is finished.
 (add-hook 'after-init-hook (lambda () (setq gc-cons-threshold 800000)))
 #+END_SRC
 
+I want an easy way to change the appearance of things and be consistent about
+it. Those variables are used throughout the whole configuration.
+
+#+BEGIN_SRC emacs-lisp
+(defvar me/font-family            "Monaco"  "The font to use.")
+(defvar me/font-size-default      120       "The font size to use for default text.")
+(defvar me/font-size-header       140       "The font size to use for headers.")
+(defvar me/font-size-mode-line    120       "The font size to use for the mode line.")
+#+END_SRC
+
 ** 2. Validate Emacs' version
 
 #+BEGIN_SRC emacs-lisp
@@ -98,24 +109,36 @@ should live as early as in =init.el=.
     (load benchmark-init.el)))
 #+END_SRC
 
-** 4. Set constants
+** 4. Load =custom.el=
 
-I load =.secret.el= to keep sensible things out of version control.
-For instance, you could overwrite the following variables and set your identity by
-customizing both =user-full-name= and =user-mail-address=.
+One is able to use the customization interface that is bundled within Emacs. It is
+meant to help people non familiar with Emacs Lisp in the configuration of Emacs
+itself. By default, changes in the customization will be automatically detected and
+appended at the end of the configuration file, =init.el=.
+
+Since that in my case, the actual configuration file is new one, crafted by
+=org-mode=, adding code at the end of =init.el= might mess things up. The following
+tells Emacs to add extra code in another file that would be then loaded if existing.
 
 #+BEGIN_SRC emacs-lisp
-(defvar me/font-family            "Monaco"  "The font to use.")
-(defvar me/font-size-default      120       "The font size to use for default text.")
-(defvar me/font-size-header       140       "The font size to use for headers.")
-(defvar me/font-size-mode-line    120       "The font size to use for the mode line.")
+(setq-default custom-file (expand-file-name ".custom.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+  (load custom-file))
+#+END_SRC
 
+** 5. Load =secret.el=
+
+I load =.secret.el= to keep sensible things out of version control.
+For instance, you could set your identity by customizing both =user-full-name= and
+=user-mail-address= in this file.
+
+#+BEGIN_SRC emacs-lisp
 (let ((secret.el (expand-file-name ".secret.el" user-emacs-directory)))
   (when (file-exists-p secret.el)
     (load secret.el)))
 #+END_SRC
 
-** 5. Initialize MELPA
+** 6. Initialize MELPA
 
 - *FIXME*: What if emacs-major-version < 24?
 - *FIXME*: It sometimes does an extra =package-refresh-contents=.
