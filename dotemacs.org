@@ -70,10 +70,12 @@ Enable some more goodies.
 (put 'upcase-region 'disabled nil)               ; Enable upcase-region
 #+END_SRC
 
-Reset garbage colelctor treshold after initialization is finished.
+Reset garbage collector treshold after initialization is finished and garbage-collect
+on focus-out.
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'after-init-hook (lambda () (setq gc-cons-threshold 800000)))
+(add-hook 'focus-out-hook 'garbage-collect)
 #+END_SRC
 
 I want an easy way to change the appearance of things and be consistent about
