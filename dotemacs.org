@@ -1138,11 +1138,8 @@ Enable multiple cursors at once. Some witchcraft at work here.
   :init
   (setq-default
    mc/edit-lines-empty-lines 'ignore
-   mc/list-file (expand-file-name ".multiple-cursors.el" user-emacs-directory))
-  :config
-  (advice-add #'mc/insert-numbers :around #'me/insert-number)
-  (defun me/insert-number (fun arg)
-    (funcall fun (if arg arg 1))))
+   mc/insert-numbers-default 1
+   mc/list-file (expand-file-name ".multiple-cursors.el" user-emacs-directory)))
 #+END_SRC
 
 - *TODO*: Make a help buffer.
