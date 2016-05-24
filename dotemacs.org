@@ -269,31 +269,32 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 2. *[[#2-css][CSS]]*
 3. *[[#3-comments][Comments]]*
 4. *[[#4-customization][Customization]]*
-5. *[[#5-dired][Dired]]*
-6. *[[#6-docker][Docker]]*
-7. *[[#7-expand][Expand]]*
-8. *[[#8-git][Git]]*
-9. *[[#9-helm][Helm]]*
-10. *[[#10-helm-plugins][Helm Plugins]]*
-11. *[[#11-html][HTML]]*
-12. *[[#12-javascript][JavaScript]]*
-13. *[[#13-linters][Linters]]*
-14. *[[#14-lisp][Lisp]]*
-15. *[[#15-markdown][Markdown]]*
-16. *[[#16-mode-line][Mode-line]]*
-17. *[[#17-org][Org]]*
-18. *[[#18-os-x][OS X]]*
-19. *[[#19-navigation][Navigation]]*
-20. *[[#20-parentheses][Parentheses]]*
-21. *[[#21-point][Point]]*
-22. *[[#22-projectile][Projectile]]*
-23. *[[#23-python][Python]]*
-24. *[[#24-quality-of-life][Quality of Life]]*
-25. *[[#25-slack][Slack]]*
-26. *[[#26-whitespaces][Whitespaces]]*
-27. *[[#27-web-browsing][Web Browsing]]*
-28. *[[#28-windows][Windows]]*
-29. *[[#29-yaml][YAML]]*
+5. *[[#5-diff][Diff]]*
+6. *[[#6-dired][Dired]]*
+7. *[[#7-docker][Docker]]*
+8. *[[#8-expand][Expand]]*
+9. *[[#9-git][Git]]*
+10. *[[#10-helm][Helm]]*
+11. *[[#11-helm-plugins][Helm Plugins]]*
+12. *[[#12-html][HTML]]*
+13. *[[#13-javascript][JavaScript]]*
+14. *[[#14-linters][Linters]]*
+15. *[[#15-lisp][Lisp]]*
+16. *[[#16-markdown][Markdown]]*
+17. *[[#17-mode-line][Mode-line]]*
+18. *[[#18-org][Org]]*
+19. *[[#19-os-x][OS X]]*
+20. *[[#20-navigation][Navigation]]*
+21. *[[#21-parentheses][Parentheses]]*
+22. *[[#22-point][Point]]*
+23. *[[#23-projectile][Projectile]]*
+24. *[[#24-python][Python]]*
+25. *[[#25-quality-of-life][Quality of Life]]*
+26. *[[#26-slack][Slack]]*
+27. *[[#27-whitespaces][Whitespaces]]*
+28. *[[#28-web-browsing][Web Browsing]]*
+29. *[[#29-windows][Windows]]*
+30. *[[#30-yaml][YAML]]*
 
 - *TODO*: Add a list of all custom shortcuts.
 
@@ -358,6 +359,7 @@ Auto-completion at point. Display a small popin containing the candidates.
    comment-auto-fill-only-comments t
    comment-multi-line t))
 #+END_SRC
+
 ** 4. Customization
 
 This merely changes face attributes and Zenburn customization buffers a little
@@ -376,7 +378,17 @@ more. Should I just try a pull request over [[https://github.com/bbatsov/zenburn
     (set-face-attribute 'custom-group-tag nil :font me/font-family)))
 #+END_SRC
 
-** 5. Dired
+** 5. Diff
+
+Ediff is a visual interface to Unix =diff=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package ediff
+  :ensure nil
+  :config (setq-default ediff-split-window-function 'split-window-horizontally))
+#+END_SRC
+
+** 6. Dired
 
 Configure Dired buffers. Amongst many other things, Emacs is also a file explorer.
 
@@ -405,7 +417,7 @@ Configure Dired buffers. Amongst many other things, Emacs is also a file explore
    dired-recursive-copies 'always))
 #+END_SRC
 
-** 6. Docker
+** 7. Docker
 
 - =dockerfile-mode=: https://github.com/spotify/dockerfile-mode
 
@@ -415,7 +427,7 @@ Configure Dired buffers. Amongst many other things, Emacs is also a file explore
   :mode "Dockerfile\\'")
 #+END_SRC
 
-** 7. Expand
+** 8. Expand
 
 HippieExpand manages expansions a la [[http://emmet.io/][Emmet]]. So I've gathered all features that look
 anywhere close to this behavior for it to handle under the same bind, that is
@@ -455,7 +467,7 @@ anywhere close to this behavior for it to handle under the same bind, that is
   (unbind-key "<tab>" yas-minor-mode-map))
 #+END_SRC
 
-** 8. Git
+** 9. Git
 
 Magit provide Git facilities directly from within Emacs.
 
@@ -533,7 +545,7 @@ Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.h
   :delight gitignore-mode "Git Ignore")
 #+END_SRC
 
-** 9. Helm
+** 10. Helm
 
 - *TODO*: Make helm-list-faces-display.
 - *TODO*: Fix the mode-line for Helm buffers.
@@ -626,7 +638,7 @@ Helm equivalents.
   :config (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn/blue))
 #+END_SRC
 
-** 10. Helm Plugins
+** 11. Helm Plugins
 
 - *NOTE*: Does not respect =helm-split-window-default-side=
           (https://github.com/ShingoFukuyama/helm-css-scss/issues/7).
@@ -664,7 +676,7 @@ Fourth-party packages for Helm.
   :config (helm-projectile-on))
 #+END_SRC
 
-** 11. HTML
+** 12. HTML
 
 HTML mode is defined in =sgml-mode.el=.
 
@@ -677,7 +689,7 @@ HTML mode is defined in =sgml-mode.el=.
   :config (setq-default sgml-basic-offset 2))
 #+END_SRC
 
-** 12. JavaScript
+** 13. JavaScript
 
 - *FIXME*: Indent level is broken
            (https://github.com/joshwnj/json-mode/issues/32).
@@ -705,7 +717,7 @@ for variables and properties.
   :config (add-hook 'js-mode-hook 'tern-mode))
 #+END_SRC
 
-** 13. Linters
+** 14. Linters
 
 Flycheck lints warnings and errors directly within buffers. It can check a lot of
 different syntaxes, as long as you make sure that Emacs has access to the binaries
@@ -743,7 +755,7 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
   (set-face-attribute 'flycheck-fringe-warning nil :foreground zenburn/orange))
 #+END_SRC
 
-** 14. Lisp
+** 15. Lisp
 
 - =lisp-mode=: built-in
 
@@ -757,7 +769,7 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
      (lisp-interaction-mode "Lisp Interaction"))))
 #+END_SRC
 
-** 15. Markdown
+** 16. Markdown
 
 - =markdown-mode=: https://github.com/jrblevin/markdown-mode
 
@@ -778,7 +790,7 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
   (setq-default markdown-asymmetric-header t))
 #+END_SRC
 
-** 16. Mode-line
+** 17. Mode-line
 
 - *TODO*: Check out https://www.emacswiki.org/emacs/delight-powerline.el.
 
@@ -973,7 +985,7 @@ customize the =mode-line= a la Vim.
   (set-face-attribute 'me/vc-face nil :foreground zenburn/bg+3))
 #+END_SRC
 
-** 17. Navigation
+** 18. Navigation
 
 - =avy=: https://github.com/abo-abo/avy
 
@@ -1021,7 +1033,7 @@ Bind commands to move around windows.
 (global-set-key (kbd "C-M-<down>") 'windmove-down)
 #+END_SRC
 
-** 18. Org
+** 19. Org
 
 This very file is organized with =org-mode=. I am definitely not a power user of Org,
 but I'm getting there. :)
@@ -1058,7 +1070,7 @@ authoring documents with a fast and effective plain-text system.
   (define-key org-mode-map (kbd "<M-return>") 'org-insert-heading-after-current))
 #+END_SRC
 
-** 19. OS X
+** 20. OS X
 
 Augment Emacs experience for OS X users.
 
@@ -1072,7 +1084,7 @@ Augment Emacs experience for OS X users.
    ns-option-modifier nil))                          ; Disable the `alt' key
 #+END_SRC
 
-** 20. Parentheses
+** 21. Parentheses
 
 Highlight parenthese-like delimiters in a rainbow fashion. It ease the reading when
 dealing with mismatched parentheses.
@@ -1112,7 +1124,7 @@ package seem to be please my person.
   (sp-pair "[[" "]]"))
 #+END_SRC
 
-** 21. Point
+** 22. Point
 
 - =expand-region=: https://github.com/magnars/expand-region.el
 - =multiple-cursors=: https://github.com/magnars/multiple-cursors.el
@@ -1262,7 +1274,7 @@ Work on lines.
   (delete-trailing-whitespace))
 #+END_SRC
 
-** 22. Projectile
+** 23. Projectile
 
 - *TODO*: Try with =:init= instead of =:demand=.
 
@@ -1293,7 +1305,7 @@ performance sake an indexing mechanism backed by external commands exists as wel
   (advice-add 'projectile-project-name :around #'me/projectile-project-name))
 #+END_SRC
 
-** 23. Python
+** 24. Python
 
 - =python=: built-in
 - =pip-requirements=: https://github.com/Wilfred/pip-requirements.el
@@ -1307,7 +1319,7 @@ performance sake an indexing mechanism backed by external commands exists as wel
   :config (add-hook 'pip-requirements-mode-hook (lambda () (setq-local completion-ignore-case t))))
 #+END_SRC
 
-** 24. Quality of Life
+** 25. Quality of Life
 
 Colorize colors as text with their value.
 
@@ -1319,7 +1331,7 @@ Colorize colors as text with their value.
   :config (setq-default rainbow-x-colors-major-mode-list '()))
 #+END_SRC
 
-** 25. Slack
+** 26. Slack
 
 Slack integration.
 
@@ -1346,7 +1358,7 @@ Slack integration.
   (set-face-attribute 'slack-message-output-text nil :height 1))
 #+END_SRC
 
-** 26. Whitespaces
+** 27. Whitespaces
 
 Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
@@ -1362,7 +1374,7 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
   (set-face-attribute 'whitespace-trailing nil :background zenburn/red-1))
 #+END_SRC
 
-** 27. Web Browsing
+** 28. Web Browsing
 
 EWW stands for Emacs Web Wowser. Yeah that's right... Emacs is also a Web
 browser, text-based that is.
@@ -1376,7 +1388,7 @@ browser, text-based that is.
   :config (setq eww-header-line-format " %t: %u"))
 #+END_SRC
 
-** 28. Windows
+** 29. Windows
 
 - *TODO*: Find a way to automatically adjust =golden-ratio-adjust-factor= depending
           on the current display.
@@ -1406,6 +1418,11 @@ golden ratio somewhere in its formulas.
   (defun me/golden-ratio-adjust-4 ()
     (interactive)
     (golden-ratio-adjust me/golden-ratio-adjust-factor-4))
+  (defun me/ediff-comparison-buffer-p ()
+    (if (boundp 'ediff-this-buffer-ediff-sessions)
+        (progn
+          (balance-windows)
+          ediff-this-buffer-ediff-sessions)))
 
   :bind
   (("<f5>" . me/golden-ratio-adjust-1)
@@ -1416,9 +1433,9 @@ golden ratio somewhere in its formulas.
   :init (golden-ratio-mode 1)
 
   :config
-  (setq-default
-   golden-ratio-adjust-factor me/golden-ratio-adjust-factor-1
-   split-width-threshold nil))
+  (setq-default golden-ratio-adjust-factor me/golden-ratio-adjust-factor-3)
+  (add-to-list 'golden-ratio-exclude-modes "ediff-mode")
+  (add-to-list 'golden-ratio-inhibit-functions 'me/ediff-comparison-buffer-p))
 #+END_SRC
 
 Allow undo's and redo's with window configurations.
@@ -1440,7 +1457,7 @@ session is easy.
   :init (winner-mode 1))
 #+END_SRC
 
-** 29. YAML
+** 30. YAML
 
 - =yaml-mode=: https://github.com/yoshiki/yaml-mode
 
