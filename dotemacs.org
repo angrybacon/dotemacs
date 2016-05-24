@@ -614,6 +614,10 @@ Helm equivalents.
   (setq-default helm-M-x-fuzzy-match t)
   (set-face-attribute 'helm-M-x-key nil :foreground zenburn/orange :underline nil))
 
+(use-package helm-files
+  :ensure helm
+  :bind (:map helm-find-files-map ("C-s" . helm-ff-run-grep-ag)))
+
 (use-package helm-grep
   :ensure helm
   :config (set-face-attribute 'helm-grep-lineno nil :foreground zenburn/yellow-2))
