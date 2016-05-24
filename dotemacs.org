@@ -27,6 +27,7 @@ Here is what I consider better defaults for my own experience.
  display-time-format "%H:%M"                     ; Format the time string
  fill-column 85                                  ; Set width for automatic line breaking
  gc-cons-threshold most-positive-fixnum          ; Increase garbage collector treshold
+ help-window-select t
  indent-tabs-mode nil                            ; Stop using tabs to indent
  indicate-empty-lines t                          ; Indicate unused lines in the fringe
  inhibit-startup-screen t                        ; Disable start-up screen
@@ -36,6 +37,8 @@ Here is what I consider better defaults for my own experience.
  scroll-conservatively 9999                      ; Disable re-center when scrolling
  scroll-margin 1                                 ; Add a window margin when scrolling
  show-trailing-whitespace nil                    ; Display trailing whitespaces
+ split-height-threshold nil
+ split-width-threshold nil
  tab-width 4                                     ; Set width for tabs
  uniquify-buffer-name-style 'forward             ; Uniquify buffer names
  window-combination-resize t                     ; Resize windows proportionally
@@ -252,6 +255,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
   (set-face-attribute 'header-line nil
                       :box `(:line-width 1 :color ,zenburn/bg-1)
                       :height me/font-size-header)
+  (set-face-attribute 'help-argument-name nil :foreground zenburn/orange)
   (set-face-attribute 'hl-line nil :background zenburn/bg+0)
   (set-face-attribute 'region nil :foreground zenburn/green)
   (set-face-attribute 'vertical-border nil :foreground zenburn/bg-1)
@@ -436,8 +440,8 @@ anywhere close to this behavior for it to handle under the same bind, that is
   :ensure nil
   :bind ("<C-return>" . hippie-expand)
   :config
-  (setq-default hippie-expand-try-functions-list
-                '(yas-hippie-try-expand emmet-expand-line)))
+  (setq-default
+   hippie-expand-try-functions-list '(yas-hippie-try-expand emmet-expand-line)))
 
 (use-package yasnippet
   :init
@@ -793,14 +797,16 @@ customize the =mode-line= a la Vim.
   (defadvice powerline-minor-modes (around delight-powerline-minor-modes activate)
     (let ((inhibit-mode-name-delight nil))
       ad-do-it)))
+#+END_SRC
 
+#+BEGIN_SRC emacs-lisp
 (use-package powerline
 
   :demand t
 
   :preface
 
-  ;; Configure the mode-line
+  ;; Setup the mode-line components
   (defvar me/powerline-hud nil)
 
   ;; Define new faces for elements
@@ -1275,18 +1281,16 @@ performance sake an indexing mechanism backed by external commands exists as wel
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
   :demand t
-  :defines me/project-name
-  :functions (me/projectile-project-name)
   :config
   (defun me/projectile-project-name (orig-fun &rest args)
     "Prefer `me/project-name' over default Projectile project string."
     (or me/project-name (apply orig-fun args)))
   (projectile-global-mode)
-  (advice-add 'projectile-project-name :around #'me/projectile-project-name)
   (setq-default
    projectile-completion-system 'helm
    projectile-enable-caching t
-   projectile-mode-line '(:eval (projectile-project-name))))
+   projectile-mode-line '(:eval (projectile-project-name)))
+  (advice-add 'projectile-project-name :around #'me/projectile-project-name))
 #+END_SRC
 
 ** 23. Python
