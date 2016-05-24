@@ -1421,6 +1421,25 @@ golden ratio somewhere in its formulas.
    split-width-threshold nil))
 #+END_SRC
 
+Allow undo's and redo's with window configurations.
+
+#+BEGIN_QUOTE
+Winner Mode is great when you depend a lot on working with Emacs windows. To read
+code, you want one window. To compare it with another file, you want two
+windows. When on IRC you want six windows, and while you’re engaging in an important
+discussion, you want just one window, etc. Getting from many windows to one window is
+easy: ‘C-x 1’ will do it. But getting back to a delicate WindowConfiguration is
+difficult. This is where Winner Mode comes in: With it, going back to a previous
+session is easy.
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package winner
+  :ensure nil
+  :if (fboundp 'winner-mode)
+  :init (winner-mode 1))
+#+END_SRC
+
 ** 29. YAML
 
 - =yaml-mode=: https://github.com/yoshiki/yaml-mode
