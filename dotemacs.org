@@ -70,8 +70,8 @@ Enable some more goodies.
 (put 'upcase-region 'disabled nil)               ; Enable upcase-region
 #+END_SRC
 
-Reset garbage collector treshold after initialization is finished and garbage-collect
-on focus-out.
+Reset garbage collector treshold after initialization is finished and
+`garbage-collect` on focus-out.
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'after-init-hook (lambda () (setq gc-cons-threshold 800000)))
@@ -354,7 +354,6 @@ Auto-completion at point. Display a small popin containing the candidates.
    comment-auto-fill-only-comments t
    comment-multi-line t))
 #+END_SRC
-
 ** 4. Customization
 
 This merely changes face attributes and Zenburn customization buffers a little
@@ -616,8 +615,7 @@ Helm equivalents.
 
 (use-package helm-net
   :ensure helm
-  :config
-  (setq-default helm-net-prefer-curl t))
+  :config (setq-default helm-net-prefer-curl t))
 
 (use-package helm-regexp
   :ensure helm
