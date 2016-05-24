@@ -575,6 +575,8 @@ modular, and unchained from constraints of backward compatibility.
 #+BEGIN_SRC emacs-lisp
 (use-package helm
 
+  :defer 1
+
   :bind
   (("C-c h k" . helm-show-kill-ring)
    ("C-c h g" . helm-google-suggest)
@@ -1296,12 +1298,11 @@ performance sake an indexing mechanism backed by external commands exists as wel
 
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
-  :demand t
+  :init (projectile-global-mode)
   :config
   (defun me/projectile-project-name (orig-fun &rest args)
     "Prefer `me/project-name' over default Projectile project string."
     (or me/project-name (apply orig-fun args)))
-  (projectile-global-mode)
   (setq-default
    projectile-completion-system 'helm
    projectile-enable-caching t
