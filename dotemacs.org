@@ -101,10 +101,10 @@ it. Those variables are used throughout the whole configuration.
 
 ** 3. Benchmark startup time
 
-- *FIXME*: Find a way to dynamically look for =benchmark-init.el=.
-
 Currently 1.4 seconds start-up time. But this is cheating: this snippet of code
 should live as early as in =init.el=.
+
+- *FIXME*: Find a way to dynamically look for =benchmark-init.el=.
 
 #+BEGIN_SRC emacs-lisp
 (let ((benchmark-init.el
@@ -145,10 +145,10 @@ For instance, you could set your identity by customizing both =user-full-name= a
 
 ** 6. Initialize MELPA
 
+Dependency checks and [[https://melpa.org][MELPA]] initialization, sugar-wrapped.
+
 - *FIXME*: What if emacs-major-version < 24?
 - *FIXME*: It sometimes does an extra =package-refresh-contents=.
-
-Dependency checks and [[https://melpa.org][MELPA]] initialization, sugar-wrapped.
 
 #+BEGIN_SRC emacs-lisp
 (when (>= emacs-major-version 24)
@@ -296,17 +296,14 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 29. *[[#29-windows][Windows]]*
 30. *[[#30-yaml][YAML]]*
 
-- *TODO*: Add a list of all custom shortcuts.
-
 Features are alphabetically sorted because, well, I'm fussy. And they're easier to
 find that way... so there's that.
+
+- *TODO*: Add a list of all custom shortcuts.
 
 ** 1. Auto-Completion
 
 Auto-completion at point. Display a small popin containing the candidates.
-
-- =company-mode=: https://github.com/company-mode/company-mode
-- =company-tern=: https://github.com/proofit404/company-tern
 
 #+BEGIN_SRC emacs-lisp
 (use-package company
@@ -327,9 +324,6 @@ Auto-completion at point. Display a small popin containing the candidates.
 
 ** 2. CSS
 
-- =css-mode=: built-in
-- =scss-mode=: https://github.com/antonj/scss-mode/
-
 #+BEGIN_SRC emacs-lisp
 (use-package css-mode
   :delight css-mode "CSS"
@@ -348,8 +342,6 @@ Auto-completion at point. Display a small popin containing the candidates.
 
 ** 3. Comments
 
-- =newcomment=: built-in
-
 #+BEGIN_SRC emacs-lisp
 (use-package newcomment
   :ensure nil
@@ -364,8 +356,6 @@ Auto-completion at point. Display a small popin containing the candidates.
 
 This merely changes face attributes and Zenburn customization buffers a little
 more. Should I just try a pull request over [[https://github.com/bbatsov/zenburn-emacs][zenburn-emacs]]?
-
-- =cus-edit=: built-in
 
 #+BEGIN_SRC emacs-lisp
 (use-package cus-edit
@@ -404,8 +394,6 @@ Ediff is a visual interface to Unix =diff=.
 
 Configure Dired buffers. Amongst many other things, Emacs is also a file explorer.
 
-- =dired=: built-in
-
 #+BEGIN_SRC emacs-lisp
 (use-package dired
 
@@ -431,8 +419,6 @@ Configure Dired buffers. Amongst many other things, Emacs is also a file explore
 
 ** 7. Docker
 
-- =dockerfile-mode=: https://github.com/spotify/dockerfile-mode
-
 #+BEGIN_SRC emacs-lisp
 (use-package dockerfile-mode
   :delight dockerfile-mode "Dockerfile"
@@ -444,10 +430,6 @@ Configure Dired buffers. Amongst many other things, Emacs is also a file explore
 HippieExpand manages expansions a la [[http://emmet.io/][Emmet]]. So I've gathered all features that look
 anywhere close to this behavior for it to handle under the same bind, that is
 =C-RET=. Basically I made a DWIM for expand-like completion out of it.
-
-- =emmet-mode=: https://github.com/smihica/emmet-mode
-- =hippie-exp=: built-in
-- =yasnippet=: https://github.com/capitaomorte/yasnippet
 
 #+BEGIN_SRC emacs-lisp
 (use-package emmet-mode
@@ -482,9 +464,6 @@ anywhere close to this behavior for it to handle under the same bind, that is
 ** 9. Git
 
 Magit provide Git facilities directly from within Emacs.
-
-- =magit=: https://github.com/magit/magit
-- =git*-mode=: https://github.com/magit/git-modes
 
 #+BEGIN_QUOTE
 Magit is an interface to the version control system [[https://git-scm.com/][Git]], implemented as an [[https://www.gnu.org/software/emacs][Emacs]]
@@ -559,20 +538,10 @@ Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.h
 
 ** 10. Helm
 
-- *TODO*: Make helm-list-faces-display.
-- *TODO*: Fix the mode-line for Helm buffers.
-
 Helm is a beast. Although heavily, it replaces =ido-mode= in many ways.
 
-- =helm=: https://github.com/emacs-helm/helm
-- =helm-buffers=: https://github.com/emacs-helm/helm/blob/master/helm-buffers.el
-- =helm-color=: https://github.com/emacs-helm/helm/blob/master/helm-color.el
-- =helm-command=: https://github.com/emacs-helm/helm/blob/master/helm-command.el
-- =helm-grep=: https://github.com/emacs-helm/helm/blob/master/helm-grep.el
-- =helm-misc=: https://github.com/emacs-helm/helm/blob/master/helm-misc.el
-- =helm-mode=: https://github.com/emacs-helm/helm/blob/master/helm-mode.el
-- =helm-net=: https://github.com/emacs-helm/helm/blob/master/helm-net.el
-- =helm-regexp=: https://github.com/emacs-helm/helm/blob/master/helm-regexp.el
+- *TODO*: Make helm-list-faces-display.
+- *TODO*: Fix the mode-line for Helm buffers.
 
 #+BEGIN_QUOTE
 =Helm= is an Emacs framework for incremental completions and narrowing selections. It
@@ -658,19 +627,12 @@ Helm equivalents.
 
 ** 11. Helm Plugins
 
+Fourth-party packages for Helm.
+
 - *NOTE*: Does not respect =helm-split-window-default-side=
           (https://github.com/ShingoFukuyama/helm-css-scss/issues/7).
 - *TODO*: Fix Zenburn palette
           (https://github.com/bbatsov/zenburn-emacs/issues/220).
-
-Fourth-party packages for Helm.
-
-- =helm-ag=: https://github.com/syohex/emacs-helm-ag
-- =helm-css-scss=: https://github.com/ShingoFukuyama/helm-css-scss
-- =helm-descbinds=: https://github.com/emacs-helm/helm-descbinds
-- =helm-describe-modes=: https://github.com/emacs-helm/helm-describe-modes
-- =helm-flycheck=: https://github.com/yasuyk/helm-flycheck
-- =helm-projectile=: https://github.com/bbatsov/helm-projectile
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm-ag)
@@ -698,8 +660,6 @@ Fourth-party packages for Helm.
 
 HTML mode is defined in =sgml-mode.el=.
 
-- =sgml-mode=: built-in
-
 #+BEGIN_SRC emacs-lisp
 (use-package sgml-mode
   :ensure nil
@@ -709,16 +669,12 @@ HTML mode is defined in =sgml-mode.el=.
 
 ** 13. JavaScript
 
-- *FIXME*: Indent level is broken
-           (https://github.com/joshwnj/json-mode/issues/32).
-
 Tern is a code-analysis engine for JavaScript. I use it to check syntax and grammar
 in my JavaScript code. With an auto-complete frontend, it can also provide candidates
 for variables and properties.
 
-- =js-mode=: built-in
-- =json-mode=: https://github.com/joshwnj/json-mode
-- =tern=: http://ternjs.net/doc/manual.html#emacs
+- *FIXME*: Indent level is broken
+           (https://github.com/joshwnj/json-mode/issues/32).
 
 #+BEGIN_SRC emacs-lisp
 (use-package js
@@ -740,8 +696,6 @@ for variables and properties.
 Flycheck lints warnings and errors directly within buffers. It can check a lot of
 different syntaxes, as long as you make sure that Emacs has access to the binaries
 (see [[./README.md][README.md]]).
-
-- =flycheck=: https://github.com/flycheck/flycheck
 
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
@@ -775,8 +729,6 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
 
 ** 15. Lisp
 
-- =lisp-mode=: built-in
-
 #+BEGIN_SRC emacs-lisp
 (use-package lisp-mode
   :ensure nil
@@ -788,8 +740,6 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
 #+END_SRC
 
 ** 16. Markdown
-
-- =markdown-mode=: https://github.com/jrblevin/markdown-mode
 
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
@@ -810,13 +760,10 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
 
 ** 17. Mode-line
 
-- *TODO*: Check out https://www.emacswiki.org/emacs/delight-powerline.el.
-
 Brace yourself, this is quite big and possible sub-optimal. I use =powerline= to
 customize the =mode-line= a la Vim.
 
-- =delight=: https://github.com/antonio/delight.el
-- =powerline=: https://github.com/milkypostman/powerline
+- *TODO*: Check out https://www.emacswiki.org/emacs/delight-powerline.el.
 
 #+BEGIN_SRC emacs-lisp
 (use-package delight
@@ -1005,8 +952,6 @@ customize the =mode-line= a la Vim.
 
 ** 18. Navigation
 
-- =avy=: https://github.com/abo-abo/avy
-
 Jump to a specific position in the buffer using a char-based decision tree.
 
 #+BEGIN_SRC emacs-lisp
@@ -1055,8 +1000,6 @@ Bind commands to move around windows.
 
 This very file is organized with =org-mode=. I am definitely not a power user of Org,
 but I'm getting there. :)
-
-- =org=: http://orgmode.org/
 
 #+BEGIN_QUOTE
 Org mode is for keeping notes, maintaining TODO lists, planning projects, and
@@ -1107,9 +1050,6 @@ Augment Emacs experience for OS X users.
 Highlight parenthese-like delimiters in a rainbow fashion. It ease the reading when
 dealing with mismatched parentheses.
 
-- =rainbow-delimiters=: https://github.com/Fanael/rainbow-delimiters
-- =smartparens=: https://github.com/Fuco1/smartparens
-
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
   :init
@@ -1144,10 +1084,6 @@ package seem to be please my person.
 
 ** 22. Point
 
-- =expand-region=: https://github.com/magnars/expand-region.el
-- =multiple-cursors=: https://github.com/magnars/multiple-cursors.el
-- =selected=: https://github.com/Kungsgeten/selected.el
-
 Increase region by semantic units. It tries to be smart about it and adapt to the
 structure of the current major mode.
 
@@ -1157,10 +1093,10 @@ structure of the current major mode.
   :init (pending-delete-mode t))
 #+END_SRC
 
+Enable multiple cursors at once. Some witchcraft at work here.
+
 - *NOTE*: =me/insert-numbers= won't be needed anymore
           (https://github.com/magnars/multiple-cursors.el/issues/248).
-
-Enable multiple cursors at once. Some witchcraft at work here.
 
 #+BEGIN_SRC emacs-lisp
 (use-package multiple-cursors
@@ -1178,10 +1114,10 @@ Enable multiple cursors at once. Some witchcraft at work here.
    mc/list-file (expand-file-name ".multiple-cursors.el" user-emacs-directory)))
 #+END_SRC
 
-- *TODO*: Make a help buffer.
-
 Enable new custom binds when region is active. I've also added a few helpers to use
 with =selected=.
+
+- *TODO*: Make a help buffer.
 
 #+BEGIN_SRC emacs-lisp
 (use-package selected
@@ -1245,9 +1181,9 @@ See `sort-regexp-fields'."
   (sort-regexp-fields reverse "\\w+" "\\&" beg end))
 #+END_SRC
 
-- *TODO*: Handle regions.
-
 Work on lines.
+
+- *TODO*: Handle regions.
 
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "<M-S-down>") 'me/duplicate-line-down)
@@ -1294,11 +1230,9 @@ Work on lines.
 
 ** 23. Projectile
 
-- *TODO*: Try with =:init= instead of =:demand=.
-
 Projectile brings project-level facilities to Emacs such as grep, find and replace.
 
-- =projectile=: https://github.com/bbatsov/projectile
+- *TODO*: Try with =:init= instead of =:demand=.
 
 #+BEGIN_QUOTE
 Projectile is a project interaction library for Emacs. Its goal is to provide a nice
@@ -1324,9 +1258,6 @@ performance sake an indexing mechanism backed by external commands exists as wel
 
 ** 24. Python
 
-- =python=: built-in
-- =pip-requirements=: https://github.com/Wilfred/pip-requirements.el
-
 #+BEGIN_SRC emacs-lisp
 (use-package python
   :delight python-mode "Python")
@@ -1340,8 +1271,6 @@ performance sake an indexing mechanism backed by external commands exists as wel
 
 Colorize colors as text with their value.
 
-- =rainbow-mode=: https://julien.danjou.info/projects/emacs-packages#rainbow-mode
-
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-mode
   :init (add-hook 'prog-mode-hook 'rainbow-mode)
@@ -1351,8 +1280,6 @@ Colorize colors as text with their value.
 ** 26. Slack
 
 Slack integration.
-
-- =slack=: https://github.com/yuya373/emacs-slack
 
 #+BEGIN_SRC emacs-lisp
 (use-package slack
@@ -1379,8 +1306,6 @@ Slack integration.
 
 Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
-- =whitespace=: built-in
-
 #+BEGIN_SRC emacs-lisp
 (use-package whitespace
   :init (global-whitespace-mode 1)
@@ -1396,8 +1321,6 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 EWW stands for Emacs Web Wowser. Yeah that's right... Emacs is also a Web
 browser, text-based that is.
 
-- =eww=: built-in
-
 #+BEGIN_SRC emacs-lisp
 (use-package eww
   :ensure nil
@@ -1407,13 +1330,11 @@ browser, text-based that is.
 
 ** 29. Windows
 
-- *TODO*: Find a way to automatically adjust =golden-ratio-adjust-factor= depending
-          on the current display.
-
 Adjust the size of every windows and focus the active one. It uses the mathematical
 golden ratio somewhere in its formulas.
 
-- =golden-ratio=: https://github.com/roman/golden-ratio.el
+- *TODO*: Find a way to automatically adjust =golden-ratio-adjust-factor= depending
+          on the current display.
 
 #+BEGIN_SRC emacs-lisp
 (use-package golden-ratio
@@ -1475,8 +1396,6 @@ session is easy.
 #+END_SRC
 
 ** 30. YAML
-
-- =yaml-mode=: https://github.com/yoshiki/yaml-mode
 
 #+BEGIN_SRC emacs-lisp
 (use-package yaml-mode
