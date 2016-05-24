@@ -383,9 +383,21 @@ more. Should I just try a pull request over [[https://github.com/bbatsov/zenburn
 Ediff is a visual interface to Unix =diff=.
 
 #+BEGIN_SRC emacs-lisp
-(use-package ediff
+(use-package ediff-util
   :ensure nil
-  :config (setq-default ediff-split-window-function 'split-window-horizontally))
+  :init (add-hook 'ediff-mode-hook #'me/setup-ediff-map)
+  :config
+  (defun me/setup-ediff-map ()
+    (ediff-setup-keymap)
+    (define-key ediff-mode-map (kbd "<down>") #'ediff-next-difference)
+    (define-key ediff-mode-map (kbd "<up>") #'ediff-previous-difference)))
+
+(use-package ediff-wind
+  :ensure nil
+  :config
+  (setq-default
+   ediff-split-window-function #'split-window-horizontally
+   ediff-window-setup-function #'ediff-setup-windows-plain))
 #+END_SRC
 
 ** 6. Dired
