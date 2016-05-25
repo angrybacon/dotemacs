@@ -22,12 +22,13 @@ Here is what I consider better defaults for my own experience.
 (setq-default
  ad-redefinition-action 'accept                  ; Silence warnings for redefinition
  confirm-kill-emacs 'yes-or-no-p                 ; Confirm before exiting Emacs
+ cursor-in-non-selected-windows nil              ; Hide the cursor in inactive windows
  delete-by-moving-to-trash t                     ; Delete files to trash
  display-time-default-load-average nil           ; Don't display load average
  display-time-format "%H:%M"                     ; Format the time string
  fill-column 85                                  ; Set width for automatic line breaking
  gc-cons-threshold most-positive-fixnum          ; Increase garbage collector treshold
- help-window-select t
+ help-window-select t                            ; Focus new help windows when opened
  indent-tabs-mode nil                            ; Stop using tabs to indent
  indicate-empty-lines t                          ; Indicate unused lines in the fringe
  inhibit-startup-screen t                        ; Disable start-up screen
@@ -37,8 +38,8 @@ Here is what I consider better defaults for my own experience.
  scroll-conservatively 9999                      ; Disable re-center when scrolling
  scroll-margin 1                                 ; Add a window margin when scrolling
  show-trailing-whitespace nil                    ; Display trailing whitespaces
- split-height-threshold nil
- split-width-threshold nil
+ split-height-threshold nil                      ; Disable vertical window splitting
+ split-width-threshold nil                       ; Disable horizontal window splitting
  tab-width 4                                     ; Set width for tabs
  uniquify-buffer-name-style 'forward             ; Uniquify buffer names
  window-combination-resize t                     ; Resize windows proportionally
