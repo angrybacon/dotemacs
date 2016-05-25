@@ -170,11 +170,11 @@ In order to have unified package declaration in my Emacs files, I use [[https://
 It allows for isolation and clarity.
 
 #+BEGIN_QUOTE
-/The =use-package= macro allows you to isolate package configuration in your/
-/=.emacs= file in a way that is both performance-oriented and, well, tidy. I created/
-/it because I have over 80 packages that I use in Emacs, and things were getting/
-/difficult to manage. Yet with this utility my total load time is around 2 seconds,/
-/with no loss of functionality!/
+The =use-package= macro allows you to isolate package configuration in your =.emacs=
+file in a way that is both performance-oriented and, well, tidy. I created it because
+I have over 80 packages that I use in Emacs, and things were getting difficult to
+manage. Yet with this utility my total load time is around 2 seconds, with no loss of
+functionality!
 
 [[https://github.com/jwiegley/use-package][John Wiegley]]
 #+END_QUOTE
@@ -469,12 +469,12 @@ anywhere close to this behavior for it to handle under the same bind, that is
 Magit provide Git facilities directly from within Emacs.
 
 #+BEGIN_QUOTE
-/Magit is an interface to the version control system [[https://git-scm.com/][Git]], implemented as an [[https://www.gnu.org/software/emacs][Emacs]]/
-/package. Magit aspires to be a complete Git porcelain. While we cannot (yet) claim/
-/that Magit wraps and improves upon each and every Git command, it is complete/
-/enough to allow even experienced Git users to perform almost all of their daily/
-/version control tasks directly from within Emacs. While many fine Git clients/
-/exist, only Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]/
+Magit is an interface to the version control system [[https://git-scm.com/][Git]], implemented as an [[https://www.gnu.org/software/emacs][Emacs]]
+package. Magit aspires to be a complete Git porcelain. While we cannot (yet) claim
+that Magit wraps and improves upon each and every Git command, it is complete enough
+to allow even experienced Git users to perform almost all of their daily version
+control tasks directly from within Emacs. While many fine Git clients exist, only
+Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
 
 [[https://github.com/magit/magit][Jonas Bernoulli]]
 #+END_QUOTE
@@ -546,13 +546,13 @@ Magit provide Git facilities directly from within Emacs.
 Helm is a beast. Although heavily, it replaces =ido-mode= in many ways.
 
 #+BEGIN_QUOTE
-/=Helm= is an Emacs framework for incremental completions and narrowing/
-/selections. It helps to rapidly complete file names, buffer names, or any other/
-/Emacs interactions requiring selecting an item from a list of possible choices./
+=Helm= is an Emacs framework for incremental completions and narrowing selections. It
+helps to rapidly complete file names, buffer names, or any other Emacs interactions
+requiring selecting an item from a list of possible choices.
 
-/Helm is a fork of =anything.el=, which was originally written by Tamas Patrovic and/
-/can be considered to be its successor. =Helm= cleans the legacy code that is leaner,/
-/modular, and unchained from constraints of backward compatibility./
+Helm is a fork of =anything.el=, which was originally written by Tamas Patrovic and
+can be considered to be its successor. =Helm= cleans the legacy code that is leaner,
+modular, and unchained from constraints of backward compatibility.
 
 [[https://github.com/emacs-helm/helm][Bozhidar Batsov]]
 #+END_QUOTE
@@ -1009,8 +1009,8 @@ This very file is organized with =org-mode=. I am definitely not a power user of
 but I'm getting there. :)
 
 #+BEGIN_QUOTE
-/Org mode is for keeping notes, maintaining TODO lists, planning projects, and/
-/authoring documents with a fast and effective plain-text system./
+Org mode is for keeping notes, maintaining TODO lists, planning projects, and
+authoring documents with a fast and effective plain-text system.
 
 [[http://orgmode.org/][Carsten Dominik]]
 #+END_QUOTE
@@ -1242,11 +1242,11 @@ Work on lines.
 Projectile brings project-level facilities to Emacs such as grep, find and replace.
 
 #+BEGIN_QUOTE
-/Projectile is a project interaction library for Emacs. Its goal is to provide a/
-/nice set of features operating on a project level without introducing external/
-/dependencies (when feasible). For instance - finding project files has a portable/
-/implementation written in pure Emacs Lisp without the use of GNU find (but for/
-/performance sake an indexing mechanism backed by external commands exists as well)./
+Projectile is a project interaction library for Emacs. Its goal is to provide a nice
+set of features operating on a project level without introducing external
+dependencies (when feasible). For instance - finding project files has a portable
+implementation written in pure Emacs Lisp without the use of GNU find (but for
+performance sake an indexing mechanism backed by external commands exists as well).
 
 [[https://github.com/bbatsov/projectile][Bozhidar Batsov]]
 #+END_QUOTE
@@ -1390,11 +1390,11 @@ golden ratio somewhere in its formulas.
 Allow undo's and redo's with window configurations.
 
 #+BEGIN_QUOTE
-/Winner mode is a global minor mode that records the changes in the window/
-/configuration (i.e. how the frames are partitioned into windows) so that the/
-/changes can be "undone" using the command =winner-undo=.  By default this one is/
-/bound to the key sequence ctrl-c left.  If you change your mind (while undoing),/
-/you can press ctrl-c right (calling =winner-redo=)./
+Winner mode is a global minor mode that records the changes in the window
+configuration (i.e. how the frames are partitioned into windows) so that the changes
+can be "undone" using the command =winner-undo=.  By default this one is bound to the
+key sequence ctrl-c left.  If you change your mind (while undoing), you can press
+ctrl-c right (calling =winner-redo=).
 
 [[https://github.com/emacs-mirror/emacs/blob/master/lisp/winner.el][Ivar Rummelhoff]]
 #+END_QUOTE
