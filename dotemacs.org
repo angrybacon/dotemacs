@@ -767,10 +767,8 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
 
 ** 17. Mode-line
 
-Brace yourself, this is quite big and possible sub-optimal. I use =powerline= to
-customize the =mode-line= a la Vim.
-
-- *TODO*: Check out https://www.emacswiki.org/emacs/delight-powerline.el.
+Delight allows you to change modes --- both major and minor modes --- lighters. They
+are the descriptive strings than you often see appear within the =mode-line=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package delight
@@ -782,6 +780,11 @@ customize the =mode-line= a la Vim.
     (let ((inhibit-mode-name-delight nil))
       ad-do-it)))
 #+END_SRC
+
+Brace yourself, this is quite big and possibly sub-optimal. I use =powerline= to
+customize the =mode-line= a la Vim.
+
+- *TODO*: Check out https://www.emacswiki.org/emacs/delight-powerline.el.
 
 #+BEGIN_SRC emacs-lisp
 (use-package powerline
@@ -1067,8 +1070,8 @@ dealing with mismatched parentheses.
 
 #+END_SRC
 
-I am still looking for the perfect parenthese management setup as of today... No
-package seem to be please my person.
+I am still looking for the perfect parenthesis management setup as of today... No
+package seem to please my person.
 
 #+BEGIN_SRC emacs-lisp
 (use-package smartparens
@@ -1104,9 +1107,6 @@ structure of the current major mode.
 
 Enable multiple cursors at once. Some witchcraft at work here.
 
-- *NOTE*: =me/insert-numbers= won't be needed anymore
-          (https://github.com/magnars/multiple-cursors.el/issues/248).
-
 #+BEGIN_SRC emacs-lisp
 (use-package multiple-cursors
   :bind
@@ -1126,7 +1126,7 @@ Enable multiple cursors at once. Some witchcraft at work here.
 Enable new custom binds when region is active. I've also added a few helpers to use
 with =selected=.
 
-- *TODO*: Make a help buffer.
+- *TODO*: Make a help buffer à la Magit.
 
 #+BEGIN_SRC emacs-lisp
 (use-package selected
@@ -1251,8 +1251,6 @@ performance sake an indexing mechanism backed by external commands exists as wel
 [[https://github.com/bbatsov/projectile][Bozhidar Batsov]]
 #+END_QUOTE
 
-- *TODO*: Try with =:init= instead of =:demand=.
-
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
   :init (projectile-global-mode)
@@ -1291,6 +1289,8 @@ Colorize colors as text with their value.
 ** 26. Slack
 
 Slack integration.
+
+- *TODO*: Register teams in =.secret.el=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package slack
@@ -1332,6 +1332,8 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 EWW stands for Emacs Web Wowser. Yeah that's right... Emacs is also a Web
 browser, text-based that is.
 
+- *NOTE*: Why can't I use =setq-default= to customize =eww-header-line-format=?
+
 #+BEGIN_SRC emacs-lisp
 (use-package eww
   :ensure nil
@@ -1346,6 +1348,7 @@ golden ratio somewhere in its formulas.
 
 - *TODO*: Find a way to automatically adjust =golden-ratio-adjust-factor= depending
           on the current display.
+- *TODO*: Check out https://github.com/mina86/auto-dim-other-buffers.el.
 
 #+BEGIN_SRC emacs-lisp
 (use-package golden-ratio
