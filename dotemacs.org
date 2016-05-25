@@ -7,11 +7,11 @@ C. *[[#c-features][Features]]*
 
 * A. Bootstrap
 
-1. *[[#1-use-better-default][Use better default]]*
+1. *[[#1-use-better-defaults][Use better defaults]]*
 2. *[[#2-validate-emacs-version][Validate Emacs' version]]*
 3. *[[#3-benchmark-startup-time][Benchmark startup time]]*
-4. *[[#4-load-custom.el][Load =custom.el=]]*
-5. *[[#5-load-secret.el][Load =secret.el=]]*
+4. *[[#4-load-customel][Load .custom.el]]*
+5. *[[#5-load-secretel][Load .secret.el]]*
 6. *[[#6-initialize-melpa][Initialize MELPA]]*
 
 ** 1. Use better defaults
@@ -115,7 +115,7 @@ should live as early as in =init.el=.
     (load benchmark-init.el)))
 #+END_SRC
 
-** 4. Load =custom.el=
+** 4. Load =.custom.el=
 
 One is able to use the customization interface that is bundled within Emacs. It is
 meant to help people non familiar with Emacs Lisp in the configuration of Emacs
@@ -132,7 +132,7 @@ tells Emacs to add extra code in another file that would be then loaded if exist
   (load custom-file))
 #+END_SRC
 
-** 5. Load =secret.el=
+** 5. Load =.secret.el=
 
 I load =.secret.el= to keep sensible things out of version control.
 For instance, you could set your identity by customizing both =user-full-name= and
@@ -541,9 +541,6 @@ Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.h
 
 Helm is a beast. Although heavily, it replaces =ido-mode= in many ways.
 
-- *TODO*: Make helm-list-faces-display.
-- *TODO*: Fix the mode-line for Helm buffers.
-
 #+BEGIN_QUOTE
 =Helm= is an Emacs framework for incremental completions and narrowing selections. It
 helps to rapidly complete file names, buffer names, or any other Emacs interactions
@@ -553,6 +550,9 @@ Helm is a fork of =anything.el=, which was originally written by Tamas Patrovic 
 can be considered to be its successor. =Helm= cleans the legacy code that is leaner,
 modular, and unchained from constraints of backward compatibility.
 #+END_QUOTE
+
+- *TODO*: Make helm-list-faces-display.
+- *TODO*: Fix the mode-line for Helm buffers.
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm
@@ -1233,8 +1233,6 @@ Work on lines.
 
 Projectile brings project-level facilities to Emacs such as grep, find and replace.
 
-- *TODO*: Try with =:init= instead of =:demand=.
-
 #+BEGIN_QUOTE
 Projectile is a project interaction library for Emacs. Its goal is to provide a nice
 set of features operating on a project level without introducing external
@@ -1242,6 +1240,8 @@ dependencies (when feasible). For instance - finding project files has a portabl
 implementation written in pure Emacs Lisp without the use of GNU find (but for
 performance sake an indexing mechanism backed by external commands exists as well).
 #+END_QUOTE
+
+- *TODO*: Try with =:init= instead of =:demand=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
