@@ -1028,16 +1028,14 @@ authoring documents with a fast and effective plain-text system.
   :config
   (setq-default
    org-edit-src-content-indentation 0
-   org-fontify-quote-and-verse-blocks t
    org-src-fontify-natively t
    org-src-window-setup 'current-window
    org-support-shift-select 'always
    org-startup-folded nil
    org-startup-truncated nil)
   (set-face-attribute 'org-block-background nil :background zenburn/bg+0)
-  (set-face-attribute 'org-block-begin-line nil :background zenburn/bg-0)
-  (set-face-attribute 'org-block-end-line nil :background zenburn/bg-0)
-  (set-face-attribute 'org-quote nil :background zenburn/bg+0)
+  (set-face-attribute 'org-block-begin-line nil :background 'unspecified)
+  (set-face-attribute 'org-block-end-line nil :background 'unspecified)
   (unbind-key "C-a" org-mode-map)
   (unbind-key "C-e" org-mode-map)
   (unbind-key "<C-return>" org-mode-map)
