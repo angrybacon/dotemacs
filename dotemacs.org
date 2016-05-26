@@ -524,12 +524,13 @@ Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.h
 
   ;; Customize faces
   (set-face-attribute 'magit-diff-added nil
-                      :background 'unspecified :foreground zenburn/green+3)
+                      :background zenburn/bg+0 :foreground zenburn/green+3)
+  (set-face-attribute 'magit-diff-context nil :background zenburn/bg+0)
   (set-face-attribute 'magit-diff-file-heading-highlight nil :background 'unspecified)
   (set-face-attribute 'magit-diff-hunk-heading nil :background zenburn/bg+2)
   (set-face-attribute 'magit-diff-hunk-heading-highlight nil :background zenburn/bg+2)
   (set-face-attribute 'magit-diff-removed nil
-                      :background 'unspecified :foreground zenburn/red)
+                      :background zenburn/bg+0 :foreground zenburn/red)
   (set-face-attribute 'magit-popup-heading nil :height me/font-size-header)
   (set-face-attribute 'magit-section-heading nil :height me/font-size-header)
   (set-face-attribute 'magit-section-highlight nil :background 'unspecified))
