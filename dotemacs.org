@@ -259,7 +259,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
                       :box `(:line-width 1 :color ,zenburn/bg-1)
                       :height me/font-size-header)
   (set-face-attribute 'help-argument-name nil :foreground zenburn/orange)
-  (set-face-attribute 'hl-line nil :background zenburn/bg+0)
+  (set-face-attribute 'hl-line nil :background zenburn/bg+1)
   (set-face-attribute 'region nil :foreground zenburn/green)
   (set-face-attribute 'vertical-border nil :foreground zenburn/bg-1)
   (when (member me/font-family (font-family-list))
@@ -510,6 +510,7 @@ Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.h
   ;; Use better defaults
   (setq-default
    magit-display-buffer-function 'me/magit-display-buffer-function
+   magit-diff-highlight-hunk-body nil
    magit-refs-show-commit-count (quote all)
    magit-section-show-child-count t
    magit-set-upstream-on-push 'askifnotset)
@@ -523,22 +524,19 @@ Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.h
 
   ;; Customize faces
   (set-face-attribute 'magit-diff-added nil
-                      :background zenburn/green-1 :foreground zenburn/green+2)
-  (set-face-attribute 'magit-diff-added-highlight nil
-                      :background zenburn/green-1 :foreground zenburn/green+2)
+                      :background 'unspecified :foreground zenburn/green+3)
+  (set-face-attribute 'magit-diff-file-heading-highlight nil :background 'unspecified)
+  (set-face-attribute 'magit-diff-hunk-heading nil :background zenburn/bg+2)
+  (set-face-attribute 'magit-diff-hunk-heading-highlight nil :background zenburn/bg+2)
   (set-face-attribute 'magit-diff-removed nil
-                      :background zenburn/red-4 :foreground zenburn/red)
-  (set-face-attribute 'magit-diff-removed-highlight nil
-                      :background zenburn/red-4 :foreground zenburn/red)
+                      :background 'unspecified :foreground zenburn/red)
   (set-face-attribute 'magit-popup-heading nil :height me/font-size-header)
-  (set-face-attribute 'magit-section-heading nil :height me/font-size-header))
+  (set-face-attribute 'magit-section-heading nil :height me/font-size-header)
+  (set-face-attribute 'magit-section-highlight nil :background 'unspecified))
 
-(use-package gitattributes-mode
-  :delight gitattributes-mode "Git Attributes")
-(use-package gitconfig-mode
-  :delight gitconfig-mode "Git Config")
-(use-package gitignore-mode
-  :delight gitignore-mode "Git Ignore")
+(use-package gitattributes-mode :delight gitattributes-mode "Git Attributes")
+(use-package gitconfig-mode :delight gitconfig-mode "Git Config")
+(use-package gitignore-mode :delight gitignore-mode "Git Ignore")
 #+END_SRC
 
 ** 10. Helm
@@ -1018,6 +1016,8 @@ authoring documents with a fast and effective plain-text system.
 [[http://orgmode.org/][Carsten Dominik]]
 #+END_QUOTE
 
+- *FIXME*: Fix =hl-line= in source blocks.
+
 #+BEGIN_SRC emacs-lisp
 (use-package org
   :delight org-mode "Org"
@@ -1027,14 +1027,16 @@ authoring documents with a fast and effective plain-text system.
   :config
   (setq-default
    org-edit-src-content-indentation 0
+   org-fontify-quote-and-verse-blocks t
    org-src-fontify-natively t
    org-src-window-setup 'current-window
    org-support-shift-select 'always
    org-startup-folded nil
    org-startup-truncated nil)
-  (set-face-attribute 'org-block-background nil :background zenburn/bg+2)
-  (set-face-attribute 'org-block-begin-line nil :background zenburn/bg+0)
-  (set-face-attribute 'org-block-end-line nil :background zenburn/bg+0)
+  (set-face-attribute 'org-block-background nil :background zenburn/bg+0)
+  (set-face-attribute 'org-block-begin-line nil :background zenburn/bg-0)
+  (set-face-attribute 'org-block-end-line nil :background zenburn/bg-0)
+  (set-face-attribute 'org-quote nil :background zenburn/bg+0)
   (unbind-key "C-a" org-mode-map)
   (unbind-key "C-e" org-mode-map)
   (unbind-key "<C-return>" org-mode-map)
