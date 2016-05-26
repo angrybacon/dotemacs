@@ -511,6 +511,7 @@ Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.h
   (setq-default
    magit-display-buffer-function 'me/magit-display-buffer-function
    magit-diff-highlight-hunk-body nil
+   magit-popup-display-buffer-action '((display-buffer-same-window))
    magit-refs-show-commit-count (quote all)
    magit-section-show-child-count t
    magit-set-upstream-on-push 'askifnotset)
