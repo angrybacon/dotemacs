@@ -419,6 +419,13 @@ Configure Dired buffers. Amongst many other things, Emacs is also a file explore
    dired-listing-switches "-alh"
    dired-ls-F-marks-symlinks nil
    dired-recursive-copies 'always))
+
+(use-package dired-x
+  :ensure nil
+  :config
+  (defun me/dired-revert-after-shell-command (command &optional output-buffer error-buffer)
+    (revert-buffer))
+  (advice-add 'dired-smart-shell-command :after #'me/dired-revert-after-shell-command))
 #+END_SRC
 
 ** 7. Docker
@@ -1100,7 +1107,6 @@ package seem to please my person.
 
   :config
   (smartparens-global-mode 1)
-  (setq-default sp-autoinsert-quote-if-followed-by-closing-pair t)
   (sp-pair "{{" "}}")
   (sp-pair "[[" "]]"))
 #+END_SRC
