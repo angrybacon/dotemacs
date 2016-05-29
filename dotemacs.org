@@ -303,6 +303,7 @@ Features are alphabetically sorted because, well, I'm fussy. And they're easier 
 find that way... so there's that.
 
 - *TODO*: Add a list of all custom shortcuts.
+- *TODO*: Replace all olf defadvice's.
 
 ** 1. Auto-Completion
 
@@ -447,13 +448,20 @@ anywhere close to this behavior for it to handle under the same bind, that is
 
 (use-package hippie-exp
   :ensure nil
+  :preface
+  (defun me/emmet-try-expand-line (args)
+    "Try `emmet-expand-line' if `emmet-mode' is active. Else, does nothing."
+     (interactive "P")
+     (when emmet-mode (emmet-exand-line args)))
   :bind ("<C-return>" . hippie-expand)
   :config
   (setq-default
-   hippie-expand-try-functions-list '(yas-hippie-try-expand emmet-expand-line)))
+   hippie-expand-try-functions-list '(yas-hippie-try-expand me/emmet-try-expand-line)
+   hippie-expand-verbose nil))
 
 (use-package yasnippet
   :init
+  (add-hook 'emacs-lisp-mode-hook 'yas-minor-mode)
   (add-hook 'js-mode-hook 'yas-minor-mode)
   (add-hook 'org-mode-hook 'yas-minor-mode)
   (add-hook 'sgml-mode-hook 'yas-minor-mode)
@@ -1154,7 +1162,7 @@ with =selected=.
 
 (defun me/eval-region-and-kill-mark (beg end)
   "Execute the region as Lisp code.
- Call `eval-region' and kill mark. Move back to the beginning of the region."
+Call `eval-region' and kill mark. Move back to the beginning of the region."
   (interactive "r")
   (eval-region beg end)
   (setq deactivate-mark t)
@@ -1162,21 +1170,21 @@ with =selected=.
 
 (defun me/browse-url-and-kill-mark (url &rest args)
   "Ask a WWW browser to load URL.
- Call `browse-url' and kill mark."
+Call `browse-url' and kill mark."
   (interactive (browse-url-interactive-arg "URL: "))
   (apply #'browse-url url args)
   (setq deactivate-mark t))
 
 (defun me/indent-rigidly-left-and-keep-mark (beg end)
   "Indent all lines between BEG and END leftward by one space.
- Call `indent-rigidly-left' and keep mark."
+Call `indent-rigidly-left' and keep mark."
   (interactive "r")
   (indent-rigidly-left beg end)
   (setq deactivate-mark nil))
 
 (defun me/indent-rigidly-right-and-keep-mark (beg end)
   "Indent all lines between BEG and END rightward by one space.
- Call `indent-rigidly-right' and keep mark."
+Call `indent-rigidly-right' and keep mark."
   (interactive "r")
   (indent-rigidly-right beg end)
   (setq deactivate-mark nil))
