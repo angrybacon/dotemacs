@@ -69,7 +69,7 @@ Some UI elements are rather invasive and oppose to the no-mouse philosophy.
 Enable some more goodies.
 
 #+BEGIN_SRC emacs-lisp
-(fset 'yes-or-no-p 'y-or-n-p)                    ; Replace yes/no prompts with the shorter y/n
+(fset 'yes-or-no-p 'y-or-n-p)                    ; Replace yes/no prompts with y/n
 (put 'downcase-region 'disabled nil)             ; Enable downcase-region
 (put 'upcase-region 'disabled nil)               ; Enable upcase-region
 #+END_SRC
@@ -285,9 +285,9 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 15. *[[#15-lisp][Lisp]]*
 16. *[[#16-markdown][Markdown]]*
 17. *[[#17-mode-line][Mode-line]]*
-18. *[[#18-org][Org]]*
-19. *[[#19-os-x][OS X]]*
-20. *[[#20-navigation][Navigation]]*
+18. *[[#18-navigation][Navigation]]*
+19. *[[#19-org][Org]]*
+20. *[[#20-os-x][OS X]]*
 21. *[[#21-parentheses][Parentheses]]*
 22. *[[#22-point][Point]]*
 23. *[[#23-projectile][Projectile]]*
@@ -642,7 +642,8 @@ Fourth-party packages for Helm.
           (https://github.com/bbatsov/zenburn-emacs/issues/220).
 
 #+BEGIN_SRC emacs-lisp
-(use-package helm-ag)
+(use-package helm-ag
+  :config (setq-default helm-ag-show-status-function nil))
 
 (use-package helm-css-scss
   :bind ("C-c h s" . helm-css-scss)
