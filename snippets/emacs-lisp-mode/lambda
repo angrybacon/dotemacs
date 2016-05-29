@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key: l
+# --
+(lambda ()
+  $0)
