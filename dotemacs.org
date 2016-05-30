@@ -456,7 +456,7 @@ anywhere close to this behavior for it to handle under the same bind, that is
   (defun me/emmet-try-expand-line (args)
     "Try `emmet-expand-line' if `emmet-mode' is active. Else, does nothing."
      (interactive "P")
-     (when emmet-mode (emmet-exand-line args)))
+     (when emmet-mode (emmet-expand-line args)))
   :bind ("<C-return>" . hippie-expand)
   :config
   (setq-default
@@ -857,7 +857,7 @@ customize the =mode-line= a la Vim.
             (running (eq 'running flycheck-last-status-change)))
        (if (or errorp running) (format "• %s" count))))
 
-  ;; Customize appearance
+  ;; Customize the appearance
   (setq-default
    powerline-default-separator 'wave
    powerline-height 20
@@ -921,7 +921,8 @@ customize the =mode-line= a la Vim.
               (append
                (when (and
                       (bound-and-true-p flycheck-mode)
-                      (or flycheck-current-errors (eq 'running flycheck-last-status-change)))
+                      (or flycheck-current-errors
+                          (eq 'running flycheck-last-status-change)))
                  (list
                   (funcall separator-right mode-line-3-face mode-line-2-face)
                   (powerline-raw " " mode-line-2-face)
@@ -1032,6 +1033,8 @@ authoring documents with a fast and effective plain-text system.
 #+END_QUOTE
 
 - *FIXME*: Fix =hl-line= in source blocks.
+- *TODO*: Enable whitespace-mode in edit mode.
+
 
 #+BEGIN_SRC emacs-lisp
 (use-package org
