@@ -299,9 +299,6 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 29. *[[#29-windows][Windows]]*
 30. *[[#30-yaml][YAML]]*
 
-Features are alphabetically sorted because, well, I'm fussy. And they're easier to
-find that way... so there's that.
-
 - *TODO*: Add a list of all custom shortcuts.
 - *TODO*: Replace all olf defadvice's.
 
@@ -1301,6 +1298,30 @@ Colorize colors as text with their value.
 (use-package rainbow-mode
   :init (add-hook 'prog-mode-hook 'rainbow-mode)
   :config (setq-default rainbow-x-colors-major-mode-list '()))
+#+END_SRC
+
+Augment Emmacs' package menu.
+
+#+BEGIN_QUOTE
+Project for modernizing Emacs' Package Menu. With improved appearance, mode-line
+information. Github integration, customizability, asynchronous upgrading, and more.
+
+[[https://github.com/Malabarba/paradox][Artur Malabarba]]
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package paradox
+  :config
+  (setq-default
+   paradox-column-width-package 27
+   paradox-column-width-version 13
+   paradox-execute-asynchronously t
+   paradox-hide-wiki-packages t)
+  ;; (setq-local
+  ;;  header-line-format (propertize header-line-format 'display '((space :align-to 0))))
+  (set-face-attribute 'paradox-homepage-button-face nil :italic nil)
+  (remove-hook 'paradox--report-buffer-print 'paradox-after-execute-functions))
+
 #+END_SRC
 
 ** 26. Slack
