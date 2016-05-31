@@ -843,6 +843,10 @@ customize the =mode-line= a la Vim.
 
   :config
 
+  (defpowerline me/powerline-vc
+    (when (and (buffer-file-name (current-buffer)) vc-mode)
+      (format "%s" (format-mode-line '(vc-mode vc-mode)))))
+
   (defadvice vc-mode-line (after me/vc-mode-line () activate)
     "Strip backend from the VC information."
     (when (stringp vc-mode)
@@ -935,7 +939,7 @@ customize the =mode-line= a la Vim.
                 (funcall separator-right mode-line-3-face mode-line-2-face)
                 (powerline-raw " " mode-line-2-face)
                 (powerline-raw (projectile-project-name) projectile-face)
-                (powerline-vc vc-face)
+                (me/powerline-vc vc-face)
                 (powerline-raw " " mode-line-2-face))
                (list
                 (funcall separator-right mode-line-2-face mode-line-1-face)
@@ -958,7 +962,8 @@ customize the =mode-line= a la Vim.
                       :box `(:line-width 1 :color ,zenburn/bg-1)
                       :background zenburn/bg-1 :foreground zenburn/bg+3
                       :height me/font-size-mode-line)
-  (set-face-attribute 'powerline-active1 nil :background zenburn/bg-0 :foreground zenburn/fg)
+  (set-face-attribute 'powerline-active1 nil
+                      :background zenburn/bg-0 :foreground zenburn/fg)
   (set-face-attribute 'powerline-active2 nil :background zenburn/bg+1)
   (set-face-attribute 'powerline-inactive1 nil :background zenburn/bg-0)
   (set-face-attribute 'powerline-inactive2 nil :background zenburn/bg+1)
@@ -1320,8 +1325,6 @@ information. Github integration, customizability, asynchronous upgrading, and mo
    paradox-column-width-version 13
    paradox-execute-asynchronously t
    paradox-hide-wiki-packages t)
-  ;; (setq-local
-  ;;  header-line-format (propertize header-line-format 'display '((space :align-to 0))))
   (set-face-attribute 'paradox-homepage-button-face nil :italic nil)
   (remove-hook 'paradox--report-buffer-print 'paradox-after-execute-functions))
 
