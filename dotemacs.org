@@ -21,6 +21,7 @@ Here is what I consider better defaults for my own experience.
 #+BEGIN_SRC emacs-lisp
 (setq-default
  ad-redefinition-action 'accept                  ; Silence warnings for redefinition
+ auto-window-vscroll t                           ; Normalize vertical scroll offset
  confirm-kill-emacs 'yes-or-no-p                 ; Confirm before exiting Emacs
  cursor-in-non-selected-windows nil              ; Hide the cursor in inactive windows
  delete-by-moving-to-trash t                     ; Delete files to trash
@@ -35,8 +36,7 @@ Here is what I consider better defaults for my own experience.
  initial-scratch-message ""                      ; Empty the initial *scratch* buffer
  mouse-yank-at-point t                           ; Yank at point rather than cursor
  require-final-newline 'visit                    ; Add a newline at EOF on visit
- scroll-conservatively 9999                      ; Disable re-center when scrolling
- scroll-margin 1                                 ; Add a window margin when scrolling
+ scroll-step 1                                   ; Fix the scroll line step
  show-trailing-whitespace nil                    ; Display trailing whitespaces
  split-height-threshold nil                      ; Disable vertical window splitting
  split-width-threshold nil                       ; Disable horizontal window splitting
