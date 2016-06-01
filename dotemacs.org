@@ -299,6 +299,11 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 29. *[[#29-windows][Windows]]*
 30. *[[#30-yaml][YAML]]*
 
+#+BEGIN_QUOTE
+As pedantic as I like to be, some package have a `use-package` clause for nothing but
+the customization of its lighter.
+#+END_QUOTE
+
 - *TODO*: Add a list of all custom shortcuts.
 - *TODO*: Replace all olf defadvice's.
 
@@ -362,7 +367,8 @@ more. Should I just try a pull request over [[https://github.com/bbatsov/zenburn
 (use-package cus-edit
   :ensure nil
   :config
-  (set-face-attribute 'custom-group-tag nil :foreground zenburn/yellow :height me/font-size-header)
+  (set-face-attribute 'custom-group-tag nil
+                      :foreground zenburn/yellow :height me/font-size-header)
   (set-face-attribute 'custom-state nil :foreground zenburn/green+4)
   (set-face-attribute 'custom-variable-tag nil :foreground zenburn/blue)
   (when (member me/font-family (font-family-list))
