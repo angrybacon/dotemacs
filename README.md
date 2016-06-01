@@ -20,7 +20,7 @@ Screenshots
 My Emacs configuration is a living mixture that I edit on a daily basis. As such, the
 following screenshots might not reflect exactly what is on `:master`.
 
-![dotemacs.2016-03-14.png](http://i.imgur.com/BN8dIS9.png)
+- Helm: https://drive.google.com/open?id=0BwTSOByd3qSFMmZqVHBpTlk2Q1E
 
 More coming *soon* :tm:
 

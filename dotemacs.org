@@ -300,7 +300,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 30. *[[#30-yaml][YAML]]*
 
 #+BEGIN_QUOTE
-As pedantic as I like to be, some package have a `use-package` clause for nothing but
+As pedantic as I like to be, some packages have a `use-package` clause for nothing but
 the customization of its lighter.
 #+END_QUOTE
 
