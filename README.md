@@ -20,14 +20,14 @@ Screenshots
 My Emacs configuration is a living mixture that I edit on a daily basis. As such, the
 following screenshots might not reflect exactly what is on `:master`.
 
-- Helm: https://drive.google.com/open?id=0BwTSOByd3qSFMmZqVHBpTlk2Q1E
+- [Helm][screenshots.helm]
 
 More coming *soon* :tm:
 
 Installation
 ============
 
-I primarily use Emacs on OS X, but I trust your google-fu to find the equivalent for
+I primarily use Emacs on OS X, but I trust your *google-fu* to find the equivalent for
 the following commands to run on your setup.
 
 Emacs
@@ -35,9 +35,7 @@ Emacs
 
 1. I use [Yamamoto Mitsuharu's port][github.mitsuharu]. The configuration files
    *should* work with any build nonetheless. In any case, install Emacs 24 or above.
-1. Clone `dotemacs/` into `~/.emacs.d/`.
-1. Edit constants from within `~/.emacs.d/dotemacs.org` (Bootstrap > Set constants)
-   to suit your needs.
+1. Clone `dotemacs/` as `~/.emacs.d/`.
 
 Ag
 --
@@ -55,10 +53,11 @@ I use [Flycheck][github.flycheck] as linter framework to display syntax warnings
 errors whithin each buffer.
 
 ```sh
-pip install flake8
-gem install scss_lint scss_lint_reporter_checkstyle
+pip install flake8                                   # Python
+gem install scss_lint scss_lint_reporter_checkstyle  # SCSS
 ```
 
+[screenshots.helm]: https://drive.google.com/open?id=0BwTSOByd3qSFMmZqVHBpTlk2Q1E
 [self.dotemacs]: ./dotemacs.org
 [github.flycheck]: https://github.com/flycheck/flycheck
 [github.mitsuharu]: https://github.com/railwaycat/homebrew-emacsmacport
