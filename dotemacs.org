@@ -268,15 +268,15 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 
 * C. Languages
 
-1.*[[#1-css][CSS]]*
-2.*[[#2-docker][Docker]]*
-3.*[[#3-html][HTML]]*
-4.*[[#4-javascript][JavaScript]]*
-5.*[[#5-lisp][Lisp]]*
-6.*[[#6-markdown][Markdown]]*
-7.*[[#7-org][Org]]*
-8.*[[#8-python][Python]]*
-9.*[[#9-yaml][YAML]]*
+1. *[[#1-css][CSS]]*
+2. *[[#2-docker][Docker]]*
+3. *[[#3-html][HTML]]*
+4. *[[#4-javascript][JavaScript]]*
+5. *[[#5-lisp][Lisp]]*
+6. *[[#6-markdown][Markdown]]*
+7. *[[#7-org][Org]]*
+8. *[[#8-python][Python]]*
+9. *[[#9-yaml][YAML]]*
 
 #+BEGIN_QUOTE
 As pedantic as I like to be, some packages have a `use-package` clause for nothing but
