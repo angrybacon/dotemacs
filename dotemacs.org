@@ -24,7 +24,7 @@ Here is what I consider better defaults for my own experience.
  ad-redefinition-action 'accept                  ; Silence warnings for redefinition
  auto-window-vscroll t                           ; Normalize vertical scroll offset
  confirm-kill-emacs 'yes-or-no-p                 ; Confirm before exiting Emacs
- cursor-in-non-selected-windows nil              ; Hide the cursor in inactive windows
+ cursor-in-non-selected-windows t                ; Hide the cursor in inactive windows
  delete-by-moving-to-trash t                     ; Delete files to trash
  display-time-default-load-average nil           ; Don't display load average
  display-time-format "%H:%M"                     ; Format the time string
@@ -279,12 +279,12 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 9. *[[#9-yaml][YAML]]*
 
 #+BEGIN_QUOTE
-As pedantic as I like to be, some packages have a `use-package` clause for nothing but
+As pedantic as I like to be, some packages have a =use-package= clause for nothing but
 the customization of its lighter.
 #+END_QUOTE
 
 - *TODO*: Add a list of all custom shortcuts.
-- *TODO*: Replace all olf defadvice's.
+- *TODO*: Replace all old defadvice's.
 
 ** 1. CSS
 
@@ -519,12 +519,12 @@ Ediff is a visual interface to Unix =diff=.
 #+BEGIN_SRC emacs-lisp
 (use-package ediff-util
   :ensure nil
-  :init (add-hook 'ediff-mode-hook #'me/setup-ediff-map)
-  :config
+  :preface
   (defun me/setup-ediff-map ()
     (ediff-setup-keymap)
     (define-key ediff-mode-map (kbd "<down>") #'ediff-next-difference)
-    (define-key ediff-mode-map (kbd "<up>") #'ediff-previous-difference)))
+    (define-key ediff-mode-map (kbd "<up>") #'ediff-previous-difference))
+  :init (add-hook 'ediff-mode-hook #'me/setup-ediff-map))
 
 (use-package ediff-wind
   :ensure nil
@@ -562,10 +562,11 @@ Configure Dired buffers. Amongst many other things, Emacs is also a file explore
 
 (use-package dired-x
   :ensure nil
-  :config
-  (defun me/dired-revert-after-shell-command (command &optional output-buffer error-buffer)
+  :preface
+  (defun me/dired-revert-after-command (command &optional output error)
     (revert-buffer))
-  (advice-add 'dired-smart-shell-command :after #'me/dired-revert-after-shell-command))
+  :config
+  (advice-add 'dired-smart-shell-command :after #'me/dired-revert-after-command))
 #+END_SRC
 
 ** 6. Expand
@@ -1242,7 +1243,9 @@ with =selected=.
         ("C-s s" . sort-lines)
         ("C-s w" . me/sort-words))
   :init (selected-global-mode))
+#+END_SRC
 
+#+BEGIN_SRC emacs-lisp
 (defun me/eval-region-and-kill-mark (beg end)
   "Execute the region as Lisp code.
 Call `eval-region' and kill mark. Move back to the beginning of the region."
@@ -1348,10 +1351,11 @@ performance sake an indexing mechanism backed by external commands exists as wel
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
   :init (projectile-global-mode)
-  :config
+  :preface
   (defun me/projectile-project-name (orig-fun &rest args)
     "Prefer `me/project-name' over default Projectile project string."
     (or me/project-name (apply orig-fun args)))
+  :config
   (setq-default
    projectile-completion-system 'helm
    projectile-enable-caching t
