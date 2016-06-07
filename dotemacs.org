@@ -3,7 +3,8 @@
 
 A. *[[#a-bootstrap][Bootstrap]]* |
 B. *[[#b-theme][Theme]]* |
-C. *[[#c-features][Features]]*
+C. *[[#c-languages][Languages]]* |
+C. *[[#d-features][Features]]*
 
 * A. Bootstrap
 
@@ -186,7 +187,6 @@ functionality!
    use-package-always-defer t
    use-package-always-ensure t))
 #+END_SRC
-
 * B. Theme
 
 1. *[[#1-set-a-color-palette][Set a color palette]]*
@@ -266,38 +266,17 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
     (set-face-attribute 'default nil :font me/font-family)))
 #+END_SRC
 
-* C. Features
+* C. Languages
 
-1. *[[#1-auto-completion][Auto-Completion]]*
-2. *[[#2-css][CSS]]*
-3. *[[#3-comments][Comments]]*
-4. *[[#4-customization][Customization]]*
-5. *[[#5-diff][Diff]]*
-6. *[[#6-dired][Dired]]*
-7. *[[#7-docker][Docker]]*
-8. *[[#8-expand][Expand]]*
-9. *[[#9-git][Git]]*
-10. *[[#10-helm][Helm]]*
-11. *[[#11-helm-plugins][Helm Plugins]]*
-12. *[[#12-html][HTML]]*
-13. *[[#13-javascript][JavaScript]]*
-14. *[[#14-linters][Linters]]*
-15. *[[#15-lisp][Lisp]]*
-16. *[[#16-markdown][Markdown]]*
-17. *[[#17-mode-line][Mode-line]]*
-18. *[[#18-navigation][Navigation]]*
-19. *[[#19-org][Org]]*
-20. *[[#20-os-x][OS X]]*
-21. *[[#21-parentheses][Parentheses]]*
-22. *[[#22-point][Point]]*
-23. *[[#23-projectile][Projectile]]*
-24. *[[#24-python][Python]]*
-25. *[[#25-quality-of-life][Quality of Life]]*
-26. *[[#26-slack][Slack]]*
-27. *[[#27-whitespaces][Whitespaces]]*
-28. *[[#28-web-browsing][Web Browsing]]*
-29. *[[#29-windows][Windows]]*
-30. *[[#30-yaml][YAML]]*
+1.*[[#1-css][CSS]]*
+2.*[[#2-docker][Docker]]*
+3.*[[#3-html][HTML]]*
+4.*[[#4-javascript][JavaScript]]*
+5.*[[#5-lisp][Lisp]]*
+6.*[[#6-markdown][Markdown]]*
+7.*[[#7-org][Org]]*
+8.*[[#8-python][Python]]*
+9.*[[#9-yaml][YAML]]*
 
 #+BEGIN_QUOTE
 As pedantic as I like to be, some packages have a `use-package` clause for nothing but
@@ -306,6 +285,182 @@ the customization of its lighter.
 
 - *TODO*: Add a list of all custom shortcuts.
 - *TODO*: Replace all olf defadvice's.
+
+** 1. CSS
+
+#+BEGIN_SRC emacs-lisp
+(use-package css-mode
+  :delight css-mode "CSS"
+  :config (setq-default css-indent-offset 2))
+
+(use-package scss-mode
+  :delight scss-mode "SCSS"
+  :mode ("\\.css\\'" "\\.sass\\'" "\\.scss\\'")
+  :init
+  (add-hook 'scss-mode-hook
+            (lambda ()
+              (setq-local comment-end "")
+              (setq-local comment-start "//")))
+  :config (setq-default scss-compile-at-save nil))
+#+END_SRC
+
+** 2. Docker
+
+#+BEGIN_SRC emacs-lisp
+(use-package dockerfile-mode
+  :delight dockerfile-mode "Dockerfile"
+  :mode "Dockerfile\\'")
+#+END_SRC
+
+** 3. HTML
+
+HTML mode is defined in =sgml-mode.el=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package sgml-mode
+  :ensure nil
+  :delight html-mode "HTML"
+  :config (setq-default sgml-basic-offset 2))
+#+END_SRC
+
+** 4. JavaScript
+
+Tern is a code-analysis engine for JavaScript. I use it to check syntax and grammar
+in my JavaScript code. With an auto-complete frontend, it can also provide candidates
+for variables and properties.
+
+- *FIXME*: Indent level is broken
+           (https://github.com/joshwnj/json-mode/issues/32).
+
+#+BEGIN_SRC emacs-lisp
+(use-package js
+  :delight js-mode "JavaScript"
+  :config (setq-default js-indent-level 2))
+
+(use-package json-mode
+  :delight json-mode "JSON"
+  :mode "\\.json\\'"
+  :config
+  (add-hook 'json-mode-hook (lambda () (setq-local js-indent-level 2))))
+
+(use-package tern
+  :config (add-hook 'js-mode-hook 'tern-mode))
+#+END_SRC
+
+** 5. Lisp
+
+#+BEGIN_SRC emacs-lisp
+(use-package lisp-mode
+  :ensure nil
+  :delight lisp-mode "Lisp"
+  :config
+  (delight
+   '((emacs-lisp-mode "Emacs Lisp")
+     (lisp-interaction-mode "Lisp Interaction"))))
+#+END_SRC
+
+** 6. Markdown
+
+#+BEGIN_SRC emacs-lisp
+(use-package markdown-mode
+  :delight markdown-mode "Markdown"
+  :mode
+  ("INSTALL\\'"
+   "CONTRIBUTORS\\'"
+   "LICENSE\\'"
+   "README\\'"
+   "\\.markdown\\'"
+   "\\.md\\'")
+  :init (add-hook 'markdown-mode-hook 'turn-on-auto-fill)
+  :config
+  (unbind-key "M-<down>" markdown-mode-map)
+  (unbind-key "M-<up>" markdown-mode-map)
+  (setq-default markdown-asymmetric-header t))
+#+END_SRC
+
+** 7. Org
+
+This very file is organized with =org-mode=. I am definitely not a power user of Org,
+but I'm getting there. :)
+
+#+BEGIN_QUOTE
+Org mode is for keeping notes, maintaining TODO lists, planning projects, and
+authoring documents with a fast and effective plain-text system.
+
+[[http://orgmode.org/][Carsten Dominik]]
+#+END_QUOTE
+
+- *FIXME*: Fix =hl-line= in source blocks.
+- *TODO*: Enable whitespace-mode in edit mode.
+
+#+BEGIN_SRC emacs-lisp
+(use-package org
+  :delight org-mode "Org"
+
+  :init (add-hook 'org-mode-hook 'turn-on-auto-fill)
+
+  :config
+  (setq-default
+   org-edit-src-content-indentation 0
+   org-src-fontify-natively t
+   org-src-window-setup 'current-window
+   org-support-shift-select 'always
+   org-startup-folded nil
+   org-startup-truncated nil)
+  (set-face-attribute 'org-block-background nil :background zenburn/bg+0)
+  (set-face-attribute 'org-block-begin-line nil :background 'unspecified)
+  (set-face-attribute 'org-block-end-line nil :background 'unspecified)
+  (unbind-key "C-a" org-mode-map)
+  (unbind-key "C-e" org-mode-map)
+  (unbind-key "<C-return>" org-mode-map)
+  (unbind-key "<C-S-down>" org-mode-map)
+  (unbind-key "<C-S-up>" org-mode-map)
+  (define-key org-mode-map (kbd "<M-return>") 'org-insert-heading-after-current))
+#+END_SRC
+
+** 8. Python
+
+#+BEGIN_SRC emacs-lisp
+(use-package python
+  :delight python-mode "Python")
+
+(use-package pip-requirements
+  :delight pip-requirements-mode "PyPA Requirements"
+  :config (add-hook 'pip-requirements-mode-hook (lambda () (setq-local completion-ignore-case t))))
+#+END_SRC
+
+** 9. YAML
+
+#+BEGIN_SRC emacs-lisp
+(use-package yaml-mode
+  :delight yaml-mode "YAML"
+  :mode "\\.yml\\'")
+#+END_SRC
+
+* D. Features
+
+1. *[[#1-auto-completion][Auto-Completion]]*
+2. *[[#2-comments][Comments]]*
+3. *[[#3-customization-menus][Customization Menus]]*
+4. *[[#4-diff][Diff]]*
+5. *[[#5-dired][Dired]]*
+6. *[[#6-expand][Expand]]*
+7. *[[#7-git][Git]]*
+8. *[[#8-helm][Helm]]*
+9. *[[#9-helm-plugins][Helm Plugins]]*
+10. *[[#10-hydra][Hydra]]*
+11. *[[#11-linters][Linters]]*
+12. *[[#12-mode-line][Mode-line]]*
+13. *[[#13-navigation][Navigation]]*
+14. *[[#14-os-x][OS X]]*
+15. *[[#15-parentheses][Parentheses]]*
+16. *[[#16-point][Point]]*
+17. *[[#17-projectile][Projectile]]*
+18. *[[#18-quality-of-life][Quality of Life]]*
+19. *[[#19-slack][Slack]]*
+20. *[[#20-whitespaces][Whitespaces]]*
+21. *[[#21-web-browsing][Web Browsing]]*
+22. *[[#22-windows][Windows]]*
 
 ** 1. Auto-Completion
 
@@ -328,25 +483,7 @@ Auto-completion at point. Display a small popin containing the candidates.
    company-tern-property-marker " *"))
 #+END_SRC
 
-** 2. CSS
-
-#+BEGIN_SRC emacs-lisp
-(use-package css-mode
-  :delight css-mode "CSS"
-  :config (setq-default css-indent-offset 2))
-
-(use-package scss-mode
-  :delight scss-mode "SCSS"
-  :mode ("\\.css\\'" "\\.sass\\'" "\\.scss\\'")
-  :init
-  (add-hook 'scss-mode-hook
-            (lambda ()
-              (setq-local comment-end "")
-              (setq-local comment-start "//")))
-  :config (setq-default scss-compile-at-save nil))
-#+END_SRC
-
-** 3. Comments
+** 2. Comments
 
 #+BEGIN_SRC emacs-lisp
 (use-package newcomment
@@ -358,7 +495,7 @@ Auto-completion at point. Display a small popin containing the candidates.
    comment-multi-line t))
 #+END_SRC
 
-** 4. Customization
+** 3. Customization Menus
 
 This merely changes face attributes and Zenburn customization buffers a little
 more. Should I just try a pull request over [[https://github.com/bbatsov/zenburn-emacs][zenburn-emacs]]?
@@ -375,7 +512,7 @@ more. Should I just try a pull request over [[https://github.com/bbatsov/zenburn
     (set-face-attribute 'custom-group-tag nil :font me/font-family)))
 #+END_SRC
 
-** 5. Diff
+** 4. Diff
 
 Ediff is a visual interface to Unix =diff=.
 
@@ -397,7 +534,7 @@ Ediff is a visual interface to Unix =diff=.
    ediff-window-setup-function #'ediff-setup-windows-plain))
 #+END_SRC
 
-** 6. Dired
+** 5. Dired
 
 Configure Dired buffers. Amongst many other things, Emacs is also a file explorer.
 
@@ -431,15 +568,7 @@ Configure Dired buffers. Amongst many other things, Emacs is also a file explore
   (advice-add 'dired-smart-shell-command :after #'me/dired-revert-after-shell-command))
 #+END_SRC
 
-** 7. Docker
-
-#+BEGIN_SRC emacs-lisp
-(use-package dockerfile-mode
-  :delight dockerfile-mode "Dockerfile"
-  :mode "Dockerfile\\'")
-#+END_SRC
-
-** 8. Expand
+** 6. Expand
 
 HippieExpand manages expansions a la [[http://emmet.io/][Emmet]]. So I've gathered all features that look
 anywhere close to this behavior for it to handle under the same bind, that is
@@ -482,7 +611,7 @@ anywhere close to this behavior for it to handle under the same bind, that is
   (unbind-key "<tab>" yas-minor-mode-map))
 #+END_SRC
 
-** 9. Git
+** 7. Git
 
 Magit provide Git facilities directly from within Emacs.
 
@@ -559,7 +688,7 @@ Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.h
 (use-package gitignore-mode :delight gitignore-mode "Git Ignore")
 #+END_SRC
 
-** 10. Helm
+** 8. Helm
 
 Helm is a beast. Although heavily, it replaces =ido-mode= in many ways.
 
@@ -580,15 +709,7 @@ modular, and unchained from constraints of backward compatibility.
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm
-
   :defer 1
-
-  :bind
-  (("C-c h k" . helm-show-kill-ring)
-   ("C-c h g" . helm-google-suggest)
-   ("C-c h i" . helm-imenu)
-   ("C-c h r" . helm-resume))
-
   :config
   (helm-mode 1)
   (setq-default
@@ -596,8 +717,6 @@ modular, and unchained from constraints of backward compatibility.
    helm-display-header-line nil
    helm-mode-line-string nil
    helm-split-window-default-side 'left)
-  (set-face-attribute 'helm-ff-dotted-directory nil
-                      :background 'unspecified :foreground zenburn/bg+3)
   (set-face-attribute 'helm-match nil :foreground zenburn/green+2 :weight 'normal)
   (set-face-attribute 'helm-source-header nil
                       :box nil :background 'unspecified :height me/font-size-header))
@@ -609,11 +728,13 @@ Helm equivalents.
 #+BEGIN_SRC emacs-lisp
 (use-package helm-buffers
   :ensure helm
-  :config (setq-default helm-buffers-fuzzy-matching t))
+  :config
+  (setq-default helm-buffers-fuzzy-matching t)
+  (set-face-attribute 'helm-buffer-directory nil
+                      :background 'unspecified :foreground zenburn/blue))
 
 (use-package helm-color
-  :ensure helm
-  :bind ("C-c h c" . helm-colors))
+  :ensure helm)
 
 (use-package helm-command
   :ensure helm
@@ -624,7 +745,9 @@ Helm equivalents.
 
 (use-package helm-files
   :ensure helm
-  :bind (:map helm-find-files-map ("C-s" . helm-ff-run-grep-ag)))
+  :bind (:map helm-find-files-map ("C-s" . helm-ff-run-grep-ag))
+  :config
+  (set-face-attribute 'helm-ff-dotted-directory nil :background 'unspecified))
 
 (use-package helm-grep
   :ensure helm
@@ -649,8 +772,7 @@ Helm equivalents.
   :ensure helm
   :config (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn/blue))
 #+END_SRC
-
-** 11. Helm Plugins
+** 9. Helm Plugins
 
 Fourth-party packages for Helm.
 
@@ -664,7 +786,6 @@ Fourth-party packages for Helm.
   :config (setq-default helm-ag-show-status-function nil))
 
 (use-package helm-css-scss
-  :bind ("C-c h s" . helm-css-scss)
   :config (setq-default helm-css-scss-split-direction 'split-window-horizontally))
 
 (use-package helm-descbinds
@@ -674,50 +795,68 @@ Fourth-party packages for Helm.
 (use-package helm-describe-modes
   :bind ([remap describe-mode] . helm-describe-modes))
 
-(use-package helm-flycheck
-  :bind ("C-c h f" . helm-flycheck))
+(use-package helm-flycheck)
 
 (use-package helm-projectile
   :after helm
   :config (helm-projectile-on))
 #+END_SRC
 
-** 12. HTML
+** 10. Hydra
 
-HTML mode is defined in =sgml-mode.el=.
+#+BEGIN_QUOTE
+Once you summon the Hydra through the prefixed binding (the body + any one head), all
+heads can be called in succession with only a short extension.
 
-#+BEGIN_SRC emacs-lisp
-(use-package sgml-mode
-  :ensure nil
-  :delight html-mode "HTML"
-  :config (setq-default sgml-basic-offset 2))
-#+END_SRC
+The Hydra is vanquished once Hercules, any binding that isn't the Hydra's head,
+arrives. Note that Hercules, besides vanquishing the Hydra, will still serve his
+original purpose, calling his proper command. This makes the Hydra very seamless,
+it's like a minor mode that disables itself auto-magically.
 
-** 13. JavaScript
+[[https://github.com/abo-abo/hydra][Oleh Krehel]]
+#+END_QUOTE
 
-Tern is a code-analysis engine for JavaScript. I use it to check syntax and grammar
-in my JavaScript code. With an auto-complete frontend, it can also provide candidates
-for variables and properties.
-
-- *FIXME*: Indent level is broken
-           (https://github.com/joshwnj/json-mode/issues/32).
+- *TODO*: Make a hydra for =golden-ratio=.
 
 #+BEGIN_SRC emacs-lisp
-(use-package js
-  :delight js-mode "JavaScript"
-  :config (setq-default js-indent-level 2))
-
-(use-package json-mode
-  :delight json-mode "JSON"
-  :mode "\\.json\\'"
-  :config
-  (add-hook 'json-mode-hook (lambda () (setq-local js-indent-level 2))))
-
-(use-package tern
-  :config (add-hook 'js-mode-hook 'tern-mode))
+(use-package hydra
+  :bind
+  ("C-c h" . hydra-helm/body)
+  ("<f5>" . hydra-zoom/body))
 #+END_SRC
 
-** 14. Linters
+Group Helm commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-helm (:color blue :hint nil)
+  "
+
+  ^Meta^          ^Browse^        ^Do^
+ ─^────^───────  ─^──────^─────  ─^──^─────────
+ _q_ quit        _c_ colors      _f_ flycheck
+ _r_ resume      _g_ google      _s_ css-scss
+ ^^              _i_ imenu
+"
+  ("c" helm-colors)
+  ("f" helm-flycheck)
+  ("g" helm-google-suggest)
+  ("i" helm-imenu)
+  ("q" nil)
+  ("r" helm-resume)
+  ("s" helm-css-scss))
+
+#+END_SRC
+
+Change text size.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-zoom () "Zoom"
+  ("-" text-scale-decrease "out")
+  ("=" text-scale-increase "in")
+  ("0" (text-scale-increase 0) "reset"))
+#+END_SRC
+
+** 11. Linters
 
 Flycheck lints warnings and errors directly within buffers. It can check a lot of
 different syntaxes, as long as you make sure that Emacs has access to the binaries
@@ -753,38 +892,7 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
   (set-face-attribute 'flycheck-fringe-warning nil :foreground zenburn/orange))
 #+END_SRC
 
-** 15. Lisp
-
-#+BEGIN_SRC emacs-lisp
-(use-package lisp-mode
-  :ensure nil
-  :delight lisp-mode "Lisp"
-  :config
-  (delight
-   '((emacs-lisp-mode "Emacs Lisp")
-     (lisp-interaction-mode "Lisp Interaction"))))
-#+END_SRC
-
-** 16. Markdown
-
-#+BEGIN_SRC emacs-lisp
-(use-package markdown-mode
-  :delight markdown-mode "Markdown"
-  :mode
-  ("INSTALL\\'"
-   "CONTRIBUTORS\\'"
-   "LICENSE\\'"
-   "README\\'"
-   "\\.markdown\\'"
-   "\\.md\\'")
-  :init (add-hook 'markdown-mode-hook 'turn-on-auto-fill)
-  :config
-  (unbind-key "M-<down>" markdown-mode-map)
-  (unbind-key "M-<up>" markdown-mode-map)
-  (setq-default markdown-asymmetric-header t))
-#+END_SRC
-
-** 17. Mode-line
+** 12. Mode-line
 
 Delight allows you to change modes --- both major and minor modes --- lighters. They
 are the descriptive strings than you often see appear within the =mode-line=.
@@ -985,7 +1093,7 @@ customize the =mode-line= a la Vim.
   (set-face-attribute 'me/vc-face nil :foreground zenburn/bg+3))
 #+END_SRC
 
-** 18. Navigation
+** 13. Navigation
 
 Jump to a specific position in the buffer using a char-based decision tree.
 
@@ -1031,48 +1139,7 @@ Bind commands to move around windows.
 (global-set-key (kbd "C-M-<down>") 'windmove-down)
 #+END_SRC
 
-** 19. Org
-
-This very file is organized with =org-mode=. I am definitely not a power user of Org,
-but I'm getting there. :)
-
-#+BEGIN_QUOTE
-Org mode is for keeping notes, maintaining TODO lists, planning projects, and
-authoring documents with a fast and effective plain-text system.
-
-[[http://orgmode.org/][Carsten Dominik]]
-#+END_QUOTE
-
-- *FIXME*: Fix =hl-line= in source blocks.
-- *TODO*: Enable whitespace-mode in edit mode.
-
-
-#+BEGIN_SRC emacs-lisp
-(use-package org
-  :delight org-mode "Org"
-
-  :init (add-hook 'org-mode-hook 'turn-on-auto-fill)
-
-  :config
-  (setq-default
-   org-edit-src-content-indentation 0
-   org-src-fontify-natively t
-   org-src-window-setup 'current-window
-   org-support-shift-select 'always
-   org-startup-folded nil
-   org-startup-truncated nil)
-  (set-face-attribute 'org-block-background nil :background zenburn/bg+0)
-  (set-face-attribute 'org-block-begin-line nil :background 'unspecified)
-  (set-face-attribute 'org-block-end-line nil :background 'unspecified)
-  (unbind-key "C-a" org-mode-map)
-  (unbind-key "C-e" org-mode-map)
-  (unbind-key "<C-return>" org-mode-map)
-  (unbind-key "<C-S-down>" org-mode-map)
-  (unbind-key "<C-S-up>" org-mode-map)
-  (define-key org-mode-map (kbd "<M-return>") 'org-insert-heading-after-current))
-#+END_SRC
-
-** 20. OS X
+** 14. OS X
 
 Augment Emacs experience for OS X users.
 
@@ -1081,12 +1148,12 @@ Augment Emacs experience for OS X users.
 (defvar ns-option-modifier)
 (when (eq system-type 'darwin)
   (setq-default
-   exec-path (append exec-path '("/usr/local/bin"))  ; Add path to binaries installed with Homebrew
+   exec-path (append exec-path '("/usr/local/bin"))  ; Add path to Homebrew binaries
    ns-command-modifier 'meta                         ; Map the Meta key to the `cmd' key
    ns-option-modifier nil))                          ; Disable the `alt' key
 #+END_SRC
 
-** 21. Parentheses
+** 15. Parentheses
 
 Highlight parenthese-like delimiters in a rainbow fashion. It ease the reading when
 dealing with mismatched parentheses.
@@ -1096,7 +1163,6 @@ dealing with mismatched parentheses.
   :init
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'scss-mode-hook #'rainbow-delimiters-mode))
-
 #+END_SRC
 
 I am still looking for the perfect parenthesis management setup as of today... No
@@ -1122,7 +1188,7 @@ package seem to please my person.
   (sp-pair "[[" "]]"))
 #+END_SRC
 
-** 22. Point
+** 16. Point
 
 Increase region by semantic units. It tries to be smart about it and adapt to the
 structure of the current major mode.
@@ -1265,7 +1331,7 @@ Work on lines.
   (delete-trailing-whitespace))
 #+END_SRC
 
-** 23. Projectile
+** 17. Projectile
 
 Projectile brings project-level facilities to Emacs such as grep, find and replace.
 
@@ -1293,18 +1359,7 @@ performance sake an indexing mechanism backed by external commands exists as wel
   (advice-add 'projectile-project-name :around #'me/projectile-project-name))
 #+END_SRC
 
-** 24. Python
-
-#+BEGIN_SRC emacs-lisp
-(use-package python
-  :delight python-mode "Python")
-
-(use-package pip-requirements
-  :delight pip-requirements-mode "PyPA Requirements"
-  :config (add-hook 'pip-requirements-mode-hook (lambda () (setq-local completion-ignore-case t))))
-#+END_SRC
-
-** 25. Quality of Life
+** 18. Quality of Life
 
 Colorize colors as text with their value.
 
@@ -1336,7 +1391,7 @@ information. Github integration, customizability, asynchronous upgrading, and mo
 
 #+END_SRC
 
-** 26. Slack
+** 19. Slack
 
 Slack integration.
 
@@ -1363,7 +1418,7 @@ Slack integration.
   (set-face-attribute 'slack-message-output-text nil :height 1))
 #+END_SRC
 
-** 27. Whitespaces
+** 20. Whitespaces
 
 Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
@@ -1377,7 +1432,7 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
   (set-face-attribute 'whitespace-trailing nil :background zenburn/red-1))
 #+END_SRC
 
-** 28. Web Browsing
+** 21. Web Browsing
 
 EWW stands for Emacs Web Wowser. Yeah that's right... Emacs is also a Web
 browser, text-based that is.
@@ -1391,7 +1446,7 @@ browser, text-based that is.
   :config (setq eww-header-line-format " %t: %u"))
 #+END_SRC
 
-** 29. Windows
+** 22. Windows
 
 Adjust the size of every windows and focus the active one. It uses the mathematical
 golden ratio somewhere in its formulas.
@@ -1405,9 +1460,8 @@ golden ratio somewhere in its formulas.
 
   :preface
   (defconst me/golden-ratio-adjust-factor-1  .8    "A factor for 16/10: bi-split.")
-  (defconst me/golden-ratio-adjust-factor-2  .525  "A factor for 16/10: tri-split.")
-  (defconst me/golden-ratio-adjust-factor-3  .805  "A factor for 16/9: bi-split.")
-  (defconst me/golden-ratio-adjust-factor-4  .53   "A factor for 16/9: tri-split.")
+  (defconst me/golden-ratio-adjust-factor-2  .805  "A factor for 16/9: bi-split.")
+  (defconst me/golden-ratio-adjust-factor-3  .53   "A factor for 16/9: tri-split.")
   (defun me/golden-ratio-adjust-1 ()
     (interactive)
     (golden-ratio-adjust me/golden-ratio-adjust-factor-1))
@@ -1417,9 +1471,6 @@ golden ratio somewhere in its formulas.
   (defun me/golden-ratio-adjust-3 ()
     (interactive)
     (golden-ratio-adjust me/golden-ratio-adjust-factor-3))
-  (defun me/golden-ratio-adjust-4 ()
-    (interactive)
-    (golden-ratio-adjust me/golden-ratio-adjust-factor-4))
   (defun me/ediff-comparison-buffer-p ()
     (if (boundp 'ediff-this-buffer-ediff-sessions)
         (progn
@@ -1427,15 +1478,14 @@ golden ratio somewhere in its formulas.
           ediff-this-buffer-ediff-sessions)))
 
   :bind
-  (("<f5>" . me/golden-ratio-adjust-1)
-   ("<f6>" . me/golden-ratio-adjust-2)
-   ("<f7>" . me/golden-ratio-adjust-3)
-   ("<f8>" . me/golden-ratio-adjust-4))
+  (("<f6>" . me/golden-ratio-adjust-1)
+   ("<f7>" . me/golden-ratio-adjust-2)
+   ("<f8>" . me/golden-ratio-adjust-3))
 
   :init (golden-ratio-mode 1)
 
   :config
-  (setq-default golden-ratio-adjust-factor me/golden-ratio-adjust-factor-3)
+  (setq-default golden-ratio-adjust-factor me/golden-ratio-adjust-factor-2)
   (add-to-list 'golden-ratio-exclude-modes "ediff-mode")
   (add-to-list 'golden-ratio-inhibit-functions 'me/ediff-comparison-buffer-p))
 #+END_SRC
@@ -1457,14 +1507,6 @@ ctrl-c right (calling =winner-redo=).
   :ensure nil
   :if (fboundp 'winner-mode)
   :init (winner-mode 1))
-#+END_SRC
-
-** 30. YAML
-
-#+BEGIN_SRC emacs-lisp
-(use-package yaml-mode
-  :delight yaml-mode "YAML"
-  :mode "\\.yml\\'")
 #+END_SRC
 
 -----
