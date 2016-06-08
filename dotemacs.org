@@ -928,13 +928,67 @@ are the descriptive strings than you often see appear within the =mode-line=.
     (let ((inhibit-mode-name-delight nil)) ad-do-it)))
 #+END_SRC
 
-Brace yourself, this is quite big and possibly sub-optimal. I use =powerline= to
+#+BEGIN_SRC emacs-lisp
+(use-package spaceline :demand t)
+(use-package spaceline-config
+
+  :ensure nil
+  :after spaceline
+
+  :config
+
+  ;; Configure the mode-line
+  (setq-default
+   mode-line-format '("%e" (:eval (spaceline-ml-main)))
+   powerline-default-separator 'wave
+   powerline-height 20
+   spaceline-highlight-face-func 'spaceline-highlight-face-modified
+   spaceline-separator-dir-left '(left . left)
+   spaceline-separator-dir-right '(right . right))
+
+  ;; Build the mode-line
+  (spaceline-install
+   `((major-mode :face highlight-face)
+     ((remote-host buffer-id line) :separator ":"))
+
+   `(((flycheck-error flycheck-warning flycheck-info) :when active :skip-alternate t)
+     ((projectile-root version-control) :separator ":" :skip-alternate t)
+     (selection-info :skip-alternate t)
+     (global :face highlight-face)))
+
+  ;; Customize the mode-line
+  (set-face-attribute 'mode-line nil
+                      :box `(:line-width 1 :color ,zenburn/bg-1)
+                      :foreground zenburn/bg+3
+                      :height me/font-size-mode-line)
+  (set-face-attribute 'mode-line-inactive nil
+                      :box `(:line-width 1 :color ,zenburn/bg-1)
+                      :foreground zenburn/bg+3
+                      :height me/font-size-mode-line)
+  (set-face-attribute 'powerline-active1 nil :background zenburn/bg-1)
+  (set-face-attribute 'powerline-active2 nil :background zenburn/bg+0)
+  (set-face-attribute 'powerline-inactive1 nil :background zenburn/bg-1)
+  (set-face-attribute 'powerline-inactive2 nil :background zenburn/bg+1)
+  (set-face-attribute 'spaceline-flycheck-error nil :foreground zenburn/red)
+  (set-face-attribute 'spaceline-flycheck-info nil :foreground zenburn/blue+1)
+  (set-face-attribute 'spaceline-flycheck-warning nil :foreground zenburn/orange)
+  (set-face-attribute 'spaceline-modified nil
+                      :background zenburn/red :foreground zenburn/red-4)
+  (set-face-attribute 'spaceline-read-only nil
+                      :background zenburn/blue+1 :foreground zenburn/blue-5)
+  (set-face-attribute 'spaceline-unmodified nil
+                      :background zenburn/green-1 :foreground zenburn/green+4))
+#+END_SRC
+
+Brace yourself, for this is quite big and possibly sub-optimal. I use =powerline= to
 customize the =mode-line= a la Vim.
 
-- *TODO*: Check out https://www.emacswiki.org/emacs/delight-powerline.el.
+- *TODO*: Harvest and filter the following.
 
 #+BEGIN_SRC emacs-lisp
 (use-package powerline
+
+  :disabled t
 
   :demand t
 
