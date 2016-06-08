@@ -32,7 +32,6 @@ Here is what I consider better defaults for my own experience.
  gc-cons-threshold most-positive-fixnum          ; Increase garbage collector treshold
  help-window-select t                            ; Focus new help windows when opened
  indent-tabs-mode nil                            ; Stop using tabs to indent
- indicate-empty-lines t                          ; Indicate unused lines in the fringe
  inhibit-startup-screen t                        ; Disable start-up screen
  initial-scratch-message ""                      ; Empty the initial *scratch* buffer
  mouse-yank-at-point t                           ; Yank at point rather than cursor
@@ -924,11 +923,9 @@ are the descriptive strings than you often see appear within the =mode-line=.
 (use-package delight
   :config
   (defadvice powerline-major-mode (around delight-powerline-major-mode activate)
-    (let ((inhibit-mode-name-delight nil))
-      ad-do-it))
+    (let ((inhibit-mode-name-delight nil)) ad-do-it))
   (defadvice powerline-minor-modes (around delight-powerline-minor-modes activate)
-    (let ((inhibit-mode-name-delight nil))
-      ad-do-it)))
+    (let ((inhibit-mode-name-delight nil)) ad-do-it)))
 #+END_SRC
 
 Brace yourself, this is quite big and possibly sub-optimal. I use =powerline= to
@@ -1167,8 +1164,6 @@ Bind commands to move around windows.
 Augment Emacs experience for OS X users.
 
 #+BEGIN_SRC emacs-lisp
-(defvar ns-command-modifier)
-(defvar ns-option-modifier)
 (when (eq system-type 'darwin)
   (setq-default
    exec-path (append exec-path '("/usr/local/bin"))  ; Add path to Homebrew binaries
