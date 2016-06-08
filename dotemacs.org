@@ -1115,17 +1115,6 @@ customize the =mode-line= a la Vim.
 
 ** 13. Navigation
 
-Jump to a specific position in the buffer using a char-based decision tree.
-
-#+BEGIN_SRC emacs-lisp
-(use-package avy
-  :bind ("C-s" . avy-goto-char)
-  :config
-  (setq-default
-   avy-all-windows nil
-   avy-background t))
-#+END_SRC
-
 I disagree with Emacs' definition of paragraphs so I redefined the way it should jump
 from one block to another.
 
