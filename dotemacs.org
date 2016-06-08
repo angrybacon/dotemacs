@@ -968,7 +968,7 @@ are the descriptive strings than you often see appear within the =mode-line=.
   (set-face-attribute 'powerline-active1 nil :background zenburn/bg-1)
   (set-face-attribute 'powerline-active2 nil :background zenburn/bg+0)
   (set-face-attribute 'powerline-inactive1 nil :background zenburn/bg-1)
-  (set-face-attribute 'powerline-inactive2 nil :background zenburn/bg+1)
+  (set-face-attribute 'powerline-inactive2 nil :background zenburn/bg+0)
   (set-face-attribute 'spaceline-flycheck-error nil :foreground zenburn/red)
   (set-face-attribute 'spaceline-flycheck-info nil :foreground zenburn/blue+1)
   (set-face-attribute 'spaceline-flycheck-warning nil :foreground zenburn/orange)
