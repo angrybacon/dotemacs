@@ -76,7 +76,7 @@ Enable some more goodies.
 #+END_SRC
 
 Reset garbage collector treshold after initialization is finished and
-`garbage-collect` on focus-out.
+=garbage-collect= on focus-out.
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'after-init-hook (lambda () (setq gc-cons-threshold 800000)))
@@ -712,12 +712,12 @@ modular, and unchained from constraints of backward compatibility.
 (use-package helm
   :defer 1
   :config
-  (helm-mode 1)
   (setq-default
    helm-always-two-windows t
    helm-display-header-line nil
    helm-mode-line-string nil
    helm-split-window-default-side 'left)
+  (helm-mode 1)
   (set-face-attribute 'helm-match nil :foreground zenburn/green+2 :weight 'normal)
   (set-face-attribute 'helm-source-header nil
                       :box nil :background 'unspecified :height me/font-size-header))
@@ -728,51 +728,61 @@ Helm equivalents.
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm-buffers
-  :ensure helm
+  :ensure nil
+  :after helm
   :config
   (setq-default helm-buffers-fuzzy-matching t)
   (set-face-attribute 'helm-buffer-directory nil
                       :background 'unspecified :foreground zenburn/blue))
 
 (use-package helm-color
-  :ensure helm)
+  :ensure nil
+  :after helm)
 
 (use-package helm-command
-  :ensure helm
+  :ensure nil
+  :after helm
   :bind ([remap execute-extended-command] . helm-M-x)
   :config
   (setq-default helm-M-x-fuzzy-match t)
   (set-face-attribute 'helm-M-x-key nil :foreground zenburn/orange :underline nil))
 
 (use-package helm-files
-  :ensure helm
+  :ensure nil
+  :after helm
   :bind (:map helm-find-files-map ("C-s" . helm-ff-run-grep-ag))
   :config
   (set-face-attribute 'helm-ff-dotted-directory nil :background 'unspecified))
 
 (use-package helm-grep
-  :ensure helm
+  :ensure nil
+  :after helm
   :config (set-face-attribute 'helm-grep-lineno nil :foreground zenburn/yellow-2))
 
 (use-package helm-misc
-  :ensure helm
+  :ensure nil
+  :after helm
   :bind ([remap switch-to-buffer] . helm-buffers-list))
 
 (use-package helm-mode
-  :ensure helm
+  :ensure nil
+  :after helm
   :config
   (setq-default
    helm-completion-in-region-fuzzy-match t
    helm-mode-fuzzy-match t))
 
 (use-package helm-net
-  :ensure helm
+  :ensure nil
+  :after helm
   :config (setq-default helm-net-prefer-curl t))
 
 (use-package helm-regexp
-  :ensure helm
+  :ensure nil
+  :after helm
   :config (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn/blue))
 #+END_SRC
+
 ** 9. Helm Plugins
 
 Fourth-party packages for Helm.
@@ -784,23 +794,35 @@ Fourth-party packages for Helm.
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm-ag
+  :after helm
   :config (setq-default helm-ag-show-status-function nil))
 
 (use-package helm-css-scss
+  :after helm
   :config (setq-default helm-css-scss-split-direction 'split-window-horizontally))
 
 (use-package helm-descbinds
+  :after helm
   :bind ([remap describe-key] . helm-descbinds)
   :config (setq-default helm-descbinds-window-style 'split-window))
 
 (use-package helm-describe-modes
+  :after helm
   :bind ([remap describe-mode] . helm-describe-modes))
 
-(use-package helm-flycheck)
+(use-package helm-flycheck
+  :after helm)
 
 (use-package helm-projectile
   :after helm
-  :config (helm-projectile-on))
+  :bind
+  (:map projectile-command-map
+        ("b" . helm-projectile-switch-to-buffer)
+        ("d" . helm-projectile-find-dir)
+        ("f" . helm-projectile-find-file)
+        ("p" . helm-projectile-switch-project)
+        ("s s" . helm-projectile-ag))
+  :config (helm-projectile-toggle 1))
 #+END_SRC
 
 ** 10. Hydra
