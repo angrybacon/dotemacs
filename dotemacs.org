@@ -957,27 +957,29 @@ are the descriptive strings than you often see appear within the =mode-line=.
      ((remote-host buffer-id line) :separator ":"))
    `((selection-info)
      ((flycheck-error flycheck-warning flycheck-info) :when active)
-     (projectile-root)
-     (("⎇" me/version-control) :tight-left nil :when vc-mode)
+     (projectile-root (("" me/version-control) :when vc-mode))
      (global :face highlight-face)))
 
   ;; Customize the mode-line
   (set-face-attribute 'mode-line nil
-                      :box `(:line-width 1 :color ,zenburn/bg-1)
-                      :foreground zenburn/green
+                      :box `(:line-width 1 :color ,zenburn/bg-2)
+                      :foreground zenburn/bg+3
                       :height me/font-size-mode-line)
   (set-face-attribute 'mode-line-inactive nil
-                      :box `(:line-width 1 :color ,zenburn/bg-1)
+                      :box `(:line-width 1 :color ,zenburn/bg-2)
                       :foreground zenburn/bg+3
                       :height me/font-size-mode-line)
   (set-face-attribute 'powerline-active2 nil :background zenburn/bg+2)
   (set-face-attribute 'powerline-inactive2 nil :background zenburn/bg+2)
+  (set-face-attribute 'spaceline-flycheck-error nil :foreground zenburn/red)
+  (set-face-attribute 'spaceline-flycheck-info nil :foreground zenburn/blue)
+  (set-face-attribute 'spaceline-flycheck-warning nil :foreground zenburn/orange)
   (set-face-attribute 'spaceline-modified nil
                       :background zenburn/red :foreground zenburn/red-4)
   (set-face-attribute 'spaceline-read-only nil
                       :background zenburn/blue+1 :foreground zenburn/blue-5)
   (set-face-attribute 'spaceline-unmodified nil
-                      :background zenburn/green-1 :foreground zenburn/green+4))
+                      :background zenburn/green :foreground zenburn/green+4))
 #+END_SRC
 
 ** 13. Navigation

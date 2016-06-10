@@ -57,7 +57,13 @@ pip install flake8                                   # Python
 gem install scss_lint scss_lint_reporter_checkstyle  # SCSS
 ```
 
-[screenshots.helm]: https://drive.google.com/open?id=0BwTSOByd3qSFMmZqVHBpTlk2Q1E
-[self.dotemacs]: ./dotemacs.org
+Font Awesome
+------------
+
+There are special characters in the mode-line. Install [Font Awesome][font-awesome].
+
+[font-awesome]: http://fontawesome.io/
 [github.flycheck]: https://github.com/flycheck/flycheck
 [github.mitsuharu]: https://github.com/railwaycat/homebrew-emacsmacport
+[screenshots.helm]: https://drive.google.com/open?id=0BwTSOByd3qSFMmZqVHBpTlk2Q1E
+[self.dotemacs]: ./dotemacs.org
