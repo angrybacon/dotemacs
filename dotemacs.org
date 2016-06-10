@@ -714,10 +714,10 @@ modular, and unchained from constraints of backward compatibility.
   (setq-default
    helm-always-two-windows t
    helm-display-header-line nil
-   helm-mode-line-string nil
    helm-split-window-default-side 'left)
   (helm-mode 1)
   (set-face-attribute 'helm-match nil :foreground zenburn/green+2 :weight 'normal)
+  (set-face-attribute 'helm-prefarg nil :foreground zenburn/red)
   (set-face-attribute 'helm-source-header nil
                       :box nil :background 'unspecified :height me/font-size-header))
 #+END_SRC
@@ -944,21 +944,33 @@ are the descriptive strings than you often see appear within the =mode-line=.
    spaceline-highlight-face-func 'spaceline-highlight-face-modified
    spaceline-separator-dir-left '(left . left)
    spaceline-separator-dir-right '(right . right))
+  (spaceline-helm-mode)
 
   ;; Build the segments
   (spaceline-define-segment me/version-control
-    "Version control branch."
     (when vc-mode
       (substring vc-mode (+ 2 (length (symbol-name (vc-backend buffer-file-name)))))))
+  (spaceline-define-segment me/helm-follow
+    (when (and (bound-and-true-p helm-alive-p)
+               spaceline--helm-current-source
+               (eq 1 (cdr (assq 'follow spaceline--helm-current-source))))
+      (propertize "" 'face 'success)))
 
-  ;; Build the mode-line
+  ;; Build the mode-lines
   (spaceline-install
    `((major-mode :face highlight-face)
      ((remote-host buffer-id line) :separator ":"))
    `((selection-info)
      ((flycheck-error flycheck-warning flycheck-info) :when active)
-     (projectile-root (("" me/version-control) :when vc-mode))
+     ((projectile-root me/version-control) :separator "  ")
      (global :face highlight-face)))
+  (spaceline-install
+   'helm
+   '((helm-buffer-id :face spaceline-read-only)
+     helm-number
+     (me/helm-follow :fallback "")
+     helm-prefix-argument)
+   '((helm-help :face spaceline-read-only)))
 
   ;; Customize the mode-line
   (set-face-attribute 'mode-line nil
