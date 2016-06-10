@@ -945,32 +945,33 @@ are the descriptive strings than you often see appear within the =mode-line=.
    spaceline-separator-dir-left '(left . left)
    spaceline-separator-dir-right '(right . right))
 
+  ;; Build the segments
+  (spaceline-define-segment me/version-control
+    "Version control branch."
+    (when vc-mode
+      (substring vc-mode (+ 2 (length (symbol-name (vc-backend buffer-file-name)))))))
+
   ;; Build the mode-line
   (spaceline-install
    `((major-mode :face highlight-face)
      ((remote-host buffer-id line) :separator ":"))
-
-   `(((flycheck-error flycheck-warning flycheck-info) :when active :skip-alternate t)
-     ((projectile-root version-control) :separator ":" :skip-alternate t)
-     (selection-info :skip-alternate t)
+   `((selection-info)
+     ((flycheck-error flycheck-warning flycheck-info) :when active)
+     (projectile-root)
+     (("⎇" me/version-control) :tight-left nil :when vc-mode)
      (global :face highlight-face)))
 
   ;; Customize the mode-line
   (set-face-attribute 'mode-line nil
                       :box `(:line-width 1 :color ,zenburn/bg-1)
-                      :foreground zenburn/bg+3
+                      :foreground zenburn/green
                       :height me/font-size-mode-line)
   (set-face-attribute 'mode-line-inactive nil
                       :box `(:line-width 1 :color ,zenburn/bg-1)
                       :foreground zenburn/bg+3
                       :height me/font-size-mode-line)
-  (set-face-attribute 'powerline-active1 nil :background zenburn/bg-1)
-  (set-face-attribute 'powerline-active2 nil :background zenburn/bg+0)
-  (set-face-attribute 'powerline-inactive1 nil :background zenburn/bg-1)
-  (set-face-attribute 'powerline-inactive2 nil :background zenburn/bg+0)
-  (set-face-attribute 'spaceline-flycheck-error nil :foreground zenburn/red)
-  (set-face-attribute 'spaceline-flycheck-info nil :foreground zenburn/blue+1)
-  (set-face-attribute 'spaceline-flycheck-warning nil :foreground zenburn/orange)
+  (set-face-attribute 'powerline-active2 nil :background zenburn/bg+2)
+  (set-face-attribute 'powerline-inactive2 nil :background zenburn/bg+2)
   (set-face-attribute 'spaceline-modified nil
                       :background zenburn/red :foreground zenburn/red-4)
   (set-face-attribute 'spaceline-read-only nil
