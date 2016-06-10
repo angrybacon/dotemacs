@@ -102,7 +102,7 @@ it. Those variables are used throughout the whole configuration.
 
 ** 3. Benchmark startup time
 
-Currently 1.4 seconds start-up time. But this is cheating: this snippet of code
+Currently 1.7 seconds start-up time. But this is cheating: this snippet of code
 should live as early as in =init.el=.
 
 - *FIXME*: Find a way to dynamically look for =benchmark-init.el=.
@@ -710,6 +710,12 @@ modular, and unchained from constraints of backward compatibility.
 #+BEGIN_SRC emacs-lisp
 (use-package helm
   :defer 1
+  :bind*
+  (:map helm--minor-mode-map
+        ("<left>" . backward-char)
+        ("<right>" . forward-char)
+        ("C-b" . helm-previous-source)
+        ("C-f" . helm-next-source))
   :config
   (setq-default
    helm-always-two-windows t
@@ -732,7 +738,8 @@ Helm equivalents.
   :config
   (setq-default helm-buffers-fuzzy-matching t)
   (set-face-attribute 'helm-buffer-directory nil
-                      :background 'unspecified :foreground zenburn/blue))
+                      :background 'unspecified :foreground zenburn/blue)
+  (set-face-attribute 'helm-buffer-size nil :foreground zenburn/bg+3))
 
 (use-package helm-color
   :ensure nil
