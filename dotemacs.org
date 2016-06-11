@@ -972,6 +972,7 @@ are the descriptive strings than you often see appear within the =mode-line=.
    powerline-default-separator 'wave
    powerline-height 20
    spaceline-highlight-face-func 'spaceline-highlight-face-modified
+   spaceline-flycheck-bullet "• %s"
    spaceline-separator-dir-left '(left . left)
    spaceline-separator-dir-right '(right . right))
   (spaceline-helm-mode)
