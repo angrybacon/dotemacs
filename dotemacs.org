@@ -75,7 +75,8 @@ Enable some more goodies.
 #+END_SRC
 
 Reset garbage collector treshold after initialization is finished and
-=garbage-collect= on focus-out.
+=garbage-collect= on focus-out. Emacs /should/ feel snappier, I do however
+experience long garbage collects when returning to the Emacs frame.
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'after-init-hook (lambda () (setq gc-cons-threshold 800000)))
@@ -83,7 +84,8 @@ Reset garbage collector treshold after initialization is finished and
 #+END_SRC
 
 I want an easy way to change the appearance of things and be consistent about
-it. Those variables are used throughout the whole configuration.
+it. Those variables are used throughout the whole configuration. You could always
+customize these in =~/.emacs.d/.secret.el= file.
 
 #+BEGIN_SRC emacs-lisp
 (defvar me/font-family            "Monaco"  "The font to use.")
@@ -93,6 +95,10 @@ it. Those variables are used throughout the whole configuration.
 #+END_SRC
 
 ** 2. Validate Emacs' version
+
+Most of the configuration is written and tested on a daily basis with Emacs 24.
+
+- *TODO*: Check how it actually behave on a <24 Emacs.
 
 #+BEGIN_SRC emacs-lisp
 (when (version<= emacs-version "24")
@@ -105,6 +111,7 @@ it. Those variables are used throughout the whole configuration.
 Currently 1.7 seconds start-up time. But this is cheating: this snippet of code
 should live as early as in =init.el=.
 
+- *TODO*: Actually use it.
 - *FIXME*: Find a way to dynamically look for =benchmark-init.el=.
 
 #+BEGIN_SRC emacs-lisp
@@ -118,13 +125,14 @@ should live as early as in =init.el=.
 ** 4. Load =.custom.el=
 
 One is able to use the customization interface that is bundled within Emacs. It is
-meant to help people non familiar with Emacs Lisp in the configuration of Emacs
+meant to help people who are not familiar with Emacs Lisp in the configuration of Emacs
 itself. By default, changes in the customization will be automatically detected and
 appended at the end of the configuration file, =init.el=.
 
 Since that in my case, the actual configuration file is new one, crafted by
 =org-mode=, adding code at the end of =init.el= might mess things up. The following
-tells Emacs to add extra code in another file that would be then loaded if existing.
+tells Emacs to add extra code in another file that would be then loaded, if existing
+that is.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default custom-file (expand-file-name ".custom.el" user-emacs-directory))
@@ -134,7 +142,7 @@ tells Emacs to add extra code in another file that would be then loaded if exist
 
 ** 5. Load =.secret.el=
 
-I load =.secret.el= to keep sensible things out of version control.
+I load =~/.emacs.d/.secret.el= to keep sensible things out of version control.
 For instance, you could set your identity by customizing both =user-full-name= and
 =user-mail-address= in this file.
 
@@ -148,7 +156,7 @@ For instance, you could set your identity by customizing both =user-full-name= a
 
 Dependency checks and [[https://melpa.org][MELPA]] initialization, sugar-wrapped.
 
-- *FIXME*: What if emacs-major-version < 24?
+- *FIXME*: Do I really need to ensure =delight= here?
 - *FIXME*: It sometimes does an extra =package-refresh-contents=.
 
 #+BEGIN_SRC emacs-lisp
@@ -166,8 +174,8 @@ Dependency checks and [[https://melpa.org][MELPA]] initialization, sugar-wrapped
     (package-install 'use-package)))
 #+END_SRC
 
-In order to have unified package declaration in my Emacs files, I use [[https://github.com/jwiegley/use-package][use-package]].
-It allows for isolation and clarity.
+In order to have unified package declarations in my Emacs files, I use
+[[https://github.com/jwiegley/use-package][use-package]]. It allows for isolation and clarity.
 
 #+BEGIN_QUOTE
 The =use-package= macro allows you to isolate package configuration in your =.emacs=
@@ -186,6 +194,7 @@ functionality!
    use-package-always-defer t
    use-package-always-ensure t))
 #+END_SRC
+
 * B. Theme
 
 1. *[[#1-set-a-color-palette][Set a color palette]]*
@@ -195,10 +204,10 @@ functionality!
 
 I like to have an accessible copy of my active theme's color codes.
 That way, I can fix other packages' colors while still using the same color codes and
-keep consistency everywhere.
+keep a sane consistency everywhere.
 
-This method is considered safe because I am using the all-famous [[https://github.com/bbatsov/zenburn-emacs][Zenburn Emacs port]]
-palette. It is very /unlikely/ that any of its tones will ever change.
+I consider this method safe because I am using the all-famous [[https://github.com/bbatsov/zenburn-emacs][Zenburn Emacs port]]
+palette. It is /very/ unlikely that any of its tones will ever change.
 
 #+BEGIN_SRC emacs-lisp
 (defconst zenburn/bg+3      "#6F6F6F"  "Zenburn palette: #6F6F6F.")
@@ -248,10 +257,10 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
   :init (load-theme 'zenburn t)
   :config
   (set-face-attribute 'default nil :height me/font-size-default)
-  (set-face-attribute 'font-lock-doc-face nil :italic t)
-  (set-face-attribute 'font-lock-comment-face nil :italic t)
   (set-face-attribute 'font-lock-comment-delimiter-face nil
                       :foreground zenburn/bg+3 :italic t)
+  (set-face-attribute 'font-lock-comment-face nil :italic t)
+  (set-face-attribute 'font-lock-doc-face nil :italic t)
   (set-face-attribute 'font-lock-function-name-face nil :foreground zenburn/blue)
   (set-face-attribute 'fringe nil :background zenburn/bg :foreground zenburn/bg+3)
   (set-face-attribute 'header-line nil
@@ -380,7 +389,7 @@ for variables and properties.
 ** 7. Org
 
 This very file is organized with =org-mode=. I am definitely not a power user of Org,
-but I'm getting there. :)
+but I'm getting there. :-)
 
 #+BEGIN_QUOTE
 Org mode is for keeping notes, maintaining TODO lists, planning projects, and
@@ -395,6 +404,8 @@ authoring documents with a fast and effective plain-text system.
 #+BEGIN_SRC emacs-lisp
 (use-package org
   :delight org-mode "Org"
+
+  :bind (:map org-mode-map ("<M-return>" . org-insert-heading-after-current))
 
   :init (add-hook 'org-mode-hook 'turn-on-auto-fill)
 
@@ -413,8 +424,7 @@ authoring documents with a fast and effective plain-text system.
   (unbind-key "C-e" org-mode-map)
   (unbind-key "<C-return>" org-mode-map)
   (unbind-key "<C-S-down>" org-mode-map)
-  (unbind-key "<C-S-up>" org-mode-map)
-  (define-key org-mode-map (kbd "<M-return>") 'org-insert-heading-after-current))
+  (unbind-key "<C-S-up>" org-mode-map))
 #+END_SRC
 
 ** 8. Python
@@ -425,7 +435,9 @@ authoring documents with a fast and effective plain-text system.
 
 (use-package pip-requirements
   :delight pip-requirements-mode "PyPA Requirements"
-  :config (add-hook 'pip-requirements-mode-hook (lambda () (setq-local completion-ignore-case t))))
+  :config
+  (add-hook 'pip-requirements-mode-hook
+            (lambda () (setq-local completion-ignore-case t))))
 #+END_SRC
 
 ** 9. YAML
@@ -463,7 +475,15 @@ authoring documents with a fast and effective plain-text system.
 
 ** 1. Auto-Completion
 
-Auto-completion at point. Display a small popin containing the candidates.
+Auto-completion at point. Display a small pop-in containing the candidates.
+
+#+BEGIN_QUOTE
+Company is a text completion framework for Emacs. The name stands for "complete
+anything". It uses pluggable back-ends and front-ends to retrieve and display
+completion candidates.
+
+[[http://company-mode.github.io/][Dmitry Gutov]]
+#+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
 (use-package company
@@ -487,7 +507,7 @@ Auto-completion at point. Display a small popin containing the candidates.
 #+BEGIN_SRC emacs-lisp
 (use-package newcomment
   :ensure nil
-  :bind ("M-RET" . comment-indent-new-line)
+  :bind ("<M-return>" . comment-indent-new-line)
   :config
   (setq-default
    comment-auto-fill-only-comments t
@@ -496,8 +516,10 @@ Auto-completion at point. Display a small popin containing the candidates.
 
 ** 3. Customization Menus
 
-This merely changes face attributes and Zenburn customization buffers a little
-more. Should I just try a pull request over [[https://github.com/bbatsov/zenburn-emacs][zenburn-emacs]]?
+This merely changes face attributes. It also /Zenburn/ customization buffers a little
+more.
+
+- *TODO*: Open a pull request over [[https://github.com/bbatsov/zenburn-emacs][zenburn-emacs]].
 
 #+BEGIN_SRC emacs-lisp
 (use-package cus-edit
@@ -537,9 +559,10 @@ Ediff is a visual interface to Unix =diff=.
 
 Configure Dired buffers. Amongst many other things, Emacs is also a file explorer.
 
+- *TODO*: Use the new syntax for advices.
+
 #+BEGIN_SRC emacs-lisp
 (use-package dired
-
   :ensure nil
   :delight dired-mode "Dired"
 
@@ -572,7 +595,7 @@ Configure Dired buffers. Amongst many other things, Emacs is also a file explore
 
 HippieExpand manages expansions a la [[http://emmet.io/][Emmet]]. So I've gathered all features that look
 anywhere close to this behavior for it to handle under the same bind, that is
-=C-RET=. Basically I made a DWIM for expand-like completion out of it.
+=<C-return>=. Basically it's an expand DWIM.
 
 #+BEGIN_SRC emacs-lisp
 (use-package emmet-mode
@@ -625,6 +648,8 @@ Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.h
 
 [[https://github.com/magit/magit][Jonas Bernoulli]]
 #+END_QUOTE
+
+- *TODO*: Make a hydra.
 
 #+BEGIN_SRC emacs-lisp
 (use-package magit
@@ -713,9 +738,7 @@ modular, and unchained from constraints of backward compatibility.
   :bind*
   (:map helm--minor-mode-map
         ("<left>" . backward-char)
-        ("<right>" . forward-char)
-        ("C-b" . helm-previous-source)
-        ("C-f" . helm-next-source))
+        ("<right>" . forward-char))
   :config
   (setq-default
    helm-always-two-windows t
@@ -833,6 +856,9 @@ Fourth-party packages for Helm.
 
 ** 10. Hydra
 
+Hydra allows me to group binds together. It also shows a list of all implemented
+commands in the eho area.
+
 #+BEGIN_QUOTE
 Once you summon the Hydra through the prefixed binding (the body + any one head), all
 heads can be called in succession with only a short extension.
@@ -845,14 +871,14 @@ it's like a minor mode that disables itself auto-magically.
 [[https://github.com/abo-abo/hydra][Oleh Krehel]]
 #+END_QUOTE
 
-- *TODO*: Make a hydra for =golden-ratio=.
+- *TODO*: Prefix own functions.
 
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
   :bind
   ("C-c h" . hydra-helm/body)
   ("C-c p" . hydra-projectile/body)
-  ("<f5>" . hydra-zoom/body))
+  ("C-c z" . hydra-zoom/body))
 #+END_SRC
 
 Group Helm commands.
@@ -874,7 +900,11 @@ Group Helm commands.
   ("i" helm-imenu)
   ("r" helm-resume)
   ("s" helm-css-scss))
+#+END_SRC
 
+Group Projectile commands.
+
+#+BEGIN_SRC emacs-lisp
 (defhydra hydra-projectile (:color blue :hint nil)
   "
   ^
@@ -899,6 +929,8 @@ Group Helm commands.
 #+END_SRC
 
 Change text size.
+
+- *TODO*: Prettify.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-zoom () "Zoom"
@@ -945,8 +977,14 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
 
 ** 12. Mode-line
 
-Delight allows you to change modes --- both major and minor modes --- lighters. They
-are the descriptive strings than you often see appear within the =mode-line=.
+Delight allows you to change modes --- both major and minor --- lighters. They are
+the descriptive strings than you see appear within the =mode-line=.
+
+To make it work with =spaceline= (which uses =powerline= internally), I need to allow
+it to use the newly changed strings.
+
+- *TODO*: Check whether =diminish= rename major mode lighters.
+- *TODO*: Use the new syntax for advices.
 
 #+BEGIN_SRC emacs-lisp
 (use-package delight
@@ -957,10 +995,19 @@ are the descriptive strings than you often see appear within the =mode-line=.
     (let ((inhibit-mode-name-delight nil)) ad-do-it)))
 #+END_SRC
 
+Spaceline, is a mode-line configuration framework. Like what =powerline= doesm but at
+a shallower level. It's still very customizable nonetheless.
+
+#+BEGIN_QUOTE
+This is the package that provides [[http://spacemacs.org/][Spacemacs]] with its famous mode-line theme. It has
+been extracted as an independent package for general fun and profit.
+
+[[https://github.com/TheBB/spaceline][Eivind Fonn]]
+#+END_QUOTE
+
 #+BEGIN_SRC emacs-lisp
 (use-package spaceline :demand t)
 (use-package spaceline-config
-
   :ensure nil
   :after spaceline
 
@@ -1087,20 +1134,17 @@ dealing with mismatched parentheses.
 I am still looking for the perfect parenthesis management setup as of today... No
 package seem to please my person.
 
+- *TODO*: Find a better parenthese management package.
+
 #+BEGIN_SRC emacs-lisp
 (use-package smartparens
-
-  :functions sp-pair
-
   :bind
   (("M-<backspace>" . sp-unwrap-sexp)
    ("M-<left>" . sp-forward-barf-sexp)
    ("M-<right>" . sp-forward-slurp-sexp)
    ("M-S-<left>" . sp-backward-slurp-sexp)
    ("M-S-<right>" . sp-backward-barf-sexp))
-
   :init (require 'smartparens-config)
-
   :config
   (smartparens-global-mode 1)
   (sp-pair "{{" "}}")
@@ -1139,7 +1183,7 @@ Enable multiple cursors at once. Some witchcraft at work here.
 Enable new custom binds when region is active. I've also added a few helpers to use
 with =selected=.
 
-- *TODO*: Make a help buffer à la Magit.
+- *TODO*: Make a hydra.
 
 #+BEGIN_SRC emacs-lisp
 (use-package selected
@@ -1312,7 +1356,6 @@ information. Github integration, customizability, asynchronous upgrading, and mo
    paradox-hide-wiki-packages t)
   (set-face-attribute 'paradox-homepage-button-face nil :italic nil)
   (remove-hook 'paradox--report-buffer-print 'paradox-after-execute-functions))
-
 #+END_SRC
 
 ** 19. Slack
@@ -1320,6 +1363,7 @@ information. Github integration, customizability, asynchronous upgrading, and mo
 Slack integration.
 
 - *TODO*: Register teams in =.secret.el=.
+- *TODO*: Create a pull request over https://github.com/yuya373/emacs-slack.
 
 #+BEGIN_SRC emacs-lisp
 (use-package slack
@@ -1335,16 +1379,18 @@ Slack integration.
    :client-secret me/fiftyfor-client-secret
    :token me/fiftyfor-token
    :subscribed-channels '(dev general))
-  (set-face-attribute
-   'slack-message-output-header nil :foreground zenburn/orange :underline nil)
-  (set-face-attribute
-   'slack-message-output-reaction nil :background zenburn/bg+2 :overline nil)
+  (set-face-attribute 'slack-message-output-header nil
+                      :foreground zenburn/orange :underline nil)
+  (set-face-attribute 'slack-message-output-reaction nil
+                      :background zenburn/bg+2 :overline nil)
   (set-face-attribute 'slack-message-output-text nil :height 1))
 #+END_SRC
 
 ** 20. Whitespaces
 
 Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
+
+- *FIXME*: Force =whitespace-mode= in Org source buffers.
 
 #+BEGIN_SRC emacs-lisp
 (use-package whitespace
@@ -1378,6 +1424,7 @@ golden ratio somewhere in its formulas.
 - *TODO*: Find a way to automatically adjust =golden-ratio-adjust-factor= depending
           on the current display.
 - *TODO*: Check out https://github.com/mina86/auto-dim-other-buffers.el.
+- *TODO*: Make a hydra.
 
 #+BEGIN_SRC emacs-lisp
 (use-package golden-ratio
