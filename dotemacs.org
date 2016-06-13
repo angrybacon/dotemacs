@@ -1101,10 +1101,13 @@ from one block to another.
 Bind commands to move around windows.
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-M-<left>") 'windmove-left)
-(global-set-key (kbd "C-M-<right>") 'windmove-right)
-(global-set-key (kbd "C-M-<up>") 'windmove-up)
-(global-set-key (kbd "C-M-<down>") 'windmove-down)
+(use-package windmove
+  :ensure nil
+  :bind
+  (("C-M-<left>". windmove-left)
+   ("C-M-<right>". windmove-right)
+   ("C-M-<up>". windmove-up)
+   ("C-M-<down>". windmove-down)))
 #+END_SRC
 
 ** 14. OS X
