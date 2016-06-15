@@ -877,6 +877,7 @@ it's like a minor mode that disables itself auto-magically.
 (use-package hydra
   :bind
   ("C-c h" . hydra-helm/body)
+  ("C-c o" . hydra-org/body)
   ("C-c p" . hydra-projectile/body)
   ("C-c z" . hydra-zoom/body)
   :config (setq-default hydra-default-hint nil))
@@ -901,6 +902,32 @@ Group Helm commands.
   ("i" helm-imenu)
   ("r" helm-resume)
   ("s" helm-css-scss))
+#+END_SRC
+
+Group Org commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-org (:color pink)
+  "
+^
+^Meta^             ^Links^            ^Outline^
+^────^─────────────^─────^────────────^───────^──────────
+[_q_] quit         [_i_] insert       [_a_] show all
+^^                 [_n_] next         [_b_] backward
+^^                 [_o_] open         [_f_] forward
+^^                 [_p_] previous     [_v_] overview
+^^                 [_s_] store        ^^
+"
+  ("q" nil)
+  ("a" show-all)
+  ("b" org-backward-element)
+  ("f" org-forward-element)
+  ("i" org-insert-link)
+  ("n" org-next-link)
+  ("o" org-open-at-point)
+  ("p" org-previous-link)
+  ("s" org-store-link)
+  ("v" org-overview))
 #+END_SRC
 
 Group Projectile commands.
