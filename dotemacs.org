@@ -886,12 +886,12 @@ Group Helm commands.
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-helm (:color blue :hint nil)
   "
- ^
- ^Meta^              ^Browse^            ^Do^
-└^────^───────────  └^──────^─────────  └^──^─────────────
- [_q_] quit          [_c_] colors        [_f_] flycheck
- [_r_] resume        [_g_] google        [_s_] css-scss
- ^^                  [_i_] imenu
+^
+^Meta^             ^Browse^           ^Do^
+^────^─────────────^──────^───────────^──^───────────────
+[_q_] quit         [_c_] colors       [_f_] flycheck
+[_r_] resume helm  [_g_] google       [_s_] css-scss
+^^                 [_i_] imenu        ^^
 "
   ("q" nil)
   ("c" helm-colors)
@@ -907,13 +907,13 @@ Group Projectile commands.
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-projectile (:color blue :hint nil)
   "
- ^
- ^Meta^              ^Buffers^           ^Find^              ^Search^
-└^────^───────────  └^────^───────────  └^──────^─────────  └^──^─────────────
- [_q_] quit          [_b_] list all      [_d_] directory     [_r_] replace
- [_i_] reset cache   [_k_] kill all      [_D_] root          [_s_] ag
- ^^                  [_S_] save all      [_f_] file
- ^^                  ^^                  [_p_] project
+^
+^Meta^             ^Buffers^          ^Find^             ^Search^
+^────^─────────────^───────^──────────^────^─────────────^──────^───────────
+[_q_] quit         [_b_] list all     [_d_] directory    [_r_] replace
+[_i_] reset cache  [_k_] kill all     [_D_] root         [_s_] ag
+^^                 [_S_] save all     [_f_] file         ^^
+^^                 ^^                 [_p_] project      ^^
 "
   ("q" nil)
   ("b" helm-projectile-switch-to-buffer)
