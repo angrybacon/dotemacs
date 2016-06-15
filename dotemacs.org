@@ -878,13 +878,14 @@ it's like a minor mode that disables itself auto-magically.
   :bind
   ("C-c h" . hydra-helm/body)
   ("C-c p" . hydra-projectile/body)
-  ("C-c z" . hydra-zoom/body))
+  ("C-c z" . hydra-zoom/body)
+  :config (setq-default hydra-default-hint nil))
 #+END_SRC
 
 Group Helm commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-helm (:color blue :hint nil)
+(defhydra hydra-helm (:color blue)
   "
 ^
 ^Meta^             ^Browse^           ^Do^
@@ -905,7 +906,7 @@ Group Helm commands.
 Group Projectile commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-projectile (:color blue :hint nil)
+(defhydra hydra-projectile (:color blue)
   "
 ^
 ^Meta^             ^Buffers^          ^Find^             ^Search^
@@ -931,7 +932,7 @@ Group Projectile commands.
 Change text size.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-zoom (:hint nil)
+(defhydra hydra-zoom ()
   "
 [_-_] zoom out  [_=_] zoom in  [_0_] reset
 "
