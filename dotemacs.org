@@ -1131,7 +1131,7 @@ replace text in difference places at once, =anzu= has a nice feedback on regexp
 matches.
 
 #+BEGIN_QUOTE
-=anzu.el= is an Emacs port of [[https://github.com/osyo-manga/vim-anzu][=anzu.vim=]]. =anzu.el= provides a minor mode which
+=anzu.el= is an Emacs port of [[https://github.com/osyo-manga/vim-anzu][anzu.vim]]. =anzu.el= provides a minor mode which
 displays /current match/ and /total matches/ information in the mode-line in various
 search modes.
 
