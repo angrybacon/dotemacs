@@ -656,8 +656,6 @@ Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.h
 
   :bind
   (("C-c g b" . magit-blame)
-   ("C-c g l" . magit-log)
-   ("C-c g p" . magit-pull)
    ("C-c g s" . magit-status))
 
   :config
@@ -667,8 +665,7 @@ Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.h
     (display-buffer
      buffer
      (cond ((and (derived-mode-p 'magit-mode)
-                 (eq (with-current-buffer buffer major-mode)
-                     'magit-status-mode))
+                 (eq (with-current-buffer buffer major-mode) 'magit-status-mode))
             nil)
            ((memq (with-current-buffer buffer major-mode)
                   '(magit-process-mode
@@ -676,8 +673,7 @@ Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.h
                     magit-diff-mode
                     magit-stash-mode))
             nil)
-           (t
-            '(display-buffer-same-window)))))
+           (t '(display-buffer-same-window)))))
 
   ;; Use better defaults
   (setq-default
@@ -1066,7 +1062,8 @@ been extracted as an independent package for general fun and profit.
   ;; Build the mode-lines
   (spaceline-install
    `((major-mode :face highlight-face)
-     ((remote-host buffer-id line) :separator ":"))
+     ((remote-host buffer-id line) :separator ":")
+     anzu)
    `((selection-info)
      ((flycheck-error flycheck-warning flycheck-info) :when active)
      ((projectile-root me/version-control) :separator "  ")
@@ -1106,6 +1103,8 @@ been extracted as an independent package for general fun and profit.
 I disagree with Emacs' definition of paragraphs so I redefined the way it should jump
 from one block to another.
 
+- *FIXME*: Ignore invisible text.
+
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "<C-down>") 'me/goto-next-block)
 (global-set-key (kbd "<C-up>") 'me/goto-previous-block)
@@ -1125,6 +1124,50 @@ from one block to another.
   (unless (search-backward-regexp "\n[[:blank:]]*\n" nil t)
     (goto-char (point-min)))
   (skip-chars-forward "\n"))
+#+END_SRC
+
+Better search and replace features. Even though I prefer to use =multiple-cursors= to
+replace text in difference places at once, =anzu= has a nice feedback on regexp
+matches.
+
+#+BEGIN_QUOTE
+=anzu.el= is an Emacs port of [[https://github.com/osyo-manga/vim-anzu][=anzu.vim=]]. =anzu.el= provides a minor mode which
+displays /current match/ and /total matches/ information in the mode-line in various
+search modes.
+
+[[https://github.com/syohex/emacs-anzu][Syohei Yoshida]]
+#+END_QUOTE
+
+- *TODO*: Fix https://github.com/TheBB/spaceline/blob/master/README.org#anzu.
+
+#+BEGIN_SRC emacs-lisp
+(use-package anzu
+  :defer 1
+  :bind ([remap query-replace] . anzu-query-replace-regexp)
+  :config
+  (global-anzu-mode 1)
+  (setq-default
+   anzu-cons-mode-line-p nil
+   anzu-replace-to-string-separator "  ")
+  (set-face-attribute 'anzu-match-3 nil :background zenburn/red)
+  (set-face-attribute 'anzu-replace-to nil :foreground 'unspecified)
+)
+#+END_SRC
+
+Isearch stands for /incremental search/. This means that search results are
+highlighted while you are typing your query, incrementally. Since he who can do more
+can do less, I've replaced default bindings with the regexp-equivalent commands.
+
+#+BEGIN_SRC emacs-lisp
+(use-package isearch
+  :ensure nil
+  :bind
+  ([remap isearch-backward] . isearch-backward-regexp)
+  ([remap isearch-forward] . isearch-forward-regexp)
+  :config
+  (set-face-attribute 'isearch nil :background zenburn/blue :foreground zenburn/bg)
+  (set-face-attribute 'isearch-lazy-highlight-face nil
+                      :background zenburn/blue-2 :foreground zenburn/bg))
 #+END_SRC
 
 Bind commands to move around windows.
