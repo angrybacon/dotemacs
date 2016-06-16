@@ -268,6 +268,9 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
                       :height me/font-size-header)
   (set-face-attribute 'help-argument-name nil :foreground zenburn/orange)
   (set-face-attribute 'hl-line nil :background zenburn/bg+1)
+  (set-face-attribute 'isearch nil :background zenburn/blue :foreground zenburn/bg)
+  (set-face-attribute 'isearch-lazy-highlight-face nil
+                      :background zenburn/blue-2 :foreground zenburn/bg)
   (set-face-attribute 'region nil :foreground zenburn/green)
   (set-face-attribute 'vertical-border nil :foreground zenburn/bg-1)
   (when (member me/font-family (font-family-list))
@@ -1138,6 +1141,8 @@ search modes.
 [[https://github.com/syohex/emacs-anzu][Syohei Yoshida]]
 #+END_QUOTE
 
+[[./screencasts/emacs.anzu.gif]]
+
 - *TODO*: Fix https://github.com/TheBB/spaceline/blob/master/README.org#anzu.
 
 #+BEGIN_SRC emacs-lisp
@@ -1150,8 +1155,7 @@ search modes.
    anzu-cons-mode-line-p nil
    anzu-replace-to-string-separator "  ")
   (set-face-attribute 'anzu-match-3 nil :background zenburn/red)
-  (set-face-attribute 'anzu-replace-to nil :foreground 'unspecified)
-)
+  (set-face-attribute 'anzu-replace-to nil :foreground zenburn/bg))
 #+END_SRC
 
 Isearch stands for /incremental search/. This means that search results are
@@ -1163,11 +1167,7 @@ can do less, I've replaced default bindings with the regexp-equivalent commands.
   :ensure nil
   :bind
   ([remap isearch-backward] . isearch-backward-regexp)
-  ([remap isearch-forward] . isearch-forward-regexp)
-  :config
-  (set-face-attribute 'isearch nil :background zenburn/blue :foreground zenburn/bg)
-  (set-face-attribute 'isearch-lazy-highlight-face nil
-                      :background zenburn/blue-2 :foreground zenburn/bg))
+  ([remap isearch-forward] . isearch-forward-regexp))
 #+END_SRC
 
 Bind commands to move around windows.
