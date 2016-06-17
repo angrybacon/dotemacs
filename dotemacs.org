@@ -46,7 +46,7 @@ Here is what I consider better defaults for my own experience.
  x-select-enable-clipboard t)                    ; Merge system's and Emacs' clipboard
 #+END_SRC
 
-Some UI elements are rather invasive and oppose to the no-mouse philosophy.
+Some UI elements are rather invasive. No-mouse master race.
 
 #+BEGIN_SRC emacs-lisp
 (when window-system
@@ -1141,9 +1141,10 @@ search modes.
 [[https://github.com/syohex/emacs-anzu][Syohei Yoshida]]
 #+END_QUOTE
 
-[[./screencasts/emacs.anzu.gif]]
-
 - *TODO*: Fix https://github.com/TheBB/spaceline/blob/master/README.org#anzu.
+
+[[./screencasts/emacs.anzu-replace.gif]]
+[[./screencasts/emacs.anzu-replace-regexp.gif]]
 
 #+BEGIN_SRC emacs-lisp
 (use-package anzu
