@@ -1141,10 +1141,15 @@ search modes.
 [[https://github.com/syohex/emacs-anzu][Syohei Yoshida]]
 #+END_QUOTE
 
-- *TODO*: Fix https://github.com/TheBB/spaceline/blob/master/README.org#anzu.
+/Regular replace/
 
 [[./screencasts/emacs.anzu-replace.gif]]
+
+/Regexp replace/
+
 [[./screencasts/emacs.anzu-replace-regexp.gif]]
+
+- *TODO*: Fix https://github.com/TheBB/spaceline/blob/master/README.org#anzu.
 
 #+BEGIN_SRC emacs-lisp
 (use-package anzu
