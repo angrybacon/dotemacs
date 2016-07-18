@@ -897,12 +897,14 @@ Group Helm commands.
 ^────^─────────────^──────^───────────^──^───────────────
 [_q_] quit         [_c_] colors       [_f_] flycheck
 [_r_] resume helm  [_g_] google       [_s_] css-scss
+^^                 [_h_] headings     ^^
 ^^                 [_i_] imenu        ^^
 "
   ("q" nil)
   ("c" helm-colors)
   ("f" helm-flycheck)
   ("g" helm-google-suggest)
+  ("h" helm-org-in-buffer-headings)
   ("i" helm-imenu)
   ("r" helm-resume)
   ("s" helm-css-scss))
