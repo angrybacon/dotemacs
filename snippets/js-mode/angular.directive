@@ -1,8 +1,8 @@
 # -*- mode: snippet -*-
 # group: angular
-# key: ad
+# key: adirective
 # --
-${1:module}.directive('$2', function() {
+${1:module}.directive('$2', function($3) {
   return {
     $0
   };

@@ -1,8 +1,8 @@
 # -*- mode: snippet -*-
 # group: angular
-# key: as
+# key: aservice
 # --
-${1:module}.service('$2', function() {
+${1:module}.service('$2', function($3) {
   return function() {
     $0
   };
