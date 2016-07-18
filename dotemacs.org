@@ -892,7 +892,7 @@ Group Helm commands.
 (defhydra hydra-helm (:color blue)
   "
 ^
-^Meta^             ^Browse^           ^Do^
+^Helm^             ^Browse^           ^Do^
 ^────^─────────────^──────^───────────^──^───────────────
 [_q_] quit         [_c_] colors       [_f_] flycheck
 [_r_] resume helm  [_g_] google       [_s_] css-scss
@@ -913,8 +913,8 @@ Group Org commands.
 (defhydra hydra-org (:color pink)
   "
 ^
-^Meta^             ^Links^            ^Outline^
-^────^─────────────^─────^────────────^───────^──────────
+^Org^              ^Links^            ^Outline^
+^───^──────────────^─────^────────────^───────^──────────
 [_q_] quit         [_i_] insert       [_a_] show all
 ^^                 [_n_] next         [_b_] backward
 ^^                 [_o_] open         [_f_] forward
@@ -939,8 +939,8 @@ Group Projectile commands.
 (defhydra hydra-projectile (:color blue)
   "
 ^
-^Meta^             ^Buffers^          ^Find^             ^Search^
-^────^─────────────^───────^──────────^────^─────────────^──────^───────────
+^Projectile^       ^Buffers^          ^Find^             ^Search^
+^──────────^───────^───────^──────────^────^─────────────^──────^───────────
 [_q_] quit         [_b_] list all     [_d_] directory    [_r_] replace
 [_i_] reset cache  [_k_] kill all     [_D_] root         [_s_] ag
 ^^                 [_S_] save all     [_f_] file         ^^
