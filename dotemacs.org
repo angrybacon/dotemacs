@@ -720,10 +720,6 @@ modular, and unchained from constraints of backward compatibility.
 #+BEGIN_SRC emacs-lisp
 (use-package helm
   :defer 1
-  :bind*
-  (:map helm--minor-mode-map
-        ("<left>" . backward-char)
-        ("<right>" . forward-char))
   :config
   (setq-default
    helm-always-two-windows t
@@ -811,6 +807,10 @@ Fourth-party packages for Helm.
 #+BEGIN_SRC emacs-lisp
 (use-package helm-ag
   :after helm
+  :bind
+  (:map helm-ag-map
+        ("<left>" . backward-char)
+        ("<right>" . forward-char))
   :config (setq-default helm-ag-show-status-function nil))
 
 (use-package helm-css-scss
@@ -831,13 +831,6 @@ Fourth-party packages for Helm.
 
 (use-package helm-projectile
   :after helm
-  :bind
-  (:map projectile-command-map
-        ("b" . helm-projectile-switch-to-buffer)
-        ("d" . helm-projectile-find-dir)
-        ("f" . helm-projectile-find-file)
-        ("p" . helm-projectile-switch-project)
-        ("s s" . helm-projectile-ag))
   :config (helm-projectile-toggle 1))
 #+END_SRC
 
