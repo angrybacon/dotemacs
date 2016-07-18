@@ -35,6 +35,7 @@ Here are what I consider better defaults as per my own experience.
  inhibit-startup-screen t                        ; Disable start-up screen
  initial-scratch-message ""                      ; Empty the initial *scratch* buffer
  mouse-yank-at-point t                           ; Yank at point rather than cursor
+ ns-use-srgb-colorspace nil                      ; Don't use sRGB colors
  require-final-newline 'visit                    ; Add a newline at EOF on visit
  scroll-step 1                                   ; Fix the scroll line step
  show-trailing-whitespace nil                    ; Display trailing whitespaces
@@ -1534,14 +1535,14 @@ golden ratio somewhere in its formulas.
           ediff-this-buffer-ediff-sessions)))
 
   :bind
-  (("<f6>" . me/golden-ratio-adjust-1)
-   ("<f7>" . me/golden-ratio-adjust-2)
-   ("<f8>" . me/golden-ratio-adjust-3))
+  (("<f5>" . me/golden-ratio-adjust-1)
+   ("<f6>" . me/golden-ratio-adjust-2)
+   ("<f7>" . me/golden-ratio-adjust-3))
 
   :init (golden-ratio-mode 1)
 
   :config
-  (setq-default golden-ratio-adjust-factor me/golden-ratio-adjust-factor-2)
+  (setq-default golden-ratio-adjust-factor me/golden-ratio-adjust-factor-1)
   (add-to-list 'golden-ratio-exclude-modes "ediff-mode")
   (add-to-list 'golden-ratio-inhibit-functions 'me/ediff-comparison-buffer-p))
 #+END_SRC
