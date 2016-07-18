@@ -9,11 +9,10 @@ C. *[[#d-features][Features]]*
 * A. Bootstrap
 
 1. *[[#1-use-better-defaults][Use better defaults]]*
-2. *[[#2-validate-emacs-version][Validate Emacs' version]]*
-3. *[[#3-benchmark-startup-time][Benchmark startup time]]*
-4. *[[#4-load-customel][Load .custom.el]]*
-5. *[[#5-load-secretel][Load .secret.el]]*
-6. *[[#6-initialize-melpa][Initialize MELPA]]*
+2. *[[2#-validate-emacs-version][Validate Emacs' version]]*
+3. *[[3#-load-customel][Load .custom.el]]*
+4. *[[4#-load-secretel][Load .secret.el]]*
+5. *[[5#-initialize-melpa][Initialize MELPA]]*
 
 ** 1. Use better defaults
 
@@ -107,23 +106,7 @@ Most of the configuration is written and tested on a daily basis with Emacs 24.
     (kill-emacs)))
 #+END_SRC
 
-** 3. Benchmark startup time
-
-Currently 1.7 seconds start-up time. But this is cheating: this snippet of code
-should live as early as in =init.el=.
-
-- *TODO*: Actually use it.
-- *FIXME*: Find a way to dynamically look for =benchmark-init.el=.
-
-#+BEGIN_SRC emacs-lisp
-(let ((benchmark-init.el
-       (expand-file-name
-        "elpa/benchmark-init-20150905.238/benchmark-init.el" user-emacs-directory)))
-  (when (file-exists-p benchmark-init.el)
-    (load benchmark-init.el)))
-#+END_SRC
-
-** 4. Load =.custom.el=
+** 3. Load =.custom.el=
 
 One is able to use the customization interface that is bundled within Emacs. It is
 meant to help people who are not familiar with Emacs Lisp in the configuration of Emacs
@@ -141,7 +124,7 @@ that is.
   (load custom-file))
 #+END_SRC
 
-** 5. Load =.secret.el=
+** 4. Load =.secret.el=
 
 I load =~/.emacs.d/.secret.el= to keep sensible things out of version control.
 For instance, you could set your identity by customizing both =user-full-name= and
@@ -153,7 +136,7 @@ For instance, you could set your identity by customizing both =user-full-name= a
     (load secret.el)))
 #+END_SRC
 
-** 6. Initialize MELPA
+** 5. Initialize MELPA
 
 Dependency checks and [[https://melpa.org][MELPA]] initialization, sugar-wrapped.
 
