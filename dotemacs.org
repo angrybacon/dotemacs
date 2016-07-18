@@ -17,7 +17,7 @@ C. *[[#d-features][Features]]*
 
 ** 1. Use better defaults
 
-Here is what I consider better defaults for my own experience.
+Here are what I consider better defaults as per my own experience.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default
@@ -63,7 +63,7 @@ Some UI elements are rather invasive. No-mouse master race.
 (line-number-mode 1)                             ; Show the line number
 (menu-bar-mode 0)                                ; Disable the menu bar
 (mouse-avoidance-mode 'animate)                  ; Move pointer to avoid collision with point
-(set-frame-parameter nil 'fullscreen 'fullboth)  ; Enable pseudo fullscreen
+(set-frame-parameter nil 'fullscreen 'fullboth)  ; Maximize the frame
 #+END_SRC
 
 Enable some more goodies.
@@ -730,6 +730,8 @@ modular, and unchained from constraints of backward compatibility.
 
 - *TODO*: Make helm-list-faces-display.
 - *TODO*: Fix the mode-line for Helm buffers.
+- *TODO*: Add a flashing effect with Helm actions
+          =(progn (require 'pulse) (pulse-momentary-highlight-one-line (point))=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm
@@ -819,6 +821,8 @@ Fourth-party packages for Helm.
           (https://github.com/ShingoFukuyama/helm-css-scss/issues/7).
 - *TODO*: Fix Zenburn palette
           (https://github.com/bbatsov/zenburn-emacs/issues/220).
+- *TODO*: Add helm-swoop
+          (https://github.com/ShingoFukuyama/helm-swoop).
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm-ag
@@ -1023,7 +1027,7 @@ it to use the newly changed strings.
     (let ((inhibit-mode-name-delight nil)) ad-do-it)))
 #+END_SRC
 
-Spaceline, is a mode-line configuration framework. Like what =powerline= doesm but at
+Spaceline, is a mode-line configuration framework. Like what =powerline= does but at
 a shallower level. It's still very customizable nonetheless.
 
 #+BEGIN_QUOTE
