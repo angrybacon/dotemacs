@@ -1166,6 +1166,25 @@ can do less, I've replaced default bindings with the regexp-equivalent commands.
   ([remap isearch-forward] . isearch-forward-regexp))
 #+END_SRC
 
+Configure mouse wheel behavior.
+
+#+BEGIN_SRC emacs-lisp
+(use-package mwheel
+  :ensure nil
+  :config
+  (setq-default
+   mouse-wheel-scroll-amount '(1 ((shift) 2) ((control) . nil))
+   mouse-wheel-progressive-speed nil))
+#+END_SRC
+
+Enable smooth scrolling with the mouse wheel.
+
+#+BEGIN_SRC emacs-lisp
+(use-package smooth-scrolling
+  :init (smooth-scrolling-mode 1)
+  :config (setq-default smooth-scroll-margin 1))
+#+END_SRC
+
 Bind commands to move around windows.
 
 #+BEGIN_SRC emacs-lisp
