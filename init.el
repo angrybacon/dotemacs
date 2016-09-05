@@ -25,6 +25,8 @@
 
 ;;; Code:
 
+;; (package-initialize)
+
 ;; Mark `me/project-name' as safe
 (defvar me/project-name nil)
 (put 'me/project-name 'safe-local-variable #'stringp)
