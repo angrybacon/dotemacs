@@ -21,7 +21,6 @@ Here are what I consider better defaults as per my own experience.
 #+BEGIN_SRC emacs-lisp
 (setq-default
  ad-redefinition-action 'accept                  ; Silence warnings for redefinition
- auto-window-vscroll t                           ; Normalize vertical scroll offset
  confirm-kill-emacs 'yes-or-no-p                 ; Confirm before exiting Emacs
  cursor-in-non-selected-windows t                ; Hide the cursor in inactive windows
  delete-by-moving-to-trash t                     ; Delete files to trash
@@ -36,7 +35,7 @@ Here are what I consider better defaults as per my own experience.
  mouse-yank-at-point t                           ; Yank at point rather than cursor
  ns-use-srgb-colorspace nil                      ; Don't use sRGB colors
  require-final-newline 'visit                    ; Add a newline at EOF on visit
- scroll-step 1                                   ; Fix the scroll line step
+ scroll-conservatively most-positive-fixnum      ; Always scroll by one line
  show-trailing-whitespace nil                    ; Display trailing whitespaces
  split-height-threshold nil                      ; Disable vertical window splitting
  split-width-threshold nil                       ; Disable horizontal window splitting
@@ -1157,25 +1156,6 @@ can do less, I've replaced default bindings with the regexp-equivalent commands.
   :bind
   ([remap isearch-backward] . isearch-backward-regexp)
   ([remap isearch-forward] . isearch-forward-regexp))
-#+END_SRC
-
-Configure mouse wheel behavior.
-
-#+BEGIN_SRC emacs-lisp
-(use-package mwheel
-  :ensure nil
-  :config
-  (setq-default
-   mouse-wheel-scroll-amount '(1 ((shift) 2) ((control) . nil))
-   mouse-wheel-progressive-speed nil))
-#+END_SRC
-
-Enable smooth scrolling with the mouse wheel.
-
-#+BEGIN_SRC emacs-lisp
-(use-package smooth-scrolling
-  :init (smooth-scrolling-mode 1)
-  :config (setq-default smooth-scroll-margin 1))
 #+END_SRC
 
 Bind commands to move around windows.
