@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# group: angular
+# key: amodule
+# --
+var ${1:module} = angular.module('$2', [$3]);

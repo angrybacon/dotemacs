@@ -3,7 +3,7 @@
 # key: aservice
 # --
 ${1:module}.service('$2', function($3) {
-  return function() {
-    $0
-  };
+  var self = this;
+  $0
+  return self;
 });
