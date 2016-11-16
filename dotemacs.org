@@ -612,6 +612,7 @@ anywhere close to this behavior for it to handle under the same bind, that is
   (add-hook 'emacs-lisp-mode-hook 'yas-minor-mode)
   (add-hook 'js-mode-hook 'yas-minor-mode)
   (add-hook 'org-mode-hook 'yas-minor-mode)
+  (add-hook 'python-mode-hook 'yas-minor-mode)
   (add-hook 'sgml-mode-hook 'yas-minor-mode)
   :config
   (setq-default yas-snippet-dirs '("~/.emacs.d/snippets"))
