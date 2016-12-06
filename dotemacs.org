@@ -333,7 +333,7 @@ for variables and properties.
 
 (use-package json-mode
   :delight json-mode "JSON"
-  :mode "\\.json\\'"
+  :mode ("\\.jshintrc\\'" "\\.json\\'")
   :config
   (add-hook 'json-mode-hook (lambda () (setq-local js-indent-level 2))))
 
@@ -856,11 +856,36 @@ it's like a minor mode that disables itself auto-magically.
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
   :bind
+  ("C-c f" . hydra-flycheck/body)
   ("C-c h" . hydra-helm/body)
   ("C-c o" . hydra-org/body)
   ("C-c p" . hydra-projectile/body)
   ("C-c z" . hydra-zoom/body)
   :config (setq-default hydra-default-hint nil))
+#+END_SRC
+
+Group Flycheck commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-flycheck (:color blue)
+  "
+^
+^Flycheck^         ^Errors^           ^Checker^
+^────────^─────────^──────^───────────^───────^──────────
+[_q_] quit         [_c_] check        [_s_] select
+[_v_] verify setup [_n_] next         [_d_] disable
+[_m_] manual       [_p_] previous     [_?_] describe
+^^                 ^^                 ^^
+"
+  ("q" nil)
+  ("c" flycheck-buffer)
+  ("d" flycheck-disable-checker)
+  ("m" flycheck-manual)
+  ("n" flycheck-next-error :color red)
+  ("p" flycheck-previous-error :color red)
+  ("s" flycheck-select-checker)
+  ("v" flycheck-verify-setup)
+  ("?" flycheck-describe-checker))
 #+END_SRC
 
 Group Helm commands.
@@ -959,11 +984,6 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
 
-  :bind
-  (("C-c e l" . list-flycheck-errors)
-   ("C-c e p" . flycheck-previous-error)
-   ("C-c e n" . flycheck-next-error))
-
   :init
   (add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
   (add-hook 'js-mode-hook 'flycheck-mode)
@@ -974,10 +994,7 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
   (setq-default
    flycheck-check-syntax-automatically '(save mode-enabled)
    flycheck-disabled-checkers '(emacs-lisp-checkdoc)
-   flycheck-display-errors-delay .3
-   flycheck-flake8rc "~/.flake8rc"
-   flycheck-jshintrc "~/.jshintrc"
-   flycheck-pylintrc "~/.pylintrc")
+   flycheck-display-errors-delay .3)
   (set-face-attribute 'flycheck-error nil :underline zenburn/red-1)
   (set-face-attribute 'flycheck-info nil :underline zenburn/blue+1)
   (set-face-attribute 'flycheck-warning nil :underline zenburn/orange)
