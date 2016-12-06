@@ -1463,7 +1463,7 @@ Colorize colors as text with their value.
   :config (setq-default rainbow-x-colors-major-mode-list '()))
 #+END_SRC
 
-Augment Emmacs' package menu.
+Augment Emacs' package menu.
 
 #+BEGIN_QUOTE
 Project for modernizing Emacs' Package Menu. With improved appearance, mode-line
