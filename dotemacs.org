@@ -442,22 +442,23 @@ authoring documents with a fast and effective plain-text system.
 4. *[[#4-diff][Diff]]*
 5. *[[#5-dired][Dired]]*
 6. *[[#6-expand][Expand]]*
-7. *[[#7-git][Git]]*
-8. *[[#8-helm][Helm]]*
-9. *[[#9-helm-plugins][Helm Plugins]]*
-10. *[[#10-hydra][Hydra]]*
-11. *[[#11-linters][Linters]]*
-12. *[[#12-mode-line][Mode-line]]*
-13. *[[#13-navigation][Navigation]]*
-14. *[[#14-os-x][OS X]]*
-15. *[[#15-parentheses][Parentheses]]*
-16. *[[#16-point][Point]]*
-17. *[[#17-projectile][Projectile]]*
-18. *[[#18-quality-of-life][Quality of Life]]*
-19. *[[#19-slack][Slack]]*
-20. *[[#20-whitespaces][Whitespaces]]*
-21. *[[#21-web-browsing][Web Browsing]]*
-22. *[[#22-windows][Windows]]*
+7. *[[#7-exwm][EXWM]]*
+8. *[[#8-git][Git]]*
+9. *[[#9-helm][Helm]]*
+10. *[[#10-helm-plugins][Helm Plugins]]*
+11. *[[#11-hydra][Hydra]]*
+12. *[[#12-linters][Linters]]*
+13. *[[#13-mode-line][Mode-line]]*
+14. *[[#14-navigation][Navigation]]*
+15. *[[#15-os-x][OS X]]*
+16. *[[#16-parentheses][Parentheses]]*
+17. *[[#17-point][Point]]*
+18. *[[#18-projectile][Projectile]]*
+19. *[[#19-quality-of-life][Quality of Life]]*
+20. *[[#20-slack][Slack]]*
+21. *[[#21-whitespaces][Whitespaces]]*
+22. *[[#22-web-browsing][Web Browsing]]*
+23. *[[#23-windows][Windows]]*
 
 ** 1. Auto-Completion
 
@@ -621,7 +622,29 @@ anywhere close to this behavior for it to handle under the same bind, that is
   (unbind-key "<tab>" yas-minor-mode-map))
 #+END_SRC
 
-** 7. Git
+** 7. EXWM
+
+#+BEGIN_QUOTE
+EXWM (Emacs X Window Manager) is a full-featured tiling X window manager for Emacs
+built on top of [[https://github.com/ch11ng/xelb][XELB]]. It features:
+
+- Fully keyboard-driven operations
+- Hybrid layout modes (tiling & stacking)
+- Dynamic workspace support
+- ICCCM/EWMH compliance
+- (Optional) RandR (multi-monitor) support
+- (Optional) Built-in compositing manager
+- (Optional) Built-in system tray
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+;; (use-package exwm
+;;   :config
+;;   (require 'exwm-config)
+;;   (exwm-config-default))
+#+END_SRC
+
+** 8. Git
 
 Magit provide Git facilities directly from within Emacs.
 
@@ -696,7 +719,7 @@ Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.h
 (use-package gitignore-mode :delight gitignore-mode "Git Ignore")
 #+END_SRC
 
-** 8. Helm
+** 9. Helm
 
 Helm is a beast. Although heavily, it replaces =ido-mode= in many ways.
 
@@ -793,7 +816,7 @@ Helm equivalents.
   :config (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn/blue))
 #+END_SRC
 
-** 9. Helm Plugins
+** 10. Helm Plugins
 
 Fourth-party packages for Helm.
 
@@ -834,7 +857,7 @@ Fourth-party packages for Helm.
   :config (helm-projectile-toggle 1))
 #+END_SRC
 
-** 10. Hydra
+** 11. Hydra
 
 Hydra allows me to group binds together. It also shows a list of all implemented
 commands in the eho area.
@@ -975,7 +998,7 @@ Change text size.
   ("0" (text-scale-increase 0)))
 #+END_SRC
 
-** 11. Linters
+** 12. Linters
 
 Flycheck lints warnings and errors directly within buffers. It can check a lot of
 different syntaxes, as long as you make sure that Emacs has access to the binaries
@@ -1003,7 +1026,7 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
   (set-face-attribute 'flycheck-fringe-warning nil :foreground zenburn/orange))
 #+END_SRC
 
-** 12. Mode-line
+** 13. Mode-line
 
 Delight allows you to change modes --- both major and minor --- lighters. They are
 the descriptive strings than you see appear within the =mode-line=.
@@ -1101,7 +1124,7 @@ been extracted as an independent package for general fun and profit.
                       :background zenburn/green :foreground zenburn/green+4))
 #+END_SRC
 
-** 13. Navigation
+** 14. Navigation
 
 I disagree with Emacs' definition of paragraphs so I redefined the way it should jump
 from one block to another.
@@ -1188,7 +1211,7 @@ Bind commands to move around windows.
    ("C-M-<down>". windmove-down)))
 #+END_SRC
 
-** 14. OS X
+** 15. OS X
 
 Augment Emacs experience for OS X users.
 
@@ -1222,7 +1245,7 @@ interest, then copying them into the Emacs environment.
     (exec-path-from-shell-initialize)))
 #+END_SRC
 
-** 15. Parentheses
+** 16. Parentheses
 
 Highlight parenthese-like delimiters in a rainbow fashion. It ease the reading when
 dealing with mismatched parentheses.
@@ -1254,7 +1277,7 @@ package seem to please my person.
   (sp-pair "[[" "]]"))
 #+END_SRC
 
-** 16. Point
+** 17. Point
 
 Increase region by semantic units. It tries to be smart about it and adapt to the
 structure of the current major mode.
@@ -1399,7 +1422,7 @@ Work on lines.
   (delete-trailing-whitespace))
 #+END_SRC
 
-** 17. Projectile
+** 18. Projectile
 
 Projectile brings project-level facilities to Emacs such as grep, find and replace.
 
@@ -1430,7 +1453,7 @@ performance sake an indexing mechanism backed by external commands exists as wel
   (advice-add 'projectile-project-name :around #'me/projectile-project-name))
 #+END_SRC
 
-** 18. Quality of Life
+** 19. Quality of Life
 
 Colorize colors as text with their value.
 
@@ -1461,7 +1484,6 @@ information. Github integration, customizability, asynchronous upgrading, and mo
   (remove-hook 'paradox--report-buffer-print 'paradox-after-execute-functions))
 #+END_SRC
 
-** 19. Slack
 Auto-dim other buffers. Pretty self-explanatory.
 
 #+BEGIN_SRC emacs-lisp
@@ -1471,6 +1493,7 @@ Auto-dim other buffers. Pretty self-explanatory.
   (set-face-attribute 'auto-dim-other-buffers-face nil :background zenburn/bg-0))
 #+END_SRC
 
+** 20. Slack
 
 Slack integration.
 
@@ -1498,7 +1521,7 @@ Slack integration.
   (set-face-attribute 'slack-message-output-text nil :height 1))
 #+END_SRC
 
-** 20. Whitespaces
+** 21. Whitespaces
 
 Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
@@ -1514,7 +1537,7 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
   (set-face-attribute 'whitespace-trailing nil :background zenburn/red-1))
 #+END_SRC
 
-** 21. Web Browsing
+** 22. Web Browsing
 
 EWW stands for Emacs Web Wowser. Yeah that's right... Emacs is also a Web
 browser, text-based that is.
@@ -1528,7 +1551,7 @@ browser, text-based that is.
   :config (setq eww-header-line-format " %t: %u"))
 #+END_SRC
 
-** 22. Windows
+** 23. Windows
 
 Adjust the size of every windows and focus the active one. It uses the mathematical
 golden ratio somewhere in its formulas.
