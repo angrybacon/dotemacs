@@ -245,7 +245,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
   (set-face-attribute 'font-lock-comment-face nil :italic t)
   (set-face-attribute 'font-lock-doc-face nil :italic t)
   (set-face-attribute 'font-lock-function-name-face nil :foreground zenburn/blue)
-  (set-face-attribute 'fringe nil :background zenburn/bg :foreground zenburn/bg+3)
+  (set-face-attribute 'fringe nil :background zenburn/bg-0 :foreground zenburn/bg+3)
   (set-face-attribute 'header-line nil
                       :box `(:line-width 1 :color ,zenburn/bg-1)
                       :height me/font-size-header)
@@ -1445,6 +1445,15 @@ information. Github integration, customizability, asynchronous upgrading, and mo
 #+END_SRC
 
 ** 19. Slack
+Auto-dim other buffers. Pretty self-explanatory.
+
+#+BEGIN_SRC emacs-lisp
+(use-package auto-dim-other-buffers
+  :init (auto-dim-other-buffers-mode 1)
+  :config
+  (set-face-attribute 'auto-dim-other-buffers-face nil :background zenburn/bg-0))
+#+END_SRC
+
 
 Slack integration.
 
