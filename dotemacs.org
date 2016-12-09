@@ -891,12 +891,34 @@ it's like a minor mode that disables itself auto-magically.
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
   :bind
+  ("C-c d" . hydra-date/body)
   ("C-c f" . hydra-flycheck/body)
   ("C-c h" . hydra-helm/body)
   ("C-c o" . hydra-org/body)
   ("C-c p" . hydra-projectile/body)
   ("C-c z" . hydra-zoom/body)
   :config (setq-default hydra-default-hint nil))
+#+END_SRC
+
+Group date-related commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-date (:color blue)
+  "
+^
+^Date^             ^Insert^           ^Insert with time^
+^────^─────────────^──────^───────────^────────────────^─
+[_q_] quit         [_d_] short        [_D_] short
+^^                 [_i_] iso          [_I_] iso
+^^                 [_l_] long
+^^                 ^^
+"
+  ("q" nil)
+  ("d" me/date-short)
+  ("D" me/date-short-with-time)
+  ("i" me/date-iso)
+  ("I" me/date-iso-with-time)
+  ("l" me/date-long))
 #+END_SRC
 
 Group Flycheck commands.
@@ -1474,6 +1496,35 @@ Auto-dim other buffers. Pretty self-explanatory.
   :init (auto-dim-other-buffers-mode 1)
   :config
   (set-face-attribute 'auto-dim-other-buffers-face nil :background zenburn/bg-0))
+#+END_SRC
+
+Insert the current date.
+
+#+BEGIN_SRC emacs-lisp
+(defun me/date-iso ()
+  "Insert the current date, short format, eg. 2016-12-09."
+  (interactive)
+  (insert (format-time-string "%F")))
+
+(defun me/date-iso-with-time ()
+  "Insert the current date, short format, eg. 2016-12-09T14:34:54+0100."
+  (interactive)
+  (insert (format-time-string "%FT%T%z")))
+
+(defun me/date-long ()
+  "Insert the current date, short format, eg. December 09, 2016."
+  (interactive)
+  (insert (format-time-string "%B %d, %Y")))
+
+(defun me/date-short ()
+  "Insert the current date, short format, eg. 2016.12.09."
+  (interactive)
+  (insert (format-time-string "%Y.%m.%d")))
+
+(defun me/date-short-with-time ()
+  "Insert the current date, short format, eg. 2016.12.09 14:34"
+  (interactive)
+  (insert (format-time-string "%Y.%m.%d %H:%M")))
 #+END_SRC
 
 Augment Emacs' package menu.
