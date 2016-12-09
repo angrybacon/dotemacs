@@ -36,13 +36,13 @@ Here are what I consider better defaults as per my own experience.
  ns-use-srgb-colorspace nil                      ; Don't use sRGB colors
  require-final-newline 'visit                    ; Add a newline at EOF on visit
  scroll-conservatively most-positive-fixnum      ; Always scroll by one line
+ select-enable-clipboard t                       ; Merge system's and Emacs' clipboard
  show-trailing-whitespace nil                    ; Display trailing whitespaces
  split-height-threshold nil                      ; Disable vertical window splitting
  split-width-threshold nil                       ; Disable horizontal window splitting
  tab-width 4                                     ; Set width for tabs
  uniquify-buffer-name-style 'forward             ; Uniquify buffer names
- window-combination-resize t                     ; Resize windows proportionally
- x-select-enable-clipboard t)                    ; Merge system's and Emacs' clipboard
+ window-combination-resize t)                    ; Resize windows proportionally
 #+END_SRC
 
 Some UI elements are rather invasive. No-mouse master race.
