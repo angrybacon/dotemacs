@@ -998,7 +998,7 @@ Group Projectile commands.
   ("S" projectile-save-project-buffers :color red))
 #+END_SRC
 
-Change text size.
+Group zoom-related commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-zoom ()
@@ -1467,12 +1467,13 @@ performance sake an indexing mechanism backed by external commands exists as wel
 
 ** 19. Quality of Life
 
-Colorize colors as text with their value.
+Auto-dim other buffers. Pretty self-explanatory.
 
 #+BEGIN_SRC emacs-lisp
-(use-package rainbow-mode
-  :init (add-hook 'prog-mode-hook 'rainbow-mode)
-  :config (setq-default rainbow-x-colors-major-mode-list '()))
+(use-package auto-dim-other-buffers
+  :init (auto-dim-other-buffers-mode 1)
+  :config
+  (set-face-attribute 'auto-dim-other-buffers-face nil :background zenburn/bg-0))
 #+END_SRC
 
 Augment Emacs' package menu.
@@ -1496,13 +1497,12 @@ information. Github integration, customizability, asynchronous upgrading, and mo
   (remove-hook 'paradox--report-buffer-print 'paradox-after-execute-functions))
 #+END_SRC
 
-Auto-dim other buffers. Pretty self-explanatory.
+Colorize colors as text with their value.
 
 #+BEGIN_SRC emacs-lisp
-(use-package auto-dim-other-buffers
-  :init (auto-dim-other-buffers-mode 1)
-  :config
-  (set-face-attribute 'auto-dim-other-buffers-face nil :background zenburn/bg-0))
+(use-package rainbow-mode
+  :init (add-hook 'prog-mode-hook 'rainbow-mode)
+  :config (setq-default rainbow-x-colors-major-mode-list '()))
 #+END_SRC
 
 ** 20. Slack
