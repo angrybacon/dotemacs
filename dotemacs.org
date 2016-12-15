@@ -464,7 +464,7 @@ authoring documents with a fast and effective plain-text system.
 12. [[#12-linters][Linters]]
 13. [[#13-mode-line][Mode-line]]
 14. [[#14-navigation][Navigation]]
-15. [[#15-os-x][OS X]]
+15. [[#15-os-related][OS-Related]]
 16. [[#16-parentheses][Parentheses]]
 17. [[#17-point][Point]]
 18. [[#18-projectile][Projectile]]
@@ -1252,7 +1252,7 @@ Bind commands to move around windows.
    ("C-M-<down>". windmove-down)))
 #+END_SRC
 
-** 15. OS X
+** 15. OS-Related
 
 Augment Emacs experience for OS X users.
 
@@ -1661,7 +1661,7 @@ golden ratio somewhere in its formulas.
   :init (golden-ratio-mode 1)
 
   :config
-  (setq-default golden-ratio-adjust-factor me/golden-ratio-adjust-factor-1)
+  (setq-default golden-ratio-adjust-factor me/golden-ratio-adjust-factor-3)
   (add-to-list 'golden-ratio-exclude-modes "ediff-mode")
   (add-to-list 'golden-ratio-inhibit-functions 'me/ediff-comparison-buffer-p))
 #+END_SRC
