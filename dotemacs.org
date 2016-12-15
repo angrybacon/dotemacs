@@ -493,6 +493,10 @@ completion candidates.
    company-minimum-prefix-length 1
    company-tooltip-align-annotations t))
 
+(use-package company-dabbrev
+  :ensure nil
+  :config (setq-default company-dabbrev-downcase nil))
+
 (use-package company-tern
   :init (add-to-list 'company-backends 'company-tern)
   :config
