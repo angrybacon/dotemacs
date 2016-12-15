@@ -1235,11 +1235,9 @@ highlighted while you are typing your query, incrementally. Since he who can do 
 can do less, I've replaced default bindings with the regexp-equivalent commands.
 
 #+BEGIN_SRC emacs-lisp
-(use-package isearch
-  :ensure nil
-  :bind
-  ([remap isearch-backward] . isearch-backward-regexp)
-  ([remap isearch-forward] . isearch-forward-regexp))
+(setq-default isearch-allow-scroll t)
+(global-set-key [remap isearch-backward] 'isearch-backward-regexp)
+(global-set-key [remap isearch-forward] 'isearch-forward-regexp)
 #+END_SRC
 
 Bind commands to move around windows.
