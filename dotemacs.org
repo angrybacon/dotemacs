@@ -189,8 +189,9 @@ I like to have an accessible copy of my active theme's color codes.
 That way, I can fix other packages' colors while still using the same color codes and
 keep a sane consistency everywhere.
 
-I consider this method safe because I am using the all-famous [[https://github.com/bbatsov/zenburn-emacs][Zenburn Emacs port]]
-palette. It is /very/ unlikely that any of its tones will ever change.
+I consider this method safe because I am using the all-famous
+[[https://github.com/bbatsov/zenburn-emacs][Zenburn Emacs port]] palette. It is
+/very/ unlikely that any of its tones will ever change.
 
 #+BEGIN_SRC emacs-lisp
 (defconst zenburn/bg+3      "#6F6F6F"  "Zenburn palette: #6F6F6F.")
@@ -397,6 +398,7 @@ authoring documents with a fast and effective plain-text system.
 
   :config
   (setq-default
+   org-descriptive-links nil
    org-edit-src-content-indentation 0
    org-src-fontify-natively t
    org-src-window-setup 'current-window
@@ -522,7 +524,8 @@ completion candidates.
 This merely changes face attributes. It also /Zenburn/ customization buffers a little
 more.
 
-- *TODO*: Open a pull request over [[https://github.com/bbatsov/zenburn-emacs][zenburn-emacs]].
+- *TODO*: Open a pull request over
+  [[https://github.com/bbatsov/zenburn-emacs][zenburn-emacs]].
 
 #+BEGIN_SRC emacs-lisp
 (use-package cus-edit
@@ -596,9 +599,9 @@ Configure Dired buffers. Amongst many other things, Emacs is also a file explore
 
 ** 6. Expand
 
-HippieExpand manages expansions a la [[http://emmet.io/][Emmet]]. So I've gathered all features that look
-anywhere close to this behavior for it to handle under the same bind, that is
-=<C-return>=. Basically it's an expand DWIM.
+HippieExpand manages expansions a la [[http://emmet.io/][Emmet]]. So I've gathered
+all features that look anywhere close to this behavior for it to handle under the
+same bind, that is =<C-return>=. Basically it's an expand DWIM.
 
 #+BEGIN_SRC emacs-lisp
 (use-package emmet-mode
@@ -665,12 +668,13 @@ built on top of [[https://github.com/ch11ng/xelb][XELB]]. It features:
 Magit provide Git facilities directly from within Emacs.
 
 #+BEGIN_QUOTE
-Magit is an interface to the version control system [[https://git-scm.com/][Git]], implemented as an [[https://www.gnu.org/software/emacs][Emacs]]
-package. Magit aspires to be a complete Git porcelain. While we cannot (yet) claim
-that Magit wraps and improves upon each and every Git command, it is complete enough
-to allow even experienced Git users to perform almost all of their daily version
-control tasks directly from within Emacs. While many fine Git clients exist, only
-Magit and Git itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
+Magit is an interface to the version control system [[https://git-scm.com/][Git]],
+implemented as an [[https://www.gnu.org/software/emacs][Emacs]] package. Magit
+aspires to be a complete Git porcelain. While we cannot (yet) claim that Magit wraps
+and improves upon each and every Git command, it is complete enough to allow even
+experienced Git users to perform almost all of their daily version control tasks
+directly from within Emacs. While many fine Git clients exist, only Magit and Git
+itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
 
 [[https://github.com/magit/magit][Jonas Bernoulli]]
 #+END_QUOTE
@@ -1088,8 +1092,9 @@ Spaceline, is a mode-line configuration framework. Like what =powerline= does bu
 a shallower level. It's still very customizable nonetheless.
 
 #+BEGIN_QUOTE
-This is the package that provides [[http://spacemacs.org/][Spacemacs]] with its famous mode-line theme. It has
-been extracted as an independent package for general fun and profit.
+This is the package that provides [[http://spacemacs.org/][Spacemacs]] with its
+famous mode-line theme. It has been extracted as an independent package for general
+fun and profit.
 
 [[https://github.com/TheBB/spaceline][Eivind Fonn]]
 #+END_QUOTE
@@ -1195,9 +1200,9 @@ replace text in difference places at once, =anzu= has a nice feedback on regexp
 matches.
 
 #+BEGIN_QUOTE
-=anzu.el= is an Emacs port of [[https://github.com/osyo-manga/vim-anzu][anzu.vim]]. =anzu.el= provides a minor mode which
-displays /current match/ and /total matches/ information in the mode-line in various
-search modes.
+=anzu.el= is an Emacs port of [[https://github.com/osyo-manga/vim-anzu][anzu.vim]].
+=anzu.el= provides a minor mode which displays /current match/ and /total matches/
+information in the mode-line in various search modes.
 
 [[https://github.com/syohex/emacs-anzu][Syohei Yoshida]]
 #+END_QUOTE
