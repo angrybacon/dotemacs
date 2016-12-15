@@ -1,18 +1,18 @@
 #+TITLE: DotEmacs
 #+AUTHOR: Mathieu Marques
 
-A. *[[#a-bootstrap][Bootstrap]]* |
-B. *[[#b-theme][Theme]]* |
-C. *[[#c-languages][Languages]]* |
-C. *[[#d-features][Features]]*
+A. [[#a-bootstrap][Bootstrap]] |
+B. [[#b-theme][Theme]] |
+C. [[#c-languages][Languages]] |
+C. [[#d-features][Features]]
 
 * A. Bootstrap
 
-1. *[[#1-use-better-defaults][Use better defaults]]*
-2. *[[2#-validate-emacs-version][Validate Emacs' version]]*
-3. *[[3#-load-customel][Load .custom.el]]*
-4. *[[4#-load-secretel][Load .secret.el]]*
-5. *[[5#-initialize-melpa][Initialize MELPA]]*
+1. [[#1-use-better-defaults][Use better defaults]]
+2. [[2#-validate-emacs-version][Validate Emacs' version]]
+3. [[3#-load-customel][Load .custom.el]]
+4. [[4#-load-secretel][Load .secret.el]]
+5. [[5#-initialize-melpa][Initialize MELPA]]
 
 ** 1. Use better defaults
 
@@ -180,8 +180,8 @@ functionality!
 
 * B. Theme
 
-1. *[[#1-set-a-color-palette][Set a color palette]]*
-2. *[[#2-configure-zenburn][Configure Zenburn]]*
+1. [[#1-set-a-color-palette][Set a color palette]]
+2. [[#2-configure-zenburn][Configure Zenburn]]
 
 ** 1. Set a color palette
 
@@ -262,15 +262,15 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 
 * C. Languages
 
-1. *[[#1-css][CSS]]*
-2. *[[#2-docker][Docker]]*
-3. *[[#3-html][HTML]]*
-4. *[[#4-javascript][JavaScript]]*
-5. *[[#5-lisp][Lisp]]*
-6. *[[#6-markdown][Markdown]]*
-7. *[[#7-org][Org]]*
-8. *[[#8-python][Python]]*
-9. *[[#9-yaml][YAML]]*
+1. [[#1-css][CSS]]
+2. [[#2-docker][Docker]]
+3. [[#3-html][HTML]]
+4. [[#4-javascript][JavaScript]]
+5. [[#5-lisp][Lisp]]
+6. [[#6-markdown][Markdown]]
+7. [[#7-org][Org]]
+8. [[#8-python][Python]]
+9. [[#9-yaml][YAML]]
 
 #+BEGIN_QUOTE
 As pedantic as I like to be, some packages have a =use-package= clause for nothing but
@@ -448,29 +448,29 @@ authoring documents with a fast and effective plain-text system.
 
 * D. Features
 
-1. *[[#1-auto-completion][Auto-Completion]]*
-2. *[[#2-comments][Comments]]*
-3. *[[#3-customization-menus][Customization Menus]]*
-4. *[[#4-diff][Diff]]*
-5. *[[#5-dired][Dired]]*
-6. *[[#6-expand][Expand]]*
-7. *[[#7-exwm][EXWM]]*
-8. *[[#8-git][Git]]*
-9. *[[#9-helm][Helm]]*
-10. *[[#10-helm-plugins][Helm Plugins]]*
-11. *[[#11-hydra][Hydra]]*
-12. *[[#12-linters][Linters]]*
-13. *[[#13-mode-line][Mode-line]]*
-14. *[[#14-navigation][Navigation]]*
-15. *[[#15-os-x][OS X]]*
-16. *[[#16-parentheses][Parentheses]]*
-17. *[[#17-point][Point]]*
-18. *[[#18-projectile][Projectile]]*
-19. *[[#19-quality-of-life][Quality of Life]]*
-20. *[[#20-slack][Slack]]*
-21. *[[#21-whitespaces][Whitespaces]]*
-22. *[[#22-web-browsing][Web Browsing]]*
-23. *[[#23-windows][Windows]]*
+1. [[#1-auto-completion][Auto-Completion]]
+2. [[#2-comments][Comments]]
+3. [[#3-customization-menus][Customization Menus]]
+4. [[#4-diff][Diff]]
+5. [[#5-dired][Dired]]
+6. [[#6-expand][Expand]]
+7. [[#7-exwm][EXWM]]
+8. [[#8-git][Git]]
+9. [[#9-helm][Helm]]
+10. [[#10-helm-plugins][Helm Plugins]]
+11. [[#11-hydra][Hydra]]
+12. [[#12-linters][Linters]]
+13. [[#13-mode-line][Mode-line]]
+14. [[#14-navigation][Navigation]]
+15. [[#15-os-x][OS X]]
+16. [[#16-parentheses][Parentheses]]
+17. [[#17-point][Point]]
+18. [[#18-projectile][Projectile]]
+19. [[#19-quality-of-life][Quality of Life]]
+20. [[#20-slack][Slack]]
+21. [[#21-whitespaces][Whitespaces]]
+22. [[#22-web-browsing][Web Browsing]]
+23. [[#23-windows][Windows]]
 
 ** 1. Auto-Completion
 
@@ -1680,4 +1680,4 @@ ctrl-c right (calling =winner-redo=).
 
 -----
 
-*[[#dotemacs][Back to top]]*
+[[#dotemacs][Back to top]]
