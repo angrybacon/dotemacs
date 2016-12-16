@@ -108,9 +108,9 @@ Most of the configuration is written and tested on a daily basis with Emacs 24.
 ** 3. Load =.custom.el=
 
 One is able to use the customization interface that is bundled within Emacs. It is
-meant to help people who are not familiar with Emacs Lisp in the configuration of Emacs
-itself. By default, changes in the customization will be automatically detected and
-appended at the end of the configuration file, =init.el=.
+meant to help people who are not familiar with Emacs Lisp in the configuration of
+Emacs itself. By default, changes in the customization will be automatically detected
+and appended at the end of the configuration file, =init.el=.
 
 Since that in my case, the actual configuration file is new one, crafted by
 =org-mode=, adding code at the end of =init.el= might mess things up. The following
@@ -125,8 +125,8 @@ that is.
 
 ** 4. Load =.secret.el=
 
-I load =~/.emacs.d/.secret.el= to keep sensible things out of version control.
-For instance, you could set your identity by customizing both =user-full-name= and
+I load =~/.emacs.d/.secret.el= to keep sensible things out of version control. For
+instance, you could set your identity by customizing both =user-full-name= and
 =user-mail-address= in this file.
 
 #+BEGIN_SRC emacs-lisp
@@ -158,7 +158,8 @@ Dependency checks and [[https://melpa.org][MELPA]] initialization, sugar-wrapped
 #+END_SRC
 
 In order to have unified package declarations in my Emacs files, I use
-[[https://github.com/jwiegley/use-package][use-package]]. It allows for isolation and clarity.
+[[https://github.com/jwiegley/use-package][use-package]]. It allows for isolation and
+clarity.
 
 #+BEGIN_QUOTE
 The =use-package= macro allows you to isolate package configuration in your =.emacs=
@@ -185,9 +186,9 @@ functionality!
 
 ** 1. Set a color palette
 
-I like to have an accessible copy of my active theme's color codes.
-That way, I can fix other packages' colors while still using the same color codes and
-keep a sane consistency everywhere.
+I like to have an accessible copy of my active theme's color codes. That way, I can
+fix other packages' colors while still using the same color codes and keep a sane
+consistency everywhere.
 
 I consider this method safe because I am using the all-famous
 [[https://github.com/bbatsov/zenburn-emacs][Zenburn Emacs port]] palette. It is
@@ -274,8 +275,8 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 9. [[#9-yaml][YAML]]
 
 #+BEGIN_QUOTE
-As pedantic as I like to be, some packages have a =use-package= clause for nothing but
-the customization of its lighter.
+As pedantic as I like to be, some packages have a =use-package= clause for nothing
+but the customization of its lighter.
 #+END_QUOTE
 
 - *TODO*: Add a list of all custom shortcuts.
@@ -899,7 +900,7 @@ it's like a minor mode that disables itself auto-magically.
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
   :bind
-  ("C-c d" . hydra-date/body)
+  ("C-c d" . hydra-dates/body)
   ("C-c f" . hydra-flycheck/body)
   ("C-c h" . hydra-helm/body)
   ("C-c o" . hydra-org/body)
@@ -911,15 +912,15 @@ it's like a minor mode that disables itself auto-magically.
 Group date-related commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-date (:color blue)
+(defhydra hydra-dates (:color blue)
   "
 ^
-^Date^             ^Insert^           ^Insert with time^
-^────^─────────────^──────^───────────^────────────────^─
+^Dates^            ^Insert^           ^Insert with time^
+^─────^────────────^──────^───────────^────────────────^─
 [_q_] quit         [_d_] short        [_D_] short
 ^^                 [_i_] iso          [_I_] iso
 ^^                 [_l_] long
-^^                 ^^
+^^                 ^^                 ^^
 "
   ("q" nil)
   ("d" me/date-short)
@@ -965,6 +966,7 @@ Group Helm commands.
 [_r_] resume helm  [_g_] google       [_s_] css-scss
 ^^                 [_h_] headings     ^^
 ^^                 [_i_] imenu        ^^
+^^                 ^^                 ^^
 "
   ("q" nil)
   ("c" helm-colors)
@@ -989,6 +991,7 @@ Group Org commands.
 ^^                 [_o_] open         [_f_] forward
 ^^                 [_p_] previous     [_v_] overview
 ^^                 [_s_] store        ^^
+^^                 ^^                 ^^
 "
   ("q" nil)
   ("a" show-all)
@@ -1014,6 +1017,7 @@ Group Projectile commands.
 [_i_] reset cache  [_k_] kill all     [_D_] root         [_s_] ag
 ^^                 [_S_] save all     [_f_] file         ^^
 ^^                 ^^                 [_p_] project      ^^
+^^                 ^^                 ^^                 ^^
 "
   ("q" nil)
   ("b" helm-projectile-switch-to-buffer)
@@ -1068,7 +1072,7 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
   (set-face-attribute 'flycheck-fringe-warning nil :foreground zenburn/orange))
 #+END_SRC
 
-** 13. Mode-line
+** 13. Mode-Line
 
 Delight allows you to change modes --- both major and minor --- lighters. They are
 the descriptive strings than you see appear within the =mode-line=.
@@ -1609,8 +1613,8 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
 ** 22. Web Browsing
 
-EWW stands for Emacs Web Wowser. Yeah that's right... Emacs is also a Web
-browser, text-based that is.
+EWW stands for Emacs Web Wowser. Yeah that's right... Emacs is also a Web browser,
+text-based that is.
 
 - *NOTE*: Why can't I use =setq-default= to customize =eww-header-line-format=?
 
