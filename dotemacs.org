@@ -32,9 +32,9 @@ Here are what I consider better defaults as per my own experience.
  indent-tabs-mode nil                            ; Stop using tabs to indent
  inhibit-startup-screen t                        ; Disable start-up screen
  initial-scratch-message ""                      ; Empty the initial *scratch* buffer
+ mode-require-final-newline 'visit               ; Add a newline at EOF on visit
  mouse-yank-at-point t                           ; Yank at point rather than cursor
  ns-use-srgb-colorspace nil                      ; Don't use sRGB colors
- require-final-newline 'visit                    ; Add a newline at EOF on visit
  scroll-conservatively most-positive-fixnum      ; Always scroll by one line
  select-enable-clipboard t                       ; Merge system's and Emacs' clipboard
  show-trailing-whitespace nil                    ; Display trailing whitespaces
@@ -410,6 +410,7 @@ authoring documents with a fast and effective plain-text system.
   (set-face-attribute 'org-block-begin-line nil :background 'unspecified)
   (set-face-attribute 'org-block-end-line nil :background 'unspecified)
   (unbind-key "C-a" org-mode-map)
+  (unbind-key "C-c C-w" org-mode-map)
   (unbind-key "C-e" org-mode-map)
   (unbind-key "<C-return>" org-mode-map)
   (unbind-key "<C-S-down>" org-mode-map)
@@ -905,7 +906,7 @@ it's like a minor mode that disables itself auto-magically.
   ("C-c h" . hydra-helm/body)
   ("C-c o" . hydra-org/body)
   ("C-c p" . hydra-projectile/body)
-  ("C-c z" . hydra-zoom/body)
+  ("C-c w" . hydra-windows/body)
   :config (setq-default hydra-default-hint nil))
 #+END_SRC
 
@@ -1032,16 +1033,29 @@ Group Projectile commands.
   ("S" projectile-save-project-buffers :color red))
 #+END_SRC
 
-Group zoom-related commands.
+Group window-related commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-zoom ()
+(defhydra hydra-windows (:color blue)
   "
-[_-_] zoom out  [_=_] zoom in  [_0_] reset
+^
+^Windows^          ^Golden-Ratio^     ^Perspectives^     ^Zoom^
+^───────^──────────^────────────^─────^────────────^─────^────^─────────────
+[_q_] quit         [_1_] 0.8          [_c_] copy         [_-_] zoom out
+^^                 [_2_] 0.805        [_n_] next         [_+_] zoom in
+^^                 [_3_] 0.53         [_p_] previous     [_=_] reset
+^^                 ^^                 ^^                 ^^
 "
-  ("-" text-scale-decrease)
-  ("=" text-scale-increase)
-  ("0" (text-scale-increase 0)))
+  ("q" nil)
+  ("-" text-scale-decrease :color red)
+  ("+" text-scale-increase :color red)
+  ("=" (text-scale-increase 0) :color red)
+  ("1" (golden-ratio-adjust me/golden-ratio-adjust-factor-1) :color red)
+  ("2" (golden-ratio-adjust me/golden-ratio-adjust-factor-2) :color red)
+  ("3" (golden-ratio-adjust me/golden-ratio-adjust-factor-3) :color red)
+  ("c" persp-copy)
+  ("n" persp-next :color red)
+  ("p" persp-prev :color red))
 #+END_SRC
 
 ** 12. Linters
@@ -1637,37 +1651,44 @@ golden ratio somewhere in its formulas.
 
 #+BEGIN_SRC emacs-lisp
 (use-package golden-ratio
-
   :preface
   (defconst me/golden-ratio-adjust-factor-1  .8    "A factor for 16/10: bi-split.")
   (defconst me/golden-ratio-adjust-factor-2  .805  "A factor for 16/9: bi-split.")
   (defconst me/golden-ratio-adjust-factor-3  .53   "A factor for 16/9: tri-split.")
-  (defun me/golden-ratio-adjust-1 ()
-    (interactive)
-    (golden-ratio-adjust me/golden-ratio-adjust-factor-1))
-  (defun me/golden-ratio-adjust-2 ()
-    (interactive)
-    (golden-ratio-adjust me/golden-ratio-adjust-factor-2))
-  (defun me/golden-ratio-adjust-3 ()
-    (interactive)
-    (golden-ratio-adjust me/golden-ratio-adjust-factor-3))
   (defun me/ediff-comparison-buffer-p ()
     (if (boundp 'ediff-this-buffer-ediff-sessions)
-        (progn
-          (balance-windows)
-          ediff-this-buffer-ediff-sessions)))
-
-  :bind
-  (("<f5>" . me/golden-ratio-adjust-1)
-   ("<f6>" . me/golden-ratio-adjust-2)
-   ("<f7>" . me/golden-ratio-adjust-3))
-
+        (progn (balance-windows) ediff-this-buffer-ediff-sessions)))
   :init (golden-ratio-mode 1)
 
   :config
   (setq-default golden-ratio-adjust-factor me/golden-ratio-adjust-factor-3)
   (add-to-list 'golden-ratio-exclude-modes "ediff-mode")
   (add-to-list 'golden-ratio-inhibit-functions 'me/ediff-comparison-buffer-p))
+#+END_SRC
+
+Workspaces within Emacs.
+
+#+BEGIN_QUOTE
+Perspectives for emacs, based on the
+[[http://github.com/nex3/perspective-el][=perspective-el=]] by Nathan Weizenbaum. But
+the perspectives are shared among frames + ability to save/restore its state from/to
+a file.
+
+[[https://github.com/Bad-ptr/persp-mode.el][Constantin Kulikov]]
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package persp-mode
+  :init
+  (setq-default
+   persp-auto-resume-time 0.1
+   persp-keymap-prefix (kbd "C-c C-w"))
+  (persp-mode 1)
+  :config
+  (setq-default
+   persp-auto-save-num-of-backups 0
+   persp-autokill-buffer-on-remove 'kill-weak
+   persp-save-dir (expand-file-name ".persp-confs/" user-emacs-directory)))
 #+END_SRC
 
 Allow undo's and redo's with window configurations.
