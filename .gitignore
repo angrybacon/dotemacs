@@ -13,7 +13,7 @@ url/
 
 # Third-party packages
 .multiple-cursors.el
-.persp-confs/
+.persp
 .projectile
 projectile.cache
 projectile-bookmarks.eld

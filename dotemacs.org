@@ -1044,6 +1044,7 @@ Group window-related commands.
 [_q_] quit         [_1_] 0.8          [_c_] copy         [_-_] zoom out
 ^^                 [_2_] 0.805        [_n_] next         [_+_] zoom in
 ^^                 [_3_] 0.53         [_p_] previous     [_=_] reset
+^^                 ^^                 [_w_] save         ^^
 ^^                 ^^                 ^^                 ^^
 "
   ("q" nil)
@@ -1055,7 +1056,8 @@ Group window-related commands.
   ("3" (golden-ratio-adjust me/golden-ratio-adjust-factor-3) :color red)
   ("c" persp-copy)
   ("n" persp-next :color red)
-  ("p" persp-prev :color red))
+  ("p" persp-prev :color red)
+  ("w" (persp-save-state-to-file persp-auto-save-fname) :color red))
 #+END_SRC
 
 ** 12. Linters
@@ -1129,6 +1131,7 @@ fun and profit.
   (setq-default
    mode-line-format '("%e" (:eval (spaceline-ml-main)))
    powerline-default-separator 'wave
+   spaceline-display-default-perspective t
    powerline-height 20
    spaceline-highlight-face-func 'spaceline-highlight-face-modified
    spaceline-flycheck-bullet "• %s"
@@ -1147,6 +1150,25 @@ fun and profit.
                spaceline--helm-current-source
                (eq 1 (cdr (assq 'follow spaceline--helm-current-source))))
       (propertize "" 'face 'success)))
+
+  ;; Build a segment for persp-mode
+  (spaceline-define-segment me/persp-name
+    (when (and (bound-and-true-p persp-mode)
+               (fboundp 'safe-persp-name)
+               (fboundp 'get-frame-persp)
+               (or (not (string= persp-nil-name (safe-persp-name (get-frame-persp))))
+                   spaceline-display-default-perspective))
+      (let ((name (safe-persp-name (get-frame-persp))))
+        (propertize
+         (if (file-directory-p name)
+             (file-name-nondirectory (directory-file-name name))
+           name)
+         'face
+         (let ((persp (get-current-persp)))
+           (if persp
+               (if (persp-contain-buffer-p (current-buffer) persp)
+                   'persp-face-lighter-default 'persp-face-lighter-buffer-not-in-persp)
+             'persp-face-lighter-nil-persp))))))
 
   ;; Build a segment for the active region
   (spaceline-define-segment me/selection-info
@@ -1170,6 +1192,7 @@ fun and profit.
    `((me/selection-info)
      ((flycheck-error flycheck-warning flycheck-info) :when active)
      ((projectile-root me/version-control) :separator "  ")
+     (me/persp-name)
      (global :face highlight-face)))
   (spaceline-install
    'helm
@@ -1675,7 +1698,6 @@ golden ratio somewhere in its formulas.
     (if (boundp 'ediff-this-buffer-ediff-sessions)
         (progn (balance-windows) ediff-this-buffer-ediff-sessions)))
   :init (golden-ratio-mode 1)
-
   :config
   (setq-default golden-ratio-adjust-factor me/golden-ratio-adjust-factor-3)
   (add-to-list 'golden-ratio-exclude-modes "ediff-mode")
@@ -1702,9 +1724,14 @@ a file.
   (persp-mode 1)
   :config
   (setq-default
+   persp-auto-save-fname ".persp"
    persp-auto-save-num-of-backups 0
    persp-autokill-buffer-on-remove 'kill-weak
-   persp-save-dir (expand-file-name ".persp-confs/" user-emacs-directory)))
+   persp-save-dir user-emacs-directory)
+  (set-face-attribute 'persp-face-lighter-buffer-not-in-persp nil
+                      :background 'unspecified :foreground zenburn/red-1)
+  (set-face-attribute 'persp-face-lighter-default nil :italic nil)
+  (set-face-attribute 'persp-face-lighter-nil-persp nil :italic nil))
 #+END_SRC
 
 Allow undo's and redo's with window configurations.
