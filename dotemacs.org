@@ -906,7 +906,8 @@ it's like a minor mode that disables itself auto-magically.
   ("C-c h" . hydra-helm/body)
   ("C-c o" . hydra-org/body)
   ("C-c p" . hydra-projectile/body)
-  ("C-c w" . hydra-windows/body)
+  ("C-c s" . hydra-persp/body)
+  ("C-c w" . hydra-window/body)
   :config (setq-default hydra-default-hint nil))
 #+END_SRC
 
@@ -1006,6 +1007,36 @@ Group Org commands.
   ("v" org-overview))
 #+END_SRC
 
+Group Persp commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-persp (:color blue)
+  "
+^
+^Persp^            ^Buffers^          ^Perspectives^
+^─────^────────────^───────^──────────^────────────^─────
+[_q_] quit         [_a_] add current  [_c_] copy
+^^                 [_A_] add          [_n_] next
+^^                 [_b_] list         [_p_] previous
+^^                 [_k_] kill current [_r_] rename
+^^                 [_K_] kill         [_s_] switch
+^^                 ^^                 [_w_] save
+^^                 ^^                 ^^
+"
+  ("q" nil)
+  ("a" (persp-add-buffer (current-buffer)))
+  ("A" persp-add-buffer)
+  ("b" persp-switch-to-buffer)
+  ("c" persp-copy)
+  ("k" (persp-remove-buffer (current-buffer)))
+  ("K" persp-remove-buffer)
+  ("n" persp-next :color red)
+  ("p" persp-prev :color red)
+  ("r" persp-rename)
+  ("s" persp-frame-switch)
+  ("w" (persp-save-state-to-file persp-auto-save-fname)))
+#+END_SRC
+
 Group Projectile commands.
 
 #+BEGIN_SRC emacs-lisp
@@ -1036,28 +1067,22 @@ Group Projectile commands.
 Group window-related commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-windows (:color blue)
+(defhydra hydra-window (:color blue)
   "
 ^
-^Windows^          ^Golden-Ratio^     ^Perspectives^     ^Zoom^
-^───────^──────────^────────────^─────^────────────^─────^────^─────────────
-[_q_] quit         [_1_] 0.8          [_c_] copy         [_-_] zoom out
-^^                 [_2_] 0.805        [_n_] next         [_+_] zoom in
-^^                 [_3_] 0.53         [_p_] previous     [_=_] reset
-^^                 ^^                 [_w_] save         ^^
-^^                 ^^                 ^^                 ^^
+^Window^           ^Golden-Ratio^     ^Zoom^
+^──────^───────────^────────────^─────^────^─────────────
+[_q_] quit         [_2_] bi-split     [_-_] zoom out
+^^                 [_3_] tri-split    [_+_] zoom in
+^^                 ^^                 [_=_] reset
+^^                 ^^                 ^^
 "
   ("q" nil)
   ("-" text-scale-decrease :color red)
   ("+" text-scale-increase :color red)
   ("=" (text-scale-increase 0) :color red)
-  ("1" (golden-ratio-adjust me/golden-ratio-adjust-factor-1) :color red)
-  ("2" (golden-ratio-adjust me/golden-ratio-adjust-factor-2) :color red)
-  ("3" (golden-ratio-adjust me/golden-ratio-adjust-factor-3) :color red)
-  ("c" persp-copy)
-  ("n" persp-next :color red)
-  ("p" persp-prev :color red)
-  ("w" (persp-save-state-to-file persp-auto-save-fname) :color red))
+  ("2" (golden-ratio-adjust me/golden-ratio-adjust-factor-bi-split) :color red)
+  ("3" (golden-ratio-adjust me/golden-ratio-adjust-factor-tri-split) :color red))
 #+END_SRC
 
 ** 12. Linters
@@ -1691,15 +1716,14 @@ golden ratio somewhere in its formulas.
 #+BEGIN_SRC emacs-lisp
 (use-package golden-ratio
   :preface
-  (defconst me/golden-ratio-adjust-factor-1  .8    "A factor for 16/10: bi-split.")
-  (defconst me/golden-ratio-adjust-factor-2  .805  "A factor for 16/9: bi-split.")
-  (defconst me/golden-ratio-adjust-factor-3  .53   "A factor for 16/9: tri-split.")
+  (defconst me/golden-ratio-adjust-factor-bi-split .805)
+  (defconst me/golden-ratio-adjust-factor-tri-split .53)
   (defun me/ediff-comparison-buffer-p ()
     (if (boundp 'ediff-this-buffer-ediff-sessions)
         (progn (balance-windows) ediff-this-buffer-ediff-sessions)))
   :init (golden-ratio-mode 1)
   :config
-  (setq-default golden-ratio-adjust-factor me/golden-ratio-adjust-factor-3)
+  (setq-default golden-ratio-adjust-factor me/golden-ratio-adjust-factor-tri-split)
   (add-to-list 'golden-ratio-exclude-modes "ediff-mode")
   (add-to-list 'golden-ratio-inhibit-functions 'me/ediff-comparison-buffer-p))
 #+END_SRC
