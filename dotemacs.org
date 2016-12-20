@@ -1222,10 +1222,11 @@ fun and profit.
   (spaceline-install
    'helm
    '((helm-buffer-id :face spaceline-read-only)
-     helm-number
+     (helm-number)
      (me/helm-follow :fallback "")
      helm-prefix-argument)
-   '((helm-help :face spaceline-read-only)))
+   '((helm-help)
+     (global :face spaceline-read-only)))
 
   ;; Customize the mode-line
   (set-face-attribute 'mode-line nil
@@ -1753,7 +1754,7 @@ a file.
    persp-autokill-buffer-on-remove 'kill-weak
    persp-save-dir user-emacs-directory)
   (set-face-attribute 'persp-face-lighter-buffer-not-in-persp nil
-                      :background 'unspecified :foreground zenburn/red-1)
+                      :bold nil :background 'unspecified :foreground zenburn/red-1)
   (set-face-attribute 'persp-face-lighter-default nil :italic nil)
   (set-face-attribute 'persp-face-lighter-nil-persp nil :italic nil))
 #+END_SRC
