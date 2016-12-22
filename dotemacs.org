@@ -1115,6 +1115,28 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
 
 ** 13. Mode-Line
 
+Here is how it looks:
+
+/In an active window/
+
+[[./screenshots/emacs.mode-line.active.png]]
+
+/In an inactive window/
+
+[[./screenshots/emacs.mode-line.inactive.png]]
+
+/When inside of a Helm session/
+
+[[./screenshots/emacs.mode-line.helm.png]]
+
+/When using =isearch=/
+
+[[./screenshots/emacs.mode-line.search.png]]
+
+/With an active region/
+
+[[./screenshots/emacs.mode-line.region.png]]
+
 Delight allows you to change modes --- both major and minor --- lighters. They are
 the descriptive strings than you see appear within the =mode-line=.
 
