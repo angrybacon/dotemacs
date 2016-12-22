@@ -464,7 +464,7 @@ authoring documents with a fast and effective plain-text system.
 10. [[#10-helm-plugins][Helm Plugins]]
 11. [[#11-hydra][Hydra]]
 12. [[#12-linters][Linters]]
-13. [[#13-mode-line][Mode-line]]
+13. [[#13-mode-line][Mode-Line]]
 14. [[#14-navigation][Navigation]]
 15. [[#15-os-related][OS-Related]]
 16. [[#16-parentheses][Parentheses]]
@@ -1129,13 +1129,20 @@ Here is how it looks:
 
 [[./screenshots/emacs.mode-line.helm.png]]
 
-/When using =isearch=/
+/When using isearch/
 
 [[./screenshots/emacs.mode-line.search.png]]
 
 /With an active region/
 
 [[./screenshots/emacs.mode-line.region.png]]
+
+- [[http://placehold.it/15/7F9F7F/000000?text=+]] means buffer is clean.
+- [[http://placehold.it/15/CC9393/000000?text=+]] means buffer is modified.
+- [[http://placehold.it/15/94BFF3/000000?text=+]] means buffer is read-only.
+- Colored bullets represent =flycheck= critical, warning and informational errors.
+- The segment next to the clock indicate the current perspective from =persp-mode=,
+  red when the buffer doesn't belong to the current perspective.
 
 Delight allows you to change modes --- both major and minor --- lighters. They are
 the descriptive strings than you see appear within the =mode-line=.
