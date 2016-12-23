@@ -1020,7 +1020,7 @@ Group Persp commands.
 ^^                 [_b_] list         [_p_] previous
 ^^                 [_k_] kill current [_r_] rename
 ^^                 [_K_] kill         [_s_] switch
-^^                 ^^                 [_w_] save
+^^                 [_t_] temporary    [_w_] save
 ^^                 ^^                 ^^
 "
   ("q" nil)
@@ -1034,6 +1034,7 @@ Group Persp commands.
   ("p" persp-prev :color red)
   ("r" persp-rename)
   ("s" persp-frame-switch)
+  ("t" persp-temporarily-display-buffer)
   ("w" (persp-save-state-to-file persp-auto-save-fname)))
 #+END_SRC
 
