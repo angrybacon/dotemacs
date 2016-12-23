@@ -1781,7 +1781,7 @@ a file.
   (setq-default
    persp-auto-save-fname ".persp"
    persp-auto-save-num-of-backups 0
-   persp-autokill-buffer-on-remove 'kill-weak
+   persp-autokill-buffer-on-remove nil
    persp-save-dir user-emacs-directory)
   (set-face-attribute 'persp-face-lighter-buffer-not-in-persp nil
                       :bold nil :background 'unspecified :foreground zenburn/red-1)
