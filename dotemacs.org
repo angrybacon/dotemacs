@@ -16,6 +16,16 @@ C. [[#d-features][Features]]
 
 ** 1. Use better defaults
 
+Some UI elements are rather invasive. No-mouse master race.
+
+#+BEGIN_SRC emacs-lisp
+(when window-system
+  (blink-cursor-mode 0)                          ; Disable the cursor blinking
+  (scroll-bar-mode 0)                            ; Disable the scroll bar
+  (tool-bar-mode 0)                              ; Disable the tool bar
+  (tooltip-mode 0))                              ; Disable the tooltips
+#+END_SRC
+
 Here are what I consider better defaults as per my own experience.
 
 #+BEGIN_SRC emacs-lisp
@@ -43,16 +53,7 @@ Here are what I consider better defaults as per my own experience.
  tab-width 4                                     ; Set width for tabs
  uniquify-buffer-name-style 'forward             ; Uniquify buffer names
  window-combination-resize t)                    ; Resize windows proportionally
-#+END_SRC
 
-Some UI elements are rather invasive. No-mouse master race.
-
-#+BEGIN_SRC emacs-lisp
-(when window-system
-  (blink-cursor-mode 0)                          ; Disable the cursor blinking
-  (scroll-bar-mode 0)                            ; Disable the scroll bar
-  (tool-bar-mode 0)                              ; Disable the tool bar
-  (tooltip-mode 0))                              ; Disable the tooltips
 (column-number-mode 0)                           ; Hide the column number
 (display-battery-mode 0)                         ; Hide the battery level
 (display-time-mode 1)                            ; Hide the time representation
@@ -139,7 +140,6 @@ instance, you could set your identity by customizing both =user-full-name= and
 
 Dependency checks and [[https://melpa.org][MELPA]] initialization, sugar-wrapped.
 
-- *FIXME*: Do I really need to ensure =delight= here? Or maybe juse =diminish=?
 - *FIXME*: It sometimes does an extra =package-refresh-contents=.
 
 #+BEGIN_SRC emacs-lisp
@@ -663,11 +663,7 @@ built on top of [[https://github.com/ch11ng/xelb][XELB]]. It features:
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
-(use-package exwm
-  :disabled t
-  :config
-  (require 'exwm-config)
-  (exwm-config-default))
+(use-package exwm :disabled t)
 #+END_SRC
 
 ** 8. Git
@@ -1145,7 +1141,6 @@ the descriptive strings than you see appear within the =mode-line=.
 To make it work with =spaceline= (which uses =powerline= internally), I need to allow
 it to use the newly changed strings.
 
-- *TODO*: Check whether =diminish= rename major mode lighters.
 - *TODO*: Use the new syntax for advices.
 
 #+BEGIN_SRC emacs-lisp
