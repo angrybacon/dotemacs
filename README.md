@@ -55,7 +55,7 @@ errors whithin each buffer.
 ```sh
 pip install flake8                                   # Python
 gem install scss_lint scss_lint_reporter_checkstyle  # SCSS
-npm install -g eslint                                # JsavaScript
+npm install -g eslint                                # JavaScript
 ```
 
 Font Awesome
