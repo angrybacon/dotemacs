@@ -1730,7 +1730,9 @@ Save and restore Emacs status, including buffers, modes, point and windows.
 #+BEGIN_SRC emacs-lisp
 (use-package desktop
   :demand t
-  :config (desktop-save-mode 1))
+  :config
+  (desktop-save-mode 1)
+  (add-to-list 'desktop-globals-to-save 'golden-ratio-adjust-factor))
 #+END_SRC
 
 Workspaces within Emacs.
