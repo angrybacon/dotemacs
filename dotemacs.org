@@ -1743,6 +1743,8 @@ configurations in a simple manner, just like tiling window managers like i3wm wi
 their workspaces do. It displays their current state in the modeline by default. The
 behaviour is modeled after [[http://ranger.nongnu.org/][ranger]], a file manager
 written in Python.
+
+[[https://github.com/wasamasa/eyebrowse][Vasilij Schneidermann]]
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
