@@ -139,7 +139,7 @@ instance, you could set your identity by customizing both =user-full-name= and
 
 Dependency checks and [[https://melpa.org][MELPA]] initialization, sugar-wrapped.
 
-- *FIXME*: Do I really need to ensure =delight= here?
+- *FIXME*: Do I really need to ensure =delight= here? Or maybe juse =diminish=?
 - *FIXME*: It sometimes does an extra =package-refresh-contents=.
 
 #+BEGIN_SRC emacs-lisp
@@ -389,6 +389,7 @@ authoring documents with a fast and effective plain-text system.
 
 - *FIXME*: Fix =hl-line= in source blocks.
 - *TODO*: Enable whitespace-mode in edit mode.
+          See http://emacs.stackexchange.com/q/29424/2397.
 
 #+BEGIN_SRC emacs-lisp
 (use-package org
@@ -763,7 +764,6 @@ modular, and unchained from constraints of backward compatibility.
 #+END_QUOTE
 
 - *TODO*: Make helm-list-faces-display.
-- *TODO*: Fix the mode-line for Helm buffers.
 - *TODO*: Add a flashing effect with Helm actions
           =(progn (require 'pulse) (pulse-momentary-highlight-one-line (point))=.
 
@@ -1697,8 +1697,6 @@ Slack integration.
 
 Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
-- *FIXME*: Force =whitespace-mode= in Org source buffers.
-
 #+BEGIN_SRC emacs-lisp
 (use-package whitespace
   :demand t
@@ -1755,11 +1753,6 @@ written in Python.
 
 Adjust the size of every windows and focus the active one. It uses the mathematical
 golden ratio somewhere in its formulas.
-
-- *TODO*: Find a way to automatically adjust =golden-ratio-adjust-factor= depending
-          on the current display.
-- *TODO*: Check out https://github.com/mina86/auto-dim-other-buffers.el.
-- *TODO*: Make a hydra.
 
 #+BEGIN_SRC emacs-lisp
 (use-package golden-ratio
