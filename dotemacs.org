@@ -239,8 +239,9 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 
 #+BEGIN_SRC emacs-lisp
 (use-package zenburn-theme
-  :init (load-theme 'zenburn t)
+  :demand t
   :config
+  (load-theme 'zenburn t)
   (set-face-attribute 'default nil :height me/font-size-default)
   (set-face-attribute 'font-lock-comment-delimiter-face nil
                       :foreground zenburn/bg+3 :italic t)
@@ -490,8 +491,9 @@ completion candidates.
 
 #+BEGIN_SRC emacs-lisp
 (use-package company
-  :init (global-company-mode)
+  :demand t
   :config
+  (global-company-mode)
   (setq-default
    company-idle-delay .2
    company-minimum-prefix-length 1
@@ -1392,7 +1394,8 @@ interest, then copying them into the Emacs environment.
 
 #+BEGIN_SRC emacs-lisp
 (use-package exec-path-from-shell
-  :init
+  :demand t
+  :config
   (when (memq window-system '(mac ns))
     (exec-path-from-shell-initialize)))
 #+END_SRC
@@ -1416,14 +1419,15 @@ package seem to please my person.
 
 #+BEGIN_SRC emacs-lisp
 (use-package smartparens
+  :demand t
   :bind
   (("M-<backspace>" . sp-unwrap-sexp)
    ("M-<left>" . sp-forward-barf-sexp)
    ("M-<right>" . sp-forward-slurp-sexp)
    ("M-S-<left>" . sp-backward-slurp-sexp)
    ("M-S-<right>" . sp-backward-barf-sexp))
-  :init (require 'smartparens-config)
   :config
+  (require 'smartparens-config)
   (smartparens-global-mode 1)
   (sp-pair "{{" "}}")
   (sp-pair "[[" "]]"))
@@ -1436,14 +1440,16 @@ structure of the current major mode.
 
 #+BEGIN_SRC emacs-lisp
 (use-package expand-region
+  :demand t
   :bind ("C-=" . er/expand-region)
-  :init (pending-delete-mode t))
+  :config (pending-delete-mode t))
 #+END_SRC
 
 Enable multiple cursors at once. Some witchcraft at work here.
 
 #+BEGIN_SRC emacs-lisp
 (use-package multiple-cursors
+  :demand t
   :bind
   (("C-S-<mouse-1>" . mc/add-cursor-on-click)
    ("C-S-c C-S-a" . mc/vertical-align-with-space)
@@ -1451,7 +1457,7 @@ Enable multiple cursors at once. Some witchcraft at work here.
    ("C-S-c C-S-l" . mc/insert-letters)
    ("C-S-c C-S-n" . mc/insert-numbers)
    ("C-'" . mc-hide-unmatched-lines-mode))
-  :init
+  :config
   (setq-default
    mc/edit-lines-empty-lines 'ignore
    mc/insert-numbers-default 1
@@ -1465,6 +1471,7 @@ with =selected=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package selected
+  :demand t
   :defines selected-keymap
   :bind
   (:map selected-keymap
@@ -1482,7 +1489,7 @@ with =selected=.
         ("C-s r" . reverse-region)
         ("C-s s" . sort-lines)
         ("C-s w" . me/sort-words))
-  :init (selected-global-mode))
+  :config (selected-global-mode))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -1592,20 +1599,21 @@ performance sake an indexing mechanism backed by external commands exists as wel
 
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
-  :init
-  (setq-default
-   projectile-cache-file (expand-file-name ".projectile.cache" user-emacs-directory)
-   projectile-keymap-prefix (kbd "C-c C-p")
-   projectile-known-projects-file (expand-file-name ".projectile-bookmarks.eld" user-emacs-directory))
-  (projectile-global-mode)
+  :demand t
   :preface
   (defun me/projectile-project-name (orig-fun &rest args)
     "Prefer `me/project-name' over default Projectile project string."
     (or me/project-name (apply orig-fun args)))
+  :init
+  (setq-default projectile-keymap-prefix (kbd "C-c C-p"))
   :config
+  (projectile-global-mode)
   (setq-default
+   projectile-cache-file (expand-file-name ".projectile.cache" user-emacs-directory)
    projectile-completion-system 'helm
    projectile-enable-caching t
+   projectile-known-projects-file
+   (expand-file-name ".projectile-bookmarks.eld" user-emacs-directory)
    projectile-mode-line '(:eval (projectile-project-name)))
   (advice-add 'projectile-project-name :around #'me/projectile-project-name))
 #+END_SRC
@@ -1616,8 +1624,9 @@ Auto-dim other buffers. Pretty self-explanatory.
 
 #+BEGIN_SRC emacs-lisp
 (use-package auto-dim-other-buffers
-  :init (auto-dim-other-buffers-mode 1)
+  :demand t
   :config
+  (auto-dim-other-buffers-mode 1)
   (set-face-attribute 'auto-dim-other-buffers-face nil :background zenburn/bg-0))
 #+END_SRC
 
@@ -1717,8 +1726,9 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
 #+BEGIN_SRC emacs-lisp
 (use-package whitespace
-  :init (global-whitespace-mode 1)
+  :demand t
   :config
+  (global-whitespace-mode 1)
   (setq-default whitespace-style '(face empty tab trailing))
   (set-face-attribute 'whitespace-empty nil :background zenburn/red-1)
   (set-face-attribute 'whitespace-tab nil :background zenburn/red-1)
@@ -1752,15 +1762,16 @@ golden ratio somewhere in its formulas.
 
 #+BEGIN_SRC emacs-lisp
 (use-package golden-ratio
+  :demand t
   :preface
   (defconst me/golden-ratio-adjust-factor-bi-split .805)
   (defconst me/golden-ratio-adjust-factor-tri-split .53)
   (defun me/ediff-comparison-buffer-p ()
     (if (boundp 'ediff-this-buffer-ediff-sessions)
         (progn (balance-windows) ediff-this-buffer-ediff-sessions)))
-  :init (golden-ratio-mode 1)
   :config
-  (setq-default golden-ratio-adjust-factor me/golden-ratio-adjust-factor-tri-split)
+  (golden-ratio-mode 1)
+  (setq-default golden-ratio-adjust-factor me/golden-ratio-adjust-factor-bi-split)
   (add-to-list 'golden-ratio-exclude-modes "ediff-mode")
   (add-to-list 'golden-ratio-inhibit-functions 'me/ediff-comparison-buffer-p))
 #+END_SRC
@@ -1810,7 +1821,8 @@ ctrl-c right (calling =winner-redo=).
 #+BEGIN_SRC emacs-lisp
 (use-package winner
   :ensure nil
-  :init (winner-mode 1))
+  :demand t
+  :config (winner-mode 1))
 #+END_SRC
 
 -----
