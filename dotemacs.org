@@ -686,11 +686,6 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
 
 #+BEGIN_SRC emacs-lisp
 (use-package magit
-
-  :bind
-  (("C-c g b" . magit-blame)
-   ("C-c g s" . magit-status))
-
   :config
 
   ;; Redefine how Magit display buffers
@@ -903,6 +898,7 @@ it's like a minor mode that disables itself auto-magically.
   ("C-c d" . hydra-dates/body)
   ("C-c e" . hydra-eyebrowse/body)
   ("C-c f" . hydra-flycheck/body)
+  ("C-c g" . hydra-magit/body)
   ("C-c h" . hydra-helm/body)
   ("C-c o" . hydra-org/body)
   ("C-c p" . hydra-projectile/body)
@@ -1001,6 +997,23 @@ Group Helm commands.
   ("i" helm-imenu)
   ("r" helm-resume)
   ("s" helm-css-scss))
+#+END_SRC
+
+Group Magit commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-magit (:color blue)
+  "
+^
+^Magit^            ^Do^
+^─────^────────────^──^───────────────
+[_q_] quit         [_b_] blame
+^^                 [_s_] status
+^^                 ^^
+"
+  ("q" nil)
+  ("b" magit-blame)
+  ("s" magit-status))
 #+END_SRC
 
 Group Org commands.
