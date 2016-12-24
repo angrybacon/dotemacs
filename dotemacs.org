@@ -392,11 +392,8 @@ authoring documents with a fast and effective plain-text system.
 #+BEGIN_SRC emacs-lisp
 (use-package org
   :delight org-mode "Org"
-
   :bind (:map org-mode-map ("<M-return>" . org-insert-heading-after-current))
-
   :init (add-hook 'org-mode-hook 'turn-on-auto-fill)
-
   :config
   (setq-default
    org-descriptive-links nil
@@ -418,6 +415,9 @@ authoring documents with a fast and effective plain-text system.
 #+END_SRC
 
 ** 8. Python
+
+- *TODO*: Check what happens when =ipython= is missing.
+- *TODO*: Fix for =ipython= 5.1.0.
 
 #+BEGIN_SRC emacs-lisp
 (use-package python
@@ -573,17 +573,14 @@ Configure Dired buffers. Amongst many other things, Emacs is also a file explore
 (use-package dired
   :ensure nil
   :delight dired-mode "Dired"
-
   :config
-
   (defadvice dired-readin (after dired-after-updating-hook first () activate)
     "Sort dired listings with directories first before adding marks."
     (save-excursion
       (let (buffer-read-only)
-        (forward-line 2) ;; beyond dir. header
+        (forward-line 2)
         (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
       (set-buffer-modified-p nil)))
-
   (setq-default
    dired-auto-revert-buffer t
    dired-listing-switches "-alh"
@@ -645,6 +642,8 @@ same bind, that is =<C-return>=. Basically it's an expand DWIM.
 
 ** 7. EXWM
 
+- *TODO*
+
 #+BEGIN_QUOTE
 EXWM (Emacs X Window Manager) is a full-featured tiling X window manager for Emacs
 built on top of [[https://github.com/ch11ng/xelb][XELB]]. It features:
@@ -659,10 +658,11 @@ built on top of [[https://github.com/ch11ng/xelb][XELB]]. It features:
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
-;; (use-package exwm
-;;   :config
-;;   (require 'exwm-config)
-;;   (exwm-config-default))
+(use-package exwm
+  :disabled t
+  :config
+  (require 'exwm-config)
+  (exwm-config-default))
 #+END_SRC
 
 ** 8. Git
@@ -692,6 +692,7 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
 
   :config
 
+  ;; Redefine how Magit display buffers
   (defun me/magit-display-buffer-function (buffer)
     "Render some magit modes in the currently selected buffer."
     (display-buffer
@@ -896,8 +897,6 @@ it's like a minor mode that disables itself auto-magically.
 [[https://github.com/abo-abo/hydra][Oleh Krehel]]
 #+END_QUOTE
 
-- *TODO*: Prefix own functions.
-
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
   :bind
@@ -1094,13 +1093,11 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
 
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
-
   :init
   (add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
   (add-hook 'js-mode-hook 'flycheck-mode)
   (add-hook 'python-mode-hook 'flycheck-mode)
   (add-hook 'scss-mode-hook 'flycheck-mode)
-
   :config
   (setq-default
    flycheck-check-syntax-automatically '(save mode-enabled)
@@ -1309,7 +1306,7 @@ from one block to another.
 #+END_SRC
 
 Better search and replace features. Even though I prefer to use =multiple-cursors= to
-replace text in difference places at once, =anzu= has a nice feedback on regexp
+replace text in different places at once, =anzu= has a nice feedback on regexp
 matches.
 
 #+BEGIN_QUOTE
@@ -1332,7 +1329,6 @@ information in the mode-line in various search modes.
 
 #+BEGIN_SRC emacs-lisp
 (use-package anzu
-  :defer 1
   :bind ([remap query-replace] . anzu-query-replace-regexp)
   :config
   (global-anzu-mode 1)
@@ -1346,6 +1342,8 @@ information in the mode-line in various search modes.
 Isearch stands for /incremental search/. This means that search results are
 highlighted while you are typing your query, incrementally. Since he who can do more
 can do less, I've replaced default bindings with the regexp-equivalent commands.
+
+- *TODO*: Allow mac-wheel-scroll too.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default isearch-allow-scroll t)
@@ -1590,6 +1588,8 @@ performance sake an indexing mechanism backed by external commands exists as wel
 [[https://github.com/bbatsov/projectile][Bozhidar Batsov]]
 #+END_QUOTE
 
+- *TODO*: Use the new syntax for advices.
+
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
   :init
@@ -1683,11 +1683,13 @@ Colorize colors as text with their value.
 
 Slack integration.
 
+- *TODO*
 - *TODO*: Register teams in =.secret.el=.
 - *TODO*: Create a pull request over https://github.com/yuya373/emacs-slack.
 
 #+BEGIN_SRC emacs-lisp
 (use-package slack
+  :disabled t
   :commands (slack-start)
   :config
   (setq-default
@@ -1728,6 +1730,7 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 EWW stands for Emacs Web Wowser. Yeah that's right... Emacs is also a Web browser,
 text-based that is.
 
+- *TODO*: Check what happens when =eww= is missing.
 - *NOTE*: Why can't I use =setq-default= to customize =eww-header-line-format=?
 
 #+BEGIN_SRC emacs-lisp
@@ -1807,7 +1810,6 @@ ctrl-c right (calling =winner-redo=).
 #+BEGIN_SRC emacs-lisp
 (use-package winner
   :ensure nil
-  :if (fboundp 'winner-mode)
   :init (winner-mode 1))
 #+END_SRC
 
