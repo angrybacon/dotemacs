@@ -491,7 +491,7 @@ completion candidates.
 
 #+BEGIN_SRC emacs-lisp
 (use-package company
-  :demand t
+  :defer 1
   :config
   (global-company-mode)
   (setq-default
@@ -501,11 +501,13 @@ completion candidates.
 
 (use-package company-dabbrev
   :ensure nil
+  :after company
   :config (setq-default company-dabbrev-downcase nil))
 
 (use-package company-tern
-  :init (add-to-list 'company-backends 'company-tern)
+  :after company
   :config
+  (add-to-list 'company-backends 'company-tern)
   (setq-default
    company-tern-meta-as-single-line t
    company-tern-property-marker " *"))
@@ -769,11 +771,11 @@ modular, and unchained from constraints of backward compatibility.
 (use-package helm
   :defer 1
   :config
+  (helm-mode 1)
   (setq-default
    helm-always-two-windows t
    helm-display-header-line nil
    helm-split-window-default-side 'left)
-  (helm-mode 1)
   (set-face-attribute 'helm-match nil :foreground zenburn/green+2 :weight 'normal)
   (set-face-attribute 'helm-prefarg nil :foreground zenburn/red)
   (set-face-attribute 'helm-source-header nil
@@ -1419,7 +1421,7 @@ package seem to please my person.
 
 #+BEGIN_SRC emacs-lisp
 (use-package smartparens
-  :demand t
+  :defer 1
   :bind
   (("M-<backspace>" . sp-unwrap-sexp)
    ("M-<left>" . sp-forward-barf-sexp)
@@ -1440,16 +1442,15 @@ structure of the current major mode.
 
 #+BEGIN_SRC emacs-lisp
 (use-package expand-region
-  :demand t
   :bind ("C-=" . er/expand-region)
-  :config (pending-delete-mode t))
+  :init (pending-delete-mode t))
 #+END_SRC
 
 Enable multiple cursors at once. Some witchcraft at work here.
 
 #+BEGIN_SRC emacs-lisp
 (use-package multiple-cursors
-  :demand t
+  :defer 1
   :bind
   (("C-S-<mouse-1>" . mc/add-cursor-on-click)
    ("C-S-c C-S-a" . mc/vertical-align-with-space)
@@ -1471,7 +1472,7 @@ with =selected=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package selected
-  :demand t
+  :defer 1
   :defines selected-keymap
   :bind
   (:map selected-keymap
@@ -1599,7 +1600,7 @@ performance sake an indexing mechanism backed by external commands exists as wel
 
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
-  :demand t
+  :defer 1
   :preface
   (defun me/projectile-project-name (orig-fun &rest args)
     "Prefer `me/project-name' over default Projectile project string."
@@ -1821,7 +1822,7 @@ ctrl-c right (calling =winner-redo=).
 #+BEGIN_SRC emacs-lisp
 (use-package winner
   :ensure nil
-  :demand t
+  :defer 1
   :config (winner-mode 1))
 #+END_SRC
 
