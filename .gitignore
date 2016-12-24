@@ -15,8 +15,8 @@ url/
 .multiple-cursors.el
 .persp
 .projectile
-projectile.cache
-projectile-bookmarks.eld
+.projectile.cache
+.projectile-bookmarks.eld
 
-# OSX
+# OS X
 .DS_Store

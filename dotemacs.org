@@ -1593,7 +1593,10 @@ performance sake an indexing mechanism backed by external commands exists as wel
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
   :init
-  (setq-default projectile-keymap-prefix (kbd "C-c C-p"))
+  (setq-default
+   projectile-cache-file (expand-file-name ".projectile.cache" user-emacs-directory)
+   projectile-keymap-prefix (kbd "C-c C-p")
+   projectile-known-projects-file (expand-file-name ".projectile-bookmarks.eld" user-emacs-directory))
   (projectile-global-mode)
   :preface
   (defun me/projectile-project-name (orig-fun &rest args)
