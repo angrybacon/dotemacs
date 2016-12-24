@@ -12,8 +12,8 @@ semanticdb/
 url/
 
 # Third-party packages
+.emacs.desktop*
 .multiple-cursors.el
-.persp
 .projectile
 .projectile.cache
 .projectile-bookmarks.eld

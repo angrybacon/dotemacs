@@ -905,11 +905,11 @@ it's like a minor mode that disables itself auto-magically.
 (use-package hydra
   :bind
   ("C-c d" . hydra-dates/body)
+  ("C-c e" . hydra-eyebrowse/body)
   ("C-c f" . hydra-flycheck/body)
   ("C-c h" . hydra-helm/body)
   ("C-c o" . hydra-org/body)
   ("C-c p" . hydra-projectile/body)
-  ("C-c s" . hydra-persp/body)
   ("C-c w" . hydra-window/body)
   :config (setq-default hydra-default-hint nil))
 #+END_SRC
@@ -933,6 +933,30 @@ Group date-related commands.
   ("i" me/date-iso)
   ("I" me/date-iso-with-time)
   ("l" me/date-long))
+#+END_SRC
+
+Group Eyebrowse commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-eyebrowse (:color blue)
+  "
+^
+^Eyebrowse^        ^Do^               ^Switch^
+^─────────^────────^──^───────────────^──────^───────────
+[_q_] quit         [_c_] create       [_>_] next
+^^                 [_k_] kill         [_>_] previous
+^^                 [_r_] rename       [_e_] last
+^^                 ^^                 [_s_] switch
+^^                 ^^                 ^^
+"
+  ("q" nil)
+  (">" eyebrowse-next-window-config :color red)
+  ("<" eyebrowse-prev-window-config :color red)
+  ("c" eyebrowse-create-window-config)
+  ("e" eyebrowse-last-window-config)
+  ("k" eyebrowse-close-window-config :color red)
+  ("r" eyebrowse-rename-window-config)
+  ("s" eyebrowse-switch-to-window-config))
 #+END_SRC
 
 Group Flycheck commands.
@@ -1008,37 +1032,6 @@ Group Org commands.
   ("p" org-previous-link)
   ("s" org-store-link)
   ("v" org-overview))
-#+END_SRC
-
-Group Persp commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-persp (:color blue)
-  "
-^
-^Persp^            ^Buffers^          ^Perspectives^
-^─────^────────────^───────^──────────^────────────^─────
-[_q_] quit         [_a_] add current  [_c_] copy
-^^                 [_A_] add          [_n_] next
-^^                 [_b_] list         [_p_] previous
-^^                 [_k_] kill current [_r_] rename
-^^                 [_K_] kill         [_s_] switch
-^^                 [_t_] temporary    [_w_] save
-^^                 ^^                 ^^
-"
-  ("q" nil)
-  ("a" (persp-add-buffer (current-buffer)))
-  ("A" persp-add-buffer)
-  ("b" persp-switch-to-buffer)
-  ("c" persp-copy)
-  ("k" (persp-remove-buffer (current-buffer)))
-  ("K" persp-remove-buffer)
-  ("n" persp-next :color red)
-  ("p" persp-prev :color red)
-  ("r" persp-rename)
-  ("s" persp-frame-switch)
-  ("t" persp-temporarily-display-buffer)
-  ("w" (persp-save-state-to-file persp-auto-save-fname)))
 #+END_SRC
 
 Group Projectile commands.
@@ -1207,25 +1200,6 @@ fun and profit.
                (eq 1 (cdr (assq 'follow spaceline--helm-current-source))))
       (propertize "" 'face 'success)))
 
-  ;; Build a segment for persp-mode
-  (spaceline-define-segment me/persp-name
-    (when (and (bound-and-true-p persp-mode)
-               (fboundp 'safe-persp-name)
-               (fboundp 'get-frame-persp)
-               (or (not (string= persp-nil-name (safe-persp-name (get-frame-persp))))
-                   spaceline-display-default-perspective))
-      (let ((name (safe-persp-name (get-frame-persp))))
-        (propertize
-         (if (file-directory-p name)
-             (file-name-nondirectory (directory-file-name name))
-           name)
-         'face
-         (let ((persp (get-current-persp)))
-           (if persp
-               (if (persp-contain-buffer-p (current-buffer) persp)
-                   'persp-face-lighter-default 'persp-face-lighter-buffer-not-in-persp)
-             'persp-face-lighter-nil-persp))))))
-
   ;; Build a segment for the active region
   (spaceline-define-segment me/selection-info
     (when mark-active
@@ -1248,7 +1222,7 @@ fun and profit.
    `((me/selection-info)
      ((flycheck-error flycheck-warning flycheck-info) :when active)
      ((projectile-root me/version-control) :separator "  ")
-     (me/persp-name)
+     (workspace-number)
      (global :face highlight-face)))
   (spaceline-install
    'helm
@@ -1753,6 +1727,30 @@ text-based that is.
 
 ** 23. Windows
 
+Save and restore Emacs status, including buffers, modes, point and windows.
+
+#+BEGIN_SRC emacs-lisp
+(use-package desktop
+  :demand t
+  :config (desktop-save-mode 1))
+#+END_SRC
+
+Workspaces within Emacs.
+
+#+BEGIN_QUOTE
+=eyebrowse= is a global minor mode for Emacs that allows you to manage your window
+configurations in a simple manner, just like tiling window managers like i3wm with
+their workspaces do. It displays their current state in the modeline by default. The
+behaviour is modeled after [[http://ranger.nongnu.org/][ranger]], a file manager
+written in Python.
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package eyebrowse
+  :demand t
+  :config (eyebrowse-mode 1))
+#+END_SRC
+
 Adjust the size of every windows and focus the active one. It uses the mathematical
 golden ratio somewhere in its formulas.
 
@@ -1772,39 +1770,9 @@ golden ratio somewhere in its formulas.
         (progn (balance-windows) ediff-this-buffer-ediff-sessions)))
   :config
   (golden-ratio-mode 1)
-  (setq-default golden-ratio-adjust-factor me/golden-ratio-adjust-factor-bi-split)
+  (setq-default golden-ratio-adjust-factor me/golden-ratio-adjust-factor-tri-split)
   (add-to-list 'golden-ratio-exclude-modes "ediff-mode")
   (add-to-list 'golden-ratio-inhibit-functions 'me/ediff-comparison-buffer-p))
-#+END_SRC
-
-Workspaces within Emacs.
-
-#+BEGIN_QUOTE
-Perspectives for emacs, based on the
-[[http://github.com/nex3/perspective-el][=perspective-el=]] by Nathan Weizenbaum. But
-the perspectives are shared among frames + ability to save/restore its state from/to
-a file.
-
-[[https://github.com/Bad-ptr/persp-mode.el][Constantin Kulikov]]
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package persp-mode
-  :init
-  (setq-default
-   persp-auto-resume-time 0.1
-   persp-keymap-prefix (kbd "C-c C-w"))
-  (persp-mode 1)
-  :config
-  (setq-default
-   persp-auto-save-fname ".persp"
-   persp-auto-save-num-of-backups 0
-   persp-autokill-buffer-on-remove nil
-   persp-save-dir user-emacs-directory)
-  (set-face-attribute 'persp-face-lighter-buffer-not-in-persp nil
-                      :bold nil :background 'unspecified :foreground zenburn/red-1)
-  (set-face-attribute 'persp-face-lighter-default nil :italic nil)
-  (set-face-attribute 'persp-face-lighter-nil-persp nil :italic nil))
 #+END_SRC
 
 Allow undo's and redo's with window configurations.
