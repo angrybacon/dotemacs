@@ -468,9 +468,9 @@ authoring documents with a fast and effective plain-text system.
 12. [[#12-linters][Linters]]
 13. [[#13-mode-line][Mode-Line]]
 14. [[#14-navigation][Navigation]]
-15. [[#15-os-related][OS-Related]]
+15. [[#15-os-specific][OS-Specific]]
 16. [[#16-parentheses][Parentheses]]
-17. [[#17-point][Point]]
+17. [[#17-point-and-region][Point and Region]]
 18. [[#18-projectile][Projectile]]
 19. [[#19-quality-of-life][Quality of Life]]
 20. [[#20-slack][Slack]]
@@ -912,12 +912,12 @@ Group date-related commands.
 (defhydra hydra-dates (:color blue)
   "
 ^
-^Dates^            ^Insert^           ^Insert with time^
-^─────^────────────^──────^───────────^────────────────^─
-[_q_] quit         [_d_] short        [_D_] short
-^^                 [_i_] iso          [_I_] iso
-^^                 [_l_] long
-^^                 ^^                 ^^
+^Dates^             ^Insert^            ^Insert with time^
+^─────^─────────────^──────^────────────^────────────────^──
+[_q_] quit          [_d_] short         [_D_] short
+^^                  [_i_] iso           [_I_] iso
+^^                  [_l_] long
+^^                  ^^                  ^^
 "
   ("q" nil)
   ("d" me/date-short)
@@ -933,13 +933,13 @@ Group Eyebrowse commands.
 (defhydra hydra-eyebrowse (:color blue)
   "
 ^
-^Eyebrowse^        ^Do^               ^Switch^
-^─────────^────────^──^───────────────^──────^───────────
-[_q_] quit         [_c_] create       [_>_] next
-^^                 [_k_] kill         [_>_] previous
-^^                 [_r_] rename       [_e_] last
-^^                 ^^                 [_s_] switch
-^^                 ^^                 ^^
+^Eyebrowse^         ^Do^                ^Switch^
+^─────────^─────────^──^────────────────^──────^────────────
+[_q_] quit          [_c_] create        [_>_] next
+^^                  [_k_] kill          [_>_] previous
+^^                  [_r_] rename        [_e_] last
+^^                  ^^                  [_s_] switch
+^^                  ^^                  ^^
 "
   ("q" nil)
   (">" eyebrowse-next-window-config :color red)
@@ -957,12 +957,12 @@ Group Flycheck commands.
 (defhydra hydra-flycheck (:color blue)
   "
 ^
-^Flycheck^         ^Errors^           ^Checker^
-^────────^─────────^──────^───────────^───────^──────────
-[_q_] quit         [_c_] check        [_s_] select
-[_v_] verify setup [_n_] next         [_d_] disable
-[_m_] manual       [_p_] previous     [_?_] describe
-^^                 ^^                 ^^
+^Flycheck^          ^Errors^            ^Checker^
+^────────^──────────^──────^────────────^───────^───────────
+[_q_] quit          [_c_] check         [_s_] select
+[_v_] verify setup  [_n_] next          [_d_] disable
+[_m_] manual        [_p_] previous      [_?_] describe
+^^                  ^^                  ^^
 "
   ("q" nil)
   ("c" flycheck-buffer)
@@ -981,13 +981,13 @@ Group Helm commands.
 (defhydra hydra-helm (:color blue)
   "
 ^
-^Helm^             ^Browse^           ^Do^
-^────^─────────────^──────^───────────^──^───────────────
-[_q_] quit         [_c_] colors       [_f_] flycheck
-[_r_] resume helm  [_g_] google       [_s_] css-scss
-^^                 [_h_] headings     ^^
-^^                 [_i_] imenu        ^^
-^^                 ^^                 ^^
+^Helm^              ^Browse^            ^Do^
+^────^──────────────^──────^────────────^──^────────────────
+[_q_] quit          [_c_] colors        [_f_] flycheck
+[_r_] resume helm   [_g_] google        [_s_] css-scss
+^^                  [_h_] headings      ^^
+^^                  [_i_] imenu         ^^
+^^                  ^^                  ^^
 "
   ("q" nil)
   ("c" helm-colors)
@@ -1005,11 +1005,11 @@ Group Magit commands.
 (defhydra hydra-magit (:color blue)
   "
 ^
-^Magit^            ^Do^
-^─────^────────────^──^───────────────
-[_q_] quit         [_b_] blame
-^^                 [_s_] status
-^^                 ^^
+^Magit^             ^Do^
+^─────^─────────────^──^────────────────
+[_q_] quit          [_b_] blame
+^^                  [_s_] status
+^^                  ^^
 "
   ("q" nil)
   ("b" magit-blame)
@@ -1022,14 +1022,14 @@ Group Org commands.
 (defhydra hydra-org (:color pink)
   "
 ^
-^Org^              ^Links^            ^Outline^
-^───^──────────────^─────^────────────^───────^──────────
-[_q_] quit         [_i_] insert       [_a_] show all
-^^                 [_n_] next         [_b_] backward
-^^                 [_o_] open         [_f_] forward
-^^                 [_p_] previous     [_v_] overview
-^^                 [_s_] store        ^^
-^^                 ^^                 ^^
+^Org^               ^Links^             ^Outline^
+^───^───────────────^─────^─────────────^───────^───────────
+[_q_] quit          [_i_] insert        [_a_] show all
+^^                  [_n_] next          [_b_] backward
+^^                  [_o_] open          [_f_] forward
+^^                  [_p_] previous      [_v_] overview
+^^                  [_s_] store         ^^
+^^                  ^^                  ^^
 "
   ("q" nil)
   ("a" show-all)
@@ -1049,13 +1049,13 @@ Group Projectile commands.
 (defhydra hydra-projectile (:color blue)
   "
 ^
-^Projectile^       ^Buffers^          ^Find^             ^Search^
-^──────────^───────^───────^──────────^────^─────────────^──────^───────────
-[_q_] quit         [_b_] list all     [_d_] directory    [_r_] replace
-[_i_] reset cache  [_k_] kill all     [_D_] root         [_s_] ag
-^^                 [_S_] save all     [_f_] file         ^^
-^^                 ^^                 [_p_] project      ^^
-^^                 ^^                 ^^                 ^^
+^Projectile^        ^Buffers^           ^Find^              ^Search^
+^──────────^────────^───────^───────────^────^──────────────^──────^────────────
+[_q_] quit          [_b_] list all      [_d_] directory     [_r_] replace
+[_i_] reset cache   [_k_] kill all      [_D_] root          [_s_] ag
+^^                  [_S_] save all      [_f_] file          ^^
+^^                  ^^                  [_p_] project       ^^
+^^                  ^^                  ^^                  ^^
 "
   ("q" nil)
   ("b" helm-projectile-switch-to-buffer)
@@ -1076,12 +1076,12 @@ Group window-related commands.
 (defhydra hydra-window (:color blue)
   "
 ^
-^Window^           ^Golden-Ratio^     ^Zoom^
-^──────^───────────^────────────^─────^────^─────────────
-[_q_] quit         [_2_] bi-split     [_-_] zoom out
-^^                 [_3_] tri-split    [_+_] zoom in
-^^                 ^^                 [_=_] reset
-^^                 ^^                 ^^
+^Window^            ^Golden-Ratio^      ^Zoom^
+^──────^────────────^────────────^──────^────^──────────────
+[_q_] quit          [_2_] bi-split      [_-_] zoom out
+^^                  [_3_] tri-split     [_+_] zoom in
+^^                  ^^                  [_=_] reset
+^^                  ^^                  ^^
 "
   ("q" nil)
   ("-" text-scale-decrease :color red)
@@ -1349,7 +1349,7 @@ Bind commands to move around windows.
    ("C-M-<down>". windmove-down)))
 #+END_SRC
 
-** 15. OS-Related
+** 15. OS-Specific
 
 Augment Emacs experience for OS X users.
 
@@ -1417,7 +1417,7 @@ package seem to please my person.
   (sp-pair "[[" "]]"))
 #+END_SRC
 
-** 17. Point
+** 17. Point and Region
 
 Increase region by semantic units. It tries to be smart about it and adapt to the
 structure of the current major mode.
