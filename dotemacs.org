@@ -461,7 +461,7 @@ authoring documents with a fast and effective plain-text system.
 5. [[#5-dired][Dired]]
 6. [[#6-expand][Expand]]
 7. [[#7-exwm][EXWM]]
-8. [[#8-git][Git]]
+8. [[#8-folding][Folding]]
 9. [[#9-helm][Helm]]
 10. [[#10-helm-plugins][Helm Plugins]]
 11. [[#11-hydra][Hydra]]
@@ -474,9 +474,10 @@ authoring documents with a fast and effective plain-text system.
 18. [[#18-projectile][Projectile]]
 19. [[#19-quality-of-life][Quality of Life]]
 20. [[#20-slack][Slack]]
-21. [[#21-whitespaces][Whitespaces]]
-22. [[#22-web-browsing][Web Browsing]]
-23. [[#23-windows][Windows]]
+21. [[#21-version-control][Version Control]]
+22. [[#22-whitespaces][Whitespaces]]
+23. [[#23-web-browsing][Web Browsing]]
+24. [[#24-windows][Windows]]
 
 ** 1. Auto-Completion
 
@@ -666,76 +667,30 @@ built on top of [[https://github.com/ch11ng/xelb][XELB]]. It features:
 (use-package exwm :disabled t)
 #+END_SRC
 
-** 8. Git
+** 8. Folding
 
-Magit provide Git facilities directly from within Emacs.
+- *TODO*
 
 #+BEGIN_QUOTE
-Magit is an interface to the version control system [[https://git-scm.com/][Git]],
-implemented as an [[https://www.gnu.org/software/emacs][Emacs]] package. Magit
-aspires to be a complete Git porcelain. While we cannot (yet) claim that Magit wraps
-and improves upon each and every Git command, it is complete enough to allow even
-experienced Git users to perform almost all of their daily version control tasks
-directly from within Emacs. While many fine Git clients exist, only Magit and Git
-itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
+This is a package to perform text folding like in Vim. It has the following features:
 
-[[https://github.com/magit/magit][Jonas Bernoulli]]
+- folding of active regions;
+- good visual feedback: it's obvious which part of text is folded;
+- persistence by default: when you close file your folds don't disappear;
+- persistence scales well, you can work on hundreds of files with lots of folds without
+  adverse effects;
+- it doesn't break indentation or something;
+- folds can be toggled from folded state to unfolded and back very easily;
+- quick navigation between existing folds;
+- you can use mouse to unfold folds (good for beginners and not only for them);
+- for fans of avy package: you can use avy to fold text with minimal number of key
+  strokes!
+
+[[https://github.com/mrkkrp/vimish-fold][Mark Karpov]]
 #+END_QUOTE
 
-- *TODO*: Make a hydra.
-
 #+BEGIN_SRC emacs-lisp
-(use-package magit
-  :config
-
-  ;; Redefine how Magit display buffers
-  (defun me/magit-display-buffer-function (buffer)
-    "Render some magit modes in the currently selected buffer."
-    (display-buffer
-     buffer
-     (cond ((and (derived-mode-p 'magit-mode)
-                 (eq (with-current-buffer buffer major-mode) 'magit-status-mode))
-            nil)
-           ((memq (with-current-buffer buffer major-mode)
-                  '(magit-process-mode
-                    magit-revision-mode
-                    magit-diff-mode
-                    magit-stash-mode))
-            nil)
-           (t '(display-buffer-same-window)))))
-
-  ;; Use better defaults
-  (setq-default
-   magit-display-buffer-function 'me/magit-display-buffer-function
-   magit-diff-highlight-hunk-body nil
-   magit-popup-display-buffer-action '((display-buffer-same-window))
-   magit-refs-show-commit-count (quote all)
-   magit-section-show-child-count t
-   magit-set-upstream-on-push 'askifnotset)
-
-  ;; Customize lighters
-  (delight
-   '((magit-diff-mode "Magit Diff")
-     (magit-log-mode "Magit Log")
-     (magit-popup-mode "Magit Popup")
-     (magit-status-mode "Magit Status")))
-
-  ;; Customize faces
-  (set-face-attribute 'magit-diff-added nil
-                      :background zenburn/bg+0 :foreground zenburn/green+3)
-  (set-face-attribute 'magit-diff-context nil :background zenburn/bg+0)
-  (set-face-attribute 'magit-diff-file-heading-highlight nil :background 'unspecified)
-  (set-face-attribute 'magit-diff-hunk-heading nil :background zenburn/bg+2)
-  (set-face-attribute 'magit-diff-hunk-heading-highlight nil :background zenburn/bg+2)
-  (set-face-attribute 'magit-diff-removed nil
-                      :background zenburn/bg+0 :foreground zenburn/red)
-  (set-face-attribute 'magit-popup-heading nil :height me/font-size-header)
-  (set-face-attribute 'magit-section-heading nil :height me/font-size-header)
-  (set-face-attribute 'magit-section-highlight nil :background 'unspecified))
-
-(use-package gitattributes-mode :delight gitattributes-mode "Git Attributes")
-(use-package gitconfig-mode :delight gitconfig-mode "Git Config")
-(use-package gitignore-mode :delight gitignore-mode "Git Ignore")
+(use-package vimish-fold)
 #+END_SRC
 
 ** 9. Helm
@@ -892,9 +847,13 @@ it's like a minor mode that disables itself auto-magically.
 [[https://github.com/abo-abo/hydra][Oleh Krehel]]
 #+END_QUOTE
 
+- *FIXME*: Allow =TAB= for console users.
+
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
   :bind
+  ;; ("C-c TAB" . hydra-fold/body)
+  ("C-c <tab>" . hydra-fold/body)
   ("C-c d" . hydra-dates/body)
   ("C-c e" . hydra-eyebrowse/body)
   ("C-c f" . hydra-flycheck/body)
@@ -973,6 +932,29 @@ Group Flycheck commands.
   ("s" flycheck-select-checker)
   ("v" flycheck-verify-setup)
   ("?" flycheck-describe-checker))
+#+END_SRC
+
+Group folding commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-fold (:color pink)
+  "
+^
+^Fold^              ^Do^                ^Jump^              ^Toggle^
+^────^──────────────^──^────────────────^────^──────────────^──────^────────────
+[_q_] quit          [_f_] fold          [_n_] next          [_<tab>_] current
+^^                  [_k_] kill          [_p_] previous      [_S-<tab>_] all
+^^                  [_K_] kill all      ^^                  ^^
+^^                  ^^                  ^^                  ^^
+"
+  ("q" nil)
+  ("<tab>" vimish-fold-toggle)
+  ("S-<tab>" vimish-fold-toggle-all)
+  ("f" vimish-fold)
+  ("k" vimish-fold-delete)
+  ("K" vimish-fold-delete-all)
+  ("n" vimish-fold-next-fold)
+  ("p" vimish-fold-previous-fold))
 #+END_SRC
 
 Group Helm commands.
@@ -1701,7 +1683,79 @@ Slack integration.
   (set-face-attribute 'slack-message-output-text nil :height 1))
 #+END_SRC
 
-** 21. Whitespaces
+** 21. Version Control
+
+Magit provide Git facilities directly from within Emacs.
+
+#+BEGIN_QUOTE
+Magit is an interface to the version control system [[https://git-scm.com/][Git]],
+implemented as an [[https://www.gnu.org/software/emacs][Emacs]] package. Magit
+aspires to be a complete Git porcelain. While we cannot (yet) claim that Magit wraps
+and improves upon each and every Git command, it is complete enough to allow even
+experienced Git users to perform almost all of their daily version control tasks
+directly from within Emacs. While many fine Git clients exist, only Magit and Git
+itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
+
+[[https://github.com/magit/magit][Jonas Bernoulli]]
+#+END_QUOTE
+
+- *TODO*: Make a hydra.
+
+#+BEGIN_SRC emacs-lisp
+(use-package magit
+  :config
+
+  ;; Redefine how Magit display buffers
+  (defun me/magit-display-buffer-function (buffer)
+    "Render some magit modes in the currently selected buffer."
+    (display-buffer
+     buffer
+     (cond ((and (derived-mode-p 'magit-mode)
+                 (eq (with-current-buffer buffer major-mode) 'magit-status-mode))
+            nil)
+           ((memq (with-current-buffer buffer major-mode)
+                  '(magit-process-mode
+                    magit-revision-mode
+                    magit-diff-mode
+                    magit-stash-mode))
+            nil)
+           (t '(display-buffer-same-window)))))
+
+  ;; Use better defaults
+  (setq-default
+   magit-display-buffer-function 'me/magit-display-buffer-function
+   magit-diff-highlight-hunk-body nil
+   magit-popup-display-buffer-action '((display-buffer-same-window))
+   magit-refs-show-commit-count (quote all)
+   magit-section-show-child-count t
+   magit-set-upstream-on-push 'askifnotset)
+
+  ;; Customize lighters
+  (delight
+   '((magit-diff-mode "Magit Diff")
+     (magit-log-mode "Magit Log")
+     (magit-popup-mode "Magit Popup")
+     (magit-status-mode "Magit Status")))
+
+  ;; Customize faces
+  (set-face-attribute 'magit-diff-added nil
+                      :background zenburn/bg+0 :foreground zenburn/green+3)
+  (set-face-attribute 'magit-diff-context nil :background zenburn/bg+0)
+  (set-face-attribute 'magit-diff-file-heading-highlight nil :background 'unspecified)
+  (set-face-attribute 'magit-diff-hunk-heading nil :background zenburn/bg+2)
+  (set-face-attribute 'magit-diff-hunk-heading-highlight nil :background zenburn/bg+2)
+  (set-face-attribute 'magit-diff-removed nil
+                      :background zenburn/bg+0 :foreground zenburn/red)
+  (set-face-attribute 'magit-popup-heading nil :height me/font-size-header)
+  (set-face-attribute 'magit-section-heading nil :height me/font-size-header)
+  (set-face-attribute 'magit-section-highlight nil :background 'unspecified))
+
+(use-package gitattributes-mode :delight gitattributes-mode "Git Attributes")
+(use-package gitconfig-mode :delight gitconfig-mode "Git Config")
+(use-package gitignore-mode :delight gitignore-mode "Git Ignore")
+#+END_SRC
+
+** 22. Whitespaces
 
 Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
@@ -1716,7 +1770,7 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
   (set-face-attribute 'whitespace-trailing nil :background zenburn/red-1))
 #+END_SRC
 
-** 22. Web Browsing
+** 23. Web Browsing
 
 EWW stands for Emacs Web Wowser. Yeah that's right... Emacs is also a Web browser,
 text-based that is.
@@ -1731,7 +1785,7 @@ text-based that is.
   :config (setq eww-header-line-format " %t: %u"))
 #+END_SRC
 
-** 23. Windows
+** 24. Windows
 
 Save and restore Emacs status, including buffers, modes, point and windows.
 
