@@ -1443,6 +1443,8 @@ with =selected=.
         ("C-c C-c" . me/eval-region-and-kill-mark)
         ("<M-left>" . me/indent-rigidly-left-and-keep-mark)
         ("<M-right>" . me/indent-rigidly-right-and-keep-mark)
+        ("<M-S-left>" . me/indent-rigidly-left-tab-and-keep-mark)
+        ("<M-S-right>" . me/indent-rigidly-right-tab-and-keep-mark)
         ("<" . mc/mark-previous-like-this)
         (">" . mc/mark-next-like-this)
         ("C-b b" . me/browse-url-and-kill-mark)
@@ -1485,6 +1487,20 @@ Call `indent-rigidly-left' and keep mark."
 Call `indent-rigidly-right' and keep mark."
   (interactive "r")
   (indent-rigidly-right beg end)
+  (setq deactivate-mark nil))
+
+(defun me/indent-rigidly-left-tab-and-keep-mark (beg end)
+  "Indent all lines between BEG and END leftward to a tab stop.
+Call `indent-rigidly-left-to-tab-stop' and keep mark."
+  (interactive "r")
+  (indent-rigidly-left-to-tab-stop beg end)
+  (setq deactivate-mark nil))
+
+(defun me/indent-rigidly-right-tab-and-keep-mark (beg end)
+  "Indent all lines between BEG and END rightward to a tab stop.
+Call `indent-rigidly-right-to-tab-stop' and keep mark."
+  (interactive "r")
+  (indent-rigidly-right-to-tab-stop beg end)
   (setq deactivate-mark nil))
 
 (defun me/sort-words (reverse beg end)
