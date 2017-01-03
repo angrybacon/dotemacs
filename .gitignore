@@ -17,6 +17,7 @@ url/
 .projectile
 .projectile.cache
 .projectile-bookmarks.eld
+.vimish-fold/
 
 # OS X
 .DS_Store
