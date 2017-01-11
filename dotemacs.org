@@ -76,7 +76,7 @@ Enable some more goodies.
 
 Reset garbage collector treshold after initialization is finished and
 =garbage-collect= on focus-out. Emacs /should/ feel snappier, I do however
-experience long garbage collects when returning to the Emacs frame.
+sometimes experience long garbage collects when returning to the Emacs frame.
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'after-init-hook (lambda () (setq gc-cons-threshold 800000)))
