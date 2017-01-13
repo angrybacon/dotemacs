@@ -4,7 +4,7 @@
 A. [[#a-bootstrap][Bootstrap]] |
 B. [[#b-theme][Theme]] |
 C. [[#c-languages][Languages]] |
-C. [[#d-features][Features]]
+D. [[#d-features][Features]]
 
 * A. Bootstrap
 
