@@ -436,7 +436,9 @@ authoring documents with a fast and effective plain-text system.
    "';'.join(module_completion('''%s'''))\n"
    python-shell-completion-string-code
    "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"))
+#+END_SRC
 
+#+BEGIN_SRC emacs-lisp
 (use-package pip-requirements
   :delight pip-requirements-mode "PyPA Requirements"
   :config
@@ -1112,6 +1114,8 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
 
 ** 13. Mode-Line
 
+*** Screenshots
+
 Here is how it looks:
 
 /In an active window/
@@ -1141,6 +1145,8 @@ Here is how it looks:
 - The segment next to the clock indicate the current perspective from =persp-mode=,
   red when the buffer doesn't belong to the current perspective.
 
+*** Delight
+
 Delight allows you to change modes --- both major and minor --- lighters. They are
 the descriptive strings than you see appear within the =mode-line=.
 
@@ -1157,6 +1163,8 @@ it to use the newly changed strings.
   (defadvice powerline-minor-modes (around delight-powerline-minor-modes activate)
     (let ((inhibit-mode-name-delight nil)) ad-do-it)))
 #+END_SRC
+
+*** Spaceline
 
 Spaceline, is a mode-line configuration framework. Like what =powerline= does but at
 a shallower level. It's still very customizable nonetheless.
