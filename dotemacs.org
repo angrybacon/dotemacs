@@ -1299,7 +1299,7 @@ Smarter =C-a=.
 
 (defun me/beginning-of-line-dwim ()
   "Move point to first non-whitespace character, or beginning of line."
-  (interactive)
+  (interactive "^")
   (let ((origin (point)))
     (back-to-indentation)
     (and (= origin (point))
