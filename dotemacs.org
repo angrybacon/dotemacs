@@ -1301,9 +1301,9 @@ Smarter =C-a=.
   "Move point to first non-whitespace character, or beginning of line."
   (interactive "^")
   (let ((origin (point)))
-    (back-to-indentation)
+    (beginning-of-line)
     (and (= origin (point))
-         (beginning-of-line))))
+         (back-to-indentation))))
 #+END_SRC
 
 Better search and replace features. Even though I prefer to use =multiple-cursors= to
