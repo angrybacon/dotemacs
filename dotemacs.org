@@ -744,6 +744,8 @@ modular, and unchained from constraints of backward compatibility.
 Helm sub-modules can be customized separately. Many basic Emacs commands have their
 Helm equivalents.
 
+- *FIXME*: Fix cases where =curl= is not available.
+
 #+BEGIN_SRC emacs-lisp
 (use-package helm-buffers
   :ensure nil
@@ -1117,7 +1119,9 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
 
 *** Screenshots
 
-Here is how it looks:
+- *TODO*: Update screenshots and documentation.
+
+Here is how it looks (slightly deprecated):
 
 /In an active window/
 
