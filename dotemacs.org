@@ -980,7 +980,7 @@ Group Helm commands.
 ^────^──────────────^──────^────────────^──^────────────────
 [_q_] quit          [_c_] colors        [_f_] flycheck
 [_r_] resume helm   [_g_] google        [_s_] css-scss
-^^                  [_h_] headings      ^^
+^^                  [_h_] headings      [_t_] fontawesome
 ^^                  [_i_] imenu         ^^
 ^^                  ^^                  ^^
 "
@@ -991,7 +991,8 @@ Group Helm commands.
   ("h" helm-org-in-buffer-headings)
   ("i" helm-imenu)
   ("r" helm-resume)
-  ("s" helm-css-scss))
+  ("s" helm-css-scss)
+  ("t" helm-fontawesome))
 #+END_SRC
 
 Group Magit commands.
@@ -1671,6 +1672,12 @@ Insert the current date.
   "Insert the current date, short format, eg. 2016.12.09 14:34"
   (interactive)
   (insert (format-time-string "%Y.%m.%d %H:%M")))
+#+END_SRC
+
+Insert [[http://fontawesome.io/][fontawesome]] icons.
+
+#+BEGIN_SRC emacs-lisp
+(use-package fontawesome)
 #+END_SRC
 
 Augment Emacs' package menu.
