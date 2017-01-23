@@ -1367,6 +1367,8 @@ Bind commands to move around windows.
 
 ** 15. OS-Specific
 
+*** OS X
+
 Augment Emacs experience for OS X users.
 
 #+BEGIN_SRC emacs-lisp
@@ -1398,6 +1400,15 @@ interest, then copying them into the Emacs environment.
   :config
   (when (memq window-system '(mac ns))
     (exec-path-from-shell-initialize)))
+#+END_SRC
+
+*** Windows
+
+Fix FontAwesome glyphs.
+
+#+BEGIN_SRC emacs-lisp
+(when (eq system-type 'windows-nt)
+  (set-fontset-font "fontset-default" '(#xf000 . #xf23a) "FontAwesome"))
 #+END_SRC
 
 ** 16. Parentheses
