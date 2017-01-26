@@ -744,6 +744,8 @@ modular, and unchained from constraints of backward compatibility.
 Helm sub-modules can be customized separately. Many basic Emacs commands have their
 Helm equivalents.
 
+- *FIXME*: Fix cases where =curl= is not available.
+
 #+BEGIN_SRC emacs-lisp
 (use-package helm-buffers
   :ensure nil
@@ -980,7 +982,7 @@ Group Helm commands.
 ^────^──────────────^──────^────────────^──^────────────────
 [_q_] quit          [_c_] colors        [_f_] flycheck
 [_r_] resume helm   [_g_] google        [_s_] css-scss
-^^                  [_h_] headings      ^^
+^^                  [_h_] headings      [_t_] fontawesome
 ^^                  [_i_] imenu         ^^
 ^^                  ^^                  ^^
 "
@@ -991,7 +993,8 @@ Group Helm commands.
   ("h" helm-org-in-buffer-headings)
   ("i" helm-imenu)
   ("r" helm-resume)
-  ("s" helm-css-scss))
+  ("s" helm-css-scss)
+  ("t" helm-fontawesome))
 #+END_SRC
 
 Group Magit commands.
@@ -1116,7 +1119,9 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
 
 *** Screenshots
 
-Here is how it looks:
+- *TODO*: Update screenshots and documentation.
+
+Here is how it looks (slightly deprecated):
 
 /In an active window/
 
@@ -1366,6 +1371,8 @@ Bind commands to move around windows.
 
 ** 15. OS-Specific
 
+*** OS X
+
 Augment Emacs experience for OS X users.
 
 #+BEGIN_SRC emacs-lisp
@@ -1397,6 +1404,15 @@ interest, then copying them into the Emacs environment.
   :config
   (when (memq window-system '(mac ns))
     (exec-path-from-shell-initialize)))
+#+END_SRC
+
+*** Windows
+
+Fix FontAwesome glyphs.
+
+#+BEGIN_SRC emacs-lisp
+(when (eq system-type 'windows-nt)
+  (set-fontset-font "fontset-default" '(#xf000 . #xf23a) "FontAwesome"))
 #+END_SRC
 
 ** 16. Parentheses
@@ -1671,6 +1687,12 @@ Insert the current date.
   "Insert the current date, short format, eg. 2016.12.09 14:34"
   (interactive)
   (insert (format-time-string "%Y.%m.%d %H:%M")))
+#+END_SRC
+
+Insert [[http://fontawesome.io/][fontawesome]] icons.
+
+#+BEGIN_SRC emacs-lisp
+(use-package fontawesome)
 #+END_SRC
 
 Augment Emacs' package menu.
