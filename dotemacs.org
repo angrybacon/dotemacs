@@ -9,10 +9,10 @@ D. [[#d-features][Features]]
 * A. Bootstrap
 
 1. [[#1-use-better-defaults][Use better defaults]]
-2. [[2#-validate-emacs-version][Validate Emacs' version]]
-3. [[3#-load-customel][Load .custom.el]]
-4. [[4#-load-secretel][Load .secret.el]]
-5. [[5#-initialize-melpa][Initialize MELPA]]
+2. [[#2-validate-emacs-version][Validate Emacs' version]]
+3. [[#3-load-customel][Load .custom.el]]
+4. [[#4-load-secretel][Load .secret.el]]
+5. [[#5-initialize-melpa][Initialize MELPA]]
 
 ** 1. Use better defaults
 
