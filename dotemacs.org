@@ -620,7 +620,8 @@ same bind, that is =<C-return>=. Basically it's an expand DWIM.
   (setq-default emmet-move-cursor-between-quote t)
   (unbind-key "<C-return>" emmet-mode-keymap)
   (unbind-key "C-M-<left>" emmet-mode-keymap)
-  (unbind-key "C-M-<right>" emmet-mode-keymap))
+  (unbind-key "C-M-<right>" emmet-mode-keymap)
+  (unbind-key "C-c w" emmet-mode-keymap))
 
 (use-package hippie-exp
   :ensure nil
