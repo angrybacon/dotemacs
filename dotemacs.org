@@ -467,19 +467,20 @@ authoring documents with a fast and effective plain-text system.
 9. [[#9-helm][Helm]]
 10. [[#10-helm-plugins][Helm Plugins]]
 11. [[#11-hydra][Hydra]]
-12. [[#12-linters][Linters]]
-13. [[#13-mode-line][Mode-Line]]
-14. [[#14-navigation][Navigation]]
-15. [[#15-os-specific][OS-Specific]]
-16. [[#16-parentheses][Parentheses]]
-17. [[#17-point-and-region][Point and Region]]
-18. [[#18-projectile][Projectile]]
-19. [[#19-quality-of-life][Quality of Life]]
-20. [[#20-slack][Slack]]
-21. [[#21-version-control][Version Control]]
-22. [[#22-whitespaces][Whitespaces]]
-23. [[#23-web-browsing][Web Browsing]]
-24. [[#24-windows][Windows]]
+12. [[#12-irc][IRC]]
+13. [[#13-linters][Linters]]
+14. [[#14-mode-line][Mode-Line]]
+15. [[#15-navigation][Navigation]]
+16. [[#16-os-specific][OS-Specific]]
+17. [[#17-parentheses][Parentheses]]
+18. [[#18-point-and-region][Point and Region]]
+19. [[#19-projectile][Projectile]]
+20. [[#20-quality-of-life][Quality of Life]]
+21. [[#21-slack][Slack]]
+22. [[#22-version-control][Version Control]]
+23. [[#23-whitespaces][Whitespaces]]
+24. [[#24-web-browsing][Web Browsing]]
+25. [[#25-windows][Windows]]
 
 ** 1. Auto-Completion
 
@@ -1089,7 +1090,17 @@ Group window-related commands.
   ("3" (golden-ratio-adjust me/golden-ratio-adjust-factor-tri-split) :color red))
 #+END_SRC
 
-** 12. Linters
+** 12. IRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package erc
+  :bind
+  (:map erc-mode-map
+        ("C-<down>" . erc-next-command)
+        ("C-<up>" . erc-previous-command)))
+#+END_SRC
+
+** 13. Linters
 
 Flycheck lints warnings and errors directly within buffers. It can check a lot of
 different syntaxes, as long as you make sure that Emacs has access to the binaries
@@ -1115,7 +1126,7 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
   (set-face-attribute 'flycheck-fringe-warning nil :foreground zenburn/orange))
 #+END_SRC
 
-** 13. Mode-Line
+** 14. Mode-Line
 
 *** Screenshots
 
@@ -1269,7 +1280,7 @@ fun and profit.
                       :background zenburn/green :foreground zenburn/green+4))
 #+END_SRC
 
-** 14. Navigation
+** 15. Navigation
 
 I disagree with Emacs' definition of paragraphs so I redefined the way it should jump
 from one block to another.
@@ -1369,7 +1380,7 @@ Bind commands to move around windows.
    ("C-M-<down>". windmove-down)))
 #+END_SRC
 
-** 15. OS-Specific
+** 16. OS-Specific
 
 *** OS X
 
@@ -1415,7 +1426,7 @@ Fix FontAwesome glyphs.
   (set-fontset-font "fontset-default" '(#xf000 . #xf23a) "FontAwesome"))
 #+END_SRC
 
-** 16. Parentheses
+** 17. Parentheses
 
 Highlight parenthese-like delimiters in a rainbow fashion. It ease the reading when
 dealing with mismatched parentheses.
@@ -1448,7 +1459,7 @@ package seem to please my person.
   (sp-pair "[[" "]]"))
 #+END_SRC
 
-** 17. Point and Region
+** 18. Point and Region
 
 Increase region by semantic units. It tries to be smart about it and adapt to the
 structure of the current major mode.
@@ -1611,7 +1622,7 @@ Work on lines.
   (delete-trailing-whitespace))
 #+END_SRC
 
-** 18. Projectile
+** 19. Projectile
 
 Projectile brings project-level facilities to Emacs such as grep, find and replace.
 
@@ -1648,7 +1659,7 @@ performance sake an indexing mechanism backed by external commands exists as wel
   (advice-add 'projectile-project-name :around #'me/projectile-project-name))
 #+END_SRC
 
-** 19. Quality of Life
+** 20. Quality of Life
 
 Auto-dim other buffers. Pretty self-explanatory.
 
@@ -1724,7 +1735,7 @@ Colorize colors as text with their value.
   :config (setq-default rainbow-x-colors-major-mode-list '()))
 #+END_SRC
 
-** 20. Slack
+** 21. Slack
 
 Slack integration.
 
@@ -1754,7 +1765,7 @@ Slack integration.
   (set-face-attribute 'slack-message-output-text nil :height 1))
 #+END_SRC
 
-** 21. Version Control
+** 22. Version Control
 
 Magit provide Git facilities directly from within Emacs.
 
@@ -1826,7 +1837,7 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
 (use-package gitignore-mode :delight gitignore-mode "Git Ignore")
 #+END_SRC
 
-** 22. Whitespaces
+** 23. Whitespaces
 
 Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
@@ -1841,7 +1852,7 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
   (set-face-attribute 'whitespace-trailing nil :background zenburn/red-1))
 #+END_SRC
 
-** 23. Web Browsing
+** 24. Web Browsing
 
 EWW stands for Emacs Web Wowser. Yeah that's right... Emacs is also a Web browser,
 text-based that is.
@@ -1856,7 +1867,7 @@ text-based that is.
   :config (setq eww-header-line-format " %t: %u"))
 #+END_SRC
 
-** 24. Windows
+** 25. Windows
 
 Save and restore Emacs status, including buffers, modes, point and windows.
 
