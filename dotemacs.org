@@ -1707,6 +1707,16 @@ Insert [[http://fontawesome.io/][fontawesome]] icons.
 (use-package fontawesome)
 #+END_SRC
 
+Originally, =midnight= is used to /run something at midnight/. I use its feature that
+kills old buffers.
+
+#+BEGIN_SRC emacs-lisp
+(use-package midnight
+  :config
+  (setq-default clean-buffer-list-delay-general 1)
+  (add-to-list 'clean-buffer-list-kill-never-buffer-names "dotemacs.org"))
+#+END_SRC
+
 Augment Emacs' package menu.
 
 #+BEGIN_QUOTE
