@@ -1494,11 +1494,11 @@ Enable new custom binds when region is active. I've also added a few helpers to 
 with =selected=.
 
 - *TODO*: Make a hydra.
+- *FIXME*: See https://github.com/Kungsgeten/selected.el/issues/6.
 
 #+BEGIN_SRC emacs-lisp
 (use-package selected
   :defer 1
-  :defines selected-keymap
   :bind
   (:map selected-keymap
         ("C-c C-c" . me/eval-region-and-kill-mark)
