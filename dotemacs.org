@@ -1256,8 +1256,7 @@ fun and profit.
      (helm-number)
      (me/helm-follow :fallback "")
      helm-prefix-argument)
-   '((helm-help)
-     (global :face spaceline-read-only)))
+   '((global :face spaceline-read-only)))
 
   ;; Customize the mode-line
   (set-face-attribute 'mode-line nil
