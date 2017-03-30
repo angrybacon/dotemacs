@@ -1357,15 +1357,32 @@ information in the mode-line in various search modes.
   (set-face-attribute 'anzu-replace-to nil :foreground zenburn/bg))
 #+END_SRC
 
+#+BEGIN_QUOTE
+=avy= is a GNU Emacs package for jumping to visible text using a char-based decision
+tree. See also [[https://github.com/winterTTr/ace-jump-mode][ace-jump-mode]] and
+[[https://github.com/Lokaltog/vim-easymotion][vim-easymotion]] - =avy= uses the same
+idea.
+
+[[https://github.com/abo-abo/avy][Oleh Krehel]]
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package avy
+  :bind
+  ([remap goto-line] . avy-goto-line)
+  ([remap isearch-backward] . avy-goto-char-timer)
+  :config (setq-default avy-background t))
+#+END_SRC
+
 Isearch stands for /incremental search/. This means that search results are
 highlighted while you are typing your query, incrementally. Since he who can do more
 can do less, I've replaced default bindings with the regexp-equivalent commands.
 
+- *NOTE*: Still debating whether I prefer =avy= or =isearch= for =C-s=.
 - *TODO*: Allow mac-wheel-scroll too.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default isearch-allow-scroll t)
-(global-set-key [remap isearch-backward] 'isearch-backward-regexp)
 (global-set-key [remap isearch-forward] 'isearch-forward-regexp)
 #+END_SRC
 
