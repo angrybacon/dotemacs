@@ -1500,11 +1500,13 @@ Enable multiple cursors at once. Some witchcraft at work here.
    ("C-S-c C-S-l" . mc/insert-letters)
    ("C-S-c C-S-n" . mc/insert-numbers)
    ("C-'" . mc-hide-unmatched-lines-mode))
+  :init
+  (setq-default
+   mc/list-file (expand-file-name ".multiple-cursors.el" user-emacs-directory))
   :config
   (setq-default
    mc/edit-lines-empty-lines 'ignore
-   mc/insert-numbers-default 1
-   mc/list-file (expand-file-name ".multiple-cursors.el" user-emacs-directory)))
+   mc/insert-numbers-default 1))
 #+END_SRC
 
 Enable new custom binds when region is active. I've also added a few helpers to use
@@ -1663,15 +1665,15 @@ performance sake an indexing mechanism backed by external commands exists as wel
     "Prefer `me/project-name' over default Projectile project string."
     (or me/project-name (apply orig-fun args)))
   :init
-  (setq-default projectile-keymap-prefix (kbd "C-c C-p"))
+  (setq-default
+   projectile-cache-file (expand-file-name ".projectile-cache" user-emacs-directory)
+   projectile-keymap-prefix (kbd "C-c C-p")
+   projectile-known-projects-file (expand-file-name ".projectile-bookmarks" user-emacs-directory))
   :config
   (projectile-global-mode)
   (setq-default
-   projectile-cache-file (expand-file-name ".projectile.cache" user-emacs-directory)
    projectile-completion-system 'helm
    projectile-enable-caching t
-   projectile-known-projects-file
-   (expand-file-name ".projectile-bookmarks.eld" user-emacs-directory)
    projectile-mode-line '(:eval (projectile-project-name)))
   (advice-add 'projectile-project-name :around #'me/projectile-project-name))
 #+END_SRC
