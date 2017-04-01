@@ -1923,6 +1923,11 @@ written in Python.
 #+BEGIN_SRC emacs-lisp
 (use-package eyebrowse
   :demand t
+  :bind
+  ("<f5>" . eyebrowse-switch-to-window-config-1)
+  ("<f6>" . eyebrowse-switch-to-window-config-2)
+  ("<f7>" . eyebrowse-switch-to-window-config-3)
+  ("<f8>" . eyebrowse-switch-to-window-config-4)
   :config (eyebrowse-mode 1))
 #+END_SRC
 
