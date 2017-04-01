@@ -15,8 +15,8 @@ url/
 .emacs.desktop*
 .multiple-cursors.el
 .projectile
-.projectile.cache
-.projectile-bookmarks.eld
+.projectile-bookmarks
+.projectile-cache
 .vimish-fold/
 
 # OS X
