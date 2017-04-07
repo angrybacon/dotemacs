@@ -753,7 +753,9 @@ Helm equivalents.
   :ensure nil
   :after helm
   :config
-  (setq-default helm-buffers-fuzzy-matching t)
+  (setq-default
+   helm-buffers-fuzzy-matching t
+   helm-buffer-max-length nil)
   (set-face-attribute 'helm-buffer-directory nil
                       :background 'unspecified :foreground zenburn/blue)
   (set-face-attribute 'helm-buffer-size nil :foreground zenburn/bg+3))
