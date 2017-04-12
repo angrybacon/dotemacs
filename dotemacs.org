@@ -1831,7 +1831,7 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
 [[https://github.com/magit/magit][Jonas Bernoulli]]
 #+END_QUOTE
 
-- *TODO*: Make a hydra.
+- *TODO*: Turn auto-fill-mode on when editing a commit messaged.
 
 #+BEGIN_SRC emacs-lisp
 (use-package magit
