@@ -1118,7 +1118,7 @@ Group window-related commands.
   (add-hook 'window-configuration-change-hook 'me/update-erc-fill-column)
   (setq-default
    erc-insert-timestamp-function 'erc-insert-timestamp-left
-   erc-timestamp-format erc-timestamp-format "[%H:%M:%S] "
+   erc-timestamp-format "[%H:%M:%S] "
    erc-timestamp-only-if-changed-flag nil))
 #+END_SRC
 
