@@ -1097,10 +1097,27 @@ Group window-related commands.
 
 #+BEGIN_SRC emacs-lisp
 (use-package erc
+  :preface
+  (defun me/update-erc-fill-column ()
+    "Update `erc-fill-column' when window configuration changes."
+    (save-excursion
+      (walk-windows
+       (lambda (w)
+         (let ((buffer (window-buffer w)))
+           (set-buffer buffer)
+           (when (eq major-mode 'erc-mode)
+             (setq erc-fill-column (- (window-width w) 1))))))))
   :bind
   (:map erc-mode-map
         ("C-<down>" . erc-next-command)
-        ("C-<up>" . erc-previous-command)))
+        ("C-<up>" . erc-previous-command))
+  :config
+  (make-variable-buffer-local 'erc-fill-column)
+  (add-hook 'window-configuration-change-hook 'me/update-erc-fill-column)
+  (setq-default
+   erc-insert-timestamp-function 'erc-insert-timestamp-left
+   erc-timestamp-format erc-timestamp-format "[%H:%M:%S] "
+   erc-timestamp-only-if-changed-flag nil))
 #+END_SRC
 
 ** 13. Linters
