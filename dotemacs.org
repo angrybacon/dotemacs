@@ -45,7 +45,7 @@ Here are what I consider better defaults as per my own experience.
  mode-require-final-newline 'visit               ; Add a newline at EOF on visit
  mouse-yank-at-point t                           ; Yank at point rather than cursor
  ns-use-srgb-colorspace nil                      ; Don't use sRGB colors
- recenter-positions '(top)                       ; Limit centering to top
+ recenter-positions '(5 bottom)                  ; Limit centering to top and bottom
  scroll-conservatively most-positive-fixnum      ; Always scroll by one line
  scroll-margin 0                                 ; Add a margin to windows
  select-enable-clipboard t                       ; Merge system's and Emacs' clipboard
@@ -1097,6 +1097,8 @@ Group window-related commands.
 
 ** 12. IRC
 
+- *TODO*: Use =.secret.el=.
+
 #+BEGIN_SRC emacs-lisp
 (use-package erc
   :preface
@@ -1116,7 +1118,15 @@ Group window-related commands.
   :config
   (make-variable-buffer-local 'erc-fill-column)
   (add-hook 'window-configuration-change-hook 'me/update-erc-fill-column)
+  (erc-scrolltobottom-mode)
+
   (setq-default
+   erc-fill-function 'erc-fill-static
+   erc-fill-static-center 16
+   erc-hide-list '("JOIN" "PART" "QUIT")
+   erc-lurker-hide-list '("JOIN" "PART" "QUIT")
+   erc-nick "angrybacon"
+   erc-input-line-position -1
    erc-insert-timestamp-function 'erc-insert-timestamp-left
    erc-timestamp-format "[%H:%M:%S] "
    erc-timestamp-only-if-changed-flag nil))
