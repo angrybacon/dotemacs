@@ -1123,6 +1123,7 @@ Group window-related commands.
   (setq-default
    erc-fill-function 'erc-fill-static
    erc-fill-static-center 16
+   erc-header-line-format nil
    erc-hide-list '("JOIN" "PART" "QUIT")
    erc-lurker-hide-list '("JOIN" "PART" "QUIT")
    erc-nick "angrybacon"
