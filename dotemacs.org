@@ -396,7 +396,9 @@ authoring documents with a fast and effective plain-text system.
 (use-package org
   :delight org-mode "Org"
   :bind (:map org-mode-map ("<M-return>" . org-insert-heading-after-current))
-  :init (add-hook 'org-mode-hook 'turn-on-auto-fill)
+  :init
+  (add-hook 'org-mode-hook 'org-sticky-header-mode)
+  (add-hook 'org-mode-hook 'turn-on-auto-fill)
   :config
   (setq-default
    org-descriptive-links nil
@@ -415,6 +417,14 @@ authoring documents with a fast and effective plain-text system.
   (unbind-key "<C-return>" org-mode-map)
   (unbind-key "<C-S-down>" org-mode-map)
   (unbind-key "<C-S-up>" org-mode-map))
+#+END_SRC
+
+Display the current Org header in the header-line.
+
+#+BEGIN_SRC emacs-lisp
+(use-package org-sticky-header
+  :config
+  (setq-default org-sticky-header-full-path t))
 #+END_SRC
 
 ** 8. Python
