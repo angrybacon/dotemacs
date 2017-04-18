@@ -1418,6 +1418,14 @@ can do less, I've replaced default bindings with the regexp-equivalent commands.
 (global-set-key [remap isearch-forward] 'isearch-forward-regexp)
 #+END_SRC
 
+Configure the mouse wheel events.
+
+#+BEGIN_SRC emacs-lisp
+(use-package mwheel
+  :ensure nil
+  :config (setq-default mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control)))))
+#+END_SRC
+
 Bind commands to move around windows.
 
 #+BEGIN_SRC emacs-lisp
