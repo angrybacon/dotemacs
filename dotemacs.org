@@ -65,7 +65,7 @@ Here are what I consider better defaults as per my own experience.
 (line-number-mode 1)                             ; Show the line number
 (menu-bar-mode 0)                                ; Disable the menu bar
 (mouse-avoidance-mode 'animate)                  ; Move pointer to avoid collision with point
-(set-frame-parameter nil 'fullscreen 'fullboth)  ; Maximize the frame
+(set-frame-parameter nil 'fullscreen 'maximized)  ; Maximize the frame
 #+END_SRC
 
 Enable some more goodies.
