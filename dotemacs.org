@@ -88,7 +88,7 @@ customize these in =~/.emacs.d/.secret.el= file.
 #+BEGIN_SRC emacs-lisp
 (defvar me/font-family            "Monaco"  "The font to use.")
 (defvar me/font-size-default      120       "The font size to use for default text.")
-(defvar me/font-size-header       140       "The font size to use for headers.")
+(defvar me/font-size-header-line  140       "The font size to use for headers.")
 (defvar me/font-size-mode-line    120       "The font size to use for the mode line.")
 #+END_SRC
 
@@ -248,8 +248,8 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
   (set-face-attribute 'font-lock-function-name-face nil :foreground zenburn/blue)
   (set-face-attribute 'fringe nil :background zenburn/bg-0 :foreground zenburn/bg+3)
   (set-face-attribute 'header-line nil
-                      :box `(:line-width 1 :color ,zenburn/bg-1)
-                      :height me/font-size-header)
+                      :box `(:line-width 4 :color ,zenburn/bg-1)
+                      :height me/font-size-header-line)
   (set-face-attribute 'help-argument-name nil :foreground zenburn/orange)
   (set-face-attribute 'hl-line nil :background zenburn/bg+1)
   (set-face-attribute 'isearch nil :background zenburn/blue :foreground zenburn/bg)
@@ -551,7 +551,7 @@ more.
   :ensure nil
   :config
   (set-face-attribute 'custom-group-tag nil
-                      :foreground zenburn/yellow :height me/font-size-header)
+                      :foreground zenburn/yellow :height me/font-size-header-line)
   (set-face-attribute 'custom-state nil :foreground zenburn/green+4)
   (set-face-attribute 'custom-variable-tag nil :foreground zenburn/blue)
   (when (member me/font-family (font-family-list))
@@ -748,7 +748,7 @@ modular, and unchained from constraints of backward compatibility.
   (set-face-attribute 'helm-match nil :foreground zenburn/green+2 :weight 'normal)
   (set-face-attribute 'helm-prefarg nil :foreground zenburn/red)
   (set-face-attribute 'helm-source-header nil
-                      :box nil :background 'unspecified :height me/font-size-header))
+                      :box nil :background 'unspecified :height me/font-size-header-line))
 #+END_SRC
 
 Helm sub-modules can be customized separately. Many basic Emacs commands have their
@@ -1797,6 +1797,7 @@ information. Github integration, customizability, asynchronous upgrading, and mo
    paradox-column-width-package 27
    paradox-column-width-version 13
    paradox-execute-asynchronously t
+   paradox-github-token t
    paradox-hide-wiki-packages t)
   (set-face-attribute 'paradox-homepage-button-face nil :italic nil)
   (remove-hook 'paradox--report-buffer-print 'paradox-after-execute-functions))
@@ -1903,8 +1904,8 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
   (set-face-attribute 'magit-diff-hunk-heading-highlight nil :background zenburn/bg+2)
   (set-face-attribute 'magit-diff-removed nil
                       :background zenburn/bg+0 :foreground zenburn/red)
-  (set-face-attribute 'magit-popup-heading nil :height me/font-size-header)
-  (set-face-attribute 'magit-section-heading nil :height me/font-size-header)
+  (set-face-attribute 'magit-popup-heading nil :height me/font-size-header-line)
+  (set-face-attribute 'magit-section-heading nil :height me/font-size-header-line)
   (set-face-attribute 'magit-section-highlight nil :background 'unspecified))
 
 (use-package gitattributes-mode :delight gitattributes-mode "Git Attributes")
