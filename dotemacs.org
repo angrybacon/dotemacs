@@ -43,9 +43,9 @@ Here are what I consider better defaults as per my own experience.
  inhibit-startup-screen t                        ; Disable start-up screen
  initial-scratch-message ""                      ; Empty the initial *scratch* buffer
  mode-require-final-newline 'visit               ; Add a newline at EOF on visit
- mouse-yank-at-point t                           ; Yank at point rather than cursor
+ mouse-yank-at-point t                           ; Yank at point rather than pointer
  ns-use-srgb-colorspace nil                      ; Don't use sRGB colors
- recenter-positions '(5 bottom)                  ; Limit centering to top and bottom
+ recenter-positions '(5 bottom)                  ; Set re-centering positions
  scroll-conservatively most-positive-fixnum      ; Always scroll by one line
  scroll-margin 0                                 ; Add a margin to windows
  select-enable-clipboard t                       ; Merge system's and Emacs' clipboard
@@ -56,13 +56,10 @@ Here are what I consider better defaults as per my own experience.
  uniquify-buffer-name-style 'forward             ; Uniquify buffer names
  window-combination-resize t)                    ; Resize windows proportionally
 
-(column-number-mode 0)                           ; Hide the column number
-(display-battery-mode 0)                         ; Hide the battery level
-(display-time-mode 1)                            ; Hide the time representation
+(display-time-mode 1)                            ; Enable time in the mode-line
 (fringe-mode '(10 . 10))                         ; Show vertical fringes
 (global-hl-line-mode 1)                          ; Hightlight current line
 (global-subword-mode 1)                          ; Iterate through CamelCase words
-(line-number-mode 1)                             ; Show the line number
 (menu-bar-mode 0)                                ; Disable the menu bar
 (mouse-avoidance-mode 'animate)                  ; Move pointer to avoid collision with point
 (set-frame-parameter nil 'fullscreen 'fullboth)  ; Maximize the frame
