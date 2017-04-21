@@ -61,7 +61,7 @@ Here are what I consider better defaults as per my own experience.
 (global-hl-line-mode 1)                          ; Hightlight current line
 (global-subword-mode 1)                          ; Iterate through CamelCase words
 (menu-bar-mode 0)                                ; Disable the menu bar
-(mouse-avoidance-mode 'animate)                  ; Move pointer to avoid collision with point
+(mouse-avoidance-mode 'banish)                   ; Move pointer to avoid collision with point
 (set-frame-parameter nil 'fullscreen 'fullboth)  ; Maximize the frame
 #+END_SRC
 
