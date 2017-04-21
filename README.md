@@ -33,9 +33,14 @@ the following commands to run on your setup.
 Emacs
 -----
 
-1. I use [Yamamoto Mitsuharu's port][github.mitsuharu]. The configuration files
-   *should* work with any build nonetheless. In any case, install Emacs 24 or above.
-1. Clone `dotemacs/` as `~/.emacs.d/`.
+I use [Emacs Plus][github.homebrew-emacs-plus]. The configuration files *should* work with
+any build nonetheless. In any case, install Emacs 24 or above.
+
+``` sh
+brew tap d12frosted/emacs-plus
+brew install emacs-plus --with-no-title-bars --without-spacemacs-icon
+git clone https://github.com/angrybacon/dotemacs.git ~/.emacs.d/
+```
 
 Ag
 --
@@ -65,6 +70,6 @@ There are special characters in the mode-line. Install [Font Awesome][font-aweso
 
 [font-awesome]: http://fontawesome.io/
 [github.flycheck]: https://github.com/flycheck/flycheck
-[github.mitsuharu]: https://github.com/railwaycat/homebrew-emacsmacport
+[github.homebrew-emacs-plus]: https://github.com/d12frosted/homebrew-emacs-plus
 [screenshots.helm]: https://drive.google.com/open?id=0BwTSOByd3qSFMmZqVHBpTlk2Q1E
 [self.dotemacs]: ./dotemacs.org
