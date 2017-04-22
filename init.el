@@ -14,12 +14,8 @@
 
 ;;; Commentary:
 
-;; To install, clone dotemacs/ into ~/.emacs.d/.
-;;
 ;; Following lines load an Org file and build the configuration code out of it. This
 ;; process is known as tangling.
-;; Using this configuration on a daily basis, I work quite often with Python, HTML,
-;; SCSS and JavaScript code.
 ;;
 ;; See README.md for more details.
 

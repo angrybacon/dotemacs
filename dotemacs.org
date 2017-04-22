@@ -1197,8 +1197,7 @@ Here is how it looks (slightly deprecated):
 - Red means buffer is modified.
 - Blue means buffer is read-only.
 - Colored bullets represent =flycheck= critical, warning and informational errors.
-- The segment next to the clock indicate the current perspective from =persp-mode=,
-  red when the buffer doesn't belong to the current perspective.
+- The segment next to the clock indicate the current perspective from =eyebrowse=.
 
 *** Delight
 
