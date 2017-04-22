@@ -1033,6 +1033,7 @@ Group window-related commands.
 #+BEGIN_SRC emacs-lisp
 (use-package erc
   :preface
+  (defun me/erc-bol-with-region () (interactive "^") (erc-bol))
   (defun me/update-erc-fill-column ()
     "Update `erc-fill-column' when window configuration changes."
     (save-excursion
@@ -1044,6 +1045,7 @@ Group window-related commands.
              (setq erc-fill-column (- (window-width w) 1))))))))
   :bind
   (:map erc-mode-map
+        ([remap erc-bol] . me/erc-bol-with-region)
         ("C-<down>" . erc-next-command)
         ("C-<up>" . erc-previous-command))
   :config
