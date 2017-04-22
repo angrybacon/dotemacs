@@ -346,7 +346,9 @@ Display the current Org header in the header-line.
 #+BEGIN_SRC emacs-lisp
 (use-package org-sticky-header
   :config
-  (setq-default org-sticky-header-full-path t))
+  (setq-default
+   org-sticky-header-full-path 'full
+   org-sticky-header-outline-path-separator " / "))
 #+END_SRC
 
 ** 8. Python
