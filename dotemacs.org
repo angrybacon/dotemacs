@@ -1348,6 +1348,8 @@ can do less, I've replaced default bindings with the regexp-equivalent commands.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default isearch-allow-scroll t)
+(global-set-key [remap isearch-backward-regexp] 'isearch-backward)
+(global-set-key [remap isearch-forward-regexp] 'isearch-forward)
 (global-set-key [remap isearch-forward] 'isearch-forward-regexp)
 #+END_SRC
 
