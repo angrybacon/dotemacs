@@ -9,10 +9,8 @@ D. [[#d-features][Features]]
 * A. Bootstrap
 
 1. [[#1-use-better-defaults][Use better defaults]]
-2. [[#2-validate-emacs-version][Validate Emacs' version]]
-3. [[#3-load-customel][Load .custom.el]]
-4. [[#4-load-secretel][Load .secret.el]]
-5. [[#5-initialize-melpa][Initialize MELPA]]
+2. [[#2-load-customel][Load .custom.el]]
+3. [[#3-load-secretel][Load .secret.el]]
 
 ** 1. Use better defaults
 
@@ -37,7 +35,6 @@ Here are what I consider better defaults as per my own experience.
  display-time-default-load-average nil            ; Don't display load average
  display-time-format "%H:%M"                      ; Format the time string
  fill-column 85                                   ; Set width for automatic line breaks
- gc-cons-threshold most-positive-fixnum           ; Increase garbage collector treshold
  help-window-select t                             ; Focus new help windows when opened
  indent-tabs-mode nil                             ; Stop using tabs to indent
  inhibit-startup-screen t                         ; Disable start-up screen
@@ -72,12 +69,9 @@ Enable some more goodies.
 (put 'upcase-region 'disabled nil)               ; Enable upcase-region
 #+END_SRC
 
-Reset garbage collector treshold after initialization is finished and
-=garbage-collect= on focus-out. Emacs /should/ feel snappier, I do however
-sometimes experience long garbage collects when returning to the Emacs frame.
+Garbage-collect on focus-out, Emacs /should/ feel snappier.
 
 #+BEGIN_SRC emacs-lisp
-(add-hook 'after-init-hook (lambda () (setq gc-cons-threshold 800000)))
 (add-hook 'focus-out-hook 'garbage-collect)
 #+END_SRC
 
@@ -92,19 +86,7 @@ customize these in =~/.emacs.d/.secret.el= file.
 (defvar me/font-size-mode-line    120       "The font size to use for the mode line.")
 #+END_SRC
 
-** 2. Validate Emacs' version
-
-Most of the configuration is written and tested on a daily basis with Emacs 24.
-
-- *TODO*: Check how it actually behave on a <24 Emacs.
-
-#+BEGIN_SRC emacs-lisp
-(when (version<= emacs-version "24")
-  (unless (yes-or-no-p "Your Emacs is getting old. Kitten may be killed, continue? ")
-    (kill-emacs)))
-#+END_SRC
-
-** 3. Load =.custom.el=
+** 2. Load =.custom.el=
 
 One is able to use the customization interface that is bundled within Emacs. It is
 meant to help people who are not familiar with Emacs Lisp in the configuration of
@@ -122,7 +104,7 @@ that is.
   (load custom-file))
 #+END_SRC
 
-** 4. Load =.secret.el=
+** 3. Load =.secret.el=
 
 I load =~/.emacs.d/.secret.el= to keep sensible things out of version control. For
 instance, you could set your identity by customizing both =user-full-name= and
@@ -132,49 +114,6 @@ instance, you could set your identity by customizing both =user-full-name= and
 (let ((secret.el (expand-file-name ".secret.el" user-emacs-directory)))
   (when (file-exists-p secret.el)
     (load secret.el)))
-#+END_SRC
-
-** 5. Initialize MELPA
-
-Dependency checks and [[https://melpa.org][MELPA]] initialization, sugar-wrapped.
-
-- *FIXME*: It sometimes does an extra =package-refresh-contents=.
-
-#+BEGIN_SRC emacs-lisp
-(when (>= emacs-major-version 24)
-  (setq-default
-   load-prefer-newer t
-   package-enable-at-startup nil)
-  (package-initialize)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-  (unless (package-installed-p 'delight)
-    (package-refresh-contents)
-    (package-install 'delight))
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package)))
-#+END_SRC
-
-In order to have unified package declarations in my Emacs files, I use
-[[https://github.com/jwiegley/use-package][use-package]]. It allows for isolation and
-clarity.
-
-#+BEGIN_QUOTE
-The =use-package= macro allows you to isolate package configuration in your =.emacs=
-file in a way that is both performance-oriented and, well, tidy. I created it because
-I have over 80 packages that I use in Emacs, and things were getting difficult to
-manage. Yet with this utility my total load time is around 2 seconds, with no loss of
-functionality!
-
-[[https://github.com/jwiegley/use-package][John Wiegley]]
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(eval-when-compile
-  (require 'use-package)
-  (setq-default
-   use-package-always-defer t
-   use-package-always-ensure t))
 #+END_SRC
 
 * B. Theme
@@ -385,13 +324,13 @@ authoring documents with a fast and effective plain-text system.
 [[http://orgmode.org/][Carsten Dominik]]
 #+END_QUOTE
 
-- *FIXME*: Fix =hl-line= in source blocks.
 - *TODO*: Enable whitespace-mode in edit mode.
           See http://emacs.stackexchange.com/q/29424/2397.
 
 #+BEGIN_SRC emacs-lisp
 (use-package org
   :delight org-mode "Org"
+  :ensure nil
   :bind (:map org-mode-map ("<M-return>" . org-insert-heading-after-current))
   :init
   (add-hook 'org-mode-hook 'org-sticky-header-mode)
@@ -400,17 +339,10 @@ authoring documents with a fast and effective plain-text system.
   (setq-default
    org-descriptive-links nil
    org-edit-src-content-indentation 0
-   org-src-fontify-natively t
    org-src-window-setup 'current-window
    org-support-shift-select 'always
    org-startup-folded nil
    org-startup-truncated nil)
-  (set-face-attribute 'org-block-background nil :background zenburn/bg+0)
-  (set-face-attribute 'org-block-begin-line nil :background 'unspecified)
-  (set-face-attribute 'org-block-end-line nil :background 'unspecified)
-  (unbind-key "C-a" org-mode-map)
-  (unbind-key "C-c C-w" org-mode-map)
-  (unbind-key "C-e" org-mode-map)
   (unbind-key "<C-return>" org-mode-map)
   (unbind-key "<C-S-down>" org-mode-map)
   (unbind-key "<C-S-up>" org-mode-map))
