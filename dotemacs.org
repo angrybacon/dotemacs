@@ -205,10 +205,8 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 8. [[#8-python][Python]]
 9. [[#9-yaml][YAML]]
 
-#+BEGIN_QUOTE
 As pedantic as I like to be, some packages have a =use-package= clause for nothing
 but the customization of its lighter.
-#+END_QUOTE
 
 - *TODO*: Add a list of all custom shortcuts.
 - *TODO*: Replace all old defadvice's.

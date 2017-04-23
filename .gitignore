@@ -1,8 +1,5 @@
 # Emacs
-*~
-*.elc
 .custom.el
-.dir-locals.el
 .secret.el
 dotemacs.el
 auto-save-list/
@@ -14,10 +11,6 @@ url/
 # Third-party packages
 .emacs.desktop*
 .multiple-cursors.el
-.projectile
 .projectile-bookmarks
 .projectile-cache
 .vimish-fold/
-
-# OS X
-.DS_Store
