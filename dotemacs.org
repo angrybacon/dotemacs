@@ -620,7 +620,7 @@ modular, and unchained from constraints of backward compatibility.
    helm-display-header-line nil
    helm-split-window-default-side 'left)
   (zenburn-with-color-variables
-    (set-face-attribute 'helm-match nil :background nil :foreground zenburn-blue)
+    (set-face-attribute 'helm-match nil :background nil :foreground zenburn-orange)
     (set-face-attribute 'helm-source-header nil
                         :box nil
                         :background nil
@@ -641,6 +641,7 @@ Helm equivalents.
    helm-buffers-fuzzy-matching t
    helm-buffer-max-length 30)
   (zenburn-with-color-variables
+    (set-face-attribute 'helm-buffer-directory nil :foreground zenburn-blue :background nil)
     (set-face-attribute 'helm-buffer-size nil :foreground zenburn-fg-1)))
 
 (use-package helm-color
@@ -693,7 +694,7 @@ Helm equivalents.
   :after helm
   :config
   (zenburn-with-color-variables
-    (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn-bg+3)))
+    (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn-blue)))
 #+END_SRC
 
 ** 10. Helm Plugins
@@ -1196,7 +1197,7 @@ fun and profit.
     (set-face-attribute 'spaceline-flycheck-info nil :foreground zenburn-blue+1)
     (set-face-attribute 'spaceline-flycheck-warning nil :foreground zenburn-orange)
     (set-face-attribute 'spaceline-modified nil
-                        :background zenburn-red+1
+                        :background zenburn-red
                         :foreground zenburn-red-4)
     (set-face-attribute 'spaceline-read-only nil
                         :background zenburn-blue+1
