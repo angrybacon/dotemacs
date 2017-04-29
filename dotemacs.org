@@ -123,7 +123,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
   (set-face-attribute 'default nil :height me/font-size-default :font me/font-family)
   (set-face-attribute 'font-lock-comment-face nil :italic t)
   (set-face-attribute 'font-lock-doc-face nil :italic t)
-  (set-face-attribute 'fringe nil :background 'unspecified)
+  (set-face-attribute 'fringe nil :background nil)
   (zenburn-with-color-variables
     (set-face-attribute 'help-argument-name nil :foreground zenburn-orange :italic nil)
     (set-face-attribute 'hl-line nil :background zenburn-bg+1)
@@ -620,10 +620,10 @@ modular, and unchained from constraints of backward compatibility.
    helm-display-header-line nil
    helm-split-window-default-side 'left)
   (zenburn-with-color-variables
-    (set-face-attribute 'helm-match nil :background 'unspecified :foreground zenburn-blue)
+    (set-face-attribute 'helm-match nil :background nil :foreground zenburn-blue)
     (set-face-attribute 'helm-source-header nil
                         :box nil
-                        :background 'unspecified
+                        :background nil
                         :height me/font-size-header-line)))
 #+END_SRC
 
@@ -661,9 +661,7 @@ Helm equivalents.
   :after helm
   :config
   (zenburn-with-color-variables
-    (set-face-attribute 'helm-ff-dotted-directory nil
-                        :background 'unspecified
-                        :foreground zenburn-fg-1)))
+    (set-face-attribute 'helm-ff-dotted-directory nil :background nil :foreground zenburn-fg-1)))
 
 (use-package helm-grep
   :ensure nil
@@ -1789,13 +1787,13 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
      (magit-status-mode "Magit Status")))
 
   ;; Customize faces
-  (set-face-attribute 'magit-diff-file-heading-highlight nil :background 'unspecified)
+  (set-face-attribute 'magit-diff-file-heading-highlight nil :background nil)
   (set-face-attribute 'magit-popup-heading nil :height me/font-size-header-line)
   (set-face-attribute 'magit-section-heading nil :height me/font-size-header-line)
-  (set-face-attribute 'magit-section-highlight nil :background 'unspecified)
+  (set-face-attribute 'magit-section-highlight nil :background nil)
   (zenburn-with-color-variables
-    (set-face-attribute 'magit-diff-added nil :background 'unspecified :foreground zenburn-green+3)
-    (set-face-attribute 'magit-diff-removed nil :background 'unspecified :foreground zenburn-red)))
+    (set-face-attribute 'magit-diff-added nil :background nil :foreground zenburn-green+3)
+    (set-face-attribute 'magit-diff-removed nil :background nil :foreground zenburn-red)))
 
 (use-package gitattributes-mode :delight gitattributes-mode "Git Attributes")
 (use-package gitconfig-mode :delight gitconfig-mode "Git Config")

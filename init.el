@@ -54,4 +54,5 @@
   ;; Tangle configuration
   (org-babel-load-file (expand-file-name "dotemacs.org" user-emacs-directory))
   (garbage-collect))
+
 ;;; init.el ends here
