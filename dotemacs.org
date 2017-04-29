@@ -178,8 +178,7 @@ but the customization of its lighter.
   (add-hook 'scss-mode-hook
             (lambda ()
               (setq-local comment-end "")
-              (setq-local comment-start "//")))
-  :config (setq-default scss-compile-at-save nil))
+              (setq-local comment-start "//"))))
 #+END_SRC
 
 ** 2. Docker
