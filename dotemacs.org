@@ -76,8 +76,9 @@ customize these in =~/.emacs.d/.secret.el= file.
 #+BEGIN_SRC emacs-lisp
 (defvar me/font-family            "Monaco"  "The font to use.")
 (defvar me/font-size-default      120       "The font size to use for default text.")
-(defvar me/font-size-header-line  130       "The font size to use for headers.")
-(defvar me/font-size-mode-line    120       "The font size to use for the mode line.")
+(defvar me/font-size-header-line  130       "The font size to use for the header-line.")
+(defvar me/font-size-mode-line    120       "The font size to use for the mode-line.")
+(defvar me/font-size-title        150       "The font size to use for titles.")
 #+END_SRC
 
 ** 2. Load =.custom.el=
@@ -428,7 +429,7 @@ more.
   :ensure nil
   :config
   (zenburn-with-color-variables
-    (set-face-attribute 'custom-group-tag nil :font me/font-family :height me/font-size-header-line)
+    (set-face-attribute 'custom-group-tag nil :font me/font-family :height me/font-size-title)
     (set-face-attribute 'custom-state nil :foreground zenburn-green+4)))
 #+END_SRC
 
@@ -624,7 +625,7 @@ modular, and unchained from constraints of backward compatibility.
     (set-face-attribute 'helm-source-header nil
                         :box nil
                         :background nil
-                        :height me/font-size-header-line)))
+                        :height me/font-size-title)))
 #+END_SRC
 
 Helm sub-modules can be customized separately. Many basic Emacs commands have their
@@ -1789,8 +1790,8 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
 
   ;; Customize faces
   (set-face-attribute 'magit-diff-file-heading-highlight nil :background nil)
-  (set-face-attribute 'magit-popup-heading nil :height me/font-size-header-line)
-  (set-face-attribute 'magit-section-heading nil :height me/font-size-header-line)
+  (set-face-attribute 'magit-popup-heading nil :height me/font-size-title)
+  (set-face-attribute 'magit-section-heading nil :height me/font-size-title)
   (set-face-attribute 'magit-section-highlight nil :background nil)
   (zenburn-with-color-variables
     (set-face-attribute 'magit-diff-added nil :background nil :foreground zenburn-green+3)
