@@ -180,7 +180,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
   (set-face-attribute 'font-lock-function-name-face nil :foreground zenburn/blue)
   (set-face-attribute 'fringe nil :background zenburn/bg-0 :foreground zenburn/bg+3)
   (set-face-attribute 'header-line nil
-                      :box `(:line-width 4 :color ,zenburn/bg-1)
+                      :box `(:line-width 2 :color ,zenburn/bg-1)
                       :height me/font-size-header-line)
   (set-face-attribute 'help-argument-name nil :foreground zenburn/orange)
   (set-face-attribute 'hl-line nil :background zenburn/bg+1)
@@ -1223,11 +1223,11 @@ fun and profit.
 
   ;; Customize the mode-line
   (set-face-attribute 'mode-line nil
-                      :box `(:line-width 1 :color ,zenburn/bg-2)
+                      :box `(:line-width 1 :color ,zenburn/bg-1)
                       :foreground zenburn/bg+3
                       :height me/font-size-mode-line)
   (set-face-attribute 'mode-line-inactive nil
-                      :box `(:line-width 1 :color ,zenburn/bg-2)
+                      :box `(:line-width 1 :color ,zenburn/bg-1)
                       :foreground zenburn/bg+3
                       :height me/font-size-mode-line)
   (set-face-attribute 'powerline-active2 nil :background zenburn/bg+2)
