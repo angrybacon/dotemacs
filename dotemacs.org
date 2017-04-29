@@ -42,7 +42,7 @@ Here are what I consider better defaults as per my own experience.
  mode-require-final-newline 'visit                ; Add a newline at EOF on visit
  mouse-yank-at-point t                            ; Yank at point rather than pointer
  ns-use-srgb-colorspace nil                       ; Don't use sRGB colors
- recenter-positions '(5 bottom)                   ; Set re-centering positions
+ recenter-positions '(5 top bottom)               ; Set re-centering positions
  scroll-conservatively most-positive-fixnum       ; Always scroll by one line
  select-enable-clipboard t                        ; Merge system's and Emacs' clipboard
  show-trailing-whitespace nil                     ; Display trailing whitespaces
