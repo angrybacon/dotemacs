@@ -76,7 +76,7 @@ customize these in =~/.emacs.d/.secret.el= file.
 #+BEGIN_SRC emacs-lisp
 (defvar me/font-family            "Monaco"  "The font to use.")
 (defvar me/font-size-default      120       "The font size to use for default text.")
-(defvar me/font-size-header-line  140       "The font size to use for headers.")
+(defvar me/font-size-header-line  130       "The font size to use for headers.")
 (defvar me/font-size-mode-line    120       "The font size to use for the mode line.")
 #+END_SRC
 
@@ -708,7 +708,6 @@ Helm equivalents.
 (use-package helm-files
   :ensure nil
   :after helm
-  :bind (:map helm-find-files-map ("C-s" . helm-ff-run-grep-ag))
   :config
   (set-face-attribute 'helm-ff-dotted-directory nil :background 'unspecified))
 
@@ -1158,24 +1157,9 @@ fun and profit.
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
-(use-package spaceline :demand t)
-(use-package spaceline-config
-  :ensure nil
-  :after spaceline
-
+(use-package spaceline
+  :demand t
   :config
-
-  ;; Configure the mode-line
-  (setq-default
-   mode-line-format '("%e" (:eval (spaceline-ml-main)))
-   powerline-default-separator 'wave
-   spaceline-display-default-perspective t
-   powerline-height 20
-   spaceline-highlight-face-func 'spaceline-highlight-face-modified
-   spaceline-flycheck-bullet "• %s"
-   spaceline-separator-dir-left '(left . left)
-   spaceline-separator-dir-right '(right . right))
-  (spaceline-helm-mode)
 
   ;; Build a segment for the version control branch
   (spaceline-define-segment me/version-control
@@ -1201,7 +1185,26 @@ fun and profit.
         (cond
          (rect (format "%d × %d" (1- cols) lines))
          (multi-line (format "%d lines" (if (eq (current-column) 0) (1- lines) lines)))
-         (t (format "%d chars" (1- chars)))))))
+         (t (format "%d chars" (1- chars))))))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package spaceline-config
+  :ensure nil
+  :after spaceline
+  :config
+
+  ;; Configure the mode-line
+  (setq-default
+   mode-line-format '("%e" (:eval (spaceline-ml-main)))
+   powerline-default-separator 'wave
+   spaceline-display-default-perspective t
+   powerline-height 20
+   spaceline-highlight-face-func 'spaceline-highlight-face-modified
+   spaceline-flycheck-bullet "• %s"
+   spaceline-separator-dir-left '(left . left)
+   spaceline-separator-dir-right '(right . right))
+  (spaceline-helm-mode)
 
   ;; Build the mode-lines
   (spaceline-install
@@ -1655,6 +1658,8 @@ performance sake an indexing mechanism backed by external commands exists as wel
 
 Auto-dim other buffers. Pretty self-explanatory.
 
+- *FIXME*: Auto-dim the fringes too.
+
 #+BEGIN_SRC emacs-lisp
 (use-package auto-dim-other-buffers
   :demand t
@@ -1726,7 +1731,6 @@ information. Github integration, customizability, asynchronous upgrading, and mo
    paradox-execute-asynchronously t
    paradox-github-token t
    paradox-hide-wiki-packages t)
-  (set-face-attribute 'paradox-homepage-button-face nil :italic nil)
   (remove-hook 'paradox--report-buffer-print 'paradox-after-execute-functions))
 #+END_SRC
 
@@ -1744,7 +1748,6 @@ Slack integration.
 
 - *TODO*
 - *TODO*: Register teams in =.secret.el=.
-- *TODO*: Create a pull request over https://github.com/yuya373/emacs-slack.
 
 #+BEGIN_SRC emacs-lisp
 (use-package slack
@@ -1760,12 +1763,7 @@ Slack integration.
    :client-id me/fiftyfor-client-id
    :client-secret me/fiftyfor-client-secret
    :token me/fiftyfor-token
-   :subscribed-channels '(dev general))
-  (set-face-attribute 'slack-message-output-header nil
-                      :foreground zenburn/orange :underline nil)
-  (set-face-attribute 'slack-message-output-reaction nil
-                      :background zenburn/bg+2 :overline nil)
-  (set-face-attribute 'slack-message-output-text nil :height 1))
+   :subscribed-channels '(dev general)))
 #+END_SRC
 
 ** 22. Version Control
@@ -1825,10 +1823,7 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
   ;; Customize faces
   (set-face-attribute 'magit-diff-added nil
                       :background zenburn/bg+0 :foreground zenburn/green+3)
-  (set-face-attribute 'magit-diff-context nil :background zenburn/bg+0)
   (set-face-attribute 'magit-diff-file-heading-highlight nil :background 'unspecified)
-  (set-face-attribute 'magit-diff-hunk-heading nil :background zenburn/bg+2)
-  (set-face-attribute 'magit-diff-hunk-heading-highlight nil :background zenburn/bg+2)
   (set-face-attribute 'magit-diff-removed nil
                       :background zenburn/bg+0 :foreground zenburn/red)
   (set-face-attribute 'magit-popup-heading nil :height me/font-size-header-line)
@@ -1849,10 +1844,7 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
   :demand t
   :config
   (global-whitespace-mode 1)
-  (setq-default whitespace-style '(face empty tab trailing))
-  (set-face-attribute 'whitespace-empty nil :background zenburn/red-1)
-  (set-face-attribute 'whitespace-tab nil :background zenburn/red-1)
-  (set-face-attribute 'whitespace-trailing nil :background zenburn/red-1))
+  (setq-default whitespace-style '(face empty tab trailing)))
 #+END_SRC
 
 ** 24. Web Browsing
