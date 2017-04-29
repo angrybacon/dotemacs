@@ -640,7 +640,7 @@ Helm equivalents.
   :config
   (setq-default
    helm-buffers-fuzzy-matching t
-   helm-buffer-max-length nil)
+   helm-buffer-max-length 30)
   (zenburn-with-color-variables
     (set-face-attribute 'helm-buffer-size nil :foreground zenburn-fg-1)))
 
