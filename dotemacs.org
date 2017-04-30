@@ -1127,10 +1127,11 @@ fun and profit.
 
   ;; Build a segment for helm-follow-mode
   (spaceline-define-segment me/helm-follow
-    (when (and (bound-and-true-p helm-alive-p)
-               spaceline--helm-current-source
-               (eq 1 (cdr (assq 'follow spaceline--helm-current-source))))
-      (propertize "" 'face 'success)))
+    (if (and (bound-and-true-p helm-alive-p)
+             spaceline--helm-current-source
+             (eq 1 (cdr (assq 'follow spaceline--helm-current-source))))
+        (propertize (mdi-insert "eye") 'face 'success)
+      (mdi-insert "eye-off")))
 
   ;; Build a segment for the active region
   (spaceline-define-segment me/selection-info
@@ -1142,7 +1143,7 @@ fun and profit.
              (rect (bound-and-true-p rectangle-mark-mode))
              (multi-line (> lines 1)))
         (cond
-         (rect (format "%d × %d" (1- cols) lines))
+         (rect (format "%d %s %d" (1- cols) (mdi-insert "arrow-expand-all") lines))
          (multi-line (format "%d lines" (if (eq (current-column) 0) (1- lines) lines)))
          (t (format "%d chars" (1- chars))))))))
 #+END_SRC
@@ -1160,7 +1161,7 @@ fun and profit.
    spaceline-display-default-perspective t
    powerline-height 20
    spaceline-highlight-face-func 'spaceline-highlight-face-modified
-   spaceline-flycheck-bullet "• %s"
+   spaceline-flycheck-bullet (format "%s%s" (mdi-insert "record") "%s")
    spaceline-separator-dir-left '(left . left)
    spaceline-separator-dir-right '(right . right))
   (spaceline-helm-mode)
@@ -1171,15 +1172,15 @@ fun and profit.
      ((remote-host buffer-id line) :separator ":")
      (anzu))
    `((me/selection-info)
-     ((flycheck-error flycheck-warning flycheck-info) :when active)
-     ((projectile-root me/version-control) :separator "  ")
+     ((flycheck-error flycheck-warning flycheck-info :when active))
+     ((projectile-root me/version-control) :separator (format " %s " (mdi-insert "source-branch")))
      (workspace-number)
      (global :face highlight-face)))
   (spaceline-install
    'helm
    '((helm-buffer-id :face spaceline-read-only)
      (helm-number)
-     (me/helm-follow :fallback "")
+     (me/helm-follow)
      helm-prefix-argument)
    '((global :face spaceline-read-only)))
 
@@ -1343,8 +1344,6 @@ Bind commands to move around windows.
 
 ** 16. OS-Specific
 
-*** OS X
-
 Augment Emacs experience for OS X users.
 
 #+BEGIN_SRC emacs-lisp
@@ -1376,15 +1375,6 @@ interest, then copying them into the Emacs environment.
   :config
   (when (memq window-system '(mac ns))
     (exec-path-from-shell-initialize)))
-#+END_SRC
-
-*** Windows
-
-Fix FontAwesome glyphs.
-
-#+BEGIN_SRC emacs-lisp
-(when (eq system-type 'windows-nt)
-  (set-fontset-font "fontset-default" '(#xf000 . #xf23a) "FontAwesome"))
 #+END_SRC
 
 ** 17. Parentheses
