@@ -275,7 +275,20 @@ authoring documents with a fast and effective plain-text system.
 (use-package org
   :delight org-mode "Org"
   :ensure nil
-  :bind (:map org-mode-map ("<M-return>" . org-insert-heading-after-current))
+  :preface
+  (defun me/org-backward-paragraph-shifted ()
+    "Move backward to start of previous paragraph or equivalent. Support shift."
+    (interactive "^")
+    (org-backward-paragraph))
+  (defun me/org-forward-paragraph-shifted ()
+    "Move forward to beginning of next paragraph or equivalent. Support shift."
+    (interactive "^")
+    (org-forward-paragraph))
+  :bind
+  (:map org-mode-map
+        ([remap backward-paragraph] . me/org-backward-paragraph-shifted)
+        ([remap forward-paragraph] . me/org-forward-paragraph-shifted)
+        ("<M-return" . org-insert-heading-after-current))
   :init
   (add-hook 'org-mode-hook 'org-sticky-header-mode)
   (add-hook 'org-mode-hook 'turn-on-auto-fill)
