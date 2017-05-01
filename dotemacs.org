@@ -69,18 +69,6 @@ Garbage-collect on focus-out, Emacs /should/ feel snappier.
 (add-hook 'focus-out-hook 'garbage-collect)
 #+END_SRC
 
-I want an easy way to change the appearance of things and be consistent about
-it. Those variables are used throughout the whole configuration. You could always
-customize these in =~/.emacs.d/.secret.el= file.
-
-#+BEGIN_SRC emacs-lisp
-(defvar me/font-family            "Monaco"  "The font to use.")
-(defvar me/font-size-default      120       "The font size to use for default text.")
-(defvar me/font-size-header-line  130       "The font size to use for the header-line.")
-(defvar me/font-size-mode-line    120       "The font size to use for the mode-line.")
-(defvar me/font-size-title        150       "The font size to use for titles.")
-#+END_SRC
-
 ** 2. Load =.custom.el=
 
 One is able to use the customization interface that is bundled within Emacs. It is
@@ -105,6 +93,13 @@ instance, you could set your identity by customizing both =user-full-name= and
 =user-mail-address=. This is also where you want your API tokens to live.
 
 #+BEGIN_SRC emacs-lisp
+(defvar me/erc-nick               nil       "The ERC nick to use.")
+(defvar me/font-family            "Monaco"  "The font to use.")
+(defvar me/font-size-default      120       "The font size to use for default text.")
+(defvar me/font-size-header-line  130       "The font size to use for the header-line.")
+(defvar me/font-size-mode-line    120       "The font size to use for the mode-line.")
+(defvar me/font-size-title        150       "The font size to use for titles.")
+
 (let ((secret.el (expand-file-name ".secret.el" user-emacs-directory)))
   (when (file-exists-p secret.el)
     (load secret.el)))
@@ -113,6 +108,8 @@ instance, you could set your identity by customizing both =user-full-name= and
 * B. Theme
 
 Load =zenburn-theme= and fix some high-level faces to match my personal preferences.
+
+- *FIXME*: The un-bold'ify thing runs too early.
 
 #+BEGIN_SRC emacs-lisp
 (use-package zenburn-theme
@@ -166,7 +163,6 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 As pedantic as I like to be, some packages have a =use-package= clause for nothing
 but the customization of its lighter.
 
-- *TODO*: Add a list of all custom shortcuts.
 - *TODO*: Replace all old defadvice's.
 
 ** 1. CSS
@@ -369,8 +365,7 @@ Display the current Org header in the header-line.
 21. [[#21-slack][Slack]]
 22. [[#22-version-control][Version Control]]
 23. [[#23-whitespaces][Whitespaces]]
-24. [[#24-web-browsing][Web Browsing]]
-25. [[#25-windows][Windows]]
+24. [[#24-windows][Windows]]
 
 ** 1. Auto-Completion
 
@@ -424,9 +419,6 @@ completion candidates.
 
 This merely changes face attributes. It also /Zenburn/ customization buffers a little
 more.
-
-- *TODO*: Open a pull request over
-  [[https://github.com/bbatsov/zenburn-emacs][zenburn-emacs]].
 
 #+BEGIN_SRC emacs-lisp
 (use-package cus-edit
@@ -560,8 +552,6 @@ built on top of [[https://github.com/ch11ng/xelb][XELB]]. It features:
 
 ** 8. Folding
 
-- *TODO*
-
 #+BEGIN_QUOTE
 This is a package to perform text folding like in Vim. It has the following features:
 
@@ -579,8 +569,6 @@ This is a package to perform text folding like in Vim. It has the following feat
 
 [[https://github.com/mrkkrp/vimish-fold][Mark Karpov]]
 #+END_QUOTE
-
-- *FIXME*: Doesn't restore folds.
 
 #+BEGIN_SRC emacs-lisp
 (use-package vimish-fold
@@ -611,7 +599,6 @@ modular, and unchained from constraints of backward compatibility.
 [[https://github.com/emacs-helm/helm][Bozhidar Batsov]]
 #+END_QUOTE
 
-- *TODO*: Make helm-list-faces-display.
 - *TODO*: Add a flashing effect with Helm actions
           =(progn (require 'pulse) (pulse-momentary-highlight-one-line (point))=.
 
@@ -760,12 +747,9 @@ it's like a minor mode that disables itself auto-magically.
 [[https://github.com/abo-abo/hydra][Oleh Krehel]]
 #+END_QUOTE
 
-- *FIXME*: Allow =TAB= for console users.
-
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
   :bind
-  ;; ("C-c TAB" . hydra-fold/body)
   ("C-c <tab>" . hydra-fold/body)
   ("C-c d" . hydra-dates/body)
   ("C-c e" . hydra-eyebrowse/body)
@@ -1216,7 +1200,7 @@ fun and profit.
 ** 15. Navigation
 
 I disagree with Emacs' definition of paragraphs so I redefined the way it should jump
-from one block to another.
+from one paragraph to another.
 
 - *FIXME*: Ignore invisible text.
 
@@ -1244,7 +1228,7 @@ from one block to another.
 Smarter =C-a=.
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-a") 'me/beginning-of-line-dwim)
+(global-set-key [remap move-beginning-of-line] 'me/beginning-of-line-dwim)
 
 (defun me/beginning-of-line-dwim ()
   "Move point to first non-whitespace character, or beginning of line."
@@ -1274,8 +1258,6 @@ information in the mode-line in various search modes.
 /Regexp replace/
 
 [[./screencasts/emacs.anzu-replace-regexp.gif]]
-
-- *TODO*: Fix https://github.com/TheBB/spaceline/blob/master/README.org#anzu.
 
 #+BEGIN_SRC emacs-lisp
 (use-package anzu
@@ -1317,7 +1299,6 @@ highlighted while you are typing your query, incrementally. Since he who can do 
 can do less, I've replaced default bindings with the regexp-equivalent commands.
 
 - *NOTE*: Still debating whether I prefer =avy= or =isearch= for =C-s=.
-- *TODO*: Allow mac-wheel-scroll too.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default isearch-allow-scroll t)
@@ -1449,20 +1430,15 @@ Enable multiple cursors at once. Some witchcraft at work here.
 Enable new custom binds when region is active. I've also added a few helpers to use
 with =selected=.
 
-- *TODO*: Make a hydra.
-
 #+BEGIN_SRC emacs-lisp
 (use-package selected
   :defer 1
   :bind
   (:map selected-keymap
-        ("C-c C-c" . me/eval-region-and-kill-mark)
-        ("<M-left>" . me/indent-rigidly-left-and-keep-mark)
-        ("<M-right>" . me/indent-rigidly-right-and-keep-mark)
-        ("<M-S-left>" . me/indent-rigidly-left-tab-and-keep-mark)
-        ("<M-S-right>" . me/indent-rigidly-right-tab-and-keep-mark)
         ("<" . mc/mark-previous-like-this)
         (">" . mc/mark-next-like-this)
+        ("C-?" . hydra-selected/body)
+        ("C-c C-c" . me/eval-region-and-kill-mark)
         ("C-b b" . me/browse-url-and-kill-mark)
         ("C-c c" . capitalize-region)
         ("C-c l" . downcase-region)
@@ -1471,7 +1447,11 @@ with =selected=.
         ("C-g" . selected-off)
         ("C-s r" . reverse-region)
         ("C-s s" . sort-lines)
-        ("C-s w" . me/sort-words))
+        ("C-s w" . me/sort-words)
+        ("<M-left>" . me/indent-rigidly-left-and-keep-mark)
+        ("<M-right>" . me/indent-rigidly-right-and-keep-mark)
+        ("<M-S-left>" . me/indent-rigidly-left-tab-and-keep-mark)
+        ("<M-S-right>" . me/indent-rigidly-right-tab-and-keep-mark))
   :config (selected-global-mode))
 #+END_SRC
 
@@ -1620,6 +1600,7 @@ performance sake an indexing mechanism backed by external commands exists as wel
 Auto-dim other buffers. Pretty self-explanatory.
 
 - *FIXME*: Auto-dim the fringes too.
+           See https://github.com/mina86/auto-dim-other-buffers.el/issues/11.
 
 #+BEGIN_SRC emacs-lisp
 (use-package auto-dim-other-buffers
@@ -1808,22 +1789,7 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
   (setq-default whitespace-style '(face empty tab trailing)))
 #+END_SRC
 
-** 24. Web Browsing
-
-EWW stands for Emacs Web Wowser. Yeah that's right... Emacs is also a Web browser,
-text-based that is.
-
-- *TODO*: Check what happens when =eww= is missing.
-- *NOTE*: Why can't I use =setq-default= to customize =eww-header-line-format=?
-
-#+BEGIN_SRC emacs-lisp
-(use-package eww
-  :ensure nil
-  :delight eww-mode "Emacs Web Wowser"
-  :config (setq eww-header-line-format " %t: %u"))
-#+END_SRC
-
-** 25. Windows
+** 24. Windows
 
 Save and restore Emacs status, including buffers, modes, point and windows.
 
