@@ -986,8 +986,6 @@ Group window-related commands.
 
 ** 12. IRC
 
-- *TODO*: Use =.secret.el=.
-
 #+BEGIN_SRC emacs-lisp
 (use-package erc
   :preface
@@ -1016,7 +1014,7 @@ Group window-related commands.
    erc-fill-static-center 16
    erc-header-line-format nil
    erc-lurker-hide-list '("JOIN" "PART" "QUIT")
-   erc-nick "angrybacon"
+   erc-nick me/erc-nick
    erc-input-line-position -1
    erc-insert-timestamp-function 'erc-insert-timestamp-left
    erc-timestamp-format "[%H:%M:%S] "
