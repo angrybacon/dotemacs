@@ -1309,13 +1309,10 @@ Isearch stands for /incremental search/. This means that search results are
 highlighted while you are typing your query, incrementally. Since he who can do more
 can do less, I've replaced default bindings with the regexp-equivalent commands.
 
-- *NOTE*: Still debating whether I prefer =avy= or =isearch= for =C-s=.
-
 #+BEGIN_SRC emacs-lisp
 (setq-default isearch-allow-scroll t)
-(global-set-key [remap isearch-backward-regexp] 'isearch-backward)
-(global-set-key [remap isearch-forward-regexp] 'isearch-forward)
-(global-set-key [remap isearch-forward] 'isearch-forward-regexp)
+(global-set-key (kbd "C-S-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-S-s") 'isearch-forward-regexp)
 #+END_SRC
 
 Configure the mouse wheel events.
