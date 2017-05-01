@@ -877,6 +877,7 @@ Group Helm commands.
 [_r_] resume helm   [_g_] google        [_s_] css-scss
 ^^                  [_h_] headings      [_t_] fontawesome
 ^^                  [_i_] imenu         ^^
+^^                  [_k_] kill-ring     ^^
 ^^                  ^^                  ^^
 "
   ("q" nil)
@@ -885,6 +886,7 @@ Group Helm commands.
   ("g" helm-google-suggest)
   ("h" helm-org-in-buffer-headings)
   ("i" helm-imenu)
+  ("k" helm-show-kill-ring)
   ("r" helm-resume)
   ("s" helm-css-scss)
   ("t" helm-fontawesome))
