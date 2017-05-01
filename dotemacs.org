@@ -587,13 +587,13 @@ This is a package to perform text folding like in Vim. It has the following feat
 (use-package vimish-fold
   :defer 1
   :bind
-  (:map vimish-fold-folded-keymap("<tab>" . vimish-fold-unfold)
+  (:map vimish-fold-folded-keymap ("<tab>" . vimish-fold-unfold)
    :map vimish-fold-unfolded-keymap ("<tab>" . vimish-fold-refold))
+  :init
+  (setq-default vimish-fold-dir (expand-file-name ".vimish-fold/" user-emacs-directory))
+  (vimish-fold-global-mode 1)
   :config
-  (setq-default
-   vimish-fold-dir (expand-file-name ".vimish-fold/" user-emacs-directory)
-   vimish-fold-header-width 79)
-  (vimish-fold-global-mode 1))
+  (setq-default vimish-fold-header-width 79))
 #+END_SRC
 
 ** 9. Helm
