@@ -147,6 +147,10 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
    (face-list)))
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+(use-package mdi :ensure nil :demand t)
+#+END_SRC
+
 * C. Languages
 
 1. [[#1-css][CSS]]

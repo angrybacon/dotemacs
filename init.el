@@ -27,6 +27,10 @@
   (defvar me/project-name nil)
   (put 'me/project-name 'safe-local-variable #'stringp)
 
+  ;; Load lisp/ and friends
+  (let ((default-directory (expand-file-name "lisp/" user-emacs-directory)))
+    (normal-top-level-add-subdirs-to-load-path))
+
   ;; Set repositories
   (require 'package)
   (setq-default

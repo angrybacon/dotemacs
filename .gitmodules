@@ -1,0 +1,3 @@
+[submodule "mdi"]
+	path = lisp/mdi
+	url = https://github.com/angrybacon/mdi
