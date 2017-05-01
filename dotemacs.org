@@ -1524,29 +1524,37 @@ Work on lines.
 - *TODO*: Handle regions.
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "<M-S-down>") 'me/duplicate-line-down)
-(global-set-key (kbd "<M-S-up>") 'me/duplicate-line-up)
+(global-set-key (kbd "<M-S-up>") 'me/duplicate-backward)
+(global-set-key (kbd "<M-S-down>") 'me/duplicate-forward)
 (global-set-key (kbd "<M-down>") 'me/swap-line-down)
 (global-set-key (kbd "<M-up>") 'me/swap-line-up)
 
-(defun me/duplicate-line-down ()
-  "Duplicate downward the line under point."
-  (interactive)
-  (kill-whole-line 0)
-  (yank)
-  (newline)
-  (yank)
-  (move-beginning-of-line 1))
+(defun me/duplicate-backward (begin end)
+  "Duplicate current line upward or region backward.
+If region was active, keep it so that the command can be repeated."
+  (interactive "r")
+  (if (region-active-p)
+      (let (deactivate-mark)
+        (save-excursion
+          (insert (buffer-substring begin end))))
+    (save-excursion
+      (move-end-of-line nil)
+      (save-excursion
+        (insert (buffer-substring (point-at-bol) (point-at-eol))))
+      (newline))))
 
-(defun me/duplicate-line-up ()
-  "Duplicate upward the line under point."
-  (interactive)
-  (kill-whole-line 0)
-  (yank)
-  (move-beginning-of-line 1)
-  (yank)
-  (newline)
-  (move-beginning-of-line 0))
+(defun me/duplicate-forward (begin end)
+  "Duplicate current line downward or region forward.
+If region was active, keep it so that the command can be repeated."
+  (interactive "r")
+  (if (region-active-p)
+      (let (deactivate-mark (point (point)))
+        (insert (buffer-substring begin end))
+        (push-mark point))
+    (save-excursion
+      (move-beginning-of-line nil)
+      (insert (buffer-substring (point-at-bol) (point-at-eol)))
+      (newline))))
 
 (defun me/swap-line-down ()
   "Move down the line under point."
