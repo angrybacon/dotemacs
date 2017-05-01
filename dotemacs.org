@@ -1534,27 +1534,27 @@ Work on lines.
 (global-set-key (kbd "<M-down>") 'me/swap-line-down)
 (global-set-key (kbd "<M-up>") 'me/swap-line-up)
 
-(defun me/duplicate-backward (begin end)
+(defun me/duplicate-backward ()
   "Duplicate current line upward or region backward.
 If region was active, keep it so that the command can be repeated."
-  (interactive "r")
+  (interactive)
   (if (region-active-p)
       (let (deactivate-mark)
         (save-excursion
-          (insert (buffer-substring begin end))))
+          (insert (buffer-substring (region-beginning) (region-end)))))
     (save-excursion
       (move-end-of-line nil)
       (save-excursion
         (insert (buffer-substring (point-at-bol) (point-at-eol))))
       (newline))))
 
-(defun me/duplicate-forward (begin end)
+(defun me/duplicate-forward ()
   "Duplicate current line downward or region forward.
 If region was active, keep it so that the command can be repeated."
-  (interactive "r")
+  (interactive)
   (if (region-active-p)
       (let (deactivate-mark (point (point)))
-        (insert (buffer-substring begin end))
+        (insert (buffer-substring (region-beginning) (region-end)))
         (push-mark point))
     (save-excursion
       (move-beginning-of-line nil)
