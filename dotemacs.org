@@ -1534,6 +1534,19 @@ Work on lines.
 (global-set-key (kbd "<M-down>") 'me/swap-line-down)
 (global-set-key (kbd "<M-up>") 'me/swap-line-up)
 
+(defun me/duplicate-line (&optional stay)
+  "Duplicate current line.
+With optional argument STAY true, leave point where it was."
+  (save-excursion
+    (move-end-of-line nil)
+    (save-excursion
+      (insert (buffer-substring (point-at-bol) (point-at-eol))))
+    (newline))
+  (unless stay
+    (let ((column (current-column)))
+      (forward-line)
+      (forward-char column))))
+
 (defun me/duplicate-backward ()
   "Duplicate current line upward or region backward.
 If region was active, keep it so that the command can be repeated."
@@ -1542,11 +1555,7 @@ If region was active, keep it so that the command can be repeated."
       (let (deactivate-mark)
         (save-excursion
           (insert (buffer-substring (region-beginning) (region-end)))))
-    (save-excursion
-      (move-end-of-line nil)
-      (save-excursion
-        (insert (buffer-substring (point-at-bol) (point-at-eol))))
-      (newline))))
+    (me/duplicate-line t)))
 
 (defun me/duplicate-forward ()
   "Duplicate current line downward or region forward.
@@ -1556,10 +1565,7 @@ If region was active, keep it so that the command can be repeated."
       (let (deactivate-mark (point (point)))
         (insert (buffer-substring (region-beginning) (region-end)))
         (push-mark point))
-    (save-excursion
-      (move-beginning-of-line nil)
-      (insert (buffer-substring (point-at-bol) (point-at-eol)))
-      (newline))))
+    (me/duplicate-line)))
 
 (defun me/swap-line-down ()
   "Move down the line under point."
