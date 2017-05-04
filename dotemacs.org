@@ -1415,7 +1415,9 @@ structure of the current major mode.
 
 #+BEGIN_SRC emacs-lisp
 (use-package expand-region
-  :bind ("C-=" . er/expand-region)
+  :bind
+  ("C-+" . er/contract-region)
+  ("C-=" . er/expand-region)
   :init (pending-delete-mode t))
 #+END_SRC
 
