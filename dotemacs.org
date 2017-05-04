@@ -1172,7 +1172,8 @@ fun and profit.
      (anzu))
    `((me/selection-info)
      ((flycheck-error flycheck-warning flycheck-info :when active))
-     ((projectile-root me/version-control) :separator (format " %s " (mdi-insert "source-branch")))
+     ((projectile-root me/version-control)
+      :separator (format " %s " (mdi-insert "source-branch")))
      (workspace-number)
      (global :face highlight-face)))
   (spaceline-install
