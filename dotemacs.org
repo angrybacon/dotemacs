@@ -867,6 +867,8 @@ Group folding commands.
 
 Group Helm commands.
 
+*TODO*: Make =helm-mdi=.
+
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-helm (:color blue)
   "
@@ -875,7 +877,7 @@ Group Helm commands.
 ^────^──────────────^──────^────────────^──^────────────────
 [_q_] quit          [_c_] colors        [_f_] flycheck
 [_r_] resume helm   [_g_] google        [_s_] css-scss
-^^                  [_h_] headings      [_t_] fontawesome
+^^                  [_h_] headings      ^^
 ^^                  [_i_] imenu         ^^
 ^^                  [_k_] kill-ring     ^^
 ^^                  ^^                  ^^
@@ -888,8 +890,7 @@ Group Helm commands.
   ("i" helm-imenu)
   ("k" helm-show-kill-ring)
   ("r" helm-resume)
-  ("s" helm-css-scss)
-  ("t" helm-fontawesome))
+  ("s" helm-css-scss))
 #+END_SRC
 
 Group Magit commands.
@@ -1668,12 +1669,6 @@ Insert the current date.
   "Insert the current date, short format, eg. 2016.12.09 14:34"
   (interactive)
   (insert (format-time-string "%Y.%m.%d %H:%M")))
-#+END_SRC
-
-Insert [[http://fontawesome.io/][fontawesome]] icons.
-
-#+BEGIN_SRC emacs-lisp
-(use-package fontawesome)
 #+END_SRC
 
 Originally, =midnight= is used to /run something at midnight/. I use its feature that

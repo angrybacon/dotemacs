@@ -63,12 +63,12 @@ gem install scss_lint scss_lint_reporter_checkstyle  # SCSS
 npm install -g eslint                                # JavaScript
 ```
 
-Font Awesome
-------------
+Material Design Icons
+---------------------
 
-There are special characters in the mode-line. Install [Font Awesome][font-awesome].
+There are special characters in the mode-line. Install [=mdi=][mdi].
 
-[font-awesome]: http://fontawesome.io/
+[mdi]: https://materialdesignicons.com
 [github.flycheck]: https://github.com/flycheck/flycheck
 [github.homebrew-emacs-plus]: https://github.com/d12frosted/homebrew-emacs-plus
 [screenshots.helm]: https://drive.google.com/open?id=0BwTSOByd3qSFMmZqVHBpTlk2Q1E
