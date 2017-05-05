@@ -66,7 +66,7 @@ npm install -g eslint                                # JavaScript
 Material Design Icons
 ---------------------
 
-There are special characters in the mode-line. Install [=mdi=][mdi].
+There are special characters in the mode-line. Install [`mdi`][mdi].
 
 [mdi]: https://materialdesignicons.com
 [github.flycheck]: https://github.com/flycheck/flycheck
