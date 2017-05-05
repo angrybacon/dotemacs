@@ -1756,11 +1756,9 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
 
 #+BEGIN_SRC emacs-lisp
 (use-package magit
-  :config
-
-  ;; Redefine how Magit display buffers
-  (defun me/magit-display-buffer-function (buffer)
-    "Render some magit modes in the currently selected buffer."
+  :preface
+  (defun me/magit-display-buffer-same (buffer)
+    "Display most magit popups in the current buffer."
     (display-buffer
      buffer
      (cond ((and (derived-mode-p 'magit-mode)
@@ -1773,13 +1771,14 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
                     magit-stash-mode))
             nil)
            (t '(display-buffer-same-window)))))
+  :config
 
   ;; Use better defaults
   (setq-default
-   magit-display-buffer-function 'me/magit-display-buffer-function
+   magit-display-buffer-function 'me/magit-display-buffer-same
    magit-diff-highlight-hunk-body nil
    magit-popup-display-buffer-action '((display-buffer-same-window))
-   magit-refs-show-commit-count (quote all)
+   magit-refs-show-commit-count 'all
    magit-section-show-child-count t
    magit-set-upstream-on-push 'askifnotset)
 
