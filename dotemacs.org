@@ -34,7 +34,7 @@ Here are what I consider better defaults as per my own experience.
  delete-by-moving-to-trash t                      ; Delete files to trash
  display-time-default-load-average nil            ; Don't display load average
  display-time-format "%H:%M"                      ; Format the time string
- fill-column 85                                   ; Set width for automatic line breaks
+ fill-column 80                                   ; Set width for automatic line breaks
  help-window-select t                             ; Focus new help windows when opened
  indent-tabs-mode nil                             ; Stop using tabs to indent
  inhibit-startup-screen t                         ; Disable start-up screen
@@ -249,7 +249,6 @@ for variables and properties.
    "README\\'"
    "\\.markdown\\'"
    "\\.md\\'")
-  :init (add-hook 'markdown-mode-hook 'turn-on-auto-fill)
   :config
   (unbind-key "M-<down>" markdown-mode-map)
   (unbind-key "M-<up>" markdown-mode-map)
@@ -291,7 +290,6 @@ authoring documents with a fast and effective plain-text system.
         ("<M-return" . org-insert-heading-after-current))
   :init
   (add-hook 'org-mode-hook 'org-sticky-header-mode)
-  (add-hook 'org-mode-hook 'turn-on-auto-fill)
   :config
   (setq-default
    org-descriptive-links nil
@@ -1710,6 +1708,16 @@ Colorize colors as text with their value.
 (use-package rainbow-mode
   :init (add-hook 'prog-mode-hook 'rainbow-mode)
   :config (setq-default rainbow-x-colors-major-mode-list '()))
+#+END_SRC
+
+Turn on =auto-fill-mode= everywhere.
+
+#+BEGIN_SRC emacs-lisp
+(use-package simple
+  :ensure nil
+  :config
+  (add-hook 'prog-mode-hook #'turn-on-auto-fill)
+  (add-hook 'text-mode-hook #'turn-on-auto-fill))
 #+END_SRC
 
 ** 21. Slack
