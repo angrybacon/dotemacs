@@ -772,9 +772,11 @@ it's like a minor mode that disables itself auto-magically.
   ("C-c h" . hydra-helm/body)
   ("C-c o" . hydra-org/body)
   ("C-c p" . hydra-projectile/body)
-  ("C-c w" . hydra-window/body)
+  ("C-c w" . hydra-windows/body)
   :config (setq-default hydra-default-hint nil))
 #+END_SRC
+
+*** Dates
 
 Group date-related commands.
 
@@ -796,6 +798,8 @@ Group date-related commands.
   ("I" me/date-iso-with-time)
   ("l" me/date-long))
 #+END_SRC
+
+*** Eyebrowse
 
 Group Eyebrowse commands.
 
@@ -821,6 +825,8 @@ Group Eyebrowse commands.
   ("s" eyebrowse-switch-to-window-config))
 #+END_SRC
 
+*** Flycheck
+
 Group Flycheck commands.
 
 #+BEGIN_SRC emacs-lisp
@@ -845,6 +851,8 @@ Group Flycheck commands.
   ("?" flycheck-describe-checker))
 #+END_SRC
 
+*** Fold
+
 Group folding commands.
 
 #+BEGIN_SRC emacs-lisp
@@ -867,6 +875,8 @@ Group folding commands.
   ("n" vimish-fold-next-fold)
   ("p" vimish-fold-previous-fold))
 #+END_SRC
+
+*** Helm
 
 Group Helm commands.
 
@@ -895,6 +905,8 @@ Group Helm commands.
   ("t" helm-fontawesome))
 #+END_SRC
 
+*** Magit
+
 Group Magit commands.
 
 #+BEGIN_SRC emacs-lisp
@@ -911,6 +923,8 @@ Group Magit commands.
   ("b" magit-blame)
   ("s" magit-status))
 #+END_SRC
+
+*** Org
 
 Group Org commands.
 
@@ -939,6 +953,8 @@ Group Org commands.
   ("v" org-overview))
 #+END_SRC
 
+*** Projectile
+
 Group Projectile commands.
 
 #+BEGIN_SRC emacs-lisp
@@ -966,14 +982,16 @@ Group Projectile commands.
   ("S" projectile-save-project-buffers :color red))
 #+END_SRC
 
+*** Windows
+
 Group window-related commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-window (:color blue)
+(defhydra hydra-windows (:color blue)
   "
 ^
-^Window^            ^Golden-Ratio^      ^Zoom^
-^──────^────────────^────────────^──────^────^──────────────
+^Windows^           ^Golden-Ratio^      ^Zoom^
+^───────^───────────^────────────^──────^────^──────────────
 [_q_] quit          [_2_] bi-split      [_-_] zoom out
 ^^                  [_3_] tri-split     [_+_] zoom in
 ^^                  ^^                  [_=_] reset
@@ -1008,6 +1026,7 @@ Group window-related commands.
         ("C-<down>" . erc-next-command)
         ("C-<up>" . erc-previous-command))
   :config
+  ;; NOTE: Why not setq-local?
   (make-variable-buffer-local 'erc-fill-column)
   (add-hook 'window-configuration-change-hook 'me/update-erc-fill-column)
   (erc-scrolltobottom-mode)
@@ -1187,7 +1206,6 @@ fun and profit.
    '((global :face spaceline-read-only)))
 
   ;; Customize the mode-line
-
   (zenburn-with-color-variables
     (set-face-attribute 'mode-line nil
                         :box nil
@@ -1212,6 +1230,24 @@ fun and profit.
 #+END_SRC
 
 ** 15. Navigation
+
+*** Inline
+
+Smarter =C-a=.
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key [remap move-beginning-of-line] 'me/beginning-of-line-dwim)
+
+(defun me/beginning-of-line-dwim ()
+  "Move point to first non-whitespace character, or beginning of line."
+  (interactive "^")
+  (let ((origin (point)))
+    (beginning-of-line)
+    (and (= origin (point))
+         (back-to-indentation))))
+#+END_SRC
+
+*** Paragraphs
 
 I disagree with Emacs' definition of paragraphs so I redefined the way it should jump
 from one paragraph to another.
@@ -1239,19 +1275,7 @@ from one paragraph to another.
   (skip-chars-forward "\n"))
 #+END_SRC
 
-Smarter =C-a=.
-
-#+BEGIN_SRC emacs-lisp
-(global-set-key [remap move-beginning-of-line] 'me/beginning-of-line-dwim)
-
-(defun me/beginning-of-line-dwim ()
-  "Move point to first non-whitespace character, or beginning of line."
-  (interactive "^")
-  (let ((origin (point)))
-    (beginning-of-line)
-    (and (= origin (point))
-         (back-to-indentation))))
-#+END_SRC
+*** Replace
 
 Better search and replace features. Even though I prefer to use =multiple-cursors= to
 replace text in different places at once, =anzu= has a nice feedback on regexp
@@ -1291,6 +1315,18 @@ information in the mode-line in various search modes.
                         :foreground zenburn-green+4)))
 #+END_SRC
 
+*** Scroll
+
+Configure the mouse wheel events.
+
+#+BEGIN_SRC emacs-lisp
+(use-package mwheel
+  :ensure nil
+  :config (setq-default mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control)))))
+#+END_SRC
+
+*** Search
+
 #+BEGIN_QUOTE
 =avy= is a GNU Emacs package for jumping to visible text using a char-based decision
 tree. See also [[https://github.com/winterTTr/ace-jump-mode][ace-jump-mode]] and
@@ -1321,26 +1357,6 @@ can do less, I've replaced default bindings with the regexp-equivalent commands.
 (setq-default isearch-allow-scroll t)
 (global-set-key (kbd "C-S-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-S-s") 'isearch-forward-regexp)
-#+END_SRC
-
-Configure the mouse wheel events.
-
-#+BEGIN_SRC emacs-lisp
-(use-package mwheel
-  :ensure nil
-  :config (setq-default mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control)))))
-#+END_SRC
-
-Bind commands to move around windows.
-
-#+BEGIN_SRC emacs-lisp
-(use-package windmove
-  :ensure nil
-  :bind
-  (("C-M-<left>". windmove-left)
-   ("C-M-<right>". windmove-right)
-   ("C-M-<up>". windmove-up)
-   ("C-M-<down>". windmove-down)))
 #+END_SRC
 
 ** 16. OS-Specific
@@ -1576,16 +1592,14 @@ If region was active, keep it so that the command can be repeated."
   (forward-line 1)
   (transpose-lines 1)
   (forward-line -1)
-  (indent-according-to-mode)
-  (delete-trailing-whitespace))
+  (indent-according-to-mode))
 
 (defun me/swap-line-up ()
   "Move up the line under point."
   (interactive)
   (transpose-lines 1)
   (forward-line -2)
-  (indent-according-to-mode)
-  (delete-trailing-whitespace))
+  (indent-according-to-mode))
 #+END_SRC
 
 ** 19. Projectile
@@ -1831,6 +1845,7 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 #+BEGIN_SRC emacs-lisp
 (use-package whitespace
   :demand t
+  :ensure nil
   :config
   (global-whitespace-mode 1)
   (setq-default whitespace-style '(face empty tab trailing)))
@@ -1888,6 +1903,18 @@ golden ratio somewhere in its formulas.
   (setq-default golden-ratio-adjust-factor me/golden-ratio-adjust-factor-tri-split)
   (add-to-list 'golden-ratio-exclude-modes "ediff-mode")
   (add-to-list 'golden-ratio-inhibit-functions 'me/ediff-comparison-buffer-p))
+#+END_SRC
+
+Bind commands to move around windows.
+
+#+BEGIN_SRC emacs-lisp
+(use-package windmove
+  :ensure nil
+  :bind
+  (("C-M-<left>". windmove-left)
+   ("C-M-<right>". windmove-right)
+   ("C-M-<up>". windmove-up)
+   ("C-M-<down>". windmove-down)))
 #+END_SRC
 
 Allow undo's and redo's with window configurations.
