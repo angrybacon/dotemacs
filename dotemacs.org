@@ -690,6 +690,11 @@ Helm equivalents.
   :after helm
   :config (setq-default helm-net-prefer-curl (if (executable-find "curl") t nil)))
 
+(use-package helm-org
+  :ensure nil
+  :after helm
+  :config (setq-default helm-org-headings-fontify t))
+
 (use-package helm-regexp
   :ensure nil
   :after helm
