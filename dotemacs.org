@@ -1760,7 +1760,15 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
 [[https://github.com/magit/magit][Jonas Bernoulli]]
 #+END_QUOTE
 
-- *TODO*: Turn auto-fill-mode on when editing a commit messaged.
+#+BEGIN_SRC emacs-lisp
+(use-package git-commit
+  :preface
+  (defun me/git-commit-auto-fill-everywhere ()
+    (setq fill-column 72)
+    (setq-local comment-auto-fill-only-comments nil))
+  :config
+  (add-hook 'git-commit-mode-hook #'me/git-commit-auto-fill-everywhere))
+#+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package magit
