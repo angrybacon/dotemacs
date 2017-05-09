@@ -1335,12 +1335,15 @@ information in the mode-line in various search modes.
 
 *** Scroll
 
-Configure the mouse wheel events.
+Configure the mouse wheel scroll.
 
 #+BEGIN_SRC emacs-lisp
 (use-package mwheel
   :ensure nil
-  :config (setq-default mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control)))))
+  :config
+  (setq-default
+   mouse-wheel-progressive-speed nil
+   mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control)))))
 #+END_SRC
 
 *** Search
