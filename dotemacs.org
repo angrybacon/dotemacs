@@ -353,32 +353,48 @@ Display the current Org header in the header-line.
 
 * D. Features
 
-1. [[#1-auto-completion][Auto-Completion]]
-2. [[#2-comments][Comments]]
-3. [[#3-customization-menus][Customization Menus]]
-4. [[#4-diff][Diff]]
-5. [[#5-dired][Dired]]
-6. [[#6-expand][Expand]]
-7. [[#7-exwm][EXWM]]
-8. [[#8-folding][Folding]]
-9. [[#9-helm][Helm]]
-10. [[#10-helm-plugins][Helm Plugins]]
-11. [[#11-hydra][Hydra]]
-12. [[#12-irc][IRC]]
-13. [[#13-linters][Linters]]
-14. [[#14-mode-line][Mode-Line]]
-15. [[#15-navigation][Navigation]]
-16. [[#16-os-specific][OS-Specific]]
-17. [[#17-parentheses][Parentheses]]
-18. [[#18-point-and-region][Point and Region]]
-19. [[#19-projectile][Projectile]]
-20. [[#20-quality-of-life][Quality of Life]]
-21. [[#21-slack][Slack]]
-22. [[#22-version-control][Version Control]]
-23. [[#23-whitespaces][Whitespaces]]
-24. [[#24-windows][Windows]]
+1. [[#1-alert][Alert]]
+2. [[#2-auto-completion][Auto-Completion]]
+3. [[#3-comments][Comments]]
+4. [[#4-customization-menus][Customization Menus]]
+5. [[#5-diff][Diff]]
+6. [[#6-dired][Dired]]
+7. [[#7-expand][Expand]]
+8. [[#8-exwm][EXWM]]
+9. [[#9-folding][Folding]]
+10. [[#10-helm][Helm]]
+11. [[#11-helm-plugins][Helm Plugins]]
+12. [[#12-hydra][Hydra]]
+13. [[#13-irc][IRC]]
+14. [[#14-linters][Linters]]
+15. [[#15-mode-line][Mode-Line]]
+16. [[#16-navigation][Navigation]]
+17. [[#17-os-specific][OS-Specific]]
+18. [[#18-parentheses][Parentheses]]
+19. [[#19-point-and-region][Point and Region]]
+20. [[#20-projectile][Projectile]]
+21. [[#21-quality-of-life][Quality of Life]]
+22. [[#22-slack][Slack]]
+23. [[#23-version-control][Version Control]]
+24. [[#24-whitespaces][Whitespaces]]
+25. [[#25-windows][Windows]]
 
-** 1. Auto-Completion
+** 1. Alert
+
+#+BEGIN_QUOTE
+Alert is a Growl-workalike for Emacs which uses a common notification interface
+and multiple, selectable "styles", whose use is fully customizable by the user.
+
+[[https://github.com/jwiegley/alert][John Wiegley]]
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package alert
+  :ensure nil
+  :config (setq-default alert-default-style 'osx-notifier))
+#+END_SRC
+
+** 2. Auto-Completion
 
 Auto-completion at point. Display a small pop-in containing the candidates.
 
@@ -414,7 +430,7 @@ completion candidates.
    company-tern-property-marker " *"))
 #+END_SRC
 
-** 2. Comments
+** 3. Comments
 
 #+BEGIN_SRC emacs-lisp
 (use-package newcomment
@@ -426,7 +442,7 @@ completion candidates.
    comment-multi-line t))
 #+END_SRC
 
-** 3. Customization Menus
+** 4. Customization Menus
 
 This merely changes face attributes. It also /Zenburn/ customization buffers a little
 more.
@@ -440,7 +456,7 @@ more.
     (set-face-attribute 'custom-state nil :foreground zenburn-green+4)))
 #+END_SRC
 
-** 4. Diff
+** 5. Diff
 
 Ediff is a visual interface to Unix =diff=.
 
@@ -462,7 +478,7 @@ Ediff is a visual interface to Unix =diff=.
    ediff-window-setup-function #'ediff-setup-windows-plain))
 #+END_SRC
 
-** 5. Dired
+** 6. Dired
 
 Configure Dired buffers. Amongst many other things, Emacs is also a file explorer.
 
@@ -495,7 +511,7 @@ Configure Dired buffers. Amongst many other things, Emacs is also a file explore
   (advice-add 'dired-smart-shell-command :after #'me/dired-revert-after-command))
 #+END_SRC
 
-** 6. Expand
+** 7. Expand
 
 HippieExpand manages expansions a la [[http://emmet.io/][Emmet]]. So I've gathered
 all features that look anywhere close to this behavior for it to handle under the
@@ -540,7 +556,7 @@ same bind, that is =<C-return>=. Basically it's an expand DWIM.
   (unbind-key "<tab>" yas-minor-mode-map))
 #+END_SRC
 
-** 7. EXWM
+** 8. EXWM
 
 - *TODO*
 
@@ -561,7 +577,7 @@ built on top of [[https://github.com/ch11ng/xelb][XELB]]. It features:
 (use-package exwm :disabled t)
 #+END_SRC
 
-** 8. Folding
+** 9. Folding
 
 #+BEGIN_QUOTE
 This is a package to perform text folding like in Vim. It has the following features:
@@ -594,7 +610,7 @@ This is a package to perform text folding like in Vim. It has the following feat
   (setq-default vimish-fold-header-width 79))
 #+END_SRC
 
-** 9. Helm
+** 10. Helm
 
 Helm is a beast. Although heavily, it replaces =ido-mode= in many ways.
 
@@ -703,7 +719,7 @@ Helm equivalents.
     (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn-blue)))
 #+END_SRC
 
-** 10. Helm Plugins
+** 11. Helm Plugins
 
 Fourth-party packages for Helm.
 
@@ -744,7 +760,7 @@ Fourth-party packages for Helm.
   :config (helm-projectile-toggle 1))
 #+END_SRC
 
-** 11. Hydra
+** 12. Hydra
 
 Hydra allows me to group binds together. It also shows a list of all implemented
 commands in the eho area.
@@ -1006,7 +1022,7 @@ Group window-related commands.
   ("3" (golden-ratio-adjust me/golden-ratio-adjust-factor-tri-split) :color red))
 #+END_SRC
 
-** 12. IRC
+** 13. IRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package erc
@@ -1044,7 +1060,7 @@ Group window-related commands.
    erc-timestamp-only-if-changed-flag nil))
 #+END_SRC
 
-** 13. Linters
+** 14. Linters
 
 Flycheck lints warnings and errors directly within buffers. It can check a lot of
 different syntaxes, as long as you make sure that Emacs has access to the binaries
@@ -1071,7 +1087,7 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
     (set-face-attribute 'flycheck-fringe-warning nil :foreground zenburn-orange)))
 #+END_SRC
 
-** 14. Mode-Line
+** 15. Mode-Line
 
 *** Screenshots
 
@@ -1231,7 +1247,7 @@ fun and profit.
                         :foreground zenburn-green+4)))
 #+END_SRC
 
-** 15. Navigation
+** 16. Navigation
 
 *** Inline
 
@@ -1361,7 +1377,7 @@ can do less, I've replaced default bindings with the regexp-equivalent commands.
 (global-set-key (kbd "C-S-s") 'isearch-forward-regexp)
 #+END_SRC
 
-** 16. OS-Specific
+** 17. OS-Specific
 
 Augment Emacs experience for OS X users.
 
@@ -1396,7 +1412,7 @@ interest, then copying them into the Emacs environment.
     (exec-path-from-shell-initialize)))
 #+END_SRC
 
-** 17. Parentheses
+** 18. Parentheses
 
 Highlight parenthese-like delimiters in a rainbow fashion. It ease the reading when
 dealing with mismatched parentheses.
@@ -1429,7 +1445,7 @@ package seem to please my person.
   (sp-pair "[[" "]]"))
 #+END_SRC
 
-** 18. Point and Region
+** 19. Point and Region
 
 Increase region by semantic units. It tries to be smart about it and adapt to the
 structure of the current major mode.
@@ -1606,7 +1622,7 @@ If region was active, keep it so that the command can be repeated."
   (indent-according-to-mode))
 #+END_SRC
 
-** 19. Projectile
+** 20. Projectile
 
 Projectile brings project-level facilities to Emacs such as grep, find and replace.
 
@@ -1643,7 +1659,7 @@ performance sake an indexing mechanism backed by external commands exists as wel
   (advice-add 'projectile-project-name :around #'me/projectile-project-name))
 #+END_SRC
 
-** 20. Quality of Life
+** 21. Quality of Life
 
 Auto-dim other buffers. Pretty self-explanatory.
 
@@ -1737,7 +1753,7 @@ Turn on =auto-fill-mode= everywhere.
   (add-hook 'text-mode-hook #'turn-on-auto-fill))
 #+END_SRC
 
-** 21. Slack
+** 22. Slack
 
 Slack integration.
 
@@ -1761,7 +1777,7 @@ Slack integration.
    :subscribed-channels '(dev general)))
 #+END_SRC
 
-** 22. Version Control
+** 23. Version Control
 
 Magit provide Git facilities directly from within Emacs.
 
@@ -1836,7 +1852,7 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
 (use-package gitignore-mode :delight gitignore-mode "Git Ignore")
 #+END_SRC
 
-** 23. Whitespaces
+** 24. Whitespaces
 
 Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
@@ -1849,7 +1865,7 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
   (setq-default whitespace-style '(face empty tab trailing)))
 #+END_SRC
 
-** 24. Windows
+** 25. Windows
 
 Save and restore Emacs status, including buffers, modes, point and windows.
 
