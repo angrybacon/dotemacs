@@ -67,7 +67,7 @@ Here are what I consider better defaults as per my own experience.
 Garbage-collect on focus-out, Emacs /should/ feel snappier.
 
 #+BEGIN_SRC emacs-lisp
-(add-hook 'focus-out-hook 'garbage-collect)
+(add-hook 'focus-out-hook #'garbage-collect)
 #+END_SRC
 
 ** 2. Load =.custom.el=
@@ -116,6 +116,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 (use-package zenburn-theme
   :demand t
   :config
+  (set-face-attribute 'bold nil :weight 'normal)
   (load-theme 'zenburn t)
 
   ;; Customize Zenburn implementation
@@ -148,7 +149,10 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(use-package mdi :ensure nil :demand t)
+(use-package mdi
+  :ensure nil
+  :load-path "lisp/mdi/"
+  :after zenburn-theme)
 #+END_SRC
 
 * C. Languages
@@ -172,17 +176,18 @@ but the customization of its lighter.
 
 #+BEGIN_SRC emacs-lisp
 (use-package css-mode
+  :ensure nil
   :delight css-mode "CSS"
   :config (setq-default css-indent-offset 2))
 
 (use-package scss-mode
+  :preface
+  (defun me/scss-set-comment-style ()
+    (setq-local comment-end "")
+    (setq-local comment-start "//"))
   :delight scss-mode "SCSS"
   :mode ("\\.css\\'" "\\.sass\\'" "\\.scss\\'")
-  :init
-  (add-hook 'scss-mode-hook
-            (lambda ()
-              (setq-local comment-end "")
-              (setq-local comment-start "//"))))
+  :init (add-hook 'scss-mode-hook #'me/scss-set-comment-style))
 #+END_SRC
 
 ** 2. Docker
@@ -215,17 +220,20 @@ for variables and properties.
 
 #+BEGIN_SRC emacs-lisp
 (use-package js
+  :ensure nil
   :delight js-mode "JavaScript"
   :config (setq-default js-indent-level 2))
 
 (use-package json-mode
   :delight json-mode "JSON"
   :mode ("\\.jshintrc\\'" "\\.json\\'")
-  :config
-  (add-hook 'json-mode-hook (lambda () (setq-local js-indent-level 2))))
+  :preface
+  (defun me/json-set-indent-level ()
+    (setq-local js-indent-level 2))
+  :init (add-hook 'json-mode-hook #'me/json-set-indent-level))
 
 (use-package tern
-  :config (add-hook 'js-mode-hook 'tern-mode))
+  :init (add-hook 'js-mode-hook #'tern-mode))
 #+END_SRC
 
 ** 5. Lisp
@@ -275,15 +283,15 @@ authoring documents with a fast and effective plain-text system.
 
 #+BEGIN_SRC emacs-lisp
 (use-package org
-  :delight org-mode "Org"
   :ensure nil
+  :delight org-mode "Org"
   :preface
   (defun me/org-backward-paragraph-shifted ()
-    "Move backward to start of previous paragraph or equivalent. Support shift."
+    "See `org-backward-paragraph'. Support shift."
     (interactive "^")
     (org-backward-paragraph))
   (defun me/org-forward-paragraph-shifted ()
-    "Move forward to beginning of next paragraph or equivalent. Support shift."
+    "See `org-forward-paragraph'. Support shift."
     (interactive "^")
     (org-forward-paragraph))
   :bind
@@ -291,8 +299,7 @@ authoring documents with a fast and effective plain-text system.
         ([remap backward-paragraph] . me/org-backward-paragraph-shifted)
         ([remap forward-paragraph] . me/org-forward-paragraph-shifted)
         ("<M-return" . org-insert-heading-after-current))
-  :init
-  (add-hook 'org-mode-hook 'org-sticky-header-mode)
+  :init (add-hook 'org-mode-hook #'org-sticky-header-mode)
   :config
   (setq-default
    org-descriptive-links nil
@@ -322,6 +329,7 @@ Display the current Org header in the header-line.
 
 #+BEGIN_SRC emacs-lisp
 (use-package python
+  :ensure nil
   :delight python-mode "Python"
   :config
   (when (executable-find "ipython")
@@ -341,9 +349,10 @@ Display the current Org header in the header-line.
 #+BEGIN_SRC emacs-lisp
 (use-package pip-requirements
   :delight pip-requirements-mode "PyPA Requirements"
-  :config
-  (add-hook 'pip-requirements-mode-hook
-            (lambda () (setq-local completion-ignore-case t))))
+  :preface
+  (defun me/pip-requirements-ignore-case ()
+    (setq-local completion-ignore-case t))
+  :init (add-hook 'pip-requirements-mode-hook #'me/pip-requirements-ignore-case))
 #+END_SRC
 
 ** 9. YAML
@@ -465,15 +474,17 @@ more.
 
 Ediff is a visual interface to Unix =diff=.
 
+- *TODO*: Use =:bind=.
+
 #+BEGIN_SRC emacs-lisp
 (use-package ediff-util
   :ensure nil
   :preface
-  (defun me/setup-ediff-map ()
+  (defun me/ediff-setup-keymap ()
     (ediff-setup-keymap)
     (define-key ediff-mode-map (kbd "<down>") #'ediff-next-difference)
     (define-key ediff-mode-map (kbd "<up>") #'ediff-previous-difference))
-  :init (add-hook 'ediff-mode-hook #'me/setup-ediff-map))
+  :init (add-hook 'ediff-mode-hook #'me/ediff-setup-keymap))
 
 (use-package ediff-wind
   :ensure nil
@@ -522,11 +533,13 @@ HippieExpand manages expansions a la [[http://emmet.io/][Emmet]]. So I've gather
 all features that look anywhere close to this behavior for it to handle under the
 same bind, that is =<C-return>=. Basically it's an expand DWIM.
 
+- *TODO*: Use =:bind=.
+
 #+BEGIN_SRC emacs-lisp
 (use-package emmet-mode
   :init
-  (add-hook 'css-mode-hook 'emmet-mode)
-  (add-hook 'sgml-mode-hook 'emmet-mode)
+  (add-hook 'css-mode-hook #'emmet-mode)
+  (add-hook 'html-mode-hook #'emmet-mode)
   :config
   (setq-default emmet-move-cursor-between-quote t)
   (unbind-key "<C-return>" emmet-mode-keymap)
@@ -549,11 +562,11 @@ same bind, that is =<C-return>=. Basically it's an expand DWIM.
 
 (use-package yasnippet
   :init
-  (add-hook 'emacs-lisp-mode-hook 'yas-minor-mode)
-  (add-hook 'js-mode-hook 'yas-minor-mode)
-  (add-hook 'org-mode-hook 'yas-minor-mode)
-  (add-hook 'python-mode-hook 'yas-minor-mode)
-  (add-hook 'sgml-mode-hook 'yas-minor-mode)
+  (add-hook 'emacs-lisp-mode-hook #'yas-minor-mode)
+  (add-hook 'html-mode-hook #'yas-minor-mode)
+  (add-hook 'js-mode-hook #'yas-minor-mode)
+  (add-hook 'org-mode-hook #'yas-minor-mode)
+  (add-hook 'python-mode-hook #'yas-minor-mode)
   :config
   (setq-default yas-snippet-dirs '("~/.emacs.d/snippets"))
   (yas-reload-all)
@@ -981,7 +994,7 @@ _q_ quit            _i_ insert          _a_ show all
 ^^                  ^^                  ^^
 "
   ("q" nil)
-  ("a" show-all)
+  ("a" outline-show-all)
   ("b" org-backward-element)
   ("f" org-forward-element)
   ("i" org-insert-link)
@@ -1067,11 +1080,11 @@ _q_ quit            _2_ bi-split        _-_ zoom out
 (use-package erc
   :preface
   (defun me/erc-bol-shifted ()
-    "Move `point' to the beginning of the current line. Support shift."
+    "See `erc-bol'. Support shift."
     (interactive "^")
     (erc-bol))
   (defun me/erc-set-fill-column ()
-    "Update `erc-fill-column' when window configuration changes."
+    "Update `erc-fill-column' when the window configuration changes."
     (save-excursion
       (walk-windows
        (lambda (w)
@@ -1084,11 +1097,10 @@ _q_ quit            _2_ bi-split        _-_ zoom out
         ([remap erc-bol] . me/erc-bol-shifted)
         ("M-<down>" . erc-next-command)
         ("M-<up>" . erc-previous-command))
+  :init (add-hook 'window-configuration-change-hook #'me/erc-set-fill-column)
   :config
   (make-variable-buffer-local 'erc-fill-column)
-  (add-hook 'window-configuration-change-hook 'me/erc-set-fill-column)
   (erc-scrolltobottom-mode)
-
   (setq-default
    erc-fill-function 'erc-fill-static
    erc-fill-static-center 16
@@ -1105,7 +1117,7 @@ Colorize nicks with unique colors.
 - *FIXME*: Pastel'ize the colors.
 
 #+BEGIN_SRC emacs-lisp
-(use-package erc-hl-nicks)
+(use-package erc-hl-nicks :after erc)
 #+END_SRC
 
 ** 14. Linters
@@ -1117,10 +1129,10 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
   :init
-  (add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
-  (add-hook 'js-mode-hook 'flycheck-mode)
-  (add-hook 'python-mode-hook 'flycheck-mode)
-  (add-hook 'scss-mode-hook 'flycheck-mode)
+  (add-hook 'css-mode-hook #'flycheck-mode)
+  (add-hook 'emacs-lisp-mode-hook #'flycheck-mode)
+  (add-hook 'js-mode-hook #'flycheck-mode)
+  (add-hook 'python-mode-hook #'flycheck-mode)
   :config
   (setq-default
    flycheck-check-syntax-automatically '(save mode-enabled)
@@ -1181,6 +1193,7 @@ it to use the newly changed strings.
 
 #+BEGIN_SRC emacs-lisp
 (use-package delight
+  :ensure nil
   :config
   (defadvice powerline-major-mode (around delight-powerline-major-mode activate)
     (let ((inhibit-mode-name-delight nil)) ad-do-it))
@@ -1461,10 +1474,9 @@ interest, then copying them into the Emacs environment.
 
 #+BEGIN_SRC emacs-lisp
 (use-package exec-path-from-shell
-  :demand t
-  :config
-  (when (memq window-system '(mac ns))
-    (exec-path-from-shell-initialize)))
+  :if (memq window-system '(mac ns))
+  :defer 1
+  :config (exec-path-from-shell-initialize))
 #+END_SRC
 
 ** 18. Parentheses
@@ -1474,9 +1486,7 @@ dealing with mismatched parentheses.
 
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
-  :init
-  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'scss-mode-hook #'rainbow-delimiters-mode))
+  :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+END_SRC
 
 I am still looking for the perfect parenthesis management setup as of today... No
@@ -1724,9 +1734,8 @@ Auto-dim other buffers. Pretty self-explanatory.
 
 #+BEGIN_SRC emacs-lisp
 (use-package auto-dim-other-buffers
-  :demand t
+  :init (auto-dim-other-buffers-mode 1)
   :config
-  (auto-dim-other-buffers-mode 1)
   (zenburn-with-color-variables
     (set-face-attribute 'auto-dim-other-buffers-face nil :background zenburn-bg-05)))
 #+END_SRC
@@ -1765,6 +1774,7 @@ kills old buffers.
 
 #+BEGIN_SRC emacs-lisp
 (use-package midnight
+  :ensure nil
   :config
   (setq-default clean-buffer-list-delay-general 1)
   (add-to-list 'clean-buffer-list-kill-never-buffer-names "dotemacs.org"))
@@ -1795,7 +1805,7 @@ Colorize colors as text with their value.
 
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-mode
-  :init (add-hook 'prog-mode-hook 'rainbow-mode)
+  :init (add-hook 'prog-mode-hook #'rainbow-mode)
   :config (setq-default rainbow-x-colors-major-mode-list '()))
 #+END_SRC
 
@@ -1835,7 +1845,7 @@ Slack integration.
 
 ** 23. Version Control
 
-Magit provide Git facilities directly from within Emacs.
+Magit provides Git facilities directly from within Emacs.
 
 #+BEGIN_QUOTE
 Magit is an interface to the version control system [[https://git-scm.com/][Git]],
@@ -1855,8 +1865,7 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
   (defun me/git-commit-auto-fill-everywhere ()
     (setq fill-column 72)
     (setq-local comment-auto-fill-only-comments nil))
-  :config
-  (add-hook 'git-commit-mode-hook #'me/git-commit-auto-fill-everywhere))
+  :config (add-hook 'git-commit-mode-hook #'me/git-commit-auto-fill-everywhere))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -1931,6 +1940,7 @@ Save and restore Emacs status, including buffers, modes, point and windows.
 
 #+BEGIN_SRC emacs-lisp
 (use-package desktop
+  :ensure nil
   :demand t
   :config
   (desktop-save-mode 1)
@@ -1951,7 +1961,7 @@ written in Python.
 
 #+BEGIN_SRC emacs-lisp
 (use-package eyebrowse
-  :demand t
+  :defer 1
   :bind
   ("<f5>" . eyebrowse-switch-to-window-config-1)
   ("<f6>" . eyebrowse-switch-to-window-config-2)
