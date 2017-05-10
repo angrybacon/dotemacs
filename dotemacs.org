@@ -50,7 +50,8 @@ Here are what I consider better defaults as per my own experience.
  split-width-threshold nil                        ; Disable horizontal window splitting
  tab-width 4                                      ; Set width for tabs
  uniquify-buffer-name-style 'forward              ; Uniquify buffer names
- window-combination-resize t)                     ; Resize windows proportionally
+ window-combination-resize t                      ; Resize windows proportionally
+ x-stretch-cursor t)                              ; Stretch cursor to the glyph width
 (display-time-mode 1)                             ; Enable time in the mode-line
 (fringe-mode '(10 . 10))                          ; Show vertical fringes
 (fset 'yes-or-no-p 'y-or-n-p)                     ; Replace yes/no prompts with y/n
@@ -653,6 +654,9 @@ modular, and unchained from constraints of backward compatibility.
 Helm sub-modules can be customized separately. Many basic Emacs commands have their
 Helm equivalents.
 
+- *TODO*: Do I actually want to split all of these?
+- *TODO*: Help buffer resizes the frame when killed.
+
 #+BEGIN_SRC emacs-lisp
 (use-package helm-buffers
   :ensure nil
@@ -660,7 +664,7 @@ Helm equivalents.
   :config
   (setq-default
    helm-buffers-fuzzy-matching t
-   helm-buffer-max-length 30)
+   helm-buffer-max-length nil)
   (zenburn-with-color-variables
     (set-face-attribute 'helm-buffer-directory nil
                         :foreground zenburn-blue
@@ -700,6 +704,11 @@ Helm equivalents.
   :ensure nil
   :after helm
   :bind ([remap switch-to-buffer] . helm-buffers-list))
+
+(use-package helm-lib
+  :ensure nil
+  :after helm
+  :config (setq-default helm-help-full-frame nil))
 
 (use-package helm-mode
   :ensure nil
