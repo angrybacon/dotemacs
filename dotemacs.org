@@ -810,9 +810,9 @@ Group date-related commands.
 ^
 ^Dates^             ^Insert^            ^Insert with time^
 ^─────^─────────────^──────^────────────^────────────────^──
-[_q_] quit          [_d_] short         [_D_] short
-^^                  [_i_] iso           [_I_] iso
-^^                  [_l_] long
+_q_ quit            _d_ short           _D_ short
+^^                  _i_ iso             _I_ iso
+^^                  _l_ long
 ^^                  ^^                  ^^
 "
   ("q" nil)
@@ -833,10 +833,10 @@ Group Eyebrowse commands.
 ^
 ^Eyebrowse^         ^Do^                ^Switch^
 ^─────────^─────────^──^────────────────^──────^────────────
-[_q_] quit          [_c_] create        [_>_] next
-^^                  [_k_] kill          [_>_] previous
-^^                  [_r_] rename        [_e_] last
-^^                  ^^                  [_s_] switch
+_q_] quit           _c_ create          _>_ next
+^^                  _k_ kill            _>_ previous
+^^                  _r_ rename          _e_ last
+^^                  ^^                  _s_ switch
 ^^                  ^^                  ^^
 "
   ("q" nil)
@@ -859,9 +859,9 @@ Group Flycheck commands.
 ^
 ^Flycheck^          ^Errors^            ^Checker^
 ^────────^──────────^──────^────────────^───────^───────────
-[_q_] quit          [_c_] check         [_s_] select
-[_v_] verify setup  [_n_] next          [_d_] disable
-[_m_] manual        [_p_] previous      [_?_] describe
+_q_ quit            _c_ check           _s_ select
+_v_ verify setup    _n_ next            _d_ disable
+_m_ manual          _p_ previous        _?_ describe
 ^^                  ^^                  ^^
 "
   ("q" nil)
@@ -885,9 +885,9 @@ Group folding commands.
 ^
 ^Fold^              ^Do^                ^Jump^              ^Toggle^
 ^────^──────────────^──^────────────────^────^──────────────^──────^────────────
-[_q_] quit          [_f_] fold          [_n_] next          [_<tab>_] current
-^^                  [_k_] kill          [_p_] previous      [_S-<tab>_] all
-^^                  [_K_] kill all      ^^                  ^^
+_q_ quit            _f_ fold            _n_ next            _<tab>_ current
+^^                  _k_ kill            _p_ previous        _S-<tab>_ all
+^^                  _K_ kill all        ^^                  ^^
 ^^                  ^^                  ^^                  ^^
 "
   ("q" nil)
@@ -912,11 +912,11 @@ Group Helm commands.
 ^
 ^Helm^              ^Browse^            ^Do^
 ^────^──────────────^──────^────────────^──^────────────────
-[_q_] quit          [_c_] colors        [_f_] flycheck
-[_r_] resume helm   [_g_] google        [_s_] css-scss
-^^                  [_h_] headings      ^^
-^^                  [_i_] imenu         ^^
-^^                  [_k_] kill-ring     ^^
+_q_ quit            _c_ colors          _f_ flycheck
+_r_ resume session  _g_ google          _s_ css-scss
+^^                  _h_ headings        ^^
+^^                  _i_ imenu           ^^
+^^                  _k_ kill-ring       ^^
 ^^                  ^^                  ^^
 "
   ("q" nil)
@@ -940,10 +940,10 @@ Group Magit commands.
 ^
 ^Magit^             ^Do^
 ^─────^─────────────^──^────────────────
-[_q_] quit          [_b_] blame
-^^                  [_c_] clone
-^^                  [_i_] init
-^^                  [_s_] status
+_q_ quit            _b_ blame
+^^                  _c_ clone
+^^                  _i_ init
+^^                  _s_ status
 ^^                  ^^
 "
   ("q" nil)
@@ -963,11 +963,11 @@ Group Org commands.
 ^
 ^Org^               ^Links^             ^Outline^
 ^───^───────────────^─────^─────────────^───────^───────────
-[_q_] quit          [_i_] insert        [_a_] show all
-^^                  [_n_] next          [_b_] backward
-^^                  [_o_] open          [_f_] forward
-^^                  [_p_] previous      [_v_] overview
-^^                  [_s_] store         ^^
+_q_ quit            _i_ insert          _a_ show all
+^^                  _n_ next            _b_ backward
+^^                  _o_ open            _f_ forward
+^^                  _p_ previous        _v_ overview
+^^                  _s_ store           ^^
 ^^                  ^^                  ^^
 "
   ("q" nil)
@@ -992,10 +992,10 @@ Group Projectile commands.
 ^
 ^Projectile^        ^Buffers^           ^Find^              ^Search^
 ^──────────^────────^───────^───────────^────^──────────────^──────^────────────
-[_q_] quit          [_b_] list all      [_d_] directory     [_r_] replace
-[_i_] reset cache   [_k_] kill all      [_D_] root          [_s_] ag
-^^                  [_S_] save all      [_f_] file          ^^
-^^                  ^^                  [_p_] project       ^^
+_q_ quit            _b_ list all        _d_ directory       _r_ replace
+_i_ reset cache     _k_ kill all        _D_ root            _s_ ag
+^^                  _S_ save all        _f_ file            ^^
+^^                  ^^                  _p_ project         ^^
 ^^                  ^^                  ^^                  ^^
 "
   ("q" nil)
@@ -1021,9 +1021,9 @@ Group window-related commands.
 ^
 ^Windows^           ^Golden-Ratio^      ^Zoom^
 ^───────^───────────^────────────^──────^────^──────────────
-[_q_] quit          [_2_] bi-split      [_-_] zoom out
-^^                  [_3_] tri-split     [_+_] zoom in
-^^                  ^^                  [_=_] reset
+_q_ quit            _2_ bi-split        _-_ zoom out
+^^                  _3_ tri-split       _+_ zoom in
+^^                  ^^                  _=_ reset
 ^^                  ^^                  ^^
 "
   ("q" nil)
