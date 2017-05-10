@@ -805,6 +805,7 @@ it's like a minor mode that disables itself auto-magically.
   ("C-c h" . hydra-helm/body)
   ("C-c o" . hydra-org/body)
   ("C-c p" . hydra-projectile/body)
+  ("C-c s" . hydra-system/body)
   ("C-c w" . hydra-windows/body)
   :config (setq-default hydra-default-hint nil))
 #+END_SRC
@@ -1018,6 +1019,23 @@ _i_ reset cache     _k_ kill all        _D_ root            _s_ ag
   ("r" projectile-replace)
   ("s" helm-projectile-ag)
   ("S" projectile-save-project-buffers :color red))
+#+END_SRC
+
+*** System
+
+Group system-related commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-system (:color blue)
+  "
+^
+^System^            ^Processes^
+^──────^────────────^─────────^─────────
+_q_ quit            _p_ list
+^^                  ^^
+"
+  ("q" nil)
+  ("p" list-processes))
 #+END_SRC
 
 *** Windows
