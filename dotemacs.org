@@ -1100,6 +1100,14 @@ _q_ quit            _2_ bi-split        _-_ zoom out
    erc-timestamp-only-if-changed-flag nil))
 #+END_SRC
 
+Colorize nicks with unique colors.
+
+- *FIXME*: Pastel'ize the colors.
+
+#+BEGIN_SRC emacs-lisp
+(use-package erc-hl-nicks)
+#+END_SRC
+
 ** 14. Linters
 
 Flycheck lints warnings and errors directly within buffers. It can check a lot of
