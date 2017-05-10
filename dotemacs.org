@@ -1066,7 +1066,10 @@ _q_ quit            _2_ bi-split        _-_ zoom out
 #+BEGIN_SRC emacs-lisp
 (use-package erc
   :preface
-  (defun me/erc-bol-with-region () (interactive "^") (erc-bol))
+  (defun me/erc-bol-shifted ()
+    "Move `point' to the beginning of the current line. Support shift."
+    (interactive "^")
+    (erc-bol))
   (defun me/erc-set-fill-column ()
     "Update `erc-fill-column' when window configuration changes."
     (save-excursion
@@ -1078,11 +1081,10 @@ _q_ quit            _2_ bi-split        _-_ zoom out
              (setq erc-fill-column (- (window-width w) 1))))))))
   :bind
   (:map erc-mode-map
-        ([remap erc-bol] . me/erc-bol-with-region)
-        ("C-<down>" . erc-next-command)
-        ("C-<up>" . erc-previous-command))
+        ([remap erc-bol] . me/erc-bol-shifted)
+        ("M-<down>" . erc-next-command)
+        ("M-<up>" . erc-previous-command))
   :config
-  ;; NOTE: Why not setq-local?
   (make-variable-buffer-local 'erc-fill-column)
   (add-hook 'window-configuration-change-hook 'me/erc-set-fill-column)
   (erc-scrolltobottom-mode)
@@ -1093,9 +1095,8 @@ _q_ quit            _2_ bi-split        _-_ zoom out
    erc-header-line-format nil
    erc-lurker-hide-list '("JOIN" "PART" "QUIT")
    erc-nick me/erc-nick
-   erc-input-line-position -1
    erc-insert-timestamp-function 'erc-insert-timestamp-left
-   erc-timestamp-format "[%H:%M:%S] "
+   erc-timestamp-format "[%H:%M:%S]"
    erc-timestamp-only-if-changed-flag nil))
 #+END_SRC
 
