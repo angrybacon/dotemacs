@@ -1416,7 +1416,10 @@ highlighted while you are typing your query, incrementally. Since he who can do 
 can do less, I've replaced default bindings with the regexp-equivalent commands.
 
 #+BEGIN_SRC emacs-lisp
-(setq-default isearch-allow-scroll t)
+(setq-default
+ isearch-allow-scroll t
+ lazy-highlight-cleanup nil
+ lazy-highlight-initial-delay 0)
 (global-set-key (kbd "C-S-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-S-s") 'isearch-forward-regexp)
 #+END_SRC
