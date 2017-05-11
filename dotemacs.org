@@ -1103,7 +1103,7 @@ _q_ quit            _-_ zoom out
   (erc-scrolltobottom-mode)
   (setq-default
    erc-fill-function 'erc-fill-static
-   erc-fill-static-center 16
+   erc-fill-static-center 17
    erc-header-line-format nil
    erc-lurker-hide-list '("JOIN" "PART" "QUIT")
    erc-nick me/erc-nick
