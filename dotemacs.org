@@ -856,15 +856,15 @@ Group Eyebrowse commands.
 ^
 ^Eyebrowse^         ^Do^                ^Switch^
 ^─────────^─────────^──^────────────────^──────^────────────
-_q_] quit           _c_ create          _>_ next
-^^                  _k_ kill            _>_ previous
+_q_ quit            _c_ create          _<_ previous
+^^                  _k_ kill            _>_ next
 ^^                  _r_ rename          _e_ last
 ^^                  ^^                  _s_ switch
 ^^                  ^^                  ^^
 "
   ("q" nil)
-  (">" eyebrowse-next-window-config :color red)
   ("<" eyebrowse-prev-window-config :color red)
+  (">" eyebrowse-next-window-config :color red)
   ("c" eyebrowse-create-window-config)
   ("e" eyebrowse-last-window-config)
   ("k" eyebrowse-close-window-config :color red)
@@ -882,25 +882,27 @@ Group Flycheck commands.
 ^
 ^Flycheck^          ^Errors^            ^Checker^
 ^────────^──────────^──────^────────────^───────^───────────
-_q_ quit            _c_ check           _s_ select
-_v_ verify setup    _n_ next            _d_ disable
-_m_ manual          _p_ previous        _?_ describe
+_q_ quit            _<_ previous        _?_ describe
+_m_ manual          _>_ next            _d_ disable
+_v_ verify setup    _f_ check           _s_ select
 ^^                  ^^                  ^^
 "
   ("q" nil)
-  ("c" flycheck-buffer)
+  ("<" flycheck-previous-error :color red)
+  (">" flycheck-next-error :color red)
+  ("?" flycheck-describe-checker)
   ("d" flycheck-disable-checker)
+  ("f" flycheck-buffer)
   ("m" flycheck-manual)
-  ("n" flycheck-next-error :color red)
-  ("p" flycheck-previous-error :color red)
   ("s" flycheck-select-checker)
-  ("v" flycheck-verify-setup)
-  ("?" flycheck-describe-checker))
+  ("v" flycheck-verify-setup))
 #+END_SRC
 
 *** Fold
 
 Group folding commands.
+
+- *TODO*: Use =:bind=.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-fold (:color pink)
@@ -908,19 +910,19 @@ Group folding commands.
 ^
 ^Fold^              ^Do^                ^Jump^              ^Toggle^
 ^────^──────────────^──^────────────────^────^──────────────^──────^────────────
-_q_ quit            _f_ fold            _n_ next            _<tab>_ current
-^^                  _k_ kill            _p_ previous        _S-<tab>_ all
+_q_ quit            _f_ fold            _<_ previous        _<tab>_ current
+^^                  _k_ kill            _>_ next            _S-<tab>_ all
 ^^                  _K_ kill all        ^^                  ^^
 ^^                  ^^                  ^^                  ^^
 "
   ("q" nil)
   ("<tab>" vimish-fold-toggle)
   ("S-<tab>" vimish-fold-toggle-all)
+  ("<" vimish-fold-previous-fold)
+  (">" vimish-fold-next-fold)
   ("f" vimish-fold)
   ("k" vimish-fold-delete)
-  ("K" vimish-fold-delete-all)
-  ("n" vimish-fold-next-fold)
-  ("p" vimish-fold-previous-fold))
+  ("K" vimish-fold-delete-all))
 #+END_SRC
 
 *** Helm
@@ -936,7 +938,7 @@ Group Helm commands.
 ^Helm^              ^Browse^            ^Do^
 ^────^──────────────^──────^────────────^──^────────────────
 _q_ quit            _c_ colors          _f_ flycheck
-_r_ resume session  _g_ google          _s_ css-scss
+_r_ resume          _g_ google          _s_ css-scss
 ^^                  _h_ headings        ^^
 ^^                  _i_ imenu           ^^
 ^^                  _k_ kill-ring       ^^
@@ -986,18 +988,18 @@ Group Org commands.
 ^
 ^Org^               ^Links^             ^Outline^
 ^───^───────────────^─────^─────────────^───────^───────────
-_q_ quit            _i_ insert          _a_ show all
-^^                  _n_ next            _b_ backward
-^^                  _o_ open            _f_ forward
+_q_ quit            _i_ insert          _<_ previous
+^^                  _n_ next            _>_ next
+^^                  _o_ open            _a_ all
 ^^                  _p_ previous        _v_ overview
 ^^                  _s_ store           ^^
 ^^                  ^^                  ^^
 "
   ("q" nil)
+  ("<" org-backward-element)
+  (">" org-forward-element)
   ("a" outline-show-all)
-  ("b" org-backward-element)
-  ("f" org-forward-element)
-  ("i" org-insert-link)
+  ("i" org-insert-link :color blue)
   ("n" org-next-link)
   ("o" org-open-at-point)
   ("p" org-previous-link)
@@ -1015,8 +1017,8 @@ Group Projectile commands.
 ^
 ^Projectile^        ^Buffers^           ^Find^              ^Search^
 ^──────────^────────^───────^───────────^────^──────────────^──────^────────────
-_q_ quit            _b_ list all        _d_ directory       _r_ replace
-_i_ reset cache     _k_ kill all        _D_ root            _s_ ag
+_q_ quit            _b_ list            _d_ directory       _r_ replace
+_i_ reset cache     _K_ kill all        _D_ root            _s_ ag
 ^^                  _S_ save all        _f_ file            ^^
 ^^                  ^^                  _p_ project         ^^
 ^^                  ^^                  ^^                  ^^
@@ -1027,11 +1029,11 @@ _i_ reset cache     _k_ kill all        _D_ root            _s_ ag
   ("D" projectile-dired)
   ("f" helm-projectile-find-file)
   ("i" projectile-invalidate-cache :color red)
-  ("k" projectile-kill-buffers)
+  ("K" projectile-kill-buffers)
   ("p" helm-projectile-switch-project)
   ("r" projectile-replace)
   ("s" helm-projectile-ag)
-  ("S" projectile-save-project-buffers :color red))
+  ("S" projectile-save-project-buffers))
 #+END_SRC
 
 *** System
@@ -1056,22 +1058,20 @@ _q_ quit            _p_ list
 Group window-related commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-windows (:color blue)
+(defhydra hydra-windows (:color pink)
   "
 ^
-^Windows^           ^Golden-Ratio^      ^Zoom^
-^───────^───────────^────────────^──────^────^──────────────
-_q_ quit            _2_ bi-split        _-_ zoom out
-^^                  _3_ tri-split       _+_ zoom in
-^^                  ^^                  _=_ reset
-^^                  ^^                  ^^
+^Windows^           ^Zoom^
+^───────^───────────^────^──────────────
+_q_ quit            _-_ zoom out
+^^                  _+_ zoom in
+^^                  _=_ reset
+^^                  ^^
 "
   ("q" nil)
-  ("-" text-scale-decrease :color red)
-  ("+" text-scale-increase :color red)
-  ("=" (text-scale-increase 0) :color red)
-  ("2" (golden-ratio-adjust me/golden-ratio-adjust-factor-bi-split) :color red)
-  ("3" (golden-ratio-adjust me/golden-ratio-adjust-factor-tri-split) :color red))
+  ("-" text-scale-decrease)
+  ("+" text-scale-increase)
+  ("=" (text-scale-increase 0)))
 #+END_SRC
 
 ** 13. IRC
