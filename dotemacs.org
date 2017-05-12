@@ -403,7 +403,6 @@ and multiple, selectable "styles", whose use is fully customizable by the user.
 
 #+BEGIN_SRC emacs-lisp
 (use-package alert
-  :ensure nil
   :config (setq-default alert-default-style 'osx-notifier))
 #+END_SRC
 
@@ -1976,6 +1975,7 @@ golden ratio somewhere in its formulas.
 
 #+BEGIN_SRC emacs-lisp
 (use-package golden-ratio
+  :disabled t
   :demand t
   :preface
   (defconst me/golden-ratio-adjust-factor-bi-split .805)
