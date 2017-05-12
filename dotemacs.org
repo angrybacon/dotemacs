@@ -1929,9 +1929,10 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 (use-package whitespace
   :demand t
   :ensure nil
-  :config
-  (global-whitespace-mode 1)
-  (setq-default whitespace-style '(face empty tab trailing)))
+  :init
+  (add-hook 'prog-mode-hook #'whitespace-turn-on)
+  (add-hook 'text-mode-hook #'whitespace-turn-on)
+  :config (setq-default whitespace-style '(face empty tab trailing)))
 #+END_SRC
 
 ** 25. Windows
