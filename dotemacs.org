@@ -130,8 +130,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
     (set-face-attribute 'header-line nil
                         :background zenburn-bg-1
                         :box `(:line-width 2 :color ,zenburn-bg-1)
-                        :height me/font-size-header-line
-                        :weight 'normal)
+                        :height me/font-size-header-line)
     (set-face-attribute 'isearch nil
                         :background zenburn-blue
                         :foreground zenburn-blue-5)
@@ -1221,21 +1220,17 @@ fun and profit.
   :demand t
   :config
 
-  ;; Build a segment for the version control branch
-  (spaceline-define-segment me/version-control
-    (when vc-mode
-      (substring vc-mode (+ 2 (length (symbol-name (vc-backend buffer-file-name)))))))
 
-  ;; Build a segment for helm-follow-mode
   (spaceline-define-segment me/helm-follow
+    "Show `helm-follow-mode' status."
     (if (and (bound-and-true-p helm-alive-p)
              spaceline--helm-current-source
              (eq 1 (cdr (assq 'follow spaceline--helm-current-source))))
         (propertize (mdi-insert "eye") 'face 'success)
       (mdi-insert "eye-off")))
 
-  ;; Build a segment for the active region
   (spaceline-define-segment me/selection-info
+    "Show the size of current region."
     (when mark-active
       (let* ((lines (count-lines
                      (region-beginning) (min (1+ (region-end)) (point-max))))
@@ -1247,7 +1242,12 @@ fun and profit.
         (cond
          (rect (format "%d %s %d" (1- cols) (mdi-insert "arrow-expand-all") lines))
          (multi-line (format "%d lines" (if (eq (current-column) 0) (1- lines) lines)))
-         (t (format "%d chars" (1- chars))))))))
+         (t (format "%d chars" (1- chars)))))))
+
+  (spaceline-define-segment me/version-control
+    "Show the current version control branch."
+    (when vc-mode
+      (substring vc-mode (+ 2 (length (symbol-name (vc-backend buffer-file-name))))))))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -1260,7 +1260,6 @@ fun and profit.
   (setq-default
    mode-line-format '("%e" (:eval (spaceline-ml-main)))
    powerline-default-separator 'wave
-   spaceline-display-default-perspective t
    powerline-height 20
    spaceline-highlight-face-func 'spaceline-highlight-face-modified
    spaceline-flycheck-bullet (format "%s%s" (mdi-insert "record") "%s")
@@ -1275,8 +1274,7 @@ fun and profit.
      (anzu))
    `((me/selection-info)
      ((flycheck-error flycheck-warning flycheck-info :when active))
-     ((projectile-root me/version-control)
-      :separator (format " %s " (mdi-insert "source-branch")))
+     ((projectile-root me/version-control) :separator (mdi-insert "source-branch" t))
      (workspace-number)
      (global :face highlight-face)))
   (spaceline-install
@@ -1284,7 +1282,7 @@ fun and profit.
    '((helm-buffer-id :face spaceline-read-only)
      (helm-number)
      (me/helm-follow)
-     helm-prefix-argument)
+     (helm-prefix-argument))
    '((global :face spaceline-read-only)))
 
   ;; Customize the mode-line
@@ -1449,14 +1447,14 @@ can do less, I've replaced default bindings with the regexp-equivalent commands.
 
 ** 17. OS-Specific
 
-Augment Emacs experience for OS X users.
+Augment Emacs experience for MacOS users.
 
 #+BEGIN_SRC emacs-lisp
 (when (eq system-type 'darwin)
   (setq-default
-   exec-path (append exec-path '("/usr/local/bin"))  ; Add path to Homebrew binaries
-   ns-command-modifier 'meta                         ; Map the Meta key to the `cmd' key
    ns-option-modifier nil))                          ; Disable the `alt' key
+   exec-path (append exec-path '("/usr/local/bin"))  ; Add Homebrew path
+   ns-command-modifier 'meta                         ; Map Meta to the Cmd key
 #+END_SRC
 
 Initialize environment variables.
