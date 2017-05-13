@@ -1112,12 +1112,14 @@ _q_ quit            _-_ zoom out
   (setq-default
    erc-fill-function 'erc-fill-static
    erc-fill-static-center 18
-   erc-header-line-format nil
+   erc-header-line-format " %n on %t %m"
+   erc-insert-timestamp-function 'erc-insert-timestamp-left
    erc-lurker-hide-list '("JOIN" "PART" "QUIT")
    erc-nick me/erc-nick
-   erc-insert-timestamp-function 'erc-insert-timestamp-left
-   erc-timestamp-format "[%H:%M:%S]"
-   erc-timestamp-only-if-changed-flag nil))
+   erc-prompt (format "%27s" ">")
+   erc-timestamp-format "[%H:%M:%S]")
+  (zenburn-with-color-variables
+    (set-face-attribute 'erc-timestamp-face nil :foreground zenburn-fg-1)))
 #+END_SRC
 
 Colorize nicks with unique colors.
