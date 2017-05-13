@@ -789,6 +789,13 @@ Fourth-party packages for Helm.
 (use-package helm-projectile
   :after helm
   :config (helm-projectile-toggle 1))
+
+(use-package helm-swoop
+  :config
+  (setq-default
+   helm-swoop-move-to-line-cycle nil
+   helm-swoop-speed-or-color t
+   helm-swoop-split-direction 'split-window-horizontally))
 #+END_SRC
 
 ** 12. Hydra
