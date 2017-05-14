@@ -1142,7 +1142,9 @@ Colorize nicks with unique colors.
 Keep track of ERC buffers in which new messages have been posted.
 
 #+BEGIN_SRC emacs-lisp
-(use-package erc-track :after erc)
+(use-package erc-track
+  :ensure nil
+  :after erc)
 #+END_SRC
 
 ** 14. Linters
@@ -1864,7 +1866,6 @@ Slack integration.
 #+BEGIN_SRC emacs-lisp
 (use-package slack
   :disabled t
-  :commands (slack-start)
   :config
   (setq-default
    slack-buffer-function 'switch-to-buffer
