@@ -1261,8 +1261,8 @@ fun and profit.
     (if (and (bound-and-true-p helm-alive-p)
              spaceline--helm-current-source
              (eq 1 (cdr (assq 'follow spaceline--helm-current-source))))
-        (propertize (mdi-insert "eye") 'face 'success)
-      (mdi-insert "eye-off")))
+        (propertize (mdi "eye") 'face 'success)
+      (mdi "eye-off")))
 
   (spaceline-define-segment me/selection-info
     "Show the size of current region."
@@ -1275,7 +1275,7 @@ fun and profit.
              (rect (bound-and-true-p rectangle-mark-mode))
              (multi-line (> lines 1)))
         (cond
-         (rect (format "%d %s %d" (1- cols) (mdi-insert "arrow-expand-all") lines))
+         (rect (format "%d %s %d" (1- cols) (mdi "arrow-expand-all") lines))
          (multi-line (format "%d lines" (if (eq (current-column) 0) (1- lines) lines)))
          (t (format "%d chars" (1- chars)))))))
 
@@ -1297,7 +1297,7 @@ fun and profit.
    powerline-default-separator 'wave
    powerline-height 20
    spaceline-highlight-face-func 'spaceline-highlight-face-modified
-   spaceline-flycheck-bullet (format "%s%s" (mdi-insert "record") "%s")
+   spaceline-flycheck-bullet (format "%s%s" (mdi "record") "%s")
    spaceline-separator-dir-left '(left . left)
    spaceline-separator-dir-right '(right . right))
   (spaceline-helm-mode)
@@ -1310,7 +1310,7 @@ fun and profit.
      (anzu))
    `((me/selection-info)
      ((flycheck-error flycheck-warning flycheck-info :when active))
-     ((projectile-root me/version-control) :separator (mdi-insert "source-branch" t))
+     ((projectile-root me/version-control) :separator (mdi "source-branch" t))
      (workspace-number)
      (global :face highlight-face)))
   (spaceline-install
@@ -1421,7 +1421,7 @@ information in the mode-line in various search modes.
   (global-anzu-mode 1)
   (setq-default
    anzu-cons-mode-line-p nil
-   anzu-replace-to-string-separator (format " %s " (mdi-insert "arrow-right")))
+   anzu-replace-to-string-separator (format " %s " (mdi "arrow-right")))
   (zenburn-with-color-variables
     (set-face-attribute 'anzu-replace-highlight nil
                         :background zenburn-red-4
