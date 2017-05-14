@@ -1749,10 +1749,6 @@ performance sake an indexing mechanism backed by external commands exists as wel
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
   :defer 1
-  :preface
-  (defun me/projectile-project-name (orig-fun &rest args)
-    "Prefer `me/project-name' over default Projectile project string."
-    (or me/project-name (apply orig-fun args)))
   :init
   (setq-default
    projectile-cache-file (expand-file-name ".projectile-cache" user-emacs-directory)
@@ -1764,8 +1760,7 @@ performance sake an indexing mechanism backed by external commands exists as wel
   (setq-default
    projectile-completion-system 'helm
    projectile-enable-caching t
-   projectile-mode-line '(:eval (projectile-project-name)))
-  (advice-add 'projectile-project-name :around #'me/projectile-project-name))
+   projectile-mode-line '(:eval (projectile-project-name))))
 #+END_SRC
 
 ** 21. Quality of Life
