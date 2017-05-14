@@ -1137,6 +1137,12 @@ Colorize nicks with unique colors.
 (use-package erc-hl-nicks :after erc)
 #+END_SRC
 
+Keep track of ERC buffers in which new messages have been posted.
+
+#+BEGIN_SRC emacs-lisp
+(use-package erc-track :after erc)
+#+END_SRC
+
 ** 14. Linters
 
 Flycheck lints warnings and errors directly within buffers. It can check a lot of
@@ -1236,6 +1242,15 @@ fun and profit.
   :demand t
   :config
 
+  (spaceline-define-segment me/erc-track
+    "Show the ERC buffers with new messages."
+    (when (bound-and-true-p erc-track-mode)
+      (mapcar (lambda (buffer)
+                (format "%s%s%s"
+                        (buffer-name (pop buffer))
+                        erc-track-showcount-string
+                        (pop buffer)))
+              erc-modified-channels-alist)))
 
   (spaceline-define-segment me/helm-follow
     "Show `helm-follow-mode' status."
@@ -1287,6 +1302,7 @@ fun and profit.
   (spaceline-install
    `((major-mode :face highlight-face)
      ((remote-host buffer-id line) :separator ":")
+     (me/erc-track :when active)
      (anzu))
    `((me/selection-info)
      ((flycheck-error flycheck-warning flycheck-info :when active))
