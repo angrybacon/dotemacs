@@ -1,6 +1,6 @@
 [submodule "locust"]
 	path = lisp/locust
-	url = https://github.com/angrybacon/locust
+	url = https://github.com/angrybacon/locust.git
 [submodule "mdi"]
 	path = lisp/mdi
-	url = https://github.com/angrybacon/mdi
+	url = https://github.com/angrybacon/mdi.git
