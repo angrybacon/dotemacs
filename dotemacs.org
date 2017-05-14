@@ -1865,7 +1865,6 @@ Slack integration.
 
 #+BEGIN_SRC emacs-lisp
 (use-package slack
-  :disabled t
   :config
   (setq-default
    slack-buffer-function 'switch-to-buffer
@@ -1876,7 +1875,12 @@ Slack integration.
    :client-id me/fiftyfor-client-id
    :client-secret me/fiftyfor-client-secret
    :token me/fiftyfor-token
-   :subscribed-channels '(dev general)))
+   :subscribed-channels '(dev general))
+  (set-face-attribute 'slack-message-output-text nil :height 'unspecified)
+  (zenburn-with-color-variables
+    (set-face-attribute 'slack-message-output-header nil
+                        :foreground zenburn-orange
+                        :underline nil)))
 #+END_SRC
 
 ** 23. Version Control
