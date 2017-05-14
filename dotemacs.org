@@ -286,6 +286,10 @@ authoring documents with a fast and effective plain-text system.
   :ensure nil
   :delight org-mode "Org"
   :preface
+  (defun me/org-src-buffer-name (org-buffer-name language)
+    "Construct the buffer name for a source editing buffer. See
+`org-src--construct-edit-buffer-name'."
+    (format "*%s*" org-buffer-name))
   (defun me/org-backward-paragraph-shifted ()
     "See `org-backward-paragraph'. Support shift."
     (interactive "^")
@@ -312,7 +316,8 @@ authoring documents with a fast and effective plain-text system.
     (set-face-attribute 'org-block nil :background zenburn-bg-05))
   (unbind-key "<C-return>" org-mode-map)
   (unbind-key "<C-S-down>" org-mode-map)
-  (unbind-key "<C-S-up>" org-mode-map))
+  (unbind-key "<C-S-up>" org-mode-map)
+  (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer-name))
 #+END_SRC
 
 Display the current Org header in the header-line.
