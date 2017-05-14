@@ -95,6 +95,9 @@ instance, you could set your identity by customizing both =user-full-name= and
 
 #+BEGIN_SRC emacs-lisp
 (defvar me/erc-nick               nil       "The ERC nick to use.")
+(defvar me/erc-password           nil       "The ERC password to use.")
+(defvar me/erc-port               nil       "The ERC port to use.")
+(defvar me/erc-server             nil       "The ERC server to use.")
 (defvar me/font-family            "Monaco"  "The font to use.")
 (defvar me/font-size-default      120       "The font size to use for default text.")
 (defvar me/font-size-header-line  130       "The font size to use for the header-line.")
@@ -1087,6 +1090,11 @@ _q_ quit            _-_ zoom out
 #+BEGIN_SRC emacs-lisp
 (use-package erc
   :preface
+  (defun me/erc ()
+    "Connect to `me/erc-server' on `me/erc-port' as `me/erc-nick' with
+    `me/erc-password'."
+    (interactive)
+    (erc :server me/erc-server :port me/erc-port :nick me/erc-nick me/erc-password))
   (defun me/erc-bol-shifted ()
     "See `erc-bol'. Support shift."
     (interactive "^")
@@ -1115,7 +1123,6 @@ _q_ quit            _-_ zoom out
    erc-header-line-format " %n on %t %m"
    erc-insert-timestamp-function 'erc-insert-timestamp-left
    erc-lurker-hide-list '("JOIN" "PART" "QUIT")
-   erc-nick me/erc-nick
    erc-prompt (format "%27s" ">")
    erc-timestamp-format "[%H:%M:%S]")
   (zenburn-with-color-variables
