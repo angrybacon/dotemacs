@@ -1484,9 +1484,10 @@ Augment Emacs experience for MacOS users.
 #+BEGIN_SRC emacs-lisp
 (when (eq system-type 'darwin)
   (setq-default
-   ns-option-modifier nil))                          ; Disable the `alt' key
    exec-path (append exec-path '("/usr/local/bin"))  ; Add Homebrew path
    ns-command-modifier 'meta                         ; Map Meta to the Cmd key
+   ns-option-modifier 'super                         ; Map Super to the Alt key
+   ns-right-option-modifier nil))                    ; Disable the right Alt key
 #+END_SRC
 
 Initialize environment variables.
