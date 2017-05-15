@@ -1931,7 +1931,8 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
   (defun me/git-commit-auto-fill-everywhere ()
     (setq fill-column 72)
     (setq-local comment-auto-fill-only-comments nil))
-  :config (add-hook 'git-commit-mode-hook #'me/git-commit-auto-fill-everywhere))
+  :init (add-hook 'git-commit-mode-hook #'me/git-commit-auto-fill-everywhere)
+  :config (setq-default git-commit-summary-max-length 50))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
