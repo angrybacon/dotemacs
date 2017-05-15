@@ -1556,8 +1556,7 @@ structure of the current major mode.
 (use-package expand-region
   :bind
   ("C-+" . er/contract-region)
-  ("C-=" . er/expand-region)
-  :init (pending-delete-mode t))
+  ("C-=" . er/expand-region))
 #+END_SRC
 
 Enable multiple cursors at once. Some witchcraft at work here.
@@ -1804,6 +1803,13 @@ Insert the current date.
   "Insert the current date, short format, eg. 2016.12.09 14:34"
   (interactive)
   (insert (format-time-string "%Y.%m.%d %H:%M")))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package delsel
+  :ensure nil
+  :defer 1
+  :config (delete-selection-mode 1))
 #+END_SRC
 
 Originally, =midnight= is used to /run something at midnight/. I use its feature that
