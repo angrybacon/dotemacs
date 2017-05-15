@@ -1300,7 +1300,7 @@ fun and profit.
    powerline-default-separator 'wave
    powerline-height 20
    spaceline-highlight-face-func 'spaceline-highlight-face-modified
-   spaceline-flycheck-bullet (format "%s%s" (mdi "record") "%s")
+   spaceline-flycheck-bullet (format "%s %s" (mdi "record") "%s")
    spaceline-separator-dir-left '(left . left)
    spaceline-separator-dir-right '(right . right))
   (spaceline-helm-mode)
@@ -1309,7 +1309,7 @@ fun and profit.
   (spaceline-install
    `((major-mode :face highlight-face)
      ((remote-host buffer-id line) :separator ":")
-     (me/erc-track :when active)
+     (me/erc-track :face spaceline-highlight-face :when active)
      (anzu))
    `((me/selection-info)
      ((flycheck-error flycheck-warning flycheck-info :when active))
@@ -1321,7 +1321,8 @@ fun and profit.
    '((helm-buffer-id :face spaceline-read-only)
      (helm-number)
      (me/helm-follow)
-     (helm-prefix-argument))
+     (helm-prefix-argument)
+     (me/erc-track :face spaceline-highlight-face :when active))
    '((global :face spaceline-read-only)))
 
   ;; Customize the mode-line
@@ -1337,6 +1338,9 @@ fun and profit.
     (set-face-attribute 'spaceline-flycheck-error nil :foreground zenburn-red)
     (set-face-attribute 'spaceline-flycheck-info nil :foreground zenburn-blue+1)
     (set-face-attribute 'spaceline-flycheck-warning nil :foreground zenburn-orange)
+    (set-face-attribute 'spaceline-highlight-face nil
+                        :background zenburn-yellow
+                        :foreground zenburn-fg-1)
     (set-face-attribute 'spaceline-modified nil
                         :background zenburn-red
                         :foreground zenburn-red-4)
