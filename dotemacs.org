@@ -302,7 +302,7 @@ authoring documents with a fast and effective plain-text system.
   (:map org-mode-map
         ([remap backward-paragraph] . me/org-backward-paragraph-shifted)
         ([remap forward-paragraph] . me/org-forward-paragraph-shifted)
-        ("<M-return" . org-insert-heading-after-current))
+        ("<M-return>" . org-insert-heading-after-current))
   :init (add-hook 'org-mode-hook #'org-sticky-header-mode)
   :config
   (setq-default
