@@ -2003,6 +2003,25 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
 ** 26. Windows
 
+Allow repeated use of <kbd>←</kbd> and <kbd>→</kbd> when using =previous-buffer=
+and =next-buffer=.
+
+- *TODO*: Make a hydra.
+
+#+BEGIN_SRC emacs-lisp
+(defun me/switch-to-buffer-continue ()
+  "Activate a sparse keymap:
+  <left>   `previous-buffer'
+  <right>  `next-buffer'"
+  (set-transient-map
+   (let ((map (make-sparse-keymap)))
+     (define-key map (kbd "<left>") #'previous-buffer)
+     (define-key map (kbd "<right>") #'next-buffer)
+     map)))
+(advice-add 'previous-buffer :after #'me/switch-to-buffer-continue)
+(advice-add 'next-buffer :after #'me/switch-to-buffer-continue)
+#+END_SRC
+
 Save and restore Emacs status, including buffers, modes, point and windows.
 
 #+BEGIN_SRC emacs-lisp
