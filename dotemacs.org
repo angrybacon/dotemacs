@@ -511,6 +511,7 @@ Configure Dired buffers. Amongst many other things, Emacs is also a file explore
 (use-package dired
   :ensure nil
   :delight dired-mode "Dired"
+  :init (add-hook 'dired-mode-hook #'dired-hide-details-mode)
   :config
   (defadvice dired-readin (after dired-after-updating-hook first () activate)
     "Sort dired listings with directories first before adding marks."
@@ -521,6 +522,7 @@ Configure Dired buffers. Amongst many other things, Emacs is also a file explore
       (set-buffer-modified-p nil)))
   (setq-default
    dired-auto-revert-buffer t
+   dired-hide-details-hide-symlink-targets nil
    dired-listing-switches "-alh"
    dired-ls-F-marks-symlinks nil
    dired-recursive-copies 'always))
