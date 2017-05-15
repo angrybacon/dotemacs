@@ -1826,6 +1826,12 @@ Insert the current date.
   :config (delete-selection-mode 1))
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+(use-package eldoc
+  :ensure nil
+  :config (global-eldoc-mode -1))
+#+END_SRC
+
 Originally, =midnight= is used to /run something at midnight/. I use its feature that
 kills old buffers.
 
