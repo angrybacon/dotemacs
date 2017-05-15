@@ -23,10 +23,6 @@
 
 (let ((gc-cons-threshold most-positive-fixnum))
 
-  ;; Mark directory-local variables as safe
-  (defvar me/project-name nil)
-  (put 'me/project-name 'safe-local-variable #'stringp)
-
   ;; Set repositories
   (require 'package)
   (setq-default

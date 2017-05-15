@@ -1099,7 +1099,10 @@ _q_ quit            _-_ zoom out
     "Connect to `me/erc-server' on `me/erc-port' as `me/erc-nick' with
     `me/erc-password'."
     (interactive)
-    (erc :server me/erc-server :port me/erc-port :nick me/erc-nick me/erc-password))
+    (erc :server me/erc-server
+         :port me/erc-port
+         :nick me/erc-nick
+         :password me/erc-password))
   (defun me/erc-bol-shifted ()
     "See `erc-bol'. Support shift."
     (interactive "^")
@@ -1118,11 +1121,14 @@ _q_ quit            _-_ zoom out
         ([remap erc-bol] . me/erc-bol-shifted)
         ("M-<down>" . erc-next-command)
         ("M-<up>" . erc-previous-command))
-  :init (add-hook 'window-configuration-change-hook #'me/erc-set-fill-column)
+  :init
+  (add-hook 'window-configuration-change-hook #'me/erc-set-fill-column)
+  (me/erc)
   :config
   (make-variable-buffer-local 'erc-fill-column)
   (erc-scrolltobottom-mode)
   (setq-default
+   erc-autojoin-channels-alist '(("freenode.net" "#emacs"))
    erc-fill-function 'erc-fill-static
    erc-fill-static-center 18
    erc-header-line-format " %n on %t %m"
@@ -1756,10 +1762,6 @@ performance sake an indexing mechanism backed by external commands exists as wel
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
   :defer 1
-  :preface
-  (defun me/projectile-project-name (orig-fun &rest args)
-    "Prefer `me/project-name' over default Projectile project string."
-    (or me/project-name (apply orig-fun args)))
   :init
   (setq-default
    projectile-cache-file (expand-file-name ".projectile-cache" user-emacs-directory)
@@ -1771,8 +1773,7 @@ performance sake an indexing mechanism backed by external commands exists as wel
   (setq-default
    projectile-completion-system 'helm
    projectile-enable-caching t
-   projectile-mode-line '(:eval (projectile-project-name)))
-  (advice-add 'projectile-project-name :around #'me/projectile-project-name))
+   projectile-mode-line '(:eval (projectile-project-name))))
 #+END_SRC
 
 ** 22. Quality of Life
