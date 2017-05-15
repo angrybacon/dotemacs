@@ -390,13 +390,14 @@ Display the current Org header in the header-line.
 16. [[#16-navigation][Navigation]]
 17. [[#17-os-specific][OS-Specific]]
 18. [[#18-parentheses][Parentheses]]
-19. [[#19-point-and-region][Point and Region]]
-20. [[#20-projectile][Projectile]]
-21. [[#21-quality-of-life][Quality of Life]]
-22. [[#22-slack][Slack]]
-23. [[#23-version-control][Version Control]]
-24. [[#24-whitespaces][Whitespaces]]
-25. [[#25-windows][Windows]]
+19. [[#19-paste][Paste]]
+20. [[#20-point-and-region][Point and Region]]
+21. [[#21-projectile][Projectile]]
+22. [[#22-quality-of-life][Quality of Life]]
+23. [[#23-slack][Slack]]
+24. [[#24-version-control][Version Control]]
+25. [[#25-whitespaces][Whitespaces]]
+26. [[#26-windows][Windows]]
 
 ** 1. Alert
 
@@ -1547,7 +1548,13 @@ package seem to please my person.
   (sp-pair "[[" "]]"))
 #+END_SRC
 
-** 19. Point and Region
+** 19. Paste
+
+#+BEGIN_SRC emacs-lisp
+(use-package webpaste)
+#+END_SRC
+
+** 20. Point and Region
 
 Increase region by semantic units. It tries to be smart about it and adapt to the
 structure of the current major mode.
@@ -1598,6 +1605,7 @@ with =selected=.
         ("C-c u" . upcase-region)
         ("C-f f" . fill-region)
         ("C-g" . selected-off)
+        ("C-p" . webpaste-paste-region)
         ("C-s r" . reverse-region)
         ("C-s s" . sort-lines)
         ("C-s w" . me/sort-words)
@@ -1723,7 +1731,7 @@ If region was active, keep it so that the command can be repeated."
   (indent-according-to-mode))
 #+END_SRC
 
-** 20. Projectile
+** 21. Projectile
 
 Projectile brings project-level facilities to Emacs such as grep, find and replace.
 
@@ -1761,7 +1769,7 @@ performance sake an indexing mechanism backed by external commands exists as wel
   (advice-add 'projectile-project-name :around #'me/projectile-project-name))
 #+END_SRC
 
-** 21. Quality of Life
+** 22. Quality of Life
 
 Auto-dim other buffers. Pretty self-explanatory.
 
@@ -1862,7 +1870,7 @@ Turn on =auto-fill-mode= everywhere.
   (add-hook 'text-mode-hook #'turn-on-auto-fill))
 #+END_SRC
 
-** 22. Slack
+** 23. Slack
 
 Slack integration.
 
@@ -1889,7 +1897,7 @@ Slack integration.
                         :underline nil)))
 #+END_SRC
 
-** 23. Version Control
+** 24. Version Control
 
 Magit provides Git facilities directly from within Emacs.
 
@@ -1967,7 +1975,7 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
 (use-package gitignore-mode :delight gitignore-mode "Git Ignore")
 #+END_SRC
 
-** 24. Whitespaces
+** 25. Whitespaces
 
 Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
@@ -1981,7 +1989,7 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
   :config (setq-default whitespace-style '(face empty tab trailing)))
 #+END_SRC
 
-** 25. Windows
+** 26. Windows
 
 Save and restore Emacs status, including buffers, modes, point and windows.
 
