@@ -1108,6 +1108,8 @@ _q_ quit            _-_ zoom out
 
 ** 14. IRC
 
+- *TODO*: Display the current count of users. =(hash-table-count erc-channel-users)=
+
 #+BEGIN_SRC emacs-lisp
 (use-package erc
   :preface
