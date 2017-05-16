@@ -1319,10 +1319,10 @@ fun and profit.
   (spaceline-install
    `((major-mode :face highlight-face)
      ((remote-host buffer-id line) :separator ":")
-     (me/erc-track :face spaceline-highlight-face :when active)
      (anzu))
    `((me/selection-info)
-     ((flycheck-error flycheck-warning flycheck-info :when active))
+     (me/erc-track :face spaceline-highlight-face :when active)
+     ((flycheck-error flycheck-warning flycheck-info))
      ((projectile-root me/version-control) :separator (mdi "source-branch" t))
      (workspace-number)
      (global :face highlight-face)))
@@ -1331,9 +1331,10 @@ fun and profit.
    '((helm-buffer-id :face spaceline-read-only)
      (helm-number)
      (me/helm-follow)
-     (helm-prefix-argument)
-     (me/erc-track :face spaceline-highlight-face :when active))
-   '((global :face spaceline-read-only)))
+     (helm-prefix-argument))
+   '((me/erc-track :face spaceline-highlight-face :when active)
+     (workspace-number)
+     (global :face spaceline-read-only)))
 
   ;; Customize the mode-line
   (zenburn-with-color-variables
