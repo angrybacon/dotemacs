@@ -410,7 +410,9 @@ and multiple, selectable "styles", whose use is fully customizable by the user.
 
 #+BEGIN_SRC emacs-lisp
 (use-package alert
-  :config (setq-default alert-default-style 'osx-notifier))
+  :config
+  (when (eq system-type 'darwin)
+    (setq-default alert-default-style 'osx-notifier)))
 #+END_SRC
 
 ** 2. Auto-Completion
@@ -762,11 +764,9 @@ Helm equivalents.
 
 Fourth-party packages for Helm.
 
-- *NOTE*: Does not respect =helm-split-window-default-side=
-          (https://github.com/ShingoFukuyama/helm-css-scss/issues/7).
-- *TODO*: Fix Zenburn palette
-          (https://github.com/bbatsov/zenburn-emacs/issues/220).
+- *NOTE*: See https://github.com/ShingoFukuyama/helm-css-scss/issues/7.
 - *NOTE*: See https://github.com/ShingoFukuyama/helm-swoop/issues/114.
+- *TODO*: See https://github.com/bbatsov/zenburn-emacs/issues/220.
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm-ag
@@ -1611,23 +1611,24 @@ with =selected=.
   :defer 1
   :bind
   (:map selected-keymap
-        ("<" . mc/mark-previous-like-this)
-        (">" . mc/mark-next-like-this)
-        ("C-?" . hydra-selected/body)
-        ("C-c C-c" . me/eval-region-and-kill-mark)
-        ("C-b b" . me/browse-url-and-kill-mark)
-        ("C-c c" . capitalize-region)
-        ("C-c l" . downcase-region)
-        ("C-c u" . upcase-region)
-        ("C-f f" . fill-region)
-        ("C-g" . selected-off)
-        ("C-p" . webpaste-paste-region)
-        ("C-s r" . reverse-region)
-        ("C-s s" . sort-lines)
-        ("C-s w" . me/sort-words)
-        ("<M-left>" . me/indent-rigidly-left-and-keep-mark)
-        ("<M-right>" . me/indent-rigidly-right-and-keep-mark)
-        ("<M-S-left>" . me/indent-rigidly-left-tab-and-keep-mark)
+        ("<"           . mc/mark-previous-like-this)
+        (">"           . mc/mark-next-like-this)
+        ("C-?"         . hydra-selected/body)
+        ("C-c C-c"     . me/eval-region-and-kill-mark)
+        ("C-b"         . me/browse-url-and-kill-mark)
+        ("C-c c"       . capitalize-region)
+        ("C-c l"       . downcase-region)
+        ("C-c u"       . upcase-region)
+        ("C-d"         . define-word-at-point)
+        ("C-f"         . fill-region)
+        ("C-g"         . selected-off)
+        ("C-p"         . webpaste-paste-region)
+        ("C-s r"       . reverse-region)
+        ("C-s s"       . sort-lines)
+        ("C-s w"       . me/sort-words)
+        ("<M-left>"    . me/indent-rigidly-left-and-keep-mark)
+        ("<M-right>"   . me/indent-rigidly-right-and-keep-mark)
+        ("<M-S-left>"  . me/indent-rigidly-left-tab-and-keep-mark)
         ("<M-S-right>" . me/indent-rigidly-right-tab-and-keep-mark))
   :config (selected-global-mode))
 #+END_SRC
