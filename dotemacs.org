@@ -411,7 +411,9 @@ and multiple, selectable "styles", whose use is fully customizable by the user.
 
 #+BEGIN_SRC emacs-lisp
 (use-package alert
-  :config (setq-default alert-default-style 'osx-notifier))
+  :config
+  (when (eq system-type 'darwin)
+    (setq-default alert-default-style 'osx-notifier)))
 #+END_SRC
 
 ** 2. Auto-Completion
@@ -763,12 +765,9 @@ Helm equivalents.
 
 Fourth-party packages for Helm.
 
-- *NOTE*: Does not respect =helm-split-window-default-side=
-          (https://github.com/ShingoFukuyama/helm-css-scss/issues/7).
-- *TODO*: Fix Zenburn palette
-          (https://github.com/bbatsov/zenburn-emacs/issues/220).
-- *TODO*: Add helm-swoop
-          (https://github.com/ShingoFukuyama/helm-swoop).
+- *NOTE*: See https://github.com/ShingoFukuyama/helm-css-scss/issues/7.
+- *NOTE*: See https://github.com/ShingoFukuyama/helm-swoop/issues/114.
+- *TODO*: See https://github.com/bbatsov/zenburn-emacs/issues/220.
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm-ag
@@ -804,7 +803,11 @@ Fourth-party packages for Helm.
   (setq-default
    helm-swoop-move-to-line-cycle nil
    helm-swoop-speed-or-color t
-   helm-swoop-split-direction 'split-window-horizontally))
+   helm-swoop-split-direction 'split-window-horizontally)
+  (set-face-attribute 'helm-swoop-target-word-face nil
+                      :background 'unspecified
+                      :foreground 'unspecified
+                      :inherit 'isearch))
 #+END_SRC
 
 ** 12. Help
@@ -966,8 +969,8 @@ Group Helm commands.
 ^Helm^              ^Browse^            ^Do^
 ^────^──────────────^──────^────────────^──^────────────────
 _q_ quit            _c_ colors          _f_ flycheck
-_r_ resume          _g_ google          _s_ css-scss
-^^                  _h_ headings        ^^
+_r_ resume          _g_ google          _p_ swoop
+^^                  _h_ headings        _s_ css-scss
 ^^                  _i_ imenu           ^^
 ^^                  _k_ kill-ring       ^^
 ^^                  ^^                  ^^
@@ -979,6 +982,7 @@ _r_ resume          _g_ google          _s_ css-scss
   ("h" helm-org-in-buffer-headings)
   ("i" helm-imenu)
   ("k" helm-show-kill-ring)
+  ("p" helm-swoop)
   ("r" helm-resume)
   ("s" helm-css-scss))
 #+END_SRC
@@ -1327,10 +1331,10 @@ fun and profit.
   (spaceline-install
    `((major-mode :face highlight-face)
      ((remote-host buffer-id line) :separator ":")
-     (me/erc-track :face spaceline-highlight-face :when active)
      (anzu))
    `((me/selection-info)
-     ((flycheck-error flycheck-warning flycheck-info :when active))
+     (me/erc-track :face spaceline-highlight-face :when active)
+     ((flycheck-error flycheck-warning flycheck-info))
      ((projectile-root me/version-control) :separator (mdi "source-branch" t))
      (workspace-number)
      (global :face highlight-face)))
@@ -1339,9 +1343,10 @@ fun and profit.
    '((helm-buffer-id :face spaceline-read-only)
      (helm-number)
      (me/helm-follow)
-     (helm-prefix-argument)
-     (me/erc-track :face spaceline-highlight-face :when active))
-   '((global :face spaceline-read-only)))
+     (helm-prefix-argument))
+   '((me/erc-track :face spaceline-highlight-face :when active)
+     (workspace-number)
+     (global :face spaceline-read-only)))
 
   ;; Customize the mode-line
   (zenburn-with-color-variables
@@ -1619,23 +1624,24 @@ with =selected=.
   :defer 1
   :bind
   (:map selected-keymap
-        ("<" . mc/mark-previous-like-this)
-        (">" . mc/mark-next-like-this)
-        ("C-?" . hydra-selected/body)
-        ("C-c C-c" . me/eval-region-and-kill-mark)
-        ("C-b b" . me/browse-url-and-kill-mark)
-        ("C-c c" . capitalize-region)
-        ("C-c l" . downcase-region)
-        ("C-c u" . upcase-region)
-        ("C-f f" . fill-region)
-        ("C-g" . selected-off)
-        ("C-p" . webpaste-paste-region)
-        ("C-s r" . reverse-region)
-        ("C-s s" . sort-lines)
-        ("C-s w" . me/sort-words)
-        ("<M-left>" . me/indent-rigidly-left-and-keep-mark)
-        ("<M-right>" . me/indent-rigidly-right-and-keep-mark)
-        ("<M-S-left>" . me/indent-rigidly-left-tab-and-keep-mark)
+        ("<"           . mc/mark-previous-like-this)
+        (">"           . mc/mark-next-like-this)
+        ("C-?"         . hydra-selected/body)
+        ("C-c C-c"     . me/eval-region-and-kill-mark)
+        ("C-b"         . me/browse-url-and-kill-mark)
+        ("C-c c"       . capitalize-region)
+        ("C-c l"       . downcase-region)
+        ("C-c u"       . upcase-region)
+        ("C-d"         . define-word-at-point)
+        ("C-f"         . fill-region)
+        ("C-g"         . selected-off)
+        ("C-p"         . webpaste-paste-region)
+        ("C-s r"       . reverse-region)
+        ("C-s s"       . sort-lines)
+        ("C-s w"       . me/sort-words)
+        ("<M-left>"    . me/indent-rigidly-left-and-keep-mark)
+        ("<M-right>"   . me/indent-rigidly-right-and-keep-mark)
+        ("<M-S-left>"  . me/indent-rigidly-left-tab-and-keep-mark)
         ("<M-S-right>" . me/indent-rigidly-right-tab-and-keep-mark))
   :config (selected-global-mode))
 #+END_SRC
