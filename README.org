@@ -1,0 +1,65 @@
+#+TITLE: DotEmacs
+#+AUTHOR: Mathieu Marques
+
+This repository contains my personal Emacs configuration.
+
+Have fun tinkering : j
+
+* What the .el
+
+If you are wondering where has gone all of the Lisp, fear not, for it is
+automagically tangled from an Org file into a fresh Lisp file with the help of
+the all powerful =org= package. This is called literate programming.
+
+Head over to the actual configuration: [[./dotemacs.org][dotemacs.org]].
+
+* Screenshots
+
+My Emacs configuration is a living mixture that I edit on a daily basis. As
+such, the following screenshots might not reflect exactly what is on =:master=.
+
+- [[https://drive.google.com/open?id=0BwTSOByd3qSFMmZqVHBpTlk2Q1E][Helm]]
+
+More coming /soon/ :tm:
+
+* Installation
+
+I primarily use Emacs on MacOS, but I trust your /google-fu/ to find the
+equivalent for the following commands to run on your setup.
+
+** Emacs
+
+
+I use [[https://github.com/d12frosted/homebrew-emacs-plus][Emacs Plus]]. The
+configuration files /should/ work with any build nonetheless. In any case,
+install Emacs 24 or above.
+
+#+BEGIN_SRC sh
+brew tap d12frosted/emacs-plus
+brew install emacs-plus --with-no-title-bars --without-spacemacs-icon
+git clone https://github.com/angrybacon/dotemacs.git ~/.emacs.d/
+#+END_SRC
+
+** Ag
+
+My Helm setup uses =ag= instead of =grep= to lookup files.
+
+#+BEGIN_SRC sh
+sh brew install the_silver_searcher
+#+END_SRC
+
+** Flycheck
+
+I use [[https://github.com/flycheck/flycheck][Flycheck]] as linter framework to
+display syntax warnings and errors whithin each buffer.
+
+#+BEGIN_SRC sh
+pip install flake8                       # Python gem install
+scss_lint scss_lint_reporter_checkstyle  # SCSS
+npm install -g eslint                    # JavaScript
+#+END_SRC
+
+** Material Design Icons
+
+There are special characters in the mode-line. Install
+[[https://materialdesignicons.com][=mdi=]].
