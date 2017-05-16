@@ -329,7 +329,9 @@ authoring documents with a fast and effective plain-text system.
         ([remap backward-paragraph] . me/org-backward-paragraph-shifted)
         ([remap forward-paragraph] . me/org-forward-paragraph-shifted)
         ("<M-return>" . org-insert-heading-after-current))
-  :init (add-hook 'org-mode-hook #'org-sticky-header-mode)
+  :init
+  (add-hook 'org-mode-hook #'org-sticky-header-mode)
+  (add-hook 'org-mode-hook #'toc-org-enable)
   :config
   (setq-default
    org-descriptive-links nil
@@ -354,6 +356,12 @@ Display the current Org header in the header-line.
   (setq-default
    org-sticky-header-full-path 'full
    org-sticky-header-outline-path-separator " / "))
+#+END_SRC
+
+Tired of having to manually update your tables of contents?
+
+#+BEGIN_SRC emacs-lisp
+(use-package toc-org :after org)
 #+END_SRC
 
 ** Python
