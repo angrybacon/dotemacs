@@ -766,8 +766,7 @@ Fourth-party packages for Helm.
           (https://github.com/ShingoFukuyama/helm-css-scss/issues/7).
 - *TODO*: Fix Zenburn palette
           (https://github.com/bbatsov/zenburn-emacs/issues/220).
-- *TODO*: Add helm-swoop
-          (https://github.com/ShingoFukuyama/helm-swoop).
+- *NOTE*: See https://github.com/ShingoFukuyama/helm-swoop/issues/114.
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm-ag
@@ -803,7 +802,11 @@ Fourth-party packages for Helm.
   (setq-default
    helm-swoop-move-to-line-cycle nil
    helm-swoop-speed-or-color t
-   helm-swoop-split-direction 'split-window-horizontally))
+   helm-swoop-split-direction 'split-window-horizontally)
+  (set-face-attribute 'helm-swoop-target-word-face nil
+                      :background 'unspecified
+                      :foreground 'unspecified
+                      :inherit 'isearch))
 #+END_SRC
 
 ** 12. Hydra
@@ -954,8 +957,8 @@ Group Helm commands.
 ^Helm^              ^Browse^            ^Do^
 ^────^──────────────^──────^────────────^──^────────────────
 _q_ quit            _c_ colors          _f_ flycheck
-_r_ resume          _g_ google          _s_ css-scss
-^^                  _h_ headings        ^^
+_r_ resume          _g_ google          _p_ swoop
+^^                  _h_ headings        _s_ css-scss
 ^^                  _i_ imenu           ^^
 ^^                  _k_ kill-ring       ^^
 ^^                  ^^                  ^^
@@ -967,6 +970,7 @@ _r_ resume          _g_ google          _s_ css-scss
   ("h" helm-org-in-buffer-headings)
   ("i" helm-imenu)
   ("k" helm-show-kill-ring)
+  ("p" helm-swoop)
   ("r" helm-resume)
   ("s" helm-css-scss))
 #+END_SRC
