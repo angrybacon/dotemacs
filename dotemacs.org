@@ -1112,14 +1112,14 @@ _q_ quit            _-_ zoom out
     (interactive "^")
     (erc-bol))
   (defun me/erc-set-fill-column ()
-    "Update `erc-fill-column' when the window configuration changes."
+    "Set `erc-fill-column' to the width of the current window."
     (save-excursion
       (walk-windows
-       (lambda (w)
-         (let ((buffer (window-buffer w)))
+       (lambda (window)
+         (let ((buffer (window-buffer window)))
            (set-buffer buffer)
-           (when (eq major-mode 'erc-mode)
-             (setq erc-fill-column (- (window-width w) 1))))))))
+           (when (and (erc-buffer-visible buffer) (eq major-mode 'erc-mode))
+             (setq erc-fill-column (window-width window))))))))
   :bind
   (:map erc-mode-map
         ([remap erc-bol] . me/erc-bol-shifted)
