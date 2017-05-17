@@ -177,6 +177,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
     (set-face-attribute 'isearch-lazy-highlight-face nil
                         :foreground zenburn-blue
                         :background zenburn-blue-5)
+    (set-face-attribute 'region nil :background zenburn-fg-1 :distant-foreground 'unspecified)
     (set-face-attribute 'vertical-border nil :foreground zenburn-bg-1))
 
   ;; Un-bold'ify all the things
@@ -791,8 +792,9 @@ Fourth-party packages for Helm.
 
 (use-package helm-descbinds
   :after helm
-  :bind ([remap describe-key] . helm-descbinds)
-  :config (setq-default helm-descbinds-window-style 'split-window))
+  :config
+  (helm-descbinds-mode)
+  (setq-default helm-descbinds-window-style 'split-window))
 
 (use-package helm-describe-modes
   :after helm
@@ -1134,25 +1136,26 @@ _q_ quit            _-_ zoom out
     (interactive "^")
     (erc-bol))
   (defun me/erc-set-fill-column ()
-    "Update `erc-fill-column' when the window configuration changes."
+    "Set `erc-fill-column' to the width of the current window."
     (save-excursion
       (walk-windows
-       (lambda (w)
-         (let ((buffer (window-buffer w)))
+       (lambda (window)
+         (let ((buffer (window-buffer window)))
            (set-buffer buffer)
-           (when (eq major-mode 'erc-mode)
-             (setq erc-fill-column (- (window-width w) 1))))))))
+           (when (and (erc-buffer-visible buffer) (eq major-mode 'erc-mode))
+             (setq erc-fill-column (window-width window))))))))
   :bind
   (:map erc-mode-map
         ([remap erc-bol] . me/erc-bol-shifted)
         ("M-<down>" . erc-next-command)
         ("M-<up>" . erc-previous-command))
   :init
+  (add-hook 'erc-mode-hook #'toggle-truncate-lines)
   (add-hook 'window-configuration-change-hook #'me/erc-set-fill-column)
   (me/erc)
   :config
   (make-variable-buffer-local 'erc-fill-column)
-  (erc-scrolltobottom-mode)
+  (erc-scrolltobottom-enable)
   (setq-default
    erc-autojoin-channels-alist '(("freenode.net" "#emacs"))
    erc-fill-function 'erc-fill-static
@@ -1514,12 +1517,22 @@ highlighted while you are typing your query, incrementally. Since he who can do 
 can do less, I've replaced default bindings with the regexp-equivalent commands.
 
 #+BEGIN_SRC emacs-lisp
-(setq-default
- isearch-allow-scroll t
- lazy-highlight-cleanup nil
- lazy-highlight-initial-delay 0)
-(global-set-key (kbd "C-S-r") 'isearch-backward-regexp)
-(global-set-key (kbd "C-S-s") 'isearch-forward-regexp)
+(use-package isearch
+  :ensure nil
+  :bind
+  (("C-S-r" . isearch-backward-regexp)
+   ("C-S-s" . isearch-forward-regexp)
+   :map isearch-mode-map
+   ("<M-down>" . isearch-ring-advance)
+   ("<M-up>" . isearch-ring-retreat)
+   :map minibuffer-local-isearch-map
+   ("<M-down>" . next-history-element)
+   ("<M-up>" . previous-history-element))
+  :init
+  (setq-default
+   isearch-allow-scroll t
+   lazy-highlight-cleanup nil
+   lazy-highlight-initial-delay 0))
 #+END_SRC
 
 ** OS-Specific
@@ -1993,6 +2006,9 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
   (setq-default
    magit-display-buffer-function 'me/magit-display-buffer-same
    magit-diff-highlight-hunk-body nil
+   magit-diff-highlight-hunk-region-functions
+   '(magit-diff-highlight-hunk-region-dim-outside
+     magit-diff-highlight-hunk-region-using-face)
    magit-popup-display-buffer-action '((display-buffer-same-window))
    magit-refs-show-commit-count 'all
    magit-section-show-child-count t
@@ -2007,6 +2023,7 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
 
   ;; Customize faces
   (set-face-attribute 'magit-diff-file-heading-highlight nil :background nil)
+  (set-face-attribute 'magit-diff-hunk-region nil :inherit 'region)
   (set-face-attribute 'magit-popup-heading nil :height me/font-size-title)
   (set-face-attribute 'magit-section-heading nil :height me/font-size-title)
   (set-face-attribute 'magit-section-highlight nil :background nil)
