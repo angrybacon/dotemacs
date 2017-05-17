@@ -50,6 +50,13 @@
 
 ** Use better defaults
 
+Maximize by default, fullscreen on Windows.
+
+#+BEGIN_SRC emacs-lisp
+(set-frame-parameter nil 'fullscreen (if (eq system-type 'windows-nt)
+                                         'fullboth 'maximized))
+#+END_SRC
+
 Some UI elements are rather invasive. No-mouse master race.
 
 #+BEGIN_SRC emacs-lisp
@@ -97,7 +104,6 @@ Here are what I consider better defaults as per my own experience.
 (mouse-avoidance-mode 'banish)                    ; Avoid collision of mouse with point
 (put 'downcase-region 'disabled nil)              ; Enable downcase-region
 (put 'upcase-region 'disabled nil)                ; Enable upcase-region
-(set-frame-parameter nil 'fullscreen 'maximized)  ; Maximize the frame
 #+END_SRC
 
 Garbage-collect on focus-out, Emacs /should/ feel snappier.
