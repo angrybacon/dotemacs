@@ -176,6 +176,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
     (set-face-attribute 'isearch-lazy-highlight-face nil
                         :foreground zenburn-blue
                         :background zenburn-blue-5)
+    (set-face-attribute 'region nil :background zenburn-fg-1 :distant-foreground 'unspecified)
     (set-face-attribute 'vertical-border nil :foreground zenburn-bg-1))
 
   ;; Un-bold'ify all the things
