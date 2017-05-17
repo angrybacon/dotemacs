@@ -791,8 +791,9 @@ Fourth-party packages for Helm.
 
 (use-package helm-descbinds
   :after helm
-  :bind ([remap describe-key] . helm-descbinds)
-  :config (setq-default helm-descbinds-window-style 'split-window))
+  :config
+  (helm-descbinds-mode)
+  (setq-default helm-descbinds-window-style 'split-window))
 
 (use-package helm-describe-modes
   :after helm
