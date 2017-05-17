@@ -1998,6 +1998,9 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
   (setq-default
    magit-display-buffer-function 'me/magit-display-buffer-same
    magit-diff-highlight-hunk-body nil
+   magit-diff-highlight-hunk-region-functions
+   '(magit-diff-highlight-hunk-region-dim-outside
+     magit-diff-highlight-hunk-region-using-face)
    magit-popup-display-buffer-action '((display-buffer-same-window))
    magit-refs-show-commit-count 'all
    magit-section-show-child-count t
@@ -2012,6 +2015,7 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
 
   ;; Customize faces
   (set-face-attribute 'magit-diff-file-heading-highlight nil :background nil)
+  (set-face-attribute 'magit-diff-hunk-region nil :inherit 'region)
   (set-face-attribute 'magit-popup-heading nil :height me/font-size-title)
   (set-face-attribute 'magit-section-heading nil :height me/font-size-title)
   (set-face-attribute 'magit-section-highlight nil :background nil)
