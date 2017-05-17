@@ -1131,7 +1131,7 @@ _q_ quit            _-_ zoom out
   (me/erc)
   :config
   (make-variable-buffer-local 'erc-fill-column)
-  (erc-scrolltobottom-mode)
+  (erc-scrolltobottom-enable)
   (setq-default
    erc-autojoin-channels-alist '(("freenode.net" "#emacs"))
    erc-fill-function 'erc-fill-static
