@@ -1,27 +1,63 @@
 #+TITLE: DotEmacs
 #+AUTHOR: Mathieu Marques
 
-A. [[#a-bootstrap][Bootstrap]] |
-B. [[#b-theme][Theme]] |
-C. [[#c-languages][Languages]] |
-D. [[#d-features][Features]]
+* Table of Content                                                      :TOC:
+ - [[#bootstrap][Bootstrap]]
+   - [[#use-better-defaults][Use better defaults]]
+   - [[#load-customel][Load =.custom.el=]]
+   - [[#load-secretel][Load =.secret.el=]]
+ - [[#theme][Theme]]
+ - [[#languages][Languages]]
+   - [[#css][CSS]]
+   - [[#docker][Docker]]
+   - [[#html][HTML]]
+   - [[#javascript][JavaScript]]
+   - [[#lisp][Lisp]]
+   - [[#markdown][Markdown]]
+   - [[#org][Org]]
+   - [[#python][Python]]
+   - [[#yaml][YAML]]
+ - [[#features][Features]]
+   - [[#alert][Alert]]
+   - [[#auto-completion][Auto-Completion]]
+   - [[#comments][Comments]]
+   - [[#customization-menus][Customization Menus]]
+   - [[#diff][Diff]]
+   - [[#dired][Dired]]
+   - [[#expand][Expand]]
+   - [[#exwm][EXWM]]
+   - [[#folding][Folding]]
+   - [[#helm][Helm]]
+   - [[#helm-plugins][Helm Plugins]]
+   - [[#help][Help]]
+   - [[#hydra][Hydra]]
+   - [[#irc][IRC]]
+   - [[#linters][Linters]]
+   - [[#mode-line][Mode-Line]]
+   - [[#navigation][Navigation]]
+   - [[#os-specific][OS-Specific]]
+   - [[#parentheses][Parentheses]]
+   - [[#paste][Paste]]
+   - [[#point-and-region][Point and Region]]
+   - [[#projectile][Projectile]]
+   - [[#quality-of-life][Quality of Life]]
+   - [[#slack][Slack]]
+   - [[#version-control][Version Control]]
+   - [[#whitespaces][Whitespaces]]
+   - [[#windows][Windows]]
 
-* A. Bootstrap
+* Bootstrap
 
-1. [[#1-use-better-defaults][Use better defaults]]
-2. [[#2-load-customel][Load .custom.el]]
-3. [[#3-load-secretel][Load .secret.el]]
-
-** 1. Use better defaults
+** Use better defaults
 
 Some UI elements are rather invasive. No-mouse master race.
 
 #+BEGIN_SRC emacs-lisp
 (when window-system
-  (blink-cursor-mode 0)                          ; Disable the cursor blinking
-  (scroll-bar-mode 0)                            ; Disable the scroll bar
-  (tool-bar-mode 0)                              ; Disable the tool bar
-  (tooltip-mode 0))                              ; Disable the tooltips
+  (blink-cursor-mode 0)                           ; Disable the cursor blinking
+  (scroll-bar-mode 0)                             ; Disable the scroll bar
+  (tool-bar-mode 0)                               ; Disable the tool bar
+  (tooltip-mode 0))                               ; Disable the tooltips
 #+END_SRC
 
 Here are what I consider better defaults as per my own experience.
@@ -70,7 +106,7 @@ Garbage-collect on focus-out, Emacs /should/ feel snappier.
 (add-hook 'focus-out-hook #'garbage-collect)
 #+END_SRC
 
-** 2. Load =.custom.el=
+** Load =.custom.el=
 
 One is able to use the customization interface that is bundled within Emacs. It is
 meant to help people who are not familiar with Emacs Lisp in the configuration of
@@ -87,7 +123,7 @@ tells Emacs to add extra code in another file that would be then loaded, if exis
   (load custom-file))
 #+END_SRC
 
-** 3. Load =.secret.el=
+** Load =.secret.el=
 
 I load =~/.emacs.d/.secret.el= to keep sensible things out of version control. For
 instance, you could set your identity by customizing both =user-full-name= and
@@ -109,7 +145,7 @@ instance, you could set your identity by customizing both =user-full-name= and
     (load secret.el)))
 #+END_SRC
 
-* B. Theme
+* Theme
 
 Load =zenburn-theme= and fix some high-level faces to match my personal preferences.
 
@@ -157,24 +193,14 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
   :after zenburn-theme)
 #+END_SRC
 
-* C. Languages
-
-1. [[#1-css][CSS]]
-2. [[#2-docker][Docker]]
-3. [[#3-html][HTML]]
-4. [[#4-javascript][JavaScript]]
-5. [[#5-lisp][Lisp]]
-6. [[#6-markdown][Markdown]]
-7. [[#7-org][Org]]
-8. [[#8-python][Python]]
-9. [[#9-yaml][YAML]]
+* Languages
 
 As pedantic as I like to be, some packages have a =use-package= clause for nothing
 but the customization of its lighter.
 
 - *TODO*: Replace all old defadvice's.
 
-** 1. CSS
+** CSS
 
 #+BEGIN_SRC emacs-lisp
 (use-package css-mode
@@ -192,7 +218,7 @@ but the customization of its lighter.
   :init (add-hook 'scss-mode-hook #'me/scss-set-comment-style))
 #+END_SRC
 
-** 2. Docker
+** Docker
 
 #+BEGIN_SRC emacs-lisp
 (use-package dockerfile-mode
@@ -200,7 +226,7 @@ but the customization of its lighter.
   :mode "Dockerfile\\'")
 #+END_SRC
 
-** 3. HTML
+** HTML
 
 HTML mode is defined in =sgml-mode.el=.
 
@@ -212,7 +238,7 @@ HTML mode is defined in =sgml-mode.el=.
   :config (setq-default sgml-basic-offset 2))
 #+END_SRC
 
-** 4. JavaScript
+** JavaScript
 
 Tern is a code-analysis engine for JavaScript. I use it to check syntax and grammar
 in my JavaScript code. With an auto-complete frontend, it can also provide candidates
@@ -239,7 +265,7 @@ for variables and properties.
   :init (add-hook 'js-mode-hook #'tern-mode))
 #+END_SRC
 
-** 5. Lisp
+** Lisp
 
 #+BEGIN_SRC emacs-lisp
 (use-package lisp-mode
@@ -251,7 +277,7 @@ for variables and properties.
      (lisp-interaction-mode "Lisp Interaction"))))
 #+END_SRC
 
-** 6. Markdown
+** Markdown
 
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
@@ -269,7 +295,7 @@ for variables and properties.
   (setq-default markdown-asymmetric-header t))
 #+END_SRC
 
-** 7. Org
+** Org
 
 This very file is organized with =org-mode=. I am definitely not a power user of Org,
 but I'm getting there. :-)
@@ -303,7 +329,9 @@ authoring documents with a fast and effective plain-text system.
         ([remap backward-paragraph] . me/org-backward-paragraph-shifted)
         ([remap forward-paragraph] . me/org-forward-paragraph-shifted)
         ("<M-return>" . org-insert-heading-after-current))
-  :init (add-hook 'org-mode-hook #'org-sticky-header-mode)
+  :init
+  (add-hook 'org-mode-hook #'org-sticky-header-mode)
+  (add-hook 'org-mode-hook #'toc-org-enable)
   :config
   (setq-default
    org-descriptive-links nil
@@ -330,7 +358,13 @@ Display the current Org header in the header-line.
    org-sticky-header-outline-path-separator " / "))
 #+END_SRC
 
-** 8. Python
+Tired of having to manually update your tables of contents?
+
+#+BEGIN_SRC emacs-lisp
+(use-package toc-org :after org)
+#+END_SRC
+
+** Python
 
 - *TODO*: Fix for =ipython= 5.1.0.
 
@@ -362,7 +396,7 @@ Display the current Org header in the header-line.
   :init (add-hook 'pip-requirements-mode-hook #'me/pip-requirements-ignore-case))
 #+END_SRC
 
-** 9. YAML
+** YAML
 
 #+BEGIN_SRC emacs-lisp
 (use-package yaml-mode
@@ -370,36 +404,9 @@ Display the current Org header in the header-line.
   :mode "\\.yml\\'")
 #+END_SRC
 
-* D. Features
+* Features
 
-1. [[#1-alert][Alert]]
-2. [[#2-auto-completion][Auto-Completion]]
-3. [[#3-comments][Comments]]
-4. [[#4-customization-menus][Customization Menus]]
-5. [[#5-diff][Diff]]
-6. [[#6-dired][Dired]]
-7. [[#7-expand][Expand]]
-8. [[#8-exwm][EXWM]]
-9. [[#9-folding][Folding]]
-10. [[#10-helm][Helm]]
-11. [[#11-helm-plugins][Helm Plugins]]
-12. [[#12-hydra][Hydra]]
-13. [[#13-irc][IRC]]
-14. [[#14-linters][Linters]]
-15. [[#15-mode-line][Mode-Line]]
-16. [[#16-navigation][Navigation]]
-17. [[#17-os-specific][OS-Specific]]
-18. [[#18-parentheses][Parentheses]]
-19. [[#19-paste][Paste]]
-20. [[#20-point-and-region][Point and Region]]
-21. [[#21-projectile][Projectile]]
-22. [[#22-quality-of-life][Quality of Life]]
-23. [[#23-slack][Slack]]
-24. [[#24-version-control][Version Control]]
-25. [[#25-whitespaces][Whitespaces]]
-26. [[#26-windows][Windows]]
-
-** 1. Alert
+** Alert
 
 #+BEGIN_QUOTE
 Alert is a Growl-workalike for Emacs which uses a common notification interface
@@ -415,7 +422,7 @@ and multiple, selectable "styles", whose use is fully customizable by the user.
     (setq-default alert-default-style 'osx-notifier)))
 #+END_SRC
 
-** 2. Auto-Completion
+** Auto-Completion
 
 Auto-completion at point. Display a small pop-in containing the candidates.
 
@@ -451,7 +458,7 @@ completion candidates.
    company-tern-property-marker " *"))
 #+END_SRC
 
-** 3. Comments
+** Comments
 
 #+BEGIN_SRC emacs-lisp
 (use-package newcomment
@@ -463,7 +470,7 @@ completion candidates.
    comment-multi-line t))
 #+END_SRC
 
-** 4. Customization Menus
+** Customization Menus
 
 This merely changes face attributes. It also /Zenburn/ customization buffers a little
 more.
@@ -479,7 +486,7 @@ more.
     (set-face-attribute 'custom-state nil :foreground zenburn-green+4)))
 #+END_SRC
 
-** 5. Diff
+** Diff
 
 Ediff is a visual interface to Unix =diff=.
 
@@ -503,7 +510,7 @@ Ediff is a visual interface to Unix =diff=.
    ediff-window-setup-function #'ediff-setup-windows-plain))
 #+END_SRC
 
-** 6. Dired
+** Dired
 
 Configure Dired buffers. Amongst many other things, Emacs is also a file explorer.
 
@@ -538,7 +545,7 @@ Configure Dired buffers. Amongst many other things, Emacs is also a file explore
   (advice-add 'dired-smart-shell-command :after #'me/dired-revert-after-command))
 #+END_SRC
 
-** 7. Expand
+** Expand
 
 HippieExpand manages expansions a la [[http://emmet.io/][Emmet]]. So I've gathered
 all features that look anywhere close to this behavior for it to handle under the
@@ -585,7 +592,7 @@ same bind, that is =<C-return>=. Basically it's an expand DWIM.
   (unbind-key "<tab>" yas-minor-mode-map))
 #+END_SRC
 
-** 8. EXWM
+** EXWM
 
 - *TODO*
 
@@ -606,7 +613,7 @@ built on top of [[https://github.com/ch11ng/xelb][XELB]]. It features:
 (use-package exwm :disabled t)
 #+END_SRC
 
-** 9. Folding
+** Folding
 
 #+BEGIN_QUOTE
 This is a package to perform text folding like in Vim. It has the following features:
@@ -639,7 +646,7 @@ This is a package to perform text folding like in Vim. It has the following feat
   (setq-default vimish-fold-header-width 79))
 #+END_SRC
 
-** 10. Helm
+** Helm
 
 Helm is a beast. Although heavily, it replaces =ido-mode= in many ways.
 
@@ -760,7 +767,7 @@ Helm equivalents.
     (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn-blue)))
 #+END_SRC
 
-** 11. Helm Plugins
+** Helm Plugins
 
 Fourth-party packages for Helm.
 
@@ -809,7 +816,18 @@ Fourth-party packages for Helm.
                       :inherit 'isearch))
 #+END_SRC
 
-** 12. Hydra
+** Help
+
+#+BEGIN_SRC emacs-lisp
+(use-package help-mode
+  :ensure nil
+  :bind
+  (:map help-mode-map
+        ("<" . help-go-back)
+        (">" . help-go-forward)))
+#+END_SRC
+
+** Hydra
 
 Hydra allows me to group binds together. It also shows a list of all implemented
 commands in the eho area.
@@ -948,7 +966,7 @@ _q_ quit            _f_ fold            _<_ previous        _<tab>_ current
 
 Group Helm commands.
 
-*TODO*: Make =helm-mdi=.
+- *TODO*: Make =helm-mdi=.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-helm (:color blue)
@@ -1094,7 +1112,9 @@ _q_ quit            _-_ zoom out
   ("=" (text-scale-increase 0)))
 #+END_SRC
 
-** 13. IRC
+** IRC
+
+- *TODO*: Display the current count of users. =(hash-table-count erc-channel-users)=
 
 #+BEGIN_SRC emacs-lisp
 (use-package erc
@@ -1139,8 +1159,8 @@ _q_ quit            _-_ zoom out
    erc-header-line-format " %n on %t %m"
    erc-insert-timestamp-function 'erc-insert-timestamp-left
    erc-lurker-hide-list '("JOIN" "PART" "QUIT")
-   erc-prompt (format "%27s" ">")
-   erc-timestamp-format "[%H:%M:%S]")
+   erc-prompt (format "%25s" ">")
+   erc-timestamp-format "%H:%M:%S")
   (zenburn-with-color-variables
     (set-face-attribute 'erc-timestamp-face nil :foreground zenburn-fg-1)))
 #+END_SRC
@@ -1161,7 +1181,7 @@ Keep track of ERC buffers in which new messages have been posted.
   :after erc)
 #+END_SRC
 
-** 14. Linters
+** Linters
 
 Flycheck lints warnings and errors directly within buffers. It can check a lot of
 different syntaxes, as long as you make sure that Emacs has access to the binaries
@@ -1188,7 +1208,7 @@ different syntaxes, as long as you make sure that Emacs has access to the binari
     (set-face-attribute 'flycheck-fringe-warning nil :foreground zenburn-orange)))
 #+END_SRC
 
-** 15. Mode-Line
+** Mode-Line
 
 *** Screenshots
 
@@ -1364,7 +1384,7 @@ fun and profit.
                         :foreground zenburn-green+4)))
 #+END_SRC
 
-** 16. Navigation
+** Navigation
 
 *** Inline
 
@@ -1500,7 +1520,7 @@ can do less, I've replaced default bindings with the regexp-equivalent commands.
 (global-set-key (kbd "C-S-s") 'isearch-forward-regexp)
 #+END_SRC
 
-** 17. OS-Specific
+** OS-Specific
 
 Augment Emacs experience for MacOS users.
 
@@ -1535,7 +1555,7 @@ interest, then copying them into the Emacs environment.
   :config (exec-path-from-shell-initialize))
 #+END_SRC
 
-** 18. Parentheses
+** Parentheses
 
 Highlight parenthese-like delimiters in a rainbow fashion. It ease the reading when
 dealing with mismatched parentheses.
@@ -1566,13 +1586,13 @@ package seem to please my person.
   (sp-pair "[[" "]]"))
 #+END_SRC
 
-** 19. Paste
+** Paste
 
 #+BEGIN_SRC emacs-lisp
 (use-package webpaste)
 #+END_SRC
 
-** 20. Point and Region
+** Point and Region
 
 Increase region by semantic units. It tries to be smart about it and adapt to the
 structure of the current major mode.
@@ -1750,7 +1770,7 @@ If region was active, keep it so that the command can be repeated."
   (indent-according-to-mode))
 #+END_SRC
 
-** 21. Projectile
+** Projectile
 
 Projectile brings project-level facilities to Emacs such as grep, find and replace.
 
@@ -1783,7 +1803,7 @@ performance sake an indexing mechanism backed by external commands exists as wel
    projectile-mode-line '(:eval (projectile-project-name))))
 #+END_SRC
 
-** 22. Quality of Life
+** Quality of Life
 
 Auto-dim other buffers. Pretty self-explanatory.
 
@@ -1890,7 +1910,7 @@ Turn on =auto-fill-mode= everywhere.
   (add-hook 'text-mode-hook #'turn-on-auto-fill))
 #+END_SRC
 
-** 23. Slack
+** Slack
 
 Slack integration.
 
@@ -1917,7 +1937,7 @@ Slack integration.
                         :underline nil)))
 #+END_SRC
 
-** 24. Version Control
+** Version Control
 
 Magit provides Git facilities directly from within Emacs.
 
@@ -1996,7 +2016,7 @@ itself deserve to be called porcelains. [[https://magit.vc/about.html][(more)]]
 (use-package gitignore-mode :delight gitignore-mode "Git Ignore")
 #+END_SRC
 
-** 25. Whitespaces
+** Whitespaces
 
 Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
@@ -2010,7 +2030,7 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
   :config (setq-default whitespace-style '(face empty tab trailing)))
 #+END_SRC
 
-** 26. Windows
+** Windows
 
 Allow repeated use of <kbd>←</kbd> and <kbd>→</kbd> when using =previous-buffer=
 and =next-buffer=.
