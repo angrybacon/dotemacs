@@ -1583,7 +1583,13 @@ dealing with mismatched parentheses.
 
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
-  :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+  :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+  :config
+  (zenburn-with-color-variables
+    (set-face-attribute 'rainbow-delimiters-mismatched-face nil
+                        :foreground zenburn-red-4)
+    (set-face-attribute 'rainbow-delimiters-unmatched-face nil
+                        :foreground zenburn-red-4)))
 #+END_SRC
 
 I am still looking for the perfect parenthesis management setup as of today... No
