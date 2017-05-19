@@ -345,8 +345,6 @@ authoring documents with a fast and effective plain-text system.
   :config
   (setq-default
    org-descriptive-links nil
-   org-edit-src-content-indentation 0
-   org-src-window-setup 'current-window
    org-support-shift-select 'always
    org-startup-folded nil
    org-startup-truncated nil)
@@ -356,6 +354,15 @@ authoring documents with a fast and effective plain-text system.
   (unbind-key "<C-S-down>" org-mode-map)
   (unbind-key "<C-S-up>" org-mode-map)
   (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer-name))
+
+(use-package org-src
+  :ensure nil
+  :after org
+  :config
+  (setq-default
+   org-edit-src-content-indentation 0
+   org-edit-src-persistent-message nil
+   org-src-window-setup 'current-window))
 #+END_SRC
 
 Display the current Org header in the header-line.
