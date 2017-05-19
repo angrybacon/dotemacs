@@ -349,7 +349,7 @@ authoring documents with a fast and effective plain-text system.
    org-startup-folded nil
    org-startup-truncated nil)
   (zenburn-with-color-variables
-    (set-face-attribute 'org-block nil :background zenburn-bg-05))
+    (set-face-attribute 'org-block nil :background zenburn-bg+05))
   (unbind-key "<C-return>" org-mode-map)
   (unbind-key "<C-S-down>" org-mode-map)
   (unbind-key "<C-S-up>" org-mode-map)
@@ -1521,6 +1521,7 @@ idea.
   ([remap isearch-forward] . avy-goto-char-timer)
   :config
   (setq-default avy-background t)
+  (set-face-attribute 'avy-goto-char-timer-face nil :inherit 'isearch)
   (set-face-attribute 'avy-lead-face nil :underline nil)
   (set-face-attribute 'avy-lead-face-0 nil :underline nil)
   (set-face-attribute 'avy-lead-face-1 nil :underline nil)
