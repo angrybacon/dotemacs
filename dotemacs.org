@@ -1339,6 +1339,8 @@ fun and profit.
       (substring vc-mode (+ 2 (length (symbol-name (vc-backend buffer-file-name))))))))
 #+END_SRC
 
+- *FIXME*: Projectile segment doesn't use submodule.
+
 #+BEGIN_SRC emacs-lisp
 (use-package spaceline-config
   :ensure nil
