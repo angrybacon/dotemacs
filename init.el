@@ -15,8 +15,8 @@
 ;; ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 ;; FOR A PARTICULAR PURPOSE.
 ;;
-;; You should have received a copy of the Do What The Fuck You Want To Public License
-;; along with this program. If not, see http://www.wtfpl.net/.
+;; You should have received a copy of the Do What The Fuck You Want To Public
+;; License along with this program. If not, see http://www.wtfpl.net/.
 
 ;;; Commentary:
 
