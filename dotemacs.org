@@ -22,6 +22,7 @@
   - [[#auto-completion][Auto-Completion]]
   - [[#comments][Comments]]
   - [[#customization-menus][Customization Menus]]
+  - [[#dictionary][Dictionary]]
   - [[#diff][Diff]]
   - [[#dired][Dired]]
   - [[#expand][Expand]]
@@ -501,6 +502,14 @@ more.
                         :font me/font-family
                         :height me/font-size-title)
     (set-face-attribute 'custom-state nil :foreground zenburn-green+4)))
+#+END_SRC
+
+** Dictionary
+
+Define words using Wordnik.
+
+#+BEGIN_SRC emacs-lisp
+(use-package define-word)
 #+END_SRC
 
 ** Diff
