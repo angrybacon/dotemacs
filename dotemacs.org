@@ -22,6 +22,7 @@
   - [[#auto-completion][Auto-Completion]]
   - [[#comments][Comments]]
   - [[#customization-menus][Customization Menus]]
+  - [[#dictionary][Dictionary]]
   - [[#diff][Diff]]
   - [[#dired][Dired]]
   - [[#expand][Expand]]
@@ -82,6 +83,7 @@ Here are what I consider better defaults as per my own experience.
  indent-tabs-mode nil                             ; Stop using tabs to indent
  inhibit-startup-screen t                         ; Disable start-up screen
  initial-scratch-message ""                       ; Empty the initial *scratch* buffer
+ left-margin-width 1 right-margin-width 1         ; Add left and right margins
  mode-require-final-newline 'visit                ; Add a newline at EOF on visit
  mouse-yank-at-point t                            ; Yank at point rather than pointer
  ns-use-srgb-colorspace nil                       ; Don't use sRGB colors
@@ -96,7 +98,7 @@ Here are what I consider better defaults as per my own experience.
  window-combination-resize t                      ; Resize windows proportionally
  x-stretch-cursor t)                              ; Stretch cursor to the glyph width
 (display-time-mode 1)                             ; Enable time in the mode-line
-(fringe-mode '(10 . 10))                          ; Show vertical fringes
+(fringe-mode 0)                                   ; Hide fringes
 (fset 'yes-or-no-p 'y-or-n-p)                     ; Replace yes/no prompts with y/n
 (global-hl-line-mode 1)                           ; Hightlight current line
 (global-subword-mode 1)                           ; Iterate through CamelCase words
@@ -168,7 +170,6 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
   (set-face-attribute 'default nil :height me/font-size-default :font me/font-family)
   (set-face-attribute 'font-lock-comment-face nil :italic t)
   (set-face-attribute 'font-lock-doc-face nil :italic t)
-  (set-face-attribute 'fringe nil :background nil)
   (zenburn-with-color-variables
     (set-face-attribute 'button nil :foreground zenburn-yellow-2)
     (set-face-attribute 'help-argument-name nil :foreground zenburn-orange :italic nil)
@@ -501,6 +502,14 @@ more.
                         :font me/font-family
                         :height me/font-size-title)
     (set-face-attribute 'custom-state nil :foreground zenburn-green+4)))
+#+END_SRC
+
+** Dictionary
+
+Define words using Wordnik.
+
+#+BEGIN_SRC emacs-lisp
+(use-package define-word)
 #+END_SRC
 
 ** Diff
@@ -1158,7 +1167,7 @@ _q_ quit            _-_ zoom out
          (let ((buffer (window-buffer window)))
            (set-buffer buffer)
            (when (and (erc-buffer-visible buffer) (eq major-mode 'erc-mode))
-             (setq erc-fill-column (window-width window))))))))
+             (setq erc-fill-column (1- (window-width window)))))))))
   :bind
   (:map erc-mode-map
         ([remap erc-bol] . me/erc-bol-shifted)
@@ -1338,6 +1347,8 @@ fun and profit.
     (when vc-mode
       (substring vc-mode (+ 2 (length (symbol-name (vc-backend buffer-file-name))))))))
 #+END_SRC
+
+- *FIXME*: Projectile segment doesn't use submodule.
 
 #+BEGIN_SRC emacs-lisp
 (use-package spaceline-config
