@@ -187,7 +187,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
     (set-face-attribute 'region nil
                         :background zenburn-fg-1
                         :distant-foreground 'unspecified)
-    (set-face-attribute 'vertical-border nil :foreground zenburn-bg+05))
+    (set-face-attribute 'vertical-border nil :foreground zenburn-bg))
 
   ;; Un-bold'ify all the things
   (mapc
@@ -704,6 +704,7 @@ modular, and unchained from constraints of backward compatibility.
    helm-split-window-default-side 'left)
   (zenburn-with-color-variables
     (set-face-attribute 'helm-match nil :background nil :foreground zenburn-orange)
+    (set-face-attribute 'helm-prefarg nil :foreground zenburn-magenta)
     (set-face-attribute 'helm-source-header nil
                         :box nil
                         :background nil
@@ -1327,7 +1328,7 @@ fun and profit.
              spaceline--helm-current-source
              (eq 1 (cdr (assq 'follow spaceline--helm-current-source))))
         (propertize (mdi "eye") 'face 'success)
-      (mdi "eye-off")))
+      (propertize (mdi "eye-off") 'face 'warning)))
 
   (spaceline-define-segment me/selection-info
     "Show the size of current region."
