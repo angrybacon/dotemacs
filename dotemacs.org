@@ -187,7 +187,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
     (set-face-attribute 'region nil
                         :background zenburn-fg-1
                         :distant-foreground 'unspecified)
-    (set-face-attribute 'vertical-border nil :foreground zenburn-bg-1))
+    (set-face-attribute 'vertical-border nil :foreground zenburn-bg+05))
 
   ;; Un-bold'ify all the things
   (mapc
