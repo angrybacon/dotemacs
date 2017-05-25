@@ -1177,7 +1177,6 @@ _q_ quit            _-_ zoom out
         ("M-<down>" . erc-next-command)
         ("M-<up>" . erc-previous-command))
   :init
-  (add-hook 'erc-mode-hook #'toggle-truncate-lines)
   (add-hook 'window-configuration-change-hook #'me/erc-set-fill-column)
   (me/erc)
   :config
