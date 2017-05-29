@@ -1691,6 +1691,7 @@ with =selected=.
         ("C-c C-c"     . me/eval-region-and-kill-mark)
         ("C-b"         . me/browse-url-and-kill-mark)
         ("C-c c"       . capitalize-region)
+        ("C-c k"       . me/kebab-region)
         ("C-c l"       . downcase-region)
         ("C-c u"       . upcase-region)
         ("C-d"         . define-word-at-point)
@@ -1750,6 +1751,13 @@ Call `indent-rigidly-right-to-tab-stop' and keep mark."
   (interactive "r")
   (indent-rigidly-right-to-tab-stop beg end)
   (setq deactivate-mark nil))
+
+(defun me/kebab-region (begin end)
+  "Convert region to kebab-case."
+  (interactive "r")
+  (downcase-region begin end)
+  (save-excursion
+    (perform-replace " +" "-" nil t nil nil nil begin end)))
 
 (defun me/sort-words (reverse beg end)
   "Sort words in region alphabetically, in REVERSE if negative.
