@@ -1180,7 +1180,7 @@ _q_ quit            _-_ zoom out
   (setq-default
    erc-autojoin-channels-alist '(("freenode.net" "#emacs"))
    erc-fill-function 'erc-fill-static
-   erc-fill-static-center 18
+   erc-fill-static-center 19
    erc-header-line-format " %n on %t %m"
    erc-insert-timestamp-function 'erc-insert-timestamp-left
    erc-lurker-hide-list '("JOIN" "PART" "QUIT")
