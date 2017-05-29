@@ -181,12 +181,6 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
                         :background zenburn-bg-1
                         :box `(:line-width 2 :color ,zenburn-bg-1)
                         :height me/font-size-header-line)
-    (set-face-attribute 'isearch nil
-                        :background zenburn-blue
-                        :foreground zenburn-blue-5)
-    (set-face-attribute 'isearch-lazy-highlight-face nil
-                        :foreground zenburn-blue
-                        :background zenburn-blue-5)
     (set-face-attribute 'region nil
                         :background zenburn-fg-1
                         :distant-foreground 'unspecified)
@@ -354,8 +348,6 @@ authoring documents with a fast and effective plain-text system.
    org-support-shift-select 'always
    org-startup-folded nil
    org-startup-truncated nil)
-  (zenburn-with-color-variables
-    (set-face-attribute 'org-block nil :background zenburn-bg+05))
   (unbind-key "<C-return>" org-mode-map)
   (unbind-key "<C-S-down>" org-mode-map)
   (unbind-key "<C-S-up>" org-mode-map)
@@ -1496,7 +1488,7 @@ information in the mode-line in various search modes.
   (global-anzu-mode 1)
   (setq-default
    anzu-cons-mode-line-p nil
-   anzu-replace-to-string-separator (format " %s " (mdi "arrow-right")))
+   anzu-replace-to-string-separator (mdi "arrow-right" t))
   (zenburn-with-color-variables
     (set-face-attribute 'anzu-replace-highlight nil
                         :background zenburn-red-4
@@ -1564,7 +1556,14 @@ can do less, I've replaced default bindings with the regexp-equivalent commands.
   (setq-default
    isearch-allow-scroll t
    lazy-highlight-cleanup nil
-   lazy-highlight-initial-delay 0))
+   lazy-highlight-initial-delay 0)
+  (zenburn-with-color-variables
+    (set-face-attribute 'isearch nil
+                        :background zenburn-blue
+                        :foreground zenburn-blue-5)
+    (set-face-attribute 'isearch-lazy-highlight-face nil
+                        :background zenburn-blue-5
+                        :foreground zenburn-blue)))
 #+END_SRC
 
 ** OS-Specific
