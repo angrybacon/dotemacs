@@ -167,11 +167,14 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
   (load-theme 'zenburn t)
 
   ;; Customize Zenburn implementation
-  (set-face-attribute 'default nil :height me/font-size-default :font me/font-family)
   (set-face-attribute 'font-lock-comment-face nil :italic t)
   (set-face-attribute 'font-lock-doc-face nil :italic t)
   (zenburn-with-color-variables
     (set-face-attribute 'button nil :foreground zenburn-yellow-2)
+    (set-face-attribute 'default nil
+                        :background zenburn-bg-05
+                        :height me/font-size-default
+                        :font me/font-family)
     (set-face-attribute 'help-argument-name nil :foreground zenburn-orange :italic nil)
     (set-face-attribute 'hl-line nil :background zenburn-bg+1)
     (set-face-attribute 'header-line nil
@@ -187,7 +190,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
     (set-face-attribute 'region nil
                         :background zenburn-fg-1
                         :distant-foreground 'unspecified)
-    (set-face-attribute 'vertical-border nil :foreground zenburn-bg))
+    (set-face-attribute 'vertical-border nil :foreground zenburn-bg-05))
 
   ;; Un-bold'ify all the things
   (mapc
@@ -1857,15 +1860,12 @@ performance sake an indexing mechanism backed by external commands exists as wel
 
 Auto-dim other buffers. Pretty self-explanatory.
 
-- *FIXME*: Auto-dim the fringes too.
-           See https://github.com/mina86/auto-dim-other-buffers.el/issues/11.
-
 #+BEGIN_SRC emacs-lisp
 (use-package auto-dim-other-buffers
   :init (auto-dim-other-buffers-mode 1)
   :config
   (zenburn-with-color-variables
-    (set-face-attribute 'auto-dim-other-buffers-face nil :background zenburn-bg-05)))
+    (set-face-attribute 'auto-dim-other-buffers-face nil :background zenburn-bg-1)))
 #+END_SRC
 
 Insert the current date.
