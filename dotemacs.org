@@ -998,8 +998,7 @@ Group Helm commands.
 ^────^──────────────^──────^────────────^──^────────────────
 _q_ quit            _c_ colors          _f_ flycheck
 _r_ resume          _g_ google          _p_ swoop
-^^                  _h_ headings        _s_ css-scss
-^^                  _i_ imenu           ^^
+^^                  _i_ imenu           _s_ css-scss
 ^^                  _k_ kill-ring       ^^
 ^^                  ^^                  ^^
 "
@@ -1007,7 +1006,6 @@ _r_ resume          _g_ google          _p_ swoop
   ("c" helm-colors)
   ("f" helm-flycheck)
   ("g" helm-google-suggest)
-  ("h" helm-org-in-buffer-headings)
   ("i" helm-imenu)
   ("k" helm-show-kill-ring)
   ("p" helm-swoop)
@@ -1050,9 +1048,9 @@ Group Org commands.
 ^───^───────────────^─────^─────────────^───────^───────────
 _q_ quit            _i_ insert          _<_ previous
 ^^                  _n_ next            _>_ next
-^^                  _o_ open            _a_ all
-^^                  _p_ previous        _v_ overview
-^^                  _s_ store           ^^
+^^                  _p_ previous        _a_ all
+^^                  _s_ store           _o_ goto
+^^                  ^^                  _v_ overview
 ^^                  ^^                  ^^
 "
   ("q" nil)
@@ -1061,7 +1059,7 @@ _q_ quit            _i_ insert          _<_ previous
   ("a" outline-show-all)
   ("i" org-insert-link :color blue)
   ("n" org-next-link)
-  ("o" org-open-at-point)
+  ("o" helm-org-in-buffer-headings :color blue)
   ("p" org-previous-link)
   ("s" org-store-link)
   ("v" org-overview))
