@@ -165,8 +165,6 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
   :config
   (set-face-attribute 'bold nil :weight 'normal)
   (load-theme 'zenburn t)
-
-  ;; Customize Zenburn implementation
   (set-face-attribute 'font-lock-comment-face nil :italic t)
   (set-face-attribute 'font-lock-doc-face nil :italic t)
   (zenburn-with-color-variables
@@ -184,14 +182,7 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
     (set-face-attribute 'region nil
                         :background zenburn-fg-1
                         :distant-foreground 'unspecified)
-    (set-face-attribute 'vertical-border nil :foreground zenburn-bg-05))
-
-  ;; Un-bold'ify all the things
-  (mapc
-   (lambda (face)
-     (when (eq (face-attribute face :weight) 'bold)
-       (set-face-attribute face nil :weight 'normal)))
-   (face-list)))
+    (set-face-attribute 'vertical-border nil :foreground zenburn-bg-05)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -698,12 +689,13 @@ modular, and unchained from constraints of backward compatibility.
    helm-display-header-line nil
    helm-split-window-default-side 'left)
   (zenburn-with-color-variables
-    (set-face-attribute 'helm-match nil :background nil :foreground zenburn-orange)
+    (set-face-attribute 'helm-match nil :background nil :weight 'normal)
     (set-face-attribute 'helm-prefarg nil :foreground zenburn-magenta)
     (set-face-attribute 'helm-source-header nil
                         :box nil
                         :background nil
-                        :height me/font-size-title)))
+                        :height me/font-size-title
+                        :weight 'normal)))
 #+END_SRC
 
 Helm sub-modules can be customized separately. Many basic Emacs commands have their
@@ -720,10 +712,13 @@ Helm equivalents.
   (setq-default
    helm-buffers-fuzzy-matching t
    helm-buffer-max-length nil)
+  (set-face-attribute 'helm-buffer-directory nil :inherit 'dired-directory)
+  (set-face-attribute 'helm-buffer-not-saved nil :background nil)
+  (set-face-attribute 'helm-buffer-process nil :background nil)
+  (set-face-attribute 'helm-buffer-saved-out nil :background nil)
+  (set-face-attribute 'helm-buffer-size nil :background nil)
+  (set-face-attribute 'helm-non-file-buffer nil :foreground 'unspecified :inherit 'shadow)
   (zenburn-with-color-variables
-    (set-face-attribute 'helm-buffer-directory nil
-                        :foreground zenburn-blue
-                        :background nil)
     (set-face-attribute 'helm-buffer-size nil :foreground zenburn-fg-1)))
 
 (use-package helm-color
@@ -743,6 +738,7 @@ Helm equivalents.
   :ensure nil
   :after helm
   :config
+  (set-face-attribute 'helm-ff-symlink nil :background nil :weight 'normal)
   (zenburn-with-color-variables
     (set-face-attribute 'helm-ff-dotted-directory nil
                         :background nil
@@ -1187,6 +1183,8 @@ _q_ quit            _-_ zoom out
    erc-prompt (format "%25s" ">")
    erc-timestamp-format "%H:%M:%S")
   (set-face-attribute 'erc-button nil :inherit 'button :weight 'unspecified)
+  (set-face-attribute 'erc-nick-default-face nil :weight 'normal)
+  (set-face-attribute 'erc-prompt-face nil :background 'unspecified)
   (zenburn-with-color-variables
     (set-face-attribute 'erc-timestamp-face nil :foreground zenburn-fg-1)))
 #+END_SRC
