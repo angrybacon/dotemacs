@@ -305,7 +305,10 @@ for variables and properties.
   :config
   (unbind-key "M-<down>" markdown-mode-map)
   (unbind-key "M-<up>" markdown-mode-map)
-  (setq-default markdown-asymmetric-header t))
+  (setq-default
+    markdown-asymmetric-header t
+    markdown-split-window-direction 'right
+))
 #+END_SRC
 
 ** Org
