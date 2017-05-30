@@ -158,8 +158,6 @@ and =user-mail-address=. This is also where you want your API tokens to live.
 
 * Theme
 
-
-- *FIXME*: The un-bold'ify thing runs too early.
 Load =zenburn-theme= and fix some high-level faces to match my personal
 preferences.
 
@@ -299,8 +297,7 @@ provide candidates for variables and properties.
   (unbind-key "M-<up>" markdown-mode-map)
   (setq-default
     markdown-asymmetric-header t
-    markdown-split-window-direction 'right
-))
+    markdown-split-window-direction 'right))
 #+END_SRC
 
 ** Org
@@ -336,7 +333,9 @@ authoring documents with a fast and effective plain-text system.
   (:map org-mode-map
         ([remap backward-paragraph] . me/org-backward-paragraph-shifted)
         ([remap forward-paragraph] . me/org-forward-paragraph-shifted)
-        ("<M-return>" . org-insert-heading-after-current))
+        ("<C-return>" . nil)
+        ("<C-S-down>" . nil)
+        ("<C-S-up>" . nil))
   :init
   (add-hook 'org-mode-hook #'org-sticky-header-mode)
   (add-hook 'org-mode-hook #'toc-org-enable)
@@ -346,9 +345,6 @@ authoring documents with a fast and effective plain-text system.
    org-support-shift-select 'always
    org-startup-folded nil
    org-startup-truncated nil)
-  (unbind-key "<C-return>" org-mode-map)
-  (unbind-key "<C-S-down>" org-mode-map)
-  (unbind-key "<C-S-up>" org-mode-map)
   (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer-name))
 
 (use-package org-src
@@ -577,15 +573,16 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
 
 #+BEGIN_SRC emacs-lisp
 (use-package emmet-mode
+  :bind
+  (:map emmet-mode-keymap
+        ("<C-return>" . nil)
+        ("C-M-<left>" . nil)
+        ("C-M-<right>" . nil)
+        ("C-c w" . nil))
   :init
   (add-hook 'css-mode-hook #'emmet-mode)
   (add-hook 'html-mode-hook #'emmet-mode)
-  :config
-  (setq-default emmet-move-cursor-between-quote t)
-  (unbind-key "<C-return>" emmet-mode-keymap)
-  (unbind-key "C-M-<left>" emmet-mode-keymap)
-  (unbind-key "C-M-<right>" emmet-mode-keymap)
-  (unbind-key "C-c w" emmet-mode-keymap))
+  :config (setq-default emmet-move-cursor-between-quote t))
 
 (use-package hippie-exp
   :ensure nil
@@ -1204,6 +1201,8 @@ Colorize nicks with unique colors.
 #+END_SRC
 
 Keep track of ERC buffers in which new messages have been posted.
+
+- *TODO*: Filter and track only the actual messages.
 
 #+BEGIN_SRC emacs-lisp
 (use-package erc-track
