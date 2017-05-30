@@ -829,6 +829,7 @@ Fourth-party packages for Helm.
   :config (helm-projectile-toggle 1))
 
 (use-package helm-swoop
+  :bind ([remap isearch-forward] . helm-swoop)
   :config
   (setq-default
    helm-swoop-move-to-line-cycle nil
@@ -1000,8 +1001,8 @@ Group Helm commands.
 ^Helm^              ^Browse^            ^Do^
 ^────^──────────────^──────^────────────^──^────────────────
 _q_ quit            _c_ colors          _f_ flycheck
-_r_ resume          _g_ google          _p_ swoop
-^^                  _i_ imenu           _s_ css-scss
+_r_ resume          _g_ google          _s_ css-scss
+^^                  _i_ imenu           ^^
 ^^                  _k_ kill-ring       ^^
 ^^                  ^^                  ^^
 "
@@ -1011,7 +1012,6 @@ _r_ resume          _g_ google          _p_ swoop
   ("g" helm-google-suggest)
   ("i" helm-imenu)
   ("k" helm-show-kill-ring)
-  ("p" helm-swoop)
   ("r" helm-resume)
   ("s" helm-css-scss))
 #+END_SRC
@@ -1511,29 +1511,6 @@ Configure the mouse wheel scroll.
 #+END_SRC
 
 *** Search
-
-#+BEGIN_QUOTE
-=avy= is a GNU Emacs package for jumping to visible text using a char-based decision
-tree. See also [[https://github.com/winterTTr/ace-jump-mode][ace-jump-mode]] and
-[[https://github.com/Lokaltog/vim-easymotion][vim-easymotion]] - =avy= uses the same
-idea.
-
-[[https://github.com/abo-abo/avy][Oleh Krehel]]
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package avy
-  :bind
-  ([remap goto-line] . avy-goto-line)
-  ([remap isearch-forward] . avy-goto-char-timer)
-  :config
-  (setq-default avy-background t)
-  (set-face-attribute 'avy-goto-char-timer-face nil :inherit 'isearch)
-  (set-face-attribute 'avy-lead-face nil :underline nil)
-  (set-face-attribute 'avy-lead-face-0 nil :underline nil)
-  (set-face-attribute 'avy-lead-face-1 nil :underline nil)
-  (set-face-attribute 'avy-lead-face-2 nil :underline nil))
-#+END_SRC
 
 Isearch stands for /incremental search/. This means that search results are
 highlighted while you are typing your query, incrementally. Since he who can do more
