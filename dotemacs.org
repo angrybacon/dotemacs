@@ -165,36 +165,24 @@ Load =zenburn-theme= and fix some high-level faces to match my personal preferen
   :config
   (set-face-attribute 'bold nil :weight 'normal)
   (load-theme 'zenburn t)
-
-  ;; Customize Zenburn implementation
-  (set-face-attribute 'default nil :height me/font-size-default :font me/font-family)
   (set-face-attribute 'font-lock-comment-face nil :italic t)
   (set-face-attribute 'font-lock-doc-face nil :italic t)
   (zenburn-with-color-variables
     (set-face-attribute 'button nil :foreground zenburn-yellow-2)
+    (set-face-attribute 'default nil
+                        :background zenburn-bg-05
+                        :height me/font-size-default
+                        :font me/font-family)
     (set-face-attribute 'help-argument-name nil :foreground zenburn-orange :italic nil)
     (set-face-attribute 'hl-line nil :background zenburn-bg+1)
     (set-face-attribute 'header-line nil
                         :background zenburn-bg-1
                         :box `(:line-width 2 :color ,zenburn-bg-1)
                         :height me/font-size-header-line)
-    (set-face-attribute 'isearch nil
-                        :background zenburn-blue
-                        :foreground zenburn-blue-5)
-    (set-face-attribute 'isearch-lazy-highlight-face nil
-                        :foreground zenburn-blue
-                        :background zenburn-blue-5)
     (set-face-attribute 'region nil
                         :background zenburn-fg-1
                         :distant-foreground 'unspecified)
-    (set-face-attribute 'vertical-border nil :foreground zenburn-bg))
-
-  ;; Un-bold'ify all the things
-  (mapc
-   (lambda (face)
-     (when (eq (face-attribute face :weight) 'bold)
-       (set-face-attribute face nil :weight 'normal)))
-   (face-list)))
+    (set-face-attribute 'vertical-border nil :foreground zenburn-bg-05)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -354,8 +342,6 @@ authoring documents with a fast and effective plain-text system.
    org-support-shift-select 'always
    org-startup-folded nil
    org-startup-truncated nil)
-  (zenburn-with-color-variables
-    (set-face-attribute 'org-block nil :background zenburn-bg+05))
   (unbind-key "<C-return>" org-mode-map)
   (unbind-key "<C-S-down>" org-mode-map)
   (unbind-key "<C-S-up>" org-mode-map)
@@ -706,12 +692,13 @@ modular, and unchained from constraints of backward compatibility.
    helm-display-header-line nil
    helm-split-window-default-side 'left)
   (zenburn-with-color-variables
-    (set-face-attribute 'helm-match nil :background nil :foreground zenburn-orange)
+    (set-face-attribute 'helm-match nil :background nil :weight 'normal)
     (set-face-attribute 'helm-prefarg nil :foreground zenburn-magenta)
     (set-face-attribute 'helm-source-header nil
                         :box nil
                         :background nil
-                        :height me/font-size-title)))
+                        :height me/font-size-title
+                        :weight 'normal)))
 #+END_SRC
 
 Helm sub-modules can be customized separately. Many basic Emacs commands have their
@@ -728,10 +715,13 @@ Helm equivalents.
   (setq-default
    helm-buffers-fuzzy-matching t
    helm-buffer-max-length nil)
+  (set-face-attribute 'helm-buffer-directory nil :inherit 'dired-directory)
+  (set-face-attribute 'helm-buffer-not-saved nil :background nil)
+  (set-face-attribute 'helm-buffer-process nil :background nil)
+  (set-face-attribute 'helm-buffer-saved-out nil :background nil)
+  (set-face-attribute 'helm-buffer-size nil :background nil)
+  (set-face-attribute 'helm-non-file-buffer nil :foreground 'unspecified :inherit 'shadow)
   (zenburn-with-color-variables
-    (set-face-attribute 'helm-buffer-directory nil
-                        :foreground zenburn-blue
-                        :background nil)
     (set-face-attribute 'helm-buffer-size nil :foreground zenburn-fg-1)))
 
 (use-package helm-color
@@ -751,6 +741,7 @@ Helm equivalents.
   :ensure nil
   :after helm
   :config
+  (set-face-attribute 'helm-ff-symlink nil :background nil :weight 'normal)
   (zenburn-with-color-variables
     (set-face-attribute 'helm-ff-dotted-directory nil
                         :background nil
@@ -1010,8 +1001,7 @@ Group Helm commands.
 ^────^──────────────^──────^────────────^──^────────────────
 _q_ quit            _c_ colors          _f_ flycheck
 _r_ resume          _g_ google          _p_ swoop
-^^                  _h_ headings        _s_ css-scss
-^^                  _i_ imenu           ^^
+^^                  _i_ imenu           _s_ css-scss
 ^^                  _k_ kill-ring       ^^
 ^^                  ^^                  ^^
 "
@@ -1019,7 +1009,6 @@ _r_ resume          _g_ google          _p_ swoop
   ("c" helm-colors)
   ("f" helm-flycheck)
   ("g" helm-google-suggest)
-  ("h" helm-org-in-buffer-headings)
   ("i" helm-imenu)
   ("k" helm-show-kill-ring)
   ("p" helm-swoop)
@@ -1062,9 +1051,9 @@ Group Org commands.
 ^───^───────────────^─────^─────────────^───────^───────────
 _q_ quit            _i_ insert          _<_ previous
 ^^                  _n_ next            _>_ next
-^^                  _o_ open            _a_ all
-^^                  _p_ previous        _v_ overview
-^^                  _s_ store           ^^
+^^                  _p_ previous        _a_ all
+^^                  _s_ store           _o_ goto
+^^                  ^^                  _v_ overview
 ^^                  ^^                  ^^
 "
   ("q" nil)
@@ -1073,7 +1062,7 @@ _q_ quit            _i_ insert          _<_ previous
   ("a" outline-show-all)
   ("i" org-insert-link :color blue)
   ("n" org-next-link)
-  ("o" org-open-at-point)
+  ("o" helm-org-in-buffer-headings :color blue)
   ("p" org-previous-link)
   ("s" org-store-link)
   ("v" org-overview))
@@ -1188,13 +1177,15 @@ _q_ quit            _-_ zoom out
   (setq-default
    erc-autojoin-channels-alist '(("freenode.net" "#emacs"))
    erc-fill-function 'erc-fill-static
-   erc-fill-static-center 18
+   erc-fill-static-center 19
    erc-header-line-format " %n on %t %m"
    erc-insert-timestamp-function 'erc-insert-timestamp-left
    erc-lurker-hide-list '("JOIN" "PART" "QUIT")
    erc-prompt (format "%25s" ">")
    erc-timestamp-format "%H:%M:%S")
   (set-face-attribute 'erc-button nil :inherit 'button :weight 'unspecified)
+  (set-face-attribute 'erc-nick-default-face nil :weight 'normal)
+  (set-face-attribute 'erc-prompt-face nil :background 'unspecified)
   (zenburn-with-color-variables
     (set-face-attribute 'erc-timestamp-face nil :foreground zenburn-fg-1)))
 #+END_SRC
@@ -1496,7 +1487,7 @@ information in the mode-line in various search modes.
   (global-anzu-mode 1)
   (setq-default
    anzu-cons-mode-line-p nil
-   anzu-replace-to-string-separator (format " %s " (mdi "arrow-right")))
+   anzu-replace-to-string-separator (mdi "arrow-right" t))
   (zenburn-with-color-variables
     (set-face-attribute 'anzu-replace-highlight nil
                         :background zenburn-red-4
@@ -1564,7 +1555,14 @@ can do less, I've replaced default bindings with the regexp-equivalent commands.
   (setq-default
    isearch-allow-scroll t
    lazy-highlight-cleanup nil
-   lazy-highlight-initial-delay 0))
+   lazy-highlight-initial-delay 0)
+  (zenburn-with-color-variables
+    (set-face-attribute 'isearch nil
+                        :background zenburn-blue
+                        :foreground zenburn-blue-5)
+    (set-face-attribute 'isearch-lazy-highlight-face nil
+                        :background zenburn-blue-5
+                        :foreground zenburn-blue)))
 #+END_SRC
 
 ** OS-Specific
@@ -1692,6 +1690,7 @@ with =selected=.
         ("C-c C-c"     . me/eval-region-and-kill-mark)
         ("C-b"         . me/browse-url-and-kill-mark)
         ("C-c c"       . capitalize-region)
+        ("C-c k"       . me/kebab-region)
         ("C-c l"       . downcase-region)
         ("C-c u"       . upcase-region)
         ("C-d"         . define-word-at-point)
@@ -1751,6 +1750,13 @@ Call `indent-rigidly-right-to-tab-stop' and keep mark."
   (interactive "r")
   (indent-rigidly-right-to-tab-stop beg end)
   (setq deactivate-mark nil))
+
+(defun me/kebab-region (begin end)
+  "Convert region to kebab-case."
+  (interactive "r")
+  (downcase-region begin end)
+  (save-excursion
+    (perform-replace " +" "-" nil t nil nil nil begin end)))
 
 (defun me/sort-words (reverse beg end)
   "Sort words in region alphabetically, in REVERSE if negative.
@@ -1860,15 +1866,12 @@ performance sake an indexing mechanism backed by external commands exists as wel
 
 Auto-dim other buffers. Pretty self-explanatory.
 
-- *FIXME*: Auto-dim the fringes too.
-           See https://github.com/mina86/auto-dim-other-buffers.el/issues/11.
-
 #+BEGIN_SRC emacs-lisp
 (use-package auto-dim-other-buffers
   :init (auto-dim-other-buffers-mode 1)
   :config
   (zenburn-with-color-variables
-    (set-face-attribute 'auto-dim-other-buffers-face nil :background zenburn-bg-05)))
+    (set-face-attribute 'auto-dim-other-buffers-face nil :background zenburn-bg-1)))
 #+END_SRC
 
 Insert the current date.
