@@ -159,6 +159,13 @@ and =user-mail-address=. This is also where you want your API tokens to live.
 
 * Theme
 
+The face for italic text is underlined when the font does not support slant by
+default. I don't like it.
+
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'italic nil :underline nil)
+#+END_SRC
+
 Load =zenburn-theme= and fix some high-level faces to match my personal
 preferences.
 
@@ -694,6 +701,7 @@ leaner, modular, and unchained from constraints of backward compatibility.
    helm-always-two-windows t
    helm-display-header-line nil
    helm-split-window-default-side 'left)
+  (set-face-attribute 'helm-action nil :underline nil)
   (zenburn-with-color-variables
     (set-face-attribute 'helm-match nil :background nil :weight 'normal)
     (set-face-attribute 'helm-prefarg nil :foreground zenburn-magenta)
@@ -1141,6 +1149,7 @@ _q_ quit            _-_ zoom out
 ** IRC
 
 - *TODO*: Display the current count of users. =(hash-table-count erc-channel-users)=
+- *FIXME*: =erc-buffer-visible= comes from =erc-track.el=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package erc
