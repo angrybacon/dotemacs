@@ -185,7 +185,7 @@ preferences.
     (set-face-attribute 'region nil
                         :background zenburn-fg-1
                         :distant-foreground 'unspecified)
-    (set-face-attribute 'vertical-border nil :foreground zenburn-bg-05)))
+    (set-face-attribute 'vertical-border nil :foreground zenburn-bg)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
