@@ -1902,7 +1902,7 @@ electric-indent-mode.
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
-(use-package aggressive-indent-mode
+(use-package aggressive-indent
   :config (global-aggressive-indent-mode))
 #+END_SRC
 
