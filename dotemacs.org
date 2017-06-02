@@ -192,7 +192,7 @@ preferences.
     (set-face-attribute 'region nil
                         :background zenburn-fg-1
                         :distant-foreground 'unspecified)
-    (set-face-attribute 'vertical-border nil :foreground zenburn-bg-05)))
+    (set-face-attribute 'vertical-border nil :foreground zenburn-bg)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -214,10 +214,10 @@ nothing but the customization of its lighter.
 #+BEGIN_SRC emacs-lisp
 (use-package css-mode
   :ensure nil
-  :delight css-mode "CSS"
   :config (setq-default css-indent-offset 2))
 
 (use-package scss-mode
+  :ensure nil
   :preface
   (defun me/scss-set-comment-style ()
     (setq-local comment-end "")
@@ -279,13 +279,14 @@ provide candidates for variables and properties.
 ** Lisp
 
 #+BEGIN_SRC emacs-lisp
+(use-package emacs-lisp-mode
+  :ensure nil
+  :delight emacs-lisp-mode "Emacs Lisp"
+  :config (delight 'lisp-interaction-mode "Lisp Interaction"))
+
 (use-package lisp-mode
   :ensure nil
-  :delight lisp-mode "Lisp"
-  :config
-  (delight
-   '((emacs-lisp-mode "Emacs Lisp")
-     (lisp-interaction-mode "Lisp Interaction"))))
+  :delight lisp-mode "Lisp")
 #+END_SRC
 
 ** Markdown
@@ -920,6 +921,8 @@ _q_ quit            _d_ short           _D_ short
   ("L" me/date-long-with-time))
 #+END_SRC
 
+[[./screenshots/hydra.dates.png]]
+
 *** Eyebrowse
 
 Group Eyebrowse commands.
@@ -945,6 +948,8 @@ _q_ quit            _c_ create          _<_ previous
   ("r" eyebrowse-rename-window-config)
   ("s" eyebrowse-switch-to-window-config))
 #+END_SRC
+
+[[./screenshots/hydra.eyebrowse.png]]
 
 *** Flycheck
 
@@ -972,6 +977,8 @@ _v_ verify setup    _f_ check           _s_ select
   ("v" flycheck-verify-setup))
 #+END_SRC
 
+[[./screenshots/hydra.flycheck.png]]
+
 *** Fold
 
 Group folding commands.
@@ -998,6 +1005,8 @@ _q_ quit            _f_ fold            _<_ previous        _<tab>_ current
   ("k" vimish-fold-delete)
   ("K" vimish-fold-delete-all))
 #+END_SRC
+
+[[./screenshots/hydra.fold.png]]
 
 *** Helm
 
@@ -1027,6 +1036,8 @@ _r_ resume          _g_ google          _s_ css-scss
   ("s" helm-css-scss))
 #+END_SRC
 
+[[./screenshots/hydra.helm.png]]
+
 *** Magit
 
 Group Magit commands.
@@ -1049,6 +1060,8 @@ _q_ quit            _b_ blame
   ("i" magit-init)
   ("s" magit-status))
 #+END_SRC
+
+[[./screenshots/hydra.magit.png]]
 
 *** Org
 
@@ -1079,6 +1092,8 @@ _q_ quit            _i_ insert          _<_ previous
   ("v" org-overview))
 #+END_SRC
 
+[[./screenshots/hydra.org.png]]
+
 *** Projectile
 
 Group Projectile commands.
@@ -1108,6 +1123,8 @@ _i_ reset cache     _K_ kill all        _D_ root            _s_ ag
   ("S" projectile-save-project-buffers))
 #+END_SRC
 
+[[./screenshots/hydra.projectile.png]]
+
 *** System
 
 Group system-related commands.
@@ -1125,6 +1142,8 @@ _q_ quit            _p_ list
   ("p" list-processes))
 #+END_SRC
 
+[[./screenshots/hydra.system.png]]
+
 *** Windows
 
 Group window-related commands.
@@ -1133,18 +1152,25 @@ Group window-related commands.
 (defhydra hydra-windows (:color pink)
   "
 ^
-^Windows^           ^Zoom^
-^───────^───────────^────^──────────────
-_q_ quit            _-_ zoom out
-^^                  _+_ zoom in
-^^                  _=_ reset
-^^                  ^^
+^Windows^           ^Window^            ^Zoom^
+^───────^───────────^──────^────────────^────^──────────────
+_q_ quit            _i_ enlarge         _-_ zoom out
+^^                  _j_ tighten         _+_ zoom in
+^^                  _k_ widen           _=_ reset
+^^                  _l_ shrink          ^^
+^^                  ^^                  ^^
 "
   ("q" nil)
+  ("i" enlarge-window)
+  ("j" shrink-window-horizontally)
+  ("k" shrink-window)
+  ("l" enlarge-window-horizontally)
   ("-" text-scale-decrease)
   ("+" text-scale-increase)
   ("=" (text-scale-increase 0)))
 #+END_SRC
+
+[[./screenshots/hydra.windows.png]]
 
 ** IRC
 
@@ -1861,6 +1887,25 @@ exists as well).
 
 ** Quality of Life
 
+Auto-indent code as you write.
+
+#+BEGIN_QUOTE
+=electric-indent-mode= is enough to keep your code nicely aligned when all you
+do is type. However, once you start shifting blocks around, transposing lines,
+or slurping and barfing sexps, indentation is bound to go wrong.
+
+=aggressive-indent-mode= is a minor mode that keeps your code *always* indented.
+It reindents after every change, making it more reliable than
+electric-indent-mode.
+
+[[https://github.com/Malabarba/aggressive-indent-mode][Artur Malabarba]]
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package aggressive-indent-mode
+  :config (global-aggressive-indent-mode))
+#+END_SRC
+
 Auto-dim other buffers. Pretty self-explanatory.
 
 #+BEGIN_SRC emacs-lisp
@@ -1905,12 +1950,16 @@ Insert the current date.
   (insert (format-time-string "%Y.%m.%d %H:%M")))
 #+END_SRC
 
+Text inserted while the region is active will replace the region contents.
+
 #+BEGIN_SRC emacs-lisp
 (use-package delsel
   :ensure nil
   :defer 1
   :config (delete-selection-mode 1))
 #+END_SRC
+
+Disable documentation for object at point in the echo area. It conflicts with Flycheck.
 
 #+BEGIN_SRC emacs-lisp
 (use-package eldoc
@@ -1959,7 +2008,7 @@ Colorize colors as text with their value.
   :config (setq-default rainbow-x-colors-major-mode-list '()))
 #+END_SRC
 
-Turn on =auto-fill-mode= everywhere.
+Turn on =auto-fill-mode= /almost/ everywhere.
 
 #+BEGIN_SRC emacs-lisp
 (use-package simple
