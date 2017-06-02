@@ -1133,7 +1133,7 @@ Group system-related commands.
 (defhydra hydra-system (:color blue)
   "
 ^
-^System^            ^Packages^            ^Processes^
+^System^            ^Packages^          ^Processes^
 ^──────^────────────^────────^──────────^─────────^─────────
 _q_ quit            _p_ list            _s_ list
 ^^                  _P_ upgrade         ^^
