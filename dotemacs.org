@@ -1126,14 +1126,19 @@ Group window-related commands.
 (defhydra hydra-windows (:color pink)
   "
 ^
-^Windows^           ^Zoom^
-^───────^───────────^────^──────────────
-_q_ quit            _-_ zoom out
-^^                  _+_ zoom in
-^^                  _=_ reset
-^^                  ^^
+^Windows^           ^Window^            ^Zoom^
+^───────^───────────^──────^────────────^────^──────────────
+_q_ quit            _i_ enlarge         _-_ zoom out
+^^                  _j_ tighten         _+_ zoom in
+^^                  _k_ widen           _=_ reset
+^^                  _l_ shrink          ^^
+^^                  ^^                  ^^
 "
   ("q" nil)
+  ("i" enlarge-window)
+  ("j" shrink-window-horizontally)
+  ("k" shrink-window)
+  ("l" enlarge-window-horizontally)
   ("-" text-scale-decrease)
   ("+" text-scale-increase)
   ("=" (text-scale-increase 0)))
