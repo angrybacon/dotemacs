@@ -207,10 +207,10 @@ nothing but the customization of its lighter.
 #+BEGIN_SRC emacs-lisp
 (use-package css-mode
   :ensure nil
-  :delight css-mode "CSS"
   :config (setq-default css-indent-offset 2))
 
 (use-package scss-mode
+  :ensure nil
   :preface
   (defun me/scss-set-comment-style ()
     (setq-local comment-end "")
@@ -272,13 +272,14 @@ provide candidates for variables and properties.
 ** Lisp
 
 #+BEGIN_SRC emacs-lisp
+(use-package emacs-lisp-mode
+  :ensure nil
+  :delight emacs-lisp-mode "Emacs Lisp"
+  :config (delight 'lisp-interaction-mode "Lisp Interaction"))
+
 (use-package lisp-mode
   :ensure nil
-  :delight lisp-mode "Lisp"
-  :config
-  (delight
-   '((emacs-lisp-mode "Emacs Lisp")
-     (lisp-interaction-mode "Lisp Interaction"))))
+  :delight lisp-mode "Lisp")
 #+END_SRC
 
 ** Markdown
@@ -1896,12 +1897,16 @@ Insert the current date.
   (insert (format-time-string "%Y.%m.%d %H:%M")))
 #+END_SRC
 
+Text inserted while the region is active will replace the region contents.
+
 #+BEGIN_SRC emacs-lisp
 (use-package delsel
   :ensure nil
   :defer 1
   :config (delete-selection-mode 1))
 #+END_SRC
+
+Disable documentation for object at point in the echo area. It conflicts with Flycheck.
 
 #+BEGIN_SRC emacs-lisp
 (use-package eldoc
@@ -1950,7 +1955,7 @@ Colorize colors as text with their value.
   :config (setq-default rainbow-x-colors-major-mode-list '()))
 #+END_SRC
 
-Turn on =auto-fill-mode= everywhere.
+Turn on =auto-fill-mode= /almost/ everywhere.
 
 #+BEGIN_SRC emacs-lisp
 (use-package simple
