@@ -798,6 +798,10 @@ their Helm equivalents.
   :after helm
   :bind ([remap find-file] . helm-find-files)
   :config
+  (setq-default
+   helm-ff-no-preselect t
+   helm-ff-skip-boring-files t
+   helm-find-file-ignore-thing-at-point t)
   (zenburn-with-color-variables
     ;; TOOD: Make a pull request.
     (set-face-attribute 'helm-ff-dotted-directory nil
