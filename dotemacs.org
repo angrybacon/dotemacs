@@ -216,7 +216,29 @@ preferences.
                       :inherit 'dired-directory)
   (set-face-attribute 'helm-ff-dirs nil
                       :foreground 'unspecified
-                      :inherit 'dired-directory))
+                      :inherit 'dired-directory)
+
+  ;; TODO: Unbold the following faces
+  ;;       erc-current-nick-face
+  ;;       erc-my-nick-face
+  ;;       erc-my-nick-prefix-face
+  ;;       erc-nick-prefix-face
+  ;;       erc-prompt-face
+  ;;       font-lock-builtin-face
+  ;;       font-lock-keyword-face
+  ;;       font-lock-negation-char-face
+  ;;       font-lock-regexp-grouping-backslash
+  ;;       font-lock-regexp-grouping-construct
+  ;;       font-lock-warning-face
+  ;;       magit-refname
+  ;;       magit-refname-stash
+  ;;       magit-refname-wip
+  ;;       magit-section-heading
+  ;;       magit-section-heading-selection
+  ;;       magit-section-secondary-heading
+  ;;       magit-tag
+  ;;       mode-line-buffer-id
+  )
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
