@@ -201,6 +201,7 @@ preferences.
                       :foreground 'unspecified
                       :inherit 'dired-directory)
   (set-face-attribute 'helm-buffer-directory nil
+                      :background 'unspecified
                       :foreground 'unspecified
                       :inherit 'dired-directory)
   (set-face-attribute 'helm-ff-directory nil
@@ -213,6 +214,7 @@ preferences.
 
 #+BEGIN_SRC emacs-lisp
 (use-package mdi
+  :ensure nil
   :load-path "lisp/mdi/"
   :after zenburn-theme)
 #+END_SRC
@@ -1234,9 +1236,8 @@ _q_ quit            _i_ enlarge         _-_ zoom out
    erc-lurker-hide-list '("JOIN" "PART" "QUIT")
    erc-prompt (format "%18s" ">")
    erc-timestamp-format nil)
-  (set-face-attribute 'erc-button nil :inherit 'button :weight 'unspecified)
+  (set-face-attribute 'erc-button nil :inherit 'button :weight 'normal)
   (set-face-attribute 'erc-nick-default-face nil :weight 'normal)
-  (set-face-attribute 'erc-prompt-face nil :background nil)
   (zenburn-with-color-variables
     (set-face-attribute 'erc-timestamp-face nil :foreground zenburn-fg-1)))
 #+END_SRC
