@@ -226,7 +226,7 @@ preferences.
                  font-lock-warning-face
                  mode-line-buffer-id))
 
-  ;; TODO: Make a pull request
+  ;; NOTE: See https://github.com/bbatsov/zenburn-emacs/pull/279.
   (set-face-attribute 'helm-bookmark-directory nil
                       :foreground 'unspecified
                       :inherit 'dired-directory)
@@ -803,7 +803,7 @@ their Helm equivalents.
    helm-ff-skip-boring-files t
    helm-find-file-ignore-thing-at-point t)
   (zenburn-with-color-variables
-    ;; TOOD: Make a pull request.
+    ;; NOTE: See https://github.com/bbatsov/zenburn-emacs/pull/279.
     (set-face-attribute 'helm-ff-dotted-directory nil
                         :background nil
                         :foreground zenburn-fg-1))
