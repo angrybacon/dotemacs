@@ -167,6 +167,22 @@ default. I don't like it.
 (set-face-attribute 'italic nil :underline nil)
 #+END_SRC
 
+I don't like bold text, mostly because it looks like crap on Windows. Since
+faces can be defined in every packages, I need to unboldify after that specfic
+package has been loaded. That function should be called after the provided faces
+have been defined.
+
+#+BEGIN_SRC emacs-lisp
+(defun me/unboldify (&optional faces)
+  "Set the weight property of FACES to `normal'.
+If FACES is not provided or nil, use `face-list' instead."
+  (interactive)
+  (mapc (lambda (face)
+          (when (eq (face-attribute face :weight) 'bold)
+            (set-face-attribute face nil :weight 'normal)))
+        (or faces (face-list))))
+#+END_SRC
+
 Load =zenburn-theme= and fix some high-level faces to match my personal
 preferences.
 
@@ -174,7 +190,6 @@ preferences.
 (use-package zenburn-theme
   :demand t
   :config
-  (set-face-attribute 'bold nil :weight 'normal)
   (load-theme 'zenburn t)
   (set-face-attribute 'font-lock-comment-face nil :italic t)
   (set-face-attribute 'font-lock-doc-face nil :italic t)
@@ -203,6 +218,14 @@ preferences.
          (set-face-attribute face nil :background 'unspecified)))
      (face-list)))
 
+ (me/unboldify '(font-lock-builtin-face
+                 font-lock-keyword-face
+                 font-lock-negation-char-face
+                 font-lock-regexp-grouping-backslash
+                 font-lock-regexp-grouping-construct
+                 font-lock-warning-face
+                 mode-line-buffer-id))
+
   ;; TODO: Make a pull request
   (set-face-attribute 'helm-bookmark-directory nil
                       :foreground 'unspecified
@@ -216,29 +239,7 @@ preferences.
                       :inherit 'dired-directory)
   (set-face-attribute 'helm-ff-dirs nil
                       :foreground 'unspecified
-                      :inherit 'dired-directory)
-
-  ;; TODO: Unbold the following faces
-  ;;       erc-current-nick-face
-  ;;       erc-my-nick-face
-  ;;       erc-my-nick-prefix-face
-  ;;       erc-nick-prefix-face
-  ;;       erc-prompt-face
-  ;;       font-lock-builtin-face
-  ;;       font-lock-keyword-face
-  ;;       font-lock-negation-char-face
-  ;;       font-lock-regexp-grouping-backslash
-  ;;       font-lock-regexp-grouping-construct
-  ;;       font-lock-warning-face
-  ;;       magit-refname
-  ;;       magit-refname-stash
-  ;;       magit-refname-wip
-  ;;       magit-section-heading
-  ;;       magit-section-heading-selection
-  ;;       magit-section-secondary-heading
-  ;;       magit-tag
-  ;;       mode-line-buffer-id
-  )
+                      :inherit 'dired-directory))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -750,14 +751,14 @@ leaner, modular, and unchained from constraints of backward compatibility.
    helm-display-header-line nil
    helm-split-window-default-side 'left)
   (set-face-attribute 'helm-action nil :underline nil)
-  (set-face-attribute 'helm-match nil :background nil :weight 'normal)
+  (set-face-attribute 'helm-match nil :background nil)
   (set-face-attribute 'helm-source-header nil
                       :box nil
                       :background nil
-                      :height me/font-size-title
-                      :weight 'normal)
+                      :height me/font-size-title)
   (zenburn-with-color-variables
-    (set-face-attribute 'helm-prefarg nil :foreground zenburn-magenta)))
+    (set-face-attribute 'helm-prefarg nil :foreground zenburn-magenta))
+  (me/unboldify '(helm-match helm-source-header)))
 #+END_SRC
 
 Helm sub-modules can be customized separately. Many basic Emacs commands have
@@ -797,13 +798,12 @@ their Helm equivalents.
   :after helm
   :bind ([remap find-file] . helm-find-files)
   :config
-  (set-face-attribute 'helm-ff-directory nil :weight 'normal)
-  (set-face-attribute 'helm-ff-symlink nil :weight 'normal)
   (zenburn-with-color-variables
     ;; TOOD: Make a pull request.
     (set-face-attribute 'helm-ff-dotted-directory nil
                         :background nil
-                        :foreground zenburn-fg-1)))
+                        :foreground zenburn-fg-1))
+  (me/unboldify '(helm-ff-directory helm-ff-symlink)))
 
 (use-package helm-grep
   :ensure nil
@@ -1270,10 +1270,17 @@ _q_ quit            _i_ enlarge         _-_ zoom out
    erc-lurker-hide-list '("JOIN" "PART" "QUIT")
    erc-prompt (format "%18s" ">")
    erc-timestamp-format nil)
-  (set-face-attribute 'erc-button nil :inherit 'button :weight 'normal)
-  (set-face-attribute 'erc-nick-default-face nil :weight 'normal)
+  (set-face-attribute 'erc-button nil :inherit 'button)
+  (set-face-attribute 'erc-nick-default-face nil)
   (zenburn-with-color-variables
-    (set-face-attribute 'erc-timestamp-face nil :foreground zenburn-fg-1)))
+    (set-face-attribute 'erc-timestamp-face nil :foreground zenburn-fg-1))
+  (me/unboldify '(erc-button
+                  erc-nick-default-face
+                  erc-current-nick-face
+                  erc-my-nick-face
+                  erc-my-nick-prefix-face
+                  erc-nick-prefix-face
+                  erc-prompt-face)))
 #+END_SRC
 
 Colorize nicks with unique colors.
@@ -2161,7 +2168,14 @@ Git itself deserve to be called porcelains.
                         :foreground zenburn-green+3)
     (set-face-attribute 'magit-diff-removed nil
                         :background nil
-                        :foreground zenburn-red)))
+                        :foreground zenburn-red))
+  (me/unboldify '(magit-refname
+                  magit-refname-stash
+                  magit-refname-wip
+                  magit-section-heading
+                  magit-section-heading-selection
+                  magit-section-secondary-heading
+                  magit-tag)))
 
 (use-package gitattributes-mode :delight gitattributes-mode "Git Attributes")
 (use-package gitconfig-mode :delight gitconfig-mode "Git Config")
