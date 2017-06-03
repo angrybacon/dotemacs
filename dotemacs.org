@@ -99,11 +99,12 @@ Here are what I consider better defaults as per my own experience.
  uniquify-buffer-name-style 'forward              ; Uniquify buffer names
  window-combination-resize t                      ; Resize windows proportionally
  x-stretch-cursor t)                              ; Stretch cursor to the glyph width
-(display-time-mode 1)                             ; Enable time in the mode-line
+(delete-selection-mode)                           ; Replace region when inserting text
+(display-time-mode)                               ; Enable time in the mode-line
 (fringe-mode 0)                                   ; Hide fringes
 (fset 'yes-or-no-p 'y-or-n-p)                     ; Replace yes/no prompts with y/n
-(global-hl-line-mode 1)                           ; Hightlight current line
-(global-subword-mode 1)                           ; Iterate through CamelCase words
+(global-hl-line-mode)                             ; Hightlight current line
+(global-subword-mode)                             ; Iterate through CamelCase words
 (menu-bar-mode 0)                                 ; Disable the menu bar
 (mouse-avoidance-mode 'banish)                    ; Avoid collision of mouse with point
 (put 'downcase-region 'disabled nil)              ; Enable downcase-region
@@ -190,7 +191,6 @@ preferences.
 
 #+BEGIN_SRC emacs-lisp
 (use-package mdi
-  :ensure nil
   :load-path "lisp/mdi/"
   :after zenburn-theme)
 #+END_SRC
@@ -369,7 +369,8 @@ Display the current Org header in the header-line.
    org-sticky-header-outline-path-separator " / "))
 #+END_SRC
 
-Tired of having to manually update your tables of contents?
+Tired of having to manually update your tables of contents? This package will
+maintain a TOC at the first heading that has a =:TOC:= tag.
 
 #+BEGIN_SRC emacs-lisp
 (use-package toc-org :after org)
@@ -490,10 +491,10 @@ little more.
 (use-package cus-edit
   :ensure nil
   :config
+  (set-face-attribute 'custom-group-tag nil
+                      :font me/font-family
+                      :height me/font-size-title)
   (zenburn-with-color-variables
-    (set-face-attribute 'custom-group-tag nil
-                        :font me/font-family
-                        :height me/font-size-title)
     (set-face-attribute 'custom-state nil :foreground zenburn-green+4)))
 #+END_SRC
 
@@ -662,7 +663,7 @@ This is a package to perform text folding like in Vim. It has the following feat
    :map vimish-fold-unfolded-keymap ("<tab>" . vimish-fold-refold))
   :init
   (setq-default vimish-fold-dir (expand-file-name ".vimish-fold/" user-emacs-directory))
-  (vimish-fold-global-mode 1)
+  (vimish-fold-global-mode)
   :config
   (setq-default vimish-fold-header-width 79))
 #+END_SRC
@@ -690,7 +691,7 @@ leaner, modular, and unchained from constraints of backward compatibility.
 (use-package helm
   :defer 1
   :config
-  (helm-mode 1)
+  (helm-mode)
   (setq-default
    helm-always-two-windows t
    helm-display-header-line nil
@@ -1518,7 +1519,7 @@ mode-line in various search modes.
   :defer 1
   :bind ([remap query-replace] . anzu-query-replace-regexp)
   :config
-  (global-anzu-mode 1)
+  (global-anzu-mode)
   (setq-default
    anzu-cons-mode-line-p nil
    anzu-replace-to-string-separator (mdi "arrow-right" t))
@@ -1644,7 +1645,7 @@ today... No package seem to please my person.
    ("M-S-<right>" . sp-backward-barf-sexp))
   :config
   (require 'smartparens-config)
-  (smartparens-global-mode 1)
+  (smartparens-global-mode)
   (sp-pair "{{" "}}")
   (sp-pair "[[" "]]"))
 #+END_SRC
@@ -1901,7 +1902,7 @@ Auto-dim other buffers. Pretty self-explanatory.
 
 #+BEGIN_SRC emacs-lisp
 (use-package auto-dim-other-buffers
-  :init (auto-dim-other-buffers-mode 1)
+  :init (auto-dim-other-buffers-mode)
   :config
   (zenburn-with-color-variables
     (set-face-attribute 'auto-dim-other-buffers-face nil :background zenburn-bg-1)))
@@ -1939,15 +1940,6 @@ Insert the current date.
   "Insert the current date, short format with time, eg. 2016.12.09 14:34"
   (interactive)
   (insert (format-time-string "%Y.%m.%d %H:%M")))
-#+END_SRC
-
-Text inserted while the region is active will replace the region contents.
-
-#+BEGIN_SRC emacs-lisp
-(use-package delsel
-  :ensure nil
-  :defer 1
-  :config (delete-selection-mode 1))
 #+END_SRC
 
 Disable documentation for object at point in the echo area. It conflicts with Flycheck.
@@ -2163,7 +2155,7 @@ Save and restore Emacs status, including buffers, modes, point and windows.
   :ensure nil
   :demand t
   :config
-  (desktop-save-mode 1)
+  (desktop-save-mode)
   (add-to-list 'desktop-globals-to-save 'golden-ratio-adjust-factor))
 #+END_SRC
 
@@ -2187,7 +2179,7 @@ by default. The behaviour is modeled after
   ("<f6>" . eyebrowse-switch-to-window-config-2)
   ("<f7>" . eyebrowse-switch-to-window-config-3)
   ("<f8>" . eyebrowse-switch-to-window-config-4)
-  :config (eyebrowse-mode 1))
+  :config (eyebrowse-mode))
 #+END_SRC
 
 Adjust the size of every windows and focus the active one. It uses the
@@ -2204,7 +2196,7 @@ mathematical golden ratio somewhere in its formulas.
     (if (boundp 'ediff-this-buffer-ediff-sessions)
         (progn (balance-windows) ediff-this-buffer-ediff-sessions)))
   :config
-  (golden-ratio-mode 1)
+  (golden-ratio-mode)
   (setq-default golden-ratio-adjust-factor me/golden-ratio-adjust-factor-tri-split)
   (add-to-list 'golden-ratio-exclude-modes "ediff-mode")
   (add-to-list 'golden-ratio-inhibit-functions 'me/ediff-comparison-buffer-p))
@@ -2242,7 +2234,7 @@ you can press ctrl-c right (calling =winner-redo=).
 (use-package winner
   :ensure nil
   :defer 1
-  :config (winner-mode 1))
+  :config (winner-mode))
 #+END_SRC
 
 -----
