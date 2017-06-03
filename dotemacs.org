@@ -186,7 +186,29 @@ preferences.
     (set-face-attribute 'region nil
                         :background zenburn-fg-1
                         :distant-foreground 'unspecified)
-    (set-face-attribute 'vertical-border nil :foreground zenburn-bg)))
+    (set-face-attribute 'vertical-border nil :foreground zenburn-bg))
+
+  ;; NOTE: See https://github.com/bbatsov/zenburn-emacs/issues/278.
+  (zenburn-with-color-variables
+    (mapc
+     (lambda (face)
+       (when (eq (face-attribute face :background) zenburn-bg)
+         (set-face-attribute face nil :background 'unspecified)))
+     (face-list)))
+
+  ;; TODO: Make a pull request
+  (set-face-attribute 'helm-bookmark-directory nil
+                      :foreground 'unspecified
+                      :inherit 'dired-directory)
+  (set-face-attribute 'helm-buffer-directory nil
+                      :foreground 'unspecified
+                      :inherit 'dired-directory)
+  (set-face-attribute 'helm-ff-directory nil
+                      :foreground 'unspecified
+                      :inherit 'dired-directory)
+  (set-face-attribute 'helm-ff-dirs nil
+                      :foreground 'unspecified
+                      :inherit 'dired-directory))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -696,14 +718,14 @@ leaner, modular, and unchained from constraints of backward compatibility.
    helm-always-two-windows t
    helm-display-header-line nil
    helm-split-window-default-side 'left)
+  (set-face-attribute 'helm-match nil :background nil :weight 'normal)
+  (set-face-attribute 'helm-source-header nil
+                      :box nil
+                      :background nil
+                      :height me/font-size-title
+                      :weight 'normal)
   (zenburn-with-color-variables
-    (set-face-attribute 'helm-match nil :background nil :weight 'normal)
-    (set-face-attribute 'helm-prefarg nil :foreground zenburn-magenta)
-    (set-face-attribute 'helm-source-header nil
-                        :box nil
-                        :background nil
-                        :height me/font-size-title
-                        :weight 'normal)))
+    (set-face-attribute 'helm-prefarg nil :foreground zenburn-magenta)))
 #+END_SRC
 
 Helm sub-modules can be customized separately. Many basic Emacs commands have
@@ -721,11 +743,7 @@ their Helm equivalents.
    helm-buffers-fuzzy-matching t
    helm-buffer-max-length nil)
   (set-face-attribute 'helm-buffer-directory nil :inherit 'dired-directory)
-  (set-face-attribute 'helm-buffer-not-saved nil :background nil)
-  (set-face-attribute 'helm-buffer-process nil :background nil)
-  (set-face-attribute 'helm-buffer-saved-out nil :background nil)
-  (set-face-attribute 'helm-buffer-size nil :background nil)
-  (set-face-attribute 'helm-non-file-buffer nil :foreground 'unspecified :inherit 'shadow)
+  (set-face-attribute 'helm-non-file-buffer nil :inherit 'shadow)
   (zenburn-with-color-variables
     (set-face-attribute 'helm-buffer-size nil :foreground zenburn-fg-1)))
 
@@ -745,9 +763,12 @@ their Helm equivalents.
 (use-package helm-files
   :ensure nil
   :after helm
+  :bind ([remap find-file] . helm-find-files)
   :config
-  (set-face-attribute 'helm-ff-symlink nil :background nil :weight 'normal)
+  (set-face-attribute 'helm-ff-directory nil :weight 'normal)
+  (set-face-attribute 'helm-ff-symlink nil :weight 'normal)
   (zenburn-with-color-variables
+    ;; TOOD: Make a pull request.
     (set-face-attribute 'helm-ff-dotted-directory nil
                         :background nil
                         :foreground zenburn-fg-1)))
@@ -1215,7 +1236,7 @@ _q_ quit            _i_ enlarge         _-_ zoom out
    erc-timestamp-format nil)
   (set-face-attribute 'erc-button nil :inherit 'button :weight 'unspecified)
   (set-face-attribute 'erc-nick-default-face nil :weight 'normal)
-  (set-face-attribute 'erc-prompt-face nil :background 'unspecified)
+  (set-face-attribute 'erc-prompt-face nil :background nil)
   (zenburn-with-color-variables
     (set-face-attribute 'erc-timestamp-face nil :foreground zenburn-fg-1)))
 #+END_SRC
@@ -2084,8 +2105,7 @@ Git itself deserve to be called porcelains.
      magit-diff-highlight-hunk-region-using-face)
    magit-popup-display-buffer-action '((display-buffer-same-window))
    magit-refs-show-commit-count 'all
-   magit-section-show-child-count t
-   magit-set-upstream-on-push 'askifnotset)
+   magit-section-show-child-count t)
 
   ;; Customize lighters
   (delight
