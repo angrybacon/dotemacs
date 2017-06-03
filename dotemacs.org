@@ -750,6 +750,10 @@ leaner, modular, and unchained from constraints of backward compatibility.
    helm-always-two-windows t
    helm-display-header-line nil
    helm-split-window-default-side 'left)
+  (add-hook 'helm-after-persistent-action-hook
+            '(lambda () (recenter-top-bottom (car recenter-positions))))
+  (add-hook 'helm-after-action-hook
+            '(lambda () (recenter-top-bottom (car recenter-positions))))
   (set-face-attribute 'helm-action nil :underline nil)
   (set-face-attribute 'helm-match nil :background nil)
   (set-face-attribute 'helm-source-header nil
