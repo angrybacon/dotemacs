@@ -160,6 +160,13 @@ and =user-mail-address=. This is also where you want your API tokens to live.
 
 * Theme
 
+The face for italic text is underlined when the font does not support slant by
+default. I don't like it.
+
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'italic nil :underline nil)
+#+END_SRC
+
 Load =zenburn-theme= and fix some high-level faces to match my personal
 preferences.
 
@@ -720,6 +727,7 @@ leaner, modular, and unchained from constraints of backward compatibility.
    helm-always-two-windows t
    helm-display-header-line nil
    helm-split-window-default-side 'left)
+  (set-face-attribute 'helm-action nil :underline nil)
   (set-face-attribute 'helm-match nil :background nil :weight 'normal)
   (set-face-attribute 'helm-source-header nil
                       :box nil
@@ -1149,13 +1157,16 @@ Group system-related commands.
 (defhydra hydra-system (:color blue)
   "
 ^
-^System^            ^Processes^
-^──────^────────────^─────────^─────────
-_q_ quit            _p_ list
-^^                  ^^
+^System^            ^Packages^          ^Processes^
+^──────^────────────^────────^──────────^─────────^─────────
+_q_ quit            _p_ list            _s_ list
+^^                  _P_ upgrade         ^^
+^^                  ^^                  ^^
 "
   ("q" nil)
-  ("p" list-processes))
+  ("p" paradox-list-packages)
+  ("P" paradox-upgrade-packages)
+  ("s" list-processes))
 #+END_SRC
 
 [[./screenshots/hydra.system.png]]
@@ -1191,6 +1202,7 @@ _q_ quit            _i_ enlarge         _-_ zoom out
 ** IRC
 
 - *TODO*: Display the current count of users. =(hash-table-count erc-channel-users)=
+- *FIXME*: =erc-buffer-visible= comes from =erc-track.el=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package erc
@@ -1916,7 +1928,7 @@ electric-indent-mode.
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
-(use-package aggressive-indent-mode
+(use-package aggressive-indent
   :config (global-aggressive-indent-mode))
 #+END_SRC
 
