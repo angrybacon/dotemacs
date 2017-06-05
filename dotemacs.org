@@ -1283,7 +1283,7 @@ _q_ quit            _i_ enlarge         _-_ zoom out
    erc-prompt (format "%18s" ">")
    erc-timestamp-format nil)
   (set-face-attribute 'erc-button nil :inherit 'button)
-  (set-face-attribute 'erc-nick-default-face nil)
+  (set-face-attribute 'erc-prompt-face nil :background nil)
   (zenburn-with-color-variables
     (set-face-attribute 'erc-timestamp-face nil :foreground zenburn-fg-1))
   (me/unboldify '(erc-button
@@ -2181,7 +2181,11 @@ Git itself deserve to be called porcelains.
     (set-face-attribute 'magit-diff-removed nil
                         :background nil
                         :foreground zenburn-red))
-  (me/unboldify '(magit-refname
+  (me/unboldify '(magit-branch-local
+                  magit-branch-remote
+                  magit-diff-file-heading
+                  magit-diff-file-heading-highlight
+                  magit-refname
                   magit-refname-stash
                   magit-refname-wip
                   magit-section-heading
