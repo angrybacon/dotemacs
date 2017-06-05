@@ -1258,12 +1258,16 @@ _q_ quit            _i_ enlarge         _-_ zoom out
            (set-buffer buffer)
            (when (and (erc-buffer-visible buffer) (eq major-mode 'erc-mode))
              (setq erc-fill-column (1- (window-width window)))))))))
+  (defun me/erc-set-scroll-margin ()
+    "Disable `scroll-margin' locally."
+    (setq-local scroll-margin 0))
   :bind
   (:map erc-mode-map
         ([remap erc-bol] . me/erc-bol-shifted)
         ("M-<down>" . erc-next-command)
         ("M-<up>" . erc-previous-command))
   :init
+  (add-hook 'erc-mode-hook #'me/erc-set-scroll-margin)
   (add-hook 'window-configuration-change-hook #'me/erc-set-fill-column)
   (me/erc)
   :config
