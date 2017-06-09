@@ -2271,7 +2271,9 @@ by default. The behaviour is modeled after
   ("<f6>" . eyebrowse-switch-to-window-config-2)
   ("<f7>" . eyebrowse-switch-to-window-config-3)
   ("<f8>" . eyebrowse-switch-to-window-config-4)
-  :config (eyebrowse-mode))
+  :config
+  (eyebrowse-mode)
+  (setq-default eyebrowse-new-workspace t))
 #+END_SRC
 
 Adjust the size of every windows and focus the active one. It uses the
