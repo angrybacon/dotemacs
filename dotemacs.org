@@ -1435,17 +1435,16 @@ general fun and profit.
   (spaceline-define-segment me/selection-info
     "Show the size of current region."
     (when mark-active
-      (let* ((lines (count-lines
-                     (region-beginning) (min (1+ (region-end)) (point-max))))
-             (chars (- (1+ (region-end)) (region-beginning)))
-             (cols (1+ (abs (- (spaceline--column-number-at-pos (region-end))
-                               (spaceline--column-number-at-pos (region-beginning))))))
-             (rect (bound-and-true-p rectangle-mark-mode))
-             (multi-line (> lines 1)))
+      (let ((characters (- (region-end) (region-beginning)))
+            (rows (count-lines (region-beginning) (min (1+ (region-end)) (point-max))))
+            (columns (1+ (abs (- (spaceline--column-number-at-pos (region-end))
+                                 (spaceline--column-number-at-pos (region-beginning)))))))
         (cond
-         (rect (format "%d %s %d" (1- cols) (mdi "arrow-expand-all") lines))
-         (multi-line (format "%d lines" (if (eq (current-column) 0) (1- lines) lines)))
-         (t (format "%d chars" (1- chars)))))))
+         ((bound-and-true-p rectangle-mark-mode)
+          (format "%d%s%d" (1- columns) (mdi "arrow-expand-all" t) rows))
+         ((> rows 1)
+          (format "%d" (if (eq (current-column) 0) (1- rows) rows)))
+         (t (format "%d" characters))))))
 
   (spaceline-define-segment me/version-control
     "Show the current version control branch."
