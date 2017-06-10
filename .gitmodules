@@ -4,3 +4,6 @@
 [submodule "mdi"]
 	path = lisp/mdi
 	url = https://github.com/angrybacon/mdi.git
+[submodule "mtg"]
+	path = lisp/mtg
+	url = https://github.com/angrybacon/mtg
