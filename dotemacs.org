@@ -224,6 +224,7 @@ preferences.
                   font-lock-regexp-grouping-backslash
                   font-lock-regexp-grouping-construct
                   font-lock-warning-face
+                  link
                   mode-line-buffer-id))
 
   ;; NOTE: See https://github.com/bbatsov/zenburn-emacs/pull/279.
@@ -549,7 +550,8 @@ little more.
                       :font me/font-family
                       :height me/font-size-title)
   (zenburn-with-color-variables
-    (set-face-attribute 'custom-state nil :foreground zenburn-green+4)))
+    (set-face-attribute 'custom-state nil :foreground zenburn-green+4))
+  (me/unboldify '(custom-variable-tag)))
 #+END_SRC
 
 ** Dictionary
@@ -1448,17 +1450,16 @@ general fun and profit.
   (spaceline-define-segment me/selection-info
     "Show the size of current region."
     (when mark-active
-      (let* ((lines (count-lines
-                     (region-beginning) (min (1+ (region-end)) (point-max))))
-             (chars (- (1+ (region-end)) (region-beginning)))
-             (cols (1+ (abs (- (spaceline--column-number-at-pos (region-end))
-                               (spaceline--column-number-at-pos (region-beginning))))))
-             (rect (bound-and-true-p rectangle-mark-mode))
-             (multi-line (> lines 1)))
+      (let ((characters (- (region-end) (region-beginning)))
+            (rows (count-lines (region-beginning) (min (1+ (region-end)) (point-max))))
+            (columns (1+ (abs (- (spaceline--column-number-at-pos (region-end))
+                                 (spaceline--column-number-at-pos (region-beginning)))))))
         (cond
-         (rect (format "%d %s %d" (1- cols) (mdi "arrow-expand-all") lines))
-         (multi-line (format "%d lines" (if (eq (current-column) 0) (1- lines) lines)))
-         (t (format "%d chars" (1- chars)))))))
+         ((bound-and-true-p rectangle-mark-mode)
+          (format "%d%s%d" (1- columns) (mdi "arrow-expand-all" t) rows))
+         ((> rows 1)
+          (format "%d" (if (eq (current-column) 0) (1- rows) rows)))
+         (t (format "%d" characters))))))
 
   (spaceline-define-segment me/version-control
     "Show the current version control branch."
@@ -1617,7 +1618,8 @@ mode-line in various search modes.
                         :foreground zenburn-red+1)
     (set-face-attribute 'anzu-replace-to nil
                         :background zenburn-green-1
-                        :foreground zenburn-green+4)))
+                        :foreground zenburn-green+4))
+  (me/unboldify '(anzu-mode-line anzu-mode-line-no-match)))
 #+END_SRC
 
 *** Scroll
@@ -1663,7 +1665,8 @@ commands.
                         :foreground zenburn-blue-5)
     (set-face-attribute 'isearch-lazy-highlight-face nil
                         :background zenburn-blue-5
-                        :foreground zenburn-blue)))
+                        :foreground zenburn-blue))
+  (me/unboldify '(isearch lazy-highlight)))
 #+END_SRC
 
 ** OS-Specific
@@ -2198,6 +2201,10 @@ Git itself deserve to be called porcelains.
                   magit-branch-remote
                   magit-diff-file-heading
                   magit-diff-file-heading-highlight
+                  magit-popup-argument
+                  magit-popup-heading
+                  magit-popup-key
+                  magit-popup-option-value
                   magit-refname
                   magit-refname-stash
                   magit-refname-wip
@@ -2277,7 +2284,9 @@ by default. The behaviour is modeled after
   ("<f6>" . eyebrowse-switch-to-window-config-2)
   ("<f7>" . eyebrowse-switch-to-window-config-3)
   ("<f8>" . eyebrowse-switch-to-window-config-4)
-  :config (eyebrowse-mode))
+  :config
+  (eyebrowse-mode)
+  (setq-default eyebrowse-new-workspace t))
 #+END_SRC
 
 Adjust the size of every windows and focus the active one. It uses the
@@ -2307,13 +2316,9 @@ Bind commands to move around windows.
   :ensure nil
   :bind
   (("C-M-<left>". windmove-left)
-   ("s-<left>". windmove-left)
    ("C-M-<right>". windmove-right)
-   ("s-<right>". windmove-right)
    ("C-M-<up>". windmove-up)
-   ("s-<up>". windmove-up)
-   ("C-M-<down>". windmove-down)
-   ("s-<down>". windmove-down)))
+   ("C-M-<down>". windmove-down)))
 #+END_SRC
 
 Allow undo's and redo's with window configurations.
