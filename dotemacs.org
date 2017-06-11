@@ -584,6 +584,19 @@ Ediff is a visual interface to Unix =diff=.
    ediff-window-setup-function #'ediff-setup-windows-plain))
 #+END_SRC
 
+- *TODO*: Make a pull request over https://github.com/bbatsov/zenburn-emacs.
+
+#+BEGIN_SRC emacs-lisp
+(use-package smerge-mode
+  :ensure nil
+  :config
+  (zenburn-with-color-variables
+    (set-face-attribute 'smerge-mine nil :background zenburn-red-2)
+    (set-face-attribute 'smerge-other nil :background zenburn-green)
+    (set-face-attribute 'smerge-refined-added nil :background zenburn-green-1)
+    (set-face-attribute 'smerge-refined-removed nil :background zenburn-red-4)))
+#+END_SRC
+
 ** Dired
 
 Configure Dired buffers. Amongst many other things, Emacs is also a file
