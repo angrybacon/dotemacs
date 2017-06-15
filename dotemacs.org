@@ -1790,6 +1790,10 @@ use with =selected=.
   (:map selected-keymap
         ("<"           . mc/mark-previous-like-this)
         (">"           . mc/mark-next-like-this)
+        ("C-<"         . mc/unmark-previous-like-this)
+        ("C->"         . mc/unmark-next-like-this)
+        ("C-M-<"       . mc/skip-to-previous-like-this)
+        ("C-M->"       . mc/skip-to-next-like-this)
         ("C-?"         . hydra-selected/body)
         ("C-c C-c"     . me/eval-region-and-kill-mark)
         ("C-b"         . me/browse-url-and-kill-mark)
