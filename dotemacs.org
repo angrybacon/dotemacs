@@ -1998,7 +1998,13 @@ electric-indent-mode.
 
 #+BEGIN_SRC emacs-lisp
 (use-package aggressive-indent
-  :config (global-aggressive-indent-mode))
+  :init
+  (add-hook 'css-mode-hook #'aggressive-indent-mode)
+  (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+  (add-hook 'js-mode-hook #'aggressive-indent-mode)
+  (add-hook 'lisp-mode-hook #'aggressive-indent-mode)
+  (add-hook 'sgml-mode-hook #'aggressive-indent-mode)
+  :config (setq-default aggressive-indent-comments-too t))
 #+END_SRC
 
 Auto-dim other buffers. Pretty self-explanatory.
