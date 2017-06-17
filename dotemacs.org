@@ -1626,10 +1626,18 @@ mode-line in various search modes.
 
 Enable horizontal scroll.
 
+- *TODO*: Scroll the window under cursor instead of where point is.
+
 #+BEGIN_SRC emacs-lisp
 (put 'scroll-left 'disabled nil)
-(global-set-key (kbd "<wheel-left>") (lambda () (interactive) (scroll-right 2)))
-(global-set-key (kbd "<wheel-right>") (lambda () (interactive) (scroll-left 2)))
+(defun me/scroll-left ()
+  (interactive)
+  (when truncate-lines (scroll-left 2)))
+(defun me/scroll-right ()
+  (interactive)
+  (when truncate-lines (scroll-right 2)))
+(global-set-key (kbd "<wheel-left>") #'me/scroll-right)
+(global-set-key (kbd "<wheel-right>") #'me/scroll-left)
 #+END_SRC
 
 Configure the mouse scroll.
