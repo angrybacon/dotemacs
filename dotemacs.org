@@ -332,6 +332,10 @@ provide candidates for variables and properties.
   :delight emacs-lisp-mode "Emacs Lisp"
   :config (delight 'lisp-interaction-mode "Lisp Interaction"))
 
+(use-package ielm
+  :ensure nil
+  :init (add-hook 'ielm-mode-hook '(lambda () (setq-local scroll-margin 0))))
+
 (use-package lisp-mode
   :ensure nil
   :delight lisp-mode "Lisp")
