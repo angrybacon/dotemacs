@@ -596,6 +596,19 @@ Ediff is a visual interface to Unix =diff=.
    ediff-window-setup-function #'ediff-setup-windows-plain))
 #+END_SRC
 
+- *TODO*: Make a pull request over https://github.com/bbatsov/zenburn-emacs.
+
+#+BEGIN_SRC emacs-lisp
+(use-package smerge-mode
+  :ensure nil
+  :config
+  (zenburn-with-color-variables
+    (set-face-attribute 'smerge-mine nil :background zenburn-red-2)
+    (set-face-attribute 'smerge-other nil :background zenburn-green)
+    (set-face-attribute 'smerge-refined-added nil :background zenburn-green-1)
+    (set-face-attribute 'smerge-refined-removed nil :background zenburn-red-4)))
+#+END_SRC
+
 ** Dired
 
 Configure Dired buffers. Amongst many other things, Emacs is also a file
@@ -1224,9 +1237,9 @@ Group window-related commands.
 ^Windows^           ^Window^            ^Zoom^
 ^───────^───────────^──────^────────────^────^──────────────
 _q_ quit            _i_ enlarge         _-_ zoom out
-^^                  _j_ tighten         _+_ zoom in
+^^                  _j_ shrink          _+_ zoom in
 ^^                  _k_ widen           _=_ reset
-^^                  _l_ shrink          ^^
+^^                  _l_ tighten         ^^
 ^^                  ^^                  ^^
 "
   ("q" nil)
@@ -1785,6 +1798,10 @@ use with =selected=.
   (:map selected-keymap
         ("<"           . mc/mark-previous-like-this)
         (">"           . mc/mark-next-like-this)
+        ("C-<"         . mc/unmark-previous-like-this)
+        ("C->"         . mc/unmark-next-like-this)
+        ("C-M-<"       . mc/skip-to-previous-like-this)
+        ("C-M->"       . mc/skip-to-next-like-this)
         ("C-?"         . hydra-selected/body)
         ("C-c C-c"     . me/eval-region-and-kill-mark)
         ("C-b"         . me/browse-url-and-kill-mark)
