@@ -518,6 +518,7 @@ completion candidates.
   (setq-default
    company-idle-delay .2
    company-minimum-prefix-length 1
+   company-require-match nil
    company-tooltip-align-annotations t))
 
 (use-package company-dabbrev
