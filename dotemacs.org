@@ -408,6 +408,11 @@ authoring documents with a fast and effective plain-text system.
    org-startup-truncated nil)
   (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer-name))
 
+(use-package org-faces
+  :ensure nil
+  :after org
+  :config (me/unboldify '(org-tag)))
+
 (use-package org-src
   :ensure nil
   :after org
