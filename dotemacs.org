@@ -206,7 +206,6 @@ preferences.
                         :box `(:line-width 2 :color ,zenburn-bg-1)
                         :height me/font-size-header-line)
     (set-face-attribute 'mode-line nil
-                        :background zenburn-bg-1
                         :box nil
                         :foreground zenburn-bg+3
                         :height me/font-size-mode-line)
