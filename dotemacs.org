@@ -233,22 +233,7 @@ preferences.
                   font-lock-regexp-grouping-construct
                   font-lock-warning-face
                   link
-                  mode-line-buffer-id))
-
-  ;; NOTE: See https://github.com/bbatsov/zenburn-emacs/pull/279.
-  (set-face-attribute 'helm-bookmark-directory nil
-                      :foreground 'unspecified
-                      :inherit 'dired-directory)
-  (set-face-attribute 'helm-buffer-directory nil
-                      :background 'unspecified
-                      :foreground 'unspecified
-                      :inherit 'dired-directory)
-  (set-face-attribute 'helm-ff-directory nil
-                      :foreground 'unspecified
-                      :inherit 'dired-directory)
-  (set-face-attribute 'helm-ff-dirs nil
-                      :foreground 'unspecified
-                      :inherit 'dired-directory))
+                  mode-line-buffer-id)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -261,7 +246,7 @@ preferences.
 * Languages
 
 As pedantic as I like to be, some packages have a =use-package= clause for
-nothing but the customization of its lighter.
+nothing but the customization of their lighter.
 
 - *TODO*: Replace all old defadvice's.
 
@@ -771,8 +756,9 @@ leaner, modular, and unchained from constraints of backward compatibility.
 [[https://github.com/emacs-helm/helm][Bozhidar Batsov]]
 #+END_QUOTE
 
-- *TODO*: Add a flashing effect with Helm actions
-          =(progn (require 'pulse) (pulse-momentary-highlight-one-line (point))=.
+- *TODO*: Add a flashing effect with Helm actions.
+          =(progn (require 'pulse) (pulse-momentary-highlight-one-line (point))=
+- *FIXME*: The recentering is too aggressive.
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm
@@ -805,6 +791,15 @@ their Helm equivalents.
 - *TODO*: Help buffer resizes the frame when killed.
 
 #+BEGIN_SRC emacs-lisp
+(use-package helm-bookmarks
+  :ensure nil
+  :after helm
+  :config
+  ;; NOTE: See https://github.com/bbatsov/zenburn-emacs/pull/279.
+  (set-face-attribute 'helm-bookmark-directory nil
+                      :foreground 'unspecified
+                      :inherit 'dired-directory))
+
 (use-package helm-buffers
   :ensure nil
   :after helm
@@ -815,7 +810,13 @@ their Helm equivalents.
   (set-face-attribute 'helm-buffer-directory nil :inherit 'dired-directory)
   (set-face-attribute 'helm-non-file-buffer nil :inherit 'shadow)
   (zenburn-with-color-variables
-    (set-face-attribute 'helm-buffer-size nil :foreground zenburn-fg-1)))
+    (set-face-attribute 'helm-buffer-size nil :foreground zenburn-fg-1))
+
+  ;; NOTE: See https://github.com/bbatsov/zenburn-emacs/pull/279.
+  (set-face-attribute 'helm-buffer-directory nil
+                      :background 'unspecified
+                      :foreground 'unspecified
+                      :inherit 'dired-directory))
 
 (use-package helm-color
   :ensure nil
@@ -839,12 +840,19 @@ their Helm equivalents.
    helm-ff-no-preselect t
    helm-ff-skip-boring-files t
    helm-find-file-ignore-thing-at-point t)
+  (me/unboldify '(helm-ff-directory helm-ff-symlink))
+
+  ;; NOTE: See https://github.com/bbatsov/zenburn-emacs/pull/279.
   (zenburn-with-color-variables
-    ;; NOTE: See https://github.com/bbatsov/zenburn-emacs/pull/279.
     (set-face-attribute 'helm-ff-dotted-directory nil
                         :background nil
-                        :foreground zenburn-fg-1))
-  (me/unboldify '(helm-ff-directory helm-ff-symlink)))
+                        :foreground zenburn-fg-1)
+    (set-face-attribute 'helm-ff-directory nil
+                        :foreground 'unspecified
+                        :inherit 'dired-directory)
+    (set-face-attribute 'helm-ff-dirs nil
+                        :foreground 'unspecified
+                        :inherit 'dired-directory)))
 
 (use-package helm-grep
   :ensure nil
