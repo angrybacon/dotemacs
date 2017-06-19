@@ -1518,6 +1518,8 @@ general fun and profit.
 
   ;; Customize the mode-line
   (zenburn-with-color-variables
+    (set-face-attribute 'powerline-active2 nil :background zenburn-bg+05)
+    (set-face-attribute 'powerline-inactive2 nil :background zenburn-bg)
     (set-face-attribute 'spaceline-flycheck-error nil :foreground zenburn-red)
     (set-face-attribute 'spaceline-flycheck-info nil :foreground zenburn-blue+1)
     (set-face-attribute 'spaceline-flycheck-warning nil :foreground zenburn-orange)
