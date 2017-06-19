@@ -205,6 +205,15 @@ preferences.
                         :background zenburn-bg-1
                         :box `(:line-width 2 :color ,zenburn-bg-1)
                         :height me/font-size-header-line)
+    (set-face-attribute 'mode-line nil
+                        :background zenburn-bg-1
+                        :box nil
+                        :foreground zenburn-bg+3
+                        :height me/font-size-mode-line)
+    (set-face-attribute 'mode-line-inactive nil
+                        :box nil
+                        :foreground zenburn-bg+3
+                        :height me/font-size-mode-line)
     (set-face-attribute 'region nil
                         :background zenburn-fg-1
                         :distant-foreground 'unspecified)
@@ -1488,35 +1497,27 @@ general fun and profit.
 
   ;; Build the mode-lines
   (spaceline-install
-   `((major-mode :face highlight-face)
-     ((remote-host buffer-id line) :separator ":")
-     (anzu))
-   `((me/selection-info)
-     (me/erc-track :face spaceline-highlight-face :when active)
-     ((flycheck-error flycheck-warning flycheck-info))
-     ((projectile-root me/version-control) :separator (mdi "source-branch" t))
-     (workspace-number)
-     (global :face highlight-face)))
+    `((major-mode :face highlight-face)
+      ((remote-host buffer-id line) :separator ":")
+      (anzu))
+    `((me/selection-info)
+      (me/erc-track :face spaceline-highlight-face :when active)
+      ((flycheck-error flycheck-warning flycheck-info))
+      ((projectile-root me/version-control) :separator (mdi "source-branch" t))
+      (workspace-number)
+      (global :face highlight-face)))
   (spaceline-install
-   'helm
-   '((helm-buffer-id :face spaceline-read-only)
-     (helm-number)
-     (me/helm-follow)
-     (helm-prefix-argument))
-   '((me/erc-track :face spaceline-highlight-face :when active)
-     (workspace-number)
-     (global :face spaceline-read-only)))
+    'helm
+    '((helm-buffer-id :face spaceline-read-only)
+      (helm-number)
+      (me/helm-follow)
+      (helm-prefix-argument))
+    '((me/erc-track :face spaceline-highlight-face :when active)
+      (workspace-number)
+      (global :face spaceline-read-only)))
 
   ;; Customize the mode-line
   (zenburn-with-color-variables
-    (set-face-attribute 'mode-line nil
-                        :box nil
-                        :foreground zenburn-bg+3
-                        :height me/font-size-mode-line)
-    (set-face-attribute 'mode-line-inactive nil
-                        :box nil
-                        :foreground zenburn-bg+3
-                        :height me/font-size-mode-line)
     (set-face-attribute 'spaceline-flycheck-error nil :foreground zenburn-red)
     (set-face-attribute 'spaceline-flycheck-info nil :foreground zenburn-blue+1)
     (set-face-attribute 'spaceline-flycheck-warning nil :foreground zenburn-orange)
