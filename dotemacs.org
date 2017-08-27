@@ -206,11 +206,11 @@ preferences.
                         :box `(:line-width 2 :color ,zenburn-bg-1)
                         :height me/font-size-header-line)
     (set-face-attribute 'mode-line nil
-                        :box nil
+                        :box `(:line-width 2 :color ,zenburn-bg-1)
                         :foreground zenburn-bg+3
                         :height me/font-size-mode-line)
     (set-face-attribute 'mode-line-inactive nil
-                        :box nil
+                        :box `(:line-width 2 :color ,zenburn-bg-05)
                         :foreground zenburn-bg+3
                         :height me/font-size-mode-line)
     (set-face-attribute 'region nil
