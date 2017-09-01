@@ -292,10 +292,6 @@ HTML mode is defined in =sgml-mode.el=.
 
 ** JavaScript
 
-Tern is a code-analysis engine for JavaScript. I use it to check syntax and
-grammar in my JavaScript code. With an auto-complete frontend, it can also
-provide candidates for variables and properties.
-
 - *FIXME*: Indent level is broken
            (https://github.com/joshwnj/json-mode/issues/32).
 
@@ -307,12 +303,18 @@ provide candidates for variables and properties.
 
 (use-package json-mode
   :delight json-mode "JSON"
-  :mode ("\\.jshintrc\\'" "\\.json\\'")
+  :mode "\\.json\\'"
   :preface
   (defun me/json-set-indent-level ()
     (setq-local js-indent-level 2))
   :init (add-hook 'json-mode-hook #'me/json-set-indent-level))
+#+END_SRC
 
+Tern is a code-analysis engine for JavaScript. I use it to check syntax and
+grammar in my JavaScript code. With an auto-complete frontend, it can also
+provide candidates for variables and properties.
+
+#+BEGIN_SRC emacs-lisp
 (use-package tern
   :init (add-hook 'js-mode-hook #'tern-mode))
 #+END_SRC
