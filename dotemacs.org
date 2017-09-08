@@ -288,6 +288,7 @@ HTML mode is defined in =sgml-mode.el=.
   :init
   (add-hook 'html-mode-hook #'sgml-electric-tag-pair-mode)
   (add-hook 'html-mode-hook #'sgml-name-8bit-mode)
+  (add-hook 'html-mode-hook #'toggle-truncate-lines)
   :config (setq-default sgml-basic-offset 2))
 #+END_SRC
 
