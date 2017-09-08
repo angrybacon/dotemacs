@@ -2037,8 +2037,11 @@ electric-indent-mode.
 
 Auto-dim other buffers. Pretty self-explanatory.
 
+- *FIXME*: See https://github.com/mina86/auto-dim-other-buffers.el/issues/13.
+
 #+BEGIN_SRC emacs-lisp
 (use-package auto-dim-other-buffers
+  :disabled t
   :init (auto-dim-other-buffers-mode)
   :config
   (zenburn-with-color-variables
