@@ -43,6 +43,7 @@
   - [[#projectile][Projectile]]
   - [[#quality-of-life][Quality of Life]]
   - [[#slack][Slack]]
+  - [[#terminal][Terminal]]
   - [[#version-control][Version Control]]
   - [[#whitespaces][Whitespaces]]
   - [[#windows][Windows]]
@@ -2166,6 +2167,16 @@ Slack integration.
     (set-face-attribute 'slack-message-output-header nil
                         :foreground zenburn-orange
                         :underline nil)))
+#+END_SRC
+
+** Terminal
+
+Yes, Emacs emulates terminals too.
+
+#+BEGIN_SRC emacs-lisp
+(use-package term
+  :ensure nil
+  :init (add-hook 'term-mode-hook '(lambda () (setq-local scroll-margin 0))))
 #+END_SRC
 
 ** Version Control
