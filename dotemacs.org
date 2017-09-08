@@ -310,6 +310,10 @@ HTML mode is defined in =sgml-mode.el=.
   (defun me/json-set-indent-level ()
     (setq-local js-indent-level 2))
   :init (add-hook 'json-mode-hook #'me/json-set-indent-level))
+
+(use-package rjsx-mode
+  :delight rjsx-mode "RJSX"
+  :init (add-hook 'rjsx-mode-hook #'sgml-electric-tag-pair-mode))
 #+END_SRC
 
 Tern is a code-analysis engine for JavaScript. I use it to check syntax and
@@ -649,6 +653,7 @@ gathered all features that look anywhere close to this behavior for it to handle
 under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
 
 - *TODO*: Use =:bind=.
+- *TODO*: Move hook calls where they belong.
 
 #+BEGIN_SRC emacs-lisp
 (use-package emmet-mode
@@ -661,6 +666,7 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
   :init
   (add-hook 'css-mode-hook #'emmet-mode)
   (add-hook 'html-mode-hook #'emmet-mode)
+  (add-hook 'rjsx-mode-hook #'emmet-mode)
   :config (setq-default emmet-move-cursor-between-quote t))
 
 (use-package hippie-exp
