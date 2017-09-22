@@ -1308,7 +1308,7 @@ _q_ quit            _i_ enlarge         _-_ zoom out
        (lambda (window)
          (let ((buffer (window-buffer window)))
            (set-buffer buffer)
-           (when (and (erc-buffer-visible buffer) (eq major-mode 'erc-mode))
+           (when (and (eq major-mode 'erc-mode) (erc-buffer-visible buffer))
              (setq erc-fill-column (1- (window-width window)))))))))
   :bind
   (:map erc-mode-map
@@ -1337,11 +1337,14 @@ _q_ quit            _i_ enlarge         _-_ zoom out
     (set-face-attribute 'erc-timestamp-face nil :foreground zenburn-fg-1))
   (me/unboldify '(erc-button
                   erc-nick-default-face
-                  erc-current-nick-face
                   erc-my-nick-face
                   erc-my-nick-prefix-face
                   erc-nick-prefix-face
                   erc-prompt-face)))
+
+(use-package erc-match
+  :ensure nil
+  :config (me/unboldify '(erc-current-nick-face)))
 #+END_SRC
 
 Colorize nicks with unique colors.
