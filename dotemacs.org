@@ -1322,7 +1322,7 @@ _q_ quit            _i_ enlarge         _-_ zoom out
   :init
   (add-hook 'erc-mode-hook '(lambda () (setq-local scroll-margin 0)))
   (add-hook 'window-configuration-change-hook #'me/erc-set-fill-column)
-  (me/erc)
+  ;; (me/erc)
   :config
   (make-variable-buffer-local 'erc-fill-column)
   (erc-scrolltobottom-enable)
