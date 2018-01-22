@@ -43,6 +43,7 @@
   - [[#projectile][Projectile]]
   - [[#quality-of-life][Quality of Life]]
   - [[#slack][Slack]]
+  - [[#terminal][Terminal]]
   - [[#version-control][Version Control]]
   - [[#whitespaces][Whitespaces]]
   - [[#windows][Windows]]
@@ -51,11 +52,10 @@
 
 ** Use better defaults
 
-Maximize by default, fullscreen on Windows.
+Enable fullscreen.
 
 #+BEGIN_SRC emacs-lisp
-(set-frame-parameter nil 'fullscreen (if (eq system-type 'windows-nt)
-                                         'fullboth 'maximized))
+(set-frame-parameter nil 'fullscreen 'fullboth)
 #+END_SRC
 
 Some UI elements are rather invasive. No-mouse master race.
@@ -196,13 +196,11 @@ preferences.
   (zenburn-with-color-variables
     (set-face-attribute 'button nil :foreground zenburn-yellow-2)
     (set-face-attribute 'default nil
-                        :background zenburn-bg-05
                         :height me/font-size-default
                         :font me/font-family)
     (set-face-attribute 'help-argument-name nil :foreground zenburn-orange :italic nil)
     (set-face-attribute 'hl-line nil :background zenburn-bg+1)
     (set-face-attribute 'header-line nil
-                        :background zenburn-bg-1
                         :box `(:line-width 2 :color ,zenburn-bg-1)
                         :height me/font-size-header-line)
     (set-face-attribute 'mode-line nil
@@ -234,6 +232,10 @@ preferences.
                   font-lock-warning-face
                   link
                   mode-line-buffer-id)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'fixed-pitch nil :font me/font-family)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -287,14 +289,11 @@ HTML mode is defined in =sgml-mode.el=.
   :init
   (add-hook 'html-mode-hook #'sgml-electric-tag-pair-mode)
   (add-hook 'html-mode-hook #'sgml-name-8bit-mode)
+  (add-hook 'html-mode-hook #'toggle-truncate-lines)
   :config (setq-default sgml-basic-offset 2))
 #+END_SRC
 
 ** JavaScript
-
-Tern is a code-analysis engine for JavaScript. I use it to check syntax and
-grammar in my JavaScript code. With an auto-complete frontend, it can also
-provide candidates for variables and properties.
 
 - *FIXME*: Indent level is broken
            (https://github.com/joshwnj/json-mode/issues/32).
@@ -307,12 +306,22 @@ provide candidates for variables and properties.
 
 (use-package json-mode
   :delight json-mode "JSON"
-  :mode ("\\.jshintrc\\'" "\\.json\\'")
+  :mode "\\.json\\'"
   :preface
   (defun me/json-set-indent-level ()
     (setq-local js-indent-level 2))
   :init (add-hook 'json-mode-hook #'me/json-set-indent-level))
 
+(use-package rjsx-mode
+  :delight rjsx-mode "RJSX"
+  :init (add-hook 'rjsx-mode-hook #'sgml-electric-tag-pair-mode))
+#+END_SRC
+
+Tern is a code-analysis engine for JavaScript. I use it to check syntax and
+grammar in my JavaScript code. With an auto-complete frontend, it can also
+provide candidates for variables and properties.
+
+#+BEGIN_SRC emacs-lisp
 (use-package tern
   :init (add-hook 'js-mode-hook #'tern-mode))
 #+END_SRC
@@ -624,6 +633,7 @@ explorer.
       (set-buffer-modified-p nil)))
   (setq-default
    dired-auto-revert-buffer t
+   dired-dwim-target t
    dired-hide-details-hide-symlink-targets nil
    dired-listing-switches "-alh"
    dired-ls-F-marks-symlinks nil
@@ -645,6 +655,7 @@ gathered all features that look anywhere close to this behavior for it to handle
 under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
 
 - *TODO*: Use =:bind=.
+- *TODO*: Move hook calls where they belong.
 
 #+BEGIN_SRC emacs-lisp
 (use-package emmet-mode
@@ -657,6 +668,7 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
   :init
   (add-hook 'css-mode-hook #'emmet-mode)
   (add-hook 'html-mode-hook #'emmet-mode)
+  (add-hook 'rjsx-mode-hook #'emmet-mode)
   :config (setq-default emmet-move-cursor-between-quote t))
 
 (use-package hippie-exp
@@ -763,16 +775,17 @@ leaner, modular, and unchained from constraints of backward compatibility.
 #+BEGIN_SRC emacs-lisp
 (use-package helm
   :defer 1
+  :preface
+  (defun me/recenter ()
+    (recenter-top-bottom (car recenter-positions)))
   :config
   (helm-mode)
   (setq-default
    helm-always-two-windows t
    helm-display-header-line nil
    helm-split-window-default-side 'left)
-  (add-hook 'helm-after-persistent-action-hook
-            '(lambda () (recenter-top-bottom (car recenter-positions))))
-  (add-hook 'helm-after-action-hook
-            '(lambda () (recenter-top-bottom (car recenter-positions))))
+  (add-hook 'helm-after-persistent-action-hook #'me/recenter)
+  (add-hook 'helm-after-action-hook #'me/recenter)
   (set-face-attribute 'helm-action nil :underline nil)
   (set-face-attribute 'helm-match nil :background nil)
   (set-face-attribute 'helm-source-header nil
@@ -1200,8 +1213,8 @@ Group Projectile commands.
 ^Projectile^        ^Buffers^           ^Find^              ^Search^
 ^──────────^────────^───────^───────────^────^──────────────^──────^────────────
 _q_ quit            _b_ list            _d_ directory       _r_ replace
-_i_ reset cache     _K_ kill all        _D_ root            _s_ ag
-^^                  _S_ save all        _f_ file            ^^
+_i_ reset cache     _K_ kill all        _D_ root            _R_ regexp replace
+^^                  _S_ save all        _f_ file            _s_ ag
 ^^                  ^^                  _p_ project         ^^
 ^^                  ^^                  ^^                  ^^
 "
@@ -1214,6 +1227,7 @@ _i_ reset cache     _K_ kill all        _D_ root            _s_ ag
   ("K" projectile-kill-buffers)
   ("p" helm-projectile-switch-project)
   ("r" projectile-replace)
+  ("R" projectile-replace-regexp)
   ("s" helm-projectile-ag)
   ("S" projectile-save-project-buffers))
 #+END_SRC
@@ -1298,7 +1312,7 @@ _q_ quit            _i_ enlarge         _-_ zoom out
        (lambda (window)
          (let ((buffer (window-buffer window)))
            (set-buffer buffer)
-           (when (and (erc-buffer-visible buffer) (eq major-mode 'erc-mode))
+           (when (and (eq major-mode 'erc-mode) (erc-buffer-visible buffer))
              (setq erc-fill-column (1- (window-width window)))))))))
   :bind
   (:map erc-mode-map
@@ -1308,7 +1322,7 @@ _q_ quit            _i_ enlarge         _-_ zoom out
   :init
   (add-hook 'erc-mode-hook '(lambda () (setq-local scroll-margin 0)))
   (add-hook 'window-configuration-change-hook #'me/erc-set-fill-column)
-  (me/erc)
+  ;; (me/erc)
   :config
   (make-variable-buffer-local 'erc-fill-column)
   (erc-scrolltobottom-enable)
@@ -1327,11 +1341,14 @@ _q_ quit            _i_ enlarge         _-_ zoom out
     (set-face-attribute 'erc-timestamp-face nil :foreground zenburn-fg-1))
   (me/unboldify '(erc-button
                   erc-nick-default-face
-                  erc-current-nick-face
                   erc-my-nick-face
                   erc-my-nick-prefix-face
                   erc-nick-prefix-face
                   erc-prompt-face)))
+
+(use-package erc-match
+  :ensure nil
+  :config (me/unboldify '(erc-current-nick-face)))
 #+END_SRC
 
 Colorize nicks with unique colors.
@@ -2161,6 +2178,19 @@ Slack integration.
     (set-face-attribute 'slack-message-output-header nil
                         :foreground zenburn-orange
                         :underline nil)))
+#+END_SRC
+
+** Terminal
+
+Yes, Emacs emulates terminals too.
+
+- **TODO**: Source =.bash_profile= on =M-x term=.
+- **TODO**: Disable =hl-line=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package term
+  :ensure nil
+  :init (add-hook 'term-mode-hook '(lambda () (setq-local scroll-margin 0))))
 #+END_SRC
 
 ** Version Control
