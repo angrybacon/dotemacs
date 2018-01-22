@@ -52,11 +52,10 @@
 
 ** Use better defaults
 
-Maximize by default, fullscreen on Windows.
+Enable fullscreen.
 
 #+BEGIN_SRC emacs-lisp
-(set-frame-parameter nil 'fullscreen (if (eq system-type 'windows-nt)
-                                         'fullboth 'maximized))
+(set-frame-parameter nil 'fullscreen 'fullboth)
 #+END_SRC
 
 Some UI elements are rather invasive. No-mouse master race.
