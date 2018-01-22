@@ -1213,8 +1213,8 @@ Group Projectile commands.
 ^Projectile^        ^Buffers^           ^Find^              ^Search^
 ^──────────^────────^───────^───────────^────^──────────────^──────^────────────
 _q_ quit            _b_ list            _d_ directory       _r_ replace
-_i_ reset cache     _K_ kill all        _D_ root            _s_ ag
-^^                  _S_ save all        _f_ file            ^^
+_i_ reset cache     _K_ kill all        _D_ root            _R_ regexp replace
+^^                  _S_ save all        _f_ file            _s_ ag
 ^^                  ^^                  _p_ project         ^^
 ^^                  ^^                  ^^                  ^^
 "
@@ -1227,6 +1227,7 @@ _i_ reset cache     _K_ kill all        _D_ root            _s_ ag
   ("K" projectile-kill-buffers)
   ("p" helm-projectile-switch-project)
   ("r" projectile-replace)
+  ("R" projectile-replace-regexp)
   ("s" helm-projectile-ag)
   ("S" projectile-save-project-buffers))
 #+END_SRC
