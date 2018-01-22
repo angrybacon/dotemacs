@@ -240,9 +240,8 @@ preferences.
 
 #+BEGIN_SRC emacs-lisp
 (use-package mdi
-  :ensure nil
-  :load-path "lisp/mdi/"
-  :after zenburn-theme)
+  :demand t
+  :load-path "lisp/mdi/")
 #+END_SRC
 
 * Languages
@@ -1509,11 +1508,12 @@ general fun and profit.
 #+END_SRC
 
 - *FIXME*: Projectile segment doesn't use submodules.
+- *FIXME*: Can't load =spaceline-config= through =:after=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package spaceline-config
+  :demand t
   :ensure nil
-  :after spaceline
   :config
 
   ;; Configure the mode-line
