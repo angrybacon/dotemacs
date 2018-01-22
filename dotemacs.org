@@ -201,14 +201,14 @@ preferences.
     (set-face-attribute 'help-argument-name nil :foreground zenburn-orange :italic nil)
     (set-face-attribute 'hl-line nil :background zenburn-bg+1)
     (set-face-attribute 'header-line nil
-                        :box `(:line-width 2 :color ,zenburn-bg-1)
+                        :box `(:line-width 1 :color ,zenburn-bg-1)
                         :height me/font-size-header-line)
     (set-face-attribute 'mode-line nil
-                        :box `(:line-width 2 :color ,zenburn-bg-1)
+                        :box `(:line-width 1 :color ,zenburn-bg-1)
                         :foreground zenburn-bg+3
                         :height me/font-size-mode-line)
     (set-face-attribute 'mode-line-inactive nil
-                        :box `(:line-width 2 :color ,zenburn-bg-05)
+                        :box `(:line-width 1 :color ,zenburn-bg-05)
                         :foreground zenburn-bg+3
                         :height me/font-size-mode-line)
     (set-face-attribute 'region nil
