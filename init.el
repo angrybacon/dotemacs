@@ -47,7 +47,6 @@
 
   ;; Use latest Org
   (use-package org
-    :pin org
     :ensure org-plus-contrib)
 
   ;; Tangle configuration
