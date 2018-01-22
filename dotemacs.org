@@ -196,13 +196,11 @@ preferences.
   (zenburn-with-color-variables
     (set-face-attribute 'button nil :foreground zenburn-yellow-2)
     (set-face-attribute 'default nil
-                        :background zenburn-bg-05
                         :height me/font-size-default
                         :font me/font-family)
     (set-face-attribute 'help-argument-name nil :foreground zenburn-orange :italic nil)
     (set-face-attribute 'hl-line nil :background zenburn-bg+1)
     (set-face-attribute 'header-line nil
-                        :background zenburn-bg-1
                         :box `(:line-width 2 :color ,zenburn-bg-1)
                         :height me/font-size-header-line)
     (set-face-attribute 'mode-line nil
@@ -234,6 +232,10 @@ preferences.
                   font-lock-warning-face
                   link
                   mode-line-buffer-id)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'fixed-pitch nil :font me/font-family)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
