@@ -945,6 +945,7 @@ Fourth-party packages for Helm.
 
 (use-package helm-projectile
   :after helm
+  :defer nil
   :config (helm-projectile-toggle 1))
 
 (use-package helm-swoop
