@@ -224,7 +224,8 @@ preferences.
          (set-face-attribute face nil :background 'unspecified)))
      (face-list)))
 
-  (me/unboldify '(font-lock-builtin-face
+  (me/unboldify '(bold
+                  font-lock-builtin-face
                   font-lock-keyword-face
                   font-lock-negation-char-face
                   font-lock-regexp-grouping-backslash
