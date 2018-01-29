@@ -225,6 +225,7 @@ preferences.
      (face-list)))
 
   (me/unboldify '(bold
+                  error
                   font-lock-builtin-face
                   font-lock-keyword-face
                   font-lock-negation-char-face
@@ -232,7 +233,8 @@ preferences.
                   font-lock-regexp-grouping-construct
                   font-lock-warning-face
                   link
-                  mode-line-buffer-id)))
+                  mode-line-buffer-id
+                  warning)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -1340,7 +1342,8 @@ _q_ quit            _i_ enlarge         _-_ zoom out
   (set-face-attribute 'erc-prompt-face nil :background nil)
   (zenburn-with-color-variables
     (set-face-attribute 'erc-timestamp-face nil :foreground zenburn-fg-1))
-  (me/unboldify '(erc-button
+  (me/unboldify '(erc-bold-face
+                  erc-button
                   erc-nick-default-face
                   erc-my-nick-face
                   erc-my-nick-prefix-face
@@ -2271,6 +2274,22 @@ Git itself deserve to be called porcelains.
   (set-face-attribute 'magit-popup-heading nil :height me/font-size-title)
   (set-face-attribute 'magit-section-heading nil :height me/font-size-title)
   (set-face-attribute 'magit-section-highlight nil :background nil)
+  (me/unboldify '(magit-branch-current
+                  magit-branch-local
+                  magit-branch-remote
+                  magit-head
+                  magit-refname
+                  magit-refname-stash
+                  magit-refname-wip
+                  magit-tag)))
+
+(use-package magit-blame
+  :ensure nil
+  :config (me/unboldify '(magit-blame-summary)))
+
+(use-package magit-diff
+  :ensure nil
+  :config
   (zenburn-with-color-variables
     (set-face-attribute 'magit-diff-added nil
                         :background nil
@@ -2278,22 +2297,24 @@ Git itself deserve to be called porcelains.
     (set-face-attribute 'magit-diff-removed nil
                         :background nil
                         :foreground zenburn-red))
-  (me/unboldify '(magit-branch-current
-                  magit-branch-local
-                  magit-branch-remote
-                  magit-diff-file-heading
+  (me/unboldify '(magit-diff-file-heading
                   magit-diff-file-heading-highlight
-                  magit-popup-argument
+                  magit-diff-file-heading-selection)))
+
+(use-package magit-popup
+  :ensure nil
+  :config
+  (me/unboldify '(magit-popup-argument
                   magit-popup-heading
                   magit-popup-key
-                  magit-popup-option-value
-                  magit-refname
-                  magit-refname-stash
-                  magit-refname-wip
-                  magit-section-heading
+                  magit-popup-option-value)))
+
+(use-package magit-section
+  :ensure nil
+  :config
+  (me/unboldify '(magit-section-heading
                   magit-section-heading-selection
-                  magit-section-secondary-heading
-                  magit-tag)))
+                  magit-section-secondary-heading)))
 
 (use-package gitattributes-mode :delight gitattributes-mode "Git Attributes")
 (use-package gitconfig-mode :delight gitconfig-mode "Git Config")
