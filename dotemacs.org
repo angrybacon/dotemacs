@@ -649,9 +649,6 @@ HippieExpand manages expansions a la [[http://emmet.io/][Emmet]]. So I've
 gathered all features that look anywhere close to this behavior for it to handle
 under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
 
-- *TODO*: Use =:bind=.
-- *TODO*: Move hook calls where they belong.
-
 #+BEGIN_SRC emacs-lisp
 (use-package emmet-mode
   :bind
@@ -680,6 +677,10 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
    hippie-expand-verbose nil))
 
 (use-package yasnippet
+  :bind
+  (:map yas-minor-mode-map
+        ("TAB" . nil)
+        ("<tab>" . nil))
   :init
   (add-hook 'emacs-lisp-mode-hook #'yas-minor-mode)
   (add-hook 'html-mode-hook #'yas-minor-mode)
@@ -687,10 +688,8 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
   (add-hook 'org-mode-hook #'yas-minor-mode)
   (add-hook 'python-mode-hook #'yas-minor-mode)
   :config
-  (setq-default yas-snippet-dirs '("~/.emacs.d/snippets"))
-  (yas-reload-all)
-  (unbind-key "TAB" yas-minor-mode-map)
-  (unbind-key "<tab>" yas-minor-mode-map))
+  (setq-default yas-snippet-dirs `(,(expand-file-name "snippets/" user-emacs-directory)))
+  (yas-reload-all))
 #+END_SRC
 
 ** EXWM
@@ -1341,7 +1340,7 @@ _q_ quit            _i_ enlarge         _-_ zoom out
 
 Colorize nicks with unique colors.
 
-- *FIXME*: Pastel'ize the colors.
+- *TODO*: Pastel'ize the colors.
 
 #+BEGIN_SRC emacs-lisp
 (use-package erc-hl-nicks :after erc)
@@ -1460,7 +1459,6 @@ general fun and profit.
 (use-package spaceline
   :demand t
   :config
-
   (spaceline-define-segment me/erc-track
     "Show the ERC buffers with new messages."
     (when (bound-and-true-p erc-track-mode)
