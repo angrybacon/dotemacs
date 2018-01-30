@@ -771,18 +771,19 @@ leaner, modular, and unchained from constraints of backward compatibility.
 (use-package helm
   :defer 1
   :preface
-  (defun me/helm-pulse-follow ()
-    (let ((point (point)))
-      (when (and (pulse-available-p) (> point 1))
-        (pulse-momentary-highlight-one-line point))))
+  (defun me/helm-focus-follow ()
+    ;; (let ((point (point)))
+    ;;   (when (and (pulse-available-p) (> point 1))
+    ;;     (pulse-momentary-highlight-one-line point)))
+    (recenter-top-bottom (car recenter-positions)))
   :config
   (helm-mode)
   (setq-default
    helm-always-two-windows t
    helm-display-header-line nil
    helm-split-window-default-side 'left)
-  ;; (add-hook 'helm-after-persistent-action-hook #'me/helm-pulse-follow)
-  ;; (add-hook 'helm-after-action-hook #'me/helm-pulse-follow)
+  (add-hook 'helm-after-persistent-action-hook #'me/helm-focus-follow)
+  (add-hook 'helm-after-action-hook #'me/helm-focus-follow)
   (set-face-attribute 'helm-action nil :underline nil)
   (set-face-attribute 'helm-match nil :background nil)
   (set-face-attribute 'helm-source-header nil
