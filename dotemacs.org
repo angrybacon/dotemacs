@@ -42,7 +42,6 @@
   - [[#point-and-region][Point and Region]]
   - [[#projectile][Projectile]]
   - [[#quality-of-life][Quality of Life]]
-  - [[#slack][Slack]]
   - [[#terminal][Terminal]]
   - [[#version-control][Version Control]]
   - [[#whitespaces][Whitespaces]]
@@ -2159,33 +2158,6 @@ Turn on =auto-fill-mode= /almost/ everywhere.
   :config
   (add-hook 'prog-mode-hook #'turn-on-auto-fill)
   (add-hook 'text-mode-hook #'turn-on-auto-fill))
-#+END_SRC
-
-** Slack
-
-Slack integration.
-
-- *TODO*
-- *TODO*: Register teams in =.secret.el=.
-
-#+BEGIN_SRC emacs-lisp
-(use-package slack
-  :config
-  (setq-default
-   slack-buffer-function 'switch-to-buffer
-   slack-prefer-current-team t)
-  (slack-register-team
-   :name "fiftyfor"
-   :default t
-   :client-id me/fiftyfor-client-id
-   :client-secret me/fiftyfor-client-secret
-   :token me/fiftyfor-token
-   :subscribed-channels '(dev general))
-  (set-face-attribute 'slack-message-output-text nil :height 'unspecified)
-  (zenburn-with-color-variables
-    (set-face-attribute 'slack-message-output-header nil
-                        :foreground zenburn-orange
-                        :underline nil)))
 #+END_SRC
 
 ** Terminal
