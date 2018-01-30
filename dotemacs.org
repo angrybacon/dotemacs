@@ -1439,6 +1439,7 @@ are the descriptive strings than you see appear within the =mode-line=.
 To make it work with =spaceline= (which uses =powerline= internally), I need to
 allow it to use the newly changed strings.
 
+- *TODO*: Remove =delight= dependency from =init.el=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package delight
