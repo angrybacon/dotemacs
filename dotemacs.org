@@ -252,8 +252,6 @@ preferences.
 As pedantic as I like to be, some packages have a =use-package= clause for
 nothing but the customization of their lighter.
 
-- *TODO*: Replace all old defadvice's.
-
 ** CSS
 
 #+BEGIN_SRC emacs-lisp
@@ -580,17 +578,12 @@ Define words using Wordnik.
 
 Ediff is a visual interface to Unix =diff=.
 
-- *TODO*: Use =:bind=.
-
 #+BEGIN_SRC emacs-lisp
 (use-package ediff-util
   :ensure nil
-  :preface
-  (defun me/ediff-setup-keymap ()
-    (ediff-setup-keymap)
-    (define-key ediff-mode-map (kbd "<down>") #'ediff-next-difference)
-    (define-key ediff-mode-map (kbd "<up>") #'ediff-previous-difference))
-  :init (add-hook 'ediff-mode-hook #'me/ediff-setup-keymap))
+  :bind (:map ediff-mode-map
+              ("<down>" . ediff-next-difference)
+              ("<up>" . ediff-previous-difference)))
 
 (use-package ediff-wind
   :ensure nil
@@ -618,21 +611,21 @@ Ediff is a visual interface to Unix =diff=.
 Configure Dired buffers. Amongst many other things, Emacs is also a file
 explorer.
 
-- *TODO*: Use the new syntax for advices.
-
 #+BEGIN_SRC emacs-lisp
 (use-package dired
   :ensure nil
   :delight dired-mode "Dired"
-  :init (add-hook 'dired-mode-hook #'dired-hide-details-mode)
-  :config
-  (defadvice dired-readin (after dired-after-updating-hook first () activate)
+  :preface
+  (defun me/dired-directories-first ()
     "Sort dired listings with directories first before adding marks."
     (save-excursion
       (let (buffer-read-only)
         (forward-line 2)
         (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
       (set-buffer-modified-p nil)))
+  :init (add-hook 'dired-mode-hook #'dired-hide-details-mode)
+  :config
+  (advice-add 'dired-readin :after #'me/dired-directories-first)
   (setq-default
    dired-auto-revert-buffer t
    dired-dwim-target t
@@ -1446,16 +1439,18 @@ are the descriptive strings than you see appear within the =mode-line=.
 To make it work with =spaceline= (which uses =powerline= internally), I need to
 allow it to use the newly changed strings.
 
-- *TODO*: Use the new syntax for advices.
 
 #+BEGIN_SRC emacs-lisp
 (use-package delight
   :ensure nil
+  :preface
+  (defun me/delight-powerline-major-mode (original-function &rest arguments)
+    (let ((inhibit-mode-name-delight nil)) (apply original-function arguments)))
+  (defun me/delight-powerline-minor-mode (original-function &rest arguments)
+    (let ((inhibit-mode-name-delight nil)) (apply original-function arguments)))
   :config
-  (defadvice powerline-major-mode (around delight-powerline-major-mode activate)
-    (let ((inhibit-mode-name-delight nil)) ad-do-it))
-  (defadvice powerline-minor-modes (around delight-powerline-minor-modes activate)
-    (let ((inhibit-mode-name-delight nil)) ad-do-it)))
+  (advice-add 'powerline-major-mode :around #'me/delight-powerline-major-mode)
+  (advice-add 'powerline-minor-mode :around #'me/delight-powerline-minor-mode))
 #+END_SRC
 
 *** Spaceline
@@ -2030,8 +2025,6 @@ exists as well).
 
 [[https://github.com/bbatsov/projectile][Bozhidar Batsov]]
 #+END_QUOTE
-
-- *TODO*: Use the new syntax for advices.
 
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
