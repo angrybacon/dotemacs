@@ -1813,6 +1813,14 @@ today... No package seem to please my person.
 
 ** Paste
 
+#+BEGIN_QUOTE
+This mode allows to paste whole buffers or parts of buffers to pastebin-like
+services. It supports more than one service and will failover if one service
+fails.
+
+[[https://github.com/etu/webpaste.el][Elis Hirwing]]
+#+END_QUOTE
+
 #+BEGIN_SRC emacs-lisp
 (use-package webpaste)
 #+END_SRC
