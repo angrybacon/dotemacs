@@ -903,6 +903,7 @@ their Helm equivalents.
 (use-package helm-regexp
   :ensure nil
   :after helm
+  :bind ([remap isearch-forward] . helm-occur)
   :config
   (zenburn-with-color-variables
     (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn-blue)))
@@ -913,7 +914,6 @@ their Helm equivalents.
 Fourth-party packages for Helm.
 
 - *NOTE*: See https://github.com/ShingoFukuyama/helm-css-scss/issues/7.
-- *NOTE*: See https://github.com/ShingoFukuyama/helm-swoop/issues/114.
 - *TODO*: See https://github.com/bbatsov/zenburn-emacs/issues/220.
 
 #+BEGIN_SRC emacs-lisp
@@ -946,18 +946,6 @@ Fourth-party packages for Helm.
   :after helm
   :defer nil
   :config (helm-projectile-toggle 1))
-
-(use-package helm-swoop
-  :bind ([remap isearch-forward] . helm-swoop)
-  :config
-  (setq-default
-   helm-swoop-move-to-line-cycle nil
-   helm-swoop-speed-or-color t
-   helm-swoop-split-direction 'split-window-horizontally)
-  (set-face-attribute 'helm-swoop-target-word-face nil
-                      :background 'unspecified
-                      :foreground 'unspecified
-                      :inherit 'isearch))
 #+END_SRC
 
 ** Help
