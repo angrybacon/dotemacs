@@ -770,24 +770,26 @@ leaner, modular, and unchained from constraints of backward compatibility.
 [[https://github.com/emacs-helm/helm][Bozhidar Batsov]]
 #+END_QUOTE
 
-- *TODO*: Add a flashing effect with Helm actions.
-          =(progn (require 'pulse) (pulse-momentary-highlight-one-line (point))=
+- *TODO*: Test =me/helm-pulse-follow= on MacOS. Is it Windows that makes it
+          ugly?
 - *FIXME*: The recentering is too aggressive.
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm
   :defer 1
   :preface
-  (defun me/recenter ()
-    (recenter-top-bottom (car recenter-positions)))
+  (defun me/helm-pulse-follow ()
+    (let ((point (point)))
+      (when (and (pulse-available-p) (> point 1))
+        (pulse-momentary-highlight-one-line point))))
   :config
   (helm-mode)
   (setq-default
    helm-always-two-windows t
    helm-display-header-line nil
    helm-split-window-default-side 'left)
-  (add-hook 'helm-after-persistent-action-hook #'me/recenter)
-  (add-hook 'helm-after-action-hook #'me/recenter)
+  ;; (add-hook 'helm-after-persistent-action-hook #'me/helm-pulse-follow)
+  ;; (add-hook 'helm-after-action-hook #'me/helm-pulse-follow)
   (set-face-attribute 'helm-action nil :underline nil)
   (set-face-attribute 'helm-match nil :background nil)
   (set-face-attribute 'helm-source-header nil
@@ -1618,6 +1620,18 @@ jump from one paragraph to another.
   (unless (search-forward-regexp "\n[[:blank:]]*\n" nil t)
     (goto-char (point-max)))
   (skip-chars-forward "\n"))
+#+END_SRC
+
+*** Pulse
+
+Pulse temporarily highlights the background color of a line or region.
+
+#+BEGIN_SRC emacs-lisp
+(use-package pulse
+  :ensure nil
+  :config
+  (zenburn-with-color-variables
+    (set-face-attribute 'pulse-highlight-start-face nil :background zenburn-red+1)))
 #+END_SRC
 
 *** Replace
