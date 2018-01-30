@@ -26,7 +26,6 @@
   - [[#diff][Diff]]
   - [[#dired][Dired]]
   - [[#expand][Expand]]
-  - [[#exwm][EXWM]]
   - [[#folding][Folding]]
   - [[#helm][Helm]]
   - [[#helm-plugins][Helm Plugins]]
@@ -691,27 +690,6 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
   (yas-reload-all)
   (unbind-key "TAB" yas-minor-mode-map)
   (unbind-key "<tab>" yas-minor-mode-map))
-#+END_SRC
-
-** EXWM
-
-- *TODO*
-
-#+BEGIN_QUOTE
-EXWM (Emacs X Window Manager) is a full-featured tiling X window manager for
-Emacs built on top of [[https://github.com/ch11ng/xelb][XELB]]. It features:
-
-- Fully keyboard-driven operations
-- Hybrid layout modes (tiling & stacking)
-- Dynamic workspace support
-- ICCCM/EWMH compliance
-- (Optional) RandR (multi-monitor) support
-- (Optional) Built-in compositing manager
-- (Optional) Built-in system tray
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package exwm :disabled t)
 #+END_SRC
 
 ** Folding
