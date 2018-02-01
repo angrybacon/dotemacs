@@ -412,7 +412,7 @@ authoring documents with a fast and effective plain-text system.
 (use-package org-faces
   :ensure nil
   :after org
-  :config (me/unboldify '(org-tag)))
+  :config (me/unboldify '(org-tag org-todo)))
 
 (use-package org-src
   :ensure nil
