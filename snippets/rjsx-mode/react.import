@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# group: react
+# key: ri
+# --
+import $2 from '$1';$0
