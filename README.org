@@ -39,7 +39,7 @@ git clone https://github.com/angrybacon/dotemacs.git ~/.emacs.d/
 My Helm setup uses =ag= instead of =grep= to lookup files.
 
 #+BEGIN_SRC sh
-sh brew install the_silver_searcher
+brew install the_silver_searcher
 #+END_SRC
 
 ** Flycheck
@@ -48,9 +48,9 @@ I use [[https://github.com/flycheck/flycheck][Flycheck]] as linter framework to
 display syntax warnings and errors whithin each buffer.
 
 #+BEGIN_SRC sh
-pip install flake8                       # Python gem install
-scss_lint scss_lint_reporter_checkstyle  # SCSS
-npm install -g eslint                    # JavaScript
+npm install -g eslint                                # JavaScript
+pip install flake8                                   # Python
+gem install scss_lint scss_lint_reporter_checkstyle  # SCSS
 #+END_SRC
 
 ** Material Design Icons
