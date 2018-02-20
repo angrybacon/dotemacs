@@ -233,6 +233,7 @@ preferences.
                   font-lock-warning-face
                   link
                   mode-line-buffer-id
+                  success
                   warning)))
 #+END_SRC
 
@@ -302,6 +303,11 @@ HTML mode is defined in =sgml-mode.el=.
   :ensure nil
   :delight js-mode "JavaScript"
   :config (setq-default js-indent-level 2))
+
+(use-package js2-mode
+  :ensure nil
+  :delight js2-mode "JavaScript 2"
+  :config (me/unboldify '(js2-error)))
 
 (use-package json-mode
   :delight json-mode "JSON"
@@ -584,7 +590,10 @@ Ediff is a visual interface to Unix =diff=.
   (zenburn-with-color-variables
     (set-face-attribute 'ediff-fine-diff-A nil :foreground zenburn-fg+1)
     (set-face-attribute 'ediff-fine-diff-B nil :background zenburn-green+1 :foreground zenburn-fg+1)
-    (set-face-attribute 'ediff-fine-diff-C nil :foreground zenburn-fg+1)))
+    (set-face-attribute 'ediff-fine-diff-C nil :foreground zenburn-fg+1))
+  (me/unboldify '(ediff-fine-diff-A
+                  ediff-fine-diff-B
+                  ediff-fine-diff-C)))
 
 (use-package ediff-wind
   :ensure nil
