@@ -910,6 +910,7 @@ Fourth-party packages for Helm.
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm-ag
+  :defer nil
   :after helm
   :bind
   (:map helm-ag-map
@@ -918,6 +919,7 @@ Fourth-party packages for Helm.
   :config (setq-default helm-ag-show-status-function nil))
 
 (use-package helm-descbinds
+  :defer nil
   :after helm
   :config
   (helm-descbinds-mode)
