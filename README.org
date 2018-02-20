@@ -19,19 +19,18 @@ such, the following screenshots might not reflect exactly what is on =:master=.
 
 * Installation
 
-I primarily use Emacs on MacOS, but I trust your /google-fu/ to find the
-equivalent for the following commands to run on your setup.
-
 ** Emacs
 
-I use [[https://github.com/d12frosted/homebrew-emacs-plus][Emacs Plus]]. The
-configuration files /should/ work with any build nonetheless. In any case,
-install Emacs 24 or above.
+Install Emacs 25 or above.
 
 #+BEGIN_SRC sh
+# MacOS
 brew tap d12frosted/emacs-plus
 brew install emacs-plus --with-no-title-bars --without-spacemacs-icon
 git clone https://github.com/angrybacon/dotemacs.git ~/.emacs.d/
+
+# Windows
+choco install emacs64
 #+END_SRC
 
 ** Ag
@@ -39,7 +38,11 @@ git clone https://github.com/angrybacon/dotemacs.git ~/.emacs.d/
 My Helm setup uses =ag= instead of =grep= to lookup files.
 
 #+BEGIN_SRC sh
-sh brew install the_silver_searcher
+# MacOS
+brew install the_silver_searcher
+
+# Windows
+choco install ag --version 0.29.1.1641
 #+END_SRC
 
 ** Flycheck
@@ -48,9 +51,10 @@ I use [[https://github.com/flycheck/flycheck][Flycheck]] as linter framework to
 display syntax warnings and errors whithin each buffer.
 
 #+BEGIN_SRC sh
-pip install flake8                       # Python gem install
-scss_lint scss_lint_reporter_checkstyle  # SCSS
-npm install -g eslint                    # JavaScript
+# MacOS and Windows
+npm install -g eslint                                # JavaScript
+pip install flake8                                   # Python
+gem install scss_lint scss_lint_reporter_checkstyle  # SCSS
 #+END_SRC
 
 ** Material Design Icons

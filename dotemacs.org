@@ -99,7 +99,7 @@ Here are what I consider better defaults as per my own experience.
  x-stretch-cursor t)                              ; Stretch cursor to the glyph width
 (delete-selection-mode)                           ; Replace region when inserting text
 (display-time-mode)                               ; Enable time in the mode-line
-(fringe-mode 0)                                   ; Hide fringes
+(fringe-mode 0)                                   ; Disable fringes
 (fset 'yes-or-no-p 'y-or-n-p)                     ; Replace yes/no prompts with y/n
 (global-hl-line-mode)                             ; Hightlight current line
 (global-subword-mode)                             ; Iterate through CamelCase words
@@ -232,6 +232,7 @@ preferences.
                   font-lock-warning-face
                   link
                   mode-line-buffer-id
+                  success
                   warning)))
 #+END_SRC
 
@@ -301,6 +302,11 @@ HTML mode is defined in =sgml-mode.el=.
   :ensure nil
   :delight js-mode "JavaScript"
   :config (setq-default js-indent-level 2))
+
+(use-package js2-mode
+  :ensure nil
+  :delight js2-mode "JavaScript 2"
+  :config (me/unboldify '(js2-error)))
 
 (use-package json-mode
   :delight json-mode "JSON"
@@ -577,11 +583,16 @@ Define words using Wordnik.
 Ediff is a visual interface to Unix =diff=.
 
 #+BEGIN_SRC emacs-lisp
-(use-package ediff-util
+(use-package ediff-init
   :ensure nil
-  :bind (:map ediff-mode-map
-              ("<down>" . ediff-next-difference)
-              ("<up>" . ediff-previous-difference)))
+  :config
+  (zenburn-with-color-variables
+    (set-face-attribute 'ediff-fine-diff-A nil :foreground zenburn-fg+1)
+    (set-face-attribute 'ediff-fine-diff-B nil :background zenburn-green+1 :foreground zenburn-fg+1)
+    (set-face-attribute 'ediff-fine-diff-C nil :foreground zenburn-fg+1))
+  (me/unboldify '(ediff-fine-diff-A
+                  ediff-fine-diff-B
+                  ediff-fine-diff-C)))
 
 (use-package ediff-wind
   :ensure nil
@@ -894,6 +905,7 @@ Fourth-party packages for Helm.
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm-ag
+  :defer nil
   :after helm
   :bind
   (:map helm-ag-map
@@ -901,11 +913,8 @@ Fourth-party packages for Helm.
         ("<right>" . forward-char))
   :config (setq-default helm-ag-show-status-function nil))
 
-(use-package helm-css-scss
-  :after helm
-  :config (setq-default helm-css-scss-split-direction 'split-window-horizontally))
-
 (use-package helm-descbinds
+  :defer nil
   :after helm
   :config
   (helm-descbinds-mode)
@@ -915,12 +924,11 @@ Fourth-party packages for Helm.
   :after helm
   :bind ([remap describe-mode] . helm-describe-modes))
 
-(use-package helm-flycheck
-  :after helm)
+(use-package helm-flycheck :after helm)
 
 (use-package helm-projectile
-  :after helm
   :defer nil
+  :after helm
   :config (helm-projectile-toggle 1))
 #+END_SRC
 
@@ -1285,7 +1293,6 @@ _q_ quit            _i_ enlarge         _-_ zoom out
   :init
   (add-hook 'erc-mode-hook '(lambda () (setq-local scroll-margin 0)))
   (add-hook 'window-configuration-change-hook #'me/erc-set-fill-column)
-  ;; (me/erc)
   :config
   (make-variable-buffer-local 'erc-fill-column)
   (erc-scrolltobottom-enable)
@@ -1543,7 +1550,7 @@ general fun and profit.
 Smarter =C-a=.
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key [remap move-beginning-of-line] 'me/beginning-of-line-dwim)
+(global-set-key [remap move-beginning-of-line] #'me/beginning-of-line-dwim)
 
 (defun me/beginning-of-line-dwim ()
   "Move point to first non-whitespace character, or beginning of line."
@@ -1562,8 +1569,8 @@ jump from one paragraph to another.
 - *FIXME*: Ignore invisible text.
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key [remap backward-paragraph] 'me/backward-paragraph-dwim)
-(global-set-key [remap forward-paragraph] 'me/forward-paragraph-dwim)
+(global-set-key [remap backward-paragraph] #'me/backward-paragraph-dwim)
+(global-set-key [remap forward-paragraph] #'me/forward-paragraph-dwim)
 
 (defun me/backward-paragraph-dwim ()
   "Move backward to start of paragraph."
@@ -2033,17 +2040,6 @@ electric-indent-mode.
   (add-hook 'lisp-mode-hook #'aggressive-indent-mode)
   (add-hook 'sgml-mode-hook #'aggressive-indent-mode)
   :config (setq-default aggressive-indent-comments-too t))
-#+END_SRC
-
-Auto-dim other buffers. Pretty self-explanatory.
-
-#+BEGIN_SRC emacs-lisp
-(use-package auto-dim-other-buffers
-  :disabled t
-  :init (auto-dim-other-buffers-mode)
-  :config
-  (zenburn-with-color-variables
-    (set-face-attribute 'auto-dim-other-buffers-face nil :background zenburn-bg-1)))
 #+END_SRC
 
 Insert the current date.
