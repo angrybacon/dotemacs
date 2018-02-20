@@ -2045,16 +2045,6 @@ electric-indent-mode.
   :config (setq-default aggressive-indent-comments-too t))
 #+END_SRC
 
-Auto-dim other buffers. Pretty self-explanatory.
-
-#+BEGIN_SRC emacs-lisp
-(use-package auto-dim-other-buffers
-  :init (auto-dim-other-buffers-mode)
-  :config
-  (zenburn-with-color-variables
-    (set-face-attribute 'auto-dim-other-buffers-face nil :background zenburn-bg-1)))
-#+END_SRC
-
 Insert the current date.
 
 #+BEGIN_SRC emacs-lisp
