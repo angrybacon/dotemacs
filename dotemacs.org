@@ -578,6 +578,14 @@ Define words using Wordnik.
 Ediff is a visual interface to Unix =diff=.
 
 #+BEGIN_SRC emacs-lisp
+(use-package ediff-init
+  :ensure nil
+  :config
+  (zenburn-with-color-variables
+    (set-face-attribute 'ediff-fine-diff-A nil :foreground zenburn-fg+1)
+    (set-face-attribute 'ediff-fine-diff-B nil :background zenburn-green+1 :foreground zenburn-fg+1)
+    (set-face-attribute 'ediff-fine-diff-C nil :foreground zenburn-fg+1)))
+
 (use-package ediff-wind
   :ensure nil
   :config
