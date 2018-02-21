@@ -107,6 +107,7 @@ Here are what I consider better defaults as per my own experience.
 (mouse-avoidance-mode 'banish)                    ; Avoid collision of mouse with point
 (put 'downcase-region 'disabled nil)              ; Enable downcase-region
 (put 'upcase-region 'disabled nil)                ; Enable upcase-region
+(cd "~/")                                         ; Move to the user directory
 #+END_SRC
 
 Garbage-collect on focus-out, Emacs /should/ feel snappier.
