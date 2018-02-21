@@ -961,7 +961,10 @@ their Helm equivalents.
 (use-package helm-lib
   :ensure nil
   :after helm
-  :config (setq-default helm-help-full-frame nil))
+  :config
+  (setq-default
+   helm-help-full-frame nil
+   helm-scroll-amount 5))
 
 (use-package helm-mode
   :ensure nil
