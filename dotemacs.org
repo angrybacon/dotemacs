@@ -864,7 +864,6 @@ leaner, modular, and unchained from constraints of backward compatibility.
    helm-always-two-windows t
    helm-display-header-line nil
    helm-split-window-default-side 'left)
-  (add-hook 'helm-after-persistent-action-hook #'me/helm-focus-follow)
   (add-hook 'helm-after-action-hook #'me/helm-focus-follow)
   (set-face-attribute 'helm-action nil :underline nil)
   (set-face-attribute 'helm-match nil :background nil)
@@ -1356,7 +1355,6 @@ _q_ quit            _i_ enlarge         _-_ zoom out
 ** IRC
 
 - *TODO*: Display the current count of users. =(hash-table-count erc-channel-users)=
-- *FIXME*: =erc-buffer-visible= comes from =erc-track.el=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package erc
@@ -1374,23 +1372,12 @@ _q_ quit            _i_ enlarge         _-_ zoom out
     "See `erc-bol'. Support shift."
     (interactive "^")
     (erc-bol))
-  (defun me/erc-set-fill-column ()
-    "Set `erc-fill-column' to the width of the current window."
-    (save-excursion
-      (walk-windows
-       (lambda (window)
-         (let ((buffer (window-buffer window)))
-           (set-buffer buffer)
-           (when (and (eq major-mode 'erc-mode) (erc-buffer-visible buffer))
-             (setq erc-fill-column (1- (window-width window)))))))))
   :bind
   (:map erc-mode-map
         ([remap erc-bol] . me/erc-bol-shifted)
         ("M-<down>" . erc-next-command)
         ("M-<up>" . erc-previous-command))
-  :init
-  (add-hook 'erc-mode-hook '(lambda () (setq-local scroll-margin 0)))
-  (add-hook 'window-configuration-change-hook #'me/erc-set-fill-column)
+  :init (add-hook 'erc-mode-hook '(lambda () (setq-local scroll-margin 0)))
   :config
   (make-variable-buffer-local 'erc-fill-column)
   (erc-scrolltobottom-enable)
@@ -1435,7 +1422,18 @@ Keep track of ERC buffers in which new messages have been posted.
 #+BEGIN_SRC emacs-lisp
 (use-package erc-track
   :ensure nil
-  :after erc)
+  :after erc
+  :preface
+  (defun me/erc-set-fill-column ()
+    "Set `erc-fill-column' to the width of the current window."
+    (save-excursion
+      (walk-windows
+       (lambda (window)
+         (let ((buffer (window-buffer window)))
+           (set-buffer buffer)
+           (when (and (eq major-mode 'erc-mode) (erc-buffer-visible buffer))
+             (setq erc-fill-column (1- (window-width window)))))))))
+  :init (add-hook 'window-configuration-change-hook #'me/erc-set-fill-column))
 #+END_SRC
 
 ** Linters
