@@ -1373,7 +1373,6 @@ _q_ quit            _i_ enlarge         _-_ zoom out
    erc-lurker-hide-list '("JOIN" "PART" "QUIT")
    erc-prompt (format "%18s" ">")
    erc-timestamp-format nil)
-  (set-face-attribute 'erc-button nil :inherit 'button)
   (set-face-attribute 'erc-prompt-face nil :background nil)
   (zenburn-with-color-variables
     (set-face-attribute 'erc-timestamp-face nil :foreground zenburn-fg-1))
@@ -1384,6 +1383,10 @@ _q_ quit            _i_ enlarge         _-_ zoom out
                   erc-my-nick-prefix-face
                   erc-nick-prefix-face
                   erc-prompt-face)))
+
+(use-package erc-button
+  :ensure nil
+  :config (set-face-attribute 'erc-button nil :inherit 'button))
 
 (use-package erc-match
   :ensure nil
@@ -2193,7 +2196,7 @@ more.
    paradox-execute-asynchronously t
    paradox-github-token t
    paradox-hide-wiki-packages t)
-  (remove-hook 'paradox--report-buffer-print 'paradox-after-execute-functions))
+  (remove-hook 'paradox-after-execute-functions #'paradox--report-buffer-print))
 #+END_SRC
 
 Colorize colors as text with their value.
