@@ -322,15 +322,6 @@ HTML mode is defined in =sgml-mode.el=.
   :init (add-hook 'rjsx-mode-hook #'sgml-electric-tag-pair-mode))
 #+END_SRC
 
-Tern is a code-analysis engine for JavaScript. I use it to check syntax and
-grammar in my JavaScript code. With an auto-complete frontend, it can also
-provide candidates for variables and properties.
-
-#+BEGIN_SRC emacs-lisp
-(use-package tern
-  :init (add-hook 'js-mode-hook #'tern-mode))
-#+END_SRC
-
 ** Lisp
 
 #+BEGIN_SRC emacs-lisp
@@ -532,14 +523,6 @@ completion candidates.
   :ensure nil
   :after company
   :config (setq-default company-dabbrev-downcase nil))
-
-(use-package company-tern
-  :after company
-  :config
-  (add-to-list 'company-backends 'company-tern)
-  (setq-default
-   company-tern-meta-as-single-line t
-   company-tern-property-marker " *"))
 #+END_SRC
 
 ** Buffers and Windows
