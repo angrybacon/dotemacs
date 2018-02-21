@@ -190,6 +190,7 @@ preferences.
   :demand t
   :config
   (load-theme 'zenburn t)
+  (set-face-attribute 'fixed-pitch nil :font me/font-family)
   (set-face-attribute 'font-lock-comment-face nil :italic t)
   (set-face-attribute 'font-lock-doc-face nil :italic t)
   (zenburn-with-color-variables
@@ -214,15 +215,6 @@ preferences.
                         :background zenburn-fg-1
                         :distant-foreground 'unspecified)
     (set-face-attribute 'vertical-border nil :foreground zenburn-bg))
-
-  ;; NOTE: See https://github.com/bbatsov/zenburn-emacs/issues/278.
-  (zenburn-with-color-variables
-    (mapc
-     (lambda (face)
-       (when (eq (face-attribute face :background) zenburn-bg)
-         (set-face-attribute face nil :background 'unspecified)))
-     (face-list)))
-
   (me/unboldify '(bold
                   error
                   font-lock-builtin-face
@@ -238,7 +230,7 @@ preferences.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(set-face-attribute 'fixed-pitch nil :font me/font-family)
+
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -1939,7 +1931,9 @@ use with =selected=.
         ("<M-right>"   . me/indent-rigidly-right-and-keep-mark)
         ("<M-S-left>"  . me/indent-rigidly-left-tab-and-keep-mark)
         ("<M-S-right>" . me/indent-rigidly-right-tab-and-keep-mark))
-  :config (selected-global-mode))
+  :config
+  (require 'browse-url)
+  (selected-global-mode))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
