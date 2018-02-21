@@ -1410,7 +1410,7 @@ Keep track of ERC buffers in which new messages have been posted.
          (let ((buffer (window-buffer window)))
            (set-buffer buffer)
            (when (and (eq major-mode 'erc-mode) (erc-buffer-visible buffer))
-             (setq erc-fill-column (1- (window-width window)))))))))
+             (setq erc-fill-column (- (window-width window) 2))))))))
   :init (add-hook 'window-configuration-change-hook #'me/erc-set-fill-column))
 #+END_SRC
 
