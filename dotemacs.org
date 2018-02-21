@@ -543,6 +543,12 @@ completion candidates.
 
 ** Buffers and Windows
 
+Don't ask before killing a buffer. I'm a consenting adult.
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key [remap kill-buffer] #'kill-this-buffer)
+#+END_SRC
+
 Allow repeated use of =←= and =→= when using =previous-buffer= and
 =next-buffer=.
 
