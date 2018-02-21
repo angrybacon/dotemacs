@@ -20,13 +20,13 @@
 - [[#features][Features]]
   - [[#alert][Alert]]
   - [[#auto-completion][Auto-Completion]]
+  - [[#buffers-and-windows][Buffers and Windows]]
   - [[#comments][Comments]]
   - [[#customization-menus][Customization Menus]]
   - [[#dictionary][Dictionary]]
   - [[#diff][Diff]]
   - [[#dired][Dired]]
   - [[#expand][Expand]]
-  - [[#exwm][EXWM]]
   - [[#folding][Folding]]
   - [[#helm][Helm]]
   - [[#helm-plugins][Helm Plugins]]
@@ -45,7 +45,6 @@
   - [[#terminal][Terminal]]
   - [[#version-control][Version Control]]
   - [[#whitespaces][Whitespaces]]
-  - [[#windows][Windows]]
 
 * Bootstrap
 
@@ -542,6 +541,94 @@ completion candidates.
    company-tern-property-marker " *"))
 #+END_SRC
 
+** Buffers and Windows
+
+Allow repeated use of =←= and =→= when using =previous-buffer= and
+=next-buffer=.
+
+- *TODO*: Make a hydra.
+
+#+BEGIN_SRC emacs-lisp
+(defun me/switch-to-buffer-continue ()
+  "Activate a sparse keymap:
+  <left>   `previous-buffer'
+  <right>  `next-buffer'"
+  (set-transient-map
+   (let ((map (make-sparse-keymap)))
+     (define-key map (kbd "<left>") #'previous-buffer)
+     (define-key map (kbd "<right>") #'next-buffer)
+     map)))
+(advice-add 'previous-buffer :after #'me/switch-to-buffer-continue)
+(advice-add 'next-buffer :after #'me/switch-to-buffer-continue)
+#+END_SRC
+
+Save and restore Emacs status, including buffers, modes, point and windows.
+
+#+BEGIN_SRC emacs-lisp
+(use-package desktop
+  :ensure nil
+  :demand t
+  :config
+  (desktop-save-mode)
+  (add-to-list 'desktop-globals-to-save 'golden-ratio-adjust-factor))
+#+END_SRC
+
+Workspaces within Emacs.
+
+#+BEGIN_QUOTE
+=eyebrowse= is a global minor mode for Emacs that allows you to manage your
+window configurations in a simple manner, just like tiling window managers like
+i3wm with their workspaces do. It displays their current state in the modeline
+by default. The behaviour is modeled after
+[[http://ranger.nongnu.org/][ranger]], a file manager written in Python.
+
+[[https://github.com/wasamasa/eyebrowse][Vasilij Schneidermann]]
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package eyebrowse
+  :defer 1
+  :bind
+  ("<f5>" . eyebrowse-switch-to-window-config-1)
+  ("<f6>" . eyebrowse-switch-to-window-config-2)
+  ("<f7>" . eyebrowse-switch-to-window-config-3)
+  ("<f8>" . eyebrowse-switch-to-window-config-4)
+  :config
+  (eyebrowse-mode)
+  (setq-default eyebrowse-new-workspace t))
+#+END_SRC
+
+Bind commands to move around windows.
+
+#+BEGIN_SRC emacs-lisp
+(use-package windmove
+  :ensure nil
+  :bind
+  (("C-M-<left>". windmove-left)
+   ("C-M-<right>". windmove-right)
+   ("C-M-<up>". windmove-up)
+   ("C-M-<down>". windmove-down)))
+#+END_SRC
+
+Allow undo's and redo's with window configurations.
+
+#+BEGIN_QUOTE
+Winner mode is a global minor mode that records the changes in the window
+configuration (i.e. how the frames are partitioned into windows) so that the
+changes can be "undone" using the command =winner-undo=.  By default this one is
+bound to the key sequence ctrl-c left.  If you change your mind (while undoing),
+you can press ctrl-c right (calling =winner-redo=).
+
+[[https://github.com/emacs-mirror/emacs/blob/master/lisp/winner.el][Ivar Rummelhoff]]
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package winner
+  :ensure nil
+  :defer 1
+  :config (winner-mode))
+#+END_SRC
+
 ** Comments
 
 #+BEGIN_SRC emacs-lisp
@@ -700,27 +787,6 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
   :config
   (setq-default yas-snippet-dirs `(,(expand-file-name "snippets/" user-emacs-directory)))
   (yas-reload-all))
-#+END_SRC
-
-** EXWM
-
-- *TODO*
-
-#+BEGIN_QUOTE
-EXWM (Emacs X Window Manager) is a full-featured tiling X window manager for
-Emacs built on top of [[https://github.com/ch11ng/xelb][XELB]]. It features:
-
-- Fully keyboard-driven operations
-- Hybrid layout modes (tiling & stacking)
-- Dynamic workspace support
-- ICCCM/EWMH compliance
-- (Optional) RandR (multi-monitor) support
-- (Optional) Built-in compositing manager
-- (Optional) Built-in system tray
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package exwm :disabled t)
 #+END_SRC
 
 ** Folding
@@ -2305,114 +2371,6 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
   (add-hook 'prog-mode-hook #'whitespace-turn-on)
   (add-hook 'text-mode-hook #'whitespace-turn-on)
   :config (setq-default whitespace-style '(face empty tab trailing)))
-#+END_SRC
-
-** Windows
-
-Allow repeated use of =←= and =→= when using =previous-buffer= and
-=next-buffer=.
-
-- *TODO*: Make a hydra.
-
-#+BEGIN_SRC emacs-lisp
-(defun me/switch-to-buffer-continue ()
-  "Activate a sparse keymap:
-  <left>   `previous-buffer'
-  <right>  `next-buffer'"
-  (set-transient-map
-   (let ((map (make-sparse-keymap)))
-     (define-key map (kbd "<left>") #'previous-buffer)
-     (define-key map (kbd "<right>") #'next-buffer)
-     map)))
-(advice-add 'previous-buffer :after #'me/switch-to-buffer-continue)
-(advice-add 'next-buffer :after #'me/switch-to-buffer-continue)
-#+END_SRC
-
-Save and restore Emacs status, including buffers, modes, point and windows.
-
-#+BEGIN_SRC emacs-lisp
-(use-package desktop
-  :ensure nil
-  :demand t
-  :config
-  (desktop-save-mode)
-  (add-to-list 'desktop-globals-to-save 'golden-ratio-adjust-factor))
-#+END_SRC
-
-Workspaces within Emacs.
-
-#+BEGIN_QUOTE
-=eyebrowse= is a global minor mode for Emacs that allows you to manage your
-window configurations in a simple manner, just like tiling window managers like
-i3wm with their workspaces do. It displays their current state in the modeline
-by default. The behaviour is modeled after
-[[http://ranger.nongnu.org/][ranger]], a file manager written in Python.
-
-[[https://github.com/wasamasa/eyebrowse][Vasilij Schneidermann]]
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package eyebrowse
-  :defer 1
-  :bind
-  ("<f5>" . eyebrowse-switch-to-window-config-1)
-  ("<f6>" . eyebrowse-switch-to-window-config-2)
-  ("<f7>" . eyebrowse-switch-to-window-config-3)
-  ("<f8>" . eyebrowse-switch-to-window-config-4)
-  :config
-  (eyebrowse-mode)
-  (setq-default eyebrowse-new-workspace t))
-#+END_SRC
-
-Adjust the size of every windows and focus the active one. It uses the
-mathematical golden ratio somewhere in its formulas.
-
-#+BEGIN_SRC emacs-lisp
-(use-package golden-ratio
-  :disabled t
-  :demand t
-  :preface
-  (defconst me/golden-ratio-adjust-factor-bi-split .805)
-  (defconst me/golden-ratio-adjust-factor-tri-split .53)
-  (defun me/ediff-comparison-buffer-p ()
-    (if (boundp 'ediff-this-buffer-ediff-sessions)
-        (progn (balance-windows) ediff-this-buffer-ediff-sessions)))
-  :config
-  (golden-ratio-mode)
-  (setq-default golden-ratio-adjust-factor me/golden-ratio-adjust-factor-tri-split)
-  (add-to-list 'golden-ratio-exclude-modes "ediff-mode")
-  (add-to-list 'golden-ratio-inhibit-functions 'me/ediff-comparison-buffer-p))
-#+END_SRC
-
-Bind commands to move around windows.
-
-#+BEGIN_SRC emacs-lisp
-(use-package windmove
-  :ensure nil
-  :bind
-  (("C-M-<left>". windmove-left)
-   ("C-M-<right>". windmove-right)
-   ("C-M-<up>". windmove-up)
-   ("C-M-<down>". windmove-down)))
-#+END_SRC
-
-Allow undo's and redo's with window configurations.
-
-#+BEGIN_QUOTE
-Winner mode is a global minor mode that records the changes in the window
-configuration (i.e. how the frames are partitioned into windows) so that the
-changes can be "undone" using the command =winner-undo=.  By default this one is
-bound to the key sequence ctrl-c left.  If you change your mind (while undoing),
-you can press ctrl-c right (calling =winner-redo=).
-
-[[https://github.com/emacs-mirror/emacs/blob/master/lisp/winner.el][Ivar Rummelhoff]]
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package winner
-  :ensure nil
-  :defer 1
-  :config (winner-mode))
 #+END_SRC
 
 -----
