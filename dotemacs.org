@@ -259,7 +259,7 @@ nothing but the customization of their lighter.
     (setq-local comment-start "//"))
   :delight scss-mode "SCSS"
   :mode ("\\.css\\'" "\\.sass\\'" "\\.scss\\'")
-  :init (add-hook 'scss-mode-hook #'me/scss-set-comment-style))
+  :hook (scss-mode . me/scss-set-comment-style))
 #+END_SRC
 
 ** Docker
@@ -278,10 +278,10 @@ HTML mode is defined in =sgml-mode.el=.
 (use-package sgml-mode
   :ensure nil
   :delight html-mode "HTML"
-  :init
-  (add-hook 'html-mode-hook #'sgml-electric-tag-pair-mode)
-  (add-hook 'html-mode-hook #'sgml-name-8bit-mode)
-  (add-hook 'html-mode-hook #'toggle-truncate-lines)
+  :hook
+  ((html-mode . sgml-electric-tag-pair-mode)
+   (html-mode . sgml-name-8bit-mode)
+   (html-mode . toggle-truncate-lines))
   :config (setq-default sgml-basic-offset 2))
 #+END_SRC
 
@@ -307,11 +307,11 @@ HTML mode is defined in =sgml-mode.el=.
   :preface
   (defun me/json-set-indent-level ()
     (setq-local js-indent-level 2))
-  :init (add-hook 'json-mode-hook #'me/json-set-indent-level))
+  :hook (json-mode . me/json-set-indent-level))
 
 (use-package rjsx-mode
   :delight rjsx-mode "RJSX"
-  :init (add-hook 'rjsx-mode-hook #'sgml-electric-tag-pair-mode))
+  :hook (rjsx-mode . sgml-electric-tag-pair-mode))
 #+END_SRC
 
 ** Lisp
@@ -324,7 +324,7 @@ HTML mode is defined in =sgml-mode.el=.
 
 (use-package ielm
   :ensure nil
-  :init (add-hook 'ielm-mode-hook '(lambda () (setq-local scroll-margin 0))))
+  :hook (ielm-mode . (lambda () (setq-local scroll-margin 0))))
 
 (use-package lisp-mode
   :ensure nil
@@ -387,9 +387,9 @@ authoring documents with a fast and effective plain-text system.
         ("<C-return>" . nil)
         ("<C-S-down>" . nil)
         ("<C-S-up>" . nil))
-  :init
-  (add-hook 'org-mode-hook #'org-sticky-header-mode)
-  (add-hook 'org-mode-hook #'toc-org-enable)
+  :hook
+  ((org-mode . org-sticky-header-mode)
+   (org-mode . toc-org-enable))
   :config
   (setq-default
    org-descriptive-links nil
@@ -459,7 +459,7 @@ maintain a TOC at the first heading that has a =:TOC:= tag.
   :preface
   (defun me/pip-requirements-ignore-case ()
     (setq-local completion-ignore-case t))
-  :init (add-hook 'pip-requirements-mode-hook #'me/pip-requirements-ignore-case))
+  :hook (pip-requirements-mode . me/pip-requirements-ignore-case))
 #+END_SRC
 
 ** YAML
@@ -702,7 +702,7 @@ explorer.
         (forward-line 2)
         (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
       (set-buffer-modified-p nil)))
-  :init (add-hook 'dired-mode-hook #'dired-hide-details-mode)
+  :hook (dired-mode . dired-hide-details-mode)
   :config
   (advice-add 'dired-readin :after #'me/dired-directories-first)
   (setq-default
@@ -736,10 +736,7 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
         ("C-M-<left>" . nil)
         ("C-M-<right>" . nil)
         ("C-c w" . nil))
-  :init
-  (add-hook 'css-mode-hook #'emmet-mode)
-  (add-hook 'html-mode-hook #'emmet-mode)
-  (add-hook 'rjsx-mode-hook #'emmet-mode)
+  :hook (css-mode html-mode rjsx-mode)
   :config (setq-default emmet-move-cursor-between-quote t))
 
 (use-package hippie-exp
@@ -760,12 +757,12 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
   (:map yas-minor-mode-map
         ("TAB" . nil)
         ("<tab>" . nil))
-  :init
-  (add-hook 'emacs-lisp-mode-hook #'yas-minor-mode)
-  (add-hook 'html-mode-hook #'yas-minor-mode)
-  (add-hook 'js-mode-hook #'yas-minor-mode)
-  (add-hook 'org-mode-hook #'yas-minor-mode)
-  (add-hook 'python-mode-hook #'yas-minor-mode)
+  :hook
+  ((emacs-lisp-mode . yas-minor-mode)
+   (html-mode . yas-minor-mode)
+   (js-mode . yas-minor-mode)
+   (org-mode . yas-minor-mode)
+   (python-mode . yas-minor-mode))
   :config
   (setq-default yas-snippet-dirs `(,(expand-file-name "snippets/" user-emacs-directory)))
   (yas-reload-all))
@@ -833,13 +830,13 @@ leaner, modular, and unchained from constraints of backward compatibility.
     ;;   (when (and (pulse-available-p) (> point 1))
     ;;     (pulse-momentary-highlight-one-line point)))
     (recenter-top-bottom (car recenter-positions)))
+  :hook (helm-after-action . me/helm-focus-follow)
   :config
   (helm-mode)
   (setq-default
    helm-always-two-windows t
    helm-display-header-line nil
    helm-split-window-default-side 'left)
-  (add-hook 'helm-after-action-hook #'me/helm-focus-follow)
   (set-face-attribute 'helm-action nil :underline nil)
   (set-face-attribute 'helm-match nil :background nil)
   (set-face-attribute 'helm-source-header nil
@@ -1352,7 +1349,7 @@ _q_ quit            _i_ enlarge         _-_ zoom out
         ([remap erc-bol] . me/erc-bol-shifted)
         ("M-<down>" . erc-next-command)
         ("M-<up>" . erc-previous-command))
-  :init (add-hook 'erc-mode-hook '(lambda () (setq-local scroll-margin 0)))
+  :hook (erc-mode . (lambda () (setq-local scroll-margin 0)))
   :config
   (make-variable-buffer-local 'erc-fill-column)
   (erc-scrolltobottom-enable)
@@ -1411,7 +1408,7 @@ Keep track of ERC buffers in which new messages have been posted.
            (set-buffer buffer)
            (when (and (eq major-mode 'erc-mode) (erc-buffer-visible buffer))
              (setq erc-fill-column (- (window-width window) 2))))))))
-  :init (add-hook 'window-configuration-change-hook #'me/erc-set-fill-column))
+  :hook (window-configuration-change . me/erc-set-fill-column))
 #+END_SRC
 
 ** Linters
@@ -1422,11 +1419,11 @@ binaries (see [[./README.org][README.org]]).
 
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
-  :init
-  (add-hook 'css-mode-hook #'flycheck-mode)
-  (add-hook 'emacs-lisp-mode-hook #'flycheck-mode)
-  (add-hook 'js-mode-hook #'flycheck-mode)
-  (add-hook 'python-mode-hook #'flycheck-mode)
+  :hook
+  ((css-mode . flycheck-mode)
+   (emacs-lisp-mode . flycheck-mode)
+   (js-mode . flycheck-mode)
+   (python-mode . flycheck-mode))
   :config
   (setq-default
    flycheck-check-syntax-automatically '(save mode-enabled)
@@ -1819,7 +1816,7 @@ when dealing with mismatched parentheses.
 
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
-  :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+  :hook (prog-mode . rainbow-delimiters-mode)
   :config
   (zenburn-with-color-variables
     (set-face-attribute 'rainbow-delimiters-mismatched-face nil
@@ -2106,12 +2103,12 @@ electric-indent-mode.
 
 #+BEGIN_SRC emacs-lisp
 (use-package aggressive-indent
-  :init
-  (add-hook 'css-mode-hook #'aggressive-indent-mode)
-  (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
-  (add-hook 'js-mode-hook #'aggressive-indent-mode)
-  (add-hook 'lisp-mode-hook #'aggressive-indent-mode)
-  (add-hook 'sgml-mode-hook #'aggressive-indent-mode)
+  :hook
+  ((css-mode . aggressive-indent-mode)
+   (emacs-lisp-mode . aggressive-indent-mode)
+   (js-mode . aggressive-indent-mode)
+   (lisp-mode . aggressive-indent-mode)
+   (sgml-mode . aggressive-indent-mode))
   :config (setq-default aggressive-indent-comments-too t))
 #+END_SRC
 
@@ -2194,7 +2191,7 @@ Colorize colors as text with their value.
 
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-mode
-  :init (add-hook 'prog-mode-hook #'rainbow-mode)
+  :hook prog-mode
   :config (setq-default rainbow-x-colors-major-mode-list '()))
 #+END_SRC
 
@@ -2203,9 +2200,9 @@ Turn on =auto-fill-mode= /almost/ everywhere.
 #+BEGIN_SRC emacs-lisp
 (use-package simple
   :ensure nil
-  :config
-  (add-hook 'prog-mode-hook #'turn-on-auto-fill)
-  (add-hook 'text-mode-hook #'turn-on-auto-fill))
+  :hook
+  ((prog-mode . turn-on-auto-fill)
+   (text-mode . turn-on-auto-fill)))
 #+END_SRC
 
 ** Terminal
@@ -2218,7 +2215,7 @@ Yes, Emacs emulates terminals too.
 #+BEGIN_SRC emacs-lisp
 (use-package term
   :ensure nil
-  :init (add-hook 'term-mode-hook '(lambda () (setq-local scroll-margin 0))))
+  :hook (term-mode . (lambda () (setq-local scroll-margin 0))))
 #+END_SRC
 
 ** Version Control
@@ -2245,7 +2242,7 @@ Git itself deserve to be called porcelains.
   (defun me/git-commit-auto-fill-everywhere ()
     (setq fill-column 72)
     (setq-local comment-auto-fill-only-comments nil))
-  :init (add-hook 'git-commit-mode-hook #'me/git-commit-auto-fill-everywhere)
+  :hook (git-commit-mode . me/git-commit-auto-fill-everywhere)
   :config
   (setq-default git-commit-summary-max-length 50)
   (me/unboldify '(git-commit-comment-action
@@ -2352,9 +2349,9 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 (use-package whitespace
   :demand t
   :ensure nil
-  :init
-  (add-hook 'prog-mode-hook #'whitespace-turn-on)
-  (add-hook 'text-mode-hook #'whitespace-turn-on)
+  :hook
+  ((prog-mode . whitespace-turn-on)
+   (text-mode . whitespace-turn-on))
   :config (setq-default whitespace-style '(face empty tab trailing)))
 #+END_SRC
 
