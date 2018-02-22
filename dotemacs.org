@@ -747,8 +747,8 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
   :preface
   (defun me/emmet-try-expand-line (args)
     "Try `emmet-expand-line' if `emmet-mode' is active. Else, does nothing."
-     (interactive "P")
-     (when emmet-mode (emmet-expand-line args)))
+    (interactive "P")
+    (when emmet-mode (emmet-expand-line args)))
   :bind ("<C-return>" . hippie-expand)
   :config
   (setq-default
@@ -1435,10 +1435,7 @@ binaries (see [[./README.org][README.org]]).
   (zenburn-with-color-variables
     (set-face-attribute 'flycheck-error nil :underline zenburn-red)
     (set-face-attribute 'flycheck-info nil :underline zenburn-blue+1)
-    (set-face-attribute 'flycheck-warning nil :underline zenburn-orange)
-    (set-face-attribute 'flycheck-fringe-error nil :foreground zenburn-red)
-    (set-face-attribute 'flycheck-fringe-info nil :foreground zenburn-blue+1)
-    (set-face-attribute 'flycheck-fringe-warning nil :foreground zenburn-orange)))
+    (set-face-attribute 'flycheck-warning nil :underline zenburn-orange)))
 #+END_SRC
 
 ** Mode-Line
