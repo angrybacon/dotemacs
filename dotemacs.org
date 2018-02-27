@@ -23,6 +23,7 @@
   - [[#buffers-and-windows][Buffers and Windows]]
   - [[#comments][Comments]]
   - [[#customization-menus][Customization Menus]]
+  - [[#daemon][Daemon]]
   - [[#dictionary][Dictionary]]
   - [[#diff][Diff]]
   - [[#dired][Dired]]
@@ -639,6 +640,19 @@ little more.
   (zenburn-with-color-variables
     (set-face-attribute 'custom-state nil :foreground zenburn-green+4))
   (me/unboldify '(custom-variable-tag)))
+#+END_SRC
+
+** Daemon
+
+Emacs can be run as a daemon onto which Emacs clients can latch on. This allows
+for much shorter starting times when you already got Emacs running ie. when you
+want to edit a single file for a quick edit.
+
+#+BEGIN_SRC emacs-lisp
+(use-package server
+  :ensure nil
+  :defer 1
+  :config (server-start))
 #+END_SRC
 
 ** Dictionary
