@@ -348,7 +348,8 @@ HTML mode is defined in =sgml-mode.el=.
   (unbind-key "M-<up>" markdown-mode-map)
   (setq-default
    markdown-asymmetric-header t
-   markdown-split-window-direction 'right))
+   markdown-split-window-direction 'right)
+  (me/unboldify '(markdown-header-face)))
 #+END_SRC
 
 ** Org
@@ -651,6 +652,14 @@ Define words using Wordnik.
 ** Diff
 
 Ediff is a visual interface to Unix =diff=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package diff-mode
+  :ensure nil
+  :config
+  (set-face-attribute 'diff-added nil :background nil)
+  (set-face-attribute 'diff-removed nil :background nil))
+#+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package ediff-init
