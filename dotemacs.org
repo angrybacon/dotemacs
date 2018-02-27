@@ -259,7 +259,7 @@ nothing but the customization of their lighter.
     (setq-local comment-end "")
     (setq-local comment-start "//"))
   :delight scss-mode "SCSS"
-  :mode ("\\.css\\'" "\\.sass\\'" "\\.scss\\'")
+  :mode ("\\.sass\\'" "\\.scss\\'")
   :hook (scss-mode . me/scss-set-comment-style))
 #+END_SRC
 
