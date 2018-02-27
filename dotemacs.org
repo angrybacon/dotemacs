@@ -644,6 +644,15 @@ little more.
 
 ** Daemon
 
+This package let us start a server to edit editable elements in a Chrome browser
+from Emacs.
+
+#+BEGIN_SRC emacs-lisp
+(use-package edit-server
+  :defer 1
+  :config (edit-server-start))
+#+END_SRC
+
 Emacs can be run as a daemon onto which Emacs clients can latch on. This allows
 for much shorter starting times when you already got Emacs running ie. when you
 want to edit a single file for a quick edit.
