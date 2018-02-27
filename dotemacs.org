@@ -347,8 +347,8 @@ HTML mode is defined in =sgml-mode.el=.
   (unbind-key "M-<down>" markdown-mode-map)
   (unbind-key "M-<up>" markdown-mode-map)
   (setq-default
-    markdown-asymmetric-header t
-    markdown-split-window-direction 'right))
+   markdown-asymmetric-header t
+   markdown-split-window-direction 'right))
 #+END_SRC
 
 ** Org
@@ -2310,13 +2310,6 @@ Git itself deserve to be called porcelains.
 (use-package magit-diff
   :ensure nil
   :config
-  (zenburn-with-color-variables
-    (set-face-attribute 'magit-diff-added nil
-                        :background nil
-                        :foreground zenburn-green+3)
-    (set-face-attribute 'magit-diff-removed nil
-                        :background nil
-                        :foreground zenburn-red))
   (me/unboldify '(magit-diff-file-heading
                   magit-diff-file-heading-highlight
                   magit-diff-file-heading-selection)))
