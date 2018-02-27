@@ -27,10 +27,14 @@ Install Emacs 25 or above.
 # MacOS
 brew tap d12frosted/emacs-plus
 brew install emacs-plus --with-no-title-bars --without-spacemacs-icon
-git clone https://github.com/angrybacon/dotemacs.git ~/.emacs.d/
 
 # Windows
 choco install emacs64
+#+END_SRC
+
+#+BEGIN_SRC sh
+# MacOS and Windows
+git clone https://github.com/angrybacon/dotemacs.git ~/.emacs.d/ --recurse-submodules --jobs 3
 #+END_SRC
 
 ** Ag
