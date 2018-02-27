@@ -1980,18 +1980,18 @@ Call `indent-rigidly-left' and keep mark."
   (indent-rigidly-left beg end)
   (setq deactivate-mark nil))
 
-(defun me/indent-rigidly-right-and-keep-mark (beg end)
-  "Indent all lines between BEG and END rightward by one space.
-Call `indent-rigidly-right' and keep mark."
-  (interactive "r")
-  (indent-rigidly-right beg end)
-  (setq deactivate-mark nil))
-
 (defun me/indent-rigidly-left-tab-and-keep-mark (beg end)
   "Indent all lines between BEG and END leftward to a tab stop.
 Call `indent-rigidly-left-to-tab-stop' and keep mark."
   (interactive "r")
   (indent-rigidly-left-to-tab-stop beg end)
+  (setq deactivate-mark nil))
+
+(defun me/indent-rigidly-right-and-keep-mark (beg end)
+  "Indent all lines between BEG and END rightward by one space.
+Call `indent-rigidly-right' and keep mark."
+  (interactive "r")
+  (indent-rigidly-right beg end)
   (setq deactivate-mark nil))
 
 (defun me/indent-rigidly-right-tab-and-keep-mark (beg end)
