@@ -311,7 +311,9 @@ HTML mode is defined in =sgml-mode.el=.
 
 (use-package rjsx-mode
   :delight rjsx-mode "RJSX"
-  :hook (rjsx-mode . sgml-electric-tag-pair-mode))
+  :hook
+  ((rjsx-mode . sgml-electric-tag-pair-mode)
+   (rjsx-mode . turn-off-auto-fill)))
 #+END_SRC
 
 ** Lisp
