@@ -859,6 +859,10 @@ leaner, modular, and unchained from constraints of backward compatibility.
     ;;   (when (and (pulse-available-p) (> point 1))
     ;;     (pulse-momentary-highlight-one-line point)))
     (recenter-top-bottom (car recenter-positions)))
+  (defun me/helm-grab-candidates ()
+    (interactive)
+    (with-helm-buffer (kill-ring-save (point-min) (point-max))))
+  :bind (:map helm-map ("M-w" . me/helm-grab-candidates))
   :hook (helm-after-action . me/helm-focus-follow)
   :config
   (helm-mode)
