@@ -1071,6 +1071,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
   ("C-c f" . hydra-flycheck/body)
   ("C-c g" . hydra-magit/body)
   ("C-c h" . hydra-helm/body)
+  ("C-c m" . hydra-markdown/body)
   ("C-c o" . hydra-org/body)
   ("C-c p" . hydra-projectile/body)
   ("C-c s" . hydra-system/body)
@@ -1243,6 +1244,34 @@ _q_ quit            _b_ blame
 #+END_SRC
 
 [[./screenshots/hydra.magit.png]]
+
+*** Markdown
+
+Group Markdown commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-markdown (:color pink)
+  "
+^
+^Markdown^          ^Table Columns^     ^Table Rows   ^
+^────────^──────────^─────────────^─────^─────────────^─────
+_q_ quit            _c_ insert          _r_ insert
+^^                  _C_ delete          _R_ delete
+^^                  _M-<left>_ left     _M-<down>_ down
+^^                  _M-<right>_ right   _M-<up>_ up
+^^                  ^^                  ^^
+"
+  ("q" nil)
+  ("c" markdown-table-insert-column)
+  ("C" markdown-table-delete-column)
+  ("r" markdown-table-insert-row)
+  ("R" markdown-table-delete-row)
+  ("M-<left>" markdown-table-move-column-left)
+  ("M-<right>" markdown-table-move-column-right)
+  ("M-<down>" markdown-table-move-row-down)
+  ("M-<up>" markdown-table-move-row-up)
+)
+#+END_SRC
 
 *** Org
 
