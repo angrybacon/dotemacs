@@ -311,8 +311,12 @@ HTML mode is defined in =sgml-mode.el=.
 
 (use-package rjsx-mode
   :delight rjsx-mode "RJSX"
+  :preface
+  (defun me/rjsx-set-pretty-print-function ()
+    (setq me/pretty-print-function #'sgml-pretty-print))
   :hook
-  ((rjsx-mode . sgml-electric-tag-pair-mode)
+  ((rjsx-mode . me/rjsx-set-pretty-print-function)
+   (rjsx-mode . sgml-electric-tag-pair-mode)
    (rjsx-mode . turn-off-auto-fill)))
 #+END_SRC
 
@@ -1981,10 +1985,19 @@ use with =selected=.
 #+BEGIN_SRC emacs-lisp
 (use-package selected
   :defer 1
+  :preface
+  (defvar-local me/pretty-print-function nil)
+  (defun me/pretty-print (beg end)
+    (interactive "r")
+    (if me/pretty-print-function
+        (progn (funcall me/pretty-print-function beg end)
+               (setq deactivate-mark t))
+      (user-error "me/pretty-print: me/pretty-print-function is not set")))
   :bind
   (:map selected-keymap
         ("<"           . mc/mark-previous-like-this)
         (">"           . mc/mark-next-like-this)
+        ("C-<tab>"     . me/pretty-print)
         ("C-<"         . mc/unmark-previous-like-this)
         ("C->"         . mc/unmark-next-like-this)
         ("C-M-<"       . mc/skip-to-previous-like-this)
