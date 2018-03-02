@@ -389,7 +389,9 @@ authoring documents with a fast and effective plain-text system.
         ([remap forward-paragraph] . me/org-forward-paragraph-shifted)
         ("<C-return>" . nil)
         ("<C-S-down>" . nil)
-        ("<C-S-up>" . nil))
+        ("<C-S-up>" . nil)
+        ("<M-S-down>" . nil)
+        ("<M-S-up>" . nil))
   :hook
   ((org-mode . org-sticky-header-mode)
    (org-mode . toc-org-enable))
