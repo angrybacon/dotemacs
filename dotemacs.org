@@ -312,10 +312,13 @@ HTML mode is defined in =sgml-mode.el=.
 (use-package rjsx-mode
   :delight rjsx-mode "RJSX"
   :preface
+  (defun me/rjsx-set-ongoing-hydra-body ()
+    (setq me/ongoing-hydra-body #'hydra-rjsx/body))
   (defun me/rjsx-set-pretty-print-function ()
     (setq me/pretty-print-function #'sgml-pretty-print))
   :hook
-  ((rjsx-mode . me/rjsx-set-pretty-print-function)
+  ((rjsx-mode . me/rjsx-set-ongoing-hydra-body)
+   (rjsx-mode . me/rjsx-set-pretty-print-function)
    (rjsx-mode . sgml-electric-tag-pair-mode)
    (rjsx-mode . turn-off-auto-fill)))
 #+END_SRC
@@ -342,6 +345,9 @@ HTML mode is defined in =sgml-mode.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
   :delight markdown-mode "Markdown"
+  :preface
+  (defun me/markdown-set-ongoing-hydra-body ()
+    (setq me/ongoing-hydra-body #'hydra-markdown/body))
   :mode
   ("INSTALL\\'"
    "CONTRIBUTORS\\'"
@@ -349,6 +355,7 @@ HTML mode is defined in =sgml-mode.el=.
    "README\\'"
    "\\.markdown\\'"
    "\\.md\\'")
+  :hook (markdown-mode . me/markdown-set-ongoing-hydra-body)
   :config
   (unbind-key "M-<down>" markdown-mode-map)
   (unbind-key "M-<up>" markdown-mode-map)
@@ -387,6 +394,8 @@ authoring documents with a fast and effective plain-text system.
     "See `org-forward-paragraph'. Support shift."
     (interactive "^")
     (org-forward-paragraph))
+  (defun me/org-set-ongoing-hydra-body ()
+    (setq me/ongoing-hydra-body #'hydra-org/body))
   :bind
   (:map org-mode-map
         ([remap backward-paragraph] . me/org-backward-paragraph-shifted)
@@ -397,7 +406,8 @@ authoring documents with a fast and effective plain-text system.
         ("<M-S-down>" . nil)
         ("<M-S-up>" . nil))
   :hook
-  ((org-mode . org-sticky-header-mode)
+  ((org-mode . me/org-set-ongoing-hydra-body)
+   (org-mode . org-sticky-header-mode)
    (org-mode . toc-org-enable))
   :config
   (setq-default
@@ -1072,6 +1082,13 @@ seamless, it's like a minor mode that disables itself auto-magically.
 
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
+  :preface
+  (defvar-local me/ongoing-hydra-body nil)
+  (defun me/ongoing-hydra ()
+    (interactive)
+    (if me/ongoing-hydra-body
+        (funcall me/ongoing-hydra-body)
+      (user-error "me/ongoing-hydra: me/ongoing-hydra-body is not set")))
   :bind
   ("C-c <tab>" . hydra-fold/body)
   ("C-c d" . hydra-dates/body)
@@ -1079,8 +1096,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
   ("C-c f" . hydra-flycheck/body)
   ("C-c g" . hydra-magit/body)
   ("C-c h" . hydra-helm/body)
-  ("C-c m" . hydra-markdown/body)
-  ("C-c o" . hydra-org/body)
+  ("C-c o" . me/ongoing-hydra)
   ("C-c p" . hydra-projectile/body)
   ("C-c s" . hydra-system/body)
   ("C-c w" . hydra-windows/body)
