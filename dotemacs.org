@@ -1340,6 +1340,22 @@ _i_ reset cache     _K_ kill all        _D_ root            _R_ regexp replace
 
 [[./screenshots/hydra.projectile.png]]
 
+*** RJSX
+
+Group React JavaScript commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-rjsx (:color pink)
+  "
+^
+^RJSX^
+^────^──────────────
+_q_ quit
+^^
+"
+  ("q" nil))
+#+END_SRC
+
 *** System
 
 Group system-related commands.
