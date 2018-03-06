@@ -568,7 +568,7 @@ Allow repeated use of =←= and =→= when using =previous-buffer= and
 (advice-add 'next-buffer :after #'me/switch-to-buffer-continue)
 #+END_SRC
 
-Save and restore Emacs status, including buffers, modes, point and windows.
+Save and restore Emacs status, including buffers, point and window configurations.
 
 #+BEGIN_SRC emacs-lisp
 (use-package desktop
