@@ -604,6 +604,29 @@ by default. The behaviour is modeled after
   (setq-default eyebrowse-new-workspace t))
 #+END_SRC
 
+Window management.
+
+- *TODO*: Shackle Magit.
+
+#+BEGIN_QUOTE
+=shackle= gives you the means to put an end to popped up buffers not behaving they
+way you'd like them to. By setting up simple rules you can for instance make
+Emacs always select help buffers for you or make everything reuse your currently
+selected window.
+
+[[https://github.com/wasamasa/shackle][Vasilij Schneidermann]]
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package shackle
+  :defer 1
+  :config
+  (setq-default
+   shackle-rules '((help-mode :inhibit-window-quit t :same t))
+   shackle-select-reused-windows t)
+  (shackle-mode 1))
+#+END_SRC
+
 Bind commands to move around windows.
 
 #+BEGIN_SRC emacs-lisp
