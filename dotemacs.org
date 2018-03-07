@@ -1139,7 +1139,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
   :config (setq-default hydra-default-hint nil))
 #+END_SRC
 
-*** Dates
+*** Hydra / Dates
 
 Group date-related commands.
 
@@ -1165,7 +1165,7 @@ _q_ quit            _d_ short           _D_ short
 
 [[./screenshots/hydra.dates.png]]
 
-*** Eyebrowse
+*** Hydra / Eyebrowse
 
 Group Eyebrowse commands.
 
@@ -1193,7 +1193,7 @@ _q_ quit            _c_ create          _<_ previous
 
 [[./screenshots/hydra.eyebrowse.png]]
 
-*** Flycheck
+*** Hydra / Flycheck
 
 Group Flycheck commands.
 
@@ -1221,7 +1221,7 @@ _v_ verify setup    _f_ check           _s_ select
 
 [[./screenshots/hydra.flycheck.png]]
 
-*** Fold
+*** Hydra / Fold
 
 Group folding commands.
 
@@ -1250,7 +1250,7 @@ _q_ quit            _f_ fold            _<_ previous        _<tab>_ current
 
 [[./screenshots/hydra.fold.png]]
 
-*** Helm
+*** Hydra / Helm
 
 Group Helm commands.
 
@@ -1280,7 +1280,7 @@ _r_ resume          _g_ google          _s_ css-scss
 
 [[./screenshots/hydra.helm.png]]
 
-*** Magit
+*** Hydra / Magit
 
 Group Magit commands.
 
@@ -1305,7 +1305,7 @@ _q_ quit            _b_ blame
 
 [[./screenshots/hydra.magit.png]]
 
-*** Markdown
+*** Hydra / Markdown
 
 Group Markdown commands.
 
@@ -1333,7 +1333,7 @@ _q_ quit            _c_ insert          _r_ insert
 )
 #+END_SRC
 
-*** Org
+*** Hydra / Org
 
 Group Org commands.
 
@@ -1364,7 +1364,7 @@ _q_ quit            _i_ insert          _<_ previous
 
 [[./screenshots/hydra.org.png]]
 
-*** Projectile
+*** Hydra / Projectile
 
 Group Projectile commands.
 
@@ -1396,7 +1396,7 @@ _i_ reset cache     _K_ kill all        _D_ root            _R_ regexp replace
 
 [[./screenshots/hydra.projectile.png]]
 
-*** RJSX
+*** Hydra / RJSX
 
 Group React JavaScript commands.
 
@@ -1412,7 +1412,7 @@ _q_ quit
   ("q" nil))
 #+END_SRC
 
-*** System
+*** Hydra / System
 
 Group system-related commands.
 
@@ -1434,7 +1434,7 @@ _q_ quit            _p_ list            _s_ list
 
 [[./screenshots/hydra.system.png]]
 
-*** Windows
+*** Hydra / Windows
 
 Group window-related commands.
 
@@ -1575,7 +1575,7 @@ binaries (see [[./README.org][README.org]]).
 
 ** Mode-Line
 
-*** Screenshots
+*** Mode-Line / Screenshots
 
 - *TODO*: Update screenshots and documentation.
 
@@ -1609,7 +1609,7 @@ Here is how it looks (slightly deprecating):
 - The segment next to the clock indicate the current perspective from
   =eyebrowse=.
 
-*** Delight
+*** Mode-Line / Delight
 
 Delight allows you to change modes --- both major and minor --- lighters. They
 are the descriptive strings than you see appear within the =mode-line=.
@@ -1632,7 +1632,7 @@ allow it to use the newly changed strings.
   (advice-add 'powerline-minor-mode :around #'me/delight-powerline-minor-mode))
 #+END_SRC
 
-*** Spaceline
+*** Mode-Line / Spaceline
 
 Spaceline, is a mode-line configuration framework. Like what =powerline= does
 but at a shallower level. It's still very customizable nonetheless.
@@ -1751,7 +1751,7 @@ general fun and profit.
 
 ** Navigation
 
-*** Inline
+*** Navigation / Inline
 
 Smarter =C-a=.
 
@@ -1767,7 +1767,7 @@ Smarter =C-a=.
          (back-to-indentation))))
 #+END_SRC
 
-*** Paragraphs
+*** Navigation / Paragraphs
 
 I disagree with Emacs' definition of paragraphs so I redefined the way it should
 jump from one paragraph to another.
@@ -1795,7 +1795,7 @@ jump from one paragraph to another.
   (skip-chars-forward "\n"))
 #+END_SRC
 
-*** Pulse
+*** Navigation / Pulse
 
 Pulse temporarily highlights the background color of a line or region.
 
@@ -1807,7 +1807,7 @@ Pulse temporarily highlights the background color of a line or region.
     (set-face-attribute 'pulse-highlight-start-face nil :background zenburn-red+1)))
 #+END_SRC
 
-*** Replace
+*** Navigation / Replace
 
 Better search and replace features. Even though I prefer to use
 =multiple-cursors= to replace text in different places at once, =anzu= has a
@@ -1849,7 +1849,7 @@ mode-line in various search modes.
   (me/unboldify '(anzu-mode-line anzu-mode-line-no-match)))
 #+END_SRC
 
-*** Scroll
+*** Navigation / Scroll
 
 Enable horizontal scroll.
 
@@ -1880,7 +1880,7 @@ Configure the mouse scroll.
    mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control)))))
 #+END_SRC
 
-*** Search
+*** Navigation / Search
 
 Isearch stands for /incremental search/. This means that search results are
 highlighted while you are typing your query, incrementally. Since he who can do
