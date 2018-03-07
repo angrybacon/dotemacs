@@ -1865,6 +1865,8 @@ Enable horizontal scroll.
   (when truncate-lines (scroll-right 2)))
 (global-set-key (kbd "<wheel-left>") #'me/scroll-right)
 (global-set-key (kbd "<wheel-right>") #'me/scroll-left)
+(global-set-key (kbd "S-<wheel-down>") #'me/scroll-left)
+(global-set-key (kbd "S-<wheel-up>") #'me/scroll-right)
 #+END_SRC
 
 Configure the mouse scroll.
