@@ -9,6 +9,7 @@
 - [[#theme][Theme]]
 - [[#languages][Languages]]
   - [[#css][CSS]]
+  - [[#csv][CSV]]
   - [[#docker][Docker]]
   - [[#html][HTML]]
   - [[#javascript][JavaScript]]
@@ -261,6 +262,13 @@ nothing but the customization of their lighter.
   :delight scss-mode "SCSS"
   :mode ("\\.sass\\'" "\\.scss\\'")
   :hook (scss-mode . me/scss-set-comment-style))
+#+END_SRC
+
+** CSV
+
+#+BEGIN_SRC emacs-lisp
+(use-package csv-mode
+  :config (setq-default csv-align-padding 2))
 #+END_SRC
 
 ** Docker
