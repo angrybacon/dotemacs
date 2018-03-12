@@ -1332,6 +1332,8 @@ _q_ quit            _c_ insert          _r_ insert
   ("M-<up>" markdown-table-move-row-up))
 #+END_SRC
 
+[[./screenshots/hydra.markdown.png]]
+
 *** Hydra / Org
 
 Group Org commands.
@@ -1410,6 +1412,8 @@ _q_ quit
 "
   ("q" nil))
 #+END_SRC
+
+[[./screenshots/hydra.rjsx.png]]
 
 *** Hydra / System
 
