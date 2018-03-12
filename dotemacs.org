@@ -1329,8 +1329,7 @@ _q_ quit            _c_ insert          _r_ insert
   ("M-<left>" markdown-table-move-column-left)
   ("M-<right>" markdown-table-move-column-right)
   ("M-<down>" markdown-table-move-row-down)
-  ("M-<up>" markdown-table-move-row-up)
-)
+  ("M-<up>" markdown-table-move-row-up))
 #+END_SRC
 
 *** Hydra / Org
@@ -1444,10 +1443,10 @@ Group window-related commands.
 ^
 ^Windows^           ^Window^            ^Zoom^
 ^───────^───────────^──────^────────────^────^──────────────
-_q_ quit            _i_ enlarge         _-_ zoom out
-^^                  _j_ shrink          _+_ zoom in
-^^                  _k_ widen           _=_ reset
-^^                  _l_ tighten         ^^
+_q_ quit            _i_ heighten        _-_ out
+^^                  _j_ narrow          _+_ in
+^^                  _k_ lower           _=_ reset
+^^                  _l_ widen           ^^
 ^^                  ^^                  ^^
 "
   ("q" nil)
