@@ -1443,13 +1443,15 @@ Group window-related commands.
 ^
 ^Windows^           ^Window^            ^Zoom^
 ^───────^───────────^──────^────────────^────^──────────────
-_q_ quit            _i_ heighten        _-_ out
-^^                  _j_ narrow          _+_ in
-^^                  _k_ lower           _=_ reset
+_q_ quit            _b_ balance         _-_ out
+^^                  _i_ heighten        _+_ in
+^^                  _j_ narrow          _=_ reset
+^^                  _k_ lower           ^^
 ^^                  _l_ widen           ^^
 ^^                  ^^                  ^^
 "
   ("q" nil)
+  ("b" balance-windows)
   ("i" enlarge-window)
   ("j" shrink-window-horizontally)
   ("k" shrink-window)
