@@ -1884,7 +1884,7 @@ Configure the mouse scroll.
   :config
   (setq-default
    mouse-wheel-progressive-speed nil
-   mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control)))))
+   mouse-wheel-scroll-amount '(1 ((control) . 5))))
 #+END_SRC
 
 *** Navigation / Search
