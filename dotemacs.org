@@ -1198,7 +1198,7 @@ _q_ quit            _c_ create          _<_ previous
 Group Flycheck commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-flycheck (:color blue)
+(defhydra hydra-flycheck (:color pink)
   "
 ^
 ^Flycheck^          ^Errors^            ^Checker^
@@ -1206,17 +1206,19 @@ Group Flycheck commands.
 _q_ quit            _<_ previous        _?_ describe
 _m_ manual          _>_ next            _d_ disable
 _v_ verify setup    _f_ check           _s_ select
+^^                  _l_ list            ^^
 ^^                  ^^                  ^^
 "
   ("q" nil)
-  ("<" flycheck-previous-error :color red)
-  (">" flycheck-next-error :color red)
-  ("?" flycheck-describe-checker)
-  ("d" flycheck-disable-checker)
+  ("<" flycheck-previous-error)
+  (">" flycheck-next-error)
+  ("?" flycheck-describe-checker :color blue)
+  ("d" flycheck-disable-checker :color blue)
   ("f" flycheck-buffer)
-  ("m" flycheck-manual)
-  ("s" flycheck-select-checker)
-  ("v" flycheck-verify-setup))
+  ("l" flycheck-list-errors :color blue)
+  ("m" flycheck-manual :color blue)
+  ("s" flycheck-select-checker :color blue)
+  ("v" flycheck-verify-setup :color blue))
 #+END_SRC
 
 [[./screenshots/hydra.flycheck.png]]
