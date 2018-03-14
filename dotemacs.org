@@ -2310,6 +2310,14 @@ Disable documentation for object at point in the echo area. It conflicts with Fl
   :config (global-eldoc-mode -1))
 #+END_SRC
 
+Add visual guides towards indenting levels.
+
+#+BEGIN_SRC emacs-lisp
+(use-package highlight-indent-guides
+  :hook (python-mode . highlight-indent-guides-mode)
+  :config (setq-default highlight-indent-guides-method 'character))
+#+END_SRC
+
 Originally, =midnight= is used to /run something at midnight/. I use its feature that
 kills old buffers.
 
