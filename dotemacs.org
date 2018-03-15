@@ -1056,7 +1056,6 @@ their Helm equivalents.
 
 Fourth-party packages for Helm.
 
-- *NOTE*: See https://github.com/ShingoFukuyama/helm-css-scss/issues/7.
 - *TODO*: See https://github.com/bbatsov/zenburn-emacs/issues/220.
 
 #+BEGIN_SRC emacs-lisp
@@ -1263,7 +1262,7 @@ Group Helm commands.
 ^Helm^              ^Browse^            ^Do^
 ^────^──────────────^──────^────────────^──^────────────────
 _q_ quit            _c_ colors          _f_ flycheck
-_r_ resume          _g_ google          _s_ css-scss
+_r_ resume          _g_ google          ^^
 ^^                  _i_ imenu           ^^
 ^^                  _k_ kill-ring       ^^
 ^^                  ^^                  ^^
@@ -1274,8 +1273,7 @@ _r_ resume          _g_ google          _s_ css-scss
   ("g" helm-google-suggest)
   ("i" helm-imenu)
   ("k" helm-show-kill-ring)
-  ("r" helm-resume)
-  ("s" helm-css-scss))
+  ("r" helm-resume))
 #+END_SRC
 
 [[./screenshots/hydra.helm.png]]
