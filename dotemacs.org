@@ -971,7 +971,11 @@ their Helm equivalents.
 
 (use-package helm-color
   :ensure nil
-  :after helm)
+  :after helm
+  :bind
+  (:map helm-color-map
+        ("<left>" . backward-char)
+        ("<right>" . forward-char)))
 
 (use-package helm-command
   :ensure nil
@@ -1012,6 +1016,14 @@ their Helm equivalents.
   (zenburn-with-color-variables
     (set-face-attribute 'helm-grep-lineno nil :foreground zenburn-yellow-2)))
 
+(use-package helm-imenu
+  :ensure nil
+  :after helm
+  :bind
+  (:map helm-imenu-map
+        ("<left>" . backward-char)
+        ("<right>" . forward-char)))
+
 (use-package helm-misc
   :ensure nil
   :after helm
@@ -1046,7 +1058,11 @@ their Helm equivalents.
 (use-package helm-regexp
   :ensure nil
   :after helm
-  :bind ([remap isearch-forward] . helm-occur)
+  :bind
+  (([remap isearch-forward] . helm-occur)
+   :map helm-moccur-map
+   ("<left>" . backward-char)
+   ("<right>" . forward-char))
   :config
   (zenburn-with-color-variables
     (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn-blue)))
@@ -1084,6 +1100,14 @@ Fourth-party packages for Helm.
 (use-package helm-projectile
   :defer nil
   :after helm
+  :bind
+  (nil
+   :map helm-projectile-find-file-map
+   ("<left>" . backward-char)
+   ("<right>" . forward-char)
+   :map helm-projectile-projects-map
+   ("<left>" . backward-char)
+   ("<right>" . forward-char))
   :config (helm-projectile-toggle 1))
 #+END_SRC
 
