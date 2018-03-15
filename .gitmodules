@@ -1,9 +1,12 @@
+[submodule "company-mtg"]
+    path = lisp/company-mtg
+    url = https://github.com/angrybacon/company-mtg.git
 [submodule "locust"]
-	path = lisp/locust
-	url = https://github.com/angrybacon/locust.git
+    path = lisp/locust
+    url = https://github.com/angrybacon/locust.git
 [submodule "mdi"]
-	path = lisp/mdi
-	url = https://github.com/angrybacon/mdi.git
+    path = lisp/mdi
+    url = https://github.com/angrybacon/mdi.git
 [submodule "mtg"]
-	path = lisp/mtg
-	url = https://github.com/angrybacon/mtg.git
+    path = lisp/mtg
+    url = https://github.com/angrybacon/mtg.git
