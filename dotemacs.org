@@ -433,7 +433,10 @@ authoring documents with a fast and effective plain-text system.
 (use-package org-faces
   :ensure nil
   :after org
-  :config (me/unboldify '(org-tag org-todo)))
+  :config
+  (zenburn-with-color-variables
+    (set-face-attribute 'org-block nil :background zenburn-bg+05))
+  (me/unboldify '(org-tag org-todo)))
 
 (use-package org-src
   :ensure nil
