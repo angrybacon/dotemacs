@@ -99,12 +99,12 @@ Here are what I consider better defaults as per my own experience.
  uniquify-buffer-name-style 'forward              ; Uniquify buffer names
  window-combination-resize t                      ; Resize windows proportionally
  x-stretch-cursor t)                              ; Stretch cursor to the glyph width
-(delete-selection-mode)                           ; Replace region when inserting text
-(display-time-mode)                               ; Enable time in the mode-line
+(delete-selection-mode 1)                         ; Replace region when inserting text
+(display-time-mode 1)                             ; Enable time in the mode-line
 (fringe-mode 0)                                   ; Disable fringes
 (fset 'yes-or-no-p 'y-or-n-p)                     ; Replace yes/no prompts with y/n
-(global-hl-line-mode)                             ; Hightlight current line
-(global-subword-mode)                             ; Iterate through CamelCase words
+(global-hl-line-mode 1)                           ; Hightlight current line
+(global-subword-mode 1)                           ; Iterate through CamelCase words
 (menu-bar-mode 0)                                 ; Disable the menu bar
 (mouse-avoidance-mode 'banish)                    ; Avoid collision of mouse with point
 (put 'downcase-region 'disabled nil)              ; Enable downcase-region
@@ -536,7 +536,7 @@ completion candidates.
 (use-package company
   :defer 1
   :config
-  (global-company-mode)
+  (global-company-mode 1)
   (setq-default
    company-idle-delay .2
    company-minimum-prefix-length 1
@@ -583,7 +583,7 @@ Save and restore Emacs status, including buffers, point and window configuration
   :ensure nil
   :demand t
   :config
-  (desktop-save-mode)
+  (desktop-save-mode 1)
   (add-to-list 'desktop-globals-to-save 'golden-ratio-adjust-factor))
 #+END_SRC
 
@@ -608,7 +608,7 @@ by default. The behaviour is modeled after
   ("<f7>" . eyebrowse-switch-to-window-config-3)
   ("<f8>" . eyebrowse-switch-to-window-config-4)
   :config
-  (eyebrowse-mode)
+  (eyebrowse-mode 1)
   (setq-default eyebrowse-new-workspace t))
 #+END_SRC
 
@@ -663,7 +663,7 @@ you can press ctrl-c right (calling =winner-redo=).
 (use-package winner
   :ensure nil
   :defer 1
-  :config (winner-mode))
+  :config (winner-mode 1))
 #+END_SRC
 
 ** Comments
@@ -877,7 +877,7 @@ This is a package to perform text folding like in Vim. It has the following feat
    :map vimish-fold-unfolded-keymap ("<tab>" . vimish-fold-refold))
   :init
   (setq-default vimish-fold-dir (expand-file-name ".vimish-fold/" user-emacs-directory))
-  (vimish-fold-global-mode)
+  (vimish-fold-global-mode 1)
   :config
   (setq-default vimish-fold-header-width 79))
 #+END_SRC
@@ -919,7 +919,7 @@ leaner, modular, and unchained from constraints of backward compatibility.
   :bind (:map helm-map ("M-w" . me/helm-grab-candidates))
   :hook (helm-after-action . me/helm-focus-follow)
   :config
-  (helm-mode)
+  (helm-mode 1)
   (setq-default
    helm-always-two-windows t
    helm-display-header-line nil
@@ -1088,7 +1088,7 @@ Fourth-party packages for Helm.
   :defer nil
   :after helm
   :config
-  (helm-descbinds-mode)
+  (helm-descbinds-mode 1)
   (setq-default helm-descbinds-window-style 'split-window))
 
 (use-package helm-describe-modes
@@ -1170,7 +1170,7 @@ Group date-related commands.
 (defhydra hydra-dates (:color blue)
   "
 ^
-^Dates^             ^Insert^            ^Insert with time^
+^Dates^             ^Insert^            ^Insert with Time^
 ^─────^─────────────^──────^────────────^────────────────^──
 _q_ quit            _d_ short           _D_ short
 ^^                  _i_ iso             _I_ iso
@@ -1221,7 +1221,7 @@ _q_ quit            _c_ create          _<_ previous
 Group Flycheck commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-flycheck (:color blue)
+(defhydra hydra-flycheck (:color pink)
   "
 ^
 ^Flycheck^          ^Errors^            ^Checker^
@@ -1229,17 +1229,19 @@ Group Flycheck commands.
 _q_ quit            _<_ previous        _?_ describe
 _m_ manual          _>_ next            _d_ disable
 _v_ verify setup    _f_ check           _s_ select
+^^                  _l_ list            ^^
 ^^                  ^^                  ^^
 "
   ("q" nil)
-  ("<" flycheck-previous-error :color red)
-  (">" flycheck-next-error :color red)
-  ("?" flycheck-describe-checker)
-  ("d" flycheck-disable-checker)
+  ("<" flycheck-previous-error)
+  (">" flycheck-next-error)
+  ("?" flycheck-describe-checker :color blue)
+  ("d" flycheck-disable-checker :color blue)
   ("f" flycheck-buffer)
-  ("m" flycheck-manual)
-  ("s" flycheck-select-checker)
-  ("v" flycheck-verify-setup))
+  ("l" flycheck-list-errors :color blue)
+  ("m" flycheck-manual :color blue)
+  ("s" flycheck-select-checker :color blue)
+  ("v" flycheck-verify-setup :color blue))
 #+END_SRC
 
 [[./screenshots/hydra.flycheck.png]]
@@ -1335,8 +1337,8 @@ Group Markdown commands.
 (defhydra hydra-markdown (:color pink)
   "
 ^
-^Markdown^          ^Table Columns^     ^Table Rows   ^
-^────────^──────────^─────────────^─────^─────────────^─────
+^Markdown^          ^Table Columns^     ^Table Rows^
+^────────^──────────^─────────────^─────^──────────^────────
 _q_ quit            _c_ insert          _r_ insert
 ^^                  _C_ delete          _R_ delete
 ^^                  _M-<left>_ left     _M-<down>_ down
@@ -1732,7 +1734,7 @@ general fun and profit.
    spaceline-flycheck-bullet (format "%s %s" (mdi "record") "%s")
    spaceline-separator-dir-left '(left . left)
    spaceline-separator-dir-right '(right . right))
-  (spaceline-helm-mode)
+  (spaceline-helm-mode 1)
 
   ;; Build the mode-lines
   (spaceline-install
@@ -1862,7 +1864,7 @@ mode-line in various search modes.
   :defer 1
   :bind ([remap query-replace] . anzu-query-replace-regexp)
   :config
-  (global-anzu-mode)
+  (global-anzu-mode 1)
   (setq-default
    anzu-cons-mode-line-p nil
    anzu-replace-to-string-separator (mdi "arrow-right" t))
@@ -1904,7 +1906,7 @@ Configure the mouse scroll.
   :config
   (setq-default
    mouse-wheel-progressive-speed nil
-   mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control)))))
+   mouse-wheel-scroll-amount '(1 ((control) . 5))))
 #+END_SRC
 
 *** Navigation / Search
@@ -2008,7 +2010,7 @@ today... No package seem to please my person.
    ("M-S-<right>" . sp-backward-barf-sexp))
   :config
   (require 'smartparens-config)
-  (smartparens-global-mode)
+  (smartparens-global-mode 1)
   (sp-pair "{{" "}}")
   (sp-pair "[[" "]]"))
 #+END_SRC
@@ -2103,7 +2105,7 @@ use with =selected=.
         ("<M-S-right>" . me/indent-rigidly-right-tab-and-keep-mark))
   :config
   (require 'browse-url)
-  (selected-global-mode))
+  (selected-global-mode 1))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -2254,7 +2256,7 @@ exists as well).
    projectile-known-projects-file (expand-file-name
                                    ".projectile-bookmarks" user-emacs-directory))
   :config
-  (projectile-global-mode)
+  (projectile-global-mode 1)
   (setq-default
    projectile-completion-system 'helm
    projectile-enable-caching t
@@ -2328,6 +2330,14 @@ Disable documentation for object at point in the echo area. It conflicts with Fl
 (use-package eldoc
   :ensure nil
   :config (global-eldoc-mode -1))
+#+END_SRC
+
+Add visual guides towards indenting levels.
+
+#+BEGIN_SRC emacs-lisp
+(use-package highlight-indent-guides
+  :hook (python-mode . highlight-indent-guides-mode)
+  :config (setq-default highlight-indent-guides-method 'character))
 #+END_SRC
 
 Originally, =midnight= is used to /run something at midnight/. I use its feature that
