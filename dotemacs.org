@@ -977,7 +977,11 @@ their Helm equivalents.
 
 (use-package helm-color
   :ensure nil
-  :after helm)
+  :after helm
+  :bind
+  (:map helm-color-map
+        ("<left>" . backward-char)
+        ("<right>" . forward-char)))
 
 (use-package helm-command
   :ensure nil
@@ -1018,6 +1022,14 @@ their Helm equivalents.
   (zenburn-with-color-variables
     (set-face-attribute 'helm-grep-lineno nil :foreground zenburn-yellow-2)))
 
+(use-package helm-imenu
+  :ensure nil
+  :after helm
+  :bind
+  (:map helm-imenu-map
+        ("<left>" . backward-char)
+        ("<right>" . forward-char)))
+
 (use-package helm-misc
   :ensure nil
   :after helm
@@ -1052,7 +1064,11 @@ their Helm equivalents.
 (use-package helm-regexp
   :ensure nil
   :after helm
-  :bind ([remap isearch-forward] . helm-occur)
+  :bind
+  (([remap isearch-forward] . helm-occur)
+   :map helm-moccur-map
+   ("<left>" . backward-char)
+   ("<right>" . forward-char))
   :config
   (zenburn-with-color-variables
     (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn-blue)))
@@ -1062,7 +1078,6 @@ their Helm equivalents.
 
 Fourth-party packages for Helm.
 
-- *NOTE*: See https://github.com/ShingoFukuyama/helm-css-scss/issues/7.
 - *TODO*: See https://github.com/bbatsov/zenburn-emacs/issues/220.
 
 #+BEGIN_SRC emacs-lisp
@@ -1091,6 +1106,14 @@ Fourth-party packages for Helm.
 (use-package helm-projectile
   :defer nil
   :after helm
+  :bind
+  (nil
+   :map helm-projectile-find-file-map
+   ("<left>" . backward-char)
+   ("<right>" . forward-char)
+   :map helm-projectile-projects-map
+   ("<left>" . backward-char)
+   ("<right>" . forward-char))
   :config (helm-projectile-toggle 1))
 #+END_SRC
 
@@ -1271,7 +1294,7 @@ Group Helm commands.
 ^Helm^              ^Browse^            ^Do^
 ^────^──────────────^──────^────────────^──^────────────────
 _q_ quit            _c_ colors          _f_ flycheck
-_r_ resume          _g_ google          _s_ css-scss
+_r_ resume          _g_ google          ^^
 ^^                  _i_ imenu           ^^
 ^^                  _k_ kill-ring       ^^
 ^^                  ^^                  ^^
@@ -1282,8 +1305,7 @@ _r_ resume          _g_ google          _s_ css-scss
   ("g" helm-google-suggest)
   ("i" helm-imenu)
   ("k" helm-show-kill-ring)
-  ("r" helm-resume)
-  ("s" helm-css-scss))
+  ("r" helm-resume))
 #+END_SRC
 
 [[./screenshots/hydra.helm.png]]
