@@ -2390,6 +2390,17 @@ Yes, Emacs emulates terminals too.
   :hook (term-mode . (lambda () (setq-local scroll-margin 0))))
 #+END_SRC
 
+Provide a way to invoke =bash= on Windows. This requires "Developer Mode" to
+be enabled in the first place.
+
+#+BEGIN_SRC emacs-lisp
+(when (eq system-type 'windows-nt)
+  (defun me/bash ()
+    (interactive)
+    (let ((explicit-shell-file-name "C:/Windows/System32/bash.exe"))
+      (shell))))
+#+END_SRC
+
 ** Version Control
 
 Magit provides Git facilities directly from within Emacs.
