@@ -475,6 +475,7 @@ maintain a TOC at the first heading that has a =:TOC:= tag.
 (use-package python
   :ensure nil
   :delight python-mode "Python"
+  :hook (python-mode . turn-on-prettify-symbols-mode)
   :config
   (when (executable-find "ipython")
     (setq-default
