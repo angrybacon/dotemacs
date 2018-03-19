@@ -2271,7 +2271,9 @@ electric-indent-mode.
    (js-mode . aggressive-indent-mode)
    (lisp-mode . aggressive-indent-mode)
    (sgml-mode . aggressive-indent-mode))
-  :config (setq-default aggressive-indent-comments-too t))
+  :config
+  (setq-default aggressive-indent-comments-too t)
+  (add-to-list 'aggressive-indent-protected-commands 'comment-dwim))
 #+END_SRC
 
 Insert the current date.
