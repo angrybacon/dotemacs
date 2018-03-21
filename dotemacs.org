@@ -307,7 +307,13 @@ HTML mode is defined in =sgml-mode.el=.
 (use-package js
   :ensure nil
   :delight js-mode "JavaScript"
-  :config (setq-default js-indent-level 2))
+  :preface
+  (defun me/turn-on-prettify-symbols-mode ()
+    (add-to-list 'prettify-symbols-alist '("function" . ?ƒ))
+    (prettify-symbols-mode 1))
+  :hook (js-mode . me/turn-on-prettify-symbols-mode)
+  :config
+  (setq-default js-indent-level 2))
 
 (use-package js2-mode
   :ensure nil
