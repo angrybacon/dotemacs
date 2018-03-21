@@ -737,6 +737,13 @@ Define words using Wordnik.
 (use-package define-word)
 #+END_SRC
 
+Translage using Google.
+
+#+BEGIN_SRC emacs-lisp
+(use-package google-translate
+  :config (me/unboldify '(google-translate-translation-face)))
+#+END_SRC
+
 ** Diff
 
 Ediff is a visual interface to Unix =diff=.
@@ -2111,6 +2118,7 @@ use with =selected=.
         ("C-s r"       . reverse-region)
         ("C-s s"       . sort-lines)
         ("C-s w"       . me/sort-words)
+        ("C-t"         . google-translate-at-point)
         ("<M-left>"    . me/indent-rigidly-left-and-keep-mark)
         ("<M-right>"   . me/indent-rigidly-right-and-keep-mark)
         ("<M-S-left>"  . me/indent-rigidly-left-tab-and-keep-mark)
