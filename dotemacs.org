@@ -2356,6 +2356,19 @@ Disable documentation for object at point in the echo area. It conflicts with Fl
   :config (global-eldoc-mode -1))
 #+END_SRC
 
+Customize the noisy default towards backup files.
+
+#+BEGIN_SRC emacs-lisp
+(use-package files
+  :ensure nil
+  :config
+  (setq-default
+   backup-by-copying t
+   backup-directory-alist `(("." . ,(expand-file-name "backups/" user-emacs-directory)))
+   delete-old-versions t
+   version-control t))
+#+END_SRC
+
 Add visual guides towards indenting levels.
 
 #+BEGIN_SRC emacs-lisp
