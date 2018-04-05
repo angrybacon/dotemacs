@@ -52,12 +52,6 @@
 
 ** Use better defaults
 
-Enable fullscreen.
-
-#+BEGIN_SRC emacs-lisp
-(set-frame-parameter nil 'fullscreen 'maximized)
-#+END_SRC
-
 Some UI elements are rather invasive. No-mouse master race.
 
 #+BEGIN_SRC emacs-lisp
@@ -110,6 +104,12 @@ Here are what I consider better defaults as per my own experience.
 (put 'downcase-region 'disabled nil)              ; Enable downcase-region
 (put 'upcase-region 'disabled nil)                ; Enable upcase-region
 (cd "~/")                                         ; Move to the user directory
+#+END_SRC
+
+Enable fullscreen.
+
+#+BEGIN_SRC emacs-lisp
+(set-frame-parameter nil 'fullscreen 'maximized)
 #+END_SRC
 
 Garbage-collect on focus-out, Emacs /should/ feel snappier.
