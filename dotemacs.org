@@ -109,7 +109,9 @@ Here are what I consider better defaults as per my own experience.
 Enable fullscreen.
 
 #+BEGIN_SRC emacs-lisp
-(set-frame-parameter nil 'fullscreen 'maximized)
+(if (eq window-system 'ns)
+    (toggle-frame-maximized)
+  (toggle-frame-fullscreen))
 #+END_SRC
 
 Garbage-collect on focus-out, Emacs /should/ feel snappier.
