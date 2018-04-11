@@ -1627,17 +1627,27 @@ binaries (see [[./README.org][README.org]]).
 
 *** Mode-Line / Screenshots
 
-- *TODO*: Update screenshots and documentation.
-
-Here is how it looks (slightly deprecating):
+Here is how it looks:
 
 /In an active window/
 
-[[./screenshots/emacs.mode-line.active.png]]
+[[./screenshots/emacs.mode-line.default.png]]
 
 /In an inactive window/
 
 [[./screenshots/emacs.mode-line.inactive.png]]
+
+/In a dirty buffer/
+
+[[./screenshots/emacs.mode-line.dirty.png]]
+
+/With unread ERC messages/
+
+[[./screenshots/emacs.mode-line.erc.png]]
+
+/With Flycheck errors/
+
+[[./screenshots/emacs.mode-line.flycheck.png]]
 
 /When inside of a Helm session/
 
@@ -1645,19 +1655,20 @@ Here is how it looks (slightly deprecating):
 
 /When using isearch/
 
-[[./screenshots/emacs.mode-line.search.png]]
+[[./screenshots/emacs.mode-line.isearch.png]]
 
 /With an active region/
 
 [[./screenshots/emacs.mode-line.region.png]]
 
-- Green means buffer is clean.
-- Red means buffer is modified.
-- Blue means buffer is read-only.
-- Colored bullets represent =flycheck= critical, warning and informational
-  errors.
-- The segment next to the clock indicate the current perspective from
-  =eyebrowse=.
+/With an active rectangle/
+
+[[./screenshots/emacs.mode-line.rectangle.png]]
+
+- Green means buffer is clean ie. file is saved
+- Red means buffer is dirty ie. file is modified
+- Blue means buffer is read-only
+- The segment next to the clock indicate the current =eyebrowse= /workspace/
 
 *** Mode-Line / Delight
 
@@ -1726,7 +1737,7 @@ general fun and profit.
                                  (spaceline--column-number-at-pos (region-beginning)))))))
         (cond
          ((bound-and-true-p rectangle-mark-mode)
-          (format "%d%s%d" (1- columns) (mdi "arrow-expand-all" t) rows))
+          (format "%d %s %d" (1- columns) (mdi "arrow-expand-all") rows))
          ((> rows 1)
           (format "%d" (if (eq (current-column) 0) (1- rows) rows)))
          (t (format "%d" characters))))))
@@ -1761,11 +1772,11 @@ general fun and profit.
   (spaceline-install
     `((major-mode :face highlight-face)
       ((remote-host buffer-id line) :separator ":")
+      (me/selection-info)
       (anzu))
-    `((me/selection-info)
-      (me/erc-track :face spaceline-highlight-face :when active)
+    `((me/erc-track :face spaceline-highlight-face :when active)
       ((flycheck-error flycheck-warning flycheck-info))
-      ((projectile-root me/version-control) :separator (mdi "source-branch" t))
+      ((projectile-root me/version-control) :separator ":")
       (workspace-number)
       (global :face highlight-face)))
   (spaceline-install
