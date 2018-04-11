@@ -194,14 +194,12 @@ preferences.
   :demand t
   :config
   (load-theme 'zenburn t)
+  (set-face-attribute 'default nil :font me/font-family :height me/font-size-default)
   (set-face-attribute 'fixed-pitch nil :font me/font-family)
   (set-face-attribute 'font-lock-comment-face nil :italic t)
   (set-face-attribute 'font-lock-doc-face nil :italic t)
   (zenburn-with-color-variables
     (set-face-attribute 'button nil :foreground zenburn-yellow-2)
-    (set-face-attribute 'default nil
-                        :height me/font-size-default
-                        :font me/font-family)
     (set-face-attribute 'help-argument-name nil :foreground zenburn-orange :italic nil)
     (set-face-attribute 'hl-line nil :background zenburn-bg+1)
     (set-face-attribute 'header-line nil
@@ -231,10 +229,6 @@ preferences.
                   mode-line-buffer-id
                   success
                   warning)))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
