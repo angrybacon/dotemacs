@@ -201,6 +201,7 @@ preferences.
   (zenburn-with-color-variables
     (set-face-attribute 'button nil :foreground zenburn-yellow-2)
     (set-face-attribute 'help-argument-name nil :foreground zenburn-orange :italic nil)
+    (set-face-attribute 'highlight nil :background zenburn-yellow :foreground zenburn-fg-1)
     (set-face-attribute 'hl-line nil :background zenburn-bg+1)
     (set-face-attribute 'header-line nil
                         :box `(:line-width 1 :color ,zenburn-bg-1)
@@ -2067,6 +2068,12 @@ the structure of the current major mode.
   ("C-=" . er/expand-region))
 #+END_SRC
 
+Persistent highlighting.
+
+#+BEGIN_SRC emacs-lisp
+(use-package highlight)
+#+END_SRC
+
 Enable multiple cursors at once. Some witchcraft at work here.
 
 #+BEGIN_SRC emacs-lisp
@@ -2121,6 +2128,8 @@ use with =selected=.
         ("C-d"         . define-word-at-point)
         ("C-f"         . fill-region)
         ("C-g"         . selected-off)
+        ("C-h h"       . hlt-highlight-region)
+        ("C-h H"       . hlt-unhighlight-region)
         ("C-p"         . webpaste-paste-region)
         ("C-s r"       . reverse-region)
         ("C-s s"       . sort-lines)
