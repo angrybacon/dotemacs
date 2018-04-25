@@ -1767,10 +1767,10 @@ general fun and profit.
   (spaceline-install
     `((major-mode :face highlight-face)
       ((remote-host buffer-id line) :separator ":")
-      (me/selection-info)
-      (anzu))
-    `((me/erc-track :face spaceline-highlight-face :when active)
       ((flycheck-error flycheck-warning flycheck-info))
+      (me/selection-info))
+    `((me/erc-track :face spaceline-highlight-face :when active)
+      (anzu)
       ((projectile-root me/version-control) :separator ":")
       (workspace-number)
       (global :face highlight-face)))
