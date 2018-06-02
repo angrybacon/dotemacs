@@ -317,7 +317,10 @@ HTML mode is defined in =sgml-mode.el=.
   :ensure nil
   :delight js2-mode "JavaScript 2"
   :config
-  (setq-default js2-idle-timer-delay 0)
+  (setq-default
+   js2-idle-timer-delay 0
+   js2-mode-show-parse-errors nil
+   js2-mode-show-strict-warnings nil)
   (me/unboldify '(js2-error)))
 
 (use-package json-mode
