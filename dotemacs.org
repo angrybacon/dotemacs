@@ -52,12 +52,6 @@
 
 ** Use better defaults
 
-Enable fullscreen.
-
-#+BEGIN_SRC emacs-lisp
-(set-frame-parameter nil 'fullscreen 'maximized)
-#+END_SRC
-
 Some UI elements are rather invasive. No-mouse master race.
 
 #+BEGIN_SRC emacs-lisp
@@ -110,6 +104,14 @@ Here are what I consider better defaults as per my own experience.
 (put 'downcase-region 'disabled nil)              ; Enable downcase-region
 (put 'upcase-region 'disabled nil)                ; Enable upcase-region
 (cd "~/")                                         ; Move to the user directory
+#+END_SRC
+
+Enable fullscreen.
+
+#+BEGIN_SRC emacs-lisp
+(if (eq window-system 'ns)
+    (toggle-frame-maximized)
+  (toggle-frame-fullscreen))
 #+END_SRC
 
 Garbage-collect on focus-out, Emacs /should/ feel snappier.
@@ -193,15 +195,14 @@ preferences.
   :demand t
   :config
   (load-theme 'zenburn t)
+  (set-face-attribute 'default nil :font me/font-family :height me/font-size-default)
   (set-face-attribute 'fixed-pitch nil :font me/font-family)
   (set-face-attribute 'font-lock-comment-face nil :italic t)
   (set-face-attribute 'font-lock-doc-face nil :italic t)
   (zenburn-with-color-variables
     (set-face-attribute 'button nil :foreground zenburn-yellow-2)
-    (set-face-attribute 'default nil
-                        :height me/font-size-default
-                        :font me/font-family)
     (set-face-attribute 'help-argument-name nil :foreground zenburn-orange :italic nil)
+    (set-face-attribute 'highlight nil :background zenburn-yellow :foreground zenburn-fg-1)
     (set-face-attribute 'hl-line nil :background zenburn-bg+1)
     (set-face-attribute 'header-line nil
                         :box `(:line-width 1 :color ,zenburn-bg-1)
@@ -230,10 +231,6 @@ preferences.
                   mode-line-buffer-id
                   success
                   warning)))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -308,7 +305,13 @@ HTML mode is defined in =sgml-mode.el=.
 (use-package js
   :ensure nil
   :delight js-mode "JavaScript"
-  :config (setq-default js-indent-level 2))
+  :preface
+  (defun me/turn-on-prettify-symbols-mode ()
+    (add-to-list 'prettify-symbols-alist '("function" . ?ƒ))
+    (prettify-symbols-mode 1))
+  :hook (js-mode . me/turn-on-prettify-symbols-mode)
+  :config
+  (setq-default js-indent-level 2))
 
 (use-package js2-mode
   :ensure nil
@@ -482,7 +485,7 @@ maintain a TOC at the first heading that has a =:TOC:= tag.
   (when (executable-find "ipython")
     (setq-default
      python-shell-interpreter "ipython"
-     python-shell-interpreter-args "--colors=Linux --profile=default"
+     python-shell-interpreter-args "--colors=Linux --profile=default --simple-prompt"
      python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
      python-shell-prompt-regexp "In \\[[0-9]+\\]: "
      python-shell-completion-setup-code
@@ -731,6 +734,13 @@ Define words using Wordnik.
 
 #+BEGIN_SRC emacs-lisp
 (use-package define-word)
+#+END_SRC
+
+Translage using Google.
+
+#+BEGIN_SRC emacs-lisp
+(use-package google-translate
+  :config (me/unboldify '(google-translate-translation-face)))
 #+END_SRC
 
 ** Diff
@@ -1614,17 +1624,27 @@ binaries (see [[./README.org][README.org]]).
 
 *** Mode-Line / Screenshots
 
-- *TODO*: Update screenshots and documentation.
-
-Here is how it looks (slightly deprecating):
+Here is how it looks:
 
 /In an active window/
 
-[[./screenshots/emacs.mode-line.active.png]]
+[[./screenshots/emacs.mode-line.default.png]]
 
 /In an inactive window/
 
 [[./screenshots/emacs.mode-line.inactive.png]]
+
+/In a dirty buffer/
+
+[[./screenshots/emacs.mode-line.dirty.png]]
+
+/With unread ERC messages/
+
+[[./screenshots/emacs.mode-line.erc.png]]
+
+/With Flycheck errors/
+
+[[./screenshots/emacs.mode-line.flycheck.png]]
 
 /When inside of a Helm session/
 
@@ -1632,19 +1652,20 @@ Here is how it looks (slightly deprecating):
 
 /When using isearch/
 
-[[./screenshots/emacs.mode-line.search.png]]
+[[./screenshots/emacs.mode-line.isearch.png]]
 
 /With an active region/
 
 [[./screenshots/emacs.mode-line.region.png]]
 
-- Green means buffer is clean.
-- Red means buffer is modified.
-- Blue means buffer is read-only.
-- Colored bullets represent =flycheck= critical, warning and informational
-  errors.
-- The segment next to the clock indicate the current perspective from
-  =eyebrowse=.
+/With an active rectangle/
+
+[[./screenshots/emacs.mode-line.rectangle.png]]
+
+- Green means buffer is clean ie. file is saved
+- Red means buffer is dirty ie. file is modified
+- Blue means buffer is read-only
+- The segment next to the clock indicate the current =eyebrowse= /workspace/
 
 *** Mode-Line / Delight
 
@@ -1713,7 +1734,7 @@ general fun and profit.
                                  (spaceline--column-number-at-pos (region-beginning)))))))
         (cond
          ((bound-and-true-p rectangle-mark-mode)
-          (format "%d%s%d" (1- columns) (mdi "arrow-expand-all" t) rows))
+          (format "%d %s %d" (1- columns) (mdi "arrow-expand-all") rows))
          ((> rows 1)
           (format "%d" (if (eq (current-column) 0) (1- rows) rows)))
          (t (format "%d" characters))))))
@@ -1748,11 +1769,11 @@ general fun and profit.
   (spaceline-install
     `((major-mode :face highlight-face)
       ((remote-host buffer-id line) :separator ":")
-      (anzu))
-    `((me/selection-info)
-      (me/erc-track :face spaceline-highlight-face :when active)
       ((flycheck-error flycheck-warning flycheck-info))
-      ((projectile-root me/version-control) :separator (mdi "source-branch" t))
+      (me/selection-info))
+    `((me/erc-track :face spaceline-highlight-face :when active)
+      (anzu)
+      ((projectile-root me/version-control) :separator ":")
       (workspace-number)
       (global :face highlight-face)))
   (spaceline-install
@@ -2049,6 +2070,12 @@ the structure of the current major mode.
   ("C-=" . er/expand-region))
 #+END_SRC
 
+Persistent highlighting.
+
+#+BEGIN_SRC emacs-lisp
+(use-package highlight)
+#+END_SRC
+
 Enable multiple cursors at once. Some witchcraft at work here.
 
 #+BEGIN_SRC emacs-lisp
@@ -2103,10 +2130,13 @@ use with =selected=.
         ("C-d"         . define-word-at-point)
         ("C-f"         . fill-region)
         ("C-g"         . selected-off)
+        ("C-h h"       . hlt-highlight-region)
+        ("C-h H"       . hlt-unhighlight-region)
         ("C-p"         . webpaste-paste-region)
         ("C-s r"       . reverse-region)
         ("C-s s"       . sort-lines)
         ("C-s w"       . me/sort-words)
+        ("C-t"         . google-translate-at-point)
         ("<M-left>"    . me/indent-rigidly-left-and-keep-mark)
         ("<M-right>"   . me/indent-rigidly-right-and-keep-mark)
         ("<M-S-left>"  . me/indent-rigidly-left-tab-and-keep-mark)
@@ -2340,6 +2370,19 @@ Disable documentation for object at point in the echo area. It conflicts with Fl
 (use-package eldoc
   :ensure nil
   :config (global-eldoc-mode -1))
+#+END_SRC
+
+Customize the noisy default towards backup files.
+
+#+BEGIN_SRC emacs-lisp
+(use-package files
+  :ensure nil
+  :config
+  (setq-default
+   backup-by-copying t
+   backup-directory-alist `(("." . ,(expand-file-name "backups/" user-emacs-directory)))
+   delete-old-versions t
+   version-control t))
 #+END_SRC
 
 Add visual guides towards indenting levels.
