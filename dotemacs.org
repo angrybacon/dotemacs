@@ -591,9 +591,7 @@ Save and restore Emacs status, including buffers, point and window configuration
 (use-package desktop
   :ensure nil
   :demand t
-  :config
-  (desktop-save-mode 1)
-  (add-to-list 'desktop-globals-to-save 'golden-ratio-adjust-factor))
+  :config (desktop-save-mode 1))
 #+END_SRC
 
 Workspaces within Emacs.
