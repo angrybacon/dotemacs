@@ -2446,6 +2446,7 @@ Turn on =auto-fill-mode= /almost/ everywhere.
 (use-package esh-mode
   :ensure nil
   :delight eshell-mode "EShell"
+  :hook (eshell-mode . (lambda () (setq-local global-hl-line-mode nil)))
   :config
   (me/unboldify '(eshell-ls-directory
                   eshell-ls-executable
@@ -2457,12 +2458,13 @@ Turn on =auto-fill-mode= /almost/ everywhere.
 Yes, Emacs emulates terminals too.
 
 - **TODO**: Source =.bash_profile= on =M-x term=.
-- **TODO**: Disable =hl-line=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package term
   :ensure nil
-  :hook (term-mode . (lambda () (setq-local scroll-margin 0))))
+  :hook
+  ((term-mode . (lambda () (setq-local global-hl-line-mode nil)))
+   (term-mode . (lambda () (setq-local scroll-margin 0)))))
 #+END_SRC
 
 Provide a way to invoke =bash= on Windows. This requires "Developer Mode" to
