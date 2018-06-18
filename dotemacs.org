@@ -44,7 +44,7 @@
   - [[#point-and-region][Point and Region]]
   - [[#projectile][Projectile]]
   - [[#quality-of-life][Quality of Life]]
-  - [[#terminal][Terminal]]
+  - [[#shell-and-terminal][Shell and Terminal]]
   - [[#version-control][Version Control]]
   - [[#whitespaces][Whitespaces]]
 
@@ -2440,7 +2440,19 @@ Turn on =auto-fill-mode= /almost/ everywhere.
    (text-mode . turn-on-auto-fill)))
 #+END_SRC
 
-** Terminal
+** Shell and Terminal
+
+#+BEGIN_SRC emacs-lisp
+(use-package esh-mode
+  :ensure nil
+  :delight eshell-mode "EShell"
+  :config
+  (me/unboldify '(eshell-ls-directory
+                  eshell-ls-executable
+                  eshell-ls-special
+                  eshell-ls-symlink
+                  eshell-prompt)))
+#+END_SRC
 
 Yes, Emacs emulates terminals too.
 

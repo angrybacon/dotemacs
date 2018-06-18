@@ -4,6 +4,7 @@
 dotemacs.el
 auto-save-list/
 elpa/
+eshell/
 games/
 semanticdb/
 server/
