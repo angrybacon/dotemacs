@@ -2450,7 +2450,14 @@ should enable the feature as a minor-mode and on a per-mode basis only.
 #+BEGIN_SRC emacs-lisp
 (use-package prog-mode
   :ensure nil
-  :config (setq-default prettify-symbols-unprettify-at-point 'right-edge))
+  :preface
+  (defun me/prettify-symbols-compose-predicate (&rest arguments)
+    (when (not (eq system-type 'windows-nt))
+      (apply #'prettify-symbols-default-compose-p arguments)))
+  :config
+  (setq-default
+   prettify-symbols-compose-predicate #'me/prettify-symbols-compose-predicate
+   prettify-symbols-unprettify-at-point 'right-edge))
 #+END_SRC
 
 Colorize colors as text with their value.
