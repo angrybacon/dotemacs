@@ -306,11 +306,10 @@ HTML mode is defined in =sgml-mode.el=.
   :delight js-mode "JavaScript"
   :preface
   (defun me/turn-on-prettify-symbols-mode ()
-    (add-to-list 'prettify-symbols-alist '("function" . ?ƒ))
+    (add-to-list 'prettify-symbols-alist '("function" . ?\u0192))
     (prettify-symbols-mode 1))
   :hook (js-mode . me/turn-on-prettify-symbols-mode)
-  :config
-  (setq-default js-indent-level 2))
+  :config (setq-default js-indent-level 2))
 
 (use-package js2-mode
   :ensure nil
@@ -2035,9 +2034,7 @@ today... No package seem to please my person.
    ("M-S-<right>" . sp-backward-barf-sexp))
   :config
   (require 'smartparens-config)
-  (smartparens-global-mode 1)
-  (sp-pair "{{" "}}")
-  (sp-pair "[[" "]]"))
+  (smartparens-global-mode 1))
 #+END_SRC
 
 ** Paste
@@ -2446,13 +2443,19 @@ Turn on =auto-fill-mode= /almost/ everywhere.
 (use-package esh-mode
   :ensure nil
   :delight eshell-mode "EShell"
-  :hook (eshell-mode . (lambda () (setq-local global-hl-line-mode nil)))
+  :hook (eshell-mode . (lambda () (setq-local global-hl-line-mode nil))))
+
+(use-package em-ls
+  :ensure nil
   :config
   (me/unboldify '(eshell-ls-directory
                   eshell-ls-executable
                   eshell-ls-special
-                  eshell-ls-symlink
-                  eshell-prompt)))
+                  eshell-ls-symlink)))
+
+(use-package em-prompt
+  :ensure nil
+  :config (me/unboldify '(eshell-prompt)))
 #+END_SRC
 
 Yes, Emacs emulates terminals too.
