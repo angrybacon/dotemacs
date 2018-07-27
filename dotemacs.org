@@ -303,10 +303,10 @@ HTML mode is defined in =sgml-mode.el=.
   :ensure nil
   :delight js-mode "JavaScript"
   :preface
-  (defun me/turn-on-prettify-symbols-mode ()
+  (defun me/js-prettify-symbols-mode-on ()
     (add-to-list 'prettify-symbols-alist '("function" . ?\u0192))
     (prettify-symbols-mode 1))
-  :hook (js-mode . me/turn-on-prettify-symbols-mode)
+  :hook (js-mode . me/js-prettify-symbols-mode-on)
   :config (setq-default js-indent-level 2))
 
 (use-package js2-mode
@@ -2442,6 +2442,15 @@ more.
    paradox-github-token t
    paradox-hide-wiki-packages t)
   (remove-hook 'paradox-after-execute-functions #'paradox--report-buffer-print))
+#+END_SRC
+
+Prettify symbols. Below is the configuration of the prettify-symbol feature. You
+should enable the feature as a minor-mode and on a per-mode basis only.
+
+#+BEGIN_SRC emacs-lisp
+(use-package prog-mode
+  :ensure nil
+  :config (setq-default prettify-symbols-unprettify-at-point 'right-edge))
 #+END_SRC
 
 Colorize colors as text with their value.
