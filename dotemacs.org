@@ -337,6 +337,10 @@ HTML mode is defined in =sgml-mode.el=.
    (rjsx-mode . me/rjsx-set-pretty-print-function)
    (rjsx-mode . sgml-electric-tag-pair-mode)
    (rjsx-mode . turn-off-auto-fill)))
+
+(use-package web-mode
+  :delight web-mode "Web"
+  :config (setq-default web-mode-enable-auto-indentation nil))
 #+END_SRC
 
 ** Lisp
