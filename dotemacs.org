@@ -830,7 +830,10 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
         ("C-M-<right>" . nil)
         ("C-c w" . nil))
   :hook (css-mode html-mode rjsx-mode)
-  :config (setq-default emmet-move-cursor-between-quote t))
+  :config
+  (setq-default
+   emmet-insert-flash-time .1
+   emmet-move-cursor-between-quote t))
 
 (use-package hippie-exp
   :ensure nil
@@ -2032,7 +2035,12 @@ today... No package seem to please my person.
    ("M-S-<left>" . sp-backward-slurp-sexp)
    ("M-S-<right>" . sp-backward-barf-sexp))
   :config
+  (show-paren-mode 0)
   (require 'smartparens-config)
+  (setq-default
+   sp-highlight-pair-overlay nil
+   sp-highlight-wrap-overlay nil
+   sp-highlight-wrap-tag-overlay nil)
   (smartparens-global-mode 1))
 #+END_SRC
 
