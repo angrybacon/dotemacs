@@ -153,6 +153,7 @@ and =user-mail-address=. This is also where you want your API tokens to live.
 (defvar me/font-size-default      110        "The font size to use for default text.")
 (defvar me/font-size-header-line  120        "The font size to use for the header-line.")
 (defvar me/font-size-mode-line    110        "The font size to use for the mode-line.")
+(defvar me/font-size-small        100        "The font size to use for smaller text.")
 (defvar me/font-size-title        140        "The font size to use for titles.")
 
 (let ((secret.el (expand-file-name ".secret.el" user-emacs-directory)))
@@ -313,7 +314,10 @@ HTML mode is defined in =sgml-mode.el=.
   :ensure nil
   :delight js2-mode "JavaScript 2"
   :config
-  (setq-default js2-idle-timer-delay 0)
+  (setq-default
+   js2-idle-timer-delay 0
+   js2-mode-show-parse-errors nil
+   js2-mode-show-strict-warnings nil)
   (me/unboldify '(js2-error)))
 
 (use-package json-mode
@@ -382,7 +386,8 @@ HTML mode is defined in =sgml-mode.el=.
   (setq-default
    markdown-asymmetric-header t
    markdown-split-window-direction 'right)
-  (me/unboldify '(markdown-header-face)))
+  (me/unboldify '(markdown-header-face))
+  (set-face-attribute 'markdown-table-face nil :height me/font-size-small))
 #+END_SRC
 
 ** Org
