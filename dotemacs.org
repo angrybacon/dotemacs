@@ -97,7 +97,6 @@ Here are what I consider better defaults as per my own experience.
 (display-time-mode 1)                             ; Enable time in the mode-line
 (fringe-mode 0)                                   ; Disable fringes
 (fset 'yes-or-no-p 'y-or-n-p)                     ; Replace yes/no prompts with y/n
-(global-hl-line-mode 1)                           ; Hightlight current line
 (global-subword-mode 1)                           ; Iterate through CamelCase words
 (menu-bar-mode 0)                                 ; Disable the menu bar
 (mouse-avoidance-mode 'banish)                    ; Avoid collision of mouse with point
@@ -202,7 +201,6 @@ preferences.
     (set-face-attribute 'button nil :foreground zenburn-yellow-2)
     (set-face-attribute 'help-argument-name nil :foreground zenburn-orange :italic nil)
     (set-face-attribute 'highlight nil :background zenburn-yellow :foreground zenburn-fg-1)
-    (set-face-attribute 'hl-line nil :background zenburn-bg+1)
     (set-face-attribute 'header-line nil
                         :box `(:line-width 1 :color ,zenburn-bg-1)
                         :height me/font-size-header-line)
@@ -2386,6 +2384,21 @@ Add visual guides towards indenting levels.
   :config (setq-default highlight-indent-guides-method 'character))
 #+END_SRC
 
+Highlight line under point.
+
+#+BEGIN_SRC emacs-lisp
+(use-package hl-line
+  :ensure nil
+  :demand t
+  :preface
+  (defun me/hl-line-mode-off ()
+    (setq-local global-hl-line-mode nil))
+  :config
+  (global-hl-line-mode 1))
+  (zenburn-with-color-variables
+    (set-face-attribute 'hl-line nil :background zenburn-bg+1))
+#+END_SRC
+
 Originally, =midnight= is used to /run something at midnight/. I use its feature that
 kills old buffers.
 
@@ -2443,7 +2456,7 @@ Turn on =auto-fill-mode= /almost/ everywhere.
 (use-package esh-mode
   :ensure nil
   :delight eshell-mode "EShell"
-  :hook (eshell-mode . (lambda () (setq-local global-hl-line-mode nil))))
+  :hook (eshell-mode . me/hl-line-mode-off))
 
 (use-package em-ls
   :ensure nil
@@ -2466,7 +2479,7 @@ Yes, Emacs emulates terminals too.
 (use-package term
   :ensure nil
   :hook
-  ((term-mode . (lambda () (setq-local global-hl-line-mode nil)))
+  ((term-mode . me/hl-line-mode-off)
    (term-mode . (lambda () (setq-local scroll-margin 0)))))
 #+END_SRC
 
