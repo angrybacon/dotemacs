@@ -1973,7 +1973,7 @@ commands.
     (set-face-attribute 'isearch nil
                         :background zenburn-blue
                         :foreground zenburn-blue-5)
-    (set-face-attribute 'isearch-lazy-highlight-face nil
+    (set-face-attribute 'lazy-highlight nil
                         :background zenburn-blue-5
                         :foreground zenburn-blue))
   (me/unboldify '(isearch lazy-highlight)))
