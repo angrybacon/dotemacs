@@ -26,7 +26,7 @@ Install Emacs 25 or above.
 #+BEGIN_SRC sh
 # MacOS
 brew tap d12frosted/emacs-plus
-brew install emacs-plus --with-no-title-bars --without-spacemacs-icon
+brew install emacs-plus --with-no-titlebar --without-spacemacs-icon
 
 # Windows
 choco install emacs64
