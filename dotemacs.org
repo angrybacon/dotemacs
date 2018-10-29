@@ -103,6 +103,7 @@ Here are what I consider better defaults as per my own experience.
 (mouse-avoidance-mode 'banish)                    ; Avoid collision of mouse with point
 (put 'downcase-region 'disabled nil)              ; Enable downcase-region
 (put 'upcase-region 'disabled nil)                ; Enable upcase-region
+(set-default-coding-systems 'utf-8)               ; Default to utf-8 encoding
 #+END_SRC
 
 Enable fullscreen.
