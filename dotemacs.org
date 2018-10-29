@@ -450,7 +450,7 @@ authoring documents with a fast and effective plain-text system.
   (zenburn-with-color-variables
     (set-face-attribute 'org-block nil :background zenburn-bg+05)
     (set-face-attribute 'org-list-dt nil :foreground zenburn-yellow))
-  (me/unboldify '(org-list-dt org-tag org-todo)))
+  (me/unboldify '(org-document-title org-list-dt org-tag org-todo)))
 
 (use-package org-src
   :ensure nil
