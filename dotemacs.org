@@ -93,6 +93,7 @@ Here are what I consider better defaults as per my own experience.
  uniquify-buffer-name-style 'forward              ; Uniquify buffer names
  window-combination-resize t                      ; Resize windows proportionally
  x-stretch-cursor t)                              ; Stretch cursor to the glyph width
+(cd "~/")                                         ; Move to the user directory
 (delete-selection-mode 1)                         ; Replace region when inserting text
 (display-time-mode 1)                             ; Enable time in the mode-line
 (fringe-mode 0)                                   ; Disable fringes
@@ -102,7 +103,6 @@ Here are what I consider better defaults as per my own experience.
 (mouse-avoidance-mode 'banish)                    ; Avoid collision of mouse with point
 (put 'downcase-region 'disabled nil)              ; Enable downcase-region
 (put 'upcase-region 'disabled nil)                ; Enable upcase-region
-(cd "~/")                                         ; Move to the user directory
 #+END_SRC
 
 Enable fullscreen.
