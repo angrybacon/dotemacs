@@ -412,20 +412,12 @@ authoring documents with a fast and effective plain-text system.
     "Construct the buffer name for a source editing buffer. See
 `org-src--construct-edit-buffer-name'."
     (format "*%s*" org-buffer-name))
-  (defun me/org-backward-paragraph-shifted ()
-    "See `org-backward-paragraph'. Support shift."
-    (interactive "^")
-    (org-backward-paragraph))
-  (defun me/org-forward-paragraph-shifted ()
-    "See `org-forward-paragraph'. Support shift."
-    (interactive "^")
-    (org-forward-paragraph))
   (defun me/org-set-ongoing-hydra-body ()
     (setq me/ongoing-hydra-body #'hydra-org/body))
   :bind
   (:map org-mode-map
-        ([remap backward-paragraph] . me/org-backward-paragraph-shifted)
-        ([remap forward-paragraph] . me/org-forward-paragraph-shifted)
+        ([remap backward-paragraph] . me/backward-paragraph-dwim)
+        ([remap forward-paragraph] . me/forward-paragraph-dwim)
         ("<C-return>" . nil)
         ("<C-S-down>" . nil)
         ("<C-S-up>" . nil)
