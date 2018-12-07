@@ -545,6 +545,11 @@ completion candidates.
 #+BEGIN_SRC emacs-lisp
 (use-package company
   :defer 1
+  :bind
+  (:map company-active-map
+        ("RET" . nil)
+        ([return] . nil)
+        ("<C-return>" . company-complete-selection))
   :config
   (global-company-mode 1)
   (setq-default
