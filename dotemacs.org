@@ -2490,6 +2490,12 @@ Turn on =auto-fill-mode= /almost/ everywhere.
 (use-package esh-mode
   :ensure nil
   :delight eshell-mode "EShell"
+  :preface
+  (defun me/eshell-bol-shifted ()
+    "See `eshell-bol'. Support shift."
+    (interactive "^")
+    (eshell-bol))
+  :bind (:map eshell-mode-map ([remap eshell-bol] . me/eshell-bol-shifted))
   :hook ((eshell-mode . me/hl-line-mode-off)
          (eshell-mode . (lambda () (setq-local scroll-margin 0)))))
 
