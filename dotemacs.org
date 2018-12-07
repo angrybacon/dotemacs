@@ -1465,16 +1465,19 @@ Group system-related commands.
 (defhydra hydra-system (:color blue)
   "
 ^
-^System^            ^Packages^          ^Processes^
-^──────^────────────^────────^──────────^─────────^─────────
-_q_ quit            _p_ list            _s_ list
-^^                  _P_ upgrade         ^^
-^^                  ^^                  ^^
+^System^            ^Packages^          ^Processes^         ^Shell^
+^──────^────────────^────────^──────────^─────────^─────────^─────^─────────────
+_q_ quit            _p_ list            _s_ list            _e_ eshell
+^^                  _P_ upgrade         ^^                  _t_ term
+^^                  ^^                  ^^                  _T_ ansi-term
 "
   ("q" nil)
+  ("e" eshell)
   ("p" paradox-list-packages)
   ("P" paradox-upgrade-packages)
-  ("s" list-processes))
+  ("s" list-processes)
+  ("t" term)
+  ("T" ansi-term))
 #+END_SRC
 
 [[./screenshots/hydra.system.png]]
