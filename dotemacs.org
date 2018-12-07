@@ -2487,6 +2487,10 @@ Turn on =auto-fill-mode= /almost/ everywhere.
 ** Shell and Terminal
 
 #+BEGIN_SRC emacs-lisp
+(use-package em-hist
+  :ensure nil
+  :config (setq-default eshell-hist-ignoredups t))
+
 (use-package esh-mode
   :ensure nil
   :delight eshell-mode "EShell"
@@ -2497,7 +2501,8 @@ Turn on =auto-fill-mode= /almost/ everywhere.
     (eshell-bol))
   :bind (:map eshell-mode-map ([remap eshell-bol] . me/eshell-bol-shifted))
   :hook ((eshell-mode . me/hl-line-mode-off)
-         (eshell-mode . (lambda () (setq-local scroll-margin 0)))))
+         (eshell-mode . (lambda () (setq-local scroll-margin 0))))
+  :config (setq-default eshell-scroll-to-bottom-on-input t))
 
 (use-package em-ls
   :ensure nil
