@@ -549,7 +549,9 @@ completion candidates.
   (:map company-active-map
         ("RET" . nil)
         ([return] . nil)
-        ("<C-return>" . company-complete-selection))
+        ("TAB" . company-complete-selection)
+        ([tab] . company-complete-selection)
+        ("<right>" . company-complete-common))
   :config
   (global-company-mode 1)
   (setq-default
