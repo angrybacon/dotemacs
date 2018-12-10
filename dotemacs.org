@@ -1477,7 +1477,7 @@ _q_ quit            _p_ list            _s_ list            _e_ eshell
 ^^                  ^^                  ^^                  _T_ ansi-term
 "
   ("q" nil)
-  ("e" eshell)
+  ("e" (eshell t))
   ("p" paradox-list-packages)
   ("P" paradox-upgrade-packages)
   ("s" list-processes)
