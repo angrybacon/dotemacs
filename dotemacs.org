@@ -1717,6 +1717,7 @@ general fun and profit.
 (use-package spaceline
   :demand t
   :config
+
   (spaceline-define-segment me/erc-track
     "Show the ERC buffers with new messages."
     (when (bound-and-true-p erc-track-mode)
@@ -1776,7 +1777,7 @@ general fun and profit.
   (spaceline-helm-mode 1)
 
   ;; Build the mode-lines
-  (spaceline-install
+  (spaceline-compile
     `((major-mode :face highlight-face)
       ((remote-host buffer-id line) :separator ":")
       ((flycheck-error flycheck-warning flycheck-info))
@@ -1786,7 +1787,7 @@ general fun and profit.
       ((projectile-root me/version-control) :separator ":")
       (workspace-number)
       (global :face highlight-face)))
-  (spaceline-install
+  (spaceline-compile
     'helm
     '((helm-buffer-id :face spaceline-read-only)
       (helm-number)
