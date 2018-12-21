@@ -1782,20 +1782,20 @@ general fun and profit.
       ((remote-host buffer-id line) :separator ":")
       ((flycheck-error flycheck-warning flycheck-info))
       (me/selection-info))
-    `((me/erc-track :face spaceline-highlight-face :when active)
+    `((me/erc-track :face 'spaceline-highlight-face :when active)
       (anzu)
       ((projectile-root me/version-control) :separator ":")
       (workspace-number)
       (global :face highlight-face)))
   (spaceline-compile
     'helm
-    '((helm-buffer-id :face spaceline-read-only)
+    '((helm-buffer-id :face 'spaceline-read-only)
       (helm-number)
       (me/helm-follow)
       (helm-prefix-argument))
-    '((me/erc-track :face spaceline-highlight-face :when active)
+    '((me/erc-track :face 'spaceline-highlight-face :when active)
       (workspace-number)
-      (global :face spaceline-read-only)))
+      (global :face 'spaceline-read-only)))
 
   ;; Customize the mode-line
   (zenburn-with-color-variables
