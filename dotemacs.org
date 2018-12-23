@@ -412,20 +412,12 @@ authoring documents with a fast and effective plain-text system.
     "Construct the buffer name for a source editing buffer. See
 `org-src--construct-edit-buffer-name'."
     (format "*%s*" org-buffer-name))
-  (defun me/org-backward-paragraph-shifted ()
-    "See `org-backward-paragraph'. Support shift."
-    (interactive "^")
-    (org-backward-paragraph))
-  (defun me/org-forward-paragraph-shifted ()
-    "See `org-forward-paragraph'. Support shift."
-    (interactive "^")
-    (org-forward-paragraph))
   (defun me/org-set-ongoing-hydra-body ()
     (setq me/ongoing-hydra-body #'hydra-org/body))
   :bind
   (:map org-mode-map
-        ([remap backward-paragraph] . me/org-backward-paragraph-shifted)
-        ([remap forward-paragraph] . me/org-forward-paragraph-shifted)
+        ([remap backward-paragraph] . me/backward-paragraph-dwim)
+        ([remap forward-paragraph] . me/forward-paragraph-dwim)
         ("<C-return>" . nil)
         ("<C-S-down>" . nil)
         ("<C-S-up>" . nil)
@@ -553,6 +545,13 @@ completion candidates.
 #+BEGIN_SRC emacs-lisp
 (use-package company
   :defer 1
+  :bind
+  (:map company-active-map
+        ("RET" . nil)
+        ([return] . nil)
+        ("TAB" . company-complete-selection)
+        ([tab] . company-complete-selection)
+        ("<right>" . company-complete-common))
   :config
   (global-company-mode 1)
   (setq-default
@@ -1473,16 +1472,19 @@ Group system-related commands.
 (defhydra hydra-system (:color blue)
   "
 ^
-^System^            ^Packages^          ^Processes^
-^──────^────────────^────────^──────────^─────────^─────────
-_q_ quit            _p_ list            _s_ list
-^^                  _P_ upgrade         ^^
-^^                  ^^                  ^^
+^System^            ^Packages^          ^Processes^         ^Shell^
+^──────^────────────^────────^──────────^─────────^─────────^─────^─────────────
+_q_ quit            _p_ list            _s_ list            _e_ eshell
+^^                  _P_ upgrade         ^^                  _t_ term
+^^                  ^^                  ^^                  _T_ ansi-term
 "
   ("q" nil)
+  ("e" (eshell t))
   ("p" paradox-list-packages)
   ("P" paradox-upgrade-packages)
-  ("s" list-processes))
+  ("s" list-processes)
+  ("t" term)
+  ("T" ansi-term))
 #+END_SRC
 
 [[./screenshots/hydra.system.png]]
@@ -1715,6 +1717,7 @@ general fun and profit.
 (use-package spaceline
   :demand t
   :config
+
   (spaceline-define-segment me/erc-track
     "Show the ERC buffers with new messages."
     (when (bound-and-true-p erc-track-mode)
@@ -1774,25 +1777,25 @@ general fun and profit.
   (spaceline-helm-mode 1)
 
   ;; Build the mode-lines
-  (spaceline-install
+  (spaceline-compile
     `((major-mode :face highlight-face)
       ((remote-host buffer-id line) :separator ":")
       ((flycheck-error flycheck-warning flycheck-info))
       (me/selection-info))
-    `((me/erc-track :face spaceline-highlight-face :when active)
+    `((me/erc-track :face 'spaceline-highlight-face :when active)
       (anzu)
       ((projectile-root me/version-control) :separator ":")
       (workspace-number)
       (global :face highlight-face)))
-  (spaceline-install
+  (spaceline-compile
     'helm
-    '((helm-buffer-id :face spaceline-read-only)
+    '((helm-buffer-id :face 'spaceline-read-only)
       (helm-number)
       (me/helm-follow)
       (helm-prefix-argument))
-    '((me/erc-track :face spaceline-highlight-face :when active)
+    '((me/erc-track :face 'spaceline-highlight-face :when active)
       (workspace-number)
-      (global :face spaceline-read-only)))
+      (global :face 'spaceline-read-only)))
 
   ;; Customize the mode-line
   (zenburn-with-color-variables
@@ -2492,12 +2495,23 @@ Turn on =auto-fill-mode= /almost/ everywhere.
 ** Shell and Terminal
 
 #+BEGIN_SRC emacs-lisp
+(use-package em-hist
+  :ensure nil
+  :config (setq-default eshell-hist-ignoredups t))
+
 (use-package esh-mode
   :ensure nil
   :delight eshell-mode "EShell"
+  :preface
+  (defun me/eshell-bol-shifted ()
+    "See `eshell-bol'. Support shift."
+    (interactive "^")
+    (eshell-bol))
+  :bind (:map eshell-mode-map ([remap eshell-bol] . me/eshell-bol-shifted))
   :hook
   ((eshell-mode . me/hl-line-mode-off)
-   (eshell-mode . (lambda () (setq-local scroll-margin 0)))))
+   (eshell-mode . (lambda () (setq-local scroll-margin 0))))
+  :config (setq-default eshell-scroll-to-bottom-on-input t))
 
 (use-package em-ls
   :ensure nil
