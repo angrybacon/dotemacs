@@ -2495,7 +2495,9 @@ Turn on =auto-fill-mode= /almost/ everywhere.
 (use-package esh-mode
   :ensure nil
   :delight eshell-mode "EShell"
-  :hook (eshell-mode . me/hl-line-mode-off))
+  :hook
+  ((eshell-mode . me/hl-line-mode-off)
+   (eshell-mode . (lambda () (setq-local scroll-margin 0)))))
 
 (use-package em-ls
   :ensure nil
