@@ -2675,7 +2675,10 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
   :hook
   ((prog-mode . whitespace-turn-on)
    (text-mode . whitespace-turn-on))
-  :config (setq-default whitespace-style '(face empty tab trailing)))
+  :config
+  (setq-default whitespace-style '(face empty indentation::space tab trailing))
+  (zenburn-with-color-variables
+    (set-face-attribute 'whitespace-indentation nil :background zenburn-bg+2))
 #+END_SRC
 
 -----
