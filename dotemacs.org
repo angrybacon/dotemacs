@@ -439,6 +439,7 @@ authoring documents with a fast and effective plain-text system.
   :ensure nil
   :after org
   :config
+  (set-face-attribute 'org-document-title nil :height 'unspecified)
   (zenburn-with-color-variables
     (set-face-attribute 'org-block nil :background zenburn-bg+05)
     (set-face-attribute 'org-list-dt nil :foreground zenburn-yellow))
