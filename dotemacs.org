@@ -703,9 +703,7 @@ little more.
 (use-package cus-edit
   :ensure nil
   :config
-  (set-face-attribute 'custom-group-tag nil
-                      :font me/font-family
-                      :height me/font-size-title)
+  (set-face-attribute 'custom-group-tag nil :font me/font-family :height me/font-size-title)
   (zenburn-with-color-variables
     (set-face-attribute 'custom-state nil :foreground zenburn-green+4))
   (me/unboldify '(custom-variable-tag)))
@@ -952,10 +950,7 @@ leaner, modular, and unchained from constraints of backward compatibility.
    helm-split-window-default-side 'left)
   (set-face-attribute 'helm-action nil :underline nil)
   (set-face-attribute 'helm-match nil :background nil)
-  (set-face-attribute 'helm-source-header nil
-                      :box nil
-                      :background nil
-                      :height me/font-size-title)
+  (set-face-attribute 'helm-source-header nil :box nil :background nil :height me/font-size-title)
   (zenburn-with-color-variables
     (set-face-attribute 'helm-prefarg nil :foreground zenburn-magenta)
     (set-face-attribute 'helm-selection nil :background zenburn-bg+2)
