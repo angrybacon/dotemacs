@@ -2639,6 +2639,7 @@ Git itself deserve to be called porcelains.
 (use-package magit-section
   :ensure nil
   :config
+  (set-face-attribute 'magit-section-heading nil :height me/font-size-title)
   (set-face-attribute 'magit-section-highlight nil :background nil)
   (me/unboldify '(magit-section-heading
                   magit-section-heading-selection
