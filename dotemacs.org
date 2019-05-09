@@ -957,7 +957,9 @@ leaner, modular, and unchained from constraints of backward compatibility.
                       :background nil
                       :height me/font-size-title)
   (zenburn-with-color-variables
-    (set-face-attribute 'helm-prefarg nil :foreground zenburn-magenta))
+    (set-face-attribute 'helm-prefarg nil :foreground zenburn-magenta)
+    (set-face-attribute 'helm-selection nil :background zenburn-bg+2)
+    (set-face-attribute 'helm-visible-mark nil :background zenburn-bg+1 :foreground 'unspecified))
   (me/unboldify '(helm-match helm-source-header)))
 #+END_SRC
 
@@ -965,14 +967,15 @@ Helm sub-modules can be customized separately. Many basic Emacs commands have
 their Helm equivalents.
 
 - *TODO*: Do I actually want to split all of these?
-- *TODO*: Help buffer resizes the frame when killed.
+- *TODO*: Help buffer resizes the frame.
+- *TODO*: Hide the buffer size column.
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm-bookmarks
   :ensure nil
   :after helm
   :config
-  ;; NOTE: See https://github.com/bbatsov/zenburn-emacs/pull/279.
+  ;; TODO: Make a pull request.
   (set-face-attribute 'helm-bookmark-directory nil
                       :foreground 'unspecified
                       :inherit 'dired-directory))
@@ -987,9 +990,8 @@ their Helm equivalents.
   (set-face-attribute 'helm-buffer-directory nil :inherit 'dired-directory)
   (set-face-attribute 'helm-non-file-buffer nil :inherit 'shadow)
   (zenburn-with-color-variables
-    (set-face-attribute 'helm-buffer-size nil :foreground zenburn-fg-1))
-
-  ;; NOTE: See https://github.com/bbatsov/zenburn-emacs/pull/279.
+    (set-face-attribute 'helm-buffer-size nil :foreground zenburn-yellow-2))
+  ;; TODO: Make a pull request.
   (set-face-attribute 'helm-buffer-directory nil
                       :background 'unspecified
                       :foreground 'unspecified
@@ -1025,15 +1027,9 @@ their Helm equivalents.
 
   ;; NOTE: See https://github.com/bbatsov/zenburn-emacs/pull/279.
   (zenburn-with-color-variables
-    (set-face-attribute 'helm-ff-dotted-directory nil
-                        :background nil
-                        :foreground zenburn-fg-1)
-    (set-face-attribute 'helm-ff-directory nil
-                        :foreground 'unspecified
-                        :inherit 'dired-directory)
-    (set-face-attribute 'helm-ff-dirs nil
-                        :foreground 'unspecified
-                        :inherit 'dired-directory)))
+    (set-face-attribute 'helm-ff-dotted-directory nil :background nil :foreground zenburn-fg-1)
+    (set-face-attribute 'helm-ff-directory nil :foreground 'unspecified :inherit 'dired-directory)
+    (set-face-attribute 'helm-ff-dirs nil :foreground 'unspecified :inherit 'dired-directory)))
 
 (use-package helm-grep
   :ensure nil
@@ -2582,6 +2578,8 @@ Git itself deserve to be called porcelains.
                   git-commit-comment-branch-remote
                   git-commit-comment-heading)))
 #+END_SRC
+
+- *TODO*: Highlight current section instead of the heading.
 
 #+BEGIN_SRC emacs-lisp
 (use-package magit
