@@ -2623,9 +2623,6 @@ Git itself deserve to be called porcelains.
   ;; Customize faces
   (set-face-attribute 'magit-diff-file-heading-highlight nil :background nil)
   (set-face-attribute 'magit-diff-hunk-region nil :inherit 'region)
-  (set-face-attribute 'magit-popup-heading nil :height me/font-size-title)
-  (set-face-attribute 'magit-section-heading nil :height me/font-size-title)
-  (set-face-attribute 'magit-section-highlight nil :background nil)
   (me/unboldify '(magit-branch-current
                   magit-branch-local
                   magit-branch-remote
@@ -2646,17 +2643,10 @@ Git itself deserve to be called porcelains.
                   magit-diff-file-heading-highlight
                   magit-diff-file-heading-selection)))
 
-(use-package magit-popup
-  :ensure nil
-  :config
-  (me/unboldify '(magit-popup-argument
-                  magit-popup-heading
-                  magit-popup-key
-                  magit-popup-option-value)))
-
 (use-package magit-section
   :ensure nil
   :config
+  (set-face-attribute 'magit-section-highlight nil :background nil)
   (me/unboldify '(magit-section-heading
                   magit-section-heading-selection
                   magit-section-secondary-heading)))
