@@ -368,6 +368,8 @@ authoring documents with a fast and effective plain-text system.
   :config
   (setq-default
    org-descriptive-links nil
+   org-fontify-done-headline t
+   org-fontify-whole-heading-line t
    org-support-shift-select 'always
    org-startup-folded nil
    org-startup-truncated nil)
@@ -375,7 +377,8 @@ authoring documents with a fast and effective plain-text system.
 
 (use-package org-faces
   :ensure nil
-  :after org)
+  :after org
+  :config (setq-default org-fontify-quote-and-verse-blocks t))
 
 (use-package org-src
   :ensure nil
