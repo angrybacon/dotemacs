@@ -164,72 +164,14 @@ and =user-mail-address=. This is also where you want your API tokens to live.
 
 * Theme
 
-The face for italic text is underlined when the font does not support slant by
-default. I don't like it.
+Load theme and fix some high-level faces to match my personal preferences.
 
 #+BEGIN_SRC emacs-lisp
-(set-face-attribute 'italic nil :underline nil)
-#+END_SRC
-
-I don't like bold text, mostly because it looks like crap on Windows. Since
-faces can be defined in every packages, I need to unboldify after that specfic
-package has been loaded. That function should be called after the provided faces
-have been defined.
-
-#+BEGIN_SRC emacs-lisp
-(defun me/unboldify (&optional faces)
-  "Set the weight property of FACES to `normal'.
-If FACES is not provided or nil, use `face-list' instead."
-  (interactive)
-  (mapc (lambda (face)
-          (when (eq (face-attribute face :weight) 'bold)
-            (set-face-attribute face nil :weight 'normal)))
-        (or faces (face-list))))
-#+END_SRC
-
-Load =zenburn-theme= and fix some high-level faces to match my personal
-preferences.
-
-#+BEGIN_SRC emacs-lisp
-(use-package zenburn-theme
+(use-package doom-themes
   :demand t
   :config
-  (load-theme 'zenburn t)
-  (set-face-attribute 'default nil :font me/font-family :height me/font-size-default)
-  (set-face-attribute 'fixed-pitch nil :font me/font-family)
-  (set-face-attribute 'font-lock-comment-face nil :italic t)
-  (set-face-attribute 'font-lock-doc-face nil :italic t)
-  (zenburn-with-color-variables
-    (set-face-attribute 'button nil :foreground zenburn-yellow-2)
-    (set-face-attribute 'help-argument-name nil :foreground zenburn-orange :italic nil)
-    (set-face-attribute 'highlight nil :background zenburn-yellow :foreground zenburn-fg-1)
-    (set-face-attribute 'header-line nil
-                        :box `(:line-width 1 :color ,zenburn-bg-1)
-                        :height me/font-size-header-line)
-    (set-face-attribute 'mode-line nil
-                        :box `(:line-width 1 :color ,zenburn-bg-1)
-                        :foreground zenburn-bg+3
-                        :height me/font-size-mode-line)
-    (set-face-attribute 'mode-line-inactive nil
-                        :box `(:line-width 1 :color ,zenburn-bg-05)
-                        :foreground zenburn-bg+3
-                        :height me/font-size-mode-line)
-    (set-face-attribute 'region nil
-                        :background zenburn-fg-1
-                        :distant-foreground 'unspecified)
-    (set-face-attribute 'vertical-border nil :foreground zenburn-bg))
-  (me/unboldify '(bold
-                  error
-                  font-lock-builtin-face
-                  font-lock-keyword-face
-                  font-lock-negation-char-face
-                  font-lock-regexp-grouping-backslash
-                  font-lock-regexp-grouping-construct
-                  font-lock-warning-face
-                  link
-                  mode-line-buffer-id
-                  success
-                  warning)))
+  (setq-default doom-themes-enable-bold nil)
+  (load-theme 'doom-one t))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -318,8 +260,7 @@ HTML mode is defined in =sgml-mode.el=.
   (setq-default
    js2-idle-timer-delay 0
    js2-mode-show-parse-errors nil
-   js2-mode-show-strict-warnings nil)
-  (me/unboldify '(js2-error)))
+   js2-mode-show-strict-warnings nil))
 
 (use-package json-mode
   :delight json-mode "JSON"
@@ -386,9 +327,7 @@ HTML mode is defined in =sgml-mode.el=.
   (unbind-key "M-<up>" markdown-mode-map)
   (setq-default
    markdown-asymmetric-header t
-   markdown-split-window-direction 'right)
-  (me/unboldify '(markdown-header-face))
-  (set-face-attribute 'markdown-table-face nil :height me/font-size-small))
+   markdown-split-window-direction 'right))
 #+END_SRC
 
 ** Org
@@ -437,13 +376,7 @@ authoring documents with a fast and effective plain-text system.
 
 (use-package org-faces
   :ensure nil
-  :after org
-  :config
-  (set-face-attribute 'org-document-title nil :height 'unspecified)
-  (zenburn-with-color-variables
-    (set-face-attribute 'org-block nil :background zenburn-bg+05)
-    (set-face-attribute 'org-list-dt nil :foreground zenburn-yellow))
-  (me/unboldify '(org-document-title org-list-dt org-tag org-todo)))
+  :after org)
 
 (use-package org-src
   :ensure nil
@@ -700,13 +633,7 @@ This merely changes face attributes. It also /Zenburn/ customization buffers a
 little more.
 
 #+BEGIN_SRC emacs-lisp
-(use-package cus-edit
-  :ensure nil
-  :config
-  (set-face-attribute 'custom-group-tag nil :font me/font-family :height me/font-size-title)
-  (zenburn-with-color-variables
-    (set-face-attribute 'custom-state nil :foreground zenburn-green+4))
-  (me/unboldify '(custom-variable-tag)))
+(use-package cus-edit :ensure nil)
 #+END_SRC
 
 ** Daemon
@@ -742,8 +669,7 @@ Define words using Wordnik.
 Translage using Google.
 
 #+BEGIN_SRC emacs-lisp
-(use-package google-translate
-  :config (me/unboldify '(google-translate-translation-face)))
+(use-package google-translate)
 #+END_SRC
 
 ** Diff
@@ -751,40 +677,12 @@ Translage using Google.
 Ediff is a visual interface to Unix =diff=.
 
 #+BEGIN_SRC emacs-lisp
-(use-package diff-mode
-  :ensure nil
-  :config
-  (set-face-attribute 'diff-added nil :background nil)
-  (set-face-attribute 'diff-removed nil :background nil))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(use-package ediff-init
-  :ensure nil
-  :config
-  (me/unboldify '(ediff-fine-diff-A
-                  ediff-fine-diff-B
-                  ediff-fine-diff-C)))
-
 (use-package ediff-wind
   :ensure nil
   :config
   (setq-default
    ediff-split-window-function #'split-window-horizontally
    ediff-window-setup-function #'ediff-setup-windows-plain))
-#+END_SRC
-
-- *TODO*: Make a pull request over https://github.com/bbatsov/zenburn-emacs.
-
-#+BEGIN_SRC emacs-lisp
-(use-package smerge-mode
-  :ensure nil
-  :config
-  (zenburn-with-color-variables
-    (set-face-attribute 'smerge-mine nil :background zenburn-red-2)
-    (set-face-attribute 'smerge-other nil :background zenburn-green)
-    (set-face-attribute 'smerge-refined-added nil :background zenburn-green-1)
-    (set-face-attribute 'smerge-refined-removed nil :background zenburn-red-4)))
 #+END_SRC
 
 ** Dired
@@ -947,15 +845,7 @@ leaner, modular, and unchained from constraints of backward compatibility.
   (setq-default
    helm-always-two-windows t
    helm-display-header-line nil
-   helm-split-window-default-side 'left)
-  (set-face-attribute 'helm-action nil :underline nil)
-  (set-face-attribute 'helm-match nil :background nil)
-  (set-face-attribute 'helm-source-header nil :box nil :background nil :height me/font-size-title)
-  (zenburn-with-color-variables
-    (set-face-attribute 'helm-prefarg nil :foreground zenburn-magenta)
-    (set-face-attribute 'helm-selection nil :background zenburn-bg+2)
-    (set-face-attribute 'helm-visible-mark nil :background zenburn-bg+1 :foreground 'unspecified))
-  (me/unboldify '(helm-match helm-source-header)))
+   helm-split-window-default-side 'left))
 #+END_SRC
 
 Helm sub-modules can be customized separately. Many basic Emacs commands have
@@ -966,31 +856,13 @@ their Helm equivalents.
 - *TODO*: Hide the buffer size column.
 
 #+BEGIN_SRC emacs-lisp
-(use-package helm-bookmarks
-  :ensure nil
-  :after helm
-  :config
-  ;; TODO: Make a pull request.
-  (set-face-attribute 'helm-bookmark-directory nil
-                      :foreground 'unspecified
-                      :inherit 'dired-directory))
-
 (use-package helm-buffers
   :ensure nil
   :after helm
   :config
   (setq-default
    helm-buffers-fuzzy-matching t
-   helm-buffer-max-length nil)
-  (set-face-attribute 'helm-buffer-directory nil :inherit 'dired-directory)
-  (set-face-attribute 'helm-non-file-buffer nil :inherit 'shadow)
-  (zenburn-with-color-variables
-    (set-face-attribute 'helm-buffer-size nil :foreground zenburn-yellow-2))
-  ;; TODO: Make a pull request.
-  (set-face-attribute 'helm-buffer-directory nil
-                      :background 'unspecified
-                      :foreground 'unspecified
-                      :inherit 'dired-directory))
+   helm-buffer-max-length nil))
 
 (use-package helm-color
   :ensure nil
@@ -1004,10 +876,7 @@ their Helm equivalents.
   :ensure nil
   :after helm
   :bind ([remap execute-extended-command] . helm-M-x)
-  :config
-  (setq-default helm-M-x-fuzzy-match t)
-  (zenburn-with-color-variables
-    (set-face-attribute 'helm-M-x-key nil :foreground zenburn-orange :underline nil)))
+  :config (setq-default helm-M-x-fuzzy-match t))
 
 (use-package helm-files
   :ensure nil
@@ -1017,21 +886,7 @@ their Helm equivalents.
   (setq-default
    helm-ff-no-preselect t
    helm-ff-skip-boring-files t
-   helm-find-file-ignore-thing-at-point t)
-  (me/unboldify '(helm-ff-directory helm-ff-symlink))
-
-  ;; NOTE: See https://github.com/bbatsov/zenburn-emacs/pull/279.
-  (zenburn-with-color-variables
-    (set-face-attribute 'helm-ff-dotted-directory nil :background nil :foreground zenburn-fg-1)
-    (set-face-attribute 'helm-ff-directory nil :foreground 'unspecified :inherit 'dired-directory)
-    (set-face-attribute 'helm-ff-dirs nil :foreground 'unspecified :inherit 'dired-directory)))
-
-(use-package helm-grep
-  :ensure nil
-  :after helm
-  :config
-  (zenburn-with-color-variables
-    (set-face-attribute 'helm-grep-lineno nil :foreground zenburn-yellow-2)))
+   helm-find-file-ignore-thing-at-point t))
 
 (use-package helm-imenu
   :ensure nil
@@ -1079,10 +934,7 @@ their Helm equivalents.
   (([remap isearch-forward] . helm-occur)
    :map helm-moccur-map
    ("<left>" . backward-char)
-   ("<right>" . forward-char))
-  :config
-  (zenburn-with-color-variables
-    (set-face-attribute 'helm-moccur-buffer nil :foreground zenburn-blue)))
+   ("<right>" . forward-char)))
 #+END_SRC
 
 ** Helm Plugins
@@ -1548,25 +1400,9 @@ _q_ quit            _b_ balance         _-_ out
    erc-insert-timestamp-function 'erc-insert-timestamp-left
    erc-lurker-hide-list '("JOIN" "PART" "QUIT")
    erc-prompt (format "%18s" ">")
-   erc-timestamp-format nil)
-  (set-face-attribute 'erc-prompt-face nil :background nil)
-  (zenburn-with-color-variables
-    (set-face-attribute 'erc-timestamp-face nil :foreground zenburn-fg-1))
-  (me/unboldify '(erc-bold-face
-                  erc-button
-                  erc-nick-default-face
-                  erc-my-nick-face
-                  erc-my-nick-prefix-face
-                  erc-nick-prefix-face
-                  erc-prompt-face)))
+   erc-timestamp-format nil))
 
-(use-package erc-button
-  :ensure nil
-  :config (set-face-attribute 'erc-button nil :inherit 'button))
-
-(use-package erc-match
-  :ensure nil
-  :config (me/unboldify '(erc-current-nick-face)))
+(use-package erc-match :ensure nil)
 #+END_SRC
 
 Colorize nicks with unique colors.
@@ -1615,11 +1451,7 @@ binaries (see [[./README.org][README.org]]).
   (setq-default
    flycheck-check-syntax-automatically '(save mode-enabled)
    flycheck-disabled-checkers '(emacs-lisp-checkdoc)
-   flycheck-display-errors-delay .3)
-  (zenburn-with-color-variables
-    (set-face-attribute 'flycheck-error nil :underline zenburn-red)
-    (set-face-attribute 'flycheck-info nil :underline zenburn-blue+1)
-    (set-face-attribute 'flycheck-warning nil :underline zenburn-orange)))
+   flycheck-display-errors-delay .3))
 #+END_SRC
 
 ** Mode-Line
@@ -1692,122 +1524,21 @@ allow it to use the newly changed strings.
   (advice-add 'powerline-minor-mode :around #'me/delight-powerline-minor-mode))
 #+END_SRC
 
-*** Mode-Line / Spaceline
-
-Spaceline, is a mode-line configuration framework. Like what =powerline= does
-but at a shallower level. It's still very customizable nonetheless.
-
-#+BEGIN_QUOTE
-This is the package that provides [[http://spacemacs.org/][Spacemacs]] with its
-famous mode-line theme. It has been extracted as an independent package for
-general fun and profit.
-
-[[https://github.com/TheBB/spaceline][Eivind Fonn]]
-#+END_QUOTE
+*** Mode-Line / Doom-Modeline
 
 #+BEGIN_SRC emacs-lisp
-(use-package spaceline
-  :demand t
-  :config
+(use-package doom-modeline
+  :hook (after-init . doom-modeline-mode))
 
-  (spaceline-define-segment me/erc-track
-    "Show the ERC buffers with new messages."
-    (when (bound-and-true-p erc-track-mode)
-      (mapcar (lambda (buffer)
-                (format "%s%s%s"
-                        (buffer-name (pop buffer))
-                        erc-track-showcount-string
-                        (pop buffer)))
-              erc-modified-channels-alist)))
-
-  (spaceline-define-segment me/helm-follow
-    "Show `helm-follow-mode' status."
-    (if (and (bound-and-true-p helm-alive-p)
-             spaceline--helm-current-source
-             (eq 1 (cdr (assq 'follow spaceline--helm-current-source))))
-        (propertize (mdi "eye") 'face 'success)
-      (propertize (mdi "eye-off") 'face 'warning)))
-
-  (spaceline-define-segment me/selection-info
-    "Show the size of current region."
-    (when mark-active
-      (let ((characters (- (region-end) (region-beginning)))
-            (rows (count-lines (region-beginning) (min (1+ (region-end)) (point-max))))
-            (columns (1+ (abs (- (spaceline--column-number-at-pos (region-end))
-                                 (spaceline--column-number-at-pos (region-beginning)))))))
-        (cond
-         ((bound-and-true-p rectangle-mark-mode)
-          (format "%d %s %d" (1- columns) (mdi "arrow-expand-all") rows))
-         ((> rows 1)
-          (format "%d" (if (eq (current-column) 0) (1- rows) rows)))
-         (t (format "%d" characters))))))
-
-  (spaceline-define-segment me/version-control
-    "Show the current version control branch."
-    (when vc-mode
-      (substring vc-mode (+ 2 (length (symbol-name (vc-backend buffer-file-name))))))))
-#+END_SRC
-
-- *FIXME*: Projectile segment doesn't use submodules.
-- *FIXME*: Can't load =spaceline-config= through =:after=.
-
-#+BEGIN_SRC emacs-lisp
-(use-package spaceline-config
-  :demand t
+(use-package doom-modeline-core
   :ensure nil
+  :hook (after-init . doom-modeline-mode)
   :config
-
-  ;; Configure the mode-line
   (setq-default
-   mode-line-format '("%e" (:eval (spaceline-ml-main)))
-   powerline-default-separator 'wave
-   powerline-height 20
-   spaceline-highlight-face-func 'spaceline-highlight-face-modified
-   spaceline-flycheck-bullet (format "%s %s" (mdi "record") "%s")
-   spaceline-separator-dir-left '(left . left)
-   spaceline-separator-dir-right '(right . right))
-  (spaceline-helm-mode 1)
-
-  ;; Build the mode-lines
-  (spaceline-compile
-    `((major-mode :face highlight-face)
-      ((remote-host buffer-id line) :separator ":")
-      ((flycheck-error flycheck-warning flycheck-info))
-      (me/selection-info))
-    `((me/erc-track :face 'spaceline-highlight-face :when active)
-      (anzu)
-      ((projectile-root me/version-control) :separator ":")
-      (workspace-number)
-      (global :face highlight-face)))
-  (spaceline-compile
-    'helm
-    '((helm-buffer-id :face 'spaceline-read-only)
-      (helm-number)
-      (me/helm-follow)
-      (helm-prefix-argument))
-    '((me/erc-track :face 'spaceline-highlight-face :when active)
-      (workspace-number)
-      (global :face 'spaceline-read-only)))
-
-  ;; Customize the mode-line
-  (zenburn-with-color-variables
-    (set-face-attribute 'powerline-active2 nil :background zenburn-bg+05)
-    (set-face-attribute 'powerline-inactive2 nil :background zenburn-bg)
-    (set-face-attribute 'spaceline-flycheck-error nil :foreground zenburn-red)
-    (set-face-attribute 'spaceline-flycheck-info nil :foreground zenburn-blue+1)
-    (set-face-attribute 'spaceline-flycheck-warning nil :foreground zenburn-orange)
-    (set-face-attribute 'spaceline-highlight-face nil
-                        :background zenburn-yellow
-                        :foreground zenburn-fg-1)
-    (set-face-attribute 'spaceline-modified nil
-                        :background zenburn-red
-                        :foreground zenburn-red-4)
-    (set-face-attribute 'spaceline-read-only nil
-                        :background zenburn-blue+1
-                        :foreground zenburn-blue-5)
-    (set-face-attribute 'spaceline-unmodified nil
-                        :background zenburn-green-1
-                        :foreground zenburn-green+4)))
+   doom-modeline-buffer-encoding nil
+   doom-modeline-buffer-file-name-style 'relative-to-project
+   doom-modeline-enable-word-count t
+   doom-modeline-icon nil))
 #+END_SRC
 
 ** Navigation
@@ -1861,11 +1592,7 @@ jump from one paragraph to another.
 Pulse temporarily highlights the background color of a line or region.
 
 #+BEGIN_SRC emacs-lisp
-(use-package pulse
-  :ensure nil
-  :config
-  (zenburn-with-color-variables
-    (set-face-attribute 'pulse-highlight-start-face nil :background zenburn-red+1)))
+(use-package pulse :ensure nil)
 #+END_SRC
 
 *** Navigation / Replace
@@ -1899,15 +1626,7 @@ mode-line in various search modes.
   (global-anzu-mode 1)
   (setq-default
    anzu-cons-mode-line-p nil
-   anzu-replace-to-string-separator (mdi "arrow-right" t))
-  (zenburn-with-color-variables
-    (set-face-attribute 'anzu-replace-highlight nil
-                        :background zenburn-red-4
-                        :foreground zenburn-red+1)
-    (set-face-attribute 'anzu-replace-to nil
-                        :background zenburn-green-1
-                        :foreground zenburn-green+4))
-  (me/unboldify '(anzu-mode-line anzu-mode-line-no-match)))
+   anzu-replace-to-string-separator (mdi "arrow-right" t)))
 #+END_SRC
 
 *** Navigation / Scroll
@@ -1964,15 +1683,7 @@ commands.
   (setq-default
    isearch-allow-scroll t
    lazy-highlight-cleanup nil
-   lazy-highlight-initial-delay 0)
-  (zenburn-with-color-variables
-    (set-face-attribute 'isearch nil
-                        :background zenburn-blue
-                        :foreground zenburn-blue-5)
-    (set-face-attribute 'lazy-highlight nil
-                        :background zenburn-blue-5
-                        :foreground zenburn-blue))
-  (me/unboldify '(isearch lazy-highlight)))
+   lazy-highlight-initial-delay 0))
 #+END_SRC
 
 ** OS-Specific
@@ -2017,13 +1728,7 @@ when dealing with mismatched parentheses.
 
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode)
-  :config
-  (zenburn-with-color-variables
-    (set-face-attribute 'rainbow-delimiters-mismatched-face nil
-                        :foreground zenburn-red-4)
-    (set-face-attribute 'rainbow-delimiters-unmatched-face nil
-                        :foreground zenburn-red-4)))
+  :hook (prog-mode . rainbow-delimiters-mode))
 #+END_SRC
 
 I am still looking for the perfect parenthesis management setup as of
@@ -2411,10 +2116,7 @@ Highlight line under point.
   :preface
   (defun me/hl-line-mode-off ()
     (setq-local global-hl-line-mode nil))
-  :config
-  (global-hl-line-mode 1))
-  (zenburn-with-color-variables
-    (set-face-attribute 'hl-line nil :background zenburn-bg+1))
+  :config (global-hl-line-mode 1))
 #+END_SRC
 
 Originally, =midnight= is used to /run something at midnight/. I use its feature that
@@ -2504,18 +2206,6 @@ Turn on =auto-fill-mode= /almost/ everywhere.
   ((eshell-mode . me/hl-line-mode-off)
    (eshell-mode . (lambda () (setq-local scroll-margin 0))))
   :config (setq-default eshell-scroll-to-bottom-on-input t))
-
-(use-package em-ls
-  :ensure nil
-  :config
-  (me/unboldify '(eshell-ls-directory
-                  eshell-ls-executable
-                  eshell-ls-special
-                  eshell-ls-symlink)))
-
-(use-package em-prompt
-  :ensure nil
-  :config (me/unboldify '(eshell-prompt)))
 #+END_SRC
 
 Yes, Emacs emulates terminals too.
@@ -2566,15 +2256,8 @@ Git itself deserve to be called porcelains.
     (setq fill-column 72)
     (setq-local comment-auto-fill-only-comments nil))
   :hook (git-commit-mode . me/git-commit-auto-fill-everywhere)
-  :config
-  (setq-default git-commit-summary-max-length 50)
-  (me/unboldify '(git-commit-comment-action
-                  git-commit-comment-branch-local
-                  git-commit-comment-branch-remote
-                  git-commit-comment-heading)))
+  :config (setq-default git-commit-summary-max-length 50))
 #+END_SRC
-
-- *TODO*: Highlight current section instead of the heading.
 
 #+BEGIN_SRC emacs-lisp
 (use-package magit
@@ -2594,8 +2277,6 @@ Git itself deserve to be called porcelains.
             nil)
            (t '(display-buffer-same-window)))))
   :config
-
-  ;; Use better defaults
   (setq-default
    magit-display-buffer-function 'me/magit-display-buffer-same
    magit-diff-highlight-hunk-body nil
@@ -2605,45 +2286,19 @@ Git itself deserve to be called porcelains.
    magit-popup-display-buffer-action '((display-buffer-same-window))
    magit-refs-show-commit-count 'all
    magit-section-show-child-count t)
-
-  ;; Customize lighters
   (delight
    '((magit-diff-mode "Magit Diff")
      (magit-log-mode "Magit Log")
      (magit-popup-mode "Magit Popup")
-     (magit-status-mode "Magit Status")))
+     (magit-status-mode "Magit Status"))))
 
-  ;; Customize faces
-  (set-face-attribute 'magit-diff-file-heading-highlight nil :background nil)
-  (set-face-attribute 'magit-diff-hunk-region nil :inherit 'region)
-  (me/unboldify '(magit-branch-current
-                  magit-branch-local
-                  magit-branch-remote
-                  magit-head
-                  magit-refname
-                  magit-refname-stash
-                  magit-refname-wip
-                  magit-tag)))
+(use-package magit-blame :ensure nil)
 
-(use-package magit-blame
-  :ensure nil
-  :config (me/unboldify '(magit-blame-summary)))
-
-(use-package magit-diff
-  :ensure nil
-  :config
-  (me/unboldify '(magit-diff-file-heading
-                  magit-diff-file-heading-highlight
-                  magit-diff-file-heading-selection)))
+(use-package magit-diff :ensure nil)
 
 (use-package magit-section
   :ensure nil
-  :config
-  (set-face-attribute 'magit-section-heading nil :height me/font-size-title)
-  (set-face-attribute 'magit-section-highlight nil :background nil)
-  (me/unboldify '(magit-section-heading
-                  magit-section-heading-selection
-                  magit-section-secondary-heading)))
+  :config (remove-hook 'magit-section-highlight-hook #'magit-section-highlight))
 
 (use-package gitattributes-mode :delight gitattributes-mode "Git Attributes")
 (use-package gitconfig-mode :delight gitconfig-mode "Git Config")
@@ -2661,10 +2316,7 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
   :hook
   ((prog-mode . whitespace-turn-on)
    (text-mode . whitespace-turn-on))
-  :config
-  (setq-default whitespace-style '(face empty indentation::space tab trailing))
-  (zenburn-with-color-variables
-    (set-face-attribute 'whitespace-indentation nil :background zenburn-bg+2)))
+  :config (setq-default whitespace-style '(face empty indentation::space tab trailing)))
 #+END_SRC
 
 -----
