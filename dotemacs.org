@@ -170,7 +170,21 @@ Load theme and fix some high-level faces to match my personal preferences.
   :demand t
   :config
   (setq-default doom-themes-enable-bold nil)
-  (load-theme 'doom-one t))
+  (load-theme 'doom-one t)
+
+  (with-eval-after-load 'faces
+    (set-face-attribute 'default nil :font me/font-family :height me/font-size-default))
+
+  (with-eval-after-load 'font-lock
+    (set-face-attribute 'font-lock-doc-face nil :italic t))
+
+  (with-eval-after-load 'helm
+    (set-face-attribute 'helm-source-header nil :background 'unspecified))
+
+  (with-eval-after-load 'magit-diff
+    (set-face-attribute 'magit-diff-added nil :background 'unspecified)
+    (set-face-attribute 'magit-diff-hunk-region nil :inherit 'region)
+    (set-face-attribute 'magit-diff-removed nil :background 'unspecified)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
