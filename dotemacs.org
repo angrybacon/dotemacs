@@ -635,7 +635,9 @@ This merely changes face attributes. It also /Zenburn/ customization buffers a
 little more.
 
 #+BEGIN_SRC emacs-lisp
-(use-package cus-edit :ensure nil)
+(use-package cus-edit
+  :ensure nil
+  :config (setq-default custom-unlispify-tag-names nil))
 #+END_SRC
 
 ** Daemon
