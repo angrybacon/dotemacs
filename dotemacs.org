@@ -936,7 +936,7 @@ their Helm equivalents.
   :after helm
   :bind
   (([remap isearch-forward] . helm-occur)
-   :map helm-moccur-map
+   :map helm-occur-map
    ("<left>" . backward-char)
    ("<right>" . forward-char)))
 #+END_SRC
