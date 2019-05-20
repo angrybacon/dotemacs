@@ -1541,9 +1541,23 @@ allow it to use the newly changed strings.
 
 *** Mode-Line / Doom-Modeline
 
+- *TOFIX*: Fix =buffer-info= segment.
+
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
-  :hook (after-init . doom-modeline-mode))
+  :hook (after-init . doom-modeline-mode)
+  :init
+  (doom-modeline-def-segment me/buffer-position
+    "The buffer position information."
+    (let ((active (doom-modeline--active)))
+      (propertize (concat (doom-modeline-whitespace)
+                          (format-mode-line "%l:%c")
+                          (doom-modeline-whitespace))
+                  'face (if active 'mode-line 'mode-line-inactive))))
+  :config
+  (doom-modeline-def-modeline 'main
+    '(bar " " buffer-info-simple remote-host me/buffer-position selection-info)
+    '(irc matches debug lsp input-method major-mode process vcs checker window-number workspace-name)))
 
 (use-package doom-modeline-core
   :ensure nil
@@ -1552,6 +1566,10 @@ allow it to use the newly changed strings.
    doom-modeline-buffer-file-name-style 'relative-to-project
    doom-modeline-enable-word-count t
    doom-modeline-icon nil))
+
+(use-package doom-modeline-segments
+  :ensure nil
+  :config (setq-default doom-modeline-percent-position nil))
 #+END_SRC
 
 ** Navigation
