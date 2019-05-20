@@ -1547,10 +1547,8 @@ allow it to use the newly changed strings.
 
 (use-package doom-modeline-core
   :ensure nil
-  :hook (after-init . doom-modeline-mode)
   :config
   (setq-default
-   doom-modeline-buffer-encoding nil
    doom-modeline-buffer-file-name-style 'relative-to-project
    doom-modeline-enable-word-count t
    doom-modeline-icon nil))
