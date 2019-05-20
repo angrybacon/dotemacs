@@ -1542,6 +1542,8 @@ allow it to use the newly changed strings.
 *** Mode-Line / Doom-Modeline
 
 - *TOFIX*: Fix =buffer-info= segment.
+- *TOFIX*: Fix =helm-follow= segment.
+- *TOFIX*: Fix =helm-prefix-argument= segment.
 
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
@@ -1555,6 +1557,9 @@ allow it to use the newly changed strings.
                           (doom-modeline-whitespace))
                   'face (if active 'mode-line 'mode-line-inactive))))
   :config
+  (doom-modeline-def-modeline 'helm
+    '(bar " " helm-buffer-id helm-follow helm-prefix-argument)
+    '(helm-number))
   (doom-modeline-def-modeline 'main
     '(bar " " buffer-info-simple remote-host me/buffer-position selection-info)
     '(irc matches debug lsp input-method major-mode process vcs checker window-number workspace-name)))
