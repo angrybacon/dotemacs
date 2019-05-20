@@ -69,7 +69,7 @@ Here are what I consider better defaults as per my own experience.
  ad-redefinition-action 'accept                   ; Silence warnings for redefinition
  auto-window-vscroll nil                          ; Lighten vertical scroll
  confirm-kill-emacs 'yes-or-no-p                  ; Confirm before exiting Emacs
- cursor-in-non-selected-windows t                 ; Hide the cursor in inactive windows
+ cursor-in-non-selected-windows nil               ; Hide the cursor in inactive windows
  delete-by-moving-to-trash t                      ; Delete files to trash
  display-time-default-load-average nil            ; Don't display load average
  display-time-format "%H:%M"                      ; Format the time string
