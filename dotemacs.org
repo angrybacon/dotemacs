@@ -171,16 +171,14 @@ Load theme and fix some high-level faces to match my personal preferences.
   :config
   (setq-default doom-themes-enable-bold nil)
   (load-theme 'doom-one t)
-
   (with-eval-after-load 'faces
     (set-face-attribute 'default nil :font me/font-family :height me/font-size-default))
-
   (with-eval-after-load 'font-lock
     (set-face-attribute 'font-lock-doc-face nil :italic t))
-
   (with-eval-after-load 'helm
     (set-face-attribute 'helm-source-header nil :background 'unspecified))
-
+  (with-eval-after-load 'outline
+    (set-face-attribute 'outline-1 nil :background 'unspecified))
   (with-eval-after-load 'magit-diff
     (set-face-attribute 'magit-diff-added nil :background 'unspecified)
     (set-face-attribute 'magit-diff-hunk-region nil :inherit 'region)
@@ -383,7 +381,6 @@ authoring documents with a fast and effective plain-text system.
   (setq-default
    org-descriptive-links nil
    org-fontify-done-headline t
-   org-fontify-whole-heading-line t
    org-support-shift-select 'always
    org-startup-folded nil
    org-startup-truncated nil)
