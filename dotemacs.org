@@ -768,7 +768,9 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
    (org-mode . yas-minor-mode)
    (python-mode . yas-minor-mode))
   :config
-  (setq-default yas-snippet-dirs `(,(expand-file-name "snippets/" user-emacs-directory)))
+  (setq-default
+   yas-snippet-dirs `(,(expand-file-name "snippets/" user-emacs-directory))
+   yas-verbosity 2)
   (yas-reload-all))
 #+END_SRC
 
