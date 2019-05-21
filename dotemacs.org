@@ -1871,14 +1871,11 @@ exists as well).
   :init
   (setq-default
    projectile-cache-file (expand-file-name ".projectile-cache" user-emacs-directory)
-   projectile-keymap-prefix (kbd "C-c C-p")
-   projectile-known-projects-file (expand-file-name
-                                   ".projectile-bookmarks" user-emacs-directory))
+   projectile-known-projects-file (expand-file-name ".projectile-bookmarks" user-emacs-directory))
   :config
   (setq-default
    projectile-completion-system 'helm
-   projectile-enable-caching t
-   projectile-mode-line '(:eval (projectile-project-name))))
+   projectile-enable-caching t))
 #+END_SRC
 
 ** Quality of Life
@@ -1981,9 +1978,7 @@ Highlight line under point.
 #+BEGIN_SRC emacs-lisp
 (use-package hl-line
   :ensure nil
-  :preface
-  (defun me/hl-line-mode-off ()
-    (setq-local global-hl-line-mode nil))
+  :preface (defun me/hl-line-mode-off () (setq-local global-hl-line-mode nil))
   :hook (after-init . global-hl-line-mode))
 #+END_SRC
 
@@ -2160,14 +2155,12 @@ Git itself deserve to be called porcelains.
      (magit-popup-mode "Magit Popup")
      (magit-status-mode "Magit Status"))))
 
-(use-package magit-blame :ensure nil)
-
-(use-package magit-diff :ensure nil)
-
 (use-package magit-section
   :ensure nil
   :config (remove-hook 'magit-section-highlight-hook #'magit-section-highlight))
+#+END_SRC
 
+#+BEGIN_SRC emacs-lisp
 (use-package gitattributes-mode :delight gitattributes-mode "Git Attributes")
 (use-package gitconfig-mode :delight gitconfig-mode "Git Config")
 (use-package gitignore-mode :delight gitignore-mode "Git Ignore")
