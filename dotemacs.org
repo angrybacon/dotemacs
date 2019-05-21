@@ -878,8 +878,6 @@ Fourth-party packages for Helm.
 (use-package helm-describe-modes
   :bind ([remap describe-mode] . helm-describe-modes))
 
-;; (use-package helm-flycheck)
-
 (use-package helm-projectile
   :defer nil
   :bind (:map helm-projectile-find-file-map
@@ -1033,17 +1031,16 @@ Group Helm commands.
 (defhydra hydra-helm (:color blue)
   "
 ^
-^Helm^              ^Browse^            ^Do^
-^────^──────────────^──────^────────────^──^────────────────
-_q_ quit            _c_ colors          _f_ flycheck
-_r_ resume          _g_ google          ^^
-^^                  _i_ imenu           ^^
-^^                  _k_ kill-ring       ^^
-^^                  ^^                  ^^
+^Helm^              ^Browse^
+^────^──────────────^──────^────────────
+_q_ quit            _c_ colors
+_r_ resume          _g_ google
+^^                  _i_ imenu
+^^                  _k_ kill-ring
+^^                  ^^
 "
   ("q" nil)
   ("c" helm-colors)
-  ("f" helm-flycheck)
   ("g" helm-google-suggest)
   ("i" helm-imenu)
   ("k" helm-show-kill-ring)
