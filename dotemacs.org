@@ -439,15 +439,6 @@ maintain a TOC at the first heading that has a =:TOC:= tag.
      "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-(use-package pip-requirements
-  :delight pip-requirements-mode "PyPA Requirements"
-  :preface
-  (defun me/pip-requirements-ignore-case ()
-    (setq-local completion-ignore-case t))
-  :hook (pip-requirements-mode . me/pip-requirements-ignore-case))
-#+END_SRC
-
 ** YAML
 
 #+BEGIN_SRC emacs-lisp
