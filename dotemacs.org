@@ -185,9 +185,7 @@ Load theme and fix some high-level faces to match my personal preferences.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(use-package mdi
-  :demand t
-  :load-path "lisp/mdi/")
+(use-package mdi :load-path "lisp/mdi/")
 #+END_SRC
 
 * Languages
@@ -355,7 +353,7 @@ authoring documents with a fast and effective plain-text system.
 #+BEGIN_SRC emacs-lisp
 (use-package org
   :ensure nil
-  :delight org-mode "Org"
+  ;; :delight org-mode "Org"
   :preface
   (defun me/org-src-buffer-name (org-buffer-name language)
     "Construct the buffer name for a source editing buffer. See
@@ -490,7 +488,6 @@ completion candidates.
 
 #+BEGIN_SRC emacs-lisp
 (use-package company
-  :defer 1
   :bind
   (:map company-active-map
         ("RET" . nil)
@@ -498,18 +495,14 @@ completion candidates.
         ("TAB" . company-complete-selection)
         ([tab] . company-complete-selection)
         ("<right>" . company-complete-common))
+  :hook (after-init . global-company-mode)
   :config
-  (global-company-mode 1)
   (setq-default
+   company-dabbrev-downcase nil
    company-idle-delay .2
    company-minimum-prefix-length 1
    company-require-match nil
    company-tooltip-align-annotations t))
-
-(use-package company-dabbrev
-  :ensure nil
-  :after company
-  :config (setq-default company-dabbrev-downcase nil))
 #+END_SRC
 
 ** Buffers and Windows
@@ -562,15 +555,13 @@ by default. The behaviour is modeled after
 
 #+BEGIN_SRC emacs-lisp
 (use-package eyebrowse
-  :defer 1
   :bind
   ("<f5>" . eyebrowse-switch-to-window-config-1)
   ("<f6>" . eyebrowse-switch-to-window-config-2)
   ("<f7>" . eyebrowse-switch-to-window-config-3)
   ("<f8>" . eyebrowse-switch-to-window-config-4)
-  :config
-  (eyebrowse-mode 1)
-  (setq-default eyebrowse-new-workspace t))
+  :hook (after-init . eyebrowse-mode)
+  :config (setq-default eyebrowse-new-workspace t))
 #+END_SRC
 
 Window management.
@@ -588,12 +579,11 @@ selected window.
 
 #+BEGIN_SRC emacs-lisp
 (use-package shackle
-  :defer 1
+  :hook (after-init . shackle-mode)
   :config
   (setq-default
    shackle-rules '((help-mode :inhibit-window-quit t :same t))
-   shackle-select-reused-windows t)
-  (shackle-mode 1))
+   shackle-select-reused-windows t))
 #+END_SRC
 
 Bind commands to move around windows.
@@ -623,8 +613,7 @@ you can press ctrl-c right (calling =winner-redo=).
 #+BEGIN_SRC emacs-lisp
 (use-package winner
   :ensure nil
-  :defer 1
-  :config (winner-mode 1))
+  :hook (after-init . winner-mode))
 #+END_SRC
 
 ** Comments
@@ -657,8 +646,7 @@ from Emacs.
 
 #+BEGIN_SRC emacs-lisp
 (use-package edit-server
-  :defer 1
-  :config (edit-server-start))
+  :hook (after-init . edit-server-start))
 #+END_SRC
 
 Emacs can be run as a daemon onto which Emacs clients can latch on. This allows
@@ -668,8 +656,7 @@ want to edit a single file for a quick edit.
 #+BEGIN_SRC emacs-lisp
 (use-package server
   :ensure nil
-  :defer 1
-  :config (server-start))
+  :hook (after-init . server-start))
 #+END_SRC
 
 ** Dictionary
@@ -1511,11 +1498,9 @@ mode-line in various search modes.
 
 #+BEGIN_SRC emacs-lisp
 (use-package anzu
-  :defer 1
   :bind ([remap query-replace] . anzu-query-replace-regexp)
-  :config
-  (global-anzu-mode 1)
-  (setq-default anzu-cons-mode-line-p nil))
+  :hook (after-init . global-anzu-mode)
+  :config (setq-default anzu-cons-mode-line-p nil))
 #+END_SRC
 
 *** Navigation / Scroll
@@ -1606,8 +1591,7 @@ variables of interest, then copying them into the Emacs environment.
 #+BEGIN_SRC emacs-lisp
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns))
-  :defer 1
-  :config (exec-path-from-shell-initialize))
+  :hook (after-init . exec-path-from-shell-initialize))
 #+END_SRC
 
 ** Parentheses
@@ -1627,21 +1611,20 @@ today... No package seem to please my person.
 
 #+BEGIN_SRC emacs-lisp
 (use-package smartparens
-  :defer 1
   :bind
   (("M-<backspace>" . sp-unwrap-sexp)
    ("M-<left>" . sp-forward-barf-sexp)
    ("M-<right>" . sp-forward-slurp-sexp)
    ("M-S-<left>" . sp-backward-slurp-sexp)
    ("M-S-<right>" . sp-backward-barf-sexp))
+  :hook (after-init . smartparens-global-mode)
   :config
   (show-paren-mode 0)
   (require 'smartparens-config)
   (setq-default
    sp-highlight-pair-overlay nil
    sp-highlight-wrap-overlay nil
-   sp-highlight-wrap-tag-overlay nil)
-  (smartparens-global-mode 1))
+   sp-highlight-wrap-tag-overlay nil))
 #+END_SRC
 
 ** Paste
@@ -1702,7 +1685,6 @@ use with =selected=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package selected
-  :defer 1
   :preface
   (defvar-local me/pretty-print-function nil)
   (defun me/pretty-print (beg end)
@@ -1741,9 +1723,8 @@ use with =selected=.
         ("<M-right>"   . me/indent-rigidly-right-and-keep-mark)
         ("<M-S-left>"  . me/indent-rigidly-left-tab-and-keep-mark)
         ("<M-S-right>" . me/indent-rigidly-right-tab-and-keep-mark))
-  :config
-  (require 'browse-url)
-  (selected-global-mode 1))
+  :hook (after-init . selected-global-mode)
+  :config (require 'browse-url))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -1886,7 +1867,7 @@ exists as well).
 
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
-  :defer 1
+  :hook (after-init . projectile-global-mode)
   :init
   (setq-default
    projectile-cache-file (expand-file-name ".projectile-cache" user-emacs-directory)
@@ -1894,7 +1875,6 @@ exists as well).
    projectile-known-projects-file (expand-file-name
                                    ".projectile-bookmarks" user-emacs-directory))
   :config
-  (projectile-global-mode 1)
   (setq-default
    projectile-completion-system 'helm
    projectile-enable-caching t
@@ -2001,11 +1981,10 @@ Highlight line under point.
 #+BEGIN_SRC emacs-lisp
 (use-package hl-line
   :ensure nil
-  :demand t
   :preface
   (defun me/hl-line-mode-off ()
     (setq-local global-hl-line-mode nil))
-  :config (global-hl-line-mode 1))
+  :hook (after-init . global-hl-line-mode))
 #+END_SRC
 
 Originally, =midnight= is used to /run something at midnight/. I use its feature that
@@ -2200,7 +2179,6 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
 #+BEGIN_SRC emacs-lisp
 (use-package whitespace
-  :demand t
   :ensure nil
   :hook
   ((prog-mode . whitespace-turn-on)
