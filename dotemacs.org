@@ -29,7 +29,6 @@
   - [[#diff][Diff]]
   - [[#dired][Dired]]
   - [[#expand][Expand]]
-  - [[#folding][Folding]]
   - [[#helm][Helm]]
   - [[#helm-plugins][Helm Plugins]]
   - [[#help][Help]]
@@ -786,39 +785,6 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
   (yas-reload-all))
 #+END_SRC
 
-** Folding
-
-#+BEGIN_QUOTE
-This is a package to perform text folding like in Vim. It has the following features:
-
-- folding of active regions;
-- good visual feedback: it's obvious which part of text is folded;
-- persistence by default: when you close file your folds don't disappear;
-- persistence scales well, you can work on hundreds of files with lots of folds without
-  adverse effects;
-- it doesn't break indentation or something;
-- folds can be toggled from folded state to unfolded and back very easily;
-- quick navigation between existing folds;
-- you can use mouse to unfold folds (good for beginners and not only for them);
-- for fans of avy package: you can use avy to fold text with minimal number of
-  key strokes!
-
-[[https://github.com/mrkkrp/vimish-fold][Mark Karpov]]
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package vimish-fold
-  :defer 1
-  :bind
-  (:map vimish-fold-folded-keymap ("<tab>" . vimish-fold-unfold)
-   :map vimish-fold-unfolded-keymap ("<tab>" . vimish-fold-refold))
-  :init
-  (setq-default vimish-fold-dir (expand-file-name ".vimish-fold/" user-emacs-directory))
-  (vimish-fold-global-mode 1)
-  :config
-  (setq-default vimish-fold-header-width 79))
-#+END_SRC
-
 ** Helm
 
 Helm is a beast. Although heavily, it replaces =ido-mode= in many ways.
@@ -1056,35 +1022,6 @@ _v_ verify setup    _f_ check           _s_ select
 #+END_SRC
 
 [[./screenshots/hydra.flycheck.png]]
-
-*** Hydra / Fold
-
-Group folding commands.
-
-- *TODO*: Use =:bind=.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-fold (:color pink)
-  "
-^
-^Fold^              ^Do^                ^Jump^              ^Toggle^
-^────^──────────────^──^────────────────^────^──────────────^──────^────────────
-_q_ quit            _f_ fold            _<_ previous        _<tab>_ current
-^^                  _k_ kill            _>_ next            _S-<tab>_ all
-^^                  _K_ kill all        ^^                  ^^
-^^                  ^^                  ^^                  ^^
-"
-  ("q" nil)
-  ("<tab>" vimish-fold-toggle)
-  ("S-<tab>" vimish-fold-toggle-all)
-  ("<" vimish-fold-previous-fold)
-  (">" vimish-fold-next-fold)
-  ("f" vimish-fold)
-  ("k" vimish-fold-delete)
-  ("K" vimish-fold-delete-all))
-#+END_SRC
-
-[[./screenshots/hydra.fold.png]]
 
 *** Hydra / Helm
 
