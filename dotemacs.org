@@ -1548,7 +1548,17 @@ allow it to use the newly changed strings.
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
-  :init
+  :config
+  (doom-modeline-def-modeline 'helm
+    '(bar " " helm-buffer-id helm-follow helm-prefix-argument)
+    '(helm-number))
+  (doom-modeline-def-modeline 'main
+    '(bar " " buffer-info-simple remote-host me/buffer-position selection-info)
+    '(irc matches debug lsp input-method major-mode process vcs checker window-number workspace-name " ")))
+
+(use-package doom-modeline-core
+  :ensure nil
+  :config
   (doom-modeline-def-segment me/buffer-position
     "The buffer position information."
     (let ((active (doom-modeline--active)))
@@ -1556,17 +1566,6 @@ allow it to use the newly changed strings.
                           (format-mode-line "%l:%c")
                           (doom-modeline-whitespace))
                   'face (if active 'mode-line 'mode-line-inactive))))
-  :config
-  (doom-modeline-def-modeline 'helm
-    '(bar " " helm-buffer-id helm-follow helm-prefix-argument)
-    '(helm-number))
-  (doom-modeline-def-modeline 'main
-    '(bar " " buffer-info-simple remote-host me/buffer-position selection-info)
-    '(irc matches debug lsp input-method major-mode process vcs checker window-number workspace-name)))
-
-(use-package doom-modeline-core
-  :ensure nil
-  :config
   (setq-default
    doom-modeline-buffer-file-name-style 'relative-to-project
    doom-modeline-enable-word-count t
