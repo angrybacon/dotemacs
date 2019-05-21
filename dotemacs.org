@@ -250,7 +250,7 @@ HTML mode is defined in =sgml-mode.el=.
 
 ** JavaScript
 
-- *FIXME*: Indent level is broken
+- *TOFIX*: Indent level is broken
            (https://github.com/joshwnj/json-mode/issues/32).
 
 #+BEGIN_SRC emacs-lisp
@@ -835,13 +835,16 @@ leaner, modular, and unchained from constraints of backward compatibility.
 [[https://github.com/emacs-helm/helm][Bozhidar Batsov]]
 #+END_QUOTE
 
-- *TODO*: Test =me/helm-pulse-follow= on MacOS. Is it Windows that makes it
-          ugly?
-- *FIXME*: The recentering is too aggressive.
+
+- *TODO*: Hide the buffer size column.
+- *TODO*: Test =me/helm-pulse-follow= on MacOS. Is it Windows that makes it ugly?
+- *TOFIX*: Help buffer resizes the frame.
+- *TOFIX*: The recentering is too aggressive.
+- *TOFIX*: Fix =me/helm-grab-candidates=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm
-  :defer 1
+  :demand t
   :preface
   (defun me/helm-focus-follow ()
     ;; (let ((point (point)))
@@ -853,145 +856,69 @@ leaner, modular, and unchained from constraints of backward compatibility.
     (if (region-active-p)
         (kill-ring-save beg end)
       (with-helm-buffer (kill-ring-save (point-min) (point-max)))))
-  :bind (:map helm-map ("M-w" . me/helm-grab-candidates))
+  :bind
+  (([remap execute-extended-command] . helm-M-x)
+   ([remap find-file] . helm-find-files)
+   ([remap isearch-forward] . helm-occur)
+   ([remap switch-to-buffer] . helm-buffers-list)
+   :map helm-map
+   ("<left>" . backward-char)
+   ("<right>" . forward-char)
+   ("M-w" . me/helm-grab-candidates))
   :hook (helm-after-action . me/helm-focus-follow)
   :config
   (helm-mode 1)
   (setq-default
+   helm-M-x-fuzzy-match t
    helm-always-two-windows t
+   helm-buffer-max-length nil
+   helm-buffers-fuzzy-matching t
+   helm-completion-in-region-fuzzy-match t
    helm-display-header-line nil
+   helm-ff-no-preselect t
+   helm-ff-skip-boring-files t
+   helm-find-file-ignore-thing-at-point t
+   helm-help-full-frame nil
+   helm-mode-fuzzy-match t
+   helm-net-prefer-curl (if (executable-find "curl") t nil)
+   helm-org-headings-fontify t
+   helm-scroll-amount 5
    helm-split-window-default-side 'left))
 #+END_SRC
 
-Helm sub-modules can be customized separately. Many basic Emacs commands have
-their Helm equivalents.
-
-- *TODO*: Do I actually want to split all of these?
-- *TODO*: Help buffer resizes the frame.
-- *TODO*: Hide the buffer size column.
-
 #+BEGIN_SRC emacs-lisp
-(use-package helm-buffers
-  :ensure nil
-  :after helm
-  :config
-  (setq-default
-   helm-buffers-fuzzy-matching t
-   helm-buffer-max-length nil))
-
-(use-package helm-color
-  :ensure nil
-  :after helm
-  :bind
-  (:map helm-color-map
-        ("<left>" . backward-char)
-        ("<right>" . forward-char)))
-
-(use-package helm-command
-  :ensure nil
-  :after helm
-  :bind ([remap execute-extended-command] . helm-M-x)
-  :config (setq-default helm-M-x-fuzzy-match t))
-
-(use-package helm-files
-  :ensure nil
-  :after helm
-  :bind ([remap find-file] . helm-find-files)
-  :config
-  (setq-default
-   helm-ff-no-preselect t
-   helm-ff-skip-boring-files t
-   helm-find-file-ignore-thing-at-point t))
-
 (use-package helm-imenu
   :ensure nil
-  :after helm
-  :bind
-  (:map helm-imenu-map
-        ("<left>" . backward-char)
-        ("<right>" . forward-char)))
-
-(use-package helm-misc
-  :ensure nil
-  :after helm
-  :bind ([remap switch-to-buffer] . helm-buffers-list))
-
-(use-package helm-lib
-  :ensure nil
-  :after helm
-  :config
-  (setq-default
-   helm-help-full-frame nil
-   helm-scroll-amount 5))
-
-(use-package helm-mode
-  :ensure nil
-  :after helm
-  :config
-  (setq-default
-   helm-completion-in-region-fuzzy-match t
-   helm-mode-fuzzy-match t))
-
-(use-package helm-net
-  :ensure nil
-  :after helm
-  :config (setq-default helm-net-prefer-curl (if (executable-find "curl") t nil)))
-
-(use-package helm-org
-  :ensure nil
-  :after helm
-  :config (setq-default helm-org-headings-fontify t))
-
-(use-package helm-regexp
-  :ensure nil
-  :after helm
-  :bind
-  (([remap isearch-forward] . helm-occur)
-   :map helm-occur-map
-   ("<left>" . backward-char)
-   ("<right>" . forward-char)))
+  :bind (:map helm-imenu-map
+              ("<left>" . backward-char)
+              ("<right>" . forward-char)))
 #+END_SRC
 
 ** Helm Plugins
 
 Fourth-party packages for Helm.
 
-- *TODO*: See https://github.com/bbatsov/zenburn-emacs/issues/220.
-
 #+BEGIN_SRC emacs-lisp
 (use-package helm-ag
-  :defer nil
-  :after helm
-  :bind
-  (:map helm-ag-map
-        ("<left>" . backward-char)
-        ("<right>" . forward-char))
+  :bind (:map helm-ag-map
+              ("<left>" . backward-char)
+              ("<right>" . forward-char))
   :config (setq-default helm-ag-show-status-function nil))
 
 (use-package helm-descbinds
-  :defer nil
-  :after helm
-  :config
-  (helm-descbinds-mode 1)
-  (setq-default helm-descbinds-window-style 'split-window))
+  :bind ([remap describe-bindings] . helm-descbinds)
+  :config (setq-default helm-descbinds-window-style 'split-window))
 
 (use-package helm-describe-modes
-  :after helm
   :bind ([remap describe-mode] . helm-describe-modes))
 
-(use-package helm-flycheck :after helm)
+;; (use-package helm-flycheck)
 
 (use-package helm-projectile
   :defer nil
-  :after helm
-  :bind
-  (nil
-   :map helm-projectile-find-file-map
-   ("<left>" . backward-char)
-   ("<right>" . forward-char)
-   :map helm-projectile-projects-map
-   ("<left>" . backward-char)
-   ("<right>" . forward-char))
+  :bind (:map helm-projectile-find-file-map
+              ("<left>" . backward-char)
+              ("<right>" . forward-char))
   :config (helm-projectile-toggle 1))
 #+END_SRC
 
@@ -1547,17 +1474,8 @@ allow it to use the newly changed strings.
 
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
-  :hook (after-init . doom-modeline-mode)
-  :config
-  (doom-modeline-def-modeline 'helm
-    '(bar " " helm-buffer-id helm-follow helm-prefix-argument)
-    '(helm-number))
-  (doom-modeline-def-modeline 'main
-    '(bar " " buffer-info-simple remote-host me/buffer-position selection-info)
-    '(irc matches debug lsp input-method major-mode process vcs checker window-number workspace-name " ")))
-
-(use-package doom-modeline-core
-  :ensure nil
+  :demand t
+  ;; :hook (after-init . doom-modeline-mode)
   :config
   (doom-modeline-def-segment me/buffer-position
     "The buffer position information."
@@ -1566,14 +1484,18 @@ allow it to use the newly changed strings.
                           (format-mode-line "%l:%c")
                           (doom-modeline-whitespace))
                   'face (if active 'mode-line 'mode-line-inactive))))
+  (doom-modeline-mode 1)
+  (doom-modeline-def-modeline 'helm
+    '(bar " " helm-buffer-id helm-follow helm-prefix-argument)
+    '(helm-number))
+  (doom-modeline-def-modeline 'main
+    '(bar " " buffer-info-simple remote-host me/buffer-position selection-info)
+    '(irc matches debug lsp input-method major-mode process vcs checker window-number workspace-name " "))
   (setq-default
    doom-modeline-buffer-file-name-style 'relative-to-project
    doom-modeline-enable-word-count t
-   doom-modeline-icon nil))
-
-(use-package doom-modeline-segments
-  :ensure nil
-  :config (setq-default doom-modeline-percent-position nil))
+   doom-modeline-icon nil
+   doom-modeline-percent-position nil))
 #+END_SRC
 
 ** Navigation
@@ -1599,7 +1521,7 @@ Smarter =C-a=.
 I disagree with Emacs' definition of paragraphs so I redefined the way it should
 jump from one paragraph to another.
 
-- *FIXME*: Ignore invisible text.
+- *TOFIX*: Ignore invisible text.
 
 #+BEGIN_SRC emacs-lisp
 (global-set-key [remap backward-paragraph] #'me/backward-paragraph-dwim)
@@ -1659,9 +1581,7 @@ mode-line in various search modes.
   :bind ([remap query-replace] . anzu-query-replace-regexp)
   :config
   (global-anzu-mode 1)
-  (setq-default
-   anzu-cons-mode-line-p nil
-   anzu-replace-to-string-separator (mdi "arrow-right" t)))
+  (setq-default anzu-cons-mode-line-p nil))
 #+END_SRC
 
 *** Navigation / Scroll
