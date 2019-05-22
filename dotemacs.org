@@ -190,9 +190,6 @@ Load theme and fix some high-level faces to match my personal preferences.
 
 * Languages
 
-As pedantic as I like to be, some packages have a =use-package= clause for
-nothing but the customization of their lighter.
-
 ** CSS
 
 #+BEGIN_SRC emacs-lisp
@@ -206,7 +203,6 @@ nothing but the customization of their lighter.
   (defun me/scss-set-comment-style ()
     (setq-local comment-end "")
     (setq-local comment-start "//"))
-  :delight scss-mode "SCSS"
   :mode ("\\.sass\\'" "\\.scss\\'")
   :hook (scss-mode . me/scss-set-comment-style))
 #+END_SRC
@@ -221,9 +217,7 @@ nothing but the customization of their lighter.
 ** Docker
 
 #+BEGIN_SRC emacs-lisp
-(use-package dockerfile-mode
-  :delight dockerfile-mode "Dockerfile"
-  :mode "Dockerfile\\'")
+(use-package dockerfile-mode :mode "Dockerfile\\'")
 #+END_SRC
 
 ** HTML
@@ -233,7 +227,6 @@ HTML mode is defined in =sgml-mode.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package sgml-mode
   :ensure nil
-  :delight html-mode "HTML"
   :preface
   (defun me/html-set-pretty-print-function ()
     (setq me/pretty-print-function #'sgml-pretty-print))
@@ -253,7 +246,6 @@ HTML mode is defined in =sgml-mode.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package js
   :ensure nil
-  :delight js-mode "JavaScript"
   :preface
   (defun me/js-prettify-symbols-mode-on ()
     (add-to-list 'prettify-symbols-alist '("function" . ?\u0192))
@@ -263,7 +255,6 @@ HTML mode is defined in =sgml-mode.el=.
 
 (use-package js2-mode
   :ensure nil
-  :delight js2-mode "JavaScript 2"
   :config
   (setq-default
    js2-idle-timer-delay 0
@@ -271,7 +262,6 @@ HTML mode is defined in =sgml-mode.el=.
    js2-mode-show-strict-warnings nil))
 
 (use-package json-mode
-  :delight json-mode "JSON"
   :mode "\\.json\\'"
   :preface
   (defun me/json-set-indent-level ()
@@ -279,7 +269,6 @@ HTML mode is defined in =sgml-mode.el=.
   :hook (json-mode . me/json-set-indent-level))
 
 (use-package rjsx-mode
-  :delight rjsx-mode "RJSX"
   :preface
   (defun me/rjsx-set-ongoing-hydra-body ()
     (setq me/ongoing-hydra-body #'hydra-rjsx/body))
@@ -293,32 +282,21 @@ HTML mode is defined in =sgml-mode.el=.
    (rjsx-mode . turn-off-auto-fill)))
 
 (use-package web-mode
-  :delight web-mode "Web"
   :config (setq-default web-mode-enable-auto-indentation nil))
 #+END_SRC
 
 ** Lisp
 
 #+BEGIN_SRC emacs-lisp
-(use-package emacs-lisp-mode
-  :ensure nil
-  :delight emacs-lisp-mode "Emacs Lisp"
-  :config (delight 'lisp-interaction-mode "Lisp Interaction"))
-
 (use-package ielm
   :ensure nil
   :hook (ielm-mode . (lambda () (setq-local scroll-margin 0))))
-
-(use-package lisp-mode
-  :ensure nil
-  :delight lisp-mode "Lisp")
 #+END_SRC
 
 ** Markdown
 
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
-  :delight markdown-mode "Markdown"
   :preface
   (defun me/markdown-set-ongoing-hydra-body ()
     (setq me/ongoing-hydra-body #'hydra-markdown/body))
@@ -353,7 +331,6 @@ authoring documents with a fast and effective plain-text system.
 #+BEGIN_SRC emacs-lisp
 (use-package org
   :ensure nil
-  ;; :delight org-mode "Org"
   :preface
   (defun me/org-src-buffer-name (org-buffer-name language)
     "Construct the buffer name for a source editing buffer. See
@@ -422,7 +399,6 @@ maintain a TOC at the first heading that has a =:TOC:= tag.
 #+BEGIN_SRC emacs-lisp
 (use-package python
   :ensure nil
-  :delight python-mode "Python"
   :hook (python-mode . turn-on-prettify-symbols-mode)
   :config
   (when (executable-find "ipython")
@@ -442,9 +418,7 @@ maintain a TOC at the first heading that has a =:TOC:= tag.
 ** YAML
 
 #+BEGIN_SRC emacs-lisp
-(use-package yaml-mode
-  :delight yaml-mode "YAML"
-  :mode "\\.yml\\'")
+(use-package yaml-mode :mode "\\.yml\\'")
 #+END_SRC
 
 * Features
@@ -685,7 +659,6 @@ explorer.
 #+BEGIN_SRC emacs-lisp
 (use-package dired
   :ensure nil
-  :delight dired-mode "Dired"
   :preface
   (defun me/dired-directories-first ()
     "Sort dired listings with directories first before adding marks."
@@ -1356,29 +1329,6 @@ Here is how it looks:
 - Red means buffer is dirty ie. file is modified
 - Blue means buffer is read-only
 - The segment next to the clock indicate the current =eyebrowse= /workspace/
-
-*** Mode-Line / Delight
-
-Delight allows you to change modes --- both major and minor --- lighters. They
-are the descriptive strings than you see appear within the =mode-line=.
-
-To make it work with =spaceline= (which uses =powerline= internally), I need to
-allow it to use the newly changed strings.
-
-- *TODO*: Remove =delight= dependency from =init.el=.
-
-#+BEGIN_SRC emacs-lisp
-(use-package delight
-  :ensure nil
-  :preface
-  (defun me/delight-powerline-major-mode (original-function &rest arguments)
-    (let ((inhibit-mode-name-delight nil)) (apply original-function arguments)))
-  (defun me/delight-powerline-minor-mode (original-function &rest arguments)
-    (let ((inhibit-mode-name-delight nil)) (apply original-function arguments)))
-  :config
-  (advice-add 'powerline-major-mode :around #'me/delight-powerline-major-mode)
-  (advice-add 'powerline-minor-mode :around #'me/delight-powerline-minor-mode))
-#+END_SRC
 
 *** Mode-Line / Doom-Modeline
 
@@ -2051,7 +2001,6 @@ Turn on =auto-fill-mode= /almost/ everywhere.
 
 (use-package esh-mode
   :ensure nil
-  :delight eshell-mode "EShell"
   :preface
   (defun me/eshell-bol-shifted ()
     "See `eshell-bol'. Support shift."
@@ -2141,12 +2090,7 @@ Git itself deserve to be called porcelains.
      magit-diff-highlight-hunk-region-using-face)
    magit-popup-display-buffer-action '((display-buffer-same-window))
    magit-refs-show-commit-count 'all
-   magit-section-show-child-count t)
-  (delight
-   '((magit-diff-mode "Magit Diff")
-     (magit-log-mode "Magit Log")
-     (magit-popup-mode "Magit Popup")
-     (magit-status-mode "Magit Status"))))
+   magit-section-show-child-count t))
 
 (use-package magit-section
   :ensure nil
@@ -2154,9 +2098,9 @@ Git itself deserve to be called porcelains.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(use-package gitattributes-mode :delight gitattributes-mode "Git Attributes")
-(use-package gitconfig-mode :delight gitconfig-mode "Git Config")
-(use-package gitignore-mode :delight gitignore-mode "Git Ignore")
+(use-package gitattributes-mode)
+(use-package gitconfig-mode)
+(use-package gitignore-mode)
 #+END_SRC
 
 ** Whitespaces

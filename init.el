@@ -36,10 +36,8 @@
   (package-initialize)
 
   ;; Install dependencies
-  (unless (and (package-installed-p 'delight)
-               (package-installed-p 'use-package))
+  (unless (package-installed-p 'use-package)
     (package-refresh-contents)
-    (package-install 'delight t)
     (package-install 'use-package t))
   (setq-default
    use-package-always-defer t
