@@ -1341,11 +1341,17 @@ Here is how it looks:
                   'face (if active 'mode-line 'mode-line-inactive))))
   (doom-modeline-mode 1)
   (doom-modeline-def-modeline 'helm
-    '(bar " " helm-buffer-id helm-follow helm-prefix-argument)
+    '(bar helm-buffer-id helm-follow helm-prefix-argument)
     '(helm-number))
+  (doom-modeline-def-modeline 'info
+    '(bar buffer-info-simple info-nodes me/buffer-position selection-info)
+    '(irc matches process major-mode workspace-name))
   (doom-modeline-def-modeline 'main
-    '(bar " " buffer-info-simple remote-host me/buffer-position selection-info)
-    '(irc matches debug lsp input-method major-mode process vcs checker window-number workspace-name " "))
+    '(bar buffer-info-simple remote-host me/buffer-position checker selection-info)
+    '(irc matches process vcs major-mode workspace-name))
+  (doom-modeline-def-modeline 'project
+    '(bar buffer-default-directory)
+    '(irc matches process major-mode workspace-name))
   (setq-default
    doom-modeline-buffer-file-name-style 'relative-to-project
    doom-modeline-enable-word-count t
