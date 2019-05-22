@@ -171,7 +171,8 @@ Load theme and fix some high-level faces to match my personal preferences.
   (setq-default doom-themes-enable-bold nil)
   (load-theme 'doom-one t)
   (with-eval-after-load 'faces
-    (set-face-attribute 'default nil :font me/font-family :height me/font-size-default))
+    (set-face-attribute 'default nil :font me/font-family :height me/font-size-default)
+    (set-face-attribute 'variable-pitch nil :family 'unspecified))
   (with-eval-after-load 'font-lock
     (set-face-attribute 'font-lock-doc-face nil :italic t))
   (with-eval-after-load 'helm
