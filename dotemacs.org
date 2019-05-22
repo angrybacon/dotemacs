@@ -355,25 +355,15 @@ authoring documents with a fast and effective plain-text system.
   :config
   (setq-default
    org-descriptive-links nil
-   org-fontify-done-headline t
-   org-support-shift-select 'always
-   org-startup-folded nil
-   org-startup-truncated nil)
-  (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer-name))
-
-(use-package org-faces
-  :ensure nil
-  :after org
-  :config (setq-default org-fontify-quote-and-verse-blocks t))
-
-(use-package org-src
-  :ensure nil
-  :after org
-  :config
-  (setq-default
    org-edit-src-content-indentation 0
    org-edit-src-persistent-message nil
-   org-src-window-setup 'current-window))
+   org-fontify-done-headline t
+   org-fontify-quote-and-verse-blocks t
+   org-src-window-setup 'current-window
+   org-startup-folded nil
+   org-startup-truncated nil
+   org-support-shift-select 'always)
+  (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer-name))
 #+END_SRC
 
 Display the current Org header in the header-line.
