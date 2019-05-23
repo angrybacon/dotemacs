@@ -809,7 +809,8 @@ leaner, modular, and unchained from constraints of backward compatibility.
    helm-net-prefer-curl (if (executable-find "curl") t nil)
    helm-org-headings-fontify t
    helm-scroll-amount 5
-   helm-split-window-default-side 'left))
+   helm-split-window-default-side 'left
+   helm-truncate-lines t))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
