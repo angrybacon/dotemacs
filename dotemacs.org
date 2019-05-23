@@ -179,6 +179,8 @@ Load theme and fix some high-level faces to match my personal preferences.
     (set-face-attribute 'helm-buffer-modified nil :foreground (doom-color 'orange) :inherit 'unspecified)
     (set-face-attribute 'helm-buffer-not-saved nil :foreground (doom-color 'red) :inherit 'unspecified)
     (set-face-attribute 'helm-non-file-buffer nil :inherit 'font-lock-comment-face))
+  (with-eval-after-load 'helm-command
+    (set-face-attribute 'helm-M-x-key nil :foreground (doom-color 'yellow) :underline 'unspecified))
   (with-eval-after-load 'helm-files
     (set-face-attribute 'helm-ff-directory nil
                         :background 'unspecified
