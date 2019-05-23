@@ -170,6 +170,20 @@ Load theme and fix some high-level faces to match my personal preferences.
   :config
   (setq-default doom-themes-enable-bold nil)
   (load-theme 'doom-one t)
+  (with-eval-after-load 'helm-buffers
+    (set-face-attribute 'helm-buffer-directory nil
+                        :background 'unspecified
+                        :foreground 'unspecified
+                        :inherit 'dired-directory)
+    (set-face-attribute 'helm-buffer-file nil :inherit 'unspecified)
+    (set-face-attribute 'helm-buffer-modified nil :foreground (doom-color 'orange) :inherit 'unspecified)
+    (set-face-attribute 'helm-buffer-not-saved nil :foreground (doom-color 'red) :inherit 'unspecified)
+    (set-face-attribute 'helm-non-file-buffer nil :inherit 'font-lock-comment-face))
+  (with-eval-after-load 'helm-files
+    (set-face-attribute 'helm-ff-directory nil
+                        :background 'unspecified
+                        :foreground 'unspecified
+                        :inherit 'dired-directory))
   (with-eval-after-load 'faces
     (set-face-attribute 'default nil :font me/font-family :height me/font-size-default)
     (set-face-attribute 'variable-pitch nil :family 'unspecified))
