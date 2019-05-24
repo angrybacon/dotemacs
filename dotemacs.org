@@ -1350,13 +1350,14 @@ Here is how it looks:
   :demand t
   ;; :hook (after-init . doom-modeline-mode)
   :config
-  (doom-modeline-def-segment me/doom-modeline-buffer
+  (doom-modeline-def-segment me/buffer-name
+    "The buffer name."
     (concat
      (doom-modeline-whitespace)
      (doom-modeline--buffer-name)
      (doom-modeline-whitespace)))
-  (doom-modeline-def-segment me/doom-modeline-position
-    "The buffer position information."
+  (doom-modeline-def-segment me/buffer-position
+    "The buffer position."
     (let ((active (doom-modeline--active)))
       (propertize (concat (doom-modeline-whitespace)
                           (format-mode-line "%l:%c")
@@ -1367,10 +1368,10 @@ Here is how it looks:
     '(bar helm-buffer-id helm-follow helm-prefix-argument)
     '(helm-number))
   (doom-modeline-def-modeline 'info
-    '(bar me/doom-modeline-buffer info-nodes me/doom-modeline-position selection-info)
+    '(bar me/buffer-name info-nodes me/buffer-position selection-info)
     '(irc matches process major-mode workspace-name))
   (doom-modeline-def-modeline 'main
-    '(bar me/doom-modeline-buffer remote-host me/doom-modeline-position checker selection-info)
+    '(bar me/buffer-name remote-host me/buffer-position checker selection-info)
     '(irc matches process vcs major-mode workspace-name))
   (doom-modeline-def-modeline 'project
     '(bar buffer-default-directory)
