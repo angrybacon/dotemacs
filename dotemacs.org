@@ -1349,20 +1349,19 @@ Here is how it looks:
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
   :demand t
-  ;; :hook (after-init . doom-modeline-mode)
   :config
   (doom-modeline-def-segment me/buffer-name
     "The buffer name."
     (concat
-     (doom-modeline-whitespace)
+     (doom-modeline-spc)
      (doom-modeline--buffer-name)
-     (doom-modeline-whitespace)))
+     (doom-modeline-spc)))
   (doom-modeline-def-segment me/buffer-position
     "The buffer position."
     (let ((active (doom-modeline--active)))
-      (propertize (concat (doom-modeline-whitespace)
+      (propertize (concat (doom-modeline-spc)
                           (format-mode-line "%l:%c")
-                          (doom-modeline-whitespace))
+                          (doom-modeline-spc))
                   'face (if active 'mode-line 'mode-line-inactive))))
   (doom-modeline-mode 1)
   (doom-modeline-def-modeline 'helm
