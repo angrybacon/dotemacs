@@ -190,6 +190,7 @@ Load theme and fix some high-level faces to match my personal preferences.
     (set-face-attribute 'lazy-highlight nil :foreground (doom-color 'blue)))
   (with-eval-after-load 'faces
     (set-face-attribute 'default nil :font me/font-family :height me/font-size-default)
+    (set-face-attribute 'help-argument-name nil :foreground (doom-color 'yellow))
     (set-face-attribute 'variable-pitch nil :family 'unspecified))
   (with-eval-after-load 'font-lock
     (set-face-attribute 'font-lock-doc-face nil :italic t))
@@ -1379,7 +1380,7 @@ Here is how it looks:
   (setq-default
    doom-modeline-buffer-file-name-style 'relative-to-project
    doom-modeline-enable-word-count t
-   doom-modeline-icon nil
+   doom-modeline-icon t
    doom-modeline-percent-position nil))
 #+END_SRC
 
