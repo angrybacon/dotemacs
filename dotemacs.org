@@ -1363,9 +1363,23 @@ Here is how it looks:
                           (format-mode-line "%l:%c")
                           (doom-modeline-spc))
                   'face (if active 'mode-line 'mode-line-inactive))))
+  (doom-modeline-def-segment me/helm-name
+    "The Helm buffer name."
+    (concat
+     (doom-modeline-spc)
+     (propertize
+      (let* ((buffer (buffer-name))
+             (name (cdr (assoc buffer doom-modeline--helm-buffer-ids)))
+             (result (cond ((functionp name) (funcall name))
+                           ((stringp name) name)
+                           (t (string-match "\\*helm:? \\(mode \\)?\\([^\\*]+\\)\\*" buffer)
+                              (s-join " " `("Helm" ,(capitalize (match-string 2 buffer))))))))
+        (replace-regexp-in-string "HELM" "Helm" result t 'literal))
+      'face 'doom-modeline-buffer-file)
+     (doom-modeline-spc)))
   (doom-modeline-mode 1)
   (doom-modeline-def-modeline 'helm
-    '(bar helm-buffer-id helm-follow helm-prefix-argument)
+    '(bar me/helm-name helm-follow helm-prefix-argument)
     '(helm-number))
   (doom-modeline-def-modeline 'info
     '(bar me/buffer-name info-nodes me/buffer-position selection-info)
