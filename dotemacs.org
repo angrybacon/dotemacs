@@ -167,8 +167,9 @@ Load theme and fix some high-level faces to match my personal preferences.
 #+BEGIN_SRC emacs-lisp
 (use-package doom-themes
   :demand t
+  :custom
+  (doom-themes-enable-bold nil)
   :config
-  (setq-default doom-themes-enable-bold nil)
   (load-theme 'doom-one t)
   (with-eval-after-load 'helm-buffers
     (set-face-attribute 'helm-buffer-directory nil
@@ -215,7 +216,7 @@ Load theme and fix some high-level faces to match my personal preferences.
 #+BEGIN_SRC emacs-lisp
 (use-package css-mode
   :ensure nil
-  :config (setq-default css-indent-offset 2))
+  :custom (css-indent-offset 2))
 
 (use-package scss-mode
   :ensure nil
@@ -255,7 +256,8 @@ HTML mode is defined in =sgml-mode.el=.
    (html-mode . sgml-electric-tag-pair-mode)
    (html-mode . sgml-name-8bit-mode)
    (html-mode . toggle-truncate-lines))
-  :config (setq-default sgml-basic-offset 2))
+  :custom
+  (sgml-basic-offset 2))
 #+END_SRC
 
 ** JavaScript
@@ -270,16 +272,17 @@ HTML mode is defined in =sgml-mode.el=.
   (defun me/js-prettify-symbols-mode-on ()
     (add-to-list 'prettify-symbols-alist '("function" . ?\u0192))
     (prettify-symbols-mode 1))
-  :hook (js-mode . me/js-prettify-symbols-mode-on)
-  :config (setq-default js-indent-level 2))
+  :hook
+  (js-mode . me/js-prettify-symbols-mode-on)
+  :custom
+  (js-indent-level 2))
 
 (use-package js2-mode
   :ensure nil
-  :config
-  (setq-default
-   js2-idle-timer-delay 0
-   js2-mode-show-parse-errors nil
-   js2-mode-show-strict-warnings nil))
+  :custom
+  (js2-idle-timer-delay 0)
+  (js2-mode-show-parse-errors nil)
+  (js2-mode-show-strict-warnings nil))
 
 (use-package json-mode
   :mode "\\.json\\'"
@@ -302,7 +305,7 @@ HTML mode is defined in =sgml-mode.el=.
    (rjsx-mode . turn-off-auto-fill)))
 
 (use-package web-mode
-  :config (setq-default web-mode-enable-auto-indentation nil))
+  :custom (web-mode-enable-auto-indentation nil))
 #+END_SRC
 
 ** Lisp
@@ -327,13 +330,14 @@ HTML mode is defined in =sgml-mode.el=.
    "README\\'"
    "\\.markdown\\'"
    "\\.md\\'")
-  :hook (markdown-mode . me/markdown-set-ongoing-hydra-body)
+  :hook
+  (markdown-mode . me/markdown-set-ongoing-hydra-body)
+  :custom
+  (markdown-asymmetric-header t)
+  (markdown-split-window-direction 'right)
   :config
   (unbind-key "M-<down>" markdown-mode-map)
-  (unbind-key "M-<up>" markdown-mode-map)
-  (setq-default
-   markdown-asymmetric-header t
-   markdown-split-window-direction 'right))
+  (unbind-key "M-<up>" markdown-mode-map))
 #+END_SRC
 
 ** Org
@@ -371,17 +375,17 @@ authoring documents with a fast and effective plain-text system.
   ((org-mode . me/org-set-ongoing-hydra-body)
    (org-mode . org-sticky-header-mode)
    (org-mode . toc-org-enable))
+  :custom
+  (org-descriptive-links nil)
+  (org-edit-src-content-indentation 0)
+  (org-edit-src-persistent-message nil)
+  (org-fontify-done-headline t)
+  (org-fontify-quote-and-verse-blocks t)
+  (org-src-window-setup 'current-window)
+  (org-startup-folded nil)
+  (org-startup-truncated nil)
+  (org-support-shift-select 'always)
   :config
-  (setq-default
-   org-descriptive-links nil
-   org-edit-src-content-indentation 0
-   org-edit-src-persistent-message nil
-   org-fontify-done-headline t
-   org-fontify-quote-and-verse-blocks t
-   org-src-window-setup 'current-window
-   org-startup-folded nil
-   org-startup-truncated nil
-   org-support-shift-select 'always)
   (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer-name))
 #+END_SRC
 
@@ -389,10 +393,9 @@ Display the current Org header in the header-line.
 
 #+BEGIN_SRC emacs-lisp
 (use-package org-sticky-header
-  :config
-  (setq-default
-   org-sticky-header-full-path 'full
-   org-sticky-header-outline-path-separator " / "))
+  :custom
+  (org-sticky-header-full-path 'full)
+  (org-sticky-header-outline-path-separator " / "))
 #+END_SRC
 
 Tired of having to manually update your tables of contents? This package will
@@ -470,14 +473,14 @@ completion candidates.
         ("TAB" . company-complete-selection)
         ([tab] . company-complete-selection)
         ("<right>" . company-complete-common))
-  :hook (after-init . global-company-mode)
-  :config
-  (setq-default
-   company-dabbrev-downcase nil
-   company-idle-delay .2
-   company-minimum-prefix-length 1
-   company-require-match nil
-   company-tooltip-align-annotations t))
+  :hook
+  (after-init . global-company-mode)
+  :custom
+  (company-dabbrev-downcase nil)
+  (company-idle-delay .2)
+  (company-minimum-prefix-length 1)
+  (company-require-match nil)
+  (company-tooltip-align-annotations t))
 #+END_SRC
 
 ** Buffers and Windows
@@ -512,8 +515,7 @@ Save and restore Emacs status, including buffers, point and window configuration
 #+BEGIN_SRC emacs-lisp
 (use-package desktop
   :ensure nil
-  :demand t
-  :config (desktop-save-mode 1))
+  :hook (after-init . desktop-save-mode))
 #+END_SRC
 
 Workspaces within Emacs.
@@ -535,8 +537,10 @@ by default. The behaviour is modeled after
   ("<f6>" . eyebrowse-switch-to-window-config-2)
   ("<f7>" . eyebrowse-switch-to-window-config-3)
   ("<f8>" . eyebrowse-switch-to-window-config-4)
-  :hook (after-init . eyebrowse-mode)
-  :config (setq-default eyebrowse-new-workspace t))
+  :hook
+  (after-init . eyebrowse-mode)
+  :custom
+  (eyebrowse-new-workspace t))
 #+END_SRC
 
 Window management.
@@ -554,11 +558,11 @@ selected window.
 
 #+BEGIN_SRC emacs-lisp
 (use-package shackle
-  :hook (after-init . shackle-mode)
-  :config
-  (setq-default
-   shackle-rules '((help-mode :inhibit-window-quit t :same t))
-   shackle-select-reused-windows t))
+  :hook
+  (after-init . shackle-mode)
+  :custom
+  (shackle-rules '((help-mode :inhibit-window-quit t :same t)))
+  (shackle-select-reused-windows t))
 #+END_SRC
 
 Bind commands to move around windows.
@@ -596,11 +600,11 @@ you can press ctrl-c right (calling =winner-redo=).
 #+BEGIN_SRC emacs-lisp
 (use-package newcomment
   :ensure nil
-  :bind ("<M-return>" . comment-indent-new-line)
-  :config
-  (setq-default
-   comment-auto-fill-only-comments t
-   comment-multi-line t))
+  :bind
+  ("<M-return>" . comment-indent-new-line)
+  :custom
+  (comment-auto-fill-only-comments t)
+  (comment-multi-line t))
 #+END_SRC
 
 ** Customization Menus
@@ -611,7 +615,7 @@ little more.
 #+BEGIN_SRC emacs-lisp
 (use-package cus-edit
   :ensure nil
-  :config (setq-default custom-unlispify-tag-names nil))
+  :custom (custom-unlispify-tag-names nil))
 #+END_SRC
 
 ** Daemon
@@ -655,10 +659,9 @@ Ediff is a visual interface to Unix =diff=.
 #+BEGIN_SRC emacs-lisp
 (use-package ediff-wind
   :ensure nil
-  :config
-  (setq-default
-   ediff-split-window-function #'split-window-horizontally
-   ediff-window-setup-function #'ediff-setup-windows-plain))
+  :custom
+  (ediff-split-window-function #'split-window-horizontally)
+  (ediff-window-setup-function #'ediff-setup-windows-plain))
 #+END_SRC
 
 ** Dired
@@ -677,24 +680,17 @@ explorer.
         (forward-line 2)
         (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
       (set-buffer-modified-p nil)))
-  :hook (dired-mode . dired-hide-details-mode)
+  :hook
+  (dired-mode . dired-hide-details-mode)
+  :custom
+  (dired-auto-revert-buffer t)
+  (dired-dwim-target t)
+  (dired-hide-details-hide-symlink-targets nil)
+  (dired-listing-switches "-alh")
+  (dired-ls-F-marks-symlinks nil)
+  (dired-recursive-copies 'always)
   :config
-  (advice-add 'dired-readin :after #'me/dired-directories-first)
-  (setq-default
-   dired-auto-revert-buffer t
-   dired-dwim-target t
-   dired-hide-details-hide-symlink-targets nil
-   dired-listing-switches "-alh"
-   dired-ls-F-marks-symlinks nil
-   dired-recursive-copies 'always))
-
-(use-package dired-x
-  :ensure nil
-  :preface
-  (defun me/dired-revert-after-command (command &optional output error)
-    (revert-buffer))
-  :config
-  (advice-add 'dired-smart-shell-command :after #'me/dired-revert-after-command))
+  (advice-add 'dired-readin :after #'me/dired-directories-first))
 #+END_SRC
 
 ** Expand
@@ -711,11 +707,11 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
         ("C-M-<left>" . nil)
         ("C-M-<right>" . nil)
         ("C-c w" . nil))
-  :hook (css-mode html-mode rjsx-mode)
-  :config
-  (setq-default
-   emmet-insert-flash-time .1
-   emmet-move-cursor-between-quote t))
+  :hook
+  (css-mode html-mode rjsx-mode)
+  :custom
+  (emmet-insert-flash-time .1)
+  (emmet-move-cursor-between-quote t))
 
 (use-package hippie-exp
   :ensure nil
@@ -724,27 +720,27 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
     "Try `emmet-expand-line' if `emmet-mode' is active. Else, does nothing."
     (interactive "P")
     (when emmet-mode (emmet-expand-line args)))
-  :bind ("<C-return>" . hippie-expand)
-  :config
-  (setq-default
-   hippie-expand-try-functions-list '(yas-hippie-try-expand me/emmet-try-expand-line)
-   hippie-expand-verbose nil))
+  :bind
+  ("<C-return>" . hippie-expand)
+  :custom
+  (hippie-expand-try-functions-list '(yas-hippie-try-expand me/emmet-try-expand-line))
+  (hippie-expand-verbose nil))
 
 (use-package yasnippet
   :bind
   (:map yas-minor-mode-map
         ("TAB" . nil)
-        ("<tab>" . nil))
+        ([tab] . nil))
   :hook
   ((emacs-lisp-mode . yas-minor-mode)
    (html-mode . yas-minor-mode)
    (js-mode . yas-minor-mode)
    (org-mode . yas-minor-mode)
    (python-mode . yas-minor-mode))
+  :custom
+  (yas-snippet-dirs `(,(expand-file-name "snippets/" user-emacs-directory)))
+  (yas-verbosity 2)
   :config
-  (setq-default
-   yas-snippet-dirs `(,(expand-file-name "snippets/" user-emacs-directory))
-   yas-verbosity 2)
   (yas-reload-all))
 #+END_SRC
 
@@ -773,7 +769,6 @@ leaner, modular, and unchained from constraints of backward compatibility.
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm
-  :demand t
   :preface
   (defun me/helm-focus-follow ()
     ;; (let ((point (point)))
@@ -794,34 +789,35 @@ leaner, modular, and unchained from constraints of backward compatibility.
    ("<left>" . backward-char)
    ("<right>" . forward-char)
    ("M-w" . me/helm-grab-candidates))
-  :hook (helm-after-action . me/helm-focus-follow)
-  :config
-  (helm-mode 1)
-  (setq-default
-   helm-M-x-fuzzy-match t
-   helm-always-two-windows t
-   helm-buffer-max-length nil
-   helm-buffers-fuzzy-matching t
-   helm-completion-in-region-fuzzy-match t
-   helm-display-header-line nil
-   helm-ff-no-preselect t
-   helm-ff-skip-boring-files t
-   helm-find-file-ignore-thing-at-point t
-   helm-help-full-frame nil
-   helm-mode-fuzzy-match t
-   helm-net-prefer-curl (if (executable-find "curl") t nil)
-   helm-org-headings-fontify t
-   helm-scroll-amount 5
-   helm-split-window-default-side 'left
-   helm-truncate-lines t))
+  :hook
+  (after-init . helm-mode)
+  (helm-after-action . me/helm-focus-follow)
+  :custom
+  (helm-M-x-fuzzy-match t)
+  (helm-always-two-windows t)
+  (helm-buffer-max-length nil)
+  (helm-buffers-fuzzy-matching t)
+  (helm-completion-in-region-fuzzy-match t)
+  (helm-display-header-line nil)
+  (helm-ff-no-preselect t)
+  (helm-ff-skip-boring-files t)
+  (helm-find-file-ignore-thing-at-point t)
+  (helm-help-full-frame nil)
+  (helm-mode-fuzzy-match t)
+  (helm-net-prefer-curl (if (executable-find "curl") t nil))
+  (helm-org-headings-fontify t)
+  (helm-scroll-amount 5)
+  (helm-split-window-default-side 'left)
+  (helm-truncate-lines t))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm-imenu
   :ensure nil
-  :bind (:map helm-imenu-map
-              ("<left>" . backward-char)
-              ("<right>" . forward-char)))
+  :bind
+  (:map helm-imenu-map
+        ("<left>" . backward-char)
+        ("<right>" . forward-char)))
 #+END_SRC
 
 ** Helm Plugins
@@ -830,24 +826,30 @@ Fourth-party packages for Helm.
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm-ag
-  :bind (:map helm-ag-map
-              ("<left>" . backward-char)
-              ("<right>" . forward-char))
-  :config (setq-default helm-ag-show-status-function nil))
+  :bind
+  (:map helm-ag-map
+        ("<left>" . backward-char)
+        ("<right>" . forward-char))
+  :custom
+  (helm-ag-show-status-function nil))
 
 (use-package helm-descbinds
-  :bind ([remap describe-bindings] . helm-descbinds)
-  :config (setq-default helm-descbinds-window-style 'split-window))
+  :bind
+  ([remap describe-bindings] . helm-descbinds)
+  :custom
+  (helm-descbinds-window-style 'split-window))
 
 (use-package helm-describe-modes
   :bind ([remap describe-mode] . helm-describe-modes))
 
 (use-package helm-projectile
   :defer nil
-  :bind (:map helm-projectile-find-file-map
-              ("<left>" . backward-char)
-              ("<right>" . forward-char))
-  :config (helm-projectile-toggle 1))
+  :bind
+  (:map helm-projectile-find-file-map
+        ("<left>" . backward-char)
+        ("<right>" . forward-char))
+  :config
+  (helm-projectile-toggle 1))
 #+END_SRC
 
 ** Help
@@ -898,7 +900,8 @@ seamless, it's like a minor mode that disables itself auto-magically.
   ("C-c p" . hydra-projectile/body)
   ("C-c s" . hydra-system/body)
   ("C-c w" . hydra-windows/body)
-  :config (setq-default hydra-default-hint nil))
+  :custom
+  (hydra-default-hint nil))
 #+END_SRC
 
 *** Hydra / Dates
@@ -1228,26 +1231,25 @@ _q_ quit            _b_ balance         _-_ out
         ([remap erc-bol] . me/erc-bol-shifted)
         ("M-<down>" . erc-next-command)
         ("M-<up>" . erc-previous-command))
-  :hook (erc-mode . (lambda () (setq-local scroll-margin 0)))
+  :hook
+  (erc-mode . (lambda () (setq-local scroll-margin 0)))
+  :custom
+  (erc-autojoin-channels-alist '(("freenode.net" "#emacs")))
+  (erc-fill-function 'erc-fill-static)
+  (erc-fill-static-center 19)
+  (erc-header-line-format " %n on %t %m")
+  (erc-insert-timestamp-function 'erc-insert-timestamp-left)
+  (erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
+  (erc-prompt (format "%18s" ">"))
+  (erc-timestamp-format nil)
   :config
   (make-variable-buffer-local 'erc-fill-column)
-  (erc-scrolltobottom-enable)
-  (setq-default
-   erc-autojoin-channels-alist '(("freenode.net" "#emacs"))
-   erc-fill-function 'erc-fill-static
-   erc-fill-static-center 19
-   erc-header-line-format " %n on %t %m"
-   erc-insert-timestamp-function 'erc-insert-timestamp-left
-   erc-lurker-hide-list '("JOIN" "PART" "QUIT")
-   erc-prompt (format "%18s" ">")
-   erc-timestamp-format nil))
+  (erc-scrolltobottom-enable))
 
 (use-package erc-match :ensure nil)
 #+END_SRC
 
 Colorize nicks with unique colors.
-
-- *TODO*: Pastel'ize the colors.
 
 #+BEGIN_SRC emacs-lisp
 (use-package erc-hl-nicks :after erc)
@@ -1271,7 +1273,8 @@ Keep track of ERC buffers in which new messages have been posted.
            (set-buffer buffer)
            (when (and (eq major-mode 'erc-mode) (erc-buffer-visible buffer))
              (setq erc-fill-column (- (window-width window) 2))))))))
-  :hook (window-configuration-change . me/erc-set-fill-column))
+  :hook
+  (window-configuration-change . me/erc-set-fill-column))
 #+END_SRC
 
 ** Linters
@@ -1287,11 +1290,10 @@ binaries (see [[./README.org][README.org]]).
    (emacs-lisp-mode . flycheck-mode)
    (js-mode . flycheck-mode)
    (python-mode . flycheck-mode))
-  :config
-  (setq-default
-   flycheck-check-syntax-automatically '(save mode-enabled)
-   flycheck-disabled-checkers '(emacs-lisp-checkdoc)
-   flycheck-display-errors-delay .3))
+  :custom
+  (flycheck-check-syntax-automatically '(save mode-enabled))
+  (flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+  (flycheck-display-errors-delay .3))
 #+END_SRC
 
 ** Mode-Line
@@ -1349,6 +1351,11 @@ Here is how it looks:
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
   :demand t
+  :custom
+  (doom-modeline-buffer-file-name-style 'relative-to-project)
+  (doom-modeline-enable-word-count t)
+  (doom-modeline-icon t)
+  (doom-modeline-percent-position nil)
   :config
   (doom-modeline-def-segment me/buffer-name
     "The buffer name."
@@ -1389,12 +1396,7 @@ Here is how it looks:
     '(irc matches process vcs major-mode workspace-name))
   (doom-modeline-def-modeline 'project
     '(bar buffer-default-directory)
-    '(irc matches process major-mode workspace-name))
-  (setq-default
-   doom-modeline-buffer-file-name-style 'relative-to-project
-   doom-modeline-enable-word-count t
-   doom-modeline-icon t
-   doom-modeline-percent-position nil))
+    '(irc matches process major-mode workspace-name)))
 #+END_SRC
 
 ** Navigation
@@ -1476,9 +1478,12 @@ mode-line in various search modes.
 
 #+BEGIN_SRC emacs-lisp
 (use-package anzu
-  :bind ([remap query-replace] . anzu-query-replace-regexp)
-  :hook (after-init . global-anzu-mode)
-  :config (setq-default anzu-cons-mode-line-p nil))
+  :bind
+  ([remap query-replace] . anzu-query-replace-regexp)
+  :hook
+  (after-init . global-anzu-mode)
+  :custom
+  (anzu-cons-mode-line-p nil))
 #+END_SRC
 
 *** Navigation / Scroll
@@ -1506,10 +1511,9 @@ Configure the mouse scroll.
 #+BEGIN_SRC emacs-lisp
 (use-package mwheel
   :ensure nil
-  :config
-  (setq-default
-   mouse-wheel-progressive-speed nil
-   mouse-wheel-scroll-amount '(1 ((control) . 5))))
+  :custom
+  (mouse-wheel-progressive-speed nil)
+  (mouse-wheel-scroll-amount '(1 ((control) . 5))))
 #+END_SRC
 
 *** Navigation / Search
@@ -1595,14 +1599,15 @@ today... No package seem to please my person.
    ("M-<right>" . sp-forward-slurp-sexp)
    ("M-S-<left>" . sp-backward-slurp-sexp)
    ("M-S-<right>" . sp-backward-barf-sexp))
-  :hook (after-init . smartparens-global-mode)
+  :hook
+  (after-init . smartparens-global-mode)
+  :custom
+  (sp-highlight-pair-overlay nil)
+  (sp-highlight-wrap-overlay nil)
+  (sp-highlight-wrap-tag-overlay nil)
   :config
   (show-paren-mode 0)
-  (require 'smartparens-config)
-  (setq-default
-   sp-highlight-pair-overlay nil
-   sp-highlight-wrap-overlay nil
-   sp-highlight-wrap-tag-overlay nil))
+  (require 'smartparens-config))
 #+END_SRC
 
 ** Paste
@@ -1652,10 +1657,9 @@ Enable multiple cursors at once. Some witchcraft at work here.
   :init
   (setq-default
    mc/list-file (expand-file-name ".multiple-cursors.el" user-emacs-directory))
-  :config
-  (setq-default
-   mc/edit-lines-empty-lines 'ignore
-   mc/insert-numbers-default 1))
+  :custom
+  (mc/edit-lines-empty-lines 'ignore)
+  (mc/insert-numbers-default 1))
 #+END_SRC
 
 Enable new custom binds when region is active. I've also added a few helpers to
@@ -1845,15 +1849,15 @@ exists as well).
 
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
-  :hook (after-init . projectile-global-mode)
+  :hook
+  (after-init . projectile-global-mode)
   :init
   (setq-default
    projectile-cache-file (expand-file-name ".projectile-cache" user-emacs-directory)
    projectile-known-projects-file (expand-file-name ".projectile-bookmarks" user-emacs-directory))
-  :config
-  (setq-default
-   projectile-completion-system 'helm
-   projectile-enable-caching t))
+  :custom
+  (projectile-completion-system 'helm)
+  (projectile-enable-caching t))
 #+END_SRC
 
 ** Quality of Life
@@ -1883,8 +1887,9 @@ electric-indent-mode.
    (js-mode . aggressive-indent-mode)
    (lisp-mode . aggressive-indent-mode)
    (sgml-mode . aggressive-indent-mode))
+  :custom
+  (aggressive-indent-comments-too t)
   :config
-  (setq-default aggressive-indent-comments-too t)
   (add-to-list 'aggressive-indent-protected-commands 'comment-dwim))
 #+END_SRC
 
@@ -1935,20 +1940,21 @@ Customize the noisy default towards backup files.
 #+BEGIN_SRC emacs-lisp
 (use-package files
   :ensure nil
-  :config
-  (setq-default
-   backup-by-copying t
-   backup-directory-alist `(("." . ,(expand-file-name "backups/" user-emacs-directory)))
-   delete-old-versions t
-   version-control t))
+  :custom
+  (backup-by-copying t)
+  (backup-directory-alist `(("." . ,(expand-file-name "backups/" user-emacs-directory))))
+  (delete-old-versions t)
+  (version-control t))
 #+END_SRC
 
 Add visual guides towards indenting levels.
 
 #+BEGIN_SRC emacs-lisp
 (use-package highlight-indent-guides
-  :hook (python-mode . highlight-indent-guides-mode)
-  :config (setq-default highlight-indent-guides-method 'character))
+  :hook
+  (python-mode . highlight-indent-guides-mode)
+  :custom
+  (highlight-indent-guides-method 'character))
 #+END_SRC
 
 Highlight line under point.
@@ -1966,8 +1972,9 @@ kills old buffers.
 #+BEGIN_SRC emacs-lisp
 (use-package midnight
   :ensure nil
+  :custom
+  (clean-buffer-list-delay-general 1)
   :config
-  (setq-default clean-buffer-list-delay-general 1)
   (add-to-list 'clean-buffer-list-kill-never-buffer-names "dotemacs.org"))
 #+END_SRC
 
@@ -1983,13 +1990,13 @@ more.
 
 #+BEGIN_SRC emacs-lisp
 (use-package paradox
+  :custom
+  (paradox-column-width-package 27)
+  (paradox-column-width-version 13)
+  (paradox-execute-asynchronously t)
+  (paradox-github-token t)
+  (paradox-hide-wiki-packages t)
   :config
-  (setq-default
-   paradox-column-width-package 27
-   paradox-column-width-version 13
-   paradox-execute-asynchronously t
-   paradox-github-token t
-   paradox-hide-wiki-packages t)
   (remove-hook 'paradox-after-execute-functions #'paradox--report-buffer-print))
 #+END_SRC
 
@@ -2003,10 +2010,9 @@ should enable the feature as a minor-mode and on a per-mode basis only.
   (defun me/prettify-symbols-compose-predicate (&rest arguments)
     (when (not (eq system-type 'windows-nt))
       (apply #'prettify-symbols-default-compose-p arguments)))
-  :config
-  (setq-default
-   prettify-symbols-compose-predicate #'me/prettify-symbols-compose-predicate
-   prettify-symbols-unprettify-at-point 'right-edge))
+  :custom
+  (prettify-symbols-compose-predicate #'me/prettify-symbols-compose-predicate)
+  (prettify-symbols-unprettify-at-point 'right-edge))
 #+END_SRC
 
 Colorize colors as text with their value.
@@ -2014,7 +2020,7 @@ Colorize colors as text with their value.
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-mode
   :hook prog-mode
-  :config (setq-default rainbow-x-colors-major-mode-list '()))
+  :custom (rainbow-x-colors-major-mode-list '()))
 #+END_SRC
 
 Turn on =auto-fill-mode= /almost/ everywhere.
@@ -2032,7 +2038,7 @@ Turn on =auto-fill-mode= /almost/ everywhere.
 #+BEGIN_SRC emacs-lisp
 (use-package em-hist
   :ensure nil
-  :config (setq-default eshell-hist-ignoredups t))
+  :custom (eshell-hist-ignoredups t))
 
 (use-package esh-mode
   :ensure nil
@@ -2041,11 +2047,14 @@ Turn on =auto-fill-mode= /almost/ everywhere.
     "See `eshell-bol'. Support shift."
     (interactive "^")
     (eshell-bol))
-  :bind (:map eshell-mode-map ([remap eshell-bol] . me/eshell-bol-shifted))
+  :bind
+  (:map eshell-mode-map
+        ([remap eshell-bol] . me/eshell-bol-shifted))
   :hook
   ((eshell-mode . me/hl-line-mode-off)
    (eshell-mode . (lambda () (setq-local scroll-margin 0))))
-  :config (setq-default eshell-scroll-to-bottom-on-input t))
+  :custom
+  (eshell-scroll-to-bottom-on-input t))
 #+END_SRC
 
 Yes, Emacs emulates terminals too.
@@ -2095,37 +2104,26 @@ Git itself deserve to be called porcelains.
   (defun me/git-commit-auto-fill-everywhere ()
     (setq fill-column 72)
     (setq-local comment-auto-fill-only-comments nil))
-  :hook (git-commit-mode . me/git-commit-auto-fill-everywhere)
-  :config (setq-default git-commit-summary-max-length 50))
+  :hook
+  (git-commit-mode . me/git-commit-auto-fill-everywhere)
+  :custom
+  (git-commit-summary-max-length 50))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package magit
-  :preface
-  (defun me/magit-display-buffer-same (buffer)
-    "Display most magit popups in the current buffer."
-    (display-buffer
-     buffer
-     (cond ((and (derived-mode-p 'magit-mode)
-                 (eq (with-current-buffer buffer major-mode) 'magit-status-mode))
-            nil)
-           ((memq (with-current-buffer buffer major-mode)
-                  '(magit-process-mode
-                    magit-revision-mode
-                    magit-diff-mode
-                    magit-stash-mode))
-            nil)
-           (t '(display-buffer-same-window)))))
-  :config
-  (setq-default
-   magit-display-buffer-function 'me/magit-display-buffer-same
-   magit-diff-highlight-hunk-body nil
-   magit-diff-highlight-hunk-region-functions
-   '(magit-diff-highlight-hunk-region-dim-outside
-     magit-diff-highlight-hunk-region-using-face)
-   magit-popup-display-buffer-action '((display-buffer-same-window))
-   magit-refs-show-commit-count 'all
-   magit-section-show-child-count t))
+  :bind
+  (:map magit-hunk-section-map
+        ("RET" . magit-diff-visit-file-other-window)
+        ([return] . magit-diff-visit-file-other-window))
+  :custom
+  (magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
+  (magit-diff-highlight-hunk-body nil)
+  (magit-diff-highlight-hunk-region-functions
+   '(magit-diff-highlight-hunk-region-dim-outside magit-diff-highlight-hunk-region-using-face))
+  (magit-popup-display-buffer-action '((display-buffer-same-window)))
+  (magit-refs-show-commit-count 'all)
+  (magit-section-show-child-count t))
 
 (use-package magit-section
   :ensure nil
@@ -2148,7 +2146,8 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
   :hook
   ((prog-mode . whitespace-turn-on)
    (text-mode . whitespace-turn-on))
-  :config (setq-default whitespace-style '(face empty indentation::space tab trailing)))
+  :custom
+  (whitespace-style '(face empty indentation::space tab trailing)))
 #+END_SRC
 
 -----
