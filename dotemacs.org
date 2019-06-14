@@ -1648,7 +1648,6 @@ Enable multiple cursors at once. Some witchcraft at work here.
 
 #+BEGIN_SRC emacs-lisp
 (use-package multiple-cursors
-  :defer 1
   :bind
   (("C-S-<mouse-1>" . mc/add-cursor-on-click)
    ("C-S-c C-S-a" . mc/vertical-align-with-space)
@@ -2125,11 +2124,9 @@ Git itself deserve to be called porcelains.
    '(magit-diff-highlight-hunk-region-dim-outside magit-diff-highlight-hunk-region-using-face))
   (magit-popup-display-buffer-action '((display-buffer-same-window)))
   (magit-refs-show-commit-count 'all)
-  (magit-section-show-child-count t))
-
-(use-package magit-section
-  :ensure nil
-  :config (remove-hook 'magit-section-highlight-hook #'magit-section-highlight))
+  (magit-section-show-child-count t)
+  :config
+  (remove-hook 'magit-section-highlight-hook #'magit-section-highlight))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
