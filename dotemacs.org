@@ -191,6 +191,7 @@ Load theme and fix some high-level faces to match my personal preferences.
     (set-face-attribute 'lazy-highlight nil :foreground (doom-color 'blue)))
   (with-eval-after-load 'faces
     (set-face-attribute 'default nil :font me/font-family :height me/font-size-default)
+    (set-face-attribute 'header-line nil :box `(:color ,(doom-color 'modeline-bg) :line-width 7))
     (set-face-attribute 'help-argument-name nil :foreground (doom-color 'yellow))
     (set-face-attribute 'mode-line nil :height me/font-size-mode-line)
     (set-face-attribute 'variable-pitch nil :family 'unspecified))
@@ -396,7 +397,11 @@ Display the current Org header in the header-line.
 (use-package org-sticky-header
   :custom
   (org-sticky-header-full-path 'full)
-  (org-sticky-header-outline-path-separator " / "))
+  (org-sticky-header-outline-path-separator " / ")
+  :config
+  (setq-default
+   org-sticky-header-header-line-format
+   '(:eval (setq org-sticky-header-stickyline (concat " " (org-sticky-header--fetch-stickyline))))))
 #+END_SRC
 
 Tired of having to manually update your tables of contents? This package will
@@ -1250,7 +1255,7 @@ _q_ quit            _b_ balance         _-_ out
   (erc-autojoin-channels-alist '(("freenode.net" "#emacs")))
   (erc-fill-function 'erc-fill-static)
   (erc-fill-static-center 19)
-  (erc-header-line-format " %n on %t %m")
+  (erc-header-line-format nil)
   (erc-insert-timestamp-function 'erc-insert-timestamp-left)
   (erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
   (erc-prompt (format "%18s" ">"))
