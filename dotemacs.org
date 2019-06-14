@@ -192,6 +192,7 @@ Load theme and fix some high-level faces to match my personal preferences.
   (with-eval-after-load 'faces
     (set-face-attribute 'default nil :font me/font-family :height me/font-size-default)
     (set-face-attribute 'help-argument-name nil :foreground (doom-color 'yellow))
+    (set-face-attribute 'mode-line nil :height me/font-size-mode-line)
     (set-face-attribute 'variable-pitch nil :family 'unspecified))
   (with-eval-after-load 'font-lock
     (set-face-attribute 'font-lock-doc-face nil :italic t))
@@ -1228,6 +1229,15 @@ _q_ quit            _b_ balance         _-_ out
     "See `erc-bol'. Support shift."
     (interactive "^")
     (erc-bol))
+  (defun me/erc-set-fill-column ()
+    "Set `erc-fill-column' to the width of the current window."
+    (save-excursion
+      (walk-windows
+       (lambda (window)
+         (let ((buffer (window-buffer window)))
+           (set-buffer buffer)
+           (when (and (eq major-mode 'erc-mode) (erc-buffer-visible buffer))
+             (setq erc-fill-column (- (window-width window) 2))))))))
   :bind
   (:map erc-mode-map
         ([remap erc-bol] . me/erc-bol-shifted)
@@ -1235,6 +1245,7 @@ _q_ quit            _b_ balance         _-_ out
         ("M-<up>" . erc-previous-command))
   :hook
   (erc-mode . (lambda () (setq-local scroll-margin 0)))
+  (window-configuration-change . me/erc-set-fill-column)
   :custom
   (erc-autojoin-channels-alist '(("freenode.net" "#emacs")))
   (erc-fill-function 'erc-fill-static)
@@ -1247,36 +1258,6 @@ _q_ quit            _b_ balance         _-_ out
   :config
   (make-variable-buffer-local 'erc-fill-column)
   (erc-scrolltobottom-enable))
-
-(use-package erc-match :ensure nil)
-#+END_SRC
-
-Colorize nicks with unique colors.
-
-#+BEGIN_SRC emacs-lisp
-(use-package erc-hl-nicks :after erc)
-#+END_SRC
-
-Keep track of ERC buffers in which new messages have been posted.
-
-- *TODO*: Filter and track only the actual messages.
-
-#+BEGIN_SRC emacs-lisp
-(use-package erc-track
-  :ensure nil
-  :after erc
-  :preface
-  (defun me/erc-set-fill-column ()
-    "Set `erc-fill-column' to the width of the current window."
-    (save-excursion
-      (walk-windows
-       (lambda (window)
-         (let ((buffer (window-buffer window)))
-           (set-buffer buffer)
-           (when (and (eq major-mode 'erc-mode) (erc-buffer-visible buffer))
-             (setq erc-fill-column (- (window-width window) 2))))))))
-  :hook
-  (window-configuration-change . me/erc-set-fill-column))
 #+END_SRC
 
 ** Linters
