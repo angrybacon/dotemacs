@@ -515,7 +515,9 @@ Save and restore Emacs status, including buffers, point and window configuration
 #+BEGIN_SRC emacs-lisp
 (use-package desktop
   :ensure nil
-  :hook (after-init . desktop-save-mode))
+  :hook
+  (after-init . desktop-read)
+  (after-init . desktop-save-mode))
 #+END_SRC
 
 Workspaces within Emacs.
