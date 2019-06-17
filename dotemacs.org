@@ -171,6 +171,10 @@ Load theme and fix some high-level faces to match my personal preferences.
   (doom-themes-enable-bold nil)
   :config
   (load-theme 'doom-one t)
+  (with-eval-after-load 'flycheck
+    (set-face-attribute 'flycheck-error nil :underline `(:color ,(doom-color 'error) :style line))
+    (set-face-attribute 'flycheck-info nil :underline `(:color ,(doom-color 'highlight) :style line))
+    (set-face-attribute 'flycheck-warning nil :underline `(:color ,(doom-color 'warning) :style line)))
   (with-eval-after-load 'helm-buffers
     (set-face-attribute 'helm-buffer-directory nil
                         :background 'unspecified
