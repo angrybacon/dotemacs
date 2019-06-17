@@ -192,6 +192,7 @@ Load theme and fix some high-level faces to match my personal preferences.
                         :foreground 'unspecified
                         :inherit 'dired-directory))
   (with-eval-after-load 'isearch
+    (set-face-attribute 'isearch nil :background (doom-color 'blue) :foreground (doom-color 'dark-blue))
     (set-face-attribute 'lazy-highlight nil :foreground (doom-color 'blue)))
   (with-eval-after-load 'faces
     (set-face-attribute 'default nil :font me/font-family :height me/font-size-default)
