@@ -879,7 +879,7 @@ Fourth-party packages for Helm.
 ** Hydra
 
 Hydra allows me to group binds together. It also shows a list of all implemented
-commands in the eho area.
+commands in the echo area.
 
 #+BEGIN_QUOTE
 Once you summon the Hydra through the prefixed binding (the body + any one
