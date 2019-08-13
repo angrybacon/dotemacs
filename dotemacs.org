@@ -204,6 +204,8 @@ Load theme and fix some high-level faces to match my personal preferences.
     (set-face-attribute 'font-lock-doc-face nil :italic t))
   (with-eval-after-load 'helm
     (set-face-attribute 'helm-source-header nil :background 'unspecified))
+  (with-eval-after-load 'markdown
+    (set-face-attribute 'markdown-table-face nil :height me/font-size-small))
   (with-eval-after-load 'outline
     (set-face-attribute 'outline-1 nil :background 'unspecified))
   (with-eval-after-load 'magit-diff
