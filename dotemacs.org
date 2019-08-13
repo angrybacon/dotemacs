@@ -288,6 +288,7 @@ HTML mode is defined in =sgml-mode.el=.
 
 (use-package js2-mode
   :ensure nil
+  :bind (:map js2-mode-map ([remap comment-indent-new-line] . js2-line-break))
   :custom
   (js2-idle-timer-delay 0)
   (js2-mode-show-parse-errors nil)
