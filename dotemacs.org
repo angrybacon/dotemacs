@@ -858,6 +858,9 @@ Fourth-party packages for Helm.
 (use-package helm-describe-modes
   :bind ([remap describe-mode] . helm-describe-modes))
 
+(use-package helm-org
+  :commands helm-org-in-buffer-headings)
+
 (use-package helm-projectile
   :defer nil
   :bind
