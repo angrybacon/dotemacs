@@ -286,6 +286,8 @@ HTML mode is defined in =sgml-mode.el=.
   :custom
   (js-indent-level 2))
 
+(use-package js-doc)
+
 (use-package js2-mode
   :ensure nil
   :bind (:map js2-mode-map ([remap comment-indent-new-line] . js2-line-break))
@@ -1157,15 +1159,17 @@ _i_ reset cache     _K_ kill all        _D_ root            _R_ regexp replace
 Group React JavaScript commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-rjsx (:color pink)
+(defhydra hydra-rjsx (:color blue)
   "
 ^
-^RJSX^
-^────^──────────────
-_q_ quit
-^^
+^RJSX^              ^JSDoc^
+^────^──────────────^─────^─────────────
+_q_ quit            _f_ function
+^^                  _F_ file
 "
-  ("q" nil))
+  ("q" nil)
+  ("f" js-doc-insert-function-doc-snippet)
+  ("F" js-doc-insert-file-doc))
 #+END_SRC
 
 [[./screenshots/hydra.rjsx.png]]
