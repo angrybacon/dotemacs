@@ -29,8 +29,6 @@
   - [[#diff][Diff]]
   - [[#dired][Dired]]
   - [[#expand][Expand]]
-  - [[#helm][Helm]]
-  - [[#helm-plugins][Helm Plugins]]
   - [[#help][Help]]
   - [[#hydra][Hydra]]
   - [[#irc][IRC]]
@@ -175,22 +173,6 @@ Load theme and fix some high-level faces to match my personal preferences.
     (set-face-attribute 'flycheck-error nil :underline `(:color ,(doom-color 'error) :style line))
     (set-face-attribute 'flycheck-info nil :underline `(:color ,(doom-color 'highlight) :style line))
     (set-face-attribute 'flycheck-warning nil :underline `(:color ,(doom-color 'warning) :style line)))
-  (with-eval-after-load 'helm-buffers
-    (set-face-attribute 'helm-buffer-directory nil
-                        :background 'unspecified
-                        :foreground 'unspecified
-                        :inherit 'dired-directory)
-    (set-face-attribute 'helm-buffer-file nil :inherit 'unspecified)
-    (set-face-attribute 'helm-buffer-modified nil :foreground (doom-color 'orange) :inherit 'unspecified)
-    (set-face-attribute 'helm-buffer-not-saved nil :foreground (doom-color 'red) :inherit 'unspecified)
-    (set-face-attribute 'helm-non-file-buffer nil :inherit 'font-lock-comment-face))
-  (with-eval-after-load 'helm-command
-    (set-face-attribute 'helm-M-x-key nil :foreground (doom-color 'yellow) :underline 'unspecified))
-  (with-eval-after-load 'helm-files
-    (set-face-attribute 'helm-ff-directory nil
-                        :background 'unspecified
-                        :foreground 'unspecified
-                        :inherit 'dired-directory))
   (with-eval-after-load 'isearch
     (set-face-attribute 'isearch nil :background (doom-color 'blue) :foreground (doom-color 'dark-blue))
     (set-face-attribute 'lazy-highlight nil :foreground (doom-color 'blue)))
@@ -202,8 +184,6 @@ Load theme and fix some high-level faces to match my personal preferences.
     (set-face-attribute 'variable-pitch nil :family 'unspecified))
   (with-eval-after-load 'font-lock
     (set-face-attribute 'font-lock-doc-face nil :italic t))
-  (with-eval-after-load 'helm
-    (set-face-attribute 'helm-source-header nil :background 'unspecified))
   (with-eval-after-load 'markdown
     (set-face-attribute 'markdown-table-face nil :height me/font-size-small))
   (with-eval-after-load 'outline
@@ -762,117 +742,6 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
   (yas-reload-all))
 #+END_SRC
 
-** Helm
-
-Helm is a beast. Although heavily, it replaces =ido-mode= in many ways.
-
-#+BEGIN_QUOTE
-=Helm= is an Emacs framework for incremental completions and narrowing
-selections. It helps to rapidly complete file names, buffer names, or any other
-Emacs interactions requiring selecting an item from a list of possible choices.
-
-Helm is a fork of =anything.el=, which was originally written by Tamas Patrovic
-and can be considered to be its successor. =Helm= cleans the legacy code that is
-leaner, modular, and unchained from constraints of backward compatibility.
-
-[[https://github.com/emacs-helm/helm][Bozhidar Batsov]]
-#+END_QUOTE
-
-
-- *TODO*: Hide the buffer size column.
-- *TODO*: Test =me/helm-pulse-follow= on MacOS. Is it Windows that makes it ugly?
-- *TOFIX*: Help buffer resizes the frame.
-- *TOFIX*: The recentering is too aggressive.
-- *TOFIX*: Fix =me/helm-grab-candidates=.
-
-#+BEGIN_SRC emacs-lisp
-(use-package helm
-  :preface
-  (defun me/helm-focus-follow ()
-    ;; (let ((point (point)))
-    ;;   (when (and (pulse-available-p) (> point 1))
-    ;;     (pulse-momentary-highlight-one-line point)))
-    (recenter-top-bottom (car recenter-positions)))
-  (defun me/helm-grab-candidates (beg end)
-    (interactive "r")
-    (if (region-active-p)
-        (kill-ring-save beg end)
-      (with-helm-buffer (kill-ring-save (point-min) (point-max)))))
-  :bind
-  (([remap execute-extended-command] . helm-M-x)
-   ([remap find-file] . helm-find-files)
-   ([remap isearch-forward] . helm-occur)
-   ([remap switch-to-buffer] . helm-buffers-list)
-   :map helm-map
-   ("<left>" . backward-char)
-   ("<right>" . forward-char)
-   ("M-w" . me/helm-grab-candidates))
-  :hook
-  (after-init . helm-mode)
-  (helm-after-action . me/helm-focus-follow)
-  :custom
-  (helm-M-x-fuzzy-match t)
-  (helm-always-two-windows t)
-  (helm-buffer-max-length nil)
-  (helm-buffers-fuzzy-matching t)
-  (helm-completion-in-region-fuzzy-match t)
-  (helm-display-header-line nil)
-  (helm-ff-no-preselect t)
-  (helm-ff-skip-boring-files t)
-  (helm-find-file-ignore-thing-at-point t)
-  (helm-help-full-frame nil)
-  (helm-mode-fuzzy-match t)
-  (helm-net-prefer-curl (if (executable-find "curl") t nil))
-  (helm-org-headings-fontify t)
-  (helm-scroll-amount 5)
-  (helm-split-window-default-side 'left)
-  (helm-truncate-lines t))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(use-package helm-imenu
-  :ensure nil
-  :bind
-  (:map helm-imenu-map
-        ("<left>" . backward-char)
-        ("<right>" . forward-char)))
-#+END_SRC
-
-** Helm Plugins
-
-Fourth-party packages for Helm.
-
-#+BEGIN_SRC emacs-lisp
-(use-package helm-ag
-  :bind
-  (:map helm-ag-map
-        ("<left>" . backward-char)
-        ("<right>" . forward-char))
-  :custom
-  (helm-ag-show-status-function nil))
-
-(use-package helm-descbinds
-  :bind
-  ([remap describe-bindings] . helm-descbinds)
-  :custom
-  (helm-descbinds-window-style 'split-window))
-
-(use-package helm-describe-modes
-  :bind ([remap describe-mode] . helm-describe-modes))
-
-(use-package helm-org
-  :commands helm-org-in-buffer-headings)
-
-(use-package helm-projectile
-  :defer nil
-  :bind
-  (:map helm-projectile-find-file-map
-        ("<left>" . backward-char)
-        ("<right>" . forward-char))
-  :config
-  (helm-projectile-toggle 1))
-#+END_SRC
-
 ** Help
 
 #+BEGIN_SRC emacs-lisp
@@ -916,7 +785,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
   ("C-c e" . hydra-eyebrowse/body)
   ("C-c f" . hydra-flycheck/body)
   ("C-c g" . hydra-magit/body)
-  ("C-c h" . hydra-helm/body)
+  ("C-c i" . hydra-ivy/body)
   ("C-c o" . me/ongoing-hydra)
   ("C-c p" . hydra-projectile/body)
   ("C-c s" . hydra-system/body)
@@ -1009,33 +878,26 @@ _v_ verify setup    _f_ check           _s_ select
 
 [[./screenshots/hydra.flycheck.png]]
 
-*** Hydra / Helm
+*** Hydra / Ivy
 
-Group Helm commands.
-
-- *TODO*: Make =helm-mdi=.
+Group Ivy commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-helm (:color blue)
+(defhydra hydra-ivy (:color blue)
   "
 ^
-^Helm^              ^Browse^
-^────^──────────────^──────^────────────
-_q_ quit            _c_ colors
-_r_ resume          _g_ google
-^^                  _i_ imenu
-^^                  _k_ kill-ring
+^Ivy^               ^Browse^
+^────────^──────────^──────^────────────
+_q_ quit            _l_ libraries
+^^                  _s_ symbols
+^^                  _u_ unicode
 ^^                  ^^
 "
   ("q" nil)
-  ("c" helm-colors)
-  ("g" helm-google-suggest)
-  ("i" helm-imenu)
-  ("k" helm-show-kill-ring)
-  ("r" helm-resume))
+  ("l" counsel-find-library)
+  ("s" counsel-info-lookup-symbol)
+  ("u" counsel-unicode-char))
 #+END_SRC
-
-[[./screenshots/hydra.helm.png]]
 
 *** Hydra / Magit
 
@@ -1104,8 +966,7 @@ Group Org commands.
 _q_ quit            _i_ insert          _<_ previous
 ^^                  _n_ next            _>_ next
 ^^                  _p_ previous        _a_ all
-^^                  _s_ store           _o_ goto
-^^                  ^^                  _v_ overview
+^^                  _s_ store           _v_ overview
 ^^                  ^^                  ^^
 "
   ("q" nil)
@@ -1114,7 +975,6 @@ _q_ quit            _i_ insert          _<_ previous
   ("a" outline-show-all)
   ("i" org-insert-link :color blue)
   ("n" org-next-link)
-  ("o" helm-org-in-buffer-headings :color blue)
   ("p" org-previous-link)
   ("s" org-store-link)
   ("v" org-overview))
@@ -1325,10 +1185,6 @@ Here is how it looks:
 
 [[./screenshots/emacs.mode-line.flycheck.png]]
 
-/When inside of a Helm session/
-
-[[./screenshots/emacs.mode-line.helm.png]]
-
 /When using isearch/
 
 [[./screenshots/emacs.mode-line.isearch.png]]
@@ -1347,9 +1203,6 @@ Here is how it looks:
 - The segment next to the clock indicate the current =eyebrowse= /workspace/
 
 *** Mode-Line / Doom-Modeline
-
-- *TOFIX*: Fix =helm-follow= segment.
-- *TOFIX*: Fix =helm-prefix-argument= segment.
 
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
@@ -1373,24 +1226,7 @@ Here is how it looks:
                           (format-mode-line "%l:%c")
                           (doom-modeline-spc))
                   'face (if active 'mode-line 'mode-line-inactive))))
-  (doom-modeline-def-segment me/helm-name
-    "The Helm buffer name."
-    (concat
-     (doom-modeline-spc)
-     (propertize
-      (let* ((buffer (buffer-name))
-             (name (cdr (assoc buffer doom-modeline--helm-buffer-ids)))
-             (result (cond ((functionp name) (funcall name))
-                           ((stringp name) name)
-                           (t (string-match "\\*helm:? \\(mode \\)?\\([^\\*]+\\)\\*" buffer)
-                              (s-join " " `("Helm" ,(capitalize (match-string 2 buffer))))))))
-        (replace-regexp-in-string "HELM" "Helm" result t 'literal))
-      'face 'doom-modeline-buffer-file)
-     (doom-modeline-spc)))
   (doom-modeline-mode 1)
-  (doom-modeline-def-modeline 'helm
-    '(bar me/helm-name helm-follow helm-prefix-argument)
-    '(helm-number))
   (doom-modeline-def-modeline 'info
     '(bar me/buffer-name info-nodes me/buffer-position selection-info)
     '(irc matches process major-mode workspace-name))
@@ -1858,7 +1694,6 @@ exists as well).
    projectile-cache-file (expand-file-name ".projectile-cache" user-emacs-directory)
    projectile-known-projects-file (expand-file-name ".projectile-bookmarks" user-emacs-directory))
   :custom
-  (projectile-completion-system 'helm)
   (projectile-enable-caching t))
 #+END_SRC
 
