@@ -770,8 +770,6 @@ efficient, smaller, simpler, and smoother to use yet highly customizable.
   (after-init . ivy-mode)
   :bind
   (:map ivy-minibuffer-map
-        ("C-m" . ivy-mark)
-        ("C-S-m" . ivy-unmark)
         ("C-<down>" . ivy-next-line-and-call)
         ("C-<up>" . ivy-previous-line-and-call))
   :custom
