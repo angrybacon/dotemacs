@@ -911,7 +911,6 @@ seamless, it's like a minor mode that disables itself auto-magically.
         (funcall me/ongoing-hydra-body)
       (user-error "me/ongoing-hydra: me/ongoing-hydra-body is not set")))
   :bind
-  ("C-c <tab>" . hydra-fold/body)
   ("C-c d" . hydra-dates/body)
   ("C-c e" . hydra-eyebrowse/body)
   ("C-c f" . hydra-flycheck/body)
