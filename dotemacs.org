@@ -784,6 +784,7 @@ efficient, smaller, simpler, and smoother to use yet highly customizable.
 
 #+BEGIN_SRC emacs-lisp
 (use-package counsel)
+(use-package counsel-projectile)
 #+END_SRC
 
 *** Ivy / Swiper
@@ -1042,16 +1043,16 @@ _i_ reset cache     _K_ kill all        _D_ root            _R_ regexp replace
 ^^                  ^^                  ^^                  ^^
 "
   ("q" nil)
-  ("b" helm-projectile-switch-to-buffer)
-  ("d" helm-projectile-find-dir)
+  ("b" counsel-projectile-switch-to-buffer)
+  ("d" counsel-projectile-find-dir)
   ("D" projectile-dired)
-  ("f" helm-projectile-find-file)
+  ("f" counsel-projectile-find-file)
   ("i" projectile-invalidate-cache :color red)
   ("K" projectile-kill-buffers)
-  ("p" helm-projectile-switch-project)
+  ("p" counsel-projectile-switch-project)
   ("r" projectile-replace)
   ("R" projectile-replace-regexp)
-  ("s" helm-projectile-ag)
+  ("s" counsel-projectile-ag)
   ("S" projectile-save-project-buffers))
 #+END_SRC
 
