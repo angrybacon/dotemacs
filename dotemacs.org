@@ -30,6 +30,7 @@
   - [[#dired][Dired]]
   - [[#expand][Expand]]
   - [[#help][Help]]
+  - [[#ivy][Ivy]]
   - [[#hydra][Hydra]]
   - [[#irc][IRC]]
   - [[#linters][Linters]]
@@ -751,6 +752,39 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
   (:map help-mode-map
         ("<" . help-go-back)
         (">" . help-go-forward)))
+#+END_SRC
+
+** Ivy
+
+#+BEGIN_QUOTE
+Ivy is a generic completion mechanism for Emacs. While it operates similarly to
+other completion schemes such as =icomplete-mode=, Ivy aims to be more
+efficient, smaller, simpler, and smoother to use yet highly customizable.
+
+[[https://github.com/abo-abo/swiper#ivy][Oleh Krehel]]
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package ivy
+  :hook
+  (after-init . ivy-mode)
+  :custom
+  (ivy-count-format "")
+  (ivy-height 16)
+  (ivy-re-builders-alist '((t . ivy--regex-fuzzy))))
+#+END_SRC
+
+*** Ivy / Counsel
+
+#+BEGIN_SRC emacs-lisp
+(use-package counsel)
+#+END_SRC
+
+*** Ivy / Swiper
+
+#+BEGIN_SRC emacs-lisp
+(use-package swiper
+  :bind ("C-s" . swiper))
 #+END_SRC
 
 ** Hydra
