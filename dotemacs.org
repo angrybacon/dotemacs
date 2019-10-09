@@ -883,20 +883,23 @@ _v_ verify setup    _f_ check           _s_ select
 Group Ivy commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-ivy (:color blue)
+(defhydra hydra-ivy (:color pink)
   "
 ^
-^Ivy^               ^Browse^
-^────────^──────────^──────^────────────
-_q_ quit            _l_ libraries
-^^                  _s_ symbols
-^^                  _u_ unicode
-^^                  ^^
+^Ivy^               ^Do^                ^Browse^
+^────────^──────────^──^────────────────^──────^────────────
+_q_ quit            _m_ mark            _l_ libraries
+_r_ resume          _M_ unmark          _s_ symbols
+^^                  ^^                  _u_ unicode
+^^                  ^^                  ^^
 "
   ("q" nil)
-  ("l" counsel-find-library)
-  ("s" counsel-info-lookup-symbol)
-  ("u" counsel-unicode-char))
+  ("l" counsel-find-library :color blue)
+  ("m" ivy-mark)
+  ("M" ivy-unmark)
+  ("r" ivy-resume :color blue)
+  ("s" counsel-info-lookup-symbol :color blue)
+  ("u" counsel-unicode-char :color blue))
 #+END_SRC
 
 *** Hydra / Magit
