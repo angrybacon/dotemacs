@@ -1398,6 +1398,9 @@ Here is how it looks:
     '(irc matches process vcs major-mode workspace-name))
   (doom-modeline-def-modeline 'project
     '(bar buffer-default-directory)
+    '(irc matches process major-mode workspace-name))
+  (doom-modeline-def-modeline 'vcs
+    '(bar me/buffer-name remote-host me/buffer-position selection-info)
     '(irc matches process major-mode workspace-name)))
 #+END_SRC
 
