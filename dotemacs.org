@@ -1220,9 +1220,9 @@ _q_ quit            _b_ balance         _-_ out
   ("j" shrink-window-horizontally)
   ("k" shrink-window)
   ("l" enlarge-window-horizontally)
-  ("-" text-scale-decrease)
-  ("+" text-scale-increase)
-  ("=" (text-scale-increase 0)))
+  ("-" default-text-scale-decrease)
+  ("+" default-text-scale-increase)
+  ("=" default-text-scale-reset))
 #+END_SRC
 
 [[./screenshots/hydra.windows.png]]
@@ -1932,6 +1932,20 @@ Insert the current date.
   "Insert the current date, short format with time, eg. 2016.12.09 14:34"
   (interactive)
   (insert (format-time-string "%Y.%m.%d %H:%M")))
+#+END_SRC
+
+Adjust font size for all windows at once.
+
+#+BEGIN_QUOTE
+This package provides commands for increasing or decreasing the default font
+size in all GUI Emacs frames -- it is like an Emacs-wide version of
+=text-scale-mode=.
+
+[[https://github.com/purcell/default-text-scale][Steve Purcell]]
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package default-text-scale)
 #+END_SRC
 
 Disable documentation for object at point in the echo area. It conflicts with Flycheck.
