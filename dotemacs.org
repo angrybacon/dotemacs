@@ -152,7 +152,6 @@ and =user-mail-address=. This is also where you want your API tokens to live.
 (defvar me/font-family            "Courier"  "The font to use.")
 (defvar me/font-size-default      110        "The font size to use for default text.")
 (defvar me/font-size-header-line  120        "The font size to use for the header-line.")
-(defvar me/font-size-mode-line    110        "The font size to use for the mode-line.")
 (defvar me/font-size-small        100        "The font size to use for smaller text.")
 (defvar me/font-size-title        140        "The font size to use for titles.")
 
@@ -199,7 +198,6 @@ Load theme and fix some high-level faces to match my personal preferences.
     (set-face-attribute 'default nil :font me/font-family :height me/font-size-default)
     (set-face-attribute 'header-line nil :box `(:color ,(doom-color 'modeline-bg) :line-width 7))
     (set-face-attribute 'help-argument-name nil :foreground (doom-color 'yellow))
-    (set-face-attribute 'mode-line nil :height me/font-size-mode-line)
     (set-face-attribute 'variable-pitch nil :family 'unspecified))
   (with-eval-after-load 'font-lock
     (set-face-attribute 'font-lock-doc-face nil :italic t))
@@ -1360,6 +1358,13 @@ Here is how it looks:
   (doom-modeline-icon t)
   (doom-modeline-percent-position nil)
   :config
+  (doom-modeline-def-segment buffer-default-directory
+    "The buffer directory."
+    (let* ((active (doom-modeline--active))
+           (face (if active 'doom-modeline-buffer-path 'mode-line-inactive)))
+      (concat (doom-modeline-spc)
+              (propertize (abbreviate-file-name default-directory) 'face face)
+              (doom-modeline-spc))))
   (doom-modeline-def-segment me/buffer-name
     "The buffer name."
     (concat
