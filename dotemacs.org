@@ -83,6 +83,7 @@ Here are what I consider better defaults as per my own experience.
  scroll-margin 10                                 ; Add a margin when scrolling vertically
  select-enable-clipboard t                        ; Merge system's and Emacs' clipboard
  sentence-end-double-space nil                    ; End a sentence after a dot and a space
+ show-help-function nil                           ; Disable help messages
  show-trailing-whitespace nil                     ; Display trailing whitespaces
  split-height-threshold nil                       ; Disable vertical window splitting
  split-width-threshold nil                        ; Disable horizontal window splitting
@@ -150,7 +151,6 @@ and =user-mail-address=. This is also where you want your API tokens to live.
 (defvar me/font-family            "Courier"  "The font to use.")
 (defvar me/font-size-default      110        "The font size to use for default text.")
 (defvar me/font-size-header-line  120        "The font size to use for the header-line.")
-(defvar me/font-size-mode-line    110        "The font size to use for the mode-line.")
 (defvar me/font-size-small        100        "The font size to use for smaller text.")
 (defvar me/font-size-title        140        "The font size to use for titles.")
 
@@ -181,7 +181,6 @@ Load theme and fix some high-level faces to match my personal preferences.
     (set-face-attribute 'default nil :font me/font-family :height me/font-size-default)
     (set-face-attribute 'header-line nil :box `(:color ,(doom-color 'modeline-bg) :line-width 7))
     (set-face-attribute 'help-argument-name nil :foreground (doom-color 'yellow))
-    (set-face-attribute 'mode-line nil :height me/font-size-mode-line)
     (set-face-attribute 'variable-pitch nil :family 'unspecified))
   (with-eval-after-load 'font-lock
     (set-face-attribute 'font-lock-doc-face nil :italic t))
@@ -1123,9 +1122,9 @@ _q_ quit            _b_ balance         _-_ out
   ("j" shrink-window-horizontally)
   ("k" shrink-window)
   ("l" enlarge-window-horizontally)
-  ("-" text-scale-decrease)
-  ("+" text-scale-increase)
-  ("=" (text-scale-increase 0)))
+  ("-" default-text-scale-decrease)
+  ("+" default-text-scale-increase)
+  ("=" default-text-scale-reset))
 #+END_SRC
 
 [[./screenshots/hydra.windows.png]]
@@ -1254,6 +1253,13 @@ Here is how it looks:
   (doom-modeline-icon t)
   (doom-modeline-percent-position nil)
   :config
+  (doom-modeline-def-segment buffer-default-directory
+    "The buffer directory."
+    (let* ((active (doom-modeline--active))
+           (face (if active 'doom-modeline-buffer-path 'mode-line-inactive)))
+      (concat (doom-modeline-spc)
+              (propertize (abbreviate-file-name default-directory) 'face face)
+              (doom-modeline-spc))))
   (doom-modeline-def-segment me/buffer-name
     "The buffer name."
     (concat
@@ -1276,6 +1282,9 @@ Here is how it looks:
     '(irc matches process vcs major-mode workspace-name))
   (doom-modeline-def-modeline 'project
     '(bar buffer-default-directory)
+    '(irc matches process major-mode workspace-name))
+  (doom-modeline-def-modeline 'vcs
+    '(bar me/buffer-name remote-host me/buffer-position selection-info)
     '(irc matches process major-mode workspace-name)))
 #+END_SRC
 
@@ -1803,6 +1812,20 @@ Insert the current date.
   "Insert the current date, short format with time, eg. 2016.12.09 14:34"
   (interactive)
   (insert (format-time-string "%Y.%m.%d %H:%M")))
+#+END_SRC
+
+Adjust font size for all windows at once.
+
+#+BEGIN_QUOTE
+This package provides commands for increasing or decreasing the default font
+size in all GUI Emacs frames -- it is like an Emacs-wide version of
+=text-scale-mode=.
+
+[[https://github.com/purcell/default-text-scale][Steve Purcell]]
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package default-text-scale)
 #+END_SRC
 
 Disable documentation for object at point in the echo area. It conflicts with Flycheck.
