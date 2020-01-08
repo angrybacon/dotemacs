@@ -775,7 +775,7 @@ efficient, smaller, simpler, and smoother to use yet highly customizable.
   (ivy-count-format "")
   (ivy-display-style nil)
   (ivy-initial-inputs-alist nil)
-  (ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
+  (ivy-re-builders-alist '((t . ivy--regex-plus)))
   (ivy-format-functions-alist '((t . ivy-format-function-line))))
 #+END_SRC
 
@@ -802,15 +802,24 @@ Augment Ivy's interface with details for candidates.
 *** Ivy / Counsel
 
 #+BEGIN_SRC emacs-lisp
-(use-package counsel)
-(use-package counsel-projectile)
+(use-package counsel
+  :after ivy
+  :config
+  (counsel-mode 1)
+  (setq-default ivy-initial-inputs-alist nil))
+(use-package counsel-projectile
+  :after ivy
+  :config
+  (counsel-projectile-mode 1)
+  (setq-default ivy-initial-inputs-alist nil))
 #+END_SRC
 
 *** Ivy / Swiper
 
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
-  :bind ("C-s" . swiper))
+  :bind ("C-s" . swiper)
+  :custom (swiper-goto-start-of-match t))
 #+END_SRC
 
 ** Hydra
