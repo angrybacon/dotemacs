@@ -49,22 +49,6 @@ The mode-line utilizes features from
 (all-the-icons-install-fonts)
 #+END_SRC
 
-** Ag
-
-My Helm setup uses =ag= instead of =grep= to lookup files.
-
-*** macOS
-
-#+BEGIN_SRC sh
-brew install the_silver_searcher
-#+END_SRC
-
-*** Windows
-
-#+BEGIN_SRC sh
-choco install ag --version 0.29.1.1641
-#+END_SRC
-
 ** Flycheck
 
 I use [[https://github.com/flycheck/flycheck][Flycheck]] as linter framework to
@@ -74,4 +58,20 @@ display syntax warnings and errors whithin each buffer.
 npm install -g eslint                                # JavaScript
 pip install flake8                                   # Python
 gem install scss_lint scss_lint_reporter_checkstyle  # SCSS
+#+END_SRC
+
+** Ripgrep
+
+My Helm setup uses =rg= instead of =grep= to lookup files.
+
+*** macOS
+
+#+BEGIN_SRC sh
+brew install ripgrep
+#+END_SRC
+
+*** Windows
+
+#+BEGIN_SRC sh
+choco install ripgrep
 #+END_SRC
