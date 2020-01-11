@@ -1298,35 +1298,25 @@ Here is how it looks:
               (doom-modeline-spc))))
   (doom-modeline-def-segment me/buffer-name
     "The buffer name."
-    (concat
-     (doom-modeline-spc)
-     (doom-modeline--buffer-name)
-     (doom-modeline-spc)))
+    (concat (doom-modeline-spc) (doom-modeline--buffer-name) (doom-modeline-spc)))
   (doom-modeline-def-segment me/buffer-name-simple
     "The buffer name but stimpler."
     (let* ((active (doom-modeline--active))
            (face (cond ((and buffer-file-name (buffer-modified-p)) 'doom-modeline-buffer-modified)
                        (active 'doom-modeline-buffer-file)
                        (t 'mode-line-inactive))))
-      (concat
-       (doom-modeline-spc)
-       (propertize "%b" 'face face)
-       (doom-modeline-spc))))
+      (concat (doom-modeline-spc) (propertize "%b" 'face face) (doom-modeline-spc))))
   (doom-modeline-def-segment me/buffer-position
     "The buffer position."
     (let* ((active (doom-modeline--active))
            (face (if active 'mode-line 'mode-line-inactive)))
-      (propertize (concat (doom-modeline-spc)
-                          (format-mode-line "%l:%c")
-                          (doom-modeline-spc))
+      (propertize (concat (doom-modeline-spc) (format-mode-line "%l:%c") (doom-modeline-spc))
                   'face face)))
-  (doom-modeline-def-segment me/checker
-    "The buffer position."
+  (doom-modeline-def-segment me/major-mode
+    "The current major mode, including environment information."
     (let* ((active (doom-modeline--active))
-           (face (if active 'mode-line 'mode-line-inactive)))
-      (propertize (concat (doom-modeline-spc)
-                          (format-mode-line "%l:%c")
-                          (doom-modeline-spc))
+           (face (if active 'doom-modeline-buffer-major-mode 'mode-line-inactive)))
+      (propertize (concat (doom-modeline-spc) mode-name (doom-modeline-spc))
                   'face face)))
   (doom-modeline-def-segment me/vcs
     "The version control system information."
@@ -1339,22 +1329,22 @@ Here is how it looks:
   (doom-modeline-mode 1)
   (doom-modeline-def-modeline 'info
     '(bar me/buffer-name info-nodes me/buffer-position selection-info)
-    '(irc-buffers matches process major-mode workspace-name))
+    '(irc-buffers matches process me/major-mode workspace-name))
   (doom-modeline-def-modeline 'main
     '(bar me/buffer-name remote-host me/buffer-position selection-info)
-    '(irc-buffers matches process checker me/vcs major-mode workspace-name))
+    '(irc-buffers matches process checker me/vcs me/major-mode workspace-name))
   (doom-modeline-def-modeline 'message
     '(bar me/buffer-name-simple me/buffer-position selection-info)
-    '(irc-buffers matches process major-mode workspace-name))
+    '(irc-buffers matches process me/major-mode workspace-name))
   (doom-modeline-def-modeline 'project
     '(bar buffer-default-directory)
-    '(irc-buffers matches process major-mode workspace-name))
+    '(irc-buffers matches process me/major-mode workspace-name))
   (doom-modeline-def-modeline 'special
     '(bar me/buffer-name me/buffer-position selection-info)
-    '(irc-buffers matches process major-mode workspace-name))
+    '(irc-buffers matches process me/major-mode workspace-name))
   (doom-modeline-def-modeline 'vcs
     '(bar me/buffer-name remote-host me/buffer-position selection-info)
-    '(irc-buffers matches process major-mode workspace-name)))
+    '(irc-buffers matches process me/major-mode workspace-name)))
 #+END_SRC
 
 ** Navigation
