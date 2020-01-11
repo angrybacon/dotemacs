@@ -818,7 +818,12 @@ Augment Ivy's interface with details for candidates.
 
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
-  :bind ("C-s" . swiper)
+  :preface
+  (defun me/swiper ()
+    "`swiper' with string returned by `ivy-thing-at-point' as initial input."
+    (interactive)
+    (swiper (ivy-thing-at-point)))
+  :bind ("C-s" . me/swiper)
   :custom (swiper-goto-start-of-match t))
 #+END_SRC
 
