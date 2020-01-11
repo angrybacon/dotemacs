@@ -1411,6 +1411,14 @@ Here is how it looks:
         (replace-regexp-in-string "HELM" "Helm" result t 'literal))
       'face 'doom-modeline-buffer-file)
      (doom-modeline-spc)))
+  (doom-modeline-def-segment me/vcs
+    "The version control system information."
+    (when-let ((branch doom-modeline--vcs-text))
+      (let ((active (doom-modeline--active))
+            (text (concat ":" branch)))
+        (concat (doom-modeline-spc)
+                (if active text (propertize text 'face 'mode-line-inactive))
+                (doom-modeline-spc)))))
   (doom-modeline-mode 1)
   (doom-modeline-def-modeline 'helm
     '(bar me/helm-name helm-follow helm-prefix-argument)
@@ -1420,7 +1428,7 @@ Here is how it looks:
     '(irc-buffers matches process major-mode workspace-name))
   (doom-modeline-def-modeline 'main
     '(bar me/buffer-name remote-host me/buffer-position selection-info)
-    '(irc-buffers matches process checker vcs major-mode workspace-name))
+    '(irc-buffers matches process checker me/vcs major-mode workspace-name))
   (doom-modeline-def-modeline 'message
     '(bar me/buffer-name-simple me/buffer-position selection-info)
     '(irc-buffers matches process major-mode workspace-name))
