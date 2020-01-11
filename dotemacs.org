@@ -1373,20 +1373,30 @@ Here is how it looks:
      (doom-modeline-spc)))
   (doom-modeline-def-segment me/buffer-name-simple
     "The buffer name but stimpler."
-    (concat
-     (doom-modeline-spc)
-     (propertize "%b" 'face (cond ((and buffer-file-name (buffer-modified-p))
-                                   'doom-modeline-buffer-modified)
-                                  ((doom-modeline--active) 'doom-modeline-buffer-file)
-                                  (t 'mode-line-inactive)))
-     (doom-modeline-spc)))
+    (let* ((active (doom-modeline--active))
+           (face (cond ((and buffer-file-name (buffer-modified-p)) 'doom-modeline-buffer-modified)
+                       (active 'doom-modeline-buffer-file)
+                       (t 'mode-line-inactive))))
+      (concat
+       (doom-modeline-spc)
+       (propertize "%b" 'face face)
+       (doom-modeline-spc))))
   (doom-modeline-def-segment me/buffer-position
     "The buffer position."
-    (let ((active (doom-modeline--active)))
+    (let* ((active (doom-modeline--active))
+           (face (if active 'mode-line 'mode-line-inactive)))
       (propertize (concat (doom-modeline-spc)
                           (format-mode-line "%l:%c")
                           (doom-modeline-spc))
-                  'face (if active 'mode-line 'mode-line-inactive))))
+                  'face face)))
+  (doom-modeline-def-segment me/checker
+    "The buffer position."
+    (let* ((active (doom-modeline--active))
+           (face (if active 'mode-line 'mode-line-inactive)))
+      (propertize (concat (doom-modeline-spc)
+                          (format-mode-line "%l:%c")
+                          (doom-modeline-spc))
+                  'face face)))
   (doom-modeline-def-segment me/helm-name
     "The Helm buffer name."
     (concat
