@@ -1367,35 +1367,19 @@ Here is how it looks:
               (doom-modeline-spc))))
   (doom-modeline-def-segment me/buffer-name
     "The buffer name."
-    (concat
-     (doom-modeline-spc)
-     (doom-modeline--buffer-name)
-     (doom-modeline-spc)))
+    (concat (doom-modeline-spc) (doom-modeline--buffer-name) (doom-modeline-spc)))
   (doom-modeline-def-segment me/buffer-name-simple
     "The buffer name but stimpler."
     (let* ((active (doom-modeline--active))
            (face (cond ((and buffer-file-name (buffer-modified-p)) 'doom-modeline-buffer-modified)
                        (active 'doom-modeline-buffer-file)
                        (t 'mode-line-inactive))))
-      (concat
-       (doom-modeline-spc)
-       (propertize "%b" 'face face)
-       (doom-modeline-spc))))
+      (concat (doom-modeline-spc) (propertize "%b" 'face face) (doom-modeline-spc))))
   (doom-modeline-def-segment me/buffer-position
     "The buffer position."
     (let* ((active (doom-modeline--active))
            (face (if active 'mode-line 'mode-line-inactive)))
-      (propertize (concat (doom-modeline-spc)
-                          (format-mode-line "%l:%c")
-                          (doom-modeline-spc))
-                  'face face)))
-  (doom-modeline-def-segment me/checker
-    "The buffer position."
-    (let* ((active (doom-modeline--active))
-           (face (if active 'mode-line 'mode-line-inactive)))
-      (propertize (concat (doom-modeline-spc)
-                          (format-mode-line "%l:%c")
-                          (doom-modeline-spc))
+      (propertize (concat (doom-modeline-spc) (format-mode-line "%l:%c") (doom-modeline-spc))
                   'face face)))
   (doom-modeline-def-segment me/vcs
     "The version control system information."
