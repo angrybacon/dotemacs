@@ -1381,6 +1381,12 @@ Here is how it looks:
            (face (if active 'mode-line 'mode-line-inactive)))
       (propertize (concat (doom-modeline-spc) (format-mode-line "%l:%c") (doom-modeline-spc))
                   'face face)))
+  (doom-modeline-def-segment me/major-mode
+    "The current major mode, including environment information."
+    (let* ((active (doom-modeline--active))
+           (face (if active 'doom-modeline-buffer-major-mode 'mode-line-inactive)))
+      (propertize (concat (doom-modeline-spc) mode-name (doom-modeline-spc))
+                  'face face)))
   (doom-modeline-def-segment me/vcs
     "The version control system information."
     (when-let ((branch doom-modeline--vcs-text))
@@ -1395,22 +1401,22 @@ Here is how it looks:
     '(helm-number))
   (doom-modeline-def-modeline 'info
     '(bar me/buffer-name info-nodes me/buffer-position selection-info)
-    '(irc-buffers matches process major-mode workspace-name))
+    '(irc-buffers matches process me/major-mode workspace-name))
   (doom-modeline-def-modeline 'main
     '(bar me/buffer-name remote-host me/buffer-position selection-info)
-    '(irc-buffers matches process checker me/vcs major-mode workspace-name))
+    '(irc-buffers matches process checker me/vcs me/major-mode workspace-name))
   (doom-modeline-def-modeline 'message
     '(bar me/buffer-name-simple me/buffer-position selection-info)
-    '(irc-buffers matches process major-mode workspace-name))
+    '(irc-buffers matches process me/major-mode workspace-name))
   (doom-modeline-def-modeline 'project
     '(bar buffer-default-directory)
-    '(irc-buffers matches process major-mode workspace-name))
+    '(irc-buffers matches process me/major-mode workspace-name))
   (doom-modeline-def-modeline 'special
     '(bar me/buffer-name me/buffer-position selection-info)
-    '(irc-buffers matches process major-mode workspace-name))
+    '(irc-buffers matches process me/major-mode workspace-name))
   (doom-modeline-def-modeline 'vcs
     '(bar me/buffer-name remote-host me/buffer-position selection-info)
-    '(irc-buffers matches process major-mode workspace-name)))
+    '(irc-buffers matches process me/major-mode workspace-name)))
 #+END_SRC
 
 ** Navigation
