@@ -1102,7 +1102,7 @@ Group Org commands.
 _q_ quit            _i_ insert          _<_ previous
 ^^                  _n_ next            _>_ next
 ^^                  _p_ previous        _a_ all
-^^                  _s_ store           _o_ goto
+^^                  _s_ store           _g_ go
 ^^                  ^^                  _v_ overview
 ^^                  ^^                  ^^
 "
@@ -1110,6 +1110,7 @@ _q_ quit            _i_ insert          _<_ previous
   ("<" org-backward-element)
   (">" org-forward-element)
   ("a" outline-show-all)
+  ("g" counsel-org-goto)
   ("i" org-insert-link :color blue)
   ("n" org-next-link)
   ("o" helm-org-in-buffer-headings :color blue)
