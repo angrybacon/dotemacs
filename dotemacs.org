@@ -1042,13 +1042,15 @@ Group Org commands.
 _q_ quit            _i_ insert          _<_ previous
 ^^                  _n_ next            _>_ next
 ^^                  _p_ previous        _a_ all
-^^                  _s_ store           _v_ overview
+^^                  _s_ store           _g_ go
+^^                  ^^                  _v_ overview
 ^^                  ^^                  ^^
 "
   ("q" nil)
   ("<" org-backward-element)
   (">" org-forward-element)
   ("a" outline-show-all)
+  ("g" counsel-org-goto)
   ("i" org-insert-link :color blue)
   ("n" org-next-link)
   ("p" org-previous-link)
