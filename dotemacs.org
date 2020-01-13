@@ -1393,8 +1393,8 @@ Here is how it looks:
     '(bar me/buffer-name info-nodes me/buffer-position selection-info)
     '(irc-buffers matches process me/major-mode workspace-name))
   (doom-modeline-def-modeline 'main
-    '(bar me/buffer-name remote-host me/buffer-position selection-info)
-    '(irc-buffers matches process checker me/vcs me/major-mode workspace-name))
+    '(bar me/buffer-name remote-host me/buffer-position checker selection-info)
+    '(irc-buffers matches process me/vcs me/major-mode workspace-name))
   (doom-modeline-def-modeline 'message
     '(bar me/buffer-name-simple me/buffer-position selection-info)
     '(irc-buffers matches process me/major-mode workspace-name))
