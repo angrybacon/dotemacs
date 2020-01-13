@@ -1110,7 +1110,7 @@ _q_ quit            _i_ insert          _<_ previous
   ("<" org-backward-element)
   (">" org-forward-element)
   ("a" outline-show-all)
-  ("g" counsel-org-goto)
+  ("g" counsel-org-goto :color blue)
   ("i" org-insert-link :color blue)
   ("n" org-next-link)
   ("o" helm-org-in-buffer-headings :color blue)
