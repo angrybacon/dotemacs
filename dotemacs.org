@@ -1050,7 +1050,7 @@ _q_ quit            _i_ insert          _<_ previous
   ("<" org-backward-element)
   (">" org-forward-element)
   ("a" outline-show-all)
-  ("g" counsel-org-goto)
+  ("g" counsel-org-goto :color blue)
   ("i" org-insert-link :color blue)
   ("n" org-next-link)
   ("p" org-previous-link)
@@ -1187,15 +1187,6 @@ _q_ quit            _b_ balance         _-_ out
     "See `erc-bol'. Support shift."
     (interactive "^")
     (erc-bol))
-  (defun me/erc-set-fill-column ()
-    "Set `erc-fill-column' to the width of the current window."
-    (save-excursion
-      (walk-windows
-       (lambda (window)
-         (let ((buffer (window-buffer window)))
-           (set-buffer buffer)
-           (when (and (eq major-mode 'erc-mode) (erc-buffer-visible buffer))
-             (setq erc-fill-column (- (window-width window) 2))))))))
   :bind
   (:map erc-mode-map
         ([remap erc-bol] . me/erc-bol-shifted)
@@ -1203,18 +1194,16 @@ _q_ quit            _b_ balance         _-_ out
         ("M-<up>" . erc-previous-command))
   :hook
   (erc-mode . (lambda () (setq-local scroll-margin 0)))
-  (window-configuration-change . me/erc-set-fill-column)
   :custom
   (erc-autojoin-channels-alist '(("freenode.net" "#emacs")))
   (erc-fill-function 'erc-fill-static)
-  (erc-fill-static-center 19)
+  (erc-fill-static-center 20)
   (erc-header-line-format nil)
   (erc-insert-timestamp-function 'erc-insert-timestamp-left)
   (erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
-  (erc-prompt (format "%18s" ">"))
+  (erc-prompt (format "%19s" ">"))
   (erc-timestamp-format nil)
   :config
-  (make-variable-buffer-local 'erc-fill-column)
   (erc-scrolltobottom-enable))
 #+END_SRC
 
