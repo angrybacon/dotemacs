@@ -170,6 +170,8 @@ Load theme and fix some high-level faces to match my personal preferences.
   (doom-themes-enable-bold nil)
   :config
   (load-theme 'doom-one t)
+  (with-eval-after-load 'erc-goodies
+    (set-face-attribute 'erc-bold-face nil :bold nil))
   (with-eval-after-load 'flycheck
     (set-face-attribute 'flycheck-error nil :underline `(:color ,(doom-color 'error) :style line))
     (set-face-attribute 'flycheck-info nil :underline `(:color ,(doom-color 'highlight) :style line))
@@ -788,7 +790,8 @@ Use posframe to display candidates.
   :custom
   (ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
   (ivy-posframe-height-alist '((t . 24)))
-  (ivy-posframe-parameters '((border-width . 1)
+  (ivy-posframe-parameters '((alpha . 90)
+                             (border-width . 0)
                              (internal-border-width . 16))))
 #+END_SRC
 
@@ -1285,6 +1288,7 @@ Here is how it looks:
   (doom-modeline-enable-word-count t)
   (doom-modeline-icon t)
   (doom-modeline-percent-position nil)
+  (doom-modeline-vcs-max-length 28)
   :config
   (doom-modeline-def-segment buffer-default-directory
     "The buffer directory."
