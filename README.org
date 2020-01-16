@@ -56,6 +56,7 @@ display syntax warnings and errors whithin each buffer.
 
 #+BEGIN_SRC sh
 npm install -g eslint                                # JavaScript
+npm install -g jsonlint                              # JSON
 pip install flake8                                   # Python
 gem install scss_lint scss_lint_reporter_checkstyle  # SCSS
 #+END_SRC
