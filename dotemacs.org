@@ -774,6 +774,7 @@ efficient, smaller, simpler, and smoother to use yet highly customizable.
   :custom
   (ivy-count-format "")
   (ivy-display-style nil)
+  (ivy-fixed-height-minibuffer t)
   (ivy-height 20)
   (ivy-initial-inputs-alist nil)
   (ivy-re-builders-alist '((t . ivy--regex-plus)))
