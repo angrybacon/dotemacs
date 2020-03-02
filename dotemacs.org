@@ -774,23 +774,10 @@ efficient, smaller, simpler, and smoother to use yet highly customizable.
   :custom
   (ivy-count-format "")
   (ivy-display-style nil)
+  (ivy-height 20)
   (ivy-initial-inputs-alist nil)
   (ivy-re-builders-alist '((t . ivy--regex-plus)))
   (ivy-format-functions-alist '((t . ivy-format-function-line))))
-#+END_SRC
-
-Use posframe to display candidates.
-
-#+BEGIN_SRC emacs-lisp
-(use-package ivy-posframe
-  :hook
-  (after-init . ivy-posframe-mode)
-  :custom
-  (ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
-  (ivy-posframe-height-alist '((t . 24)))
-  (ivy-posframe-parameters '((alpha . 90)
-                             (border-width . 0)
-                             (internal-border-width . 16))))
 #+END_SRC
 
 Augment Ivy's interface with details for candidates.
