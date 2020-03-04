@@ -191,7 +191,9 @@ Load theme and fix some high-level faces to match my personal preferences.
   (with-eval-after-load 'magit-diff
     (set-face-attribute 'magit-diff-added nil :background 'unspecified)
     (set-face-attribute 'magit-diff-hunk-region nil :inherit 'region)
-    (set-face-attribute 'magit-diff-removed nil :background 'unspecified)))
+    (set-face-attribute 'magit-diff-removed nil :background 'unspecified))
+  (with-eval-after-load 'swiper
+    (set-face-attribute 'swiper-match-face-1 nil :background (doom-color 'bg-alt))))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
