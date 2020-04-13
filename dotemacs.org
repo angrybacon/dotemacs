@@ -174,9 +174,6 @@ Load theme and fix some high-level faces to match my personal preferences.
     (set-face-attribute 'flycheck-error nil :underline `(:color ,(doom-color 'error) :style line))
     (set-face-attribute 'flycheck-info nil :underline `(:color ,(doom-color 'highlight) :style line))
     (set-face-attribute 'flycheck-warning nil :underline `(:color ,(doom-color 'warning) :style line)))
-  (with-eval-after-load 'isearch
-    (set-face-attribute 'isearch nil :background (doom-color 'blue) :foreground (doom-color 'dark-blue))
-    (set-face-attribute 'lazy-highlight nil :foreground (doom-color 'blue)))
   (with-eval-after-load 'faces
     (set-face-attribute 'default nil :font me/font-family :height me/font-size-default)
     (set-face-attribute 'header-line nil :box `(:color ,(doom-color 'modeline-bg) :line-width 7))
@@ -184,6 +181,9 @@ Load theme and fix some high-level faces to match my personal preferences.
     (set-face-attribute 'variable-pitch nil :family 'unspecified))
   (with-eval-after-load 'font-lock
     (set-face-attribute 'font-lock-doc-face nil :italic t))
+  (with-eval-after-load 'isearch
+    (set-face-attribute 'isearch nil :background (doom-color 'blue) :foreground (doom-color 'dark-blue))
+    (set-face-attribute 'lazy-highlight nil :foreground (doom-color 'blue)))
   (with-eval-after-load 'markdown
     (set-face-attribute 'markdown-table-face nil :height me/font-size-small))
   (with-eval-after-load 'outline
@@ -1063,7 +1063,7 @@ Group Projectile commands.
 ^──────────^────────^───────^───────────^────^──────────────^──────^────────────
 _q_ quit            _b_ list            _d_ directory       _r_ replace
 _i_ reset cache     _K_ kill all        _D_ root            _R_ regexp replace
-^^                  _S_ save all        _f_ file            _s_ ag
+^^                  _S_ save all        _f_ file            _s_ rg
 ^^                  ^^                  _p_ project         ^^
 ^^                  ^^                  ^^                  ^^
 "
