@@ -184,6 +184,8 @@ Load theme and fix some high-level faces to match my personal preferences.
   (with-eval-after-load 'isearch
     (set-face-attribute 'isearch nil :background (doom-color 'blue) :foreground (doom-color 'dark-blue))
     (set-face-attribute 'lazy-highlight nil :foreground (doom-color 'blue)))
+  (with-eval-after-load 'ivy
+    (set-face-attribute 'ivy-minibuffer-match-face-2 nil :background 'unspecified))
   (with-eval-after-load 'markdown
     (set-face-attribute 'markdown-table-face nil :height me/font-size-small))
   (with-eval-after-load 'outline
@@ -775,7 +777,6 @@ efficient, smaller, simpler, and smoother to use yet highly customizable.
         ("C-<up>" . ivy-previous-line-and-call))
   :custom
   (ivy-count-format "")
-  (ivy-display-style nil)
   (ivy-fixed-height-minibuffer t)
   (ivy-height 20)
   (ivy-initial-inputs-alist nil)
