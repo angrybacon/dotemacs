@@ -195,7 +195,7 @@ Load theme and fix some high-level faces to match my personal preferences.
     (set-face-attribute 'magit-diff-hunk-region nil :inherit 'region)
     (set-face-attribute 'magit-diff-removed nil :background 'unspecified))
   (with-eval-after-load 'swiper
-    (set-face-attribute 'swiper-background-match-face-1 nil :background 'unspecified))
+    (set-face-attribute 'swiper-background-match-face-1 nil :background 'unspecified)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -1988,6 +1988,10 @@ Turn on =auto-fill-mode= /almost/ everywhere.
 ** Shell and Terminal
 
 #+BEGIN_SRC emacs-lisp
+(use-package em-banner
+  :ensure nil
+  :custom (eshell-banner-message ""))
+
 (use-package em-hist
   :ensure nil
   :custom (eshell-hist-ignoredups t))
@@ -2006,7 +2010,12 @@ Turn on =auto-fill-mode= /almost/ everywhere.
   ((eshell-mode . me/hl-line-mode-off)
    (eshell-mode . (lambda () (setq-local scroll-margin 0))))
   :custom
-  (eshell-scroll-to-bottom-on-input t))
+  (eshell-scroll-to-bottom-on-input 'all)
+  (eshell-scroll-to-bottom-on-output 'all))
+
+(use-package esh-proc
+  :ensure nil
+  :custom (eshell-kill-processes-on-exit t))
 #+END_SRC
 
 Yes, Emacs emulates terminals too.
