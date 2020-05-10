@@ -176,7 +176,7 @@ Load theme and fix some high-level faces to match my personal preferences.
     (set-face-attribute 'flycheck-warning nil :underline `(:color ,(doom-color 'warning) :style line)))
   (with-eval-after-load 'faces
     (set-face-attribute 'default nil :font me/font-family :height me/font-size-default)
-    (set-face-attribute 'header-line nil :box `(:color ,(doom-color 'modeline-bg) :line-width 7))
+    (set-face-attribute 'header-line nil :box `(:color ,(doom-color 'modeline-bg) :line-width 6))
     (set-face-attribute 'help-argument-name nil :foreground (doom-color 'yellow))
     (set-face-attribute 'variable-pitch nil :family 'unspecified))
   (with-eval-after-load 'font-lock
@@ -195,7 +195,7 @@ Load theme and fix some high-level faces to match my personal preferences.
     (set-face-attribute 'magit-diff-hunk-region nil :inherit 'region)
     (set-face-attribute 'magit-diff-removed nil :background 'unspecified))
   (with-eval-after-load 'swiper
-    (set-face-attribute 'swiper-match-face-1 nil :background (doom-color 'bg-alt))))
+    (set-face-attribute 'swiper-background-match-face-1 nil :background 'unspecified))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -948,7 +948,7 @@ _v_ verify setup    _f_ check           _s_ select
 Group Ivy commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-ivy (:color pink)
+(defhydra hydra-ivy (:color blue)
   "
 ^
 ^Ivy^               ^Do^                ^Browse^
@@ -959,12 +959,12 @@ _r_ resume          _M_ unmark          _s_ symbols
 ^^                  ^^                  ^^
 "
   ("q" nil)
-  ("l" counsel-find-library :color blue)
-  ("m" ivy-mark)
-  ("M" ivy-unmark)
-  ("r" ivy-resume :color blue)
-  ("s" counsel-info-lookup-symbol :color blue)
-  ("u" counsel-unicode-char :color blue))
+  ("l" counsel-find-library)
+  ("m" ivy-mark :color pink)
+  ("M" ivy-unmark :color pink)
+  ("r" ivy-resume)
+  ("s" counsel-info-lookup-symbol)
+  ("u" counsel-unicode-char))
 #+END_SRC
 
 *** Hydra / Magit
