@@ -789,7 +789,37 @@ Augment Ivy's interface with details for candidates.
 
 #+BEGIN_SRC emacs-lisp
 (use-package ivy-rich
-  :hook (after-init . ivy-rich-mode))
+  :hook (after-init . ivy-rich-mode)
+  :preface
+  (defun me/ivy-rich-describe-variable-transformer (cand)
+    "Previews the value of the variable in the minibuffer."
+    (let* ((sym (intern cand))
+           (val (and (boundp sym) (symbol-value sym)))
+           (print-level 3))
+      (replace-regexp-in-string
+       "[\n\t\^[\^M\^@\^G]" " "
+       (cond ((booleanp val)
+              (propertize (format "%s" val) 'face (if (null val) 'font-lock-comment-face 'success)))
+             ((symbolp val)
+              (propertize (format "'%s" val) 'face 'highlight-quoted-symbol))
+             ((keymapp val)
+              (propertize "<keymap>" 'face 'font-lock-constant-face))
+             ((listp val)
+              (prin1-to-string val))
+             ((stringp val)
+              (propertize (format "%S" val) 'face 'font-lock-string-face))
+             ((numberp val)
+              (propertize (format "%s" val) 'face 'highlight-numbers-number))
+             ((format "%s" val)))
+       t)))
+  :config
+  (setq-default ivy-rich-display-transformers-list
+                (plist-put ivy-rich-display-transformers-list
+                           'counsel-describe-variable
+                           '(:columns
+                             ((counsel-describe-variable-transformer (:width 40))
+                              (me/ivy-rich-describe-variable-transformer (:width 50))
+                              (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face)))))))
 #+END_SRC
 
 *** Ivy / Counsel
