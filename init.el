@@ -24,7 +24,8 @@
 
 ;;; Code:
 
-(let ((gc-cons-threshold most-positive-fixnum))
+(let ((gc-cons-percentage .6)
+      (gc-cons-threshold most-positive-fixnum))
 
   ;; Set repositories
   (require 'package)
