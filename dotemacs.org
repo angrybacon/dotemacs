@@ -288,6 +288,7 @@ HTML mode is defined in =sgml-mode.el=.
   :hook (json-mode . me/json-set-indent-level))
 
 (use-package rjsx-mode
+  :mode "\\.js\\'"
   :preface
   (defun me/rjsx-set-ongoing-hydra-body ()
     (setq me/ongoing-hydra-body #'hydra-rjsx/body))
