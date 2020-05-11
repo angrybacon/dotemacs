@@ -1259,49 +1259,6 @@ binaries (see [[./README.org][README.org]]).
 
 ** Mode-Line
 
-*** Mode-Line / Screenshots
-
-Here is how it looks:
-
-/In an active window/
-
-[[./screenshots/emacs.mode-line.default.png]]
-
-/In an inactive window/
-
-[[./screenshots/emacs.mode-line.inactive.png]]
-
-/In a dirty buffer/
-
-[[./screenshots/emacs.mode-line.dirty.png]]
-
-/With unread ERC messages/
-
-[[./screenshots/emacs.mode-line.erc.png]]
-
-/With Flycheck errors/
-
-[[./screenshots/emacs.mode-line.flycheck.png]]
-
-/When using isearch/
-
-[[./screenshots/emacs.mode-line.isearch.png]]
-
-/With an active region/
-
-[[./screenshots/emacs.mode-line.region.png]]
-
-/With an active rectangle/
-
-[[./screenshots/emacs.mode-line.rectangle.png]]
-
-- Green means buffer is clean ie. file is saved
-- Red means buffer is dirty ie. file is modified
-- Blue means buffer is read-only
-- The segment next to the clock indicate the current =eyebrowse= /workspace/
-
-*** Mode-Line / Doom-Modeline
-
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
   :demand t
