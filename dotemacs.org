@@ -176,7 +176,7 @@ Load theme and fix some high-level faces to match my personal preferences.
     (set-face-attribute 'flycheck-warning nil :underline `(:color ,(doom-color 'warning) :style line)))
   (with-eval-after-load 'faces
     (set-face-attribute 'default nil :font me/font-family :height me/font-size-default)
-    (set-face-attribute 'header-line nil :box `(:color ,(doom-color 'modeline-bg) :line-width 6))
+    (set-face-attribute 'header-line nil :background (doom-color 'modeline-bg) :box `(:color ,(doom-color 'modeline-bg) :line-width 6))
     (set-face-attribute 'help-argument-name nil :foreground (doom-color 'yellow))
     (set-face-attribute 'variable-pitch nil :family 'unspecified))
   (with-eval-after-load 'font-lock
