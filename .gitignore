@@ -3,6 +3,7 @@
 .secret.el
 dotemacs.el
 auto-save-list/
+backups/
 elpa/
 eshell/
 games/

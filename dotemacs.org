@@ -13,6 +13,7 @@
   - [[#docker][Docker]]
   - [[#html][HTML]]
   - [[#javascript][JavaScript]]
+  - [[#json][JSON]]
   - [[#lisp][Lisp]]
   - [[#markdown][Markdown]]
   - [[#org][Org]]
@@ -177,7 +178,7 @@ Load theme and fix some high-level faces to match my personal preferences.
     (set-face-attribute 'flycheck-warning nil :underline `(:color ,(doom-color 'warning) :style line)))
   (with-eval-after-load 'faces
     (set-face-attribute 'default nil :font me/font-family :height me/font-size-default)
-    (set-face-attribute 'header-line nil :box `(:color ,(doom-color 'modeline-bg) :line-width 6))
+    (set-face-attribute 'header-line nil :background (doom-color 'modeline-bg) :box `(:color ,(doom-color 'modeline-bg) :line-width 6))
     (set-face-attribute 'help-argument-name nil :foreground (doom-color 'yellow))
     (set-face-attribute 'variable-pitch nil :family 'unspecified))
   (with-eval-after-load 'font-lock
@@ -256,9 +257,6 @@ HTML mode is defined in =sgml-mode.el=.
 
 ** JavaScript
 
-- *TOFIX*: Indent level is broken
-           (https://github.com/joshwnj/json-mode/issues/32).
-
 #+BEGIN_SRC emacs-lisp
 (use-package js
   :ensure nil
@@ -281,13 +279,6 @@ HTML mode is defined in =sgml-mode.el=.
   (js2-mode-show-parse-errors nil)
   (js2-mode-show-strict-warnings nil))
 
-(use-package json-mode
-  :mode "\\.json\\'"
-  :preface
-  (defun me/json-set-indent-level ()
-    (setq-local js-indent-level 2))
-  :hook (json-mode . me/json-set-indent-level))
-
 (use-package rjsx-mode
   :mode "\\.js\\'"
   :preface
@@ -304,6 +295,20 @@ HTML mode is defined in =sgml-mode.el=.
 
 (use-package web-mode
   :custom (web-mode-enable-auto-indentation nil))
+#+END_SRC
+
+** JSON
+
+- *TOFIX*: Indent level is broken (https://github.com/joshwnj/json-mode/issues/32).
+
+#+BEGIN_SRC emacs-lisp
+(use-package json-mode
+  :mode "\\.json\\'"
+  :preface
+  (defun me/json-set-indent-level ()
+    (setq-local js-indent-level 2))
+  :hook
+  (json-mode . me/json-set-indent-level))
 #+END_SRC
 
 ** Lisp
@@ -499,7 +504,7 @@ Allow repeated use of =←= and =→= when using =previous-buffer= and
 - *TODO*: Make a hydra.
 
 #+BEGIN_SRC emacs-lisp
-(defun me/switch-to-buffer-continue ()
+(defun me/switch-to-buffer-continue (&optional _)
   "Activate a sparse keymap:
   <left>   `previous-buffer'
   <right>  `next-buffer'"
@@ -904,7 +909,6 @@ Group date-related commands.
 _q_ quit            _d_ short           _D_ short
 ^^                  _i_ iso             _I_ iso
 ^^                  _l_ long            _L_ long
-^^                  ^^                  ^^
 "
   ("q" nil)
   ("d" me/date-short)
@@ -927,13 +931,23 @@ Group Eyebrowse commands.
 ^
 ^Eyebrowse^         ^Do^                ^Switch^
 ^─────────^─────────^──^────────────────^──────^────────────
-_q_ quit            _c_ create          _<_ previous
-^^                  _k_ kill            _>_ next
-^^                  _r_ rename          _e_ last
+_q_ quit            _c_ create          # %s(eyebrowse-mode-line-indicator)
+^^                  _k_ kill            _<_ previous
+^^                  _r_ rename          _>_ next
+^^                  ^^                  _e_ last
 ^^                  ^^                  _s_ switch
-^^                  ^^                  ^^
 "
   ("q" nil)
+  ("0" eyebrowse-switch-to-window-config-0)
+  ("1" eyebrowse-switch-to-window-config-1)
+  ("2" eyebrowse-switch-to-window-config-2)
+  ("3" eyebrowse-switch-to-window-config-3)
+  ("4" eyebrowse-switch-to-window-config-4)
+  ("5" eyebrowse-switch-to-window-config-5)
+  ("6" eyebrowse-switch-to-window-config-6)
+  ("7" eyebrowse-switch-to-window-config-7)
+  ("8" eyebrowse-switch-to-window-config-8)
+  ("9" eyebrowse-switch-to-window-config-9)
   ("<" eyebrowse-prev-window-config :color red)
   (">" eyebrowse-next-window-config :color red)
   ("c" eyebrowse-create-window-config)
@@ -959,7 +973,6 @@ _q_ quit            _<_ previous        _?_ describe
 _m_ manual          _>_ next            _d_ disable
 _v_ verify setup    _f_ check           _s_ select
 ^^                  _l_ list            ^^
-^^                  ^^                  ^^
 "
   ("q" nil)
   ("<" flycheck-previous-error :color pink)
@@ -989,7 +1002,6 @@ _q_ quit            _m_ mark            _f_ faces
 _r_ resume          _M_ unmark          _l_ libraries
 ^^                  ^^                  _s_ symbols
 ^^                  ^^                  _u_ unicode
-^^                  ^^                  ^^
 "
   ("q" nil)
   ("f" counsel-faces)
@@ -1015,7 +1027,6 @@ _q_ quit            _b_ blame
 ^^                  _c_ clone
 ^^                  _i_ init
 ^^                  _s_ status
-^^                  ^^
 "
   ("q" nil)
   ("b" magit-blame)
@@ -1040,7 +1051,6 @@ _q_ quit            _c_ insert          _r_ insert
 ^^                  _C_ delete          _R_ delete
 ^^                  _M-<left>_ left     _M-<down>_ down
 ^^                  _M-<right>_ right   _M-<up>_ up
-^^                  ^^                  ^^
 "
   ("q" nil)
   ("c" markdown-table-insert-column)
@@ -1070,7 +1080,6 @@ _q_ quit            _i_ insert          _<_ previous
 ^^                  _p_ previous        _a_ all
 ^^                  _s_ store           _g_ go
 ^^                  ^^                  _v_ overview
-^^                  ^^                  ^^
 "
   ("q" nil)
   ("<" org-backward-element)
@@ -1100,7 +1109,6 @@ _q_ quit            _b_ list            _d_ directory       _r_ replace
 _i_ reset cache     _K_ kill all        _D_ root            _R_ regexp replace
 ^^                  _S_ save all        _f_ file            _s_ rg
 ^^                  ^^                  _p_ project         ^^
-^^                  ^^                  ^^                  ^^
 "
   ("q" nil)
   ("b" counsel-projectile-switch-to-buffer)
@@ -1178,7 +1186,6 @@ _q_ quit            _b_ balance         _-_ out
 ^^                  _j_ narrow          _=_ reset
 ^^                  _k_ lower           ^^
 ^^                  _l_ widen           ^^
-^^                  ^^                  ^^
 "
   ("q" nil)
   ("b" balance-windows)
