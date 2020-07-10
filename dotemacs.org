@@ -168,6 +168,7 @@ Load theme and fix some high-level faces to match my personal preferences.
   (doom-themes-enable-bold nil)
   :config
   (load-theme 'doom-one t)
+  (doom-themes-org-config)
   (with-eval-after-load 'erc-goodies
     (set-face-attribute 'erc-bold-face nil :bold nil))
   (with-eval-after-load 'flycheck
