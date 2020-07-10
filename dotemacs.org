@@ -926,13 +926,24 @@ Group Eyebrowse commands.
 ^
 ^Eyebrowse^         ^Do^                ^Switch^
 ^─────────^─────────^──^────────────────^──────^────────────
-_q_ quit            _c_ create          _<_ previous
-^^                  _k_ kill            _>_ next
-^^                  _r_ rename          _e_ last
+_q_ quit            _c_ create          # %s(eyebrowse-mode-line-indicator)
+^^                  _k_ kill            _<_ previous
+^^                  _r_ rename          _>_ next
+^^                  ^^                  _e_ last
 ^^                  ^^                  _s_ switch
 ^^                  ^^                  ^^
 "
   ("q" nil)
+  ("0" eyebrowse-switch-to-window-config-0)
+  ("1" eyebrowse-switch-to-window-config-1)
+  ("2" eyebrowse-switch-to-window-config-2)
+  ("3" eyebrowse-switch-to-window-config-3)
+  ("4" eyebrowse-switch-to-window-config-4)
+  ("5" eyebrowse-switch-to-window-config-5)
+  ("6" eyebrowse-switch-to-window-config-6)
+  ("7" eyebrowse-switch-to-window-config-7)
+  ("8" eyebrowse-switch-to-window-config-8)
+  ("9" eyebrowse-switch-to-window-config-9)
   ("<" eyebrowse-prev-window-config :color red)
   (">" eyebrowse-next-window-config :color red)
   ("c" eyebrowse-create-window-config)
