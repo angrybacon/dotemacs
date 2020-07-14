@@ -1827,6 +1827,15 @@ electric-indent-mode.
   (add-to-list 'aggressive-indent-protected-commands 'comment-dwim))
 #+END_SRC
 
+Sort interactive commands by usage.
+
+#+BEGIN_SRC emacs-lisp
+(use-package amx
+  :custom
+  (amx-save-file (expand-file-name ".amx" user-emacs-directory))
+  (amx-show-key-bindings nil))
+#+END_SRC
+
 Insert the current date.
 
 #+BEGIN_SRC emacs-lisp
