@@ -997,7 +997,7 @@ Group Ivy commands.
   "
 ^
 ^Ivy^               ^Do^                ^Browse^
-^────────^──────────^──^────────────────^──────^────────────
+^───^───────────────^──^────────────────^──────^────────────
 _q_ quit            _m_ mark            _f_ faces
 _r_ resume          _M_ unmark          _l_ libraries
 ^^                  ^^                  _s_ symbols
@@ -1179,8 +1179,8 @@ Group window-related commands.
 (defhydra hydra-windows (:color pink)
   "
 ^
-^Windows^           ^Window^            ^Zoom^
-^───────^───────────^──────^────────────^────^──────────────
+^Windows^           ^Size^              ^Zoom^
+^───────^───────────^────^──────────────^────^──────────────
 _q_ quit            _b_ balance         _-_ out
 ^^                  _i_ heighten        _+_ in
 ^^                  _j_ narrow          _=_ reset
