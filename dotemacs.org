@@ -379,11 +379,13 @@ authoring documents with a fast and effective plain-text system.
    (org-mode . org-sticky-header-mode)
    (org-mode . toc-org-enable))
   :custom
+  (org-adapt-indentation nil)
   (org-descriptive-links nil)
   (org-edit-src-content-indentation 0)
   (org-edit-src-persistent-message nil)
   (org-fontify-done-headline t)
   (org-fontify-quote-and-verse-blocks t)
+  (org-hide-leading-stars nil)
   (org-src-window-setup 'current-window)
   (org-startup-folded nil)
   (org-startup-truncated nil)
@@ -847,13 +849,10 @@ Augment Ivy's interface with details for candidates.
 
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
-  :preface
-  (defun me/swiper ()
-    "`swiper' with string returned by `ivy-thing-at-point' as initial input."
-    (interactive)
-    (swiper (ivy-thing-at-point)))
-  :bind ("C-s" . me/swiper)
-  :custom (swiper-goto-start-of-match t))
+  :bind
+  ("C-s" . swiper-isearch-thing-at-point)
+  :custom
+  (swiper-goto-start-of-match t))
 #+END_SRC
 
 ** Hydra
