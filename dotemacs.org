@@ -163,40 +163,35 @@ and =user-mail-address=. This is also where you want your API tokens to live.
 Load theme and fix some high-level faces to match my personal preferences.
 
 #+BEGIN_SRC emacs-lisp
+(with-eval-after-load 'faces
+  (set-face-attribute 'default nil :font me/font-family :height me/font-size-default)
+  (set-face-attribute 'variable-pitch nil :family 'unspecified))
+(with-eval-after-load 'font-lock
+  (set-face-attribute 'font-lock-doc-face nil :italic t))
+(with-eval-after-load 'magit-diff
+  (set-face-attribute 'magit-diff-added nil :background 'unspecified)
+  (set-face-attribute 'magit-diff-hunk-region nil :inherit 'region)
+  (set-face-attribute 'magit-diff-removed nil :background 'unspecified))
+(with-eval-after-load 'markdown
+  (set-face-attribute 'markdown-table-face nil :height me/font-size-small))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
 (use-package doom-themes
   :demand t
   :custom
   (doom-themes-enable-bold nil)
   :config
   (load-theme 'doom-one t)
-  (with-eval-after-load 'erc-goodies
-    (set-face-attribute 'erc-bold-face nil :bold nil))
   (with-eval-after-load 'flycheck
     (set-face-attribute 'flycheck-error nil :underline `(:color ,(doom-color 'error) :style line))
     (set-face-attribute 'flycheck-info nil :underline `(:color ,(doom-color 'highlight) :style line))
     (set-face-attribute 'flycheck-warning nil :underline `(:color ,(doom-color 'warning) :style line)))
   (with-eval-after-load 'faces
-    (set-face-attribute 'default nil :font me/font-family :height me/font-size-default)
-    (set-face-attribute 'header-line nil :background (doom-color 'modeline-bg) :box `(:color ,(doom-color 'modeline-bg) :line-width 6))
-    (set-face-attribute 'help-argument-name nil :foreground (doom-color 'yellow))
-    (set-face-attribute 'variable-pitch nil :family 'unspecified))
-  (with-eval-after-load 'font-lock
-    (set-face-attribute 'font-lock-doc-face nil :italic t))
+    (set-face-attribute 'help-argument-name nil :foreground (doom-color 'yellow)))
   (with-eval-after-load 'isearch
     (set-face-attribute 'isearch nil :background (doom-color 'blue) :foreground (doom-color 'dark-blue))
-    (set-face-attribute 'lazy-highlight nil :foreground (doom-color 'blue)))
-  (with-eval-after-load 'ivy
-    (set-face-attribute 'ivy-minibuffer-match-face-2 nil :background 'unspecified))
-  (with-eval-after-load 'markdown
-    (set-face-attribute 'markdown-table-face nil :height me/font-size-small))
-  (with-eval-after-load 'outline
-    (set-face-attribute 'outline-1 nil :background 'unspecified))
-  (with-eval-after-load 'magit-diff
-    (set-face-attribute 'magit-diff-added nil :background 'unspecified)
-    (set-face-attribute 'magit-diff-hunk-region nil :inherit 'region)
-    (set-face-attribute 'magit-diff-removed nil :background 'unspecified))
-  (with-eval-after-load 'swiper
-    (set-face-attribute 'swiper-background-match-face-1 nil :background 'unspecified)))
+    (set-face-attribute 'lazy-highlight nil :foreground (doom-color 'blue))))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -835,6 +830,7 @@ Augment Ivy's interface with details for candidates.
   :config
   (counsel-mode 1)
   (setq-default ivy-initial-inputs-alist nil))
+
 (use-package counsel-projectile
   :after ivy
   :config
