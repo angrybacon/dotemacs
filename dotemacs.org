@@ -1185,7 +1185,7 @@ Group window-related commands.
 ^───────^───────────^──────^────────────^────^──────────────
 _q_ quit            _b_ balance         _-_ out
 ^^                  _i_ heighten        _+_ in
-^^                  _j_ narrow          _=_ reset
+^^                  _j_ narrow          _0_ reset
 ^^                  _k_ lower           ^^
 ^^                  _l_ widen           ^^
 "
@@ -1195,9 +1195,9 @@ _q_ quit            _b_ balance         _-_ out
   ("j" shrink-window-horizontally)
   ("k" shrink-window)
   ("l" enlarge-window-horizontally)
-  ("-" default-text-scale-decrease)
-  ("+" default-text-scale-increase)
-  ("=" default-text-scale-reset))
+  ("-" text-scale-decrease)
+  ("+" text-scale-increase)
+  ("0" text-scale-adjust))
 #+END_SRC
 
 [[./screenshots/hydra.windows.png]]
