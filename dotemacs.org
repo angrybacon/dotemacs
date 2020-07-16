@@ -2074,6 +2074,9 @@ Git itself deserve to be called porcelains.
    '(magit-diff-highlight-hunk-region-dim-outside magit-diff-highlight-hunk-region-using-face))
   (magit-popup-display-buffer-action '((display-buffer-same-window)))
   (magit-refs-show-commit-count 'all)
+  (magit-section-initial-visibility-alist '((stashes . show)
+                                            (unpulled . show)
+                                            (unpushed . show)))
   (magit-section-show-child-count t)
   :config
   (remove-hook 'magit-section-highlight-hook #'magit-section-highlight))
