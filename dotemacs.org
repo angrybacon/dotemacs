@@ -168,12 +168,16 @@ Load theme and fix some high-level faces to match my personal preferences.
   (set-face-attribute 'variable-pitch nil :family 'unspecified))
 (with-eval-after-load 'font-lock
   (set-face-attribute 'font-lock-doc-face nil :italic t))
+;; (with-eval-after-load 'ivy
+;;   (set-face-attribute 'ivy-minibuffer-match-face-2 nil :background 'unspecified))
 (with-eval-after-load 'magit-diff
   (set-face-attribute 'magit-diff-added nil :background 'unspecified)
   (set-face-attribute 'magit-diff-hunk-region nil :inherit 'region)
   (set-face-attribute 'magit-diff-removed nil :background 'unspecified))
 (with-eval-after-load 'markdown
   (set-face-attribute 'markdown-table-face nil :height me/font-size-small))
+;; (with-eval-after-load 'swiper
+;;   (set-face-attribute 'swiper-background-match-face-1 nil :background 'unspecified))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -827,6 +831,9 @@ Augment Ivy's interface with details for candidates.
 #+BEGIN_SRC emacs-lisp
 (use-package counsel
   :after ivy
+  :custom
+  (counsel-outline-face-style 'org)
+  (counsel-outline-path-separator " / ")
   :config
   (counsel-mode 1)
   (setq-default ivy-initial-inputs-alist nil))
