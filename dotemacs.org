@@ -1101,7 +1101,7 @@ Group Projectile commands.
 ^──────────^────────^───────^───────────^────^──────────────^──────^────────────
 _q_ quit            _b_ list            _d_ directory       _r_ replace
 _i_ reset cache     _K_ kill all        _D_ root            _R_ regexp replace
-^^                  _S_ save all        _f_ file            _s_ rg
+_n_ new             _S_ save all        _f_ file            _s_ rg
 ^^                  ^^                  _p_ project         ^^
 "
   ("q" nil)
@@ -1111,6 +1111,7 @@ _i_ reset cache     _K_ kill all        _D_ root            _R_ regexp replace
   ("f" counsel-projectile-find-file)
   ("i" projectile-invalidate-cache :color red)
   ("K" projectile-kill-buffers)
+  ("n" projectile-add-known-project)
   ("p" counsel-projectile-switch-project)
   ("r" projectile-replace)
   ("R" projectile-replace-regexp)
@@ -1785,7 +1786,8 @@ exists as well).
    projectile-cache-file (expand-file-name ".projectile-cache" user-emacs-directory)
    projectile-known-projects-file (expand-file-name ".projectile-bookmarks" user-emacs-directory))
   :custom
-  (projectile-enable-caching t))
+  (projectile-enable-caching t)
+  (projectile-track-known-projects-automatically nil))
 #+END_SRC
 
 ** Quality of Life
