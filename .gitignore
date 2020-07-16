@@ -13,6 +13,7 @@ transient/
 url/
 
 # Third-party packages
+.amx
 .emacs.desktop*
 .multiple-cursors.el
 .projectile-bookmarks

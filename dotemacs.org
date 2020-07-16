@@ -99,7 +99,7 @@ Here are what I consider better defaults as per my own experience.
 (fset 'yes-or-no-p 'y-or-n-p)                     ; Replace yes/no prompts with y/n
 (global-subword-mode 1)                           ; Iterate through CamelCase words
 (menu-bar-mode 0)                                 ; Disable the menu bar
-(mouse-avoidance-mode 'banish)                    ; Avoid collision of mouse with point
+(mouse-avoidance-mode 'exile)                     ; Avoid collision of mouse with point
 (put 'downcase-region 'disabled nil)              ; Enable downcase-region
 (put 'upcase-region 'disabled nil)                ; Enable upcase-region
 (set-default-coding-systems 'utf-8)               ; Default to utf-8 encoding
@@ -187,6 +187,7 @@ Load theme and fix some high-level faces to match my personal preferences.
   (doom-themes-enable-bold nil)
   :config
   (load-theme 'doom-one t)
+  (doom-themes-org-config)
   (with-eval-after-load 'flycheck
     (set-face-attribute 'flycheck-error nil :underline `(:color ,(doom-color 'error) :style line))
     (set-face-attribute 'flycheck-info nil :underline `(:color ,(doom-color 'highlight) :style line))
@@ -376,11 +377,13 @@ authoring documents with a fast and effective plain-text system.
   ((org-mode . me/org-set-ongoing-hydra-body)
    (org-mode . toc-org-enable))
   :custom
+  (org-adapt-indentation nil)
   (org-descriptive-links nil)
   (org-edit-src-content-indentation 0)
   (org-edit-src-persistent-message nil)
   (org-fontify-done-headline t)
   (org-fontify-quote-and-verse-blocks t)
+  (org-hide-leading-stars nil)
   (org-src-window-setup 'current-window)
   (org-startup-folded nil)
   (org-startup-truncated nil)
@@ -841,13 +844,10 @@ Augment Ivy's interface with details for candidates.
 
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
-  :preface
-  (defun me/swiper ()
-    "`swiper' with string returned by `ivy-thing-at-point' as initial input."
-    (interactive)
-    (swiper (ivy-thing-at-point)))
-  :bind ("C-s" . me/swiper)
-  :custom (swiper-goto-start-of-match t))
+  :bind
+  ("C-s" . swiper-isearch-thing-at-point)
+  :custom
+  (swiper-goto-start-of-match t))
 #+END_SRC
 
 ** Hydra
@@ -991,7 +991,7 @@ Group Ivy commands.
   "
 ^
 ^Ivy^               ^Do^                ^Browse^
-^────────^──────────^──^────────────────^──────^────────────
+^───^───────────────^──^────────────────^──────^────────────
 _q_ quit            _m_ mark            _f_ faces
 _r_ resume          _M_ unmark          _l_ libraries
 ^^                  ^^                  _s_ symbols
@@ -1173,8 +1173,8 @@ Group window-related commands.
 (defhydra hydra-windows (:color pink)
   "
 ^
-^Windows^           ^Window^            ^Zoom^
-^───────^───────────^──────^────────────^────^──────────────
+^Windows^           ^Size^              ^Zoom^
+^───────^───────────^────^──────────────^────^──────────────
 _q_ quit            _b_ balance         _-_ out
 ^^                  _i_ heighten        _+_ in
 ^^                  _j_ narrow          _0_ reset
@@ -1819,6 +1819,15 @@ electric-indent-mode.
   (aggressive-indent-comments-too t)
   :config
   (add-to-list 'aggressive-indent-protected-commands 'comment-dwim))
+#+END_SRC
+
+Sort interactive commands by usage.
+
+#+BEGIN_SRC emacs-lisp
+(use-package amx
+  :custom
+  (amx-save-file (expand-file-name ".amx" user-emacs-directory))
+  (amx-show-key-bindings nil))
 #+END_SRC
 
 Insert the current date.
