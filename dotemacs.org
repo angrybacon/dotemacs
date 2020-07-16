@@ -471,7 +471,13 @@ completion candidates.
   (company-idle-delay .2)
   (company-minimum-prefix-length 1)
   (company-require-match nil)
-  (company-tooltip-align-annotations t))
+  (company-tooltip-align-annotations t)
+  (company-tooltip-flip-when-above t))
+
+(use-package company-box
+  :after company
+  :hook
+  (company-mode . company-box-mode))
 #+END_SRC
 
 ** Buffers and Windows
