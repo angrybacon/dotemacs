@@ -374,7 +374,6 @@ authoring documents with a fast and effective plain-text system.
         ("<M-S-up>" . nil))
   :hook
   ((org-mode . me/org-set-ongoing-hydra-body)
-   (org-mode . org-sticky-header-mode)
    (org-mode . toc-org-enable))
   :custom
   (org-descriptive-links nil)
@@ -388,19 +387,6 @@ authoring documents with a fast and effective plain-text system.
   (org-support-shift-select 'always)
   :config
   (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer-name))
-#+END_SRC
-
-Display the current Org header in the header-line.
-
-#+BEGIN_SRC emacs-lisp
-(use-package org-sticky-header
-  :custom
-  (org-sticky-header-full-path 'full)
-  (org-sticky-header-outline-path-separator " / ")
-  :config
-  (setq-default
-   org-sticky-header-header-line-format
-   '(:eval (setq org-sticky-header-stickyline (concat " " (org-sticky-header--fetch-stickyline))))))
 #+END_SRC
 
 Tired of having to manually update your tables of contents? This package will
