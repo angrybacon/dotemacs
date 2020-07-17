@@ -188,6 +188,7 @@ Load theme and fix some high-level faces to match my personal preferences.
   :config
   (load-theme 'doom-one t)
   (doom-themes-org-config)
+  (doom-themes-visual-bell-config)
   (with-eval-after-load 'flycheck
     (set-face-attribute 'flycheck-error nil :underline `(:color ,(doom-color 'error) :style line))
     (set-face-attribute 'flycheck-info nil :underline `(:color ,(doom-color 'highlight) :style line))
