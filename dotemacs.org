@@ -292,8 +292,20 @@ HTML mode is defined in =sgml-mode.el=.
    (rjsx-mode . sgml-electric-tag-pair-mode)
    (rjsx-mode . turn-off-auto-fill)))
 
+(use-package tide
+  :preface
+  (defun me/tide-set-ongoing-hydra-body ()
+    (setq me/ongoing-hydra-body #'hydra-tide/body))
+  :hook
+  (tide-mode . me/tide-set-ongoing-hydra-body))
+
 (use-package web-mode
-  :custom (web-mode-enable-auto-indentation nil))
+  :mode "\\.tsx\\'"
+  :hook (web-mode . tide-setup)
+  :custom
+  (web-mode-code-indent-offset 2)
+  (web-mode-markup-indent-offset 2)
+  (web-mode-enable-auto-indentation nil))
 #+END_SRC
 
 ** JSON
@@ -1172,6 +1184,27 @@ _q_ quit            _p_ list            _s_ list            _e_ eshell
 
 [[./screenshots/hydra.system.png]]
 
+*** Hydra / Tide
+
+Group TypeScript commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-tide (:color blue)
+  "
+^
+^Tide^              ^Server^            ^Code^
+^────^──────────────^──────^────────────^────^──────────────
+_q_ quit            _l_ list            _d_ documentation
+^^                  _r_ restart
+^^                  _v_ verify setup
+"
+  ("q" nil)
+  ("d" tide-documentation-at-point)
+  ("l" tide-list-servers)
+  ("r" tide-restart-server)
+  ("v" tide-verify-setup))
+#+END_SRC
+
 *** Hydra / Windows
 
 Group window-related commands.
@@ -1259,11 +1292,14 @@ binaries (see [[./README.org][README.org]]).
   ((css-mode . flycheck-mode)
    (emacs-lisp-mode . flycheck-mode)
    (js-mode . flycheck-mode)
+   (web-mode . flycheck-mode)
    (python-mode . flycheck-mode))
   :custom
   (flycheck-check-syntax-automatically '(save mode-enabled))
   (flycheck-disabled-checkers '(emacs-lisp-checkdoc))
-  (flycheck-display-errors-delay .3))
+  (flycheck-display-errors-delay .3)
+  :config
+  (flycheck-add-mode 'javascript-eslint 'web-mode))
 #+END_SRC
 
 ** Mode-Line
