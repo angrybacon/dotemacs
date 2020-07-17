@@ -997,12 +997,14 @@ Group Ivy commands.
 ^Ivy^               ^Do^                ^Browse^
 ^───^───────────────^──^────────────────^──────^────────────
 _q_ quit            _m_ mark            _f_ faces
-_r_ resume          _M_ unmark          _l_ libraries
+_r_ resume          _M_ unmark          _i_ imenu
+^^                  ^^                  _l_ libraries
 ^^                  ^^                  _s_ symbols
 ^^                  ^^                  _u_ unicode
 "
   ("q" nil)
   ("f" counsel-faces)
+  ("i" counsel-imenu)
   ("l" counsel-find-library)
   ("m" ivy-mark :color pink)
   ("M" ivy-unmark :color pink)
