@@ -169,8 +169,6 @@ Load theme and fix some high-level faces to match my personal preferences.
 (with-eval-after-load 'font-lock
   (set-face-attribute 'font-lock-doc-face nil :italic t))
 (with-eval-after-load 'ivy
-  ;; (set-face-attribute 'ivy-highlight-face nil :extend t)
-  (set-face-attribute 'ivy-minibuffer-match-highlight nil :extend t)
   (set-face-attribute 'ivy-virtual nil :italic nil))
 (with-eval-after-load 'magit-diff
   (set-face-attribute 'magit-diff-added nil :background 'unspecified)
