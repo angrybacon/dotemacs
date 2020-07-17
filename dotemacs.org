@@ -517,7 +517,11 @@ Save and restore Emacs status, including buffers, point and window configuration
   :ensure nil
   :hook
   (after-init . desktop-read)
-  (after-init . desktop-save-mode))
+  (after-init . desktop-save-mode)
+  :custom
+  (desktop-base-file-name ".desktop")
+  (desktop-base-lock-name ".desktop.lock")
+  (desktop-restore-eager 8))
 #+END_SRC
 
 Workspaces within Emacs.
