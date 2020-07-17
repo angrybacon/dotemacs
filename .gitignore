@@ -14,8 +14,7 @@ url/
 
 # Third-party packages
 .amx
-.emacs.desktop*
+.desktop*
 .multiple-cursors.el
 .projectile-bookmarks
 .projectile-cache
-.vimish-fold/
