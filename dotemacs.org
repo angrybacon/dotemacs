@@ -1572,6 +1572,7 @@ commands.
   :init
   (setq-default
    isearch-allow-scroll t
+   lazy-highlight-buffer t
    lazy-highlight-cleanup nil
    lazy-highlight-initial-delay 0))
 #+END_SRC
