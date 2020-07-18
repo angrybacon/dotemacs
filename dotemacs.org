@@ -388,6 +388,8 @@ authoring documents with a fast and effective plain-text system.
         ("<C-S-up>" . nil)
         ("<M-S-down>" . nil)
         ("<M-S-up>" . nil))
+  (:map org-src-mode-map
+        ("C-c o" . org-edit-src-exit))
   :hook
   ((org-mode . me/org-set-ongoing-hydra-body)
    (org-mode . toc-org-enable))
@@ -1091,7 +1093,7 @@ Group Org commands.
 ^Org^               ^Links^             ^Outline^
 ^───^───────────────^─────^─────────────^───────^───────────
 _q_ quit            _i_ insert          _<_ previous
-^^                  _n_ next            _>_ next
+_o_ edit            _n_ next            _>_ next
 ^^                  _p_ previous        _a_ all
 ^^                  _s_ store           _g_ go
 ^^                  ^^                  _v_ overview
@@ -1103,6 +1105,7 @@ _q_ quit            _i_ insert          _<_ previous
   ("g" counsel-org-goto :color blue)
   ("i" org-insert-link :color blue)
   ("n" org-next-link)
+  ("o" org-edit-special :color blue)
   ("p" org-previous-link)
   ("s" org-store-link)
   ("v" org-overview))
