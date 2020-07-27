@@ -1938,7 +1938,7 @@ Sort interactive commands by usage.
   (amx-show-key-bindings nil))
 #+END_SRC
 
-Insert the current date.
+Insert the current date. See [[#hydra--dates][Hydra / Dates]].
 
 #+BEGIN_SRC emacs-lisp
 (defun me/date-iso ()
