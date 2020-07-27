@@ -2184,7 +2184,6 @@ Git itself deserve to be called porcelains.
                                             (unpulled . show)
                                             (unpushed . show)))
   (magit-section-show-child-count t)
-  (transient-mode-line-format nil)
   :config
   (remove-hook 'magit-section-highlight-hook #'magit-section-highlight))
 #+END_SRC
