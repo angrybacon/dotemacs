@@ -794,6 +794,7 @@ efficient, smaller, simpler, and smoother to use yet highly customizable.
   (after-init . ivy-mode)
   :bind
   (:map ivy-minibuffer-map
+        ("<C-return>" . ivy-call)
         ("C-<down>" . ivy-next-line-and-call)
         ("C-<up>" . ivy-previous-line-and-call))
   :custom
