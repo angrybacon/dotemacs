@@ -1308,6 +1308,19 @@ binaries (see [[./README.org][README.org]]).
   (flycheck-add-mode 'javascript-eslint 'web-mode))
 #+END_SRC
 
+#+BEGIN_QUOTE
+The =prettier= Emacs package reformats your code by running
+[[Prettier][https://github.com/prettier/prettier]] with minimal overhead, by
+request or transparently on file save.
+
+[[https://github.com/jscheid/prettier.el][Julian Scheid]]
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package prettier
+  :hook (after-init . global-prettier-mode))
+#+END_SRC
+
 ** Mode-Line
 
 #+BEGIN_SRC emacs-lisp
