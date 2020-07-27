@@ -1222,9 +1222,9 @@ Group window-related commands.
   ("j" shrink-window-horizontally)
   ("k" shrink-window)
   ("l" enlarge-window-horizontally)
-  ("-" text-scale-decrease)
-  ("+" text-scale-increase)
-  ("0" text-scale-adjust))
+  ("-" default-text-scale-decrease)
+  ("+" default-text-scale-increase)
+  ("0" default-text-scale-reset :color blue))
 #+END_SRC
 
 [[./screenshots/hydra.windows.jpg]]
