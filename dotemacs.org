@@ -867,7 +867,7 @@ Augment Ivy's interface with details for candidates.
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
   :bind
-  ("C-s" . swiper-isearch-thing-at-point)
+  ("C-s" . swiper)
   :custom
   (swiper-goto-start-of-match t))
 #+END_SRC
