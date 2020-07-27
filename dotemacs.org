@@ -563,6 +563,8 @@ by default. The behaviour is modeled after
   :hook
   (after-init . eyebrowse-mode)
   :custom
+  (eyebrowse-mode-line-left-delimiter "")
+  (eyebrowse-mode-line-right-delimiter "")
   (eyebrowse-new-workspace t))
 #+END_SRC
 
@@ -893,6 +895,12 @@ seamless, it's like a minor mode that disables itself auto-magically.
 (use-package hydra
   :preface
   (defvar-local me/ongoing-hydra-body nil)
+  (defun me/make-hydra-heading (&rest headings)
+    "Format HEADINGS to look pretty in a hydra docstring."
+    (mapconcat (lambda (it)
+                 (propertize (format "%-20s" it) 'face 'font-lock-doc-face))
+               headings
+               nil))
   (defun me/ongoing-hydra ()
     (interactive)
     (if me/ongoing-hydra-body
@@ -918,14 +926,12 @@ Group date-related commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-dates (:color blue)
-  "
-^
-^Dates^             ^Insert^            ^Insert with Time^
-^─────^─────────────^──────^────────────^────────────────^──
-_q_ quit            _d_ short           _D_ short
-^^                  _i_ iso             _I_ iso
-^^                  _l_ long            _L_ long
-"
+  (concat "\n " (me/make-hydra-heading "Dates" "Insert" "Insert with Time")
+          "
+ _q_ quit              _d_ short             _D_ short
+ ^^                    _i_ iso               _I_ iso
+ ^^                    _l_ long              _L_ long
+")
   ("q" nil)
   ("d" me/date-short)
   ("D" me/date-short-with-time)
@@ -935,7 +941,7 @@ _q_ quit            _d_ short           _D_ short
   ("L" me/date-long-with-time))
 #+END_SRC
 
-[[./screenshots/hydra.dates.png]]
+[[./screenshots/hydra.dates.jpg]]
 
 *** Hydra / Eyebrowse
 
@@ -943,16 +949,14 @@ Group Eyebrowse commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-eyebrowse (:color blue)
-  "
-^
-^Eyebrowse^         ^Do^                ^Switch^
-^─────────^─────────^──^────────────────^──────^────────────
-_q_ quit            _c_ create          # %s(eyebrowse-mode-line-indicator)
-^^                  _k_ kill            _<_ previous
-^^                  _r_ rename          _>_ next
-^^                  ^^                  _e_ last
-^^                  ^^                  _s_ switch
-"
+  (concat "\n " (me/make-hydra-heading "Eyebrowse" "Do" "Switch")
+          "
+ _q_ quit              _c_ create            _0_..._9_ %s(eyebrowse-mode-line-indicator)
+ ^^                    _k_ kill              _<_ previous
+ ^^                    _r_ rename            _>_ next
+ ^^                    ^^                    _e_ last
+ ^^                    ^^                    _s_ switch
+")
   ("q" nil)
   ("0" eyebrowse-switch-to-window-config-0)
   ("1" eyebrowse-switch-to-window-config-1)
@@ -973,7 +977,7 @@ _q_ quit            _c_ create          # %s(eyebrowse-mode-line-indicator)
   ("s" eyebrowse-switch-to-window-config))
 #+END_SRC
 
-[[./screenshots/hydra.eyebrowse.png]]
+[[./screenshots/hydra.eyebrowse.jpg]]
 
 *** Hydra / Flycheck
 
@@ -981,15 +985,13 @@ Group Flycheck commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-flycheck (:color blue)
-  "
-^
-^Flycheck^          ^Errors^            ^Checker^
-^────────^──────────^──────^────────────^───────^───────────
-_q_ quit            _<_ previous        _?_ describe
-_m_ manual          _>_ next            _d_ disable
-_v_ verify setup    _f_ check           _s_ select
-^^                  _l_ list            ^^
-"
+  (concat "\n " (me/make-hydra-heading "Flycheck" "Errors" "Checker")
+          "
+ _q_ quit              _<_ previous          _?_ describe
+ _m_ manual            _>_ next              _d_ disable
+ _v_ verify setup      _f_ check             _s_ select
+ ^^                    _l_ list              ^^
+")
   ("q" nil)
   ("<" flycheck-previous-error :color pink)
   (">" flycheck-next-error :color pink)
@@ -1002,7 +1004,7 @@ _v_ verify setup    _f_ check           _s_ select
   ("v" flycheck-verify-setup))
 #+END_SRC
 
-[[./screenshots/hydra.flycheck.png]]
+[[./screenshots/hydra.flycheck.jpg]]
 
 *** Hydra / Ivy
 
@@ -1010,16 +1012,14 @@ Group Ivy commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-ivy (:color blue)
-  "
-^
-^Ivy^               ^Do^                ^Browse^
-^───^───────────────^──^────────────────^──────^────────────
-_q_ quit            _m_ mark            _f_ faces
-_r_ resume          _M_ unmark          _i_ imenu
-^^                  ^^                  _l_ libraries
-^^                  ^^                  _s_ symbols
-^^                  ^^                  _u_ unicode
-"
+  (concat "\n " (me/make-hydra-heading "Ivy" "Do" "Browse")
+          "
+ _q_ quit              _m_ mark              _f_ faces
+ _r_ resume            _M_ unmark            _i_ imenu
+ ^^                    ^^                    _l_ libraries
+ ^^                    ^^                    _s_ symbols
+ ^^                    ^^                    _u_ unicode
+")
   ("q" nil)
   ("f" counsel-faces)
   ("i" counsel-imenu)
@@ -1031,21 +1031,21 @@ _r_ resume          _M_ unmark          _i_ imenu
   ("u" counsel-unicode-char))
 #+END_SRC
 
+[[./screenshots/hydra.ivy.jpg]]
+
 *** Hydra / Magit
 
 Group Magit commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-magit (:color blue)
-  "
-^
-^Magit^             ^Do^
-^─────^─────────────^──^────────────────
-_q_ quit            _b_ blame
-^^                  _c_ clone
-^^                  _i_ init
-^^                  _s_ status
-"
+  (concat "\n " (me/make-hydra-heading "Magit" "Do")
+          "
+ _q_ quit              _b_ blame
+ ^^                    _c_ clone
+ ^^                    _i_ init
+ ^^                    _s_ status
+")
   ("q" nil)
   ("b" magit-blame)
   ("c" magit-clone)
@@ -1053,7 +1053,7 @@ _q_ quit            _b_ blame
   ("s" magit-status))
 #+END_SRC
 
-[[./screenshots/hydra.magit.png]]
+[[./screenshots/hydra.magit.jpg]]
 
 *** Hydra / Markdown
 
@@ -1061,15 +1061,13 @@ Group Markdown commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-markdown (:color pink)
-  "
-^
-^Markdown^          ^Table Columns^     ^Table Rows^
-^────────^──────────^─────────────^─────^──────────^────────
-_q_ quit            _c_ insert          _r_ insert
-^^                  _C_ delete          _R_ delete
-^^                  _M-<left>_ left     _M-<down>_ down
-^^                  _M-<right>_ right   _M-<up>_ up
-"
+  (concat "\n " (me/make-hydra-heading "Markdown" "Table Columns" "Table Rows")
+          "
+ _q_ quit              _c_ insert            _r_ insert
+ ^^                    _C_ delete            _R_ delete
+ ^^                    _M-<left>_ left       _M-<down>_ down
+ ^^                    _M-<right>_ right     _M-<up>_ up
+")
   ("q" nil)
   ("c" markdown-table-insert-column)
   ("C" markdown-table-delete-column)
@@ -1081,7 +1079,7 @@ _q_ quit            _c_ insert          _r_ insert
   ("M-<up>" markdown-table-move-row-up))
 #+END_SRC
 
-[[./screenshots/hydra.markdown.png]]
+[[./screenshots/hydra.markdown.jpg]]
 
 *** Hydra / Org
 
@@ -1089,16 +1087,14 @@ Group Org commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-org (:color pink)
-  "
-^
-^Org^               ^Links^             ^Outline^
-^───^───────────────^─────^─────────────^───────^───────────
-_q_ quit            _i_ insert          _<_ previous
-_o_ edit            _n_ next            _>_ next
-^^                  _p_ previous        _a_ all
-^^                  _s_ store           _g_ go
-^^                  ^^                  _v_ overview
-"
+  (concat "\n " (me/make-hydra-heading "Org" "Links" "Outline")
+          "
+ _q_ quit              _i_ insert            _<_ previous
+ _o_ edit              _n_ next              _>_ next
+ ^^                    _p_ previous          _a_ all
+ ^^                    _s_ store             _g_ go
+ ^^                    ^^                    _v_ overview
+")
   ("q" nil)
   ("<" org-backward-element)
   (">" org-forward-element)
@@ -1112,7 +1108,7 @@ _o_ edit            _n_ next            _>_ next
   ("v" org-overview))
 #+END_SRC
 
-[[./screenshots/hydra.org.png]]
+[[./screenshots/hydra.org.jpg]]
 
 *** Hydra / Projectile
 
@@ -1120,15 +1116,13 @@ Group Projectile commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-projectile (:color blue)
-  "
-^
-^Projectile^        ^Buffers^           ^Find^              ^Search^
-^──────────^────────^───────^───────────^────^──────────────^──────^────────────
-_q_ quit            _b_ list            _d_ directory       _r_ replace
-_i_ reset cache     _K_ kill all        _D_ root            _R_ regexp replace
-_n_ new             _S_ save all        _f_ file            _s_ rg
-^^                  ^^                  _p_ project         ^^
-"
+  (concat "\n " (me/make-hydra-heading "Projectile" "Buffers" "Find" "Search")
+          "
+ _q_ quit              _b_ list              _d_ directory         _r_ replace
+ _i_ reset cache       _K_ kill all          _D_ root              _R_ regexp replace
+ _n_ new               _S_ save all          _f_ file              _s_ rg
+ ^^                    ^^                    _p_ project           ^^
+")
   ("q" nil)
   ("b" counsel-projectile-switch-to-buffer)
   ("d" counsel-projectile-find-dir)
@@ -1144,7 +1138,7 @@ _n_ new             _S_ save all        _f_ file            _s_ rg
   ("S" projectile-save-project-buffers))
 #+END_SRC
 
-[[./screenshots/hydra.projectile.png]]
+[[./screenshots/hydra.projectile.jpg]]
 
 *** Hydra / RJSX
 
@@ -1152,19 +1146,17 @@ Group React JavaScript commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-rjsx (:color blue)
-  "
-^
-^RJSX^              ^JSDoc^
-^────^──────────────^─────^─────────────
-_q_ quit            _f_ function
-^^                  _F_ file
-"
+  (concat "\n " (me/make-hydra-heading "RJSX" "JSDoc")
+          "
+ _q_ quit              _f_ function
+ ^^                    _F_ file
+")
   ("q" nil)
   ("f" js-doc-insert-function-doc-snippet)
   ("F" js-doc-insert-file-doc))
 #+END_SRC
 
-[[./screenshots/hydra.rjsx.png]]
+[[./screenshots/hydra.rjsx.jpg]]
 
 *** Hydra / System
 
@@ -1172,14 +1164,12 @@ Group system-related commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-system (:color blue)
-  "
-^
-^System^            ^Packages^          ^Processes^         ^Shell^
-^──────^────────────^────────^──────────^─────────^─────────^─────^─────────────
-_q_ quit            _p_ list            _s_ list            _e_ eshell
-^^                  _P_ upgrade         ^^                  _t_ term
-^^                  ^^                  ^^                  _T_ ansi-term
-"
+  (concat "\n " (me/make-hydra-heading "System" "Packages" "Processes" "Shell")
+          "
+ _q_ quit              _p_ list              _s_ list              _e_ eshell
+ ^^                    _P_ upgrade           ^^                    _t_ term
+ ^^                    ^^                    ^^                    _T_ ansi-term
+")
   ("q" nil)
   ("e" (eshell t))
   ("p" paradox-list-packages)
@@ -1189,7 +1179,7 @@ _q_ quit            _p_ list            _s_ list            _e_ eshell
   ("T" ansi-term))
 #+END_SRC
 
-[[./screenshots/hydra.system.png]]
+[[./screenshots/hydra.system.jpg]]
 
 *** Hydra / Tide
 
@@ -1197,14 +1187,12 @@ Group TypeScript commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-tide (:color blue)
-  "
-^
-^Tide^              ^Server^            ^Code^
-^────^──────────────^──────^────────────^────^──────────────
-_q_ quit            _l_ list            _d_ documentation
-^^                  _r_ restart
-^^                  _v_ verify setup
-"
+  (concat "\n " (me/make-hydra-heading "Tide" "Server" "Code")
+          "
+ _q_ quit              _l_ list              _d_ documentation
+ ^^                    _r_ restart           ^^
+ ^^                    _v_ verify setup      ^^
+")
   ("q" nil)
   ("d" tide-documentation-at-point)
   ("l" tide-list-servers)
@@ -1212,22 +1200,22 @@ _q_ quit            _l_ list            _d_ documentation
   ("v" tide-verify-setup))
 #+END_SRC
 
+[[./screenshots/hydra.tide.jpg]]
+
 *** Hydra / Windows
 
 Group window-related commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-windows (:color pink)
-  "
-^
-^Windows^           ^Size^              ^Zoom^
-^───────^───────────^────^──────────────^────^──────────────
-_q_ quit            _b_ balance         _-_ out
-^^                  _i_ heighten        _+_ in
-^^                  _j_ narrow          _0_ reset
-^^                  _k_ lower           ^^
-^^                  _l_ widen           ^^
-"
+  (concat "\n " (me/make-hydra-heading "Windows" "Size" "Zoom")
+          "
+ _q_ quit              _b_ balance           _-_ out
+ ^^                    _i_ heighten          _+_ in
+ ^^                    _j_ narrow            _0_ reset
+ ^^                    _k_ lower             ^^
+ ^^                    _l_ widen             ^^
+")
   ("q" nil)
   ("b" balance-windows)
   ("i" enlarge-window)
@@ -1239,7 +1227,7 @@ _q_ quit            _b_ balance         _-_ out
   ("0" text-scale-adjust))
 #+END_SRC
 
-[[./screenshots/hydra.windows.png]]
+[[./screenshots/hydra.windows.jpg]]
 
 ** IRC
 
