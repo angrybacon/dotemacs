@@ -1695,12 +1695,12 @@ Enable multiple cursors at once. Some witchcraft at work here.
 #+BEGIN_SRC emacs-lisp
 (use-package multiple-cursors
   :bind
-  (("C-S-<mouse-1>" . mc/add-cursor-on-click)
-   ("C-S-c C-S-a" . mc/vertical-align-with-space)
-   ("C-S-c C-S-c" . mc/edit-lines)
-   ("C-S-c C-S-l" . mc/insert-letters)
-   ("C-S-c C-S-n" . mc/insert-numbers)
-   ("C-'" . mc-hide-unmatched-lines-mode))
+  (("C-S-c C-S-c" . mc/edit-lines)
+   :map mc/keymap
+   ("M-a" . mc/vertical-align-with-space)
+   ("M-h" . mc-hide-unmatched-lines-mode)
+   ("M-l" . mc/insert-letters)
+   ("M-n" . mc/insert-numbers))
   :init
   (setq-default
    mc/list-file (expand-file-name ".multiple-cursors.el" user-emacs-directory))
@@ -1724,14 +1724,14 @@ use with =selected=.
       (user-error "me/pretty-print: me/pretty-print-function is not set")))
   :bind
   (:map selected-keymap
+        ("C-?"         . hydra-selected/body)
         ("<"           . mc/mark-previous-like-this)
         (">"           . mc/mark-next-like-this)
-        ("C-<tab>"     . me/pretty-print)
         ("C-<"         . mc/unmark-previous-like-this)
         ("C->"         . mc/unmark-next-like-this)
         ("C-M-<"       . mc/skip-to-previous-like-this)
         ("C-M->"       . mc/skip-to-next-like-this)
-        ("C-?"         . hydra-selected/body)
+        ("C-<tab>"     . me/pretty-print)
         ("C-c C-c"     . me/eval-region-and-kill-mark)
         ("C-b"         . me/browse-url-and-kill-mark)
         ("C-c c"       . capitalize-region)
