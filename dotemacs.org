@@ -556,11 +556,6 @@ by default. The behaviour is modeled after
 
 #+BEGIN_SRC emacs-lisp
 (use-package eyebrowse
-  :bind
-  ("<f5>" . eyebrowse-switch-to-window-config-1)
-  ("<f6>" . eyebrowse-switch-to-window-config-2)
-  ("<f7>" . eyebrowse-switch-to-window-config-3)
-  ("<f8>" . eyebrowse-switch-to-window-config-4)
   :hook
   (after-init . eyebrowse-mode)
   :custom
