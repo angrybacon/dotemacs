@@ -1401,6 +1401,9 @@ request or transparently on file save.
               (propertize (format-mode-line mode-line-process)
                           'face 'mode-line-inactive))
             (doom-modeline-spc)))
+  (doom-modeline-def-segment me/space
+    "A simple space."
+    (doom-modeline-spc))
   (doom-modeline-def-segment me/vcs
     "The version control system information."
     (when-let ((branch doom-modeline--vcs-text))
@@ -1423,7 +1426,7 @@ request or transparently on file save.
     '(bar me/buffer-simple me/buffer-position me/flycheck selection-info)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'package
-    '(bar package)
+    '(bar me/space package)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'project
     '(bar me/default-directory)
