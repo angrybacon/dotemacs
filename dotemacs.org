@@ -29,6 +29,7 @@
   - [[#dictionary][Dictionary]]
   - [[#diff][Diff]]
   - [[#dired][Dired]]
+  - [[#evil][Evil]]
   - [[#expand][Expand]]
   - [[#help][Help]]
   - [[#ivy][Ivy]]
@@ -714,6 +715,23 @@ explorer.
   (dired-recursive-copies 'always)
   :config
   (advice-add 'dired-readin :after #'me/dired-directories-first))
+#+END_SRC
+
+** Evil
+
+#+BEGIN_QUOTE
+Evil is an *e*xtensible *vi* *l*ayer for
+[[Emacs][http://www.gnu.org/software/emacs/]]. It emulates the main features of
+[[Vim][http://www.vim.org/]], and provides facilities for writing custom
+extensions. Also see our page on [[EmacsWiki][http://emacswiki.org/emacs/Evil]].
+
+[[https://github.com/emacs-evil/evil][Eivind Fonn]]
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil
+  :hook
+  (after-init . evil-mode))
 #+END_SRC
 
 ** Expand
@@ -1411,28 +1429,28 @@ request or transparently on file save.
                 (doom-modeline-spc)))))
   (doom-modeline-mode 1)
   (doom-modeline-def-modeline 'info
-    '(bar me/buffer me/info me/buffer-position selection-info)
+    '(bar modals me/buffer me/info me/buffer-position selection-info)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'main
-    '(bar me/buffer remote-host me/buffer-position me/flycheck selection-info)
+    '(bar modals me/buffer remote-host me/buffer-position me/flycheck selection-info)
     '(irc-buffers matches me/process me/vcs debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'message
-    '(bar me/buffer-simple me/buffer-position selection-info)
+    '(bar modals me/buffer-simple me/buffer-position selection-info)
     '(irc-buffers matches me/process me/major-mode workspace-name))
   (doom-modeline-def-modeline 'org-src
-    '(bar me/buffer-simple me/buffer-position me/flycheck selection-info)
+    '(bar modals me/buffer-simple me/buffer-position me/flycheck selection-info)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'package
-    '(bar me/space package)
+    '(bar modals me/space package)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'project
-    '(bar me/default-directory)
+    '(bar modals me/default-directory)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'special
-    '(bar me/buffer me/buffer-position selection-info)
+    '(bar modals me/buffer me/buffer-position selection-info)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'vcs
-    '(bar me/buffer remote-host me/buffer-position selection-info)
+    '(bar modals me/buffer remote-host me/buffer-position selection-info)
     '(irc-buffers matches me/process debug me/major-mode workspace-name)))
 #+END_SRC
 
