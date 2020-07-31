@@ -1416,6 +1416,10 @@ request or transparently on file save.
               (propertize (format-mode-line mode-line-process)
                           'face 'mode-line-inactive))
             (doom-modeline-spc)))
+  (doom-modeline-def-segment me/modals
+    "Display modal editing states."
+    (when (doom-modeline--active)
+      (doom-modeline-segment--modals)))
   (doom-modeline-def-segment me/space
     "A simple space."
     (doom-modeline-spc))
@@ -1429,28 +1433,28 @@ request or transparently on file save.
                 (doom-modeline-spc)))))
   (doom-modeline-mode 1)
   (doom-modeline-def-modeline 'info
-    '(bar modals me/buffer me/info me/buffer-position selection-info)
+    '(bar me/modals me/buffer me/info me/buffer-position selection-info)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'main
-    '(bar modals me/buffer remote-host me/buffer-position me/flycheck selection-info)
+    '(bar me/modals me/buffer remote-host me/buffer-position me/flycheck selection-info)
     '(irc-buffers matches me/process me/vcs debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'message
-    '(bar modals me/buffer-simple me/buffer-position selection-info)
+    '(bar me/modals me/buffer-simple me/buffer-position selection-info)
     '(irc-buffers matches me/process me/major-mode workspace-name))
   (doom-modeline-def-modeline 'org-src
-    '(bar modals me/buffer-simple me/buffer-position me/flycheck selection-info)
+    '(bar me/modals me/buffer-simple me/buffer-position me/flycheck selection-info)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'package
-    '(bar modals me/space package)
+    '(bar me/modals me/space package)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'project
-    '(bar modals me/default-directory)
+    '(bar me/modals me/default-directory)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'special
-    '(bar modals me/buffer me/buffer-position selection-info)
+    '(bar me/modals me/buffer me/buffer-position selection-info)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'vcs
-    '(bar modals me/buffer remote-host me/buffer-position selection-info)
+    '(bar me/modals me/buffer remote-host me/buffer-position selection-info)
     '(irc-buffers matches me/process debug me/major-mode workspace-name)))
 #+END_SRC
 
