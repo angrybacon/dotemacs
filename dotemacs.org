@@ -1585,6 +1585,7 @@ Augment Emacs experience for MacOS users.
 #+BEGIN_SRC emacs-lisp
 (when (eq system-type 'darwin)
   (setq-default
+   dired-use-ls-dired nil                            ; MacOS's ls does not support --dired
    exec-path (append exec-path '("/usr/local/bin"))  ; Add Homebrew path
    ns-command-modifier 'meta                         ; Map Meta to the Cmd key
    ns-option-modifier 'super                         ; Map Super to the Alt key
