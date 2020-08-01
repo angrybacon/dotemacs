@@ -731,7 +731,9 @@ extensions. Also see our page on [[EmacsWiki][http://emacswiki.org/emacs/Evil]].
 #+BEGIN_SRC emacs-lisp
 (use-package evil
   :hook
-  (after-init . evil-mode))
+  (after-init . evil-mode)
+  :custom
+  (evil-want-C-u-scroll t))
 #+END_SRC
 
 ** Expand
