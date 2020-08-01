@@ -967,7 +967,7 @@ Group Eyebrowse commands.
 (defhydra hydra-eyebrowse (:color blue)
   (concat "\n " (me/make-hydra-heading "Eyebrowse" "Do" "Switch")
           "
- _q_ quit              _c_ create            _0_..._9_ %s(eyebrowse-mode-line-indicator)
+ _q_ quit              _c_ create            _0_-_9_ %s(eyebrowse-mode-line-indicator)
  ^^                    _k_ kill              _<_ previous
  ^^                    _r_ rename            _>_ next
  ^^                    ^^                    _e_ last
@@ -1009,8 +1009,8 @@ Group Flycheck commands.
  ^^                    _l_ list              ^^
 ")
   ("q" nil)
-  ("<" flycheck-previous-error :color pink)
-  (">" flycheck-next-error :color pink)
+  ("<" flycheck-previous-error :color red)
+  (">" flycheck-next-error :color red)
   ("?" flycheck-describe-checker)
   ("d" flycheck-disable-checker)
   ("f" flycheck-buffer)
@@ -1040,8 +1040,8 @@ Group Ivy commands.
   ("f" counsel-faces)
   ("i" counsel-imenu)
   ("l" counsel-find-library)
-  ("m" ivy-mark :color pink)
-  ("M" ivy-unmark :color pink)
+  ("m" ivy-mark :color red)
+  ("M" ivy-unmark :color red)
   ("r" ivy-resume)
   ("s" counsel-info-lookup-symbol)
   ("u" counsel-unicode-char))
@@ -1233,7 +1233,7 @@ Group window-related commands.
  ^^                    _l_ widen             ^^
 ")
   ("q" nil)
-  ("b" balance-windows)
+  ("b" balance-windows :color blue)
   ("i" enlarge-window)
   ("j" shrink-window-horizontally)
   ("k" shrink-window)
@@ -1633,8 +1633,10 @@ variables of interest, then copying them into the Emacs environment.
 
 #+BEGIN_SRC emacs-lisp
 (use-package exec-path-from-shell
-  :if (memq window-system '(mac ns))
-  :hook (after-init . exec-path-from-shell-initialize))
+  :if
+  (memq window-system '(mac ns))
+  :hook
+  (after-init . exec-path-from-shell-initialize))
 #+END_SRC
 
 ** Parentheses
