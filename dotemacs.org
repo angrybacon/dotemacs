@@ -1886,7 +1886,7 @@ exists as well).
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
   :hook
-  (after-init . projectile-global-mode)
+  (after-init . projectile-mode)
   :init
   (setq-default
    projectile-cache-file (expand-file-name ".projectile-cache" user-emacs-directory)
