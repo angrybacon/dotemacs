@@ -1917,7 +1917,7 @@ exists as well).
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
   :hook
-  (after-init . projectile-global-mode)
+  (after-init . projectile-mode)
   :init
   (setq-default
    projectile-cache-file (expand-file-name ".projectile-cache" user-emacs-directory)
@@ -2215,6 +2215,8 @@ Git itself deserve to be called porcelains.
   (:map magit-hunk-section-map
         ("RET" . magit-diff-visit-file-other-window)
         ([return] . magit-diff-visit-file-other-window))
+  :hook
+  (magit-mode . (lambda () (setq-local display-line-numbers nil)))
   :custom
   (magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
   (magit-diff-highlight-hunk-body nil)
