@@ -2267,14 +2267,18 @@ Git itself deserve to be called porcelains.
   (magit-diff-highlight-hunk-body nil)
   (magit-diff-highlight-hunk-region-functions
    '(magit-diff-highlight-hunk-region-dim-outside magit-diff-highlight-hunk-region-using-face))
+  (magit-module-sections-nested nil)
   (magit-popup-display-buffer-action '((display-buffer-same-window)))
   (magit-refs-show-commit-count 'all)
-  (magit-section-initial-visibility-alist '((stashes . show)
+  (magit-section-initial-visibility-alist '((modules . show)
+                                            (stashes . show)
                                             (unpulled . show)
                                             (unpushed . show)))
   (magit-section-show-child-count t)
   (transient-mode-line-format nil)
   :config
+  (magit-add-section-hook
+   'magit-status-sections-hook 'magit-insert-modules-overview 'magit-insert-status-headers t)
   (remove-hook 'magit-section-highlight-hook #'magit-section-highlight))
 #+END_SRC
 
