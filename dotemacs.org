@@ -854,15 +854,59 @@ Augment Ivy's interface with details for candidates.
               (propertize (format "%s" val) 'face 'highlight-numbers-number))
              ((format "%s" val)))
        t)))
+  (defun me/ivy-rich-switch-buffer-size (candidate)
+    "Return the buffer size in a `ivy-switch-buffer' session."
+    (with-current-buffer
+        (get-buffer candidate)
+      (let ((size (buffer-size)))
+        (cond
+         ((> size 1000000) (format "%.1fM" (/ size 1000000.0)))
+         ((> size 1000) (format "%.1fk" (/ size 1000.0)))
+         (t (format "%d" size))))))
   :config
-  (setq-default ivy-rich-display-transformers-list
-                (plist-put ivy-rich-display-transformers-list
-                           'counsel-describe-variable
-                           '(:columns
-                             ((counsel-describe-variable-transformer (:width .2))
-                              (me/ivy-rich-describe-variable-value (:width .2))
-                              (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face)))
-                             :delimiter "  "))))
+  (setq-default
+   ivy-rich-display-transformers-list
+   (plist-put ivy-rich-display-transformers-list
+              'counsel-M-x
+              '(:columns
+                ((counsel-M-x-transformer (:width .2))
+                 (ivy-rich-counsel-function-docstring (:face font-lock-doc-face)))
+                :delimiter "  "))
+   ivy-rich-display-transformers-list
+   (plist-put ivy-rich-display-transformers-list
+              'counsel-describe-function
+              '(:columns
+                ((counsel-describe-function-transformer (:width .2))
+                 (ivy-rich-counsel-function-docstring (:face font-lock-doc-face)))
+                :delimiter "  "))
+   ivy-rich-display-transformers-list
+   (plist-put ivy-rich-display-transformers-list
+              'counsel-describe-variable
+              '(:columns
+                ((counsel-describe-variable-transformer (:width .2))
+                 (me/ivy-rich-describe-variable-value (:width .2))
+                 (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face)))
+                :delimiter "  "))
+   ivy-rich-display-transformers-list
+   (plist-put ivy-rich-display-transformers-list
+              'ivy-switch-buffer
+              '(:columns
+                ((ivy-switch-buffer-transformer (:width .2))
+                 (me/ivy-rich-switch-buffer-size (:align left :face shadow :width 8))
+                 (ivy-rich-switch-buffer-major-mode (:face warning :width 22))
+                 (ivy-rich-switch-buffer-project (:face success :width 34))
+                 (ivy-rich-switch-buffer-path))
+                :delimiter "  "
+                :predicate (lambda (cand) (get-buffer cand))))
+   ivy-rich-display-transformers-list
+   (plist-put ivy-rich-display-transformers-list
+              'package-install
+              '(:columns
+                ((ivy-rich-candidate (:width .2))
+                 (ivy-rich-package-version (:face shadow :width 13))
+                 (ivy-rich-package-archive-summary (:face font-lock-builtin-face :width 5))
+                 (ivy-rich-package-install-summary (:face font-lock-doc-face)))
+                :delimiter "  "))))
 #+END_SRC
 
 *** Ivy / Counsel
