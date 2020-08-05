@@ -833,8 +833,8 @@ Augment Ivy's interface with details for candidates.
 (use-package ivy-rich
   :hook (after-init . ivy-rich-mode)
   :preface
-  (defun me/ivy-rich-describe-variable-transformer (cand)
-    "Previews the value of the variable in the minibuffer."
+  (defun me/ivy-rich-describe-variable-value (cand)
+    "Return the value of the variable in a `counsel-describe-variable' session."
     (let* ((sym (intern cand))
            (val (and (boundp sym) (symbol-value sym)))
            (print-level 3))
@@ -859,9 +859,10 @@ Augment Ivy's interface with details for candidates.
                 (plist-put ivy-rich-display-transformers-list
                            'counsel-describe-variable
                            '(:columns
-                             ((counsel-describe-variable-transformer (:width 40))
-                              (me/ivy-rich-describe-variable-transformer (:width 50))
-                              (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face)))))))
+                             ((counsel-describe-variable-transformer (:width .2))
+                              (me/ivy-rich-describe-variable-value (:width .2))
+                              (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face)))
+                             :delimiter "  "))))
 #+END_SRC
 
 *** Ivy / Counsel
@@ -1920,8 +1921,8 @@ exists as well).
   (after-init . projectile-mode)
   :init
   (setq-default
-   projectile-cache-file (expand-file-name ".projectile-cache" user-emacs-directory)
-   projectile-known-projects-file (expand-file-name ".projectile-bookmarks" user-emacs-directory))
+   projectile-cache-file (expand-file-name ".projectile.cache" user-emacs-directory)
+   projectile-known-projects-file (expand-file-name ".projectile.eld" user-emacs-directory))
   :custom
   (projectile-enable-caching t)
   (projectile-track-known-projects-automatically nil))

@@ -17,5 +17,5 @@ url/
 .amx
 .desktop*
 .multiple-cursors.el
-.projectile-bookmarks
-.projectile-cache
+.projectile.cache
+.projectile.eld
