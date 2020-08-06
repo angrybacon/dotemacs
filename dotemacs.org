@@ -71,9 +71,10 @@ Here are what I consider better defaults as per my own experience.
  auto-window-vscroll nil                          ; Lighten vertical scroll
  confirm-kill-emacs 'yes-or-no-p                  ; Confirm before exiting Emacs
  cursor-in-non-selected-windows nil               ; Hide the cursor in inactive windows
+ cursor-type 'bar                                 ; Use a bar-shaped cursor
  delete-by-moving-to-trash t                      ; Delete files to trash
- display-line-numbers 'relative
- display-line-numbers-current-absolute nil
+ display-line-numbers 'relative                   ; Display relative line numbers on the left
+ display-line-numbers-current-absolute nil        ; Current line is 0
  display-time-default-load-average nil            ; Don't display load average
  display-time-format "%H:%M"                      ; Format the time string
  fill-column 80                                   ; Set width for automatic line breaks
@@ -734,6 +735,7 @@ extensions. Also see our page on [[EmacsWiki][http://emacswiki.org/emacs/Evil]].
   (after-init . evil-mode)
   :custom
   (evil-echo-state nil)
+  (evil-emacs-state-cursor 'bar)
   (evil-want-C-u-scroll t))
 #+END_SRC
 
