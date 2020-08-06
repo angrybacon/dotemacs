@@ -733,6 +733,7 @@ extensions. Also see our page on [[EmacsWiki][http://emacswiki.org/emacs/Evil]].
 (use-package evil
   :hook
   (after-init . evil-mode)
+  (with-editor-mode . evil-insert-state)
   :custom
   (evil-echo-state nil)
   (evil-emacs-state-cursor 'bar)
