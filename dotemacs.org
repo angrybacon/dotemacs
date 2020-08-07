@@ -740,6 +740,10 @@ extensions. Also see our page on [[EmacsWiki][http://emacswiki.org/emacs/Evil]].
   (after-init . evil-mode)
   (after-save . evil-normal-state)
   (with-editor-mode . evil-insert-state)
+  :bind
+  (:map evil-motion-state-map
+        ("gss" . avy-goto-char-timer)
+        ("gsS" . avy-goto-char))
   :custom
   (evil-echo-state nil)
   (evil-emacs-state-cursor 'bar)
@@ -1539,6 +1543,25 @@ request or transparently on file save.
 #+END_SRC
 
 ** Navigation
+
+*** Navigation / Avy
+
+#+BEGIN_QUOTE
+=avy= is a GNU Emacs package for jumping to visible text using a char-based
+decision tree. See also
+[[ace-jump-mode][https://github.com/winterTTr/ace-jump-mode]] and
+[[vim-easymotion][https://github.com/Lokaltog/vim-easymotion]] - =avy= uses the
+same idea.
+
+[[Oleh Krehel][https://github.com/abo-abo/avy]]
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package avy
+  :custom
+  (avy-background t)
+  (avy-style 'at-full))
+#+END_SRC
 
 *** Navigation / Inline
 
