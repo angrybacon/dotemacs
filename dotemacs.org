@@ -836,26 +836,24 @@ Augment Ivy's interface with details for candidates.
   :after ivy
   :defer nil
   :preface
-  (defun me/ivy-rich-describe-variable-value (cand)
+  (defun me/ivy-rich-describe-variable-value (candidate)
     "Return the value of the variable in a `counsel-describe-variable' session."
-    (let* ((sym (intern cand))
-           (val (and (boundp sym) (symbol-value sym)))
+    (let* ((symbol (intern candidate))
+           (value (and (boundp symbol) (symbol-value symbol)))
            (print-level 3))
       (replace-regexp-in-string
        "[\n\t\^[\^M\^@\^G]" " "
-       (cond ((booleanp val)
-              (propertize (format "%s" val) 'face (if (null val) 'font-lock-comment-face 'success)))
-             ((symbolp val)
-              (propertize (format "'%s" val) 'face 'highlight-quoted-symbol))
-             ((keymapp val)
-              (propertize "<keymap>" 'face 'font-lock-constant-face))
-             ((listp val)
-              (prin1-to-string val))
-             ((stringp val)
-              (propertize (format "%S" val) 'face 'font-lock-string-face))
-             ((numberp val)
-              (propertize (format "%s" val) 'face 'highlight-numbers-number))
-             ((format "%s" val)))
+       (cond ((booleanp value)
+              (propertize (format "%s" value) 'face (if (null value) 'shadow 'success)))
+             ((keymapp value)
+              (propertize "<keymap>" 'face 'font-lock-type-face))
+             ((listp value)
+              (prin1-to-string value))
+             ((stringp value)
+              (propertize (format "%S" value) 'face 'font-lock-string-face))
+             ((symbolp value)
+              (propertize (format "'%s" value) 'face 'font-lock-function-name-face))
+             ((format "%s" value)))
        t)))
   (defun me/ivy-rich-switch-buffer-size (candidate)
     "Return the buffer size in a `ivy-switch-buffer' session."
