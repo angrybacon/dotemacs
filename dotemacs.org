@@ -737,7 +737,16 @@ extensions. Also see our page on [[EmacsWiki][http://emacswiki.org/emacs/Evil]].
   :custom
   (evil-echo-state nil)
   (evil-emacs-state-cursor 'bar)
-  (evil-want-C-u-scroll t))
+  (evil-want-C-u-scroll t)
+  (evil-want-keybinding nil))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-collection
+  :after evil
+  :defer nil
+  :config
+  (evil-collection-init '(dired help)))
 #+END_SRC
 
 ** Expand
