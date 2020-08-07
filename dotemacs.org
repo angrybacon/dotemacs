@@ -738,6 +738,7 @@ extensions. Also see our page on [[EmacsWiki][http://emacswiki.org/emacs/Evil]].
 (use-package evil
   :hook
   (after-init . evil-mode)
+  (after-save . evil-normal-state)
   (with-editor-mode . evil-insert-state)
   :custom
   (evil-echo-state nil)
