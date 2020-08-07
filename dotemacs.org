@@ -909,7 +909,9 @@ Augment Ivy's interface with details for candidates.
                  (ivy-rich-package-archive-summary (:face font-lock-builtin-face :width 5))
                  (ivy-rich-package-install-summary (:face font-lock-doc-face)))
                 :delimiter "  ")))
-  (ivy-rich-set-display-transformer))
+  (ivy-rich-set-display-transformer)
+  :custom
+  (ivy-rich-parse-remote-buffer nil))
 #+END_SRC
 
 *** Ivy / Counsel
