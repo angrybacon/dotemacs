@@ -826,7 +826,6 @@ efficient, smaller, simpler, and smoother to use yet highly customizable.
   (ivy-fixed-height-minibuffer t)
   (ivy-height 20)
   (ivy-initial-inputs-alist nil)
-  (ivy-re-builders-alist '((t . ivy--regex-plus)))
   (ivy-format-functions-alist '((t . ivy-format-function-line))))
 #+END_SRC
 
@@ -834,7 +833,8 @@ Augment Ivy's interface with details for candidates.
 
 #+BEGIN_SRC emacs-lisp
 (use-package ivy-rich
-  :hook (after-init . ivy-rich-mode)
+  :after ivy
+  :defer nil
   :preface
   (defun me/ivy-rich-describe-variable-value (cand)
     "Return the value of the variable in a `counsel-describe-variable' session."
@@ -867,6 +867,7 @@ Augment Ivy's interface with details for candidates.
          ((> size 1000) (format "%.1fk" (/ size 1000.0)))
          (t (format "%d" size))))))
   :config
+  (ivy-rich-mode 1)
   (setq-default
    ivy-rich-display-transformers-list
    (plist-put ivy-rich-display-transformers-list
@@ -909,7 +910,8 @@ Augment Ivy's interface with details for candidates.
                  (ivy-rich-package-version (:face shadow :width 13))
                  (ivy-rich-package-archive-summary (:face font-lock-builtin-face :width 5))
                  (ivy-rich-package-install-summary (:face font-lock-doc-face)))
-                :delimiter "  "))))
+                :delimiter "  ")))
+  (ivy-rich-set-display-transformer))
 #+END_SRC
 
 *** Ivy / Counsel
@@ -917,24 +919,27 @@ Augment Ivy's interface with details for candidates.
 #+BEGIN_SRC emacs-lisp
 (use-package counsel
   :after ivy
+  :defer nil
   :custom
+  (ivy-initial-inputs-alist nil)
   (counsel-outline-face-style 'org)
   (counsel-outline-path-separator " / ")
   :config
-  (counsel-mode 1)
-  (setq-default ivy-initial-inputs-alist nil))
+  (counsel-mode 1))
 
 (use-package counsel-projectile
-  :after ivy
+  :after counsel
+  :defer nil
   :config
-  (counsel-projectile-mode 1)
-  (setq-default ivy-initial-inputs-alist nil))
+  (counsel-projectile-mode 1))
 #+END_SRC
 
 *** Ivy / Swiper
 
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
+  :after ivy
+  :defer nil
   :bind
   ("C-s" . swiper)
   :custom
