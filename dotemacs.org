@@ -175,6 +175,8 @@ Load theme and fix some high-level faces to match my personal preferences.
   (set-face-attribute 'variable-pitch nil :family 'unspecified))
 (with-eval-after-load 'font-lock
   (set-face-attribute 'font-lock-doc-face nil :italic t))
+(with-eval-after-load 'helpful
+  (set-face-attribute 'helpful-heading nil :height me/font-size-default))
 (with-eval-after-load 'ivy
   (set-face-attribute 'ivy-virtual nil :italic nil))
 (with-eval-after-load 'magit-diff
@@ -202,6 +204,8 @@ Load theme and fix some high-level faces to match my personal preferences.
     (set-face-attribute 'flycheck-warning nil :underline `(:color ,(doom-color 'warning) :style line)))
   (with-eval-after-load 'faces
     (set-face-attribute 'help-argument-name nil :foreground (doom-color 'yellow)))
+  (with-eval-after-load 'helpful
+    (set-face-attribute 'helpful-heading nil :foreground (doom-color 'red)))
   (with-eval-after-load 'isearch
     (set-face-attribute 'isearch nil :background (doom-color 'blue) :foreground (doom-color 'dark-blue))
     (set-face-attribute 'lazy-highlight nil :foreground (doom-color 'blue))))
@@ -811,6 +815,12 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
         (">" . help-go-forward)))
 #+END_SRC
 
+Provide better detailed help buffers.
+
+#+BEGIN_SRC emacs-lisp
+(use-package helpful)
+#+END_SRC
+
 ** Ivy
 
 #+BEGIN_QUOTE
@@ -931,6 +941,9 @@ Augment Ivy's interface with details for candidates.
   :defer nil
   :custom
   (ivy-initial-inputs-alist nil)
+  (counsel-describe-function-function #'helpful-function)
+  (counsel-describe-symbol-function #'helpful-symbol)
+  (counsel-describe-variable-function #'helpful-variable)
   (counsel-outline-face-style 'org)
   (counsel-outline-path-separator " / ")
   :config
