@@ -415,6 +415,7 @@ authoring documents with a fast and effective plain-text system.
   (org-startup-truncated nil)
   (org-support-shift-select 'always)
   :config
+  (modify-syntax-entry ?' "'" org-mode-syntax-table)
   (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer-name))
 #+END_SRC
 
