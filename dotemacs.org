@@ -1414,8 +1414,7 @@ request or transparently on file save.
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
-(use-package prettier
-  :hook (after-init . global-prettier-mode))
+(use-package prettier)
 #+END_SRC
 
 ** Mode-Line
