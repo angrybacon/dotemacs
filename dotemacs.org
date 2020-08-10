@@ -185,6 +185,8 @@ Load theme and fix some high-level faces to match my personal preferences.
   (set-face-attribute 'magit-diff-removed nil :background 'unspecified))
 (with-eval-after-load 'markdown
   (set-face-attribute 'markdown-table-face nil :height me/font-size-small))
+(with-eval-after-load 'org
+  (set-face-attribute 'org-quote nil :inherit 'font-lock-doc-face))
 (with-eval-after-load 'swiper
   (set-face-attribute 'swiper-background-match-face-1 nil :background 'unspecified))
 #+END_SRC
