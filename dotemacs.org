@@ -730,10 +730,10 @@ explorer.
 ** Evil
 
 #+BEGIN_QUOTE
-Evil is an *e*xtensible *vi* *l*ayer for
-[[Emacs][http://www.gnu.org/software/emacs/]]. It emulates the main features of
-[[Vim][http://www.vim.org/]], and provides facilities for writing custom
-extensions. Also see our page on [[EmacsWiki][http://emacswiki.org/emacs/Evil]].
+Evil is an extensible vi layer for
+[[http://www.gnu.org/software/emacs/][Emacs]]. It emulates the main features of
+[[http://www.vim.org/][Vim]], and provides facilities for writing custom
+extensions. Also see our page on [[http://emacswiki.org/emacs/Evil][EmacsWiki]].
 
 [[https://github.com/emacs-evil/evil][Eivind Fonn]]
 #+END_QUOTE
@@ -1407,7 +1407,7 @@ binaries (see [[./README.org][README.org]]).
 
 #+BEGIN_QUOTE
 The =prettier= Emacs package reformats your code by running
-[[Prettier][https://github.com/prettier/prettier]] with minimal overhead, by
+[[https://github.com/prettier/prettier][Prettier]] with minimal overhead, by
 request or transparently on file save.
 
 [[https://github.com/jscheid/prettier.el][Julian Scheid]]
@@ -1556,11 +1556,11 @@ request or transparently on file save.
 #+BEGIN_QUOTE
 =avy= is a GNU Emacs package for jumping to visible text using a char-based
 decision tree. See also
-[[ace-jump-mode][https://github.com/winterTTr/ace-jump-mode]] and
-[[vim-easymotion][https://github.com/Lokaltog/vim-easymotion]] - =avy= uses the
+[[https://github.com/winterTTr/ace-jump-mode][ace-jump-mode]] and
+[[https://github.com/Lokaltog/vim-easymotion][vim-easymotion]] - =avy= uses the
 same idea.
 
-[[Oleh Krehel][https://github.com/abo-abo/avy]]
+[[https://github.com/abo-abo/avy][Oleh Krehel]]
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
@@ -1588,8 +1588,11 @@ Smarter =C-a=.
 #+END_SRC
 
 #+BEGIN_QUOTE
-Evil-snipe emulates vim-seek and/or vim-sneak in evil-mode.
-[[Oleh Krehel][https://github.com/abo-abo/avy]]
+Evil-snipe emulates [[https://github.com/goldfeld/vim-seek][vim-seek]] and/or
+[[https://github.com/justinmk/vim-sneak][vim-sneak]] in
+[[https://gitorious.org/evil/pages/Home][evil-mode]].
+
+[[https://github.com/hlissner/evil-snipe][Henrik Lissner]]
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
