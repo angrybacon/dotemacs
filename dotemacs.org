@@ -1826,15 +1826,71 @@ the structure of the current major mode.
 #+BEGIN_SRC emacs-lisp
 (use-package expand-region
   :bind
-  ("C-+" . er/contract-region)
   ("C-=" . er/expand-region))
 #+END_SRC
 
-Persistent highlighting.
+*** Point and Region / Lines
+
+Work on lines.
+
+- *TODO*: Handle regions.
 
 #+BEGIN_SRC emacs-lisp
-(use-package highlight)
+(global-set-key (kbd "<M-S-up>") 'me/duplicate-backward)
+(global-set-key (kbd "<M-S-down>") 'me/duplicate-forward)
+(global-set-key (kbd "<M-down>") 'me/swap-line-down)
+(global-set-key (kbd "<M-up>") 'me/swap-line-up)
+
+(defun me/duplicate-line (&optional stay)
+  "Duplicate current line.
+With optional argument STAY true, leave point where it was."
+  (save-excursion
+    (move-end-of-line nil)
+    (save-excursion
+      (insert (buffer-substring (point-at-bol) (point-at-eol))))
+    (newline))
+  (unless stay
+    (let ((column (current-column)))
+      (forward-line)
+      (forward-char column))))
+
+(defun me/duplicate-backward ()
+  "Duplicate current line upward or region backward.
+If region was active, keep it so that the command can be repeated."
+  (interactive)
+  (if (region-active-p)
+      (let (deactivate-mark)
+        (save-excursion
+          (insert (buffer-substring (region-beginning) (region-end)))))
+    (me/duplicate-line t)))
+
+(defun me/duplicate-forward ()
+  "Duplicate current line downward or region forward.
+If region was active, keep it so that the command can be repeated."
+  (interactive)
+  (if (region-active-p)
+      (let (deactivate-mark (point (point)))
+        (insert (buffer-substring (region-beginning) (region-end)))
+        (push-mark point))
+    (me/duplicate-line)))
+
+(defun me/swap-line-down ()
+  "Move down the line under point."
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(defun me/swap-line-up ()
+  "Move up the line under point."
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2)
+  (indent-according-to-mode))
 #+END_SRC
+
+*** Point and Region / Multiple Cursors
 
 Enable multiple cursors at once. Some witchcraft at work here.
 
@@ -1854,6 +1910,8 @@ Enable multiple cursors at once. Some witchcraft at work here.
   (mc/edit-lines-empty-lines 'ignore)
   (mc/insert-numbers-default 1))
 #+END_SRC
+
+*** Point and Region / Selected
 
 Enable new custom binds when region is active. I've also added a few helpers to
 use with =selected=.
@@ -1963,65 +2021,6 @@ affects the sort order.
 See `sort-regexp-fields'."
   (interactive "*P\nr")
   (sort-regexp-fields reverse "\\w+" "\\&" beg end))
-#+END_SRC
-
-Work on lines.
-
-- *TODO*: Handle regions.
-
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "<M-S-up>") 'me/duplicate-backward)
-(global-set-key (kbd "<M-S-down>") 'me/duplicate-forward)
-(global-set-key (kbd "<M-down>") 'me/swap-line-down)
-(global-set-key (kbd "<M-up>") 'me/swap-line-up)
-
-(defun me/duplicate-line (&optional stay)
-  "Duplicate current line.
-With optional argument STAY true, leave point where it was."
-  (save-excursion
-    (move-end-of-line nil)
-    (save-excursion
-      (insert (buffer-substring (point-at-bol) (point-at-eol))))
-    (newline))
-  (unless stay
-    (let ((column (current-column)))
-      (forward-line)
-      (forward-char column))))
-
-(defun me/duplicate-backward ()
-  "Duplicate current line upward or region backward.
-If region was active, keep it so that the command can be repeated."
-  (interactive)
-  (if (region-active-p)
-      (let (deactivate-mark)
-        (save-excursion
-          (insert (buffer-substring (region-beginning) (region-end)))))
-    (me/duplicate-line t)))
-
-(defun me/duplicate-forward ()
-  "Duplicate current line downward or region forward.
-If region was active, keep it so that the command can be repeated."
-  (interactive)
-  (if (region-active-p)
-      (let (deactivate-mark (point (point)))
-        (insert (buffer-substring (region-beginning) (region-end)))
-        (push-mark point))
-    (me/duplicate-line)))
-
-(defun me/swap-line-down ()
-  "Move down the line under point."
-  (interactive)
-  (forward-line 1)
-  (transpose-lines 1)
-  (forward-line -1)
-  (indent-according-to-mode))
-
-(defun me/swap-line-up ()
-  "Move up the line under point."
-  (interactive)
-  (transpose-lines 1)
-  (forward-line -2)
-  (indent-according-to-mode))
 #+END_SRC
 
 ** Projectile
