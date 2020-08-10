@@ -1586,6 +1586,24 @@ Smarter =C-a=.
          (back-to-indentation))))
 #+END_SRC
 
+#+BEGIN_QUOTE
+Evil-snipe emulates vim-seek and/or vim-sneak in evil-mode.
+[[Oleh Krehel][https://github.com/abo-abo/avy]]
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-snipe
+  :after evil
+  :defer nil
+  :config
+  (evil-snipe-mode)
+  (evil-snipe-override-mode)
+  :custom
+  (evil-snipe-char-fold t)
+  (evil-snipe-repeat-scope 'visible)
+  (evil-snipe-smart-case t))
+#+END_SRC
+
 *** Navigation / Paragraphs
 
 I disagree with Emacs' definition of paragraphs so I redefined the way it should
