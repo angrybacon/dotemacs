@@ -740,9 +740,13 @@ extensions. Also see our page on [[EmacsWiki][http://emacswiki.org/emacs/Evil]].
 
 #+BEGIN_SRC emacs-lisp
 (use-package evil
+  :preface
+  (defun me/evil-after-save ()
+    (when (evil-insert-state-p)
+      (evil-normal-state)))
   :hook
   (after-init . evil-mode)
-  (after-save . evil-normal-state)
+  (after-save . me/evil-after-save)
   (with-editor-mode . evil-insert-state)
   :bind
   (:map evil-motion-state-map
