@@ -1567,7 +1567,8 @@ same idea.
 (use-package avy
   :custom
   (avy-background t)
-  (avy-style 'at-full))
+  (avy-style 'at-full)
+  (avy-timeout-seconds .2))
 #+END_SRC
 
 *** Navigation / Inline
