@@ -168,6 +168,8 @@ and =user-mail-address=. This is also where you want your API tokens to live.
 Load theme and fix some high-level faces to match my personal preferences.
 
 #+BEGIN_SRC emacs-lisp
+(with-eval-after-load 'avy
+  (set-face-attribute 'avy-lead-face nil :italic nil))
 (with-eval-after-load 'doom-modeline
   (set-face-attribute 'doom-modeline-bar nil :background 'unspecified))
 (with-eval-after-load 'faces
