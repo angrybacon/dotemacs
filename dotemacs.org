@@ -764,7 +764,7 @@ extensions. Also see our page on [[EmacsWiki][http://emacswiki.org/emacs/Evil]].
   :after evil
   :defer nil
   :config
-  (evil-collection-init '(dired help helpful)))
+  (evil-collection-init))
 #+END_SRC
 
 ** Expand
