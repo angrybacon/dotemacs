@@ -1117,7 +1117,8 @@ Group Flycheck commands.
           "
  _q_ quit              _<_ previous          _?_ describe
  _m_ manual            _>_ next              _d_ disable
- _v_ verify setup      _f_ check             _s_ select
+ _v_ verify setup      _f_ goto              _s_ select
+ ^^                    _F_ check             ^^
  ^^                    _l_ list              ^^
 ")
   ("q" nil)
@@ -1125,7 +1126,8 @@ Group Flycheck commands.
   (">" flycheck-next-error :color red)
   ("?" flycheck-describe-checker)
   ("d" flycheck-disable-checker)
-  ("f" flycheck-buffer)
+  ("f" (lambda () (interactive) (flycheck-next-error 1 t)))
+  ("F" flycheck-buffer)
   ("l" flycheck-list-errors)
   ("m" flycheck-manual)
   ("s" flycheck-select-checker)
