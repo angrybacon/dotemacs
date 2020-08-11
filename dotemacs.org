@@ -810,14 +810,14 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
 (use-package hippie-exp
   :ensure nil
   :preface
-  (defun me/emmet-try-expand-line (args)
+  (defun me/emmet-hippie-try-expand (args)
     "Try `emmet-expand-line' if `emmet-mode' is active. Else, does nothing."
     (interactive "P")
     (when emmet-mode (emmet-expand-line args)))
   :bind
   ("<C-return>" . hippie-expand)
   :custom
-  (hippie-expand-try-functions-list '(yas-hippie-try-expand me/emmet-try-expand-line))
+  (hippie-expand-try-functions-list '(yas-hippie-try-expand me/emmet-hippie-try-expand))
   (hippie-expand-verbose nil))
 
 (use-package yasnippet
