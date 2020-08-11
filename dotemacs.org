@@ -1338,9 +1338,9 @@ Group window-related commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-windows (:color pink)
-  (concat "\n " (me/make-hydra-heading "Windows" "Size" "Zoom")
+  (concat "\n " (me/make-hydra-heading "Windows" "Size" "Zoom" "Buffer")
           "
- _q_ quit              _b_ balance           _-_ out
+ _q_ quit              _b_ balance           _-_ out               _w_ revert
  ^^                    _i_ heighten          _+_ in
  ^^                    _j_ narrow            _0_ reset
  ^^                    _k_ lower             ^^
@@ -1352,6 +1352,7 @@ Group window-related commands.
   ("j" shrink-window-horizontally)
   ("k" shrink-window)
   ("l" enlarge-window-horizontally)
+  ("w" (lambda () (interactive) (revert-buffer nil t)) :color blue)
   ("-" default-text-scale-decrease)
   ("+" default-text-scale-increase)
   ("0" default-text-scale-reset :color blue))
