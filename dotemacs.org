@@ -735,18 +735,13 @@ Evil is an extensible vi layer for
 [[http://www.vim.org/][Vim]], and provides facilities for writing custom
 extensions. Also see our page on [[http://emacswiki.org/emacs/Evil][EmacsWiki]].
 
-[[https://github.com/emacs-evil/evil][Eivind Fonn]]
+https://github.com/emacs-evil/evil
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
 (use-package evil
-  :preface
-  (defun me/evil-after-save ()
-    (when (evil-insert-state-p)
-      (evil-normal-state)))
   :hook
   (after-init . evil-mode)
-  (after-save . me/evil-after-save)
   (with-editor-mode . evil-insert-state)
   :bind
   (:map evil-motion-state-map
@@ -759,12 +754,37 @@ extensions. Also see our page on [[http://emacswiki.org/emacs/Evil][EmacsWiki]].
   (evil-want-keybinding nil))
 #+END_SRC
 
+#+BEGIN_QUOTE
+This is a collection of [[https://github.com/emacs-evil/evil][Evil]] bindings
+for /the parts of Emacs/ that Evil does not cover properly by default, such as
+=help-mode=, =M-x calendar=, Eshell and more.
+
+https://github.com/emacs-evil/evil-collection
+#+END_QUOTE
+
 #+BEGIN_SRC emacs-lisp
 (use-package evil-collection
   :after evil
   :defer nil
   :config
   (evil-collection-init))
+#+END_SRC
+
+#+BEGIN_QUOTE
+Customizable key sequence to escape from insert state and everything else in
+Emacs.
+
+https://github.com/syl20bnr/evil-escape
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-escape
+  :after evil
+  :defer nil
+  :hook
+  (after-init . evil-escape-mode)
+  :custom
+  (evil-escape-key-sequence "jj"))
 #+END_SRC
 
 ** Expand
