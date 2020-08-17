@@ -2195,6 +2195,7 @@ Add visual guides towards indenting levels.
 (use-package highlight-indent-guides
   :hook
   (python-mode . highlight-indent-guides-mode)
+  (scss-mode . highlight-indent-guides-mode)
   :custom
   (highlight-indent-guides-method 'character))
 #+END_SRC
