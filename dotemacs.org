@@ -784,7 +784,8 @@ https://github.com/syl20bnr/evil-escape
   :hook
   (after-init . evil-escape-mode)
   :custom
-  (evil-escape-key-sequence "jj"))
+  (evil-escape-delay .3)
+  (evil-escape-unordered-key-sequence t))
 #+END_SRC
 
 ** Expand
