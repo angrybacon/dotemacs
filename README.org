@@ -25,13 +25,13 @@ Clone the repository into your user directory.
 git clone https://github.com/angrybacon/dotemacs.git ~/.emacs.d/ --recurse-submodules
 #+END_SRC
 
-Install Emacs 26 or above.
+Install Emacs 27 or above.
 
 *** macOS
 
 #+BEGIN_SRC sh
 brew tap d12frosted/emacs-plus
-brew install emacs-plus --with-no-titlebar --without-spacemacs-icon
+brew install emacs-plus@28 --with-modern-papirus-icon --with-no-titlebar
 #+END_SRC
 
 *** Windows
