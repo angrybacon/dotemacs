@@ -528,7 +528,7 @@ Allow repeated use of =←= and =→= when using =previous-buffer= and
 - *TODO*: Make a hydra.
 
 #+BEGIN_SRC emacs-lisp
-(defun me/switch-to-buffer-continue (&optional _)
+(defun me/switch-to-buffer-continue (&rest _)
   "Activate a sparse keymap:
   <left>   `previous-buffer'
   <right>  `next-buffer'"
