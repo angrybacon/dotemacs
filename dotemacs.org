@@ -156,7 +156,8 @@ and =user-mail-address=. This is also where you want your API tokens to live.
 (defvar me/erc-server             nil        "The ERC server to use.")
 (defvar me/font-family            "Courier"  "The font to use.")
 (defvar me/font-size-default      110        "The font size to use for default text.")
-(defvar me/font-size-small        100        "The font size to use for smaller text.")
+(defvar me/font-size-large        1.2        "The font size to use for larger text.")
+(defvar me/font-size-small        0.8        "The font size to use for smaller text.")
 
 (let ((secret.el (expand-file-name ".secret.el" user-emacs-directory)))
   (when (file-exists-p secret.el)
@@ -165,33 +166,7 @@ and =user-mail-address=. This is also where you want your API tokens to live.
 
 * Theme
 
-Load theme and fix some high-level faces to match my personal preferences.
-
-#+BEGIN_SRC emacs-lisp
-(with-eval-after-load 'faces
-  (set-face-attribute 'default nil :font me/font-family :height me/font-size-default)
-  (set-face-attribute 'variable-pitch nil :family 'unspecified)
-  (with-eval-after-load 'avy
-    (set-face-attribute 'avy-lead-face nil :italic nil))
-  (with-eval-after-load 'doom-modeline
-    (set-face-attribute 'doom-modeline-bar nil :background 'unspecified))
-  (with-eval-after-load 'font-lock
-    (set-face-attribute 'font-lock-doc-face nil :italic t))
-  (with-eval-after-load 'helpful
-    (set-face-attribute 'helpful-heading nil :height me/font-size-default))
-  (with-eval-after-load 'ivy
-    (set-face-attribute 'ivy-virtual nil :italic nil))
-  (with-eval-after-load 'magit-diff
-    (set-face-attribute 'magit-diff-added nil :background 'unspecified)
-    (set-face-attribute 'magit-diff-hunk-region nil :inherit 'region)
-    (set-face-attribute 'magit-diff-removed nil :background 'unspecified))
-  (with-eval-after-load 'markdown
-    (set-face-attribute 'markdown-table-face nil :height me/font-size-small))
-  (with-eval-after-load 'org
-    (set-face-attribute 'org-quote nil :inherit 'font-lock-doc-face))
-  (with-eval-after-load 'swiper
-    (set-face-attribute 'swiper-background-match-face-1 nil :background 'unspecified)))
-#+END_SRC
+Load the theme and fix some high-level faces to match my personal preferences.
 
 #+BEGIN_SRC emacs-lisp
 (use-package doom-themes
@@ -202,21 +177,27 @@ Load theme and fix some high-level faces to match my personal preferences.
   (load-theme 'doom-one t)
   (doom-themes-org-config)
   (doom-themes-visual-bell-config)
-  (with-eval-after-load 'flycheck
-    (set-face-attribute 'flycheck-error nil :underline `(:color ,(doom-color 'error) :style line))
-    (set-face-attribute 'flycheck-info nil :underline `(:color ,(doom-color 'highlight) :style line))
-    (set-face-attribute 'flycheck-warning nil :underline `(:color ,(doom-color 'warning) :style line)))
-  (with-eval-after-load 'faces
-    (set-face-attribute 'help-argument-name nil :foreground (doom-color 'yellow)))
-  (with-eval-after-load 'helpful
-    (set-face-attribute 'helpful-heading nil :foreground (doom-color 'red)))
-  (with-eval-after-load 'isearch
-    (set-face-attribute 'isearch nil :inherit 'highlight)
-    (set-face-attribute 'lazy-highlight nil :foreground (doom-color 'blue))))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(use-package mdi :load-path "lisp/mdi/")
+  (doom-themes-set-faces nil
+    '(default :font me/font-family :height me/font-size-default)
+    '(doom-modeline-bar :background 'unspecified)
+    '(flycheck-error :underline `(:color ,error :style line))
+    '(flycheck-info :underline `(:color ,highlight :style line))
+    '(flycheck-warning :underline `(:color ,warning :style line))
+    '(font-lock-doc-face :italic t)
+    '(helpful-heading :foreground red :height me/font-size-large)
+    '(isearch :inherit 'highlight)
+    '(ivy-virtual :italic nil)
+    '(lazy-highlight :foreground blue)
+    '(magit-diff-added :background 'unspecified)
+    '(magit-diff-hunk-region :inherit 'region)
+    '(magit-diff-removed :background 'unspecified)
+    '(magit-section-heading :height me/font-size-large)
+    '(markdown-table-face :height me/font-size-small)
+    '(org-quote :inherit 'font-lock-doc-face)
+    '(swiper-background-match-face-1 :background 'unspecified)
+    '(swiper-line-face :extend t)
+    '(swiper-match-face-1 :background 'unspecified :foreground 'unspecified)
+    '(variable-pitch :fanily 'unspecified)))
 #+END_SRC
 
 * Languages
