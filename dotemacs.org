@@ -762,11 +762,11 @@ https://github.com/syl20bnr/evil-escape
 (use-package evil-escape
   :after evil
   :defer nil
-  :hook
-  (after-init . evil-escape-mode)
   :custom
   (evil-escape-delay .3)
-  (evil-escape-unordered-key-sequence t))
+  (evil-escape-unordered-key-sequence t)
+  :config
+  (evil-escape-mode))
 #+END_SRC
 
 ** Expand
