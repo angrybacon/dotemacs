@@ -1108,7 +1108,7 @@ Group Flycheck commands.
   (">" flycheck-next-error :color red)
   ("?" flycheck-describe-checker)
   ("d" flycheck-disable-checker)
-  ("f" (lambda () (interactive) (flycheck-next-error 1 t)))
+  ("f" (flycheck-next-error 1 t))
   ("F" flycheck-buffer)
   ("l" flycheck-list-errors)
   ("m" flycheck-manual)
@@ -1151,18 +1151,47 @@ Group Magit commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-magit (:color blue)
-  (concat "\n " (me/make-hydra-heading "Magit" "Do")
+  (concat "\n " (me/make-hydra-heading "Magit" "Do" "More")
           "
- _q_ quit              _b_ blame
- ^^                    _c_ clone
- ^^                    _i_ init
- ^^                    _s_ status
+ _q_ quit              _b_ blame             _m_ s  merge...
+ ^^                    _c_ clone             ^^
+ ^^                    _i_ init              ^^
+ ^^                    _s_ status            ^^
 ")
   ("q" nil)
   ("b" magit-blame)
   ("c" magit-clone)
   ("i" magit-init)
+  ("m" hydra-smerge/body)
   ("s" magit-status))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-smerge
+  (:color pink :pre (if (not smerge-mode) (smerge-mode 1)) :post (smerge-auto-leave))
+  (concat "\n " (me/make-hydra-heading "SMerge" "Move" "Keep" "Diff")
+          "
+ _q_ quit              _g_ first             _RET_ current         _=_ upper / lower
+ ^^                    _G_ last              _a_ all               _<_ upper / base
+ ^^                    _C-j_ next            _b_ base              _>_ base / lower
+ ^^                    _C-k_ previous        _l_ lower             _E_ ediff
+ ^^                    ^^                    _u_ upper             _H_ highlight
+")
+  ("q" nil :color blue)
+  ("C-j" smerge-next)
+  ("C-k" smerge-prev)
+  ("<" smerge-diff-base-upper)
+  (">" smerge-diff-base-lower)
+  ("=" smerge-diff-upper-lower)
+  ("RET" smerge-keep-current)
+  ("a" smerge-keep-all)
+  ("b" smerge-keep-base)
+  ("E" smerge-ediff)
+  ("g" (progn (goto-char (point-min)) (smerge-next)))
+  ("G" (progn (goto-char (point-max)) (smerge-prev)))
+  ("H" smerge-refine)
+  ("l" smerge-keep-lower)
+  ("u" smerge-keep-upper))
 #+END_SRC
 
 [[./screenshots/hydra.magit.jpg]]
@@ -1335,7 +1364,7 @@ Group window-related commands.
   ("j" shrink-window-horizontally)
   ("k" shrink-window)
   ("l" enlarge-window-horizontally)
-  ("w" (lambda () (interactive) (revert-buffer nil t)) :color blue)
+  ("w" (revert-buffer nil t) :color blue)
   ("-" default-text-scale-decrease)
   ("+" default-text-scale-increase)
   ("0" default-text-scale-reset :color blue))
