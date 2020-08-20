@@ -1278,12 +1278,13 @@ Group system-related commands.
 (defhydra hydra-system (:color blue)
   (concat "\n " (me/make-hydra-heading "System" "Packages" "Processes" "Shell")
           "
- _q_ quit              _p_ list              _s_ list              _e_ eshell
- ^^                    _P_ upgrade           ^^                    _t_ term
- ^^                    ^^                    ^^                    _T_ ansi-term
+ _q_ quit              _i_ install           _s_ list              _e_ eshell
+ ^^                    _p_ list              ^^                    _t_ term
+ ^^                    _P_ upgrade           ^^                    _T_ ansi-term
 ")
   ("q" nil)
   ("e" (eshell t))
+  ("i" package-install)
   ("p" paradox-list-packages)
   ("P" paradox-upgrade-packages)
   ("s" list-processes)
