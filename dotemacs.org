@@ -713,9 +713,6 @@ https://github.com/emacs-evil/evil
     "Like `evil-indent' but save excursion."
     (save-excursion
       (apply original arguments)))
-  (evil-define-text-object me/evil-whole-buffer (_ &optional _ _ type)
-    "Text object to select the whole buffer."
-    (evil-range (point-min) (point-max) type))
   :bind
   (:map evil-inner-text-objects-map
         ("g" . me/evil-whole-buffer)
@@ -730,6 +727,9 @@ https://github.com/emacs-evil/evil
   (evil-want-C-u-scroll t)
   (evil-want-keybinding nil)
   :config
+  (evil-define-text-object me/evil-whole-buffer (_ &optional _ _ type)
+    "Text object to select the whole buffer."
+    (evil-range (point-min) (point-max) type))
   (advice-add 'evil-indent :around #'me/evil-indent))
 #+END_SRC
 
