@@ -709,6 +709,10 @@ https://github.com/emacs-evil/evil
   (after-init . evil-mode)
   (with-editor-mode . evil-insert-state)
   :preface
+  (defun me/evil-indent (original &rest arguments)
+    "Like `evil-indent' but save excursion."
+    (save-excursion
+      (apply original arguments)))
   (evil-define-text-object me/evil-whole-buffer (_ &optional _ _ type)
     "Text object to select the whole buffer."
     (evil-range (point-min) (point-max) type))
@@ -724,7 +728,9 @@ https://github.com/emacs-evil/evil
   (evil-echo-state nil)
   (evil-emacs-state-cursor 'bar)
   (evil-want-C-u-scroll t)
-  (evil-want-keybinding nil))
+  (evil-want-keybinding nil)
+  :config
+  (advice-add 'evil-indent :around #'me/evil-indent))
 #+END_SRC
 
 #+BEGIN_QUOTE
