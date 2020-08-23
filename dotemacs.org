@@ -197,6 +197,7 @@ Load the theme and fix some high-level faces to match my personal preferences.
     '(swiper-background-match-face-1 :background 'unspecified)
     '(swiper-line-face :extend t)
     '(swiper-match-face-1 :background 'unspecified :foreground 'unspecified)
+    '(tooltip :background base2)
     '(variable-pitch :fanily 'unspecified)))
 #+END_SRC
 
@@ -455,27 +456,29 @@ completion candidates.
 
 #+BEGIN_SRC emacs-lisp
 (use-package company
-  :bind
-  (:map company-active-map
-        ("RET" . nil)
-        ([return] . nil)
-        ("TAB" . company-complete-selection)
-        ([tab] . company-complete-selection)
-        ("<right>" . company-complete-common))
   :hook
   (after-init . global-company-mode)
   :custom
   (company-dabbrev-downcase nil)
+  (company-dabbrev-ignore-case nil)
+  (company-dabbrev-other-buffers nil)
+  (company-global-modes '(not help-mode message-mode))
   (company-idle-delay .2)
   (company-minimum-prefix-length 1)
-  (company-require-match nil)
+  (company-require-match 'never)
   (company-tooltip-align-annotations t)
   (company-tooltip-flip-when-above t))
+#+END_SRC
 
+#+BEGIN_SRC emacs-lisp
 (use-package company-box
   :after company
+  :defer nil
   :hook
-  (company-mode . company-box-mode))
+  (company-mode . company-box-mode)
+  :custom
+  (company-box-max-candidates 50)
+  (company-box-scrollbar nil))
 #+END_SRC
 
 ** Buffers and Windows
