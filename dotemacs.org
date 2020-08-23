@@ -392,7 +392,7 @@ authoring documents with a fast and effective plain-text system.
   (org-adapt-indentation nil)
   (org-descriptive-links nil)
   (org-edit-src-content-indentation 0)
-  (org-edit-src-persistent-message t)
+  (org-edit-src-persistent-message nil)
   (org-fontify-done-headline t)
   (org-hide-leading-stars nil)
   (org-src-window-setup 'current-window)
