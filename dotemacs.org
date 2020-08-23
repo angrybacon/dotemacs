@@ -20,7 +20,6 @@
   - [[#python][Python]]
   - [[#yaml][YAML]]
 - [[#features][Features]]
-  - [[#alert][Alert]]
   - [[#auto-completion][Auto-Completion]]
   - [[#buffers-and-windows][Buffers and Windows]]
   - [[#comments][Comments]]
@@ -391,9 +390,8 @@ authoring documents with a fast and effective plain-text system.
   (org-adapt-indentation nil)
   (org-descriptive-links nil)
   (org-edit-src-content-indentation 0)
-  (org-edit-src-persistent-message nil)
+  (org-edit-src-persistent-message t)
   (org-fontify-done-headline t)
-  (org-fontify-quote-and-verse-blocks t)
   (org-hide-leading-stars nil)
   (org-src-window-setup 'current-window)
   (org-startup-folded nil)
@@ -441,22 +439,6 @@ maintain a TOC at the first heading that has a =:TOC:= tag.
 #+END_SRC
 
 * Features
-
-** Alert
-
-#+BEGIN_QUOTE
-Alert is a Growl-workalike for Emacs which uses a common notification interface
-and multiple, selectable "styles", whose use is fully customizable by the user.
-
-[[https://github.com/jwiegley/alert][John Wiegley]]
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package alert
-  :config
-  (when (eq system-type 'darwin)
-    (setq-default alert-default-style 'osx-notifier)))
-#+END_SRC
 
 ** Auto-Completion
 
@@ -1153,7 +1135,7 @@ Group Magit commands.
 (defhydra hydra-magit (:color blue)
   (concat "\n " (me/make-hydra-heading "Magit" "Do" "More")
           "
- _q_ quit              _b_ blame             _m_ s  merge...
+ _q_ quit              _b_ blame             _m_ smerge...
  ^^                    _c_ clone             ^^
  ^^                    _i_ init              ^^
  ^^                    _s_ status            ^^
