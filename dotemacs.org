@@ -192,6 +192,7 @@ Load the theme and fix some high-level faces to match my personal preferences.
     '(magit-diff-removed :background 'unspecified)
     '(magit-section-heading :height me/font-size-large)
     '(markdown-table-face :height me/font-size-small)
+    '(org-block-begin-line :background 'unspecified)
     '(org-quote :inherit 'font-lock-doc-face)
     '(swiper-background-match-face-1 :background 'unspecified)
     '(swiper-line-face :extend t)
