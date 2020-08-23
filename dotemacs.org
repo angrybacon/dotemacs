@@ -857,9 +857,12 @@ efficient, smaller, simpler, and smoother to use yet highly customizable.
   :custom
   (ivy-count-format "")
   (ivy-fixed-height-minibuffer t)
-  (ivy-height 20)
+  (ivy-height 16)
   (ivy-initial-inputs-alist nil)
-  (ivy-format-functions-alist '((t . ivy-format-function-line))))
+  (ivy-format-functions-alist '((t . ivy-format-function-line)))
+  (ivy-more-chars-alist '((t . 1)))
+  (ivy-on-del-error-function 'ignore)
+  (ivy-virtual-abbreviate 'full))
 #+END_SRC
 
 Augment Ivy's interface with details for candidates.
