@@ -474,13 +474,50 @@ completion candidates.
   (company-tng-configure-default))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :lexical t
 (use-package company-box
   :after company
   :defer nil
   :hook
   (company-mode . company-box-mode)
   :custom
+  (company-box-icons-all-the-icons
+   (let ((all-the-icons-default-adjust -.22)
+         (all-the-icons-scale-factor .8)
+         (blue 'all-the-icons-blue)
+         (green 'all-the-icons-gree)
+         (maroon 'all-the-icons-maroon)
+         (pink 'all-the-icons-pink)
+         (purple 'all-the-icons-purple)
+         (red 'all-the-icons-red))
+     `((Class         . ,(all-the-icons-material "class"                    :face red))
+       (Color         . ,(all-the-icons-material "palette"                  :face red))
+       (Constant      . ,(all-the-icons-material "pause_circle_filled"      :face blue))
+       (Constructor   . ,(all-the-icons-material "functions"                :face red))
+       (Enum          . ,(all-the-icons-material "plus_one"                 :face blue))
+       (EnumMember    . ,(all-the-icons-material "people"                   :face blue))
+       (Event         . ,(all-the-icons-material "event"                    :face red))
+       (Field         . ,(all-the-icons-material "functions"                :face red))
+       (File          . ,(all-the-icons-material "insert_drive_file"        :face pink))
+       (Folder        . ,(all-the-icons-material "folder"                   :face maroon))
+       (Function      . ,(all-the-icons-material "functions"                :face red))
+       (Interface     . ,(all-the-icons-material "settings_input_component" :face red))
+       (Keyword       . ,(all-the-icons-material "filter_center_focus"      :face red))
+       (Method        . ,(all-the-icons-material "functions"                :face red))
+       (Module        . ,(all-the-icons-material "view_module"              :face red))
+       (Operator      . ,(all-the-icons-material "control_point"            :face red))
+       (Property      . ,(all-the-icons-material "settings"                 :face red))
+       (Reference     . ,(all-the-icons-material "collections_bookmark"     :face red))
+       (Snippet       . ,(all-the-icons-material "short_text"               :face pink))
+       (Struct        . ,(all-the-icons-material "streetview"               :face blue))
+       (Template      . ,(all-the-icons-material "short_text"               :face green))
+       (Text          . ,(all-the-icons-material "text_fields"              :face green))
+       (TypeParameter . ,(all-the-icons-material "class"                    :face red))
+       (Unit          . ,(all-the-icons-material "straighten"               :face red))
+       (Unknown       . ,(all-the-icons-material "find_in_page"             :face purple))
+       (Value         . ,(all-the-icons-material "filter_1"                 :face red))
+       (Variable      . ,(all-the-icons-material "adjust"                   :face blue)))))
+  (company-box-icons-alist 'company-box-icons-all-the-icons)
   (company-box-max-candidates 50)
   (company-box-scrollbar nil)
   (company-box-show-single-candidate 'always))
