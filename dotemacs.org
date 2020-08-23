@@ -708,8 +708,16 @@ https://github.com/emacs-evil/evil
   :hook
   (after-init . evil-mode)
   (with-editor-mode . evil-insert-state)
+  :preface
+  (evil-define-text-object me/evil-whole-buffer (_ &optional _ _ type)
+    "Text object to select the whole buffer."
+    (evil-range (point-min) (point-max) type))
   :bind
-  (:map evil-motion-state-map
+  (:map evil-inner-text-objects-map
+        ("g" . me/evil-whole-buffer)
+   :map evil-outer-text-objects-map
+        ("g" . me/evil-whole-buffer)
+   :map evil-motion-state-map
         ("gss" . avy-goto-char-timer)
         ("gsS" . avy-goto-char))
   :custom
