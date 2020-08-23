@@ -459,6 +459,8 @@ completion candidates.
   :hook
   (after-init . global-company-mode)
   :custom
+  ;; (company-auto-complete nil)
+  ;; (company-auto-complete-chars nil)
   (company-dabbrev-downcase nil)
   (company-dabbrev-ignore-case nil)
   (company-dabbrev-other-buffers nil)
@@ -467,7 +469,9 @@ completion candidates.
   (company-minimum-prefix-length 1)
   (company-require-match 'never)
   (company-tooltip-align-annotations t)
-  (company-tooltip-flip-when-above t))
+  (company-tooltip-flip-when-above t)
+  :config
+  (company-tng-configure-default))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -478,7 +482,8 @@ completion candidates.
   (company-mode . company-box-mode)
   :custom
   (company-box-max-candidates 50)
-  (company-box-scrollbar nil))
+  (company-box-scrollbar nil)
+  (company-box-show-single-candidate 'always))
 #+END_SRC
 
 ** Buffers and Windows
