@@ -70,7 +70,6 @@ Here are what I consider better defaults as per my own experience.
  auto-window-vscroll nil                          ; Lighten vertical scroll
  confirm-kill-emacs 'yes-or-no-p                  ; Confirm before exiting Emacs
  cursor-in-non-selected-windows nil               ; Hide the cursor in inactive windows
- cursor-type 'bar                                 ; Use a bar-shaped cursor
  delete-by-moving-to-trash t                      ; Delete files to trash
  display-line-numbers 'relative                   ; Display relative line numbers on the left
  display-line-numbers-current-absolute nil        ; Current line is 0
@@ -184,6 +183,7 @@ Load the theme and fix some high-level faces to match my personal preferences.
     '(flycheck-warning :underline `(:color ,warning :style line))
     '(font-lock-doc-face :italic t)
     '(helpful-heading :foreground red :height me/font-size-large)
+    '(info-title-4 :bold nil :foreground red)
     '(isearch :inherit 'highlight)
     '(ivy-virtual :italic nil)
     '(lazy-highlight :foreground blue)
@@ -192,6 +192,7 @@ Load the theme and fix some high-level faces to match my personal preferences.
     '(magit-diff-removed :background 'unspecified)
     '(magit-section-heading :height me/font-size-large)
     '(markdown-table-face :height me/font-size-small)
+    '(mode-line-inactive :background base3)
     '(org-block-begin-line :background 'unspecified)
     '(org-quote :inherit 'font-lock-doc-face)
     '(swiper-background-match-face-1 :background 'unspecified)
@@ -1048,7 +1049,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
   (defun me/make-hydra-heading (&rest headings)
     "Format HEADINGS to look pretty in a hydra docstring."
     (mapconcat (lambda (it)
-                 (propertize (format "%-20s" it) 'face 'font-lock-doc-face))
+                 (propertize (format "%-20s" it) 'face 'shadow))
                headings
                nil))
   (defun me/ongoing-hydra ()
