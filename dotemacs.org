@@ -476,6 +476,7 @@ completion candidates.
 
 #+BEGIN_SRC emacs-lisp :lexical t
 (use-package company-box
+  :disabled t  ;; NOTE: See https://github.com/sebastiencs/company-box/pull/106
   :after company
   :defer nil
   :hook
