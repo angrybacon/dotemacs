@@ -257,12 +257,6 @@ HTML mode is defined in =sgml-mode.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package js
   :ensure nil
-  :preface
-  (defun me/js-prettify-symbols-mode-on ()
-    (add-to-list 'prettify-symbols-alist '("function" . ?\u0192))
-    (prettify-symbols-mode 1))
-  :hook
-  (js-mode . me/js-prettify-symbols-mode-on)
   :custom
   (js-indent-level 2))
 
@@ -418,7 +412,6 @@ maintain a TOC at the first heading that has a =:TOC:= tag.
 #+BEGIN_SRC emacs-lisp
 (use-package python
   :ensure nil
-  :hook (python-mode . turn-on-prettify-symbols-mode)
   :config
   (when (executable-find "ipython")
     (setq-default
