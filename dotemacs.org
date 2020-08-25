@@ -1621,7 +1621,10 @@ same idea.
   :custom
   (avy-background t)
   (avy-style 'at-full)
-  (avy-timeout-seconds .3))
+  (avy-timeout-seconds .3)
+  :config
+  (set-face-italic 'avy-goto-char-timer-face nil)
+  (set-face-italic 'avy-lead-face nil))
 #+END_SRC
 
 *** Navigation / Inline
