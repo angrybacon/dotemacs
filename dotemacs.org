@@ -731,8 +731,8 @@ https://github.com/emacs-evil/evil
    :map evil-outer-text-objects-map
         ("g" . me/evil-whole-buffer)
    :map evil-motion-state-map
-        ("gss" . avy-goto-char-timer)
-        ("gsS" . avy-goto-char))
+        ("gs" . avy-goto-char-timer)
+        ("gS" . avy-goto-char))
   :custom
   (evil-echo-state nil)
   (evil-emacs-state-cursor 'bar)
