@@ -779,6 +779,7 @@ https://github.com/syl20bnr/evil-escape
   :defer nil
   :custom
   (evil-escape-delay .3)
+  (evil-escape-key-sequence "jj")
   (evil-escape-unordered-key-sequence t)
   :config
   (evil-escape-mode))
