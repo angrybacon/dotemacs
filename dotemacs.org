@@ -82,7 +82,7 @@ Here are what I consider better defaults as per my own experience.
  ns-use-srgb-colorspace nil                       ; Don't use sRGB colors
  recenter-positions '(5 top bottom)               ; Set re-centering positions
  scroll-conservatively most-positive-fixnum       ; Always scroll by one line
- scroll-margin 8                                  ; Add a margin when scrolling vertically
+ scroll-margin 4                                  ; Add a margin when scrolling vertically
  select-enable-clipboard t                        ; Merge system's and Emacs' clipboard
  sentence-end-double-space nil                    ; End a sentence after a dot and a space
  show-help-function nil                           ; Disable help messages
