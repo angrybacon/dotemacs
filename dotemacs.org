@@ -731,6 +731,10 @@ https://github.com/emacs-evil/evil
    :map evil-outer-text-objects-map
         ("g" . me/evil-whole-buffer)
    :map evil-motion-state-map
+        ([down] . ignore)
+        ([left] . ignore)
+        ([right] . ignore)
+        ([up] . ignore)
         ("gs" . avy-goto-char-timer)
         ("gS" . avy-goto-char))
   :custom
