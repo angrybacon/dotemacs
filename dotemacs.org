@@ -66,7 +66,6 @@ Here are what I consider better defaults as per my own experience.
 (setq-default
  ad-redefinition-action 'accept                   ; Silence warnings for redefinition
  auto-save-list-file-prefix nil                   ; Prevent tracking for auto-saves
- auto-window-vscroll nil                          ; Lighten vertical scroll
  confirm-kill-emacs 'yes-or-no-p                  ; Confirm before exiting Emacs
  cursor-in-non-selected-windows nil               ; Hide the cursor in inactive windows
  delete-by-moving-to-trash t                      ; Delete files to trash
@@ -377,8 +376,6 @@ authoring documents with a fast and effective plain-text system.
         ("<C-S-up>" . nil)
         ("<M-S-down>" . nil)
         ("<M-S-up>" . nil))
-  (:map org-src-mode-map
-        ("C-c o" . org-edit-src-exit))
   :hook
   ((org-mode . me/org-set-ongoing-hydra-body)
    (org-mode . toc-org-enable))
@@ -430,8 +427,6 @@ completion candidates.
   :hook
   (after-init . global-company-mode)
   :custom
-  ;; (company-auto-complete nil)
-  ;; (company-auto-complete-chars nil)
   (company-dabbrev-downcase nil)
   (company-dabbrev-ignore-case nil)
   (company-dabbrev-other-buffers nil)
@@ -804,7 +799,9 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
   :custom
   (emmet-insert-flash-time .1)
   (emmet-move-cursor-between-quote t))
+#+END_SRC
 
+#+BEGIN_SRC emacs-lisp
 (use-package hippie-exp
   :ensure nil
   :preface
@@ -817,7 +814,9 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
   :custom
   (hippie-expand-try-functions-list '(yas-hippie-try-expand me/emmet-hippie-try-expand))
   (hippie-expand-verbose nil))
+#+END_SRC
 
+#+BEGIN_SRC emacs-lisp
 (use-package yasnippet
   :bind
   (:map yas-minor-mode-map
