@@ -2248,7 +2248,8 @@ Colorize colors as text with their value.
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-mode
   :hook prog-mode
-  :custom (rainbow-x-colors-major-mode-list '()))
+  :custom
+  (rainbow-x-colors nil))
 #+END_SRC
 
 Turn on =auto-fill-mode= /almost/ everywhere.
