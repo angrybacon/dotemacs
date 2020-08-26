@@ -27,6 +27,10 @@
 (let ((gc-cons-percentage .6)
       (gc-cons-threshold most-positive-fixnum))
 
+  ;; Disable that pesky echo message
+  (put 'inhibit-startup-echo-area-message 'saved-value t)
+  (setq inhibit-startup-echo-area-message (user-login-name))
+
   ;; Set repositories
   (require 'package)
   (setq-default
