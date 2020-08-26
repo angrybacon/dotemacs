@@ -631,14 +631,6 @@ little more.
 
 ** Daemon
 
-This package let us start a server to edit editable elements in a Chrome browser
-from Emacs.
-
-#+BEGIN_SRC emacs-lisp
-(use-package edit-server
-  :hook (after-init . edit-server-start))
-#+END_SRC
-
 Emacs can be run as a daemon onto which Emacs clients can latch on. This allows
 for much shorter starting times when you already got Emacs running ie. when you
 want to edit a single file for a quick edit.
@@ -763,25 +755,6 @@ https://github.com/emacs-evil/evil-collection
   :defer nil
   :config
   (evil-collection-init))
-#+END_SRC
-
-#+BEGIN_QUOTE
-Customizable key sequence to escape from insert state and everything else in
-Emacs.
-
-https://github.com/syl20bnr/evil-escape
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package evil-escape
-  :after evil
-  :defer nil
-  :custom
-  (evil-escape-delay .3)
-  (evil-escape-key-sequence "jj")
-  (evil-escape-unordered-key-sequence t)
-  :config
-  (evil-escape-mode))
 #+END_SRC
 
 ** Expand
@@ -2247,18 +2220,6 @@ Highlight line under point.
   :hook (after-init . global-hl-line-mode))
 #+END_SRC
 
-Originally, =midnight= is used to /run something at midnight/. I use its feature that
-kills old buffers.
-
-#+BEGIN_SRC emacs-lisp
-(use-package midnight
-  :ensure nil
-  :custom
-  (clean-buffer-list-delay-general 1)
-  :config
-  (add-to-list 'clean-buffer-list-kill-never-buffer-names "dotemacs.org"))
-#+END_SRC
-
 Augment Emacs' package menu.
 
 #+BEGIN_QUOTE
@@ -2279,21 +2240,6 @@ more.
   (paradox-hide-wiki-packages t)
   :config
   (remove-hook 'paradox-after-execute-functions #'paradox--report-buffer-print))
-#+END_SRC
-
-Prettify symbols. Below is the configuration of the prettify-symbol feature. You
-should enable the feature as a minor-mode and on a per-mode basis only.
-
-#+BEGIN_SRC emacs-lisp
-(use-package prog-mode
-  :ensure nil
-  :preface
-  (defun me/prettify-symbols-compose-predicate (&rest arguments)
-    (when (not (eq system-type 'windows-nt))
-      (apply #'prettify-symbols-default-compose-p arguments)))
-  :custom
-  (prettify-symbols-compose-predicate #'me/prettify-symbols-compose-predicate)
-  (prettify-symbols-unprettify-at-point 'right-edge))
 #+END_SRC
 
 Colorize colors as text with their value.
