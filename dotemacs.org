@@ -2262,6 +2262,19 @@ Turn on =auto-fill-mode= /almost/ everywhere.
    (text-mode . turn-on-auto-fill)))
 #+END_SRC
 
+Display the available keybindings following your current input.
+
+#+BEGIN_SRC emacs-lisp
+(use-package which-key
+  :hook
+  (after-init . which-key-mode)
+  (which-key-init-buffer . (lambda () (setq-local display-line-numbers nil)))
+  :custom
+  (which-key-add-column-padding 1)
+  (which-key-separator " ")
+  (which-key-use-C-h-commands nil))
+#+END_SRC
+
 ** Shell and Terminal
 
 #+BEGIN_SRC emacs-lisp
