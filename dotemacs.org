@@ -583,10 +583,10 @@ Bind commands to move around windows.
 (use-package windmove
   :ensure nil
   :bind
-  (("C-M-<left>". windmove-left)
-   ("C-M-<right>". windmove-right)
-   ("C-M-<up>". windmove-up)
-   ("C-M-<down>". windmove-down)))
+  (("C-M-k". windmove-up)
+   ("C-M-l". windmove-right)
+   ("C-M-j". windmove-down)
+   ("C-M-h". windmove-left)))
 #+END_SRC
 
 Allow undo's and redo's with window configurations.
