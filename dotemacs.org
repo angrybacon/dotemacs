@@ -198,7 +198,8 @@ Load the theme and fix some high-level faces to match my personal preferences.
     '(swiper-line-face :extend t)
     '(swiper-match-face-1 :background 'unspecified :foreground 'unspecified)
     '(tooltip :background base2)
-    '(variable-pitch :family 'unspecified)))
+    '(variable-pitch :family 'unspecified)
+    '(which-key-command-description-face :foreground 'unspecified)))
 #+END_SRC
 
 * Languages
@@ -2272,6 +2273,7 @@ Display the available keybindings following your current input.
   :custom
   (which-key-add-column-padding 1)
   (which-key-separator " ")
+  (which-key-sort-order 'which-key-prefix-then-key-order)
   (which-key-use-C-h-commands nil))
 #+END_SRC
 
