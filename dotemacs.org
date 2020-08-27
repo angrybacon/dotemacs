@@ -855,10 +855,11 @@ efficient, smaller, simpler, and smoother to use yet highly customizable.
   (ivy-fixed-height-minibuffer t)
   (ivy-height 16)
   (ivy-initial-inputs-alist nil)
-  (ivy-format-functions-alist '((t . ivy-format-function-line)))
   (ivy-more-chars-alist '((t . 1)))
   (ivy-on-del-error-function 'ignore)
-  (ivy-virtual-abbreviate 'full))
+  (ivy-virtual-abbreviate 'full)
+  :config
+  (setf (alist-get 't ivy-format-functions-alist) #'ivy-format-function-line))
 #+END_SRC
 
 Augment Ivy's interface with details for candidates.
