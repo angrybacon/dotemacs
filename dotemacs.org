@@ -79,7 +79,8 @@ Here are what I consider better defaults as per my own experience.
  inhibit-startup-screen t                         ; Disable start-up screen
  initial-scratch-message ""                       ; Empty the initial *scratch* buffer
  mouse-yank-at-point t                            ; Yank at point rather than pointer
- ns-use-srgb-colorspace nil                       ; Don't use sRGB colors
+ mouse-wheel-progressive-speed nil                ; Disable mouse wheel acceleration
+ mouse-wheel-scroll-amount '(2 ((control) . 5))   ; Customize mouse wheel scroll steps
  recenter-positions '(5 top bottom)               ; Set re-centering positions
  scroll-conservatively most-positive-fixnum       ; Always scroll by one line
  scroll-margin 4                                  ; Add a margin when scrolling vertically
@@ -1712,36 +1713,6 @@ mode-line in various search modes.
   (anzu-cons-mode-line-p nil))
 #+END_SRC
 
-*** Navigation / Scroll
-
-Enable horizontal scroll.
-
-- *TODO*: Scroll the window under cursor instead of where point is.
-
-#+BEGIN_SRC emacs-lisp
-(put 'scroll-left 'disabled nil)
-(defun me/scroll-left ()
-  (interactive)
-  (when truncate-lines (scroll-left 2)))
-(defun me/scroll-right ()
-  (interactive)
-  (when truncate-lines (scroll-right 2)))
-(global-set-key (kbd "<wheel-left>") #'me/scroll-right)
-(global-set-key (kbd "<wheel-right>") #'me/scroll-left)
-(global-set-key (kbd "S-<wheel-down>") #'me/scroll-left)
-(global-set-key (kbd "S-<wheel-up>") #'me/scroll-right)
-#+END_SRC
-
-Configure the mouse scroll.
-
-#+BEGIN_SRC emacs-lisp
-(use-package mwheel
-  :ensure nil
-  :custom
-  (mouse-wheel-progressive-speed nil)
-  (mouse-wheel-scroll-amount '(1 ((control) . 5))))
-#+END_SRC
-
 *** Navigation / Search
 
 Isearch stands for /incremental search/. This means that search results are
@@ -1778,9 +1749,10 @@ Augment Emacs experience for MacOS users.
   (setq-default
    dired-use-ls-dired nil                            ; MacOS's ls does not support --dired
    exec-path (append exec-path '("/usr/local/bin"))  ; Add Homebrew path
+   ns-alternate-modifier 'super                      ; Map Super to the Alt key
    ns-command-modifier 'meta                         ; Map Meta to the Cmd key
-   ns-option-modifier 'super                         ; Map Super to the Alt key
-   ns-right-option-modifier nil))                    ; Disable the right Alt key
+   ns-pop-up-frames nil                              ; Always re-use the same frame
+   ns-use-mwheel-momentum nil))                      ; Disable smoonth scroll
 #+END_SRC
 
 Initialize environment variables.
@@ -1815,7 +1787,8 @@ when dealing with mismatched parentheses.
 
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
+  :hook
+  (prog-mode . rainbow-delimiters-mode))
 #+END_SRC
 
 I am still looking for the perfect parenthesis management setup as of
@@ -2219,8 +2192,11 @@ Highlight line under point.
 #+BEGIN_SRC emacs-lisp
 (use-package hl-line
   :ensure nil
-  :preface (defun me/hl-line-mode-off () (setq-local global-hl-line-mode nil))
-  :hook (after-init . global-hl-line-mode))
+  :preface
+  (defun me/hl-line-mode-off ()
+    (setq-local global-hl-line-mode nil))
+  :hook
+  (after-init . global-hl-line-mode))
 #+END_SRC
 
 Augment Emacs' package menu.
@@ -2249,7 +2225,8 @@ Colorize colors as text with their value.
 
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-mode
-  :hook prog-mode
+  :hook
+  (prog-mode . rainbow-mode)
   :custom
   (rainbow-x-colors nil))
 #+END_SRC
@@ -2260,8 +2237,8 @@ Turn on =auto-fill-mode= /almost/ everywhere.
 (use-package simple
   :ensure nil
   :hook
-  ((prog-mode . turn-on-auto-fill)
-   (text-mode . turn-on-auto-fill)))
+  (prog-mode . turn-on-auto-fill)
+  (text-mode . turn-on-auto-fill))
 #+END_SRC
 
 Display the available keybindings following your current input.
