@@ -1528,18 +1528,16 @@ request or transparently on file save.
     "The current major mode, including environment information."
     (let* ((active (doom-modeline--active))
            (face (if active 'doom-modeline-buffer-major-mode 'mode-line-inactive)))
-      (propertize (concat (doom-modeline-spc)
-                          mode-name
-                          (when doom-modeline-env--version (format " %s" doom-modeline-env--version))
-                          (doom-modeline-spc))
-                  'face face)))
+      (concat (doom-modeline-spc)
+              (propertize (format-mode-line mode-name) 'face face)
+              (doom-modeline-spc))))
   (doom-modeline-def-segment me/process
     "The ongoing process details."
-    (concat (if (doom-modeline--active)
-                mode-line-process
-              (propertize (format-mode-line mode-line-process)
-                          'face 'mode-line-inactive))
-            (doom-modeline-spc)))
+    (let ((result (format-mode-line mode-line-process)))
+      (concat (if (doom-modeline--active)
+                  result
+                (propertize result 'face 'mode-line-inactive))
+              (doom-modeline-spc))))
   (doom-modeline-def-segment me/modals
     "Display modal editing states."
     (when (doom-modeline--active)
