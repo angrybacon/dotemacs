@@ -1293,12 +1293,14 @@ Group system-related commands.
  _q_ quit              _i_ install           _s_ list              _e_ eshell
  ^^                    _p_ list              ^^                    _t_ term
  ^^                    _P_ upgrade           ^^                    _T_ ansi-term
+ ^^                    _r_ refresh           ^^                    _T_ ansi-term
 ")
   ("q" nil)
   ("e" (eshell t))
   ("i" package-install)
   ("p" paradox-list-packages)
   ("P" paradox-upgrade-packages)
+  ("r" package-refresh-contents)
   ("s" list-processes)
   ("t" term)
   ("T" ansi-term))
