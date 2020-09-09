@@ -360,6 +360,7 @@ authoring documents with a fast and effective plain-text system.
    (org-mode . toc-org-enable))
   :custom
   (org-adapt-indentation nil)
+  (org-confirm-babel-evaluate nil)
   (org-descriptive-links nil)
   (org-edit-src-content-indentation 0)
   (org-edit-src-persistent-message nil)
