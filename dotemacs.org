@@ -9,7 +9,6 @@
 - [[#theme][Theme]]
 - [[#languages][Languages]]
   - [[#css][CSS]]
-  - [[#docker][Docker]]
   - [[#html][HTML]]
   - [[#javascript][JavaScript]]
   - [[#json][JSON]]
@@ -32,6 +31,7 @@
   - [[#ivy][Ivy]]
   - [[#hydra][Hydra]]
   - [[#irc][IRC]]
+  - [[#line-numbers][Line Numbers]]
   - [[#linters][Linters]]
   - [[#mode-line][Mode-Line]]
   - [[#navigation][Navigation]]
@@ -69,8 +69,6 @@ Here are what I consider better defaults as per my own experience.
  cursor-in-non-selected-windows nil               ; Hide the cursor in inactive windows
  cursor-type 'bar                                 ; Prefer a bar-shaped cursor by default
  delete-by-moving-to-trash t                      ; Delete files to trash
- display-line-numbers 'relative                   ; Display relative line numbers on the left
- display-line-numbers-current-absolute nil        ; Current line is 0
  display-time-default-load-average nil            ; Don't display load average
  display-time-format "%H:%M"                      ; Format the time string
  fill-column 80                                   ; Set width for automatic line breaks
@@ -1403,6 +1401,20 @@ Highlight ERC nicks with unique colors.
 (use-package erc-hl-nicks)
 #+END_SRC
 
+** Line Numbers
+
+Display relative line numbers in most editing modes.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'conf-mode-hook #'display-line-numbers-mode)
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
+(add-hook 'text-mode-hook #'display-line-numbers-mode)
+(setq-default
+ display-line-numbers-current-absolute nil        ; Current line is 0
+ display-line-numbers-type 'relative              ; Prefer relative numbers
+ display-line-numbers-width 3)                    ; Enforce width to reduce computation
+#+END_SRC
+
 ** Linters
 
 Flycheck lints warnings and errors directly within buffers. It can check a lot
@@ -2232,7 +2244,6 @@ Display the available keybindings following your current input.
 (use-package which-key
   :hook
   (after-init . which-key-mode)
-  (which-key-init-buffer . (lambda () (setq-local display-line-numbers nil)))
   :custom
   (which-key-add-column-padding 1)
   (which-key-separator " ")
@@ -2332,8 +2343,6 @@ Git itself deserve to be called porcelains.
   (:map magit-hunk-section-map
         ("RET" . magit-diff-visit-file-other-window)
         ([return] . magit-diff-visit-file-other-window))
-  :hook
-  (magit-mode . (lambda () (setq-local display-line-numbers nil)))
   :custom
   (magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
   (magit-diff-highlight-hunk-body nil)
