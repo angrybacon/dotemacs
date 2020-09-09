@@ -554,8 +554,10 @@ selected window.
   :hook
   (after-init . shackle-mode)
   :custom
-  (shackle-rules '((help-mode :inhibit-window-quit t :same t)
-                   (helpful-mode :inhibit-window-quit t :same t)))
+  (shackle-rules '((flycheck-verify-mode :inhibit-window-quit t :same t)
+                   (help-mode :inhibit-window-quit t :same t)
+                   (helpful-mode :inhibit-window-quit t :same t)
+                   (process-menu-mode :inhibit-window-quit t :same t)))
   (shackle-select-reused-windows t))
 #+END_SRC
 
