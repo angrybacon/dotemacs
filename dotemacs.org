@@ -9,7 +9,6 @@
 - [[#theme][Theme]]
 - [[#languages][Languages]]
   - [[#css][CSS]]
-  - [[#csv][CSV]]
   - [[#docker][Docker]]
   - [[#html][HTML]]
   - [[#javascript][JavaScript]]
@@ -221,19 +220,6 @@ Load the theme and fix some high-level faces to match my personal preferences.
     (setq-local comment-start "//"))
   :mode ("\\.sass\\'" "\\.scss\\'")
   :hook (scss-mode . me/scss-set-comment-style))
-#+END_SRC
-
-** CSV
-
-#+BEGIN_SRC emacs-lisp
-(use-package csv-mode
-  :config (setq-default csv-align-padding 2))
-#+END_SRC
-
-** Docker
-
-#+BEGIN_SRC emacs-lisp
-(use-package dockerfile-mode :mode "Dockerfile\\'")
 #+END_SRC
 
 ** HTML
