@@ -25,11 +25,11 @@
 ;;; Code:
 
 (let ((gc-cons-percentage .6)
-      (gc-cons-threshold most-positive-fixnum))
+      (gc-cons-threshold most-positive-fixnum)
+      (read-process-output-max (* 1024 1024)))
 
   ;; Disable that pesky echo message
-  (put 'inhibit-startup-echo-area-message 'saved-value t)
-  (setq inhibit-startup-echo-area-message (user-login-name))
+  (setq-default inhibit-startup-echo-area-message (user-login-name))
 
   ;; Set repositories
   (require 'package)
