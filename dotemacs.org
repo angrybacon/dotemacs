@@ -68,6 +68,7 @@ Here are what I consider better defaults as per my own experience.
  auto-save-list-file-prefix nil                   ; Prevent tracking for auto-saves
  confirm-kill-emacs 'yes-or-no-p                  ; Confirm before exiting Emacs
  cursor-in-non-selected-windows nil               ; Hide the cursor in inactive windows
+ cursor-type 'bar                                 ; Prefer a bar-shaped cursor by default
  delete-by-moving-to-trash t                      ; Delete files to trash
  display-line-numbers 'relative                   ; Display relative line numbers on the left
  display-line-numbers-current-absolute nil        ; Current line is 0
