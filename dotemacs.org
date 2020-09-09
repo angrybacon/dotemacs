@@ -2246,6 +2246,7 @@ Display the available keybindings following your current input.
   (after-init . which-key-mode)
   :custom
   (which-key-add-column-padding 1)
+  (which-key-allow-evil-operators t)
   (which-key-separator " ")
   (which-key-sort-order 'which-key-prefix-then-key-order)
   (which-key-use-C-h-commands nil))
