@@ -407,22 +407,25 @@ completion candidates.
   :hook
   (after-init . global-company-mode)
   :custom
+  (company-backends '(company-capf))
   (company-dabbrev-downcase nil)
   (company-dabbrev-ignore-case nil)
   (company-dabbrev-other-buffers nil)
   (company-global-modes '(not help-mode message-mode))
-  (company-idle-delay .2)
+  (company-idle-delay .0)
   (company-minimum-prefix-length 1)
   (company-require-match 'never)
+  (company-selection-wrap-around t)
   (company-tooltip-align-annotations t)
   (company-tooltip-flip-when-above t)
+  (company-tooltip-offset-display nil)
+  (company-tooltip-width-grow-only t)
   :config
   (company-tng-configure-default))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp :lexical t
 (use-package company-box
-  :disabled t  ;; NOTE: See https://github.com/sebastiencs/company-box/pull/106
   :after company
   :defer nil
   :hook
