@@ -2059,6 +2059,7 @@ exists as well).
    projectile-known-projects-file (expand-file-name ".projectile.eld" user-emacs-directory))
   :custom
   (projectile-completion-system 'ivy)
+  (projectile-dynamic-mode-line nil)
   (projectile-enable-caching t)
   (projectile-track-known-projects-automatically nil))
 #+END_SRC
