@@ -242,45 +242,36 @@ HTML mode is defined in =sgml-mode.el=.
 ** JavaScript
 
 #+BEGIN_SRC emacs-lisp
-(use-package js
-  :ensure nil
-  :custom
-  (js-indent-level 2))
-
 (use-package js-doc)
 
 (use-package js2-mode
   :ensure nil
-  :bind (:map js2-mode-map ([remap comment-indent-new-line] . js2-line-break))
+  :mode "\\.js\\'"
   :custom
+  (js-indent-level 2)
+  (js-switch-indent-offset 2)
+  (js2-highlight-level 3)
   (js2-idle-timer-delay 0)
   (js2-mode-show-parse-errors nil)
   (js2-mode-show-strict-warnings nil))
 
 (use-package rjsx-mode
-  :mode "\\.js\\'"
+  :mode
+  (("\\.jsx\\'" . rjsx-mode)
+   ("components/.+\\.js$" . rjsx-mode))
   :preface
   (defun me/rjsx-set-ongoing-hydra-body ()
     (setq me/ongoing-hydra-body #'hydra-rjsx/body))
   (defun me/rjsx-set-pretty-print-function ()
     (setq me/pretty-print-function #'sgml-pretty-print))
   :hook
-  ((rjsx-mode . me/aggressive-indent-mode-off)
-   (rjsx-mode . me/rjsx-set-ongoing-hydra-body)
+  ((rjsx-mode . me/rjsx-set-ongoing-hydra-body)
    (rjsx-mode . me/rjsx-set-pretty-print-function)
    (rjsx-mode . sgml-electric-tag-pair-mode)
    (rjsx-mode . turn-off-auto-fill)))
 
-(use-package tide
-  :preface
-  (defun me/tide-set-ongoing-hydra-body ()
-    (setq me/ongoing-hydra-body #'hydra-tide/body))
-  :hook
-  (tide-mode . me/tide-set-ongoing-hydra-body))
-
 (use-package web-mode
   :mode "\\.tsx\\'"
-  :hook (web-mode . tide-setup)
   :custom
   (web-mode-code-indent-offset 2)
   (web-mode-markup-indent-offset 2)
@@ -1307,27 +1298,6 @@ Group system-related commands.
 #+END_SRC
 
 [[./screenshots/hydra.system.jpg]]
-
-*** Hydra / Tide
-
-Group TypeScript commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-tide (:color blue)
-  (concat "\n " (me/make-hydra-heading "Tide" "Server" "Code")
-          "
- _q_ quit              _l_ list              _d_ documentation
- ^^                    _r_ restart           ^^
- ^^                    _v_ verify setup      ^^
-")
-  ("q" nil)
-  ("d" tide-documentation-at-point)
-  ("l" tide-list-servers)
-  ("r" tide-restart-server)
-  ("v" tide-verify-setup))
-#+END_SRC
-
-[[./screenshots/hydra.tide.jpg]]
 
 *** Hydra / Windows
 
