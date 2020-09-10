@@ -1410,7 +1410,7 @@ binaries (see [[./README.org][README.org]]).
    (web-mode . flycheck-mode)
    (python-mode . flycheck-mode))
   :custom
-  (flycheck-check-syntax-automatically '(save mode-enabled))
+  (flycheck-check-syntax-automatically '(idle-buffer-switch save))
   (flycheck-disabled-checkers '(emacs-lisp-checkdoc))
   (flycheck-display-errors-delay .3)
   (flycheck-emacs-lisp-load-path 'inherit)
