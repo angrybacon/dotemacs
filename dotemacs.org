@@ -196,7 +196,7 @@ Load the theme and fix some high-level faces to match my personal preferences.
     '(swiper-background-match-face-1 :background 'unspecified)
     '(swiper-line-face :extend t)
     '(swiper-match-face-1 :background 'unspecified :foreground 'unspecified)
-    '(tooltip :background base2)
+    '(tooltip :background base1)
     '(variable-pitch :family 'unspecified)
     '(which-key-command-description-face :foreground 'unspecified)))
 #+END_SRC
