@@ -29,7 +29,14 @@ Install Emacs 27 or above.
 
 *** macOS
 
+The =jansson= dependency ensure that you take advantage of the native support
+for JSON parsing.
+
+I prefer [[https://github.com/d12frosted/homebrew-emacs-plus][=emacs-plus=]] for
+its added compilation flags.
+
 #+BEGIN_SRC sh
+brew install jansson
 brew tap d12frosted/emacs-plus
 brew install emacs-plus@28 --with-modern-papirus-icon --with-no-titlebar
 #+END_SRC
@@ -55,10 +62,19 @@ I use [[https://github.com/flycheck/flycheck][Flycheck]] as linter framework to
 display syntax warnings and errors whithin each buffer.
 
 #+BEGIN_SRC sh
-npm install -g eslint                                # JavaScript
-npm install -g jsonlint                              # JSON
-pip install flake8                                   # Python
-gem install scss_lint scss_lint_reporter_checkstyle  # SCSS
+npm install -g eslint                                 # JavaScript
+npm install -g jsonlint                               # JSON
+pip install flake8                                    # Python
+gem install scss_lint scss_lint_reporter_checkstyle   # SCSS
+#+END_SRC
+
+** LSP
+
+In order for Emacs to connect to the LSP servers, install the language-specific
+packages.
+
+#+BEGIN_SRC sh
+npm install -g typescript typescript-language-server  # JavaScript
 #+END_SRC
 
 ** Ripgrep
