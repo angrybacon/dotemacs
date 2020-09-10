@@ -588,7 +588,8 @@ you can press ctrl-c right (calling =winner-redo=).
 #+BEGIN_SRC emacs-lisp
 (use-package winner
   :ensure nil
-  :hook (after-init . winner-mode))
+  :hook
+  (after-init . winner-mode))
 #+END_SRC
 
 ** Comments
@@ -1412,6 +1413,7 @@ binaries (see [[./README.org][README.org]]).
   (flycheck-check-syntax-automatically '(save mode-enabled))
   (flycheck-disabled-checkers '(emacs-lisp-checkdoc))
   (flycheck-display-errors-delay .3)
+  (flycheck-emacs-lisp-load-path 'inherit)
   :config
   (flycheck-add-mode 'javascript-eslint 'web-mode))
 #+END_SRC
@@ -1534,28 +1536,28 @@ request or transparently on file save.
   (doom-modeline-mode 1)
   (doom-modeline-def-modeline 'info
     '(bar me/modals me/buffer me/info me/buffer-position selection-info)
-    '(irc-buffers matches me/process debug me/major-mode workspace-name))
+    '(irc-buffers matches me/process debug me/major-mode))
   (doom-modeline-def-modeline 'main
     '(bar me/modals me/buffer remote-host me/buffer-position me/flycheck selection-info)
-    '(irc-buffers matches me/process me/vcs debug me/major-mode workspace-name))
+    '(irc-buffers matches me/process me/vcs debug me/major-mode))
   (doom-modeline-def-modeline 'message
     '(bar me/modals me/buffer-simple me/buffer-position selection-info)
-    '(irc-buffers matches me/process me/major-mode workspace-name))
+    '(irc-buffers matches me/process me/major-mode))
   (doom-modeline-def-modeline 'org-src
     '(bar me/modals me/buffer-simple me/buffer-position me/flycheck selection-info)
-    '(irc-buffers matches me/process debug me/major-mode workspace-name))
+    '(irc-buffers matches me/process debug me/major-mode))
   (doom-modeline-def-modeline 'package
     '(bar me/modals me/space package)
-    '(irc-buffers matches me/process debug me/major-mode workspace-name))
+    '(irc-buffers matches me/process debug me/major-mode))
   (doom-modeline-def-modeline 'project
     '(bar me/modals me/default-directory)
-    '(irc-buffers matches me/process debug me/major-mode workspace-name))
+    '(irc-buffers matches me/process debug me/major-mode))
   (doom-modeline-def-modeline 'special
     '(bar me/modals me/buffer me/buffer-position selection-info)
-    '(irc-buffers matches me/process debug me/major-mode workspace-name))
+    '(irc-buffers matches me/process debug me/major-mode))
   (doom-modeline-def-modeline 'vcs
     '(bar me/modals me/buffer remote-host me/buffer-position selection-info)
-    '(irc-buffers matches me/process debug me/major-mode workspace-name)))
+    '(irc-buffers matches me/process debug me/major-mode)))
 #+END_SRC
 
 ** Navigation
@@ -2133,14 +2135,6 @@ size in all GUI Emacs frames -- it is like an Emacs-wide version of
 (use-package default-text-scale)
 #+END_SRC
 
-Disable documentation for object at point in the echo area. It conflicts with Flycheck.
-
-#+BEGIN_SRC emacs-lisp
-(use-package eldoc
-  :ensure nil
-  :config (global-eldoc-mode -1))
-#+END_SRC
-
 Customize the noisy default towards backup files.
 
 #+BEGIN_SRC emacs-lisp
@@ -2227,6 +2221,7 @@ Display the available keybindings following your current input.
   :custom
   (which-key-add-column-padding 1)
   (which-key-allow-evil-operators t)
+  (which-key-dont-use-unicode t)
   (which-key-separator " ")
   (which-key-sort-order 'which-key-prefix-then-key-order)
   (which-key-use-C-h-commands nil))

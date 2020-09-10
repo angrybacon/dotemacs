@@ -63,7 +63,7 @@ gem install scss_lint scss_lint_reporter_checkstyle  # SCSS
 
 ** Ripgrep
 
-My Helm setup uses =rg= instead of =grep= to lookup files.
+I use =rg= to lookup files.
 
 *** macOS
 
