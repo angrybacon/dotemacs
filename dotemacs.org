@@ -589,7 +589,19 @@ you can press ctrl-c right (calling =winner-redo=).
 (use-package winner
   :ensure nil
   :hook
-  (after-init . winner-mode))
+  (after-init . winner-mode)
+  :config
+  (defun me/winner-continue (&rest _)
+    "Activate a sparse keymap for `winner-undo' and `winner-redo':
+  <left>   `winner-undo'
+  <right>  `winner-redo'"
+    (set-transient-map
+     (let ((map (make-sparse-keymap)))
+       (define-key map (kbd "<left>") #'winner-undo)
+       (define-key map (kbd "<right>") #'winner-redo)
+       map)))
+  (advice-add 'winner-undo :after #'me/winner-continue)
+  (advice-add 'winner-redo :after #'me/winner-continue))
 #+END_SRC
 
 ** Comments
