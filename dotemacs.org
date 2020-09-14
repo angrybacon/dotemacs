@@ -1329,7 +1329,7 @@ Group window-related commands.
   (concat "\n " (me/make-hydra-heading "Windows" "Size" "Zoom" "Buffers")
           "
  _q_ quit              _b_ balance           _-_ out               _w_ revert
- _m_ maximize          _i_ heighten          _+_ in                ^^
+ _m_ maximize          _i_ heighten          _=_ in                ^^
  ^^                    _j_ narrow            _0_ reset             ^^
  ^^                    _k_ lower             ^^                    ^^
  ^^                    _l_ widen             ^^                    ^^
@@ -1343,7 +1343,7 @@ Group window-related commands.
   ("m" toggle-frame-maximized :color blue)
   ("w" (revert-buffer nil t) :color blue)
   ("-" default-text-scale-decrease)
-  ("+" default-text-scale-increase)
+  ("=" default-text-scale-increase)
   ("0" default-text-scale-reset :color blue))
 #+END_SRC
 
@@ -1753,6 +1753,7 @@ mode-line in various search modes.
   (mouse-wheel-progressive-speed nil)
   (mouse-wheel-scroll-amount '(2 ((control) . 8))))
 #+END_SRC
+
 *** Navigation / Search
 
 Isearch stands for /incremental search/. This means that search results are
@@ -1792,7 +1793,7 @@ Augment Emacs experience for MacOS users.
    ns-alternate-modifier 'super                      ; Map Super to the Alt key
    ns-command-modifier 'meta                         ; Map Meta to the Cmd key
    ns-pop-up-frames nil                              ; Always re-use the same frame
-   ns-use-mwheel-momentum nil))                      ; Disable smoonth scroll
+   ns-use-mwheel-momentum nil))                      ; Disable smooth scroll
 #+END_SRC
 
 Initialize environment variables.
