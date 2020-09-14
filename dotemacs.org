@@ -52,7 +52,7 @@
 
 Some UI elements are rather invasive. No-mouse master race.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (when window-system
   (blink-cursor-mode 0)                           ; Disable the cursor blinking
   (scroll-bar-mode 0)                             ; Disable the scroll bar
@@ -62,7 +62,7 @@ Some UI elements are rather invasive. No-mouse master race.
 
 Here are what I consider better defaults as per my own experience.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (setq-default
  ad-redefinition-action 'accept                   ; Silence warnings for redefinition
  auto-save-list-file-prefix nil                   ; Prevent tracking for auto-saves
@@ -106,7 +106,7 @@ Here are what I consider better defaults as per my own experience.
 
 Enable fullscreen.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (if (eq window-system 'ns)
     (toggle-frame-maximized)
   (toggle-frame-fullscreen))
@@ -114,7 +114,7 @@ Enable fullscreen.
 
 Garbage-collect on focus-out, Emacs /should/ feel snappier.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (add-hook 'focus-out-hook #'garbage-collect)
 #+END_SRC
 
@@ -131,7 +131,7 @@ Since that in my case, the actual configuration file is a new one, crafted by
 following tells Emacs to add extra code in another file that would be then
 loaded, if existing.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (setq-default custom-file (expand-file-name ".custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
   (load custom-file))
@@ -143,7 +143,7 @@ I load =~/.emacs.d/.secret.el= to keep sensible things out of version control.
 For instance, you could set your identity by customizing both =user-full-name=
 and =user-mail-address=. This is also where you want your API tokens to live.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (defvar me/erc-nick               nil        "The ERC nick to use.")
 (defvar me/erc-password           nil        "The ERC password to use.")
 (defvar me/erc-port               nil        "The ERC port to use.")
@@ -162,7 +162,7 @@ and =user-mail-address=. This is also where you want your API tokens to live.
 
 Load the theme and fix some high-level faces to match my personal preferences.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package doom-themes
   :demand t
   :custom
@@ -207,7 +207,7 @@ Load the theme and fix some high-level faces to match my personal preferences.
 
 ** CSS
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package css-mode
   :ensure nil
   :custom (css-indent-offset 2))
@@ -226,7 +226,7 @@ Load the theme and fix some high-level faces to match my personal preferences.
 
 HTML mode is defined in =sgml-mode.el=.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package sgml-mode
   :ensure nil
   :preface
@@ -243,7 +243,7 @@ HTML mode is defined in =sgml-mode.el=.
 
 ** JavaScript
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package js-doc)
 
 (use-package js2-mode
@@ -284,7 +284,7 @@ HTML mode is defined in =sgml-mode.el=.
 
 - *TOFIX*: Indent level is broken (https://github.com/joshwnj/json-mode/issues/32).
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package json-mode
   :mode "\\.json\\'"
   :preface
@@ -296,7 +296,7 @@ HTML mode is defined in =sgml-mode.el=.
 
 ** Lisp
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package ielm
   :ensure nil
   :hook (ielm-mode . (lambda () (setq-local scroll-margin 0))))
@@ -304,7 +304,7 @@ HTML mode is defined in =sgml-mode.el=.
 
 ** Markdown
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package markdown-mode
   :preface
   (defun me/markdown-set-ongoing-hydra-body ()
@@ -338,7 +338,7 @@ authoring documents with a fast and effective plain-text system.
 [[http://orgmode.org/][Carsten Dominik]]
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package org
   :ensure nil
   :preface
@@ -380,13 +380,13 @@ authoring documents with a fast and effective plain-text system.
 Tired of having to manually update your tables of contents? This package will
 maintain a TOC at the first heading that has a =:TOC:= tag.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package toc-org :after org)
 #+END_SRC
 
 ** YAML
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package yaml-mode :mode "\\.yml\\'")
 #+END_SRC
 
@@ -404,7 +404,7 @@ completion candidates.
 [[http://company-mode.github.io/][Dmitry Gutov]]
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package company
   :hook
   (after-init . global-company-mode)
@@ -426,7 +426,7 @@ completion candidates.
   (company-tng-configure-default))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp :lexical t
+#+BEGIN_SRC emacs-lisp :lexical t :results silent
 (use-package company-box
   :after company
   :defer nil
@@ -479,7 +479,7 @@ completion candidates.
 
 Don't ask before killing a buffer. I'm a consenting adult.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (global-set-key [remap kill-buffer] #'kill-this-buffer)
 #+END_SRC
 
@@ -488,7 +488,7 @@ Allow repeated use of =←= and =→= when using =previous-buffer= and
 
 - *TODO*: Make a hydra.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (defun me/switch-to-buffer-continue (&rest _)
   "Activate a sparse keymap:
   <left>   `previous-buffer'
@@ -504,7 +504,7 @@ Allow repeated use of =←= and =→= when using =previous-buffer= and
 
 Save and restore Emacs status, including buffers, point and window configurations.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package desktop
   :ensure nil
   :hook
@@ -528,7 +528,7 @@ by default. The behaviour is modeled after
 [[https://github.com/wasamasa/eyebrowse][Vasilij Schneidermann]]
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package eyebrowse
   :hook
   (after-init . eyebrowse-mode)
@@ -551,7 +551,7 @@ selected window.
 [[https://github.com/wasamasa/shackle][Vasilij Schneidermann]]
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package shackle
   :hook
   (after-init . shackle-mode)
@@ -565,7 +565,7 @@ selected window.
 
 Bind commands to move around windows.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package windmove
   :ensure nil
   :bind
@@ -587,7 +587,7 @@ you can press ctrl-c right (calling =winner-redo=).
 [[https://github.com/emacs-mirror/emacs/blob/master/lisp/winner.el][Ivar Rummelhoff]]
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package winner
   :ensure nil
   :hook
@@ -608,7 +608,7 @@ you can press ctrl-c right (calling =winner-redo=).
 
 ** Comments
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package newcomment
   :ensure nil
   :bind
@@ -623,7 +623,7 @@ you can press ctrl-c right (calling =winner-redo=).
 This merely changes face attributes. It also /Zenburn/ customization buffers a
 little more.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package cus-edit
   :ensure nil
   :custom (custom-unlispify-tag-names nil))
@@ -635,7 +635,7 @@ Emacs can be run as a daemon onto which Emacs clients can latch on. This allows
 for much shorter starting times when you already got Emacs running ie. when you
 want to edit a single file for a quick edit.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package server
   :ensure nil
   :hook (after-init . server-start))
@@ -645,13 +645,13 @@ want to edit a single file for a quick edit.
 
 Define words using Wordnik.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package define-word)
 #+END_SRC
 
 Translage using Google.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package google-translate)
 #+END_SRC
 
@@ -659,7 +659,7 @@ Translage using Google.
 
 Ediff is a visual interface to Unix =diff=.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package ediff-wind
   :ensure nil
   :custom
@@ -672,7 +672,7 @@ Ediff is a visual interface to Unix =diff=.
 Configure Dired buffers. Amongst many other things, Emacs is also a file
 explorer.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package dired
   :ensure nil
   :preface
@@ -707,7 +707,7 @@ extensions. Also see our page on [[http://emacswiki.org/emacs/Evil][EmacsWiki]].
 https://github.com/emacs-evil/evil
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package evil
   :hook
   (after-init . evil-mode)
@@ -749,7 +749,7 @@ for /the parts of Emacs/ that Evil does not cover properly by default, such as
 https://github.com/emacs-evil/evil-collection
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package evil-collection
   :after evil
   :defer nil
@@ -763,7 +763,7 @@ HippieExpand manages expansions a la [[http://emmet.io/][Emmet]]. So I've
 gathered all features that look anywhere close to this behavior for it to handle
 under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package emmet-mode
   :bind
   (:map emmet-mode-keymap
@@ -778,7 +778,7 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
   (emmet-move-cursor-between-quote t))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package hippie-exp
   :ensure nil
   :preface
@@ -793,7 +793,7 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
   (hippie-expand-verbose nil))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package yasnippet
   :bind
   (:map yas-minor-mode-map
@@ -814,7 +814,7 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
 
 ** Help
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package help-mode
   :ensure nil
   :bind
@@ -825,7 +825,7 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
 
 Provide better detailed help buffers.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package helpful)
 #+END_SRC
 
@@ -839,7 +839,7 @@ efficient, smaller, simpler, and smoother to use yet highly customizable.
 [[https://github.com/abo-abo/swiper#ivy][Oleh Krehel]]
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package ivy
   :hook
   (after-init . ivy-mode)
@@ -862,7 +862,7 @@ efficient, smaller, simpler, and smoother to use yet highly customizable.
 
 Augment Ivy's interface with details for candidates.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package ivy-rich
   :after ivy
   :defer nil
@@ -947,7 +947,7 @@ Augment Ivy's interface with details for candidates.
 
 *** Ivy / Counsel
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package counsel
   :after ivy
   :defer nil
@@ -970,7 +970,7 @@ Augment Ivy's interface with details for candidates.
 
 *** Ivy / Swiper
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package swiper
   :after ivy
   :defer nil
@@ -997,7 +997,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
 [[https://github.com/abo-abo/hydra][Oleh Krehel]]
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package hydra
   :preface
   (defvar-local me/ongoing-hydra-body nil)
@@ -1030,7 +1030,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
 
 Group date-related commands.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-dates (:color blue)
   (concat "\n " (me/make-hydra-heading "Dates" "Insert" "Insert with Time")
           "
@@ -1053,7 +1053,7 @@ Group date-related commands.
 
 Group Eyebrowse commands.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-eyebrowse (:color blue)
   (concat "\n " (me/make-hydra-heading "Eyebrowse" "Do" "Switch")
           "
@@ -1089,7 +1089,7 @@ Group Eyebrowse commands.
 
 Group Flycheck commands.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-flycheck (:color blue)
   (concat "\n " (me/make-hydra-heading "Flycheck" "Errors" "Checker")
           "
@@ -1118,7 +1118,7 @@ Group Flycheck commands.
 
 Group Ivy commands.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-ivy (:color blue)
   (concat "\n " (me/make-hydra-heading "Ivy" "Do" "Browse")
           "
@@ -1145,7 +1145,7 @@ Group Ivy commands.
 
 Group Magit commands.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-magit (:color blue)
   (concat "\n " (me/make-hydra-heading "Magit" "Do" "More")
           "
@@ -1162,7 +1162,7 @@ Group Magit commands.
   ("s" magit-status))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-smerge
   (:color pink :pre (if (not smerge-mode) (smerge-mode 1)) :post (smerge-auto-leave))
   (concat "\n " (me/make-hydra-heading "SMerge" "Move" "Keep" "Diff")
@@ -1196,7 +1196,7 @@ Group Magit commands.
 
 Group Markdown commands.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-markdown (:color pink)
   (concat "\n " (me/make-hydra-heading "Markdown" "Table Columns" "Table Rows")
           "
@@ -1222,7 +1222,7 @@ Group Markdown commands.
 
 Group Org commands.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-org (:color pink)
   (concat "\n " (me/make-hydra-heading "Org" "Links" "Outline")
           "
@@ -1250,7 +1250,7 @@ Group Org commands.
 
 Group Projectile commands.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-projectile (:color blue)
   (concat "\n " (me/make-hydra-heading "Projectile" "Buffers" "Find" "Search")
           "
@@ -1280,7 +1280,7 @@ Group Projectile commands.
 
 Group React JavaScript commands.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-rjsx (:color blue)
   (concat "\n " (me/make-hydra-heading "RJSX" "JSDoc")
           "
@@ -1298,7 +1298,7 @@ Group React JavaScript commands.
 
 Group system-related commands.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-system (:color blue)
   (concat "\n " (me/make-hydra-heading "System" "Packages" "Processes" "Shell")
           "
@@ -1324,7 +1324,7 @@ Group system-related commands.
 
 Group window-related commands.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-windows (:color pink)
   (concat "\n " (me/make-hydra-heading "Windows" "Size" "Zoom" "Buffers")
           "
@@ -1353,7 +1353,7 @@ Group window-related commands.
 
 - *TODO*: Display the current count of users. =(hash-table-count erc-channel-users)=
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package erc
   :ensure nil
   :preface
@@ -1391,7 +1391,7 @@ Group window-related commands.
 
 Highlight ERC nicks with unique colors.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package erc-hl-nicks)
 #+END_SRC
 
@@ -1399,7 +1399,7 @@ Highlight ERC nicks with unique colors.
 
 Display relative line numbers in most editing modes.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (add-hook 'conf-mode-hook #'display-line-numbers-mode)
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 (add-hook 'text-mode-hook #'display-line-numbers-mode)
@@ -1415,7 +1415,7 @@ Flycheck lints warnings and errors directly within buffers. It can check a lot
 of different syntaxes, as long as you make sure that Emacs has access to the
 binaries (see [[./README.org][README.org]]).
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package flycheck
   :hook
   ((css-mode . flycheck-mode)
@@ -1440,7 +1440,7 @@ request or transparently on file save.
 [[https://github.com/jscheid/prettier.el][Julian Scheid]]
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package prettier)
 #+END_SRC
 
@@ -1452,7 +1452,7 @@ Yup, Emacs supports
 | lsp-mode | https://github.com/emacs-lsp/lsp-mode |
 | lsp-ui   | https://github.com/emacs-lsp/lsp-ui   |
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package lsp-mode
   :preface
   (defun me/lsp-optimize ()
@@ -1485,7 +1485,7 @@ Yup, Emacs supports
 
 ** Mode-Line
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package doom-modeline
   :demand t
   :custom
@@ -1627,7 +1627,7 @@ same idea.
 [[https://github.com/abo-abo/avy][Oleh Krehel]]
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package avy
   :custom
   (avy-background t)
@@ -1642,7 +1642,7 @@ same idea.
 
 Smarter =C-a=.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (global-set-key [remap move-beginning-of-line] #'me/beginning-of-line-dwim)
 
 (defun me/beginning-of-line-dwim ()
@@ -1662,7 +1662,7 @@ Evil-snipe emulates [[https://github.com/goldfeld/vim-seek][vim-seek]] and/or
 [[https://github.com/hlissner/evil-snipe][Henrik Lissner]]
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package evil-snipe
   :after evil
   :defer nil
@@ -1682,7 +1682,7 @@ jump from one paragraph to another.
 
 - *TOFIX*: Ignore invisible text.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (global-set-key [remap backward-paragraph] #'me/backward-paragraph-dwim)
 (global-set-key [remap forward-paragraph] #'me/forward-paragraph-dwim)
 
@@ -1707,7 +1707,7 @@ jump from one paragraph to another.
 
 Pulse temporarily highlights the background color of a line or region.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package pulse :ensure nil)
 #+END_SRC
 
@@ -1734,7 +1734,7 @@ mode-line in various search modes.
 
 [[./screencasts/emacs.anzu-replace-regexp.gif]]
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package anzu
   :bind
   ([remap query-replace] . anzu-query-replace-regexp)
@@ -1746,7 +1746,7 @@ mode-line in various search modes.
 
 *** Navigation / Scroll
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package mwheel
   :ensure nil
   :custom
@@ -1760,7 +1760,7 @@ highlighted while you are typing your query, incrementally. Since he who can do
 more can do less, I've replaced default bindings with the regexp-equivalent
 commands.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package isearch
   :ensure nil
   :bind
@@ -1784,7 +1784,7 @@ commands.
 
 Augment Emacs experience for MacOS users.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (when (eq system-type 'darwin)
   (setq-default
    dired-use-ls-dired nil                            ; MacOS's ls does not support --dired
@@ -1810,7 +1810,7 @@ variables of interest, then copying them into the Emacs environment.
 [[https://github.com/purcell/exec-path-from-shell][Steve Purcell]]
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package exec-path-from-shell
   :if
   (memq window-system '(mac ns))
@@ -1825,7 +1825,7 @@ variables of interest, then copying them into the Emacs environment.
 Highlight parenthese-like delimiters in a rainbow fashion. It ease the reading
 when dealing with mismatched parentheses.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package rainbow-delimiters
   :hook
   (prog-mode . rainbow-delimiters-mode))
@@ -1836,7 +1836,7 @@ today... No package seem to please my person.
 
 - *TODO*: Find a better parenthese management package.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package smartparens
   :bind
   (("M-<backspace>" . sp-unwrap-sexp)
@@ -1865,7 +1865,7 @@ fails.
 [[https://github.com/etu/webpaste.el][Elis Hirwing]]
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package webpaste)
 #+END_SRC
 
@@ -1874,7 +1874,7 @@ fails.
 Increase region by semantic units. It tries to be smart about it and adapt to
 the structure of the current major mode.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package expand-region
   :bind
   ("C-=" . er/expand-region))
@@ -1886,7 +1886,7 @@ Work on lines.
 
 - *TODO*: Handle regions.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (global-set-key (kbd "<M-S-up>") 'me/duplicate-backward)
 (global-set-key (kbd "<M-S-down>") 'me/duplicate-forward)
 (global-set-key (kbd "<M-down>") 'me/swap-line-down)
@@ -1945,7 +1945,7 @@ If region was active, keep it so that the command can be repeated."
 
 Enable multiple cursors at once. Some witchcraft at work here.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package multiple-cursors
   :bind*
   (("C-S-c C-S-a" . mc/vertical-align-with-space)
@@ -1969,7 +1969,7 @@ Enable multiple cursors at once. Some witchcraft at work here.
 Enable new custom binds when region is active. I've also added a few helpers to
 use with =selected=.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package selected
   :preface
   (defvar-local me/pretty-print-function nil)
@@ -2013,7 +2013,7 @@ use with =selected=.
   :config (require 'browse-url))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (defun me/eval-region-and-kill-mark (beg end)
   "Execute the region as Lisp code.
 Call `eval-region' and kill mark. Move back to the beginning of the region."
@@ -2092,7 +2092,7 @@ exists as well).
 [[https://github.com/bbatsov/projectile][Bozhidar Batsov]]
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package projectile
   :hook
   (after-init . projectile-mode)
@@ -2123,7 +2123,7 @@ electric-indent-mode.
 [[https://github.com/Malabarba/aggressive-indent-mode][Artur Malabarba]]
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package aggressive-indent
   :preface
   (defun me/aggressive-indent-mode-off ()
@@ -2142,7 +2142,7 @@ electric-indent-mode.
 
 Sort interactive commands by usage.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package amx
   :custom
   (amx-save-file (expand-file-name ".amx" user-emacs-directory))
@@ -2151,7 +2151,7 @@ Sort interactive commands by usage.
 
 Insert the current date. See [[#hydra--dates][Hydra / Dates]].
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (defun me/date-iso ()
   "Insert the current date, ISO format, eg. 2016-12-09."
   (interactive)
@@ -2193,13 +2193,13 @@ size in all GUI Emacs frames -- it is like an Emacs-wide version of
 [[https://github.com/purcell/default-text-scale][Steve Purcell]]
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package default-text-scale)
 #+END_SRC
 
 Customize the noisy default towards backup files.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package files
   :ensure nil
   :custom
@@ -2211,7 +2211,7 @@ Customize the noisy default towards backup files.
 
 Add visual guides towards indenting levels.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package highlight-indent-guides
   :hook
   (python-mode . highlight-indent-guides-mode)
@@ -2222,7 +2222,7 @@ Add visual guides towards indenting levels.
 
 Highlight line under point.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package hl-line
   :ensure nil
   :preface
@@ -2242,7 +2242,7 @@ more.
 [[https://github.com/Malabarba/paradox][Artur Malabarba]]
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package paradox
   :custom
   (paradox-column-width-package 27)
@@ -2256,7 +2256,7 @@ more.
 
 Colorize colors as text with their value.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package rainbow-mode
   :hook
   (prog-mode . rainbow-mode)
@@ -2266,7 +2266,7 @@ Colorize colors as text with their value.
 
 Turn on =auto-fill-mode= /almost/ everywhere.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package simple
   :ensure nil
   :hook
@@ -2276,7 +2276,7 @@ Turn on =auto-fill-mode= /almost/ everywhere.
 
 Display the available keybindings following your current input.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package which-key
   :hook
   (after-init . which-key-mode)
@@ -2291,7 +2291,7 @@ Display the available keybindings following your current input.
 
 ** Shell and Terminal
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package em-banner
   :ensure nil
   :custom (eshell-banner-message ""))
@@ -2326,7 +2326,7 @@ Yes, Emacs emulates terminals too.
 
 - **TODO**: Source =.bash_profile= on =M-x term=.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package term
   :ensure nil
   :hook
@@ -2337,7 +2337,7 @@ Yes, Emacs emulates terminals too.
 Provide a way to invoke =bash= on Windows. This requires "Developer Mode" to
 be enabled in the first place.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (when (eq system-type 'windows-nt)
   (defun me/bash ()
     (interactive)
@@ -2363,7 +2363,7 @@ Git itself deserve to be called porcelains.
 [[https://github.com/magit/magit][Jonas Bernoulli]]
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package git-commit
   :preface
   (defun me/git-commit-auto-fill-everywhere ()
@@ -2375,7 +2375,7 @@ Git itself deserve to be called porcelains.
   (git-commit-summary-max-length 50))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package magit
   :bind
   (:map magit-hunk-section-map
@@ -2401,7 +2401,7 @@ Git itself deserve to be called porcelains.
   (remove-hook 'magit-section-highlight-hook #'magit-section-highlight))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package gitattributes-mode)
 (use-package gitconfig-mode)
 (use-package gitignore-mode)
@@ -2411,7 +2411,7 @@ Git itself deserve to be called porcelains.
 
 Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package whitespace
   :ensure nil
   :hook
