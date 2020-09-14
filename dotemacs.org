@@ -78,8 +78,6 @@ Here are what I consider better defaults as per my own experience.
  inhibit-startup-screen t                         ; Disable start-up screen
  initial-scratch-message ""                       ; Empty the initial *scratch* buffer
  mouse-yank-at-point t                            ; Yank at point rather than pointer
- mouse-wheel-progressive-speed nil                ; Disable mouse wheel acceleration
- mouse-wheel-scroll-amount '(2 ((control) . 5))   ; Customize mouse wheel scroll steps
  recenter-positions '(5 top bottom)               ; Set re-centering positions
  scroll-conservatively most-positive-fixnum       ; Always scroll by one line
  scroll-margin 4                                  ; Add a margin when scrolling vertically
@@ -1746,6 +1744,15 @@ mode-line in various search modes.
   (anzu-cons-mode-line-p nil))
 #+END_SRC
 
+*** Navigation / Scroll
+
+#+BEGIN_SRC emacs-lisp
+(use-package mwheel
+  :ensure nil
+  :custom
+  (mouse-wheel-progressive-speed nil)
+  (mouse-wheel-scroll-amount '(2 ((control) . 8))))
+#+END_SRC
 *** Navigation / Search
 
 Isearch stands for /incremental search/. This means that search results are
