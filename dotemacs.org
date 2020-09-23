@@ -274,8 +274,11 @@ HTML mode is defined in =sgml-mode.el=.
 
 (use-package web-mode
   :mode "\\.tsx\\'"
+  :hook
+  (web-mode . sgml-electric-tag-pair-mode)
   :custom
   (web-mode-code-indent-offset 2)
+  (web-mode-enable-auto-quoting nil)
   (web-mode-markup-indent-offset 2)
   (web-mode-enable-auto-indentation nil))
 #+END_SRC
@@ -772,7 +775,7 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
         ("C-M-<right>" . nil)
         ("C-c w" . nil))
   :hook
-  (css-mode html-mode rjsx-mode)
+  (css-mode html-mode rjsx-mode web-mode)
   :custom
   (emmet-insert-flash-time .1)
   (emmet-move-cursor-between-quote t))
@@ -804,7 +807,8 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
    (html-mode . yas-minor-mode)
    (js-mode . yas-minor-mode)
    (org-mode . yas-minor-mode)
-   (python-mode . yas-minor-mode))
+   (python-mode . yas-minor-mode)
+   (web-mode . yas-minor-mode))
   :custom
   (yas-snippet-dirs `(,(expand-file-name "snippets/" user-emacs-directory)))
   (yas-verbosity 2)
@@ -1463,6 +1467,7 @@ Yup, Emacs supports
   (js2-mode . lsp-deferred)
   (lsp-mode . me/lsp-optimize)
   (rjsx-mode . lsp-deferred)
+  (web-mode . lsp-deferred)
   :custom
   (lsp-auto-guess-root t)
   (lsp-diagnostics-provider :none)
