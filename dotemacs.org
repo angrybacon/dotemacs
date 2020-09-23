@@ -94,7 +94,7 @@ Here are what I consider better defaults as per my own experience.
 (cd "~/")                                         ; Move to the user directory
 (delete-selection-mode 1)                         ; Replace region when inserting text
 (display-time-mode 1)                             ; Enable time in the mode-line
-(fringe-mode 0)                                   ; Disable fringes
+(fringe-mode '4)                                  ; Set thin horizontal fringes
 (fset 'yes-or-no-p 'y-or-n-p)                     ; Replace yes/no prompts with y/n
 (global-subword-mode 1)                           ; Iterate through CamelCase words
 (menu-bar-mode 0)                                 ; Disable the menu bar
@@ -167,6 +167,7 @@ Load the theme and fix some high-level faces to match my personal preferences.
   :demand t
   :custom
   (doom-themes-enable-bold nil)
+  (doom-themes-enable-italic nil)
   :config
   (load-theme 'doom-one t)
   (doom-themes-org-config)
@@ -177,11 +178,10 @@ Load the theme and fix some high-level faces to match my personal preferences.
     '(flycheck-error :underline `(:color ,error :style line))
     '(flycheck-info :underline `(:color ,highlight :style line))
     '(flycheck-warning :underline `(:color ,warning :style line))
-    '(font-lock-doc-face :italic t)
     '(helpful-heading :foreground red :height me/font-size-large)
     '(info-title-4 :bold nil :foreground red)
     '(isearch :inherit 'highlight)
-    '(ivy-virtual :italic nil)
+    '(italic :italic nil)
     '(lazy-highlight :foreground blue)
     '(lsp-face-highlight-read :foreground fg)
     '(lsp-face-highlight-textual :foreground fg)
@@ -192,7 +192,8 @@ Load the theme and fix some high-level faces to match my personal preferences.
     '(magit-section-heading :foreground red :height me/font-size-large)
     '(markdown-table-face :height me/font-size-small)
     '(mode-line-inactive :background base3)
-    '(org-block-begin-line :background 'unspecified)
+    '(org-block-begin-line :background 'unspecified :underline grey)
+    '(org-block-end-line :overline grey :underline nil)
     '(org-quote :inherit 'font-lock-doc-face)
     '(outline-1 :foreground red)
     '(swiper-background-match-face-1 :background 'unspecified)
@@ -235,8 +236,7 @@ HTML mode is defined in =sgml-mode.el=.
   :hook
   ((html-mode . me/html-set-pretty-print-function)
    (html-mode . sgml-electric-tag-pair-mode)
-   (html-mode . sgml-name-8bit-mode)
-   (html-mode . toggle-truncate-lines))
+   (html-mode . sgml-name-8bit-mode))
   :custom
   (sgml-basic-offset 2))
 #+END_SRC
@@ -1406,7 +1406,7 @@ Display relative line numbers in most editing modes.
 (setq-default
  display-line-numbers-current-absolute nil        ; Current line is 0
  display-line-numbers-type 'relative              ; Prefer relative numbers
- display-line-numbers-width 3)                    ; Enforce width to reduce computation
+ display-line-numbers-width 2)                    ; Enforce width to reduce computation
 #+END_SRC
 
 ** Linters

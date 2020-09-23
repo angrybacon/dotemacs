@@ -48,9 +48,6 @@
    use-package-always-defer t
    use-package-always-ensure t)
 
-  ;; Use latest Org
-  (use-package org :ensure org-plus-contrib)
-
   ;; Tangle configuration
   (org-babel-load-file (expand-file-name "dotemacs.org" user-emacs-directory))
   (garbage-collect))
