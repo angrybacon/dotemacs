@@ -1304,19 +1304,22 @@ Group system-related commands.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-system (:color blue)
-  (concat "\n " (me/make-hydra-heading "System" "Packages" "Processes" "Shell")
+  (concat "\n " (me/make-hydra-heading "System" "Packages" "Shell" "Other")
           "
- _q_ quit              _i_ install           _s_ list              _e_ eshell
- ^^                    _p_ list              ^^                    _t_ term
- ^^                    _P_ upgrade           ^^                    _T_ ansi-term
- ^^                    _r_ refresh           ^^                    _T_ ansi-term
+ _q_ quit              _i_ install           _e_ eshell            _d_ clear byte-compiled
+ ^^                    _p_ list              _t_ term              _D_ clear desktop
+ ^^                    _P_ upgrade           _T_ ansi-term         _s_ list processes
+ ^^                    _r_ refresh           ^^                    ^^
 ")
   ("q" nil)
+  ("d" (let ((default-directory user-emacs-directory))
+         (shell-command "find . -name \"*.elc\" -type f | xargs rm -f")))
+  ("D" desktop-remove)
   ("e" (eshell t))
   ("i" package-install)
   ("p" paradox-list-packages)
   ("P" paradox-upgrade-packages)
-  ("r" package-refresh-contents)
+  ("r" package-refresh-contents :color red)
   ("s" list-processes)
   ("t" term)
   ("T" ansi-term))
