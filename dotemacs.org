@@ -1473,6 +1473,7 @@ Yup, Emacs supports
   (web-mode . lsp-deferred)
   :custom
   (lsp-auto-guess-root t)
+  (lsp-idle-delay .1)
   (lsp-diagnostics-provider :none)
   (lsp-eldoc-hook nil)
   :config
@@ -1481,7 +1482,7 @@ Yup, Emacs supports
 (use-package lsp-ui
   :custom
   (lsp-ui-doc-enable t)
-  (lsp-ui-doc-delay .0)
+  (lsp-ui-doc-delay .1)
   (lsp-ui-doc-header nil)
   (lsp-ui-doc-max-height 10)
   (lsp-ui-doc-max-width 80)
