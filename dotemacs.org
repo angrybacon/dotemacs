@@ -1405,7 +1405,7 @@ binaries (see [[./README.org][README.org]]).
   :custom
   (flycheck-check-syntax-automatically '(idle-buffer-switch save))
   (flycheck-disabled-checkers '(emacs-lisp-checkdoc))
-  (flycheck-display-errors-delay .3)
+  (flycheck-display-errors-delay .1)
   (flycheck-emacs-lisp-load-path 'inherit)
   (flycheck-indication-mode 'right-fringe)
   :config
