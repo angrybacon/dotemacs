@@ -89,7 +89,7 @@ Here are what I consider better defaults as per my own experience.
  x-stretch-cursor t)                              ; Stretch cursor to the glyph width
 (cd "~/")                                         ; Move to the user directory
 (delete-selection-mode 1)                         ; Replace region when inserting text
-(fringe-mode '4)                                  ; Set thin horizontal fringes
+(fringe-mode 2)                                   ; Initialize thinner vertical fringes
 (fset 'yes-or-no-p 'y-or-n-p)                     ; Replace yes/no prompts with y/n
 (global-subword-mode 1)                           ; Iterate through CamelCase words
 (menu-bar-mode 0)                                 ; Disable the menu bar
@@ -1092,9 +1092,9 @@ Group Magit commands.
 (defhydra hydra-git (:color blue)
   (concat "\n " (me/make-hydra-heading "Git" "Do" "More")
           "
- _q_ quit              _b_ blame             _m_ smerge...
- ^^                    _c_ clone             ^^
- ^^                    _g_ status            ^^
+ _q_ quit              _b_ blame             _p_ previous          _m_ smerge...
+ ^^                    _c_ clone             _n_ next              ^^
+ ^^                    _g_ status            _s_ stage             ^^
  ^^                    _i_ init              ^^
 ")
   ("q" nil)
@@ -1102,7 +1102,10 @@ Group Magit commands.
   ("c" magit-clone)
   ("g" magit-status)
   ("i" magit-init)
-  ("m" hydra-smerge/body))
+  ("m" hydra-smerge/body)
+  ("n" git-gutter:next-hunk :color red)
+  ("p" git-gutter:previous-hunk :color red)
+  ("s" git-gutter:stage-hunk :color red))
 #+END_SRC
 
 [[./screenshots/hydra.magit.jpg]]
@@ -1401,6 +1404,7 @@ binaries (see [[./README.org][README.org]]).
   (flycheck-disabled-checkers '(emacs-lisp-checkdoc))
   (flycheck-display-errors-delay .3)
   (flycheck-emacs-lisp-load-path 'inherit)
+  (flycheck-indication-mode 'right-fringe)
   :config
   (flycheck-add-mode 'javascript-eslint 'web-mode))
 #+END_SRC
@@ -2321,6 +2325,7 @@ be enabled in the first place.
 ** Version Control
 
 | git-commit         | https://github.com/magit/magit                        |
+| git-gutter-fringe  | https://github.com/emacsorphanage/git-gutter-fringe   |
 | gitattributes-mode | https://github.com/magit/git-modes#gitattributes-mode |
 | gitconfig-mode     | https://github.com/magit/git-modes#gitconfig-mode     |
 | gitignore-mode     | https://github.com/magit/git-modes#gitignore-mode     |
@@ -2339,6 +2344,27 @@ Auto-fill commit messages.
   (git-commit-mode . me/git-commit-auto-fill)
   :custom
   (git-commit-summary-max-length 50))
+#+END_SRC
+
+Display indicators in the left fringe for Git changes.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package git-gutter-fringe
+  :preface
+  (defun me/git-gutter-enable ()
+    (require 'git-gutter)
+    (require 'git-gutter-fringe)
+    (git-gutter-mode 1))
+  (defun me/git-gutter-setup ()
+    (when-let* ((buffer (buffer-file-name))
+                (backend (vc-backend buffer)))
+      (add-hook 'window-configuration-change-hook #'me/git-gutter-enable nil t)))
+  :hook
+  (after-change-major-mode . me/git-gutter-setup)
+  :config
+  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center t))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [240 240 240 240] nil nil 'bottom)
+  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center t)))
 #+END_SRC
 
 Major modes for Git-specific files.
