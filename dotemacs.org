@@ -89,7 +89,6 @@ Here are what I consider better defaults as per my own experience.
  x-stretch-cursor t)                              ; Stretch cursor to the glyph width
 (cd "~/")                                         ; Move to the user directory
 (delete-selection-mode 1)                         ; Replace region when inserting text
-(display-time-mode 1)                             ; Enable time in the mode-line
 (fringe-mode '4)                                  ; Set thin horizontal fringes
 (fset 'yes-or-no-p 'y-or-n-p)                     ; Replace yes/no prompts with y/n
 (global-subword-mode 1)                           ; Iterate through CamelCase words
@@ -105,8 +104,8 @@ Enable fullscreen.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (if (eq window-system 'ns)
-    (toggle-frame-maximized)
-  (toggle-frame-fullscreen))
+    (set-frame-parameter nil 'fullscreen 'maximized)
+  (set-frame-parameter nil 'fullscreen 'fullboth))
 #+END_SRC
 
 Garbage-collect on focus-out, Emacs /should/ feel snappier.
@@ -484,25 +483,6 @@ Don't ask before killing a buffer. I'm a consenting adult.
 (global-set-key [remap kill-buffer] #'kill-this-buffer)
 #+END_SRC
 
-Allow repeated use of =←= and =→= when using =previous-buffer= and
-=next-buffer=.
-
-- *TODO*: Make a hydra.
-
-#+BEGIN_SRC emacs-lisp :results silent
-(defun me/switch-to-buffer-continue (&rest _)
-  "Activate a sparse keymap:
-  <left>   `previous-buffer'
-  <right>  `next-buffer'"
-  (set-transient-map
-   (let ((map (make-sparse-keymap)))
-     (define-key map (kbd "<left>") #'previous-buffer)
-     (define-key map (kbd "<right>") #'next-buffer)
-     map)))
-(advice-add 'previous-buffer :after #'me/switch-to-buffer-continue)
-(advice-add 'next-buffer :after #'me/switch-to-buffer-continue)
-#+END_SRC
-
 Save and restore Emacs status, including buffers, point and window configurations.
 
 #+BEGIN_SRC emacs-lisp :results silent
@@ -570,10 +550,10 @@ Bind commands to move around windows.
 (use-package windmove
   :ensure nil
   :bind
-  (("C-M-k". windmove-up)
-   ("C-M-l". windmove-right)
-   ("C-M-j". windmove-down)
-   ("C-M-h". windmove-left)))
+  ("C-M-k". windmove-up)
+  ("C-M-l". windmove-right)
+  ("C-M-j". windmove-down)
+  ("C-M-h". windmove-left))
 #+END_SRC
 
 Allow undo's and redo's with window configurations.
@@ -592,19 +572,7 @@ you can press ctrl-c right (calling =winner-redo=).
 (use-package winner
   :ensure nil
   :hook
-  (after-init . winner-mode)
-  :config
-  (defun me/winner-continue (&rest _)
-    "Activate a sparse keymap for `winner-undo' and `winner-redo':
-  <left>   `winner-undo'
-  <right>  `winner-redo'"
-    (set-transient-map
-     (let ((map (make-sparse-keymap)))
-       (define-key map (kbd "<left>") #'winner-undo)
-       (define-key map (kbd "<right>") #'winner-redo)
-       map)))
-  (advice-add 'winner-undo :after #'me/winner-continue)
-  (advice-add 'winner-redo :after #'me/winner-continue))
+  (after-init . winner-mode))
 #+END_SRC
 
 ** Comments
@@ -2352,6 +2320,35 @@ be enabled in the first place.
 
 ** Version Control
 
+| git-commit         | https://github.com/magit/magit                        |
+| gitattributes-mode | https://github.com/magit/git-modes#gitattributes-mode |
+| gitconfig-mode     | https://github.com/magit/git-modes#gitconfig-mode     |
+| gitignore-mode     | https://github.com/magit/git-modes#gitignore-mode     |
+| magit              | https://github.com/magit/magit                        |
+
+Auto-fill commit messages.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package git-commit
+  :preface
+  (defun me/git-commit-auto-fill ()
+    (setq-local
+     fill-column 72
+     comment-auto-fill-only-comments nil))
+  :hook
+  (git-commit-mode . me/git-commit-auto-fill)
+  :custom
+  (git-commit-summary-max-length 50))
+#+END_SRC
+
+Major modes for Git-specific files.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package gitattributes-mode)
+(use-package gitconfig-mode)
+(use-package gitignore-mode)
+#+END_SRC
+
 Magit provides Git facilities directly from within Emacs.
 
 #+BEGIN_QUOTE
@@ -2363,22 +2360,9 @@ improves upon each and every Git command, it is complete enough to allow even
 experienced Git users to perform almost all of their daily version control tasks
 directly from within Emacs. While many fine Git clients exist, only Magit and
 Git itself deserve to be called porcelains.
-[[https://magit.vc/about.html][(more)]]
 
 [[https://github.com/magit/magit][Jonas Bernoulli]]
 #+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp :results silent
-(use-package git-commit
-  :preface
-  (defun me/git-commit-auto-fill-everywhere ()
-    (setq fill-column 72)
-    (setq-local comment-auto-fill-only-comments nil))
-  :hook
-  (git-commit-mode . me/git-commit-auto-fill-everywhere)
-  :custom
-  (git-commit-summary-max-length 50))
-#+END_SRC
 
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package magit
@@ -2404,12 +2388,6 @@ Git itself deserve to be called porcelains.
   (magit-add-section-hook
    'magit-status-sections-hook 'magit-insert-modules-overview 'magit-insert-status-headers t)
   (remove-hook 'magit-section-highlight-hook #'magit-section-highlight))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp :results silent
-(use-package gitattributes-mode)
-(use-package gitconfig-mode)
-(use-package gitignore-mode)
 #+END_SRC
 
 ** Whitespaces
