@@ -70,8 +70,6 @@ Here are what I consider better defaults as per my own experience.
  cursor-in-non-selected-windows nil               ; Hide the cursor in inactive windows
  cursor-type 'bar                                 ; Prefer a bar-shaped cursor by default
  delete-by-moving-to-trash t                      ; Delete files to trash
- display-time-default-load-average nil            ; Don't display load average
- display-time-format "%H:%M"                      ; Format the time string
  fill-column 80                                   ; Set width for automatic line breaks
  help-window-select t                             ; Focus new help windows when opened
  indent-tabs-mode nil                             ; Stop using tabs to indent
@@ -82,9 +80,7 @@ Here are what I consider better defaults as per my own experience.
  scroll-conservatively most-positive-fixnum       ; Always scroll by one line
  scroll-margin 2                                  ; Add a margin when scrolling vertically
  select-enable-clipboard t                        ; Merge system's and Emacs' clipboard
- sentence-end-double-space nil                    ; End a sentence after a dot and a space
- show-help-function nil                           ; Disable help messages
- show-trailing-whitespace nil                     ; Display trailing whitespaces
+ sentence-end-double-space nil                    ; Use a single space after dots.
  split-height-threshold nil                       ; Disable vertical window splitting
  split-width-threshold nil                        ; Disable horizontal window splitting
  tab-width 4                                      ; Set width for tabs
@@ -2235,11 +2231,10 @@ Highlight line under point.
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package hl-line
   :ensure nil
-  :preface
-  (defun me/hl-line-mode-off ()
-    (setq-local global-hl-line-mode nil))
   :hook
-  (after-init . global-hl-line-mode))
+  (prog-mode . hl-line-mode)
+  (special-mode . hl-line-mode)
+  (text-mode . hl-line-mode))
 #+END_SRC
 
 Augment Emacs' package menu.
@@ -2321,8 +2316,7 @@ Display the available keybindings following your current input.
   (:map eshell-mode-map
         ([remap eshell-bol] . me/eshell-bol-shifted))
   :hook
-  ((eshell-mode . me/hl-line-mode-off)
-   (eshell-mode . (lambda () (setq-local scroll-margin 0))))
+  (eshell-mode . (lambda () (setq-local scroll-margin 0)))
   :custom
   (eshell-scroll-to-bottom-on-input 'all)
   (eshell-scroll-to-bottom-on-output 'all))
@@ -2340,8 +2334,7 @@ Yes, Emacs emulates terminals too.
 (use-package term
   :ensure nil
   :hook
-  ((term-mode . me/hl-line-mode-off)
-   (term-mode . (lambda () (setq-local scroll-margin 0)))))
+  (term-mode . (lambda () (setq-local scroll-margin 0))))
 #+END_SRC
 
 Provide a way to invoke =bash= on Windows. This requires "Developer Mode" to
@@ -2425,8 +2418,8 @@ Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
 (use-package whitespace
   :ensure nil
   :hook
-  ((prog-mode . whitespace-turn-on)
-   (text-mode . whitespace-turn-on))
+  (prog-mode . whitespace-mode)
+  (text-mode . whitespace-mode)
   :custom
   (whitespace-style '(face empty indentation::space tab trailing)))
 #+END_SRC
