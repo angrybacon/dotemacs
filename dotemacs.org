@@ -1387,6 +1387,9 @@ Display relative line numbers in most editing modes.
 
 ** Linters
 
+| flycheck | https://github.com/flycheck/flycheck   |
+| prettier | https://github.com/jscheid/prettier.el |
+
 Flycheck lints warnings and errors directly within buffers. It can check a lot
 of different syntaxes, as long as you make sure that Emacs has access to the
 binaries (see [[./README.org][README.org]]).
@@ -1406,6 +1409,8 @@ binaries (see [[./README.org][README.org]]).
   (flycheck-emacs-lisp-load-path 'inherit)
   (flycheck-indication-mode 'right-fringe)
   :config
+  (define-fringe-bitmap 'me/flycheck-fringe-bitmap [224] nil nil '(center t))
+  (flycheck-redefine-standard-error-levels nil 'me/flycheck-fringe-bitmap)
   (flycheck-add-mode 'javascript-eslint 'web-mode))
 #+END_SRC
 
