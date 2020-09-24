@@ -1018,7 +1018,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
   ("C-c d" . hydra-dates/body)
   ("C-c e" . hydra-eyebrowse/body)
   ("C-c f" . hydra-flycheck/body)
-  ("C-c g" . hydra-magit/body)
+  ("C-c g" . hydra-git/body)
   ("C-c i" . hydra-ivy/body)
   ("C-c o" . me/ongoing-hydra)
   ("C-c p" . hydra-projectile/body)
@@ -1116,53 +1116,28 @@ Group Flycheck commands.
 
 [[./screenshots/hydra.flycheck.jpg]]
 
-*** Hydra / Ivy
-
-Group Ivy commands.
-
-#+BEGIN_SRC emacs-lisp :results silent
-(defhydra hydra-ivy (:color blue)
-  (concat "\n " (me/make-hydra-heading "Ivy" "Do" "Browse")
-          "
- _q_ quit              _m_ mark              _f_ faces
- _r_ resume            _M_ unmark            _i_ imenu
- ^^                    ^^                    _l_ libraries
- ^^                    ^^                    _s_ symbols
- ^^                    ^^                    _u_ unicode
-")
-  ("q" nil)
-  ("f" counsel-faces)
-  ("i" counsel-imenu)
-  ("l" counsel-find-library)
-  ("m" ivy-mark :color red)
-  ("M" ivy-unmark :color red)
-  ("r" ivy-resume)
-  ("s" counsel-info-lookup-symbol)
-  ("u" counsel-unicode-char))
-#+END_SRC
-
-[[./screenshots/hydra.ivy.jpg]]
-
-*** Hydra / Magit
+*** Hydra / Git
 
 Group Magit commands.
 
 #+BEGIN_SRC emacs-lisp :results silent
-(defhydra hydra-magit (:color blue)
-  (concat "\n " (me/make-hydra-heading "Magit" "Do" "More")
+(defhydra hydra-git (:color blue)
+  (concat "\n " (me/make-hydra-heading "Git" "Do" "More")
           "
  _q_ quit              _b_ blame             _m_ smerge...
  ^^                    _c_ clone             ^^
+ ^^                    _g_ status            ^^
  ^^                    _i_ init              ^^
- ^^                    _s_ status            ^^
 ")
   ("q" nil)
   ("b" magit-blame)
   ("c" magit-clone)
+  ("g" magit-status)
   ("i" magit-init)
-  ("m" hydra-smerge/body)
-  ("s" magit-status))
+  ("m" hydra-smerge/body))
 #+END_SRC
+
+[[./screenshots/hydra.magit.jpg]]
 
 #+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-smerge
@@ -1192,7 +1167,32 @@ Group Magit commands.
   ("u" smerge-keep-upper))
 #+END_SRC
 
-[[./screenshots/hydra.magit.jpg]]
+*** Hydra / Ivy
+
+Group Ivy commands.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defhydra hydra-ivy (:color blue)
+  (concat "\n " (me/make-hydra-heading "Ivy" "Do" "Browse")
+          "
+ _q_ quit              _m_ mark              _f_ faces
+ _r_ resume            _M_ unmark            _i_ imenu
+ ^^                    ^^                    _l_ libraries
+ ^^                    ^^                    _s_ symbols
+ ^^                    ^^                    _u_ unicode
+")
+  ("q" nil)
+  ("f" counsel-faces)
+  ("i" counsel-imenu)
+  ("l" counsel-find-library)
+  ("m" ivy-mark :color red)
+  ("M" ivy-unmark :color red)
+  ("r" ivy-resume)
+  ("s" counsel-info-lookup-symbol)
+  ("u" counsel-unicode-char))
+#+END_SRC
+
+[[./screenshots/hydra.ivy.jpg]]
 
 *** Hydra / Markdown
 
