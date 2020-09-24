@@ -187,7 +187,7 @@ Load the theme and fix some high-level faces to match my personal preferences.
     '(magit-diff-removed :background 'unspecified)
     '(magit-section-heading :foreground red :height me/font-size-large)
     '(markdown-table-face :height me/font-size-small)
-    '(mode-line-inactive :background base3)
+    '(mode-line-inactive :background bg-alt)
     '(org-block-begin-line :background 'unspecified :underline grey)
     '(org-block-end-line :overline grey :underline nil)
     '(org-quote :inherit 'font-lock-doc-face)
