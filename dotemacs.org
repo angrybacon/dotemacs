@@ -923,7 +923,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
 (use-package hydra
   :preface
   (defvar-local me/hydra-super-body nil)
-  (defun me/make-hydra-heading (&rest headings)
+  (defun me/hydra-heading (&rest headings)
     "Format HEADINGS to look pretty in a hydra docstring."
     (mapconcat (lambda (it)
                  (propertize (format "%-20s" it) 'face 'shadow))
@@ -964,7 +964,7 @@ Group date-related commands.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-dates (:color blue)
-  (concat "\n " (me/make-hydra-heading "Dates" "Insert" "Insert with Time")
+  (concat "\n " (me/hydra-heading "Dates" "Insert" "Insert with Time")
           "
  _q_ quit              _d_ short             _D_ short
  ^^                    _i_ iso               _I_ iso
@@ -987,7 +987,7 @@ Group Eyebrowse commands.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-eyebrowse (:color blue)
-  (concat "\n " (me/make-hydra-heading "Eyebrowse" "Do" "Switch")
+  (concat "\n " (me/hydra-heading "Eyebrowse" "Do" "Switch")
           "
  _q_ quit              _c_ create            _0_-_9_ %s(eyebrowse-mode-line-indicator)
  ^^                    _k_ kill              _<_ previous
@@ -1023,7 +1023,7 @@ Group Flycheck commands.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-flycheck (:color blue)
-  (concat "\n " (me/make-hydra-heading "Flycheck" "Errors" "Checker")
+  (concat "\n " (me/hydra-heading "Flycheck" "Errors" "Checker")
           "
  _q_ quit              _<_ previous          _?_ describe
  _m_ manual            _>_ next              _d_ disable
@@ -1052,7 +1052,7 @@ Group Magit commands.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-git (:color blue)
-  (concat "\n " (me/make-hydra-heading "Git" "Do" "More")
+  (concat "\n " (me/hydra-heading "Git" "Do" "More")
           "
  _q_ quit              _b_ blame             _p_ previous          _m_ smerge...
  ^^                    _c_ clone             _n_ next              ^^
@@ -1075,7 +1075,7 @@ Group Magit commands.
 #+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-smerge
   (:color pink :pre (if (not smerge-mode) (smerge-mode 1)) :post (smerge-auto-leave))
-  (concat "\n " (me/make-hydra-heading "SMerge" "Move" "Keep" "Diff")
+  (concat "\n " (me/hydra-heading "SMerge" "Move" "Keep" "Diff")
           "
  _q_ quit              _g_ first             _RET_ current         _=_ upper / lower
  ^^                    _G_ last              _a_ all               _<_ upper / base
@@ -1106,7 +1106,7 @@ Group Ivy commands.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-ivy (:color blue)
-  (concat "\n " (me/make-hydra-heading "Ivy" "Do" "Browse")
+  (concat "\n " (me/hydra-heading "Ivy" "Do" "Browse")
           "
  _q_ quit              _m_ mark              _f_ faces
  _r_ resume            _M_ unmark            _i_ imenu
@@ -1133,7 +1133,7 @@ Group Markdown commands.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-markdown (:color pink)
-  (concat "\n " (me/make-hydra-heading "Markdown" "Table Columns" "Table Rows")
+  (concat "\n " (me/hydra-heading "Markdown" "Table Columns" "Table Rows")
           "
  _q_ quit              _c_ insert            _r_ insert
  ^^                    _C_ delete            _R_ delete
@@ -1159,7 +1159,7 @@ Group Org commands.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-org (:color pink)
-  (concat "\n " (me/make-hydra-heading "Org" "Links" "Outline")
+  (concat "\n " (me/hydra-heading "Org" "Links" "Outline")
           "
  _q_ quit              _i_ insert            _<_ previous
  ^^                    _n_ next              _>_ next
@@ -1187,7 +1187,7 @@ Group Projectile commands.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-projectile (:color blue)
-  (concat "\n " (me/make-hydra-heading "Projectile" "Buffers" "Find" "Search")
+  (concat "\n " (me/hydra-heading "Projectile" "Buffers" "Find" "Search")
           "
  _q_ quit              _b_ list              _d_ directory         _r_ replace
  _i_ reset cache       _K_ kill all          _D_ root              _R_ regexp replace
@@ -1217,7 +1217,7 @@ Group React JavaScript commands.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-rjsx (:color blue)
-  (concat "\n " (me/make-hydra-heading "RJSX" "JSDoc")
+  (concat "\n " (me/hydra-heading "RJSX" "JSDoc")
           "
  _q_ quit              _f_ function
  ^^                    _F_ file
@@ -1235,7 +1235,7 @@ Group system-related commands.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-system (:color blue)
-  (concat "\n " (me/make-hydra-heading "System" "Packages" "Shell" "Other")
+  (concat "\n " (me/hydra-heading "System" "Packages" "Shell" "Other")
           "
  _q_ quit              _i_ install           _e_ eshell            _d_ clear byte-compiled
  ^^                    _p_ list              _t_ term              _D_ clear desktop
@@ -1264,7 +1264,7 @@ Group window-related commands.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-windows (:color pink)
-  (concat "\n " (me/make-hydra-heading "Windows" "Size" "Zoom" "Buffers")
+  (concat "\n " (me/hydra-heading "Windows" "Size" "Zoom" "Buffers")
           "
  _q_ quit              _b_ balance           _-_ out               _w_ revert
  _m_ maximize          _i_ heighten          _=_ in                ^^
