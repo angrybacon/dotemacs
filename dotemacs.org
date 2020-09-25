@@ -1,51 +1,6 @@
 #+TITLE: DotEmacs
 #+AUTHOR: Mathieu Marques
 
-* Table of Content                                                      :TOC:
-- [[#bootstrap][Bootstrap]]
-  - [[#use-better-defaults][Use better defaults]]
-  - [[#load-customel][Load =.custom.el=]]
-  - [[#load-secretel][Load =.secret.el=]]
-- [[#theme][Theme]]
-- [[#languages][Languages]]
-  - [[#css][CSS]]
-  - [[#html][HTML]]
-  - [[#javascript][JavaScript]]
-  - [[#json][JSON]]
-  - [[#lisp][Lisp]]
-  - [[#markdown][Markdown]]
-  - [[#org][Org]]
-  - [[#yaml][YAML]]
-- [[#features][Features]]
-  - [[#auto-completion][Auto-Completion]]
-  - [[#buffers-and-windows][Buffers and Windows]]
-  - [[#comments][Comments]]
-  - [[#customization-menus][Customization Menus]]
-  - [[#daemon][Daemon]]
-  - [[#dictionary][Dictionary]]
-  - [[#diff][Diff]]
-  - [[#dired][Dired]]
-  - [[#evil][Evil]]
-  - [[#expand][Expand]]
-  - [[#help][Help]]
-  - [[#ivy][Ivy]]
-  - [[#hydra][Hydra]]
-  - [[#irc][IRC]]
-  - [[#line-numbers][Line Numbers]]
-  - [[#linters][Linters]]
-  - [[#lsp][LSP]]
-  - [[#mode-line][Mode-Line]]
-  - [[#navigation][Navigation]]
-  - [[#os-specific][OS-Specific]]
-  - [[#parentheses][Parentheses]]
-  - [[#paste][Paste]]
-  - [[#point-and-region][Point and Region]]
-  - [[#projectile][Projectile]]
-  - [[#quality-of-life][Quality of Life]]
-  - [[#shell-and-terminal][Shell and Terminal]]
-  - [[#version-control][Version Control]]
-  - [[#whitespaces][Whitespaces]]
-
 * Bootstrap
 
 ** Use better defaults
@@ -154,7 +109,7 @@ and =user-mail-address=. This is also where you want your API tokens to live.
     (load secret.el)))
 #+END_SRC
 
-* Theme
+** Theme
 
 Load the theme and fix some high-level faces to match my personal preferences.
 
@@ -200,6 +155,7 @@ Load the theme and fix some high-level faces to match my personal preferences.
     '(vertical-border :foreground bg-alt)
     '(which-key-command-description-face :foreground 'unspecified)))
 #+END_SRC
+
 
 * Languages
 
@@ -282,7 +238,7 @@ HTML mode is defined in =sgml-mode.el=.
 
 ** JSON
 
-- *TOFIX*: Indent level is broken (https://github.com/joshwnj/json-mode/issues/32).
+| NOTE | Indent level is broken | https://github.com/joshwnj/json-mode/issues/32 |
 
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package json-mode
@@ -377,18 +333,12 @@ authoring documents with a fast and effective plain-text system.
   (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer-name))
 #+END_SRC
 
-Tired of having to manually update your tables of contents? This package will
-maintain a TOC at the first heading that has a =:TOC:= tag.
-
-#+BEGIN_SRC emacs-lisp :results silent
-(use-package toc-org :after org)
-#+END_SRC
-
 ** YAML
 
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package yaml-mode :mode "\\.yml\\'")
 #+END_SRC
+
 
 * Features
 
@@ -521,7 +471,7 @@ by default. The behaviour is modeled after
 
 Window management.
 
-- *TODO*: Shackle Magit.
+| TODO | Shackle Magit windows |
 
 #+BEGIN_QUOTE
 =shackle= gives you the means to put an end to popped up buffers not behaving they
@@ -595,7 +545,8 @@ little more.
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package cus-edit
   :ensure nil
-  :custom (custom-unlispify-tag-names nil))
+  :custom
+  (custom-unlispify-tag-names nil))
 #+END_SRC
 
 ** Daemon
@@ -607,7 +558,8 @@ want to edit a single file for a quick edit.
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package server
   :ensure nil
-  :hook (after-init . server-start))
+  :hook
+  (after-init . server-start))
 #+END_SRC
 
 ** Dictionary
@@ -865,6 +817,8 @@ Augment Ivy's interface with details for candidates.
          ((> size 1000000) (format "%.1fM" (/ size 1000000.0)))
          ((> size 1000) (format "%.1fk" (/ size 1000.0)))
          (t (format "%d" size))))))
+  :custom
+  (ivy-rich-parse-remote-buffer nil)
   :config
   (ivy-rich-mode 1)
   (setq-default
@@ -910,12 +864,10 @@ Augment Ivy's interface with details for candidates.
                  (ivy-rich-package-archive-summary (:face font-lock-builtin-face :width 5))
                  (ivy-rich-package-install-summary (:face font-lock-doc-face)))
                 :delimiter "  ")))
-  (ivy-rich-set-display-transformer)
-  :custom
-  (ivy-rich-parse-remote-buffer nil))
+  (ivy-rich-set-display-transformer))
 #+END_SRC
 
-*** Ivy / Counsel
+** Ivy / Counsel
 
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package counsel
@@ -938,7 +890,7 @@ Augment Ivy's interface with details for candidates.
   (counsel-projectile-mode 1))
 #+END_SRC
 
-*** Ivy / Swiper
+** Ivy / Swiper
 
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package swiper
@@ -996,7 +948,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
   (hydra-default-hint nil))
 #+END_SRC
 
-*** Hydra / Dates
+** Hydra / Dates
 
 Group date-related commands.
 
@@ -1019,7 +971,7 @@ Group date-related commands.
 
 [[./screenshots/hydra.dates.jpg]]
 
-*** Hydra / Eyebrowse
+** Hydra / Eyebrowse
 
 Group Eyebrowse commands.
 
@@ -1055,7 +1007,7 @@ Group Eyebrowse commands.
 
 [[./screenshots/hydra.eyebrowse.jpg]]
 
-*** Hydra / Flycheck
+** Hydra / Flycheck
 
 Group Flycheck commands.
 
@@ -1084,7 +1036,7 @@ Group Flycheck commands.
 
 [[./screenshots/hydra.flycheck.jpg]]
 
-*** Hydra / Git
+** Hydra / Git
 
 Group Magit commands.
 
@@ -1138,7 +1090,7 @@ Group Magit commands.
   ("u" smerge-keep-upper))
 #+END_SRC
 
-*** Hydra / Ivy
+** Hydra / Ivy
 
 Group Ivy commands.
 
@@ -1165,7 +1117,7 @@ Group Ivy commands.
 
 [[./screenshots/hydra.ivy.jpg]]
 
-*** Hydra / Markdown
+** Hydra / Markdown
 
 Group Markdown commands.
 
@@ -1191,7 +1143,7 @@ Group Markdown commands.
 
 [[./screenshots/hydra.markdown.jpg]]
 
-*** Hydra / Org
+** Hydra / Org
 
 Group Org commands.
 
@@ -1208,18 +1160,18 @@ Group Org commands.
   ("q" nil)
   ("<" org-backward-element)
   (">" org-forward-element)
-  ("a" outline-show-all)
+  ("a" outline-show-all :color blue)
   ("g" counsel-org-goto :color blue)
   ("i" org-insert-link :color blue)
   ("n" org-next-link)
   ("p" org-previous-link)
   ("s" org-store-link)
-  ("v" org-overview))
+  ("v" org-overview :color blue))
 #+END_SRC
 
 [[./screenshots/hydra.org.jpg]]
 
-*** Hydra / Projectile
+** Hydra / Projectile
 
 Group Projectile commands.
 
@@ -1249,7 +1201,7 @@ Group Projectile commands.
 
 [[./screenshots/hydra.projectile.jpg]]
 
-*** Hydra / RJSX
+** Hydra / RJSX
 
 Group React JavaScript commands.
 
@@ -1267,7 +1219,7 @@ Group React JavaScript commands.
 
 [[./screenshots/hydra.rjsx.jpg]]
 
-*** Hydra / System
+** Hydra / System
 
 Group system-related commands.
 
@@ -1296,7 +1248,7 @@ Group system-related commands.
 
 [[./screenshots/hydra.system.jpg]]
 
-*** Hydra / Windows
+** Hydra / Windows
 
 Group window-related commands.
 
@@ -1326,8 +1278,6 @@ Group window-related commands.
 [[./screenshots/hydra.windows.jpg]]
 
 ** IRC
-
-- *TODO*: Display the current count of users. =(hash-table-count erc-channel-users)=
 
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package erc
@@ -1597,9 +1547,7 @@ Yup, Emacs supports
     '(irc-buffers matches me/process debug me/major-mode)))
 #+END_SRC
 
-** Navigation
-
-*** Navigation / Avy
+** Navigation / Avy
 
 #+BEGIN_QUOTE
 =avy= is a GNU Emacs package for jumping to visible text using a char-based
@@ -1622,7 +1570,7 @@ same idea.
   (set-face-italic 'avy-lead-face nil))
 #+END_SRC
 
-*** Navigation / Inline
+** Navigation / Inline
 
 Smarter =C-a=.
 
@@ -1659,12 +1607,12 @@ Evil-snipe emulates [[https://github.com/goldfeld/vim-seek][vim-seek]] and/or
   (evil-snipe-smart-case t))
 #+END_SRC
 
-*** Navigation / Paragraphs
+** Navigation / Paragraphs
 
 I disagree with Emacs' definition of paragraphs so I redefined the way it should
 jump from one paragraph to another.
 
-- *TOFIX*: Ignore invisible text.
+| TODO | Ignore invisible text |
 
 #+BEGIN_SRC emacs-lisp :results silent
 (global-set-key [remap backward-paragraph] #'me/backward-paragraph-dwim)
@@ -1687,7 +1635,7 @@ jump from one paragraph to another.
   (skip-chars-forward "\n"))
 #+END_SRC
 
-*** Navigation / Pulse
+** Navigation / Pulse
 
 Pulse temporarily highlights the background color of a line or region.
 
@@ -1695,7 +1643,7 @@ Pulse temporarily highlights the background color of a line or region.
 (use-package pulse :ensure nil)
 #+END_SRC
 
-*** Navigation / Replace
+** Navigation / Replace
 
 Better search and replace features. Even though I prefer to use
 =multiple-cursors= to replace text in different places at once, =anzu= has a
@@ -1728,7 +1676,7 @@ mode-line in various search modes.
   (anzu-cons-mode-line-p nil))
 #+END_SRC
 
-*** Navigation / Scroll
+** Navigation / Scroll
 
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package mwheel
@@ -1738,7 +1686,7 @@ mode-line in various search modes.
   (mouse-wheel-scroll-amount '(2 ((control) . 8))))
 #+END_SRC
 
-*** Navigation / Search
+** Navigation / Search
 
 Isearch stands for /incremental search/. This means that search results are
 highlighted while you are typing your query, incrementally. Since he who can do
@@ -1819,8 +1767,6 @@ when dealing with mismatched parentheses.
 I am still looking for the perfect parenthesis management setup as of
 today... No package seem to please my person.
 
-- *TODO*: Find a better parenthese management package.
-
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package smartparens
   :bind
@@ -1854,7 +1800,7 @@ fails.
 (use-package webpaste)
 #+END_SRC
 
-** Point and Region
+** Point and Region / Expand
 
 Increase region by semantic units. It tries to be smart about it and adapt to
 the structure of the current major mode.
@@ -1865,11 +1811,11 @@ the structure of the current major mode.
   ("C-=" . er/expand-region))
 #+END_SRC
 
-*** Point and Region / Lines
+** Point and Region / Lines
 
 Work on lines.
 
-- *TODO*: Handle regions.
+| TODO | Handle regions |
 
 #+BEGIN_SRC emacs-lisp :results silent
 (global-set-key (kbd "<M-S-up>") 'me/duplicate-backward)
@@ -1926,7 +1872,7 @@ If region was active, keep it so that the command can be repeated."
   (indent-according-to-mode))
 #+END_SRC
 
-*** Point and Region / Multiple Cursors
+** Point and Region / Multiple Cursors
 
 Enable multiple cursors at once. Some witchcraft at work here.
 
@@ -1949,7 +1895,7 @@ Enable multiple cursors at once. Some witchcraft at work here.
   (mc/insert-numbers-default 1))
 #+END_SRC
 
-*** Point and Region / Selected
+** Point and Region / Selected
 
 Enable new custom binds when region is active. I've also added a few helpers to
 use with =selected=.
@@ -2307,8 +2253,6 @@ Display the available keybindings following your current input.
 
 Yes, Emacs emulates terminals too.
 
-- **TODO**: Source =.bash_profile= on =M-x term=.
-
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package term
   :ensure nil
@@ -2423,7 +2367,7 @@ Git itself deserve to be called porcelains.
 
 ** Whitespaces
 
-Highlight space-like characters, eg. trailing spaces, tabs, empty lines.
+Highlight trailing space-like characters, eg. trailing spaces, tabs, empty lines.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package whitespace
