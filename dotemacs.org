@@ -679,6 +679,16 @@ https://github.com/emacs-evil/evil-collection
   (evil-collection-init))
 #+END_SRC
 
+Comment things using Evil operators.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package evil-commentary
+  :after evil
+  :defer nil
+  :config
+  (evil-commentary-mode))
+#+END_SRC
+
 ** Expand
 
 HippieExpand manages expansions a la [[http://emmet.io/][Emmet]]. So I've
