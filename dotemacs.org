@@ -153,7 +153,8 @@ Load the theme and fix some high-level faces to match my personal preferences.
     '(tooltip :background base1)
     '(variable-pitch :family 'unspecified)
     '(vertical-border :foreground bg-alt)
-    '(which-key-command-description-face :foreground 'unspecified)))
+    '(which-key-command-description-face :foreground 'unspecified)
+    '(whitespace-empty :background red :extend t)))
 #+END_SRC
 
 
@@ -1342,7 +1343,7 @@ Display relative line numbers in most editing modes.
 (setq-default
  display-line-numbers-current-absolute nil        ; Current line is 0
  display-line-numbers-type 'relative              ; Prefer relative numbers
- display-line-numbers-width 2)                    ; Enforce width to reduce computation
+ display-line-numbers-width 3)                    ; Enforce width to reduce computation
 #+END_SRC
 
 ** Linters
