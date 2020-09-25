@@ -293,17 +293,23 @@ authoring documents with a fast and effective plain-text system.
 (use-package org
   :ensure nil
   :preface
-  (defun me/org-src-buffer-name (org-buffer-name language)
+  (defun me/org-cycle-parent (argument)
+    "Go to the nearest parent heading and execute `org-cycle'."
+    (interactive "p")
+    (if (org-at-heading-p)
+        (outline-up-heading argument)
+      (org-previous-visible-heading argument))
+    (org-cycle))
+  (defun me/org-src-buffer-name (buffer-name &rest _)
     "Construct the buffer name for a source editing buffer. See
 `org-src--construct-edit-buffer-name'."
-    (format "*%s*" org-buffer-name))
-  (defun me/org-set-ongoing-hydra-body ()
-    (setq me/ongoing-hydra-body #'hydra-org/body))
+    (format "*%s*" buffer-name))
   :bind
   (:map org-mode-map
         ([remap backward-paragraph] . me/backward-paragraph-dwim)
         ([remap forward-paragraph] . me/forward-paragraph-dwim)
         ("<C-return>" . nil)
+        ("<C-tab>" . me/org-cycle-parent)
         ("<C-S-down>" . nil)
         ("<C-S-up>" . nil)
         ("<M-S-down>" . nil)
