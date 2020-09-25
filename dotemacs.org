@@ -215,12 +215,10 @@ HTML mode is defined in =sgml-mode.el=.
   (("\\.jsx\\'" . rjsx-mode)
    ("components/.+\\.js$" . rjsx-mode))
   :preface
-  (defun me/rjsx-set-ongoing-hydra-body ()
-    (setq me/ongoing-hydra-body #'hydra-rjsx/body))
   (defun me/rjsx-set-pretty-print-function ()
     (setq me/pretty-print-function #'sgml-pretty-print))
   :hook
-  ((rjsx-mode . me/rjsx-set-ongoing-hydra-body)
+  ((rjsx-mode . me/hydra-set-super)
    (rjsx-mode . me/rjsx-set-pretty-print-function)
    (rjsx-mode . sgml-electric-tag-pair-mode)
    (rjsx-mode . turn-off-auto-fill)))
@@ -262,9 +260,6 @@ HTML mode is defined in =sgml-mode.el=.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package markdown-mode
-  :preface
-  (defun me/markdown-set-ongoing-hydra-body ()
-    (setq me/ongoing-hydra-body #'hydra-markdown/body))
   :mode
   ("INSTALL\\'"
    "CONTRIBUTORS\\'"
@@ -273,7 +268,7 @@ HTML mode is defined in =sgml-mode.el=.
    "\\.markdown\\'"
    "\\.md\\'")
   :hook
-  (markdown-mode . me/markdown-set-ongoing-hydra-body)
+  (markdown-mode . me/hydra-set-super)
   :custom
   (markdown-asymmetric-header t)
   (markdown-split-window-direction 'right)
@@ -314,8 +309,7 @@ authoring documents with a fast and effective plain-text system.
         ("<M-S-down>" . nil)
         ("<M-S-up>" . nil))
   :hook
-  ((org-mode . me/org-set-ongoing-hydra-body)
-   (org-mode . toc-org-enable))
+  (org-mode . me/hydra-set-super)
   :custom
   (org-adapt-indentation nil)
   (org-confirm-babel-evaluate nil)
@@ -922,25 +916,35 @@ seamless, it's like a minor mode that disables itself auto-magically.
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package hydra
   :preface
-  (defvar-local me/ongoing-hydra-body nil)
+  (defvar-local me/hydra-super-body nil)
   (defun me/make-hydra-heading (&rest headings)
     "Format HEADINGS to look pretty in a hydra docstring."
     (mapconcat (lambda (it)
                  (propertize (format "%-20s" it) 'face 'shadow))
                headings
                nil))
-  (defun me/ongoing-hydra ()
+  (defun me/hydra-set-super ()
+    (when-let* ((suffix "-mode")
+                (position (- (length suffix)))
+                (mode (symbol-name major-mode))
+                (name (if (string= suffix (substring mode position))
+                          (substring mode 0 position)
+                        mode))
+                (body (intern (format "hydra-%s/body" name))))
+      (when (functionp body)
+        (setq me/hydra-super-body body))))
+  (defun me/hydra-super ()
     (interactive)
-    (if me/ongoing-hydra-body
-        (funcall me/ongoing-hydra-body)
-      (user-error "me/ongoing-hydra: me/ongoing-hydra-body is not set")))
+    (if me/hydra-super-body
+        (funcall me/hydra-super-body)
+      (user-error "me/hydra-super: me/hydra-super-body is not set")))
   :bind
   ("C-c d" . hydra-dates/body)
   ("C-c e" . hydra-eyebrowse/body)
   ("C-c f" . hydra-flycheck/body)
   ("C-c g" . hydra-git/body)
   ("C-c i" . hydra-ivy/body)
-  ("C-c o" . me/ongoing-hydra)
+  ("C-c o" . me/hydra-super)
   ("C-c p" . hydra-projectile/body)
   ("C-c s" . hydra-system/body)
   ("C-c w" . hydra-windows/body)
