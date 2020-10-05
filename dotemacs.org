@@ -165,7 +165,8 @@ Load the theme and fix some high-level faces to match my personal preferences.
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package css-mode
   :ensure nil
-  :custom (css-indent-offset 2))
+  :custom
+  (css-indent-offset 2))
 
 (use-package scss-mode
   :ensure nil
@@ -173,8 +174,8 @@ Load the theme and fix some high-level faces to match my personal preferences.
   (defun me/scss-set-comment-style ()
     (setq-local comment-end "")
     (setq-local comment-start "//"))
-  :mode ("\\.sass\\'" "\\.scss\\'")
-  :hook (scss-mode . me/scss-set-comment-style))
+  :hook
+  (scss-mode . me/scss-set-comment-style))
 #+END_SRC
 
 ** HTML
@@ -188,9 +189,9 @@ HTML mode is defined in =sgml-mode.el=.
   (defun me/html-set-pretty-print-function ()
     (setq me/pretty-print-function #'sgml-pretty-print))
   :hook
-  ((html-mode . me/html-set-pretty-print-function)
-   (html-mode . sgml-electric-tag-pair-mode)
-   (html-mode . sgml-name-8bit-mode))
+  (html-mode . me/html-set-pretty-print-function)
+  (html-mode . sgml-electric-tag-pair-mode)
+  (html-mode . sgml-name-8bit-mode)
   :custom
   (sgml-basic-offset 2))
 #+END_SRC
@@ -212,17 +213,15 @@ HTML mode is defined in =sgml-mode.el=.
   (js2-mode-show-strict-warnings nil))
 
 (use-package rjsx-mode
-  :mode
-  (("\\.jsx\\'" . rjsx-mode)
-   ("components/.+\\.js$" . rjsx-mode))
+  :mode ("\\.jsx\\'" "components/.+\\.js$")
   :preface
   (defun me/rjsx-set-pretty-print-function ()
     (setq me/pretty-print-function #'sgml-pretty-print))
   :hook
-  ((rjsx-mode . me/hydra-set-super)
-   (rjsx-mode . me/rjsx-set-pretty-print-function)
-   (rjsx-mode . sgml-electric-tag-pair-mode)
-   (rjsx-mode . turn-off-auto-fill)))
+  (rjsx-mode . me/hydra-set-super)
+  (rjsx-mode . me/rjsx-set-pretty-print-function)
+  (rjsx-mode . sgml-electric-tag-pair-mode)
+  (rjsx-mode . turn-off-auto-fill))
 
 (use-package web-mode
   :mode "\\.tsx\\'"
@@ -254,28 +253,23 @@ HTML mode is defined in =sgml-mode.el=.
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package ielm
   :ensure nil
-  :hook (ielm-mode . (lambda () (setq-local scroll-margin 0))))
+  :hook
+  (ielm-mode . (lambda () (setq-local scroll-margin 0))))
 #+END_SRC
 
 ** Markdown
 
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package markdown-mode
-  :mode
-  ("INSTALL\\'"
-   "CONTRIBUTORS\\'"
-   "LICENSE\\'"
-   "README\\'"
-   "\\.markdown\\'"
-   "\\.md\\'")
+  :mode ("INSTALL\\'" "CONTRIBUTORS\\'" "LICENSE\\'" "README\\'")
   :hook
   (markdown-mode . me/hydra-set-super)
   :custom
   (markdown-asymmetric-header t)
   (markdown-split-window-direction 'right)
   :config
-  (unbind-key "M-<down>" markdown-mode-map)
-  (unbind-key "M-<up>" markdown-mode-map))
+  (unbind-key "<M-down>" markdown-mode-map)
+  (unbind-key "<M-up>" markdown-mode-map))
 #+END_SRC
 
 ** Org
@@ -307,14 +301,14 @@ authoring documents with a fast and effective plain-text system.
     (format "*%s*" buffer-name))
   :bind
   (:map org-mode-map
-        ([remap backward-paragraph] . me/backward-paragraph-dwim)
-        ([remap forward-paragraph] . me/forward-paragraph-dwim)
-        ("<C-return>" . nil)
-        ("<C-tab>" . me/org-cycle-parent)
-        ("<C-S-down>" . nil)
-        ("<C-S-up>" . nil)
-        ("<M-S-down>" . nil)
-        ("<M-S-up>" . nil))
+   ([remap backward-paragraph] . me/backward-paragraph-dwim)
+   ([remap forward-paragraph] . me/forward-paragraph-dwim)
+   ("<C-return>" . nil)
+   ("<C-tab>" . me/org-cycle-parent)
+   ("<C-S-down>" . nil)
+   ("<C-S-up>" . nil)
+   ("<M-S-down>" . nil)
+   ("<M-S-up>" . nil))
   :hook
   (org-mode . me/hydra-set-super)
   :custom
@@ -337,7 +331,7 @@ authoring documents with a fast and effective plain-text system.
 ** YAML
 
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package yaml-mode :mode "\\.yml\\'")
+(use-package yaml-mode)
 #+END_SRC
 
 
@@ -641,16 +635,16 @@ https://github.com/emacs-evil/evil
       (apply original arguments)))
   :bind
   (:map evil-inner-text-objects-map
-        ("g" . me/evil-whole-buffer)
+   ("g" . me/evil-whole-buffer)
    :map evil-outer-text-objects-map
-        ("g" . me/evil-whole-buffer)
+   ("g" . me/evil-whole-buffer)
    :map evil-motion-state-map
-        ([down] . ignore)
-        ([left] . ignore)
-        ([right] . ignore)
-        ([up] . ignore)
-        ("gs" . avy-goto-char-timer)
-        ("gS" . avy-goto-char))
+   ([down] . ignore)
+   ([left] . ignore)
+   ([right] . ignore)
+   ([up] . ignore)
+   ("gs" . avy-goto-char-timer)
+   ("gS" . avy-goto-char))
   :custom
   (evil-echo-state nil)
   (evil-emacs-state-cursor 'bar)
@@ -699,12 +693,12 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
 (use-package emmet-mode
   :bind
   (:map emmet-mode-keymap
-        ("<C-return>" . nil)
-        ("C-M-<left>" . nil)
-        ("C-M-<right>" . nil)
-        ("C-c w" . nil))
+   ("<C-return>" . nil))
   :hook
-  (css-mode html-mode rjsx-mode web-mode)
+  (css-mode . emmet-mode)
+  (html-mode . emmet-mode)
+  (rjsx-mode . emmet-mode)
+  (web-mode . emmet-mode)
   :custom
   (emmet-insert-flash-time .1)
   (emmet-move-cursor-between-quote t))
@@ -729,15 +723,11 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
 (use-package yasnippet
   :bind
   (:map yas-minor-mode-map
-        ("TAB" . nil)
-        ([tab] . nil))
+   ("TAB" . nil)
+   ([tab] . nil))
   :hook
-  ((emacs-lisp-mode . yas-minor-mode)
-   (html-mode . yas-minor-mode)
-   (js-mode . yas-minor-mode)
-   (org-mode . yas-minor-mode)
-   (python-mode . yas-minor-mode)
-   (web-mode . yas-minor-mode))
+  (prog-mode . yas-minor-mode)
+  (text-mode . yas-minor-mode)
   :custom
   (yas-snippet-dirs `(,(expand-file-name "snippets/" user-emacs-directory)))
   (yas-verbosity 2)
@@ -752,8 +742,8 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
   :ensure nil
   :bind
   (:map help-mode-map
-        ("<" . help-go-back)
-        (">" . help-go-forward)))
+   ("<" . help-go-back)
+   (">" . help-go-forward)))
 #+END_SRC
 
 Provide better detailed help buffers.
@@ -763,6 +753,10 @@ Provide better detailed help buffers.
 #+END_SRC
 
 ** Ivy
+
+| =counsel= | https://github.com/abo-abo/swiper#counsel |
+| =ivy=     | https://github.com/abo-abo/swiper#ivy     |
+| =swiper=  | https://github.com/abo-abo/swiper#swiper  |
 
 #+BEGIN_QUOTE
 Ivy is a generic completion mechanism for Emacs. While it operates similarly to
@@ -774,13 +768,13 @@ efficient, smaller, simpler, and smoother to use yet highly customizable.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package ivy
-  :hook
-  (after-init . ivy-mode)
   :bind
   (:map ivy-minibuffer-map
-        ("<C-return>" . ivy-call)
-        ("C-<down>" . ivy-next-line-and-call)
-        ("C-<up>" . ivy-previous-line-and-call))
+   ("<C-down>" . ivy-next-line-and-call)
+   ("<C-return>" . ivy-call)
+   ("<C-up>" . ivy-previous-line-and-call))
+  :hook
+  (after-init . ivy-mode)
   :custom
   (ivy-count-format "")
   (ivy-fixed-height-minibuffer t)
@@ -1063,7 +1057,7 @@ Group Magit commands.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-git (:color blue)
-  (concat "\n " (me/hydra-heading "Git" "Do" "More")
+  (concat "\n " (me/hydra-heading "Git" "Do" "Gutter" "More")
           "
  _q_ quit              _b_ blame             _p_ previous          _m_ smerge...
  ^^                    _c_ clone             _n_ next              ^^
@@ -1318,9 +1312,9 @@ Group window-related commands.
     (erc-bol))
   :bind
   (:map erc-mode-map
-        ([remap erc-bol] . me/erc-bol-shifted)
-        ("M-<down>" . erc-next-command)
-        ("M-<up>" . erc-previous-command))
+   ([remap erc-bol] . me/erc-bol-shifted)
+   ("<M-down>" . erc-next-command)
+   ("<M-up>" . erc-previous-command))
   :hook
   (erc-mode . (lambda () (setq-local scroll-margin 0)))
   :custom
@@ -1368,11 +1362,11 @@ binaries (see [[./README.org][README.org]]).
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package flycheck
   :hook
-  ((css-mode . flycheck-mode)
-   (emacs-lisp-mode . flycheck-mode)
-   (js-mode . flycheck-mode)
-   (web-mode . flycheck-mode)
-   (python-mode . flycheck-mode))
+  (css-mode . flycheck-mode)
+  (emacs-lisp-mode . flycheck-mode)
+  (js-mode . flycheck-mode)
+  (web-mode . flycheck-mode)
+  (python-mode . flycheck-mode)
   :custom
   (flycheck-check-syntax-automatically '(idle-buffer-switch save))
   (flycheck-disabled-checkers '(emacs-lisp-checkdoc))
@@ -1586,9 +1580,10 @@ same idea.
   (avy-background t)
   (avy-style 'at-full)
   (avy-timeout-seconds .3)
-  :config
-  (set-face-italic 'avy-goto-char-timer-face nil)
-  (set-face-italic 'avy-lead-face nil))
+  ;; :config
+  ;; (set-face-italic 'avy-goto-char-timer-face nil)
+  ;; (set-face-italic 'avy-lead-face nil)
+  )
 #+END_SRC
 
 ** Navigation / Inline
@@ -1596,9 +1591,9 @@ same idea.
 Smarter =C-a=.
 
 #+BEGIN_SRC emacs-lisp :results silent
-(global-set-key [remap move-beginning-of-line] #'me/beginning-of-line-dwim)
+(global-set-key [remap move-beginning-of-line] #'me/move-beginning-of-line-dwim)
 
-(defun me/beginning-of-line-dwim ()
+(defun me/move-beginning-of-line-dwim ()
   "Move point to first non-whitespace character, or beginning of line."
   (interactive "^")
   (let ((origin (point)))
@@ -1726,12 +1721,11 @@ commands.
    :map minibuffer-local-isearch-map
    ("<M-down>" . next-history-element)
    ("<M-up>" . previous-history-element))
-  :init
-  (setq-default
-   isearch-allow-scroll t
-   lazy-highlight-buffer t
-   lazy-highlight-cleanup nil
-   lazy-highlight-initial-delay 0))
+  :custom
+  (isearch-allow-scroll t)
+  (lazy-highlight-buffer t)
+  (lazy-highlight-cleanup nil)
+  (lazy-highlight-initial-delay 0))
 #+END_SRC
 
 ** OS-Specific
@@ -1791,11 +1785,11 @@ today... No package seem to please my person.
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package smartparens
   :bind
-  (("M-<backspace>" . sp-unwrap-sexp)
-   ("M-<left>" . sp-forward-barf-sexp)
-   ("M-<right>" . sp-forward-slurp-sexp)
-   ("M-S-<left>" . sp-backward-slurp-sexp)
-   ("M-S-<right>" . sp-backward-barf-sexp))
+  ("<M-backspace>" . sp-unwrap-sexp)
+  ("<M-left>" . sp-forward-barf-sexp)
+  ("<M-right>" . sp-forward-slurp-sexp)
+  ("<M-S-left>" . sp-backward-slurp-sexp)
+  ("<M-S-right>" . sp-backward-barf-sexp)
   :hook
   (after-init . smartparens-global-mode)
   :custom
@@ -1839,10 +1833,10 @@ Work on lines.
 | TODO | Handle regions |
 
 #+BEGIN_SRC emacs-lisp :results silent
-(global-set-key (kbd "<M-S-up>") 'me/duplicate-backward)
-(global-set-key (kbd "<M-S-down>") 'me/duplicate-forward)
-(global-set-key (kbd "<M-down>") 'me/swap-line-down)
-(global-set-key (kbd "<M-up>") 'me/swap-line-up)
+(global-set-key (kbd "<M-down>") #'me/swap-line-down)
+(global-set-key (kbd "<M-up>") #'me/swap-line-up)
+(global-set-key (kbd "<M-S-up>") #'me/duplicate-backward)
+(global-set-key (kbd "<M-S-down>") #'me/duplicate-forward)
 
 (defun me/duplicate-line (&optional stay)
   "Duplicate current line.
@@ -1899,7 +1893,7 @@ Enable multiple cursors at once. Some witchcraft at work here.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package multiple-cursors
-  :bind*
+  :bind
   (("C-S-c C-S-a" . mc/vertical-align-with-space)
    ("C-S-c C-S-c" . mc/edit-lines)
    ("C-S-c C-S-n" . mc/insert-numbers)
@@ -1909,8 +1903,7 @@ Enable multiple cursors at once. Some witchcraft at work here.
    ("M-l" . mc/insert-letters)
    ("M-n" . mc/insert-numbers))
   :init
-  (setq-default
-   mc/list-file (expand-file-name ".multiple-cursors.el" user-emacs-directory))
+  (setq-default mc/list-file (expand-file-name ".multiple-cursors.el" user-emacs-directory))
   :custom
   (mc/edit-lines-empty-lines 'ignore)
   (mc/insert-numbers-default 1))
@@ -1933,36 +1926,38 @@ use with =selected=.
       (user-error "me/pretty-print: me/pretty-print-function is not set")))
   :bind
   (:map selected-keymap
-        ("C-?"         . hydra-selected/body)
-        ("<"           . mc/mark-previous-like-this)
-        (">"           . mc/mark-next-like-this)
-        ("C-<"         . mc/unmark-previous-like-this)
-        ("C->"         . mc/unmark-next-like-this)
-        ("C-M-<"       . mc/skip-to-previous-like-this)
-        ("C-M->"       . mc/skip-to-next-like-this)
-        ("C-<tab>"     . me/pretty-print)
-        ("C-c C-c"     . me/eval-region-and-kill-mark)
-        ("C-b"         . me/browse-url-and-kill-mark)
-        ("C-c c"       . capitalize-region)
-        ("C-c k"       . me/kebab-region)
-        ("C-c l"       . downcase-region)
-        ("C-c u"       . upcase-region)
-        ("C-d"         . define-word-at-point)
-        ("C-f"         . fill-region)
-        ("C-g"         . selected-off)
-        ("C-h h"       . hlt-highlight-region)
-        ("C-h H"       . hlt-unhighlight-region)
-        ("C-p"         . webpaste-paste-region)
-        ("C-s r"       . reverse-region)
-        ("C-s s"       . sort-lines)
-        ("C-s w"       . me/sort-words)
-        ("C-t"         . google-translate-at-point)
-        ("<M-left>"    . me/indent-rigidly-left-and-keep-mark)
-        ("<M-right>"   . me/indent-rigidly-right-and-keep-mark)
-        ("<M-S-left>"  . me/indent-rigidly-left-tab-and-keep-mark)
-        ("<M-S-right>" . me/indent-rigidly-right-tab-and-keep-mark))
-  :hook (after-init . selected-global-mode)
-  :config (require 'browse-url))
+   ("C-?"         . hydra-selected/body)
+   ("<"           . mc/mark-previous-like-this)
+   (">"           . mc/mark-next-like-this)
+   ("C-<"         . mc/unmark-previous-like-this)
+   ("C->"         . mc/unmark-next-like-this)
+   ("C-M-<"       . mc/skip-to-previous-like-this)
+   ("C-M->"       . mc/skip-to-next-like-this)
+   ("C-c C-c"     . me/eval-region-and-kill-mark)
+   ("C-b"         . me/browse-url-and-kill-mark)
+   ("C-c c"       . capitalize-region)
+   ("C-c k"       . me/kebab-region)
+   ("C-c l"       . downcase-region)
+   ("C-c u"       . upcase-region)
+   ("C-d"         . define-word-at-point)
+   ("C-f"         . fill-region)
+   ("C-g"         . selected-off)
+   ("C-h h"       . hlt-highlight-region)
+   ("C-h H"       . hlt-unhighlight-region)
+   ("C-p"         . webpaste-paste-region)
+   ("C-s r"       . reverse-region)
+   ("C-s s"       . sort-lines)
+   ("C-s w"       . me/sort-words)
+   ("C-t"         . google-translate-at-point)
+   ("<C-tab>"     . me/pretty-print)
+   ("<M-left>"    . me/indent-rigidly-left-and-keep-mark)
+   ("<M-right>"   . me/indent-rigidly-right-and-keep-mark)
+   ("<M-S-left>"  . me/indent-rigidly-left-tab-and-keep-mark)
+   ("<M-S-right>" . me/indent-rigidly-right-tab-and-keep-mark))
+  :hook
+  (after-init . selected-global-mode)
+  :config
+  (require 'browse-url))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp :results silent
@@ -2077,15 +2072,12 @@ electric-indent-mode.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package aggressive-indent
-  :preface
-  (defun me/aggressive-indent-mode-off ()
-    (aggressive-indent-mode 0))
   :hook
-  ((css-mode . aggressive-indent-mode)
-   (emacs-lisp-mode . aggressive-indent-mode)
-   (js-mode . aggressive-indent-mode)
-   (lisp-mode . aggressive-indent-mode)
-   (sgml-mode . aggressive-indent-mode))
+  (css-mode . aggressive-indent-mode)
+  (emacs-lisp-mode . aggressive-indent-mode)
+  (js-mode . aggressive-indent-mode)
+  (lisp-mode . aggressive-indent-mode)
+  (sgml-mode . aggressive-indent-mode)
   :custom
   (aggressive-indent-comments-too t)
   :config
@@ -2245,11 +2237,13 @@ Display the available keybindings following your current input.
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package em-banner
   :ensure nil
-  :custom (eshell-banner-message ""))
+  :custom
+  (eshell-banner-message ""))
 
 (use-package em-hist
   :ensure nil
-  :custom (eshell-hist-ignoredups t))
+  :custom
+  (eshell-hist-ignoredups t))
 
 (use-package esh-mode
   :ensure nil
@@ -2260,7 +2254,7 @@ Display the available keybindings following your current input.
     (eshell-bol))
   :bind
   (:map eshell-mode-map
-        ([remap eshell-bol] . me/eshell-bol-shifted))
+   ([remap eshell-bol] . me/eshell-bol-shifted))
   :hook
   (eshell-mode . (lambda () (setq-local scroll-margin 0)))
   :custom
@@ -2269,7 +2263,8 @@ Display the available keybindings following your current input.
 
 (use-package esh-proc
   :ensure nil
-  :custom (eshell-kill-processes-on-exit t))
+  :custom
+  (eshell-kill-processes-on-exit t))
 #+END_SRC
 
 Yes, Emacs emulates terminals too.
@@ -2322,15 +2317,13 @@ Display indicators in the left fringe for Git changes.
 (use-package git-gutter-fringe
   :preface
   (defun me/git-gutter-enable ()
-    (require 'git-gutter)
-    (require 'git-gutter-fringe)
-    (git-gutter-mode 1))
-  (defun me/git-gutter-setup ()
     (when-let* ((buffer (buffer-file-name))
                 (backend (vc-backend buffer)))
-      (add-hook 'window-configuration-change-hook #'me/git-gutter-enable nil t)))
+      (require 'git-gutter)
+      (require 'git-gutter-fringe)
+      (git-gutter-mode 1)))
   :hook
-  (after-change-major-mode . me/git-gutter-setup)
+  (after-change-major-mode . me/git-gutter-enable)
   :config
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center t))
   (define-fringe-bitmap 'git-gutter-fr:deleted [240 240 240 240] nil nil 'bottom)
@@ -2364,8 +2357,8 @@ Git itself deserve to be called porcelains.
 (use-package magit
   :bind
   (:map magit-hunk-section-map
-        ("RET" . magit-diff-visit-file-other-window)
-        ([return] . magit-diff-visit-file-other-window))
+   ("RET" . magit-diff-visit-file-other-window)
+   ([return] . magit-diff-visit-file-other-window))
   :custom
   (magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
   (magit-diff-highlight-hunk-body nil)
