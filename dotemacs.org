@@ -40,11 +40,10 @@ Here are what I consider better defaults as per my own experience.
  tab-width 4                                      ; Set width for tabs
  uniquify-buffer-name-style 'forward              ; Uniquify buffer names
  window-combination-resize t                      ; Resize windows proportionally
- window-divider-default-right-width 4             ; Prefer thin vertical dividers
  x-stretch-cursor t)                              ; Stretch cursor to the glyph width
 (cd "~/")                                         ; Move to the user directory
 (delete-selection-mode 1)                         ; Replace region when inserting text
-(fringe-mode 2)                                   ; Initialize thinner vertical fringes
+(fringe-mode '(2 . 0))                            ; Initialize thinner vertical fringes
 (fset 'yes-or-no-p 'y-or-n-p)                     ; Replace yes/no prompts with y/n
 (global-subword-mode 1)                           ; Iterate through CamelCase words
 (menu-bar-mode 0)                                 ; Disable the menu bar
@@ -52,7 +51,6 @@ Here are what I consider better defaults as per my own experience.
 (put 'downcase-region 'disabled nil)              ; Enable downcase-region
 (put 'upcase-region 'disabled nil)                ; Enable upcase-region
 (set-default-coding-systems 'utf-8)               ; Default to utf-8 encoding
-(window-divider-mode 1)                           ; Prettier vertical borders
 #+END_SRC
 
 Enable fullscreen.
@@ -129,11 +127,13 @@ Load the theme and fix some high-level faces to match my personal preferences.
     '(flycheck-error :underline `(:color ,error :style line))
     '(flycheck-info :underline `(:color ,highlight :style line))
     '(flycheck-warning :underline `(:color ,warning :style line))
+    '(fringe :background bg-alt)
     '(helpful-heading :foreground red :height me/font-size-large)
     '(info-title-4 :bold nil :foreground red)
     '(isearch :inherit 'highlight)
     '(italic :italic nil)
     '(lazy-highlight :foreground blue)
+    '(line-number-current-line :inherit '(hl-line default))
     '(lsp-face-highlight-read :foreground fg)
     '(lsp-face-highlight-textual :foreground fg)
     '(lsp-face-highlight-write :foreground fg)
