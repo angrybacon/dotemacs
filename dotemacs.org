@@ -2173,7 +2173,9 @@ Highlight line under point.
   :hook
   (prog-mode . hl-line-mode)
   (special-mode . hl-line-mode)
-  (text-mode . hl-line-mode))
+  (text-mode . hl-line-mode)
+  :custom
+  (hl-line-sticky-flag nil))
 #+END_SRC
 
 Augment Emacs' package menu.
