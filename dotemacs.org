@@ -1417,6 +1417,7 @@ Yup, Emacs supports
   (lsp-idle-delay .1)
   (lsp-diagnostics-provider :none)
   (lsp-eldoc-hook nil)
+  (lsp-use-plists t)
   :config
   (lsp-enable-which-key-integration))
 
