@@ -2233,6 +2233,19 @@ Display the available keybindings following your current input.
   (which-key-use-C-h-commands nil))
 #+END_SRC
 
+** REST Client
+
+| =restclient= | https://github.com/pashky/restclient.el |
+
+Emacs can also emulate an interactive REST client.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package restclient
+  :mode ("\\.http\\'" . restclient-mode)
+  :hook
+  (restclient-mode . display-line-numbers-mode))
+#+END_SRC
+
 ** Shell and Terminal
 
 #+BEGIN_SRC emacs-lisp :results silent
