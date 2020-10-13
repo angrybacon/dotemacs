@@ -186,11 +186,8 @@ HTML mode is defined in =sgml-mode.el=.
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package sgml-mode
   :ensure nil
-  :preface
-  (defun me/html-set-pretty-print-function ()
-    (setq me/pretty-print-function #'sgml-pretty-print))
   :hook
-  (html-mode . me/html-set-pretty-print-function)
+  (html-mode . (lambda () (setq me/pretty-print-function #'sgml-pretty-print)))
   (html-mode . sgml-electric-tag-pair-mode)
   (html-mode . sgml-name-8bit-mode)
   :custom
@@ -215,12 +212,9 @@ HTML mode is defined in =sgml-mode.el=.
 
 (use-package rjsx-mode
   :mode ("\\.jsx\\'" "components/.+\\.js$")
-  :preface
-  (defun me/rjsx-set-pretty-print-function ()
-    (setq me/pretty-print-function #'sgml-pretty-print))
   :hook
+  (rjsx-mode . (lambda () (setq me/pretty-print-function #'sgml-pretty-print)))
   (rjsx-mode . me/hydra-set-super)
-  (rjsx-mode . me/rjsx-set-pretty-print-function)
   (rjsx-mode . sgml-electric-tag-pair-mode)
   (rjsx-mode . turn-off-auto-fill))
 
@@ -242,11 +236,8 @@ HTML mode is defined in =sgml-mode.el=.
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package json-mode
   :mode "\\.json\\'"
-  :preface
-  (defun me/json-set-indent-level ()
-    (setq-local js-indent-level 2))
   :hook
-  (json-mode . me/json-set-indent-level))
+  (json-mode . (lambda () (setq-local js-indent-level 2))))
 #+END_SRC
 
 ** Lisp
