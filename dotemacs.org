@@ -1515,10 +1515,6 @@ Yup, Emacs supports
                   result
                 (propertize result 'face 'mode-line-inactive))
               (doom-modeline-spc))))
-  (doom-modeline-def-segment me/modals
-    "Display modal editing states."
-    (when (doom-modeline--active)
-      (doom-modeline-segment--modals)))
   (doom-modeline-def-segment me/space
     "A simple space."
     (doom-modeline-spc))
@@ -1532,28 +1528,28 @@ Yup, Emacs supports
                 (doom-modeline-spc)))))
   (doom-modeline-mode 1)
   (doom-modeline-def-modeline 'info
-    '(bar me/modals me/buffer me/info me/buffer-position selection-info)
+    '(bar modals me/buffer me/info me/buffer-position selection-info)
     '(irc-buffers matches me/process debug me/major-mode))
   (doom-modeline-def-modeline 'main
-    '(bar me/modals me/buffer remote-host me/buffer-position me/flycheck selection-info)
+    '(bar modals me/buffer remote-host me/buffer-position me/flycheck selection-info)
     '(irc-buffers matches me/process me/vcs debug me/major-mode))
   (doom-modeline-def-modeline 'message
-    '(bar me/modals me/buffer-simple me/buffer-position selection-info)
+    '(bar modals me/buffer-simple me/buffer-position selection-info)
     '(irc-buffers matches me/process me/major-mode))
   (doom-modeline-def-modeline 'org-src
-    '(bar me/modals me/buffer-simple me/buffer-position me/flycheck selection-info)
+    '(bar modals me/buffer-simple me/buffer-position me/flycheck selection-info)
     '(irc-buffers matches me/process debug me/major-mode))
   (doom-modeline-def-modeline 'package
-    '(bar me/modals me/space package)
+    '(bar modals me/space package)
     '(irc-buffers matches me/process debug me/major-mode))
   (doom-modeline-def-modeline 'project
-    '(bar me/modals me/default-directory)
+    '(bar modals me/default-directory)
     '(irc-buffers matches me/process debug me/major-mode))
   (doom-modeline-def-modeline 'special
-    '(bar me/modals me/buffer me/buffer-position selection-info)
+    '(bar modals me/buffer me/buffer-position selection-info)
     '(irc-buffers matches me/process debug me/major-mode))
   (doom-modeline-def-modeline 'vcs
-    '(bar me/modals me/buffer remote-host me/buffer-position selection-info)
+    '(bar modals me/buffer remote-host me/buffer-position selection-info)
     '(irc-buffers matches me/process debug me/major-mode)))
 #+END_SRC
 
