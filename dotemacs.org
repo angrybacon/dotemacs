@@ -34,7 +34,8 @@ Here are what I consider better defaults as per my own experience.
  scroll-conservatively most-positive-fixnum       ; Always scroll by one line
  scroll-margin 2                                  ; Add a margin when scrolling vertically
  select-enable-clipboard t                        ; Merge system's and Emacs' clipboard
- sentence-end-double-space nil                    ; Use a single space after dots.
+ sentence-end-double-space nil                    ; Use a single space after dots
+ show-help-function nil                           ; Disable help text on most UI elements
  split-height-threshold nil                       ; Disable vertical window splitting
  split-width-threshold nil                        ; Disable horizontal window splitting
  tab-width 4                                      ; Set width for tabs
