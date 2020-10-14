@@ -148,7 +148,7 @@ Load the theme and fix some high-level faces to match my personal preferences.
     '(org-block :background (doom-lighten base3 0.05))
     '(org-block-begin-line :background 'unspecified :underline (doom-lighten base3 0.1))
     '(org-block-end-line :overline (doom-lighten base3 0.1) :underline nil)
-    '(org-quote :inherit 'font-lock-doc-face)
+    '(org-quote :background 'unspecified :inherit '(font-lock-doc-face org-block))
     '(outline-1 :foreground red)
     '(swiper-background-match-face-1 :background 'unspecified)
     '(swiper-line-face :extend t)
