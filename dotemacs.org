@@ -1419,7 +1419,7 @@ Yup, Emacs supports
   (lsp-ui-doc-enable t)
   (lsp-ui-doc-delay .1)
   (lsp-ui-doc-header nil)
-  (lsp-ui-doc-max-height 10)
+  (lsp-ui-doc-max-height 16)
   (lsp-ui-doc-max-width 80)
   (lsp-ui-doc-position 'top)
   (lsp-ui-imenu-enable nil)
