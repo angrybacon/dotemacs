@@ -1880,7 +1880,38 @@ If region was active, keep it so that the command can be repeated."
 
 ** Point and Region / Multiple Cursors
 
-Enable multiple cursors at once. Some witchcraft at work here.
+| =evil-multiedit=   | https://github.com/hlissner/evil-multiedit     |
+| =multiple-cursors= | https://github.com/magnars/multiple-cursors.el |
+
+Add support for multiple cursors within Evil.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package evil-multiedit
+  :after evil
+  :defer nil
+  :bind
+  (:map evil-insert-state-map
+   ("M-d". evil-multiedit-toggle-marker-here)
+   :map evil-motion-state-map
+   ("RET". evil-multiedit-toggle-or-restrict-region)
+   :map evil-normal-state-map
+   ("M-d". evil-multiedit-match-symbol-and-next)
+   ("M-D". evil-multiedit-match-symbol-and-prev)
+   :map evil-visual-state-map
+   ("R" . evil-multiedit-match-all)
+   ("M-d". evil-multiedit-match-symbol-and-next)
+   ("M-D". evil-multiedit-match-symbol-and-prev)
+   ("C-M-D". evil-multiedit-restore)
+   :map evil-multiedit-state-map
+   ("C-n". evil-multiedit-next)
+   ("C-p". evil-multiedit-prev)
+   ("RET". evil-multiedit-toggle-or-restrict-region)
+   :map evil-multiedit-insert-state-map
+   ("C-n". evil-multiedit-next)
+   ("C-p". evil-multiedit-prev)))
+#+END_SRC
+
+Enable multiple cursors outside Evil. Some witchcraft at work here.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package multiple-cursors
