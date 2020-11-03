@@ -36,8 +36,6 @@ Here are what I consider better defaults as per my own experience.
  select-enable-clipboard t                        ; Merge system's and Emacs' clipboard
  sentence-end-double-space nil                    ; Use a single space after dots
  show-help-function nil                           ; Disable help text on most UI elements
- split-height-threshold nil                       ; Disable vertical window splitting
- split-width-threshold nil                        ; Disable horizontal window splitting
  tab-width 4                                      ; Set width for tabs
  uniquify-buffer-name-style 'forward              ; Uniquify buffer names
  window-combination-resize t                      ; Resize windows proportionally
@@ -621,7 +619,6 @@ https://github.com/emacs-evil/evil
 (use-package evil
   :hook
   (after-init . evil-mode)
-  (with-editor-mode . evil-insert-state)
   :preface
   (defun me/evil-indent (original &rest arguments)
     "Like `evil-indent' but save excursion."
@@ -651,6 +648,7 @@ https://github.com/emacs-evil/evil
   (evil-want-C-u-scroll t)
   (evil-want-keybinding nil)
   :config
+  (add-to-list 'evil-insert-state-modes 'with-editor-mode)
   (evil-define-text-object me/evil-whole-buffer (_ &optional _ _ type)
     "Text object to select the whole buffer."
     (evil-range (point-min) (point-max) type))
@@ -1338,7 +1336,7 @@ Display relative line numbers in most editing modes.
 (setq-default
  display-line-numbers-current-absolute nil        ; Current line is 0
  display-line-numbers-type 'relative              ; Prefer relative numbers
- display-line-numbers-width 3)                    ; Enforce width to reduce computation
+ display-line-numbers-width 2)                    ; Enforce width to reduce computation
 #+END_SRC
 
 ** Linters
@@ -1395,7 +1393,7 @@ Yup, Emacs supports
   :preface
   (defun me/lsp-optimize ()
     (setq-local
-     gc-cons-threshold #x80000000
+     gc-cons-threshold (* 100 1024 1024)
      read-process-output-max (* 1024 1024)))
   :hook
   (js2-mode . lsp-deferred)
@@ -1889,8 +1887,6 @@ Add support for multiple cursors within Evil.
   :bind
   (:map evil-insert-state-map
    ("M-d". evil-multiedit-toggle-marker-here)
-   :map evil-motion-state-map
-   ("RET". evil-multiedit-toggle-or-restrict-region)
    :map evil-normal-state-map
    ("M-d". evil-multiedit-match-symbol-and-next)
    ("M-D". evil-multiedit-match-symbol-and-prev)
