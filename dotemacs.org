@@ -1533,28 +1533,28 @@ Yup, Emacs supports
   (doom-modeline-mode 1)
   (doom-modeline-def-modeline 'info
     '(bar modals me/buffer me/info me/buffer-position selection-info)
-    '(irc-buffers matches me/process debug me/major-mode))
+    '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'main
     '(bar modals me/buffer remote-host me/buffer-position me/flycheck selection-info)
-    '(irc-buffers matches me/process me/vcs debug me/major-mode))
+    '(irc-buffers matches me/process me/vcs debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'message
     '(bar modals me/buffer-simple me/buffer-position selection-info)
-    '(irc-buffers matches me/process me/major-mode))
+    '(irc-buffers matches me/process me/major-mode workspace-name))
   (doom-modeline-def-modeline 'org-src
     '(bar modals me/buffer-simple me/buffer-position me/flycheck selection-info)
-    '(irc-buffers matches me/process debug me/major-mode))
+    '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'package
     '(bar modals me/space package)
-    '(irc-buffers matches me/process debug me/major-mode))
+    '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'project
     '(bar modals me/default-directory)
-    '(irc-buffers matches me/process debug me/major-mode))
+    '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'special
     '(bar modals me/buffer me/buffer-position selection-info)
-    '(irc-buffers matches me/process debug me/major-mode))
+    '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'vcs
     '(bar modals me/buffer remote-host me/buffer-position selection-info)
-    '(irc-buffers matches me/process debug me/major-mode)))
+    '(irc-buffers matches me/process debug me/major-mode workspace-name)))
 #+END_SRC
 
 ** Navigation / Avy
