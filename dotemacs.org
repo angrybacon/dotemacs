@@ -2049,6 +2049,8 @@ See `sort-regexp-fields'."
 
 ** Projectile
 
+| =projectile= | https://github.com/bbatsov/projectile |
+
 Projectile brings project-level facilities to Emacs such as grep, find and
 replace.
 
@@ -2075,7 +2077,21 @@ exists as well).
   (projectile-completion-system 'ivy)
   (projectile-dynamic-mode-line nil)
   (projectile-enable-caching t)
-  (projectile-track-known-projects-automatically nil))
+  (projectile-track-known-projects-automatically nil)
+  (projectile-switch-project-action #'projectile-commander)
+  :config
+  (assq-delete-all ?T projectile-commander-methods)
+  (assq-delete-all ?V projectile-commander-methods)
+  (assq-delete-all ?a projectile-commander-methods)
+  (assq-delete-all ?e projectile-commander-methods)
+  (assq-delete-all ?j projectile-commander-methods)
+  (assq-delete-all ?k projectile-commander-methods)
+  (assq-delete-all ?o projectile-commander-methods)
+  (assq-delete-all ?v projectile-commander-methods)
+  (def-projectile-commander-method ?K "Kill all buffers." (projectile-kill-buffers))
+  (def-projectile-commander-method ?R "Replace a regexp." (projectile-replace-regexp))
+  (def-projectile-commander-method ?g "Magit status." (magit-status))
+  (def-projectile-commander-method ?s "Run ripgrep." (counsel-projectile-rg)))
 #+END_SRC
 
 ** Quality of Life
