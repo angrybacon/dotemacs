@@ -1438,7 +1438,7 @@ Yup, Emacs supports
   :demand t
   :custom
   (doom-modeline-bar-width 1)
-  (doom-modeline-buffer-file-name-style 'relative-to-project)
+  (doom-modeline-buffer-file-name-style 'truncate-with-project)
   (doom-modeline-enable-word-count t)
   (doom-modeline-icon (display-graphic-p))
   (doom-modeline-major-mode-icon nil)
