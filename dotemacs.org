@@ -1376,6 +1376,15 @@ request or transparently on file save.
 [[https://github.com/jscheid/prettier.el][Julian Scheid]]
 #+END_QUOTE
 
+Run Prettier against the whole buffer on save. Toggle the minor mode on through
+a strategically positioned =.dir-locals.el= containing the major modes for which
+to activate it. Use =nil= to enable Prettier for all major modes in that
+directory. ie.
+
+#+BEGIN_SRC
+((nil . ((mode . prettier))))
+#+END_SRC
+
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package prettier)
 #+END_SRC
