@@ -433,7 +433,7 @@ Save and restore Emacs status, including buffers, point and window configuration
   :custom
   (desktop-base-file-name ".desktop")
   (desktop-base-lock-name ".desktop.lock")
-  (desktop-restore-eager 8))
+  (desktop-restore-eager 4))
 #+END_SRC
 
 Workspaces within Emacs.
