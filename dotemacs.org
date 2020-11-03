@@ -627,6 +627,8 @@ https://github.com/emacs-evil/evil
     "Like `evil-indent' but save excursion."
     (save-excursion
       (apply original arguments)))
+  :commands
+  (evil-define-key)
   :bind
   (:map evil-inner-text-objects-map
    ("g" . me/evil-whole-buffer)
@@ -653,22 +655,6 @@ https://github.com/emacs-evil/evil
     "Text object to select the whole buffer."
     (evil-range (point-min) (point-max) type))
   (advice-add 'evil-indent :around #'me/evil-indent))
-#+END_SRC
-
-#+BEGIN_QUOTE
-This is a collection of [[https://github.com/emacs-evil/evil][Evil]] bindings
-for /the parts of Emacs/ that Evil does not cover properly by default, such as
-=help-mode=, =M-x calendar=, Eshell and more.
-
-https://github.com/emacs-evil/evil-collection
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp :results silent
-(use-package evil-collection
-  :after evil
-  :defer nil
-  :config
-  (evil-collection-init))
 #+END_SRC
 
 Comment things using Evil operators.
@@ -735,6 +721,8 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
 
 ** Help
 
+| =helpful= | https://github.com/Wilfred/helpful |
+
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package help-mode
   :ensure nil
@@ -747,7 +735,12 @@ under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
 Provide better detailed help buffers.
 
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package helpful)
+(use-package helpful
+  :config
+  (evil-define-key* 'normal helpful-mode-map
+    (kbd "q") #'quit-window
+    (kbd "<backtab>") #'backward-button
+    (kbd "<tab>") #'forward-button))
 #+END_SRC
 
 ** Ivy
