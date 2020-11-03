@@ -2411,6 +2411,7 @@ Git itself deserve to be called porcelains.
                                             (unpulled . show)
                                             (unpushed . show)))
   (magit-section-show-child-count t)
+  (transient-default-level 5)
   (transient-mode-line-format nil)
   :config
   (magit-add-section-hook
