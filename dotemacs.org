@@ -213,7 +213,7 @@ HTML mode is defined in =sgml-mode.el=.
   (js2-mode-show-strict-warnings nil))
 
 (use-package rjsx-mode
-  :mode ("\\.jsx\\'" "components/.+\\.js$")
+  :mode ("\\.jsx\\'" "components/.+\\.js$" "pages/.+\\.js$")
   :hook
   (rjsx-mode . (lambda () (setq me/pretty-print-function #'sgml-pretty-print)))
   (rjsx-mode . me/hydra-set-super)
@@ -221,7 +221,7 @@ HTML mode is defined in =sgml-mode.el=.
   (rjsx-mode . turn-off-auto-fill))
 
 (use-package web-mode
-  :mode "\\.tsx\\'"
+  :mode ("\\.ts\\'" "\\.tsx\\'")
   :hook
   (web-mode . sgml-electric-tag-pair-mode)
   :custom
