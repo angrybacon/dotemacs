@@ -17,7 +17,33 @@ https://drive.google.com/open?id=0BwTSOByd3qSFWUtYYnlYeTIzNFU
 
 * Installation
 
+** Dependencies
+
+#+BEGIN_QUOTE
+Tested on macOS only.
+
+I trust your Google-fu to be potent enough that you can make the most of the
+below instructions.
+#+END_QUOTE
+
+| =jansson=  | Enable native JSON parsing              |
+| =libvterm= | Used by terminal emulation within Emacs |
+| =ripgrep=  | Prefer =rg= over =grep=                 |
+
+#+BEGIN_SRC sh
+brew install jansson libvterm ripgrep
+#+END_SRC
+
 ** Emacs
+
+Install Emacs 27 or above. I prefer
+[[https://github.com/d12frosted/homebrew-emacs-plus][=emacs-plus=]] for its
+additional compilation flags.
+
+#+BEGIN_SRC sh
+brew tap d12frosted/emacs-plus
+brew install emacs-plus@27 --with-modern-papirus-icon --with-no-titlebar
+#+END_SRC
 
 Clone the repository into your user directory.
 
@@ -25,47 +51,27 @@ Clone the repository into your user directory.
 git clone https://github.com/angrybacon/dotemacs.git ~/.emacs.d/ --recurse-submodules
 #+END_SRC
 
-Install Emacs 27 or above.
-
-*** macOS
-
-The =jansson= dependency ensure that you take advantage of the native support
-for JSON parsing.
-
-I prefer [[https://github.com/d12frosted/homebrew-emacs-plus][=emacs-plus=]] for
-its added compilation flags.
-
-#+BEGIN_SRC sh
-brew install jansson
-brew tap d12frosted/emacs-plus
-brew install emacs-plus@28 --with-modern-papirus-icon --with-no-titlebar
-#+END_SRC
-
-*** Windows
-
-#+BEGIN_SRC sh
-choco install emacs
-#+END_SRC
-
-** All the Icons
-
-The mode-line utilizes features from
-[[https://github.com/domtronn/all-the-icons.el][all-the-icons]].
-
-#+BEGIN_SRC emacs-lisp
-(all-the-icons-install-fonts)
-#+END_SRC
-
 ** Flycheck
 
-I use [[https://github.com/flycheck/flycheck][Flycheck]] as linter framework to
-display syntax warnings and errors whithin each buffer.
+I use =flycheck= as linter framework to display syntax warnings and errors
+within each buffer.
 
 #+BEGIN_SRC sh
 npm install -g eslint                                 # JavaScript
 npm install -g jsonlint                               # JSON
 pip install flake8                                    # Python
 gem install scss_lint scss_lint_reporter_checkstyle   # SCSS
+#+END_SRC
+
+** Icons
+
+The mode-line utilizes features from =all-the-icons=.
+
+Run the following when Emacs loads up in order to download the required font
+files.
+
+#+BEGIN_SRC emacs-lisp
+(all-the-icons-install-fonts)
 #+END_SRC
 
 ** LSP
@@ -75,20 +81,4 @@ packages.
 
 #+BEGIN_SRC sh
 npm install -g typescript typescript-language-server  # JavaScript
-#+END_SRC
-
-** Ripgrep
-
-I use =rg= to lookup files.
-
-*** macOS
-
-#+BEGIN_SRC sh
-brew install ripgrep
-#+END_SRC
-
-*** Windows
-
-#+BEGIN_SRC sh
-choco install ripgrep
 #+END_SRC

@@ -231,13 +231,9 @@ HTML mode is defined in =sgml-mode.el=.
 
 ** JSON
 
-| NOTE | Indent level is broken | https://github.com/joshwnj/json-mode/issues/32 |
-
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package json-mode
-  :mode "\\.json\\'"
-  :hook
-  (json-mode . (lambda () (setq-local js-indent-level 2))))
+  :mode "\\.json\\'")
 #+END_SRC
 
 ** Lisp
