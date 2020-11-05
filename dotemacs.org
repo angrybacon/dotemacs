@@ -2340,12 +2340,13 @@ be enabled in the first place.
 
 ** Version Control
 
-| git-commit         | https://github.com/magit/magit                        |
-| git-gutter-fringe  | https://github.com/emacsorphanage/git-gutter-fringe   |
-| gitattributes-mode | https://github.com/magit/git-modes#gitattributes-mode |
-| gitconfig-mode     | https://github.com/magit/git-modes#gitconfig-mode     |
-| gitignore-mode     | https://github.com/magit/git-modes#gitignore-mode     |
-| magit              | https://github.com/magit/magit                        |
+| =git-commit=         | https://github.com/magit/magit/blob/master/lisp/git-commit.el |
+| =git-gutter-fringe=  | https://github.com/emacsorphanage/git-gutter-fringe           |
+| =gitattributes-mode= | https://github.com/magit/git-modes#gitattributes-mode         |
+| =gitconfig-mode=     | https://github.com/magit/git-modes#gitconfig-mode             |
+| =gitignore-mode=     | https://github.com/magit/git-modes#gitignore-mode             |
+| =magit=              | https://github.com/magit/magit                                |
+| =pinentry=           | https://elpa.gnu.org/packages/pinentry.html                   |
 
 Auto-fill commit messages.
 
@@ -2411,6 +2412,7 @@ Git itself deserve to be called porcelains.
    ("RET" . magit-diff-visit-file-other-window)
    ([return] . magit-diff-visit-file-other-window))
   :custom
+  (epg-pinentry-mode 'loopback)
   (magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
   (magit-diff-highlight-hunk-body nil)
   (magit-diff-highlight-hunk-region-functions
@@ -2429,6 +2431,40 @@ Git itself deserve to be called porcelains.
   (magit-add-section-hook
    'magit-status-sections-hook 'magit-insert-modules-overview 'magit-insert-status-headers t)
   (remove-hook 'magit-section-highlight-hook #'magit-section-highlight))
+#+END_SRC
+
+Start =pinentry= in order for Emacs to be able to prompt for passphrases when
+necessary.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package pinentry
+  :hook
+  (after-init . pinentry-start))
+#+END_SRC
+
+In the case of GPG-signed commits use the below configuration files
+
+=~./profile=
+
+#+BEGIN_SRC sh
+export GPG_TTY=$TTY
+#+END_SRC
+
+=~/.gnupg/gpg-agent.conf=
+
+#+BEGIN_SRC
+allow-emacs-pinentry
+allow-loopback-pinentry
+pinentry-program /usr/local/bin/pinentry
+#+END_SRC
+
+=~/path/to/my/project/.git/config=
+
+#+BEGIN_SRC conf
+[user]
+    signingkey = 1234567890ABCDEF
+[commit]
+    gpgsign = true
 #+END_SRC
 
 ** Whitespaces

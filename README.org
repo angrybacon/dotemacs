@@ -28,10 +28,11 @@ below instructions.
 
 | =jansson=  | Enable native JSON parsing              |
 | =libvterm= | Used by terminal emulation within Emacs |
+| =pinentry= | Let Emacs prompt for passphrases        |
 | =ripgrep=  | Prefer =rg= over =grep=                 |
 
 #+BEGIN_SRC sh
-brew install jansson libvterm ripgrep
+brew install jansson libvterm pinentry ripgrep
 #+END_SRC
 
 ** Emacs
