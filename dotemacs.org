@@ -624,7 +624,7 @@ https://github.com/emacs-evil/evil
     (save-excursion
       (apply original arguments)))
   :commands
-  (evil-define-key)
+  (evil-define-key evil-define-key*)
   :bind
   (:map evil-inner-text-objects-map
    ("g" . me/evil-whole-buffer)
@@ -651,6 +651,9 @@ https://github.com/emacs-evil/evil
   (evil-want-keybinding nil)
   :config
   (add-to-list 'evil-insert-state-modes 'with-editor-mode)
+  (evil-define-key* 'normal dired-mode-map
+    (kbd "h") #'dired-up-directory
+    (kbd "l") #'dired-find-file)
   (evil-define-text-object me/evil-whole-buffer (_ &optional _ _ type)
     "Text object to select the whole buffer."
     (evil-range (point-min) (point-max) type))
