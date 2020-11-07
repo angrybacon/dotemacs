@@ -651,6 +651,7 @@ https://github.com/emacs-evil/evil
   (evil-want-keybinding nil)
   :config
   (add-to-list 'evil-insert-state-modes 'with-editor-mode)
+  (add-to-list 'evil-emacs-state-modes 'dired-mode)
   (evil-define-key* 'normal dired-mode-map
     (kbd "h") #'dired-up-directory
     (kbd "l") #'dired-find-file)
