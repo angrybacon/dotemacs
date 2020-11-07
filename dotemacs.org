@@ -639,8 +639,11 @@ https://github.com/emacs-evil/evil
    ("<C-left>" . ignore)
    ("<C-right>" . ignore)
    ("<C-up>" . ignore)
+   ("q" . nil)
    ("gs" . avy-goto-char-timer)
-   ("gS" . avy-goto-char))
+   ("gS" . avy-goto-char)
+   :map evil-normal-state-map
+   ("q" . nil))
   :custom
   (evil-echo-state nil)
   (evil-emacs-state-cursor 'bar)
@@ -735,7 +738,6 @@ Provide better detailed help buffers.
 (use-package helpful
   :config
   (evil-define-key* 'normal helpful-mode-map
-    (kbd "q") #'quit-window
     (kbd "<backtab>") #'backward-button
     (kbd "<tab>") #'forward-button))
 #+END_SRC
