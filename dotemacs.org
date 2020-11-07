@@ -25,6 +25,7 @@ Here are what I consider better defaults as per my own experience.
  cursor-type 'bar                                 ; Prefer a bar-shaped cursor by default
  delete-by-moving-to-trash t                      ; Delete files to trash
  fill-column 80                                   ; Set width for automatic line breaks
+ gc-cons-threshold (* 8 1024 1024)                ; We're not using Game Boys anymore
  help-window-select t                             ; Focus new help windows when opened
  indent-tabs-mode nil                             ; Stop using tabs to indent
  inhibit-startup-screen t                         ; Disable start-up screen
