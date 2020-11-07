@@ -591,6 +591,8 @@ explorer.
       (set-buffer-modified-p nil)))
   :hook
   (dired-mode . dired-hide-details-mode)
+  :bind
+  ("C-x C-g" . dired-jump)
   :custom
   (dired-auto-revert-buffer t)
   (dired-dwim-target t)
