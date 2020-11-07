@@ -1232,8 +1232,8 @@ Group system-related commands.
           "
  _q_ quit              _i_ install           _e_ eshell            _d_ clear byte-compiled
  ^^                    _p_ list              _t_ term              _D_ clear desktop
- ^^                    _P_ upgrade           _T_ ansi-term         _s_ list processes
- ^^                    _r_ refresh           ^^                    ^^
+ ^^                    _r_ refresh           _T_ ansi-term         _s_ list processes
+ ^^                    ^^                    ^^                    ^^
 ")
   ("q" nil)
   ("d" (let ((default-directory user-emacs-directory))
@@ -1241,8 +1241,7 @@ Group system-related commands.
   ("D" desktop-remove)
   ("e" (eshell t))
   ("i" package-install)
-  ("p" paradox-list-packages)
-  ("P" paradox-upgrade-packages)
+  ("p" package-list-packages)
   ("r" package-refresh-contents :color red)
   ("s" list-processes)
   ("t" term)
@@ -2214,28 +2213,6 @@ Highlight line under point.
   (text-mode . hl-line-mode)
   :custom
   (hl-line-sticky-flag nil))
-#+END_SRC
-
-Augment Emacs' package menu.
-
-#+BEGIN_QUOTE
-Project for modernizing Emacs' Package Menu. With improved appearance, mode-line
-information. Github integration, customizability, asynchronous upgrading, and
-more.
-
-[[https://github.com/Malabarba/paradox][Artur Malabarba]]
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp :results silent
-(use-package paradox
-  :custom
-  (paradox-column-width-package 27)
-  (paradox-column-width-version 13)
-  (paradox-execute-asynchronously t)
-  (paradox-github-token t)
-  (paradox-hide-wiki-packages t)
-  :config
-  (remove-hook 'paradox-after-execute-functions #'paradox--report-buffer-print))
 #+END_SRC
 
 Colorize colors as text with their value.
