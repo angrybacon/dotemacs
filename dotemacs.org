@@ -597,8 +597,7 @@ explorer.
   (dired-auto-revert-buffer t)
   (dired-dwim-target t)
   (dired-hide-details-hide-symlink-targets nil)
-  (dired-listing-switches "-alh")
-  (dired-ls-F-marks-symlinks nil)
+  (dired-listing-switches "-agho")
   (dired-recursive-copies 'always)
   :config
   (advice-add 'dired-readin :after #'me/dired-directories-first))
