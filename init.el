@@ -24,7 +24,8 @@
 
 ;;; Code:
 
-(let ((gc-cons-percentage .6)
+(let ((file-name-handler-alist nil)
+      (gc-cons-percentage .6)
       (gc-cons-threshold most-positive-fixnum)
       (read-process-output-max (* 1024 1024)))
 
@@ -39,7 +40,7 @@
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
   (package-initialize)
 
-  ;; Install dependencies
+  ;; Install `use-package' dependency by hand
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package t))
