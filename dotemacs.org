@@ -164,6 +164,9 @@ Load the theme and fix some faces to match my personal preferences.
 
 ** CSS
 
+| =css-mode=  | Built-in |
+| =scss-mode= | Built-in |
+
 #+BEGIN_SRC emacs-lisp
 (use-package css-mode
   :ensure nil
@@ -182,6 +185,8 @@ Load the theme and fix some faces to match my personal preferences.
 
 ** HTML
 
+| =sgml-mode= | Built-in |
+
 HTML mode is defined in =sgml-mode.el=.
 
 #+BEGIN_SRC emacs-lisp
@@ -198,6 +203,7 @@ HTML mode is defined in =sgml-mode.el=.
 ** JavaScript
 
 | =js-doc=    | https://github.com/mooz/js-doc           |
+| =js2-mode=  | Built-in                                 |
 | =rjsx-mode= | https://github.com/felipeochoa/rjsx-mode |
 | =web-mode=  | https://github.com/fxbois/web-mode       |
 
@@ -245,6 +251,8 @@ HTML mode is defined in =sgml-mode.el=.
 
 ** Lisp
 
+| =ielm= | Built-in |
+
 #+BEGIN_SRC emacs-lisp
 (use-package ielm
   :ensure nil
@@ -270,6 +278,8 @@ HTML mode is defined in =sgml-mode.el=.
 #+END_SRC
 
 ** Org
+
+| =org= | Built-in |
 
 This very file is organized with =org-mode=. I am definitely not a power user of
 Org, but I'm getting there. :-)
@@ -425,8 +435,11 @@ completion candidates.
 
 ** Buffers and Windows
 
+| =desktop=   | Built-in                              |
 | =eyebrowse= | https://github.com/wasamasa/eyebrowse |
 | =shackle=   | https://github.com/wasamasa/shackle   |
+| =windmove=  | Built-in                              |
+| =winner=    | Built-in                              |
 
 Don't ask before killing a buffer. I'm a consenting adult.
 
@@ -529,6 +542,8 @@ you can press ctrl-c right (calling =winner-redo=).
 
 ** Comments
 
+| =newcomment= | Built-in |
+
 #+BEGIN_SRC emacs-lisp
 (use-package newcomment
   :ensure nil
@@ -570,6 +585,8 @@ Translate using Google.
 
 ** Diff
 
+| =ediff-wind= | Built-in |
+
 Ediff is a visual interface to Unix =diff=.
 
 #+BEGIN_SRC emacs-lisp
@@ -581,6 +598,8 @@ Ediff is a visual interface to Unix =diff=.
 #+END_SRC
 
 ** Dired
+
+| =dired= | Built-in |
 
 Configure Dired buffers. Amongst many other things, Emacs is also a file
 explorer.
@@ -677,6 +696,7 @@ Comment things using Evil operators.
 ** Expand
 
 | =emmet-mode= | https://github.com/smihica/emmet-mode   |
+| =hippie-exp= | Built-in                                |
 | =yasnippet=  | https://github.com/joaotavora/yasnippet |
 
 HippieExpand manages expansions a la [[http://emmet.io/][Emmet]]. So I've
@@ -731,7 +751,8 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
 
 ** Help
 
-| =helpful= | https://github.com/Wilfred/helpful |
+| =help-mode= | Built-in                           |
+| =helpful=   | https://github.com/Wilfred/helpful |
 
 #+BEGIN_SRC emacs-lisp
 (use-package help-mode
@@ -1296,6 +1317,7 @@ Group window-related commands.
 
 ** IRC
 
+| =erc=          | Built-in                                 |
 | =erc-hl-nicks= | https://github.com/leathekd/erc-hl-nicks |
 
 #+BEGIN_SRC emacs-lisp
@@ -1663,6 +1685,8 @@ jump from one paragraph to another.
 
 ** Navigation / Pulse
 
+| =pulse= | Built-in |
+
 Pulse temporarily highlights the background color of a line or region.
 
 #+BEGIN_SRC emacs-lisp
@@ -1693,6 +1717,8 @@ various search modes.
 
 ** Navigation / Scroll
 
+| =mwheel= | Built-in |
+
 #+BEGIN_SRC emacs-lisp
 (use-package mwheel
   :ensure nil
@@ -1702,6 +1728,8 @@ various search modes.
 #+END_SRC
 
 ** Navigation / Search
+
+| =isearch= | Built-in |
 
 Isearch stands for /incremental search/. This means that search results are
 highlighted while you are typing your query, incrementally. Since he who can do
@@ -2124,8 +2152,11 @@ exists as well).
 | =aggressive-indent=       | https://github.com/Malabarba/aggressive-indent-mode    |
 | =amx=                     | https://github.com/DarwinAwardWinner/amx               |
 | =default-text-scale=      | https://github.com/purcell/default-text-scale          |
+| =files=                   | Built-in                                               |
 | =highlight-indent-guides= | https://github.com/DarthFennec/highlight-indent-guides |
+| =hl-line=                 | Built-in                                               |
 | =rainbow-mode=            | https://elpa.gnu.org/packages/rainbow-mode.html        |
+| =simple=                  | Built-in                                               |
 | =which-key=               | https://github.com/justbur/emacs-which-key             |
 
 Auto-indent code as you write.
@@ -2299,6 +2330,12 @@ Emacs can also emulate an interactive REST client.
 
 ** Shell and Terminal
 
+| =em-banner= | Built-in |
+| =em-hist=   | Built-in |
+| =esh-mode=  | Built-in |
+| =esh-proc=  | Built-in |
+| =term=      | Built-in |
+
 #+BEGIN_SRC emacs-lisp
 (use-package em-banner
   :ensure nil
@@ -2469,6 +2506,8 @@ pinentry-program /usr/local/bin/pinentry
 #+END_SRC
 
 ** Whitespaces
+
+| =whitespace= | Built-in |
 
 Highlight trailing space-like characters, eg. trailing spaces, tabs, empty lines.
 
