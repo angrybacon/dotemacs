@@ -557,18 +557,6 @@ you can press ctrl-c right (calling =winner-redo=).
   (comment-multi-line t))
 #+END_SRC
 
-** Customization Menus
-
-This merely changes face attributes. It also /Zenburn/ customization buffers a
-little more.
-
-#+BEGIN_SRC emacs-lisp
-(use-package cus-edit
-  :ensure nil
-  :custom
-  (custom-unlispify-tag-names nil))
-#+END_SRC
-
 ** Dictionary
 
 | =define-word=      | https://github.com/abo-abo/define-word        |
