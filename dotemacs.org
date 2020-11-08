@@ -636,22 +636,13 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
     "Like `evil-indent' but save excursion."
     (save-excursion
       (apply original arguments)))
-  :commands
-  (evil-define-key evil-define-key*)
+  :commands (evil-define-key*)
   :bind
   (:map evil-inner-text-objects-map
    ("g" . me/evil-whole-buffer)
    :map evil-outer-text-objects-map
    ("g" . me/evil-whole-buffer)
    :map evil-motion-state-map
-   ("<down>" . ignore)
-   ("<left>" . ignore)
-   ("<right>" . ignore)
-   ("<up>" . ignore)
-   ("<C-down>" . ignore)
-   ("<C-left>" . ignore)
-   ("<C-right>" . ignore)
-   ("<C-up>" . ignore)
    ("q" . nil)
    ("gs" . avy-goto-char-timer)
    ("gS" . avy-goto-char)
