@@ -1356,7 +1356,7 @@ Display relative line numbers in most editing modes.
 (add-hook 'text-mode-hook #'display-line-numbers-mode)
 (setq-default
  display-line-numbers-current-absolute nil        ; Current line is 0
- display-line-numbers-type 'relative              ; Prefer relative numbers
+ display-line-numbers-type 'visual                ; Prefer relative numbers
  display-line-numbers-width 2)                    ; Enforce width to reduce computation
 #+END_SRC
 
