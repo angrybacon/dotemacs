@@ -742,7 +742,10 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
   :bind
   (:map help-mode-map
    ("<" . help-go-back)
-   (">" . help-go-forward)))
+   (">" . help-go-forward))
+  :config
+  (evil-define-key* 'motion help-mode-map
+    (kbd "<tab>") #'forward-button))
 #+END_SRC
 
 Provide better detailed help buffers.
@@ -750,8 +753,7 @@ Provide better detailed help buffers.
 #+BEGIN_SRC emacs-lisp
 (use-package helpful
   :config
-  (evil-define-key* 'normal helpful-mode-map
-    (kbd "<backtab>") #'backward-button
+  (evil-define-key* 'motion helpful-mode-map
     (kbd "<tab>") #'forward-button))
 #+END_SRC
 
