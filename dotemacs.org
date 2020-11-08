@@ -278,7 +278,7 @@ Org, but I'm getting there. :-)
 Org mode is for keeping notes, maintaining TODO lists, planning projects, and
 authoring documents with a fast and effective plain-text system.
 
-[[http://orgmode.org/][Carsten Dominik]]
+--- Carsten Dominik
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
@@ -349,7 +349,7 @@ Company is a text completion framework for Emacs. The name stands for "complete
 anything". It uses pluggable back-ends and front-ends to retrieve and display
 completion candidates.
 
-[[http://company-mode.github.io/][Dmitry Gutov]]
+--- Dmitry Gutov
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
@@ -454,10 +454,10 @@ Workspaces within Emacs.
 =eyebrowse= is a global minor mode for Emacs that allows you to manage your
 window configurations in a simple manner, just like tiling window managers like
 i3wm with their workspaces do. It displays their current state in the modeline
-by default. The behaviour is modeled after
-[[http://ranger.nongnu.org/][ranger]], a file manager written in Python.
+by default. The behaviour is modeled after =ranger=, a file manager written in
+Python.
 
-[[https://github.com/wasamasa/eyebrowse][Vasilij Schneidermann]]
+--- Vasilij Schneidermann
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
@@ -480,7 +480,7 @@ way you'd like them to. By setting up simple rules you can for instance make
 Emacs always select help buffers for you or make everything reuse your currently
 selected window.
 
-[[https://github.com/wasamasa/shackle][Vasilij Schneidermann]]
+--- Vasilij Schneidermann
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
@@ -517,7 +517,7 @@ changes can be "undone" using the command =winner-undo=.  By default this one is
 bound to the key sequence ctrl-c left.  If you change your mind (while undoing),
 you can press ctrl-c right (calling =winner-redo=).
 
-[[https://github.com/emacs-mirror/emacs/blob/master/lisp/winner.el][Ivar Rummelhoff]]
+--- Ivar Rummelhoff
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
@@ -615,14 +615,7 @@ explorer.
 | =evil=            | https://github.com/emacs-evil/evil            |
 | =evil-commentary= | https://github.com/linktohack/evil-commentary |
 
-#+BEGIN_QUOTE
-Evil is an extensible vi layer for
-[[http://www.gnu.org/software/emacs/][Emacs]]. It emulates the main features of
-[[http://www.vim.org/][Vim]], and provides facilities for writing custom
-extensions. Also see our page on [[http://emacswiki.org/emacs/Evil][EmacsWiki]].
-
-https://github.com/emacs-evil/evil
-#+END_QUOTE
+Evil emulates and manages the infamous Vim states and motions ported to Emacs.
 
 #+BEGIN_SRC emacs-lisp
 (use-package evil
@@ -688,7 +681,7 @@ Comment things using Evil operators.
 
 HippieExpand manages expansions a la [[http://emmet.io/][Emmet]]. So I've
 gathered all features that look anywhere close to this behavior for it to handle
-under the same bind, that is =<C-return>=. Basically it's an expand DWIM.
+them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
 
 #+BEGIN_SRC emacs-lisp
 (use-package emmet-mode
@@ -771,7 +764,7 @@ Ivy is a generic completion mechanism for Emacs. While it operates similarly to
 other completion schemes such as =icomplete-mode=, Ivy aims to be more
 efficient, smaller, simpler, and smoother to use yet highly customizable.
 
-[[https://github.com/abo-abo/swiper#ivy][Oleh Krehel]]
+--- Oleh Krehel
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
@@ -931,7 +924,7 @@ arrives. Note that Hercules, besides vanquishing the Hydra, will still serve his
 original purpose, calling his proper command. This makes the Hydra very
 seamless, it's like a minor mode that disables itself auto-magically.
 
-[[https://github.com/abo-abo/hydra][Oleh Krehel]]
+--- Oleh Krehel
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
@@ -1368,7 +1361,7 @@ Display relative line numbers in most editing modes.
 
 Flycheck lints warnings and errors directly within buffers. It can check a lot
 of different syntaxes, as long as you make sure that Emacs has access to the
-binaries (see [[./README.org][README.org]]).
+binaries.
 
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
@@ -1390,22 +1383,21 @@ binaries (see [[./README.org][README.org]]).
   (flycheck-add-mode 'javascript-eslint 'web-mode))
 #+END_SRC
 
-#+BEGIN_QUOTE
-The =prettier= Emacs package reformats your code by running
-[[https://github.com/prettier/prettier][Prettier]] with minimal overhead, by
-request or transparently on file save.
-
-[[https://github.com/jscheid/prettier.el][Julian Scheid]]
-#+END_QUOTE
-
 Run Prettier against the whole buffer on save. Toggle the minor mode on through
 a strategically positioned =.dir-locals.el= containing the major modes for which
 to activate it. Use =nil= to enable Prettier for all major modes in that
 directory. ie.
 
-#+BEGIN_SRC
+#+BEGIN_SRC emacs-lisp :tangle no
 ((nil . ((mode . prettier))))
 #+END_SRC
+
+#+BEGIN_QUOTE
+The =prettier= Emacs package reformats your code by running Prettier with
+minimal overhead, by request or transparently on file save.
+
+--- Julian Scheid
+#+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
 (use-package prettier)
@@ -1413,8 +1405,7 @@ directory. ie.
 
 ** LSP
 
-Yup, Emacs supports
-[[https://github.com/Microsoft/language-server-protocol/][LSP]].
+Yup, Emacs supports LSP.
 
 | lsp-mode | https://github.com/emacs-lsp/lsp-mode |
 | lsp-ui   | https://github.com/emacs-lsp/lsp-ui   |
@@ -1587,12 +1578,10 @@ Yup, Emacs supports
 
 #+BEGIN_QUOTE
 =avy= is a GNU Emacs package for jumping to visible text using a char-based
-decision tree. See also
-[[https://github.com/winterTTr/ace-jump-mode][ace-jump-mode]] and
-[[https://github.com/Lokaltog/vim-easymotion][vim-easymotion]] - =avy= uses the
+decision tree. See also =ace-jump-mode= and =vim-easymotion= -- =avy= uses the
 same idea.
 
-[[https://github.com/abo-abo/avy][Oleh Krehel]]
+--- Oleh Krehel
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
@@ -1604,7 +1593,7 @@ same idea.
   ;; :config
   ;; (set-face-italic 'avy-goto-char-timer-face nil)
   ;; (set-face-italic 'avy-lead-face nil)
-  )
+)
 #+END_SRC
 
 ** Navigation / Inline
@@ -1626,11 +1615,9 @@ Smarter =C-a=.
 #+END_SRC
 
 #+BEGIN_QUOTE
-Evil-snipe emulates [[https://github.com/goldfeld/vim-seek][vim-seek]] and/or
-[[https://github.com/justinmk/vim-sneak][vim-sneak]] in
-[[https://gitorious.org/evil/pages/Home][evil-mode]].
+Evil-snipe emulates =vim-seek= and/or =vim-sneak= in =evil-mode=.
 
-[[https://github.com/hlissner/evil-snipe][Henrik Lissner]]
+---Henrik Lissner
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
@@ -1691,12 +1678,11 @@ Better search and replace features. Even though I prefer to use
 nice feedback on regexp matches.
 
 #+BEGIN_QUOTE
-=anzu.el= is an Emacs port of
-[[https://github.com/osyo-manga/vim-anzu][anzu.vim]]. =anzu.el= provides a minor
-mode which displays /current match/ and /total matches/ information in the
-mode-line in various search modes.
+=anzu.el= is an Emacs port of =anzu.vim=. =anzu.el= provides a minor mode which
+displays /current match/ and /total matches/ information in the mode-line in
+various search modes.
 
-[[https://github.com/syohex/emacs-anzu][Syohei Yoshida]]
+--- Syohei Yoshida
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
@@ -1757,7 +1743,7 @@ This library works solves this problem by copying important environment
 variables from the user's shell: it works by asking your shell to print out the
 variables of interest, then copying them into the Emacs environment.
 
-[[https://github.com/purcell/exec-path-from-shell][Steve Purcell]]
+--- Steve Purcell
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
@@ -1798,7 +1784,7 @@ be enabled in the first place.
 | =rainbow-delimiters= | https://github.com/Fanael/rainbow-delimiters |
 | =smartparens=        | https://github.com/Fuco1/smartparens         |
 
-Highlight parenthese-like delimiters in a rainbow fashion. It ease the reading
+Highlight parenthese-like delimiters in a rainbow fashion. It eases the reading
 when dealing with mismatched parentheses.
 
 #+BEGIN_SRC emacs-lisp
@@ -1838,7 +1824,7 @@ This mode allows to paste whole buffers or parts of buffers to pastebin-like
 services. It supports more than one service and will failover if one service
 fails.
 
-[[https://github.com/etu/webpaste.el][Elis Hirwing]]
+--- Elis Hirwing
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
@@ -2101,7 +2087,7 @@ portable implementation written in pure Emacs Lisp without the use of GNU find
 (but for performance sake an indexing mechanism backed by external commands
 exists as well).
 
-[[https://github.com/bbatsov/projectile][Bozhidar Batsov]]
+--- Bozhidar Batsov
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
@@ -2153,7 +2139,7 @@ or slurping and barfing sexps, indentation is bound to go wrong.
 It reindents after every change, making it more reliable than
 electric-indent-mode.
 
-[[https://github.com/Malabarba/aggressive-indent-mode][Artur Malabarba]]
+--- Artur Malabarba
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
@@ -2220,7 +2206,7 @@ This package provides commands for increasing or decreasing the default font
 size in all GUI Emacs frames -- it is like an Emacs-wide version of
 =text-scale-mode=.
 
-[[https://github.com/purcell/default-text-scale][Steve Purcell]]
+--- Steve Purcell
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
@@ -2410,16 +2396,14 @@ Major modes for Git-specific files.
 Magit provides Git facilities directly from within Emacs.
 
 #+BEGIN_QUOTE
-Magit is an interface to the version control system
-[[https://git-scm.com/][Git]], implemented as an
-[[https://www.gnu.org/software/emacs][Emacs]] package. Magit aspires to be a
-complete Git porcelain. While we cannot (yet) claim that Magit wraps and
-improves upon each and every Git command, it is complete enough to allow even
-experienced Git users to perform almost all of their daily version control tasks
-directly from within Emacs. While many fine Git clients exist, only Magit and
-Git itself deserve to be called porcelains.
+Magit is an interface to the version control system Git, implemented as an Emacs
+package. Magit aspires to be a complete Git porcelain. While we cannot (yet)
+claim that Magit wraps and improves upon each and every Git command, it is
+complete enough to allow even experienced Git users to perform almost all of
+their daily version control tasks directly from within Emacs. While many fine
+Git clients exist, only Magit and Git itself deserve to be called porcelains.
 
-[[https://github.com/magit/magit][Jonas Bernoulli]]
+--- Jonas Bernoulli
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
