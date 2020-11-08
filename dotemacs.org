@@ -2307,8 +2307,6 @@ Display the available keybindings following your current input.
 
 #+BEGIN_SRC emacs-lisp
 (use-package which-key
-  :hook
-  (after-init . which-key-mode)
   :custom
   (which-key-add-column-padding 1)
   (which-key-allow-evil-operators t)
