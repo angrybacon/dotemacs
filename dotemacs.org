@@ -2127,6 +2127,7 @@ exists as well).
   (projectile-completion-system 'ivy)
   (projectile-dynamic-mode-line nil)
   (projectile-enable-caching t)
+  (projectile-indexing-method 'hybrid)
   (projectile-track-known-projects-automatically nil)
   (projectile-switch-project-action #'projectile-commander)
   :config
