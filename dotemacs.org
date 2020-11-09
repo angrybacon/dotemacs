@@ -966,6 +966,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
   ("C-c o" . me/hydra-super)
   ("C-c p" . hydra-projectile/body)
   ("C-c s" . hydra-system/body)
+  ("C-c u" . hydra-ui/body)
   ("C-c w" . hydra-windows/body)
   :custom
   (hydra-default-hint nil))
@@ -1269,17 +1270,36 @@ Group system-related commands.
 
 [[./screenshots/hydra.system.jpg]]
 
+** Hydra / UI
+
+Group system-related commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-ui (:color red)
+  (concat "\n " (me/hydra-heading "User Interface" "Frame" "Zoom")
+          "
+ _q_ quit              _m_ maximize          _-_ out               ^^
+ ^^                    ^^                    _=_ in                ^^
+ ^^                    ^^                    _0_ reset             ^^
+")
+  ("q" nil)
+  ("m" toggle-frame-maximized :color blue)
+  ("-" default-text-scale-decrease)
+  ("=" default-text-scale-increase)
+  ("0" default-text-scale-reset :color blue))
+#+END_SRC
+
 ** Hydra / Windows
 
 Group window-related commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-windows (:color pink)
-  (concat "\n " (me/hydra-heading "Windows" "Size" "Zoom" "Buffers")
+  (concat "\n " (me/hydra-heading "Windows" "Size" "Buffers")
           "
- _q_ quit              _b_ balance           _-_ out               _w_ revert
- _m_ maximize          _i_ heighten          _=_ in                ^^
- ^^                    _j_ narrow            _0_ reset             ^^
+ _q_ quit              _b_ balance           _w_ revert            ^^
+ ^^                    _i_ heighten          ^^                    ^^
+ ^^                    _j_ narrow            ^^                    ^^
  ^^                    _k_ lower             ^^                    ^^
  ^^                    _l_ widen             ^^                    ^^
 ")
@@ -1289,11 +1309,7 @@ Group window-related commands.
   ("j" shrink-window-horizontally)
   ("k" shrink-window)
   ("l" enlarge-window-horizontally)
-  ("m" toggle-frame-maximized :color blue)
-  ("w" (revert-buffer nil t) :color blue)
-  ("-" default-text-scale-decrease)
-  ("=" default-text-scale-increase)
-  ("0" default-text-scale-reset :color blue))
+  ("w" (revert-buffer nil t) :color blue))
 #+END_SRC
 
 [[./screenshots/hydra.windows.jpg]]
