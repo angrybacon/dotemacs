@@ -1131,6 +1131,27 @@ Group Ivy commands.
   ("u" counsel-unicode-char))
 #+END_SRC
 
+** Hydra / LSP
+
+Group Markdown commands. This hydra is bound in =lsp-mode-map=.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-lsp (:color blue)
+  (concat "\n " (me/hydra-heading "LSP" "Do" "Server")
+          "
+ _q_ quit              _i_ imenu             _d_ describe          ^^
+ ^^                    _f_ format            _R_ restart           ^^
+ ^^                    ^^                    _S_ shutdown          ^^
+ ^^                    ^^                    ^^                    ^^
+")
+  ("q" nil)
+  ("d" lsp-describe-session)
+  ("f" lsp-format-buffer)
+  ("i" lsp-ui-imenu)
+  ("R" lsp-workspace-restart)
+  ("S" lsp-workspace-shutdown))
+#+END_SRC
+
 ** Hydra / Markdown
 
 Group Markdown commands.
@@ -1440,6 +1461,9 @@ Yup, Emacs supports LSP.
   (lsp-mode . me/lsp-optimize)
   (rjsx-mode . lsp-deferred)
   (web-mode . lsp-deferred)
+  :bind
+  (:map lsp-mode-map
+        ("C-c l" . hydra-lsp/body))
   :custom
   (lsp-auto-guess-root t)
   (lsp-idle-delay .01)
