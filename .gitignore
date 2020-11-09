@@ -16,6 +16,6 @@ url/
 # Third-party packages
 .amx
 .desktop*
+.lsp
 .multiple-cursors.el
-.projectile.cache
-.projectile.eld
+.projectile*

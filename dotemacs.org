@@ -1445,10 +1445,11 @@ Yup, Emacs supports LSP.
   (lsp-idle-delay .01)
   (lsp-diagnostics-provider :none)
   (lsp-eldoc-hook nil)
-  (lsp-use-plists t)
-  :config
-  (lsp-enable-which-key-integration))
+  (lsp-session-file (expand-file-name ".lsp" user-emacs-directory))
+  (lsp-use-plists t))
+#+END_SRC
 
+#+BEGIN_SRC emacs-lisp
 (use-package lsp-ui
   :custom
   (lsp-ui-doc-enable t)
