@@ -979,9 +979,9 @@ Group date-related commands.
 (defhydra hydra-dates (:color blue)
   (concat "\n " (me/hydra-heading "Dates" "Insert" "Insert with Time")
           "
- _q_ quit              _d_ short             _D_ short
- ^^                    _i_ iso               _I_ iso
- ^^                    _l_ long              _L_ long
+ _q_ quit              _d_ short             _D_ short             ^^
+ ^^                    _i_ iso               _I_ iso               ^^
+ ^^                    _l_ long              _L_ long              ^^
 ")
   ("q" nil)
   ("d" me/date-short)
@@ -1003,10 +1003,10 @@ Group Eyebrowse commands.
   (concat "\n " (me/hydra-heading "Eyebrowse" "Do" "Switch")
           "
  _q_ quit              _c_ create            _0_-_9_ %s(eyebrowse-mode-line-indicator)
- ^^                    _k_ kill              _<_ previous
- ^^                    _r_ rename            _>_ next
- ^^                    ^^                    _e_ last
- ^^                    ^^                    _s_ switch
+ ^^                    _k_ kill              _<_ previous          ^^
+ ^^                    _r_ rename            _>_ next              ^^
+ ^^                    ^^                    _e_ last              ^^
+ ^^                    ^^                    _s_ switch            ^^
 ")
   ("q" nil)
   ("0" eyebrowse-switch-to-window-config-0)
@@ -1038,11 +1038,11 @@ Group Flycheck commands.
 (defhydra hydra-flycheck (:color blue)
   (concat "\n " (me/hydra-heading "Flycheck" "Errors" "Checker")
           "
- _q_ quit              _<_ previous          _?_ describe
- _m_ manual            _>_ next              _d_ disable
- _v_ verify setup      _f_ goto              _s_ select
- ^^                    _F_ check             ^^
- ^^                    _l_ list              ^^
+ _q_ quit              _<_ previous          _?_ describe          ^^
+ _m_ manual            _>_ next              _d_ disable           ^^
+ _v_ verify setup      _f_ goto              _s_ select            ^^
+ ^^                    _F_ check             ^^                    ^^
+ ^^                    _l_ list              ^^                    ^^
 ")
   ("q" nil)
   ("<" flycheck-previous-error :color red)
@@ -1070,7 +1070,7 @@ Group Magit commands.
  _q_ quit              _b_ blame             _p_ previous          _m_ smerge...
  ^^                    _c_ clone             _n_ next              ^^
  ^^                    _g_ status            _s_ stage             ^^
- ^^                    _i_ init              ^^
+ ^^                    _i_ init              ^^                    ^^
 ")
   ("q" nil)
   ("b" magit-blame)
@@ -1121,11 +1121,11 @@ Group Ivy commands.
 (defhydra hydra-ivy (:color blue)
   (concat "\n " (me/hydra-heading "Ivy" "Do" "Browse")
           "
- _q_ quit              _m_ mark              _f_ faces
- _r_ resume            _M_ unmark            _i_ imenu
- ^^                    ^^                    _l_ libraries
- ^^                    ^^                    _s_ symbols
- ^^                    ^^                    _u_ unicode
+ _q_ quit              _m_ mark              _f_ faces             ^^
+ _r_ resume            _M_ unmark            _i_ imenu             ^^
+ ^^                    ^^                    _l_ libraries         ^^
+ ^^                    ^^                    _s_ symbols           ^^
+ ^^                    ^^                    _u_ unicode           ^^
 ")
   ("q" nil)
   ("f" counsel-faces)
@@ -1148,10 +1148,10 @@ Group Markdown commands.
 (defhydra hydra-markdown (:color pink)
   (concat "\n " (me/hydra-heading "Markdown" "Table Columns" "Table Rows")
           "
- _q_ quit              _c_ insert            _r_ insert
- ^^                    _C_ delete            _R_ delete
- ^^                    _M-<left>_ left       _M-<down>_ down
- ^^                    _M-<right>_ right     _M-<up>_ up
+ _q_ quit              _c_ insert            _r_ insert            ^^
+ ^^                    _C_ delete            _R_ delete            ^^
+ ^^                    _M-<left>_ left       _M-<down>_ down       ^^
+ ^^                    _M-<right>_ right     _M-<up>_ up           ^^
 ")
   ("q" nil)
   ("c" markdown-table-insert-column)
@@ -1174,11 +1174,11 @@ Group Org commands.
 (defhydra hydra-org (:color pink)
   (concat "\n " (me/hydra-heading "Org" "Links" "Outline")
           "
- _q_ quit              _i_ insert            _<_ previous
- ^^                    _n_ next              _>_ next
- ^^                    _p_ previous          _a_ all
- ^^                    _s_ store             _g_ go
- ^^                    ^^                    _v_ overview
+ _q_ quit              _i_ insert            _<_ previous          ^^
+ ^^                    _n_ next              _>_ next              ^^
+ ^^                    _p_ previous          _a_ all               ^^
+ ^^                    _s_ store             _g_ go                ^^
+ ^^                    ^^                    _v_ overview          ^^
 ")
   ("q" nil)
   ("<" org-backward-element)
@@ -1232,8 +1232,8 @@ Group React JavaScript commands.
 (defhydra hydra-rjsx (:color blue)
   (concat "\n " (me/hydra-heading "RJSX" "JSDoc")
           "
- _q_ quit              _f_ function
- ^^                    _F_ file
+ _q_ quit              _f_ function          ^^                    ^^
+ ^^                    _F_ file              ^^                    ^^
 ")
   ("q" nil)
   ("f" js-doc-insert-function-doc-snippet)
@@ -1253,7 +1253,6 @@ Group system-related commands.
  _q_ quit              _i_ install           _e_ eshell            _d_ clear byte-compiled
  ^^                    _p_ list              _t_ term              _D_ clear desktop
  ^^                    _r_ refresh           _T_ ansi-term         _s_ list processes
- ^^                    ^^                    ^^                    ^^
 ")
   ("q" nil)
   ("d" (let ((default-directory user-emacs-directory))
