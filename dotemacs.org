@@ -1276,13 +1276,15 @@ Group system-related commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-ui (:color red)
-  (concat "\n " (me/hydra-heading "User Interface" "Frame" "Zoom")
+  (concat "\n " (me/hydra-heading "User Interface" "Frame" "Zoom" "Line Numbers")
           "
- _q_ quit              _m_ maximize          _-_ out               ^^
- ^^                    ^^                    _=_ in                ^^
+ _q_ quit              _m_ maximize          _-_ out               _l_ mode: %s`display-line-numbers
+ ^^                    ^^                    _=_ in                _L_ absolute: %s`display-line-numbers-current-absolute
  ^^                    ^^                    _0_ reset             ^^
 ")
   ("q" nil)
+  ("l" me/display-line-numbers-toggle-type)
+  ("L" me/display-line-numbers-toggle-absolute)
   ("m" toggle-frame-maximized :color blue)
   ("-" default-text-scale-decrease)
   ("=" default-text-scale-increase)
@@ -1373,6 +1375,23 @@ Display relative line numbers in most editing modes.
  display-line-numbers-current-absolute nil        ; Current line is 0
  display-line-numbers-type 'visual                ; Prefer relative numbers
  display-line-numbers-width 2)                    ; Enforce width to reduce computation
+
+(defun me/display-line-numbers-toggle-absolute ()
+  "Toggle the value of `display-line-numbers-current-absolute'."
+  (interactive)
+  (let ((value display-line-numbers-current-absolute))
+    (setq-default display-line-numbers-current-absolute (not value))))
+
+(defun me/display-line-numbers-toggle-type ()
+  "Cycle through the possible values of `display-line-numbers'.
+Cycle between nil, t, 'relative and 'visual."
+  (interactive)
+  (let* ((range '(nil t relative visual))
+         (position (1+ (cl-position display-line-numbers range)))
+         (position (if (= position (length range)) 0 position))
+         (value (nth position range)))
+    (setq-default display-line-numbers-type value)
+    (setq-local display-line-numbers value)))
 #+END_SRC
 
 ** Linters
