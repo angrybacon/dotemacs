@@ -636,7 +636,6 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
     "Like `evil-indent' but save excursion."
     (save-excursion
       (apply original arguments)))
-  :commands (evil-define-key*)
   :bind
   (:map evil-inner-text-objects-map
    ("g" . me/evil-whole-buffer)
@@ -656,9 +655,6 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
   :config
   (add-to-list 'evil-insert-state-modes 'with-editor-mode)
   (add-to-list 'evil-emacs-state-modes 'dired-mode)
-  (evil-define-key* 'normal dired-mode-map
-    (kbd "h") #'dired-up-directory
-    (kbd "l") #'dired-find-file)
   (evil-define-text-object me/evil-whole-buffer (_ &optional _ _ type)
     "Text object to select the whole buffer."
     (evil-range (point-min) (point-max) type))
@@ -744,8 +740,9 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
    ("<" . help-go-back)
    (">" . help-go-forward))
   :config
-  (evil-define-key* 'motion help-mode-map
-    (kbd "<tab>") #'forward-button))
+  (with-eval-after-load 'evil
+    (evil-define-key* 'motion help-mode-map
+      (kbd "<tab>") #'forward-button)))
 #+END_SRC
 
 Provide better detailed help buffers.
@@ -753,8 +750,9 @@ Provide better detailed help buffers.
 #+BEGIN_SRC emacs-lisp
 (use-package helpful
   :config
-  (evil-define-key* 'motion helpful-mode-map
-    (kbd "<tab>") #'forward-button))
+  (with-eval-after-load 'evil
+    (evil-define-key* 'motion helpful-mode-map
+      (kbd "<tab>") #'forward-button)))
 #+END_SRC
 
 ** Ivy
