@@ -993,8 +993,6 @@ Group date-related commands.
   ("L" me/date-long-with-time))
 #+END_SRC
 
-[[./screenshots/hydra.dates.jpg]]
-
 ** Hydra / Eyebrowse
 
 Group Eyebrowse commands.
@@ -1029,8 +1027,6 @@ Group Eyebrowse commands.
   ("s" eyebrowse-switch-to-window-config))
 #+END_SRC
 
-[[./screenshots/hydra.eyebrowse.jpg]]
-
 ** Hydra / Flycheck
 
 Group Flycheck commands.
@@ -1058,8 +1054,6 @@ Group Flycheck commands.
   ("v" flycheck-verify-setup))
 #+END_SRC
 
-[[./screenshots/hydra.flycheck.jpg]]
-
 ** Hydra / Git
 
 Group Magit commands.
@@ -1083,8 +1077,6 @@ Group Magit commands.
   ("p" git-gutter:previous-hunk :color red)
   ("s" git-gutter:stage-hunk :color red))
 #+END_SRC
-
-[[./screenshots/hydra.magit.jpg]]
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-smerge
@@ -1139,8 +1131,6 @@ Group Ivy commands.
   ("u" counsel-unicode-char))
 #+END_SRC
 
-[[./screenshots/hydra.ivy.jpg]]
-
 ** Hydra / Markdown
 
 Group Markdown commands.
@@ -1164,8 +1154,6 @@ Group Markdown commands.
   ("M-<down>" markdown-table-move-row-down)
   ("M-<up>" markdown-table-move-row-up))
 #+END_SRC
-
-[[./screenshots/hydra.markdown.jpg]]
 
 ** Hydra / Org
 
@@ -1192,8 +1180,6 @@ Group Org commands.
   ("s" org-store-link)
   ("v" org-overview :color blue))
 #+END_SRC
-
-[[./screenshots/hydra.org.jpg]]
 
 ** Hydra / Projectile
 
@@ -1223,8 +1209,6 @@ Group Projectile commands.
   ("S" projectile-save-project-buffers))
 #+END_SRC
 
-[[./screenshots/hydra.projectile.jpg]]
-
 ** Hydra / RJSX
 
 Group React JavaScript commands.
@@ -1240,8 +1224,6 @@ Group React JavaScript commands.
   ("f" js-doc-insert-function-doc-snippet)
   ("F" js-doc-insert-file-doc))
 #+END_SRC
-
-[[./screenshots/hydra.rjsx.jpg]]
 
 ** Hydra / System
 
@@ -1267,8 +1249,6 @@ Group system-related commands.
   ("t" term)
   ("T" ansi-term))
 #+END_SRC
-
-[[./screenshots/hydra.system.jpg]]
 
 ** Hydra / UI
 
@@ -1313,8 +1293,6 @@ Group window-related commands.
   ("l" enlarge-window-horizontally)
   ("w" (revert-buffer nil t) :color blue))
 #+END_SRC
-
-[[./screenshots/hydra.windows.jpg]]
 
 ** IRC
 
@@ -2533,7 +2511,3 @@ Highlight trailing space-like characters, eg. trailing spaces, tabs, empty lines
   :custom
   (whitespace-style '(face empty indentation::space tab trailing)))
 #+END_SRC
-
------
-
-[[#dotemacs][Back to top]]
