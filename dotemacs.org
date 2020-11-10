@@ -297,22 +297,8 @@ authoring documents with a fast and effective plain-text system.
 #+BEGIN_SRC emacs-lisp
 (use-package org
   :ensure nil
-  :preface
-  (defun me/org-cycle-parent (argument)
-    "Go to the nearest parent heading and execute `org-cycle'."
-    (interactive "p")
-    (if (org-at-heading-p)
-        (outline-up-heading argument)
-      (org-previous-visible-heading argument))
-    (org-cycle))
-  (defun me/org-src-buffer-name (buffer-name &rest _)
-    "Construct the buffer name for a source editing buffer. See
-`org-src--construct-edit-buffer-name'."
-    (format "*%s*" buffer-name))
   :bind
   (:map org-mode-map
-   ([remap backward-paragraph] . me/backward-paragraph-dwim)
-   ([remap forward-paragraph] . me/forward-paragraph-dwim)
    ("<C-return>" . nil)
    ("<C-tab>" . me/org-cycle-parent)
    ("<C-S-down>" . nil)
@@ -336,7 +322,22 @@ authoring documents with a fast and effective plain-text system.
   (org-support-shift-select 'always)
   :config
   (modify-syntax-entry ?' "'" org-mode-syntax-table)
-  (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer-name))
+  (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src--buffer-name))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/org-cycle-parent (argument)
+  "Go to the nearest parent heading and execute `org-cycle'."
+  (interactive "p")
+  (if (org-at-heading-p)
+      (outline-up-heading argument)
+    (org-previous-visible-heading argument))
+  (org-cycle))
+
+(defun me/org-src--buffer-name (buffer-name &rest _)
+  "Construct the buffer name for a source editing buffer.
+See `org-src--construct-edit-buffer-name'."
+  (format "*%s*" buffer-name))
 #+END_SRC
 
 ** YAML
@@ -598,14 +599,6 @@ explorer.
 #+BEGIN_SRC emacs-lisp
 (use-package dired
   :ensure nil
-  :preface
-  (defun me/dired-directories-first ()
-    "Sort dired listings with directories first before adding marks."
-    (save-excursion
-      (let (buffer-read-only)
-        (forward-line 2)
-        (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
-      (set-buffer-modified-p nil)))
   :hook
   (dired-mode . dired-hide-details-mode)
   :bind
@@ -617,7 +610,17 @@ explorer.
   (dired-listing-switches "-agho")
   (dired-recursive-copies 'always)
   :config
-  (advice-add 'dired-readin :after #'me/dired-directories-first))
+  (advice-add 'dired-readin :after #'me/dired-readin--directories-first))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/dired-readin--directories-first ()
+  "Sort dired listings with directories first before adding marks."
+  (save-excursion
+    (let (buffer-read-only)
+      (forward-line 2)
+      (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
+    (set-buffer-modified-p nil)))
 #+END_SRC
 
 ** Evil
@@ -631,11 +634,6 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
 (use-package evil
   :hook
   (after-init . evil-mode)
-  :preface
-  (defun me/evil-indent (original &rest arguments)
-    "Like `evil-indent' but save excursion."
-    (save-excursion
-      (apply original arguments)))
   :bind
   (:map evil-inner-text-objects-map
    ("g" . me/evil-whole-buffer)
@@ -660,6 +658,13 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
     "Text object to select the whole buffer."
     (evil-range (point-min) (point-max) type))
   (advice-add 'evil-indent :around #'me/evil-indent))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/evil-indent (original &rest arguments)
+  "Like `evil-indent' but save excursion."
+  (save-excursion
+    (apply original arguments)))
 #+END_SRC
 
 Comment things using Evil operators.
