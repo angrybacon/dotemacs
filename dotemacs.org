@@ -786,6 +786,7 @@ efficient, smaller, simpler, and smoother to use yet highly customizable.
   (ivy-initial-inputs-alist nil)
   (ivy-more-chars-alist '((t . 1)))
   (ivy-on-del-error-function 'ignore)
+  (ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
   (ivy-virtual-abbreviate 'full)
   :config
   (setf (alist-get 't ivy-format-functions-alist) #'ivy-format-function-line))
