@@ -33,10 +33,10 @@ Here are what I consider better defaults as per my own experience.
  tab-width 4                                      ; Set width for tabs
  uniquify-buffer-name-style 'forward              ; Uniquify buffer names
  window-combination-resize t                      ; Resize windows proportionally
+ window-divider-default-right-width 1             ; Thin window vertical dividers
  x-stretch-cursor t)                              ; Stretch cursor to the glyph width
 (cd "~/")                                         ; Move to the user directory
 (delete-selection-mode 1)                         ; Replace region when inserting text
-(fringe-mode '(2 . 0))                            ; Initialize thinner vertical fringes
 (fset 'yes-or-no-p 'y-or-n-p)                     ; Replace yes/no prompts with y/n
 (global-subword-mode 1)                           ; Iterate through CamelCase words
 (menu-bar-mode 0)                                 ; Disable the menu bar
@@ -51,9 +51,13 @@ Some UI elements are rather invasive. No-mouse master race.
 #+BEGIN_SRC emacs-lisp
 (when window-system
   (blink-cursor-mode 0)                           ; Disable the cursor blinking
+  (fringe-mode '(2 . 0))                          ; Initialize thinner vertical fringes
   (scroll-bar-mode 0)                             ; Disable the scroll bar
   (tool-bar-mode 0)                               ; Disable the tool bar
-  (tooltip-mode 0))                               ; Disable the tooltips
+  (tooltip-mode 0)                                ; Disable the tooltips
+  (window-divider-mode 1)                         ; Disable the tooltips
+
+  (define-fringe-bitmap 'left-curly-arrow [192] nil nil '(center t)))
 #+END_SRC
 
 Enable fullscreen.
@@ -100,7 +104,7 @@ and =user-mail-address=. This is also where you want your API tokens to live.
 (defvar me/erc-port           nil                 "The ERC port to use.")
 (defvar me/erc-server         nil                 "The ERC server to use.")
 (defvar me/font-family        "Monaco"            "The font to use.")
-(defvar me/font-size-default  110                 "The font size to use for default text.")
+(defvar me/font-size-default  120                 "The font size to use for default text.")
 (defvar me/font-size-large    1.2                 "The font size to use for larger text.")
 (defvar me/font-size-small    .8                  "The font size to use for smaller text.")
 
@@ -130,14 +134,13 @@ Load the theme and fix some faces to match my personal preferences.
     '(flycheck-error :underline `(:color ,error :style line))
     '(flycheck-info :underline `(:color ,highlight :style line))
     '(flycheck-warning :underline `(:color ,warning :style line))
-    '(fringe :background base3)
+    '(fringe :background 'unspecified)
     '(helpful-heading :foreground red :height me/font-size-large)
     '(info-title-4 :bold nil :foreground red)
     '(isearch :inherit 'highlight)
     '(italic :italic nil)
     '(lazy-highlight :foreground blue)
-    '(line-number :background base3)
-    '(line-number-current-line :inherit '(hl-line default))
+    '(line-number :background 'unspecified :foreground base5)
     '(lsp-face-highlight-read :foreground fg)
     '(lsp-face-highlight-textual :foreground fg)
     '(lsp-face-highlight-write :foreground fg)
@@ -159,7 +162,7 @@ Load the theme and fix some faces to match my personal preferences.
     '(swiper-match-face-1 :background 'unspecified :foreground 'unspecified)
     '(tooltip :background base1)
     '(variable-pitch :family 'unspecified)
-    '(vertical-border :foreground base3)
+    '(vertical-border :background 'unspecified :inverse-video t)
     '(which-key-command-description-face :foreground 'unspecified)
     '(whitespace-empty :background red :extend t)))
 #+END_SRC
@@ -1370,7 +1373,7 @@ Display relative line numbers in most editing modes.
 (add-hook 'text-mode-hook #'display-line-numbers-mode)
 (setq-default
  display-line-numbers-current-absolute nil        ; Current line is 0
- display-line-numbers-type 'visual                ; Prefer relative numbers
+ display-line-numbers-type 'relative              ; Prefer relative numbers
  display-line-numbers-width 2)                    ; Enforce width to reduce computation
 
 (defun me/display-line-numbers-toggle-absolute ()
@@ -1413,7 +1416,7 @@ binaries.
   (flycheck-disabled-checkers '(emacs-lisp-checkdoc))
   (flycheck-display-errors-delay .1)
   (flycheck-emacs-lisp-load-path 'inherit)
-  (flycheck-indication-mode 'right-fringe)
+  (flycheck-indication-mode nil)
   :config
   (define-fringe-bitmap 'me/flycheck-fringe-bitmap [224] nil nil '(center t))
   (flycheck-redefine-standard-error-levels nil 'me/flycheck-fringe-bitmap)
@@ -1461,7 +1464,7 @@ Yup, Emacs supports LSP.
   (web-mode . lsp-deferred)
   :bind
   (:map lsp-mode-map
-        ("C-c l" . hydra-lsp/body))
+   ("C-c l" . hydra-lsp/body))
   :custom
   (lsp-auto-guess-root t)
   (lsp-idle-delay .01)
@@ -2435,9 +2438,9 @@ Display indicators in the left fringe for Git changes.
   :hook
   (after-change-major-mode . me/git-gutter-enable)
   :config
-  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center t))
-  (define-fringe-bitmap 'git-gutter-fr:deleted [240 240 240 240] nil nil 'bottom)
-  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center t)))
+  (define-fringe-bitmap 'git-gutter-fr:added [192] nil nil '(center t))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [192 192 192 192] nil nil 'bottom)
+  (define-fringe-bitmap 'git-gutter-fr:modified [192] nil nil '(center t)))
 #+END_SRC
 
 Major modes for Git-specific files.
