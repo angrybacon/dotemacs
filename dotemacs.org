@@ -381,7 +381,7 @@ completion candidates.
   (company-tng-mode))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp :lexical t
+#+BEGIN_SRC emacs-lisp
 (use-package company-box
   :after company
   :defer nil
