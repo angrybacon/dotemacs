@@ -1391,18 +1391,16 @@ Display relative line numbers in most editing modes.
   "Toggle the value of `display-line-numbers-current-absolute'."
   (interactive)
   (let ((value display-line-numbers-current-absolute))
-    (setq-default display-line-numbers-current-absolute (not value))))
+    (setq-local display-line-numbers-current-absolute (not value))))
 
 (defun me/display-line-numbers-toggle-type ()
   "Cycle through the possible values of `display-line-numbers'.
-Cycle between nil, t, 'relative and 'visual."
+Cycle between nil, t and 'relative."
   (interactive)
-  (let* ((range '(nil t relative visual))
+  (let* ((range '(nil t relative))
          (position (1+ (cl-position display-line-numbers range)))
-         (position (if (= position (length range)) 0 position))
-         (value (nth position range)))
-    (setq-default display-line-numbers-type value)
-    (setq-local display-line-numbers value)))
+         (position (if (= position (length range)) 0 position)))
+    (setq-local display-line-numbers (nth position range))))
 #+END_SRC
 
 ** Linters
