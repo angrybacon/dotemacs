@@ -177,15 +177,6 @@ Load the theme and fix some faces to match my personal preferences.
   :ensure nil
   :custom
   (css-indent-offset 2))
-
-(use-package scss-mode
-  :ensure nil
-  :preface
-  (defun me/scss-set-comment-style ()
-    (setq-local comment-end "")
-    (setq-local comment-start "//"))
-  :hook
-  (scss-mode . me/scss-set-comment-style))
 #+END_SRC
 
 ** HTML
@@ -380,14 +371,14 @@ completion candidates.
   (company-global-modes '(not help-mode message-mode))
   (company-idle-delay .0)
   (company-minimum-prefix-length 1)
-  (company-require-match 'never)
+  (company-require-match nil)
   (company-selection-wrap-around t)
   (company-tooltip-align-annotations t)
   (company-tooltip-flip-when-above t)
   (company-tooltip-offset-display nil)
   (company-tooltip-width-grow-only t)
   :config
-  (company-tng-configure-default))
+  (company-tng-mode))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp :lexical t
