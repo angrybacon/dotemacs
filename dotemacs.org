@@ -51,7 +51,7 @@ Some UI elements are rather invasive. No-mouse master race.
 #+BEGIN_SRC emacs-lisp
 (when window-system
   (blink-cursor-mode 0)                           ; Disable the cursor blinking
-  (fringe-mode '(2 . 0))                          ; Initialize thinner vertical fringes
+  (fringe-mode 2)                                 ; Initialize thinner vertical fringes
   (scroll-bar-mode 0)                             ; Disable the scroll bar
   (tool-bar-mode 0)                               ; Disable the tool bar
   (tooltip-mode 0)                                ; Disable the tooltips
