@@ -6,16 +6,6 @@
 
 ** Use better defaults
 
-Some UI elements are rather invasive. No-mouse master race.
-
-#+BEGIN_SRC emacs-lisp
-(when window-system
-  (blink-cursor-mode 0)                           ; Disable the cursor blinking
-  (scroll-bar-mode 0)                             ; Disable the scroll bar
-  (tool-bar-mode 0)                               ; Disable the tool bar
-  (tooltip-mode 0))                               ; Disable the tooltips
-#+END_SRC
-
 Here are what I consider better defaults as per my own experience.
 
 #+BEGIN_SRC emacs-lisp
@@ -23,7 +13,9 @@ Here are what I consider better defaults as per my own experience.
  ad-redefinition-action 'accept                   ; Silence warnings for redefinition
  auto-save-list-file-prefix nil                   ; Prevent tracking for auto-saves
  cursor-in-non-selected-windows nil               ; Hide the cursor in inactive windows
- cursor-type 'bar                                 ; Prefer a bar-shaped cursor by default
+ cursor-type 'bar                                 ; Prefer a bar-shaped cursor
+ custom-unlispify-menu-entries nil                ; Prefer kebab-case for titles
+ custom-unlispify-tag-names nil                   ; Prefer kebab-case for symbols
  delete-by-moving-to-trash t                      ; Delete files to trash
  fill-column 80                                   ; Set width for automatic line breaks
  gc-cons-threshold (* 8 1024 1024)                ; We're not using Game Boys anymore
@@ -37,7 +29,7 @@ Here are what I consider better defaults as per my own experience.
  scroll-margin 2                                  ; Add a margin when scrolling vertically
  select-enable-clipboard t                        ; Merge system's and Emacs' clipboard
  sentence-end-double-space nil                    ; Use a single space after dots
- show-help-function nil                           ; Disable help text on most UI elements
+ show-help-function nil                           ; Disable help text everywhere
  tab-width 4                                      ; Set width for tabs
  uniquify-buffer-name-style 'forward              ; Uniquify buffer names
  window-combination-resize t                      ; Resize windows proportionally
@@ -52,6 +44,16 @@ Here are what I consider better defaults as per my own experience.
 (put 'downcase-region 'disabled nil)              ; Enable downcase-region
 (put 'upcase-region 'disabled nil)                ; Enable upcase-region
 (set-default-coding-systems 'utf-8)               ; Default to utf-8 encoding
+#+END_SRC
+
+Some UI elements are rather invasive. No-mouse master race.
+
+#+BEGIN_SRC emacs-lisp
+(when window-system
+  (blink-cursor-mode 0)                           ; Disable the cursor blinking
+  (scroll-bar-mode 0)                             ; Disable the scroll bar
+  (tool-bar-mode 0)                               ; Disable the tool bar
+  (tooltip-mode 0))                               ; Disable the tooltips
 #+END_SRC
 
 Enable fullscreen.
@@ -93,14 +95,14 @@ For instance, you could set your identity by customizing both =user-full-name=
 and =user-mail-address=. This is also where you want your API tokens to live.
 
 #+BEGIN_SRC emacs-lisp
-(defvar me/erc-nick           nil        "The ERC nick to use.")
-(defvar me/erc-password       nil        "The ERC password to use.")
-(defvar me/erc-port           nil        "The ERC port to use.")
-(defvar me/erc-server         nil        "The ERC server to use.")
-(defvar me/font-family        "Monaco"   "The font to use.")
-(defvar me/font-size-default  110        "The font size to use for default text.")
-(defvar me/font-size-large    1.2        "The font size to use for larger text.")
-(defvar me/font-size-small    .8         "The font size to use for smaller text.")
+(defvar me/erc-nick           nil                 "The ERC nick to use.")
+(defvar me/erc-password       nil                 "The ERC password to use.")
+(defvar me/erc-port           nil                 "The ERC port to use.")
+(defvar me/erc-server         nil                 "The ERC server to use.")
+(defvar me/font-family        "Monaco"            "The font to use.")
+(defvar me/font-size-default  110                 "The font size to use for default text.")
+(defvar me/font-size-large    1.2                 "The font size to use for larger text.")
+(defvar me/font-size-small    .8                  "The font size to use for smaller text.")
 
 (let ((secret.el (expand-file-name ".secret.el" user-emacs-directory)))
   (load secret.el t))
