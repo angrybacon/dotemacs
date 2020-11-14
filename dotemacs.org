@@ -1257,19 +1257,30 @@ Group system-related commands.
           "
  _q_ quit              _i_ install           _e_ eshell            _d_ clear byte-compiled
  ^^                    _p_ list              _t_ term              _D_ clear desktop
- ^^                    _r_ refresh           _T_ ansi-term         _s_ list processes
+ ^^                    _r_ refresh           _T_ ansi-term         _Q_ clear and kill Emacs
+ ^^                    ^^                    ^^                    _s_ list processes
 ")
   ("q" nil)
-  ("d" (let ((default-directory user-emacs-directory))
-         (shell-command "find . -name \"*.elc\" -type f | xargs rm -f")))
+  ("d" me/byte-delete)
   ("D" desktop-remove)
   ("e" (eshell t))
   ("i" package-install)
   ("p" package-list-packages)
+  ("Q" (let ((desktop-save nil))
+         (me/byte-delete)
+         (desktop-remove)
+         (save-buffers-kill-terminal)))
   ("r" package-refresh-contents :color red)
   ("s" list-processes)
   ("t" term)
   ("T" ansi-term))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/byte-delete ()
+  (interactive)
+  (let ((default-directory user-emacs-directory))
+    (shell-command "find . -name \"*.elc\" -type f | xargs rm -f")))
 #+END_SRC
 
 ** Hydra / UI
