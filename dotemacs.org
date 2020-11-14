@@ -226,8 +226,7 @@ HTML mode is defined in =sgml-mode.el=.
   :hook
   (rjsx-mode . (lambda () (setq me/pretty-print-function #'sgml-pretty-print)))
   (rjsx-mode . me/hydra-set-super)
-  (rjsx-mode . sgml-electric-tag-pair-mode)
-  (rjsx-mode . turn-off-auto-fill))
+  (rjsx-mode . sgml-electric-tag-pair-mode))
 
 (use-package web-mode
   :mode ("\\.ts\\'" "\\.tsx\\'")
@@ -448,7 +447,8 @@ Don't ask before killing a buffer. I'm a consenting adult.
 (global-set-key [remap kill-buffer] #'kill-this-buffer)
 #+END_SRC
 
-Save and restore Emacs status, including buffers, point and window configurations.
+Save and restore Emacs status, including buffers, point and window
+configurations.
 
 #+BEGIN_SRC emacs-lisp
 (use-package desktop
@@ -489,10 +489,10 @@ Window management.
 | TODO | Shackle Magit windows |
 
 #+BEGIN_QUOTE
-=shackle= gives you the means to put an end to popped up buffers not behaving they
-way you'd like them to. By setting up simple rules you can for instance make
-Emacs always select help buffers for you or make everything reuse your currently
-selected window.
+=shackle= gives you the means to put an end to popped up buffers not behaving
+they way you'd like them to. By setting up simple rules you can for instance
+make Emacs always select help buffers for you or make everything reuse your
+currently selected window.
 
 --- Vasilij Schneidermann
 #+END_QUOTE
@@ -527,8 +527,8 @@ Allow undo's and redo's with window configurations.
 #+BEGIN_QUOTE
 Winner mode is a global minor mode that records the changes in the window
 configuration (i.e. how the frames are partitioned into windows) so that the
-changes can be "undone" using the command =winner-undo=.  By default this one is
-bound to the key sequence ctrl-c left.  If you change your mind (while undoing),
+changes can be "undone" using the command =winner-undo=. By default this one is
+bound to the key sequence ctrl-c left. If you change your mind (while undoing),
 you can press ctrl-c right (calling =winner-redo=).
 
 --- Ivar Rummelhoff
@@ -550,8 +550,9 @@ you can press ctrl-c right (calling =winner-redo=).
   :ensure nil
   :bind
   ("<M-return>" . comment-indent-new-line)
+  :hook
+  (prog-mode . (lambda () (setq-local comment-auto-fill-only-comments t)))
   :custom
-  (comment-auto-fill-only-comments t)
   (comment-multi-line t))
 #+END_SRC
 
@@ -1827,8 +1828,8 @@ Augment Emacs experience for MacOS users.
    ns-use-mwheel-momentum nil))                      ; Disable smooth scroll
 #+END_SRC
 
-Provide a way to invoke =bash= on Windows. This requires "Developer Mode" to
-be enabled in the first place.
+Provide a way to invoke =bash= on Windows. This requires /Developer Mode/ to be
+enabled in the first place.
 
 #+BEGIN_SRC emacs-lisp
 (when (eq system-type 'windows-nt)
@@ -1852,8 +1853,8 @@ when dealing with mismatched parentheses.
   (prog-mode . rainbow-delimiters-mode))
 #+END_SRC
 
-I am still looking for the perfect parenthesis management setup as of
-today... No package seem to please my person.
+I am still looking for the perfect parenthesis management setup as of today...
+No package seem to please my person.
 
 #+BEGIN_SRC emacs-lisp
 (use-package smartparens
@@ -2328,8 +2329,9 @@ Turn on =auto-fill-mode= /almost/ everywhere.
 (use-package simple
   :ensure nil
   :hook
-  (prog-mode . turn-on-auto-fill)
-  (text-mode . turn-on-auto-fill))
+  (org-mode . auto-fill-mode)
+  (prog-mode . auto-fill-mode)
+  (text-mode . auto-fill-mode))
 #+END_SRC
 
 Display the available keybindings following your current input.
@@ -2422,13 +2424,8 @@ Auto-fill commit messages.
 
 #+BEGIN_SRC emacs-lisp
 (use-package git-commit
-  :preface
-  (defun me/git-commit-auto-fill ()
-    (setq-local
-     fill-column 72
-     comment-auto-fill-only-comments nil))
   :hook
-  (git-commit-mode . me/git-commit-auto-fill)
+  (git-commit-mode . (lambda () (setq-local fill-column 72)))
   :custom
   (git-commit-summary-max-length 50))
 #+END_SRC
@@ -2536,7 +2533,8 @@ pinentry-program /usr/local/bin/pinentry
 
 | =whitespace= | Built-in |
 
-Highlight trailing space-like characters, eg. trailing spaces, tabs, empty lines.
+Highlight trailing space-like characters, eg. trailing spaces, tabs, empty
+lines.
 
 #+BEGIN_SRC emacs-lisp
 (use-package whitespace

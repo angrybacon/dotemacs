@@ -1,9 +1,9 @@
 # Emacs
 .custom.el
 .secret.el
-dotemacs.el
 auto-save-list/
 backups/
+dotemacs.el
 elpa/
 eshell/
 games/
