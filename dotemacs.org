@@ -1291,14 +1291,14 @@ Group system-related commands.
 (defhydra hydra-ui (:color red)
   (concat "\n " (me/hydra-heading "User Interface" "Frame" "Zoom" "Line Numbers")
           "
- _q_ quit              _m_ maximize          _-_ out               _l_ mode: %s`display-line-numbers
- ^^                    ^^                    _=_ in                _L_ absolute: %s`display-line-numbers-current-absolute
+ _q_ quit              _m_ maximize          _-_ out               _n_ mode: %s`display-line-numbers
+ ^^                    ^^                    _=_ in                _N_ absolute: %s`display-line-numbers-current-absolute
  ^^                    ^^                    _0_ reset             ^^
 ")
   ("q" nil)
-  ("l" me/display-line-numbers-toggle-type)
-  ("L" me/display-line-numbers-toggle-absolute)
   ("m" toggle-frame-maximized :color blue)
+  ("n" me/display-line-numbers-toggle-type)
+  ("N" me/display-line-numbers-toggle-absolute)
   ("-" default-text-scale-decrease)
   ("=" default-text-scale-increase)
   ("0" default-text-scale-reset :color blue))
