@@ -141,6 +141,7 @@ Load the theme and fix some faces to match my personal preferences.
     '(italic :italic nil)
     '(lazy-highlight :foreground blue)
     '(line-number :background 'unspecified :foreground base5)
+    '(line-number-current-line :inherit 'line-number)
     '(lsp-face-highlight-read :foreground fg)
     '(lsp-face-highlight-textual :foreground fg)
     '(lsp-face-highlight-write :foreground fg)
