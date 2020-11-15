@@ -146,21 +146,32 @@ Load the theme and fix some faces to match my personal preferences.
     '(lsp-face-highlight-textual :foreground fg)
     '(lsp-face-highlight-write :foreground fg)
     '(magit-diff-added :background 'unspecified)
-    '(magit-diff-added-highlight :background 'unspecified :inherit 'magit-diff-context-highlight)
-    '(magit-diff-context-highlight :background base3 :foreground 'unspecified :inherit 'magit-diff-context)
+    '(magit-diff-added-highlight
+      :background 'unspecified
+      :inherit 'magit-diff-context-highlight)
+    '(magit-diff-context :background 'unspecified)
+    '(magit-diff-context-highlight
+      :background 'unspecified
+      :foreground 'unspecified
+      :inherit '(magit-diff-context org-block))
+    '(magit-diff-hunk-heading
+      :background 'unspecified
+      :foreground violet
+      :inherit 'org-block-begin-line)
+    ;; '(magit-diff-hunk-heading-highlight :background 'unspecified :foreground 'unspecified)
     '(magit-diff-hunk-region :inherit 'region)
     '(magit-diff-removed :background 'unspecified)
-    '(magit-diff-removed-highlight :background 'unspecified :inherit 'magit-diff-context-highlight)
+    '(magit-diff-removed-highlight
+      :background 'unspecified
+      :inherit 'magit-diff-context-highlight)
     '(magit-section-heading :foreground red :height me/font-size-large)
+    '(magit-section-highlight :inherit nil)
     '(markdown-table-face :height me/font-size-small)
     '(mode-line-inactive :background bg-alt)
-    '(org-block :background (doom-lighten base3 .05))
-    '(org-block-begin-line :background 'unspecified)
-    '(org-quote :background 'unspecified :inherit 'font-lock-doc-face)
+    '(org-block :background (doom-lighten bg .06))
+    '(org-block-begin-line :background (doom-lighten bg .03))
+    '(org-quote :background 'unspecified :inherit '(font-lock-doc-face org-block))
     '(outline-1 :foreground red)
-    '(swiper-background-match-face-1 :background 'unspecified)
-    '(swiper-line-face :extend t)
-    '(swiper-match-face-1 :background 'unspecified :foreground 'unspecified)
     '(tooltip :background base1)
     '(variable-pitch :family 'unspecified)
     '(vertical-border :background 'unspecified :inverse-video t)
@@ -2483,15 +2494,13 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
   (magit-diff-highlight-hunk-region-functions
    '(magit-diff-highlight-hunk-region-dim-outside magit-diff-highlight-hunk-region-using-face))
   (magit-module-sections-nested nil)
-  (magit-section-initial-visibility-alist '((modules . show)
-                                            (stashes . show)
-                                            (unpulled . show)
-                                            (unpushed . show)))
+  (magit-section-initial-visibility-alist
+   '((modules . show) (stashes . show) (unpulled . show) (unpushed . show)))
   (transient-default-level 5)
   (transient-mode-line-format nil)
   :config
   (magit-add-section-hook
-   'magit-status-sections-hook 'magit-insert-modules-overview 'magit-insert-status-headers t)
+   'magit-status-sections-hook 'magit-insert-modules-overview 'magit-insert-merge-log)
   (remove-hook 'magit-section-highlight-hook #'magit-section-highlight))
 #+END_SRC
 
