@@ -308,10 +308,6 @@ authoring documents with a fast and effective plain-text system.
   (:map org-mode-map
    ("<C-return>" . nil)
    ("<C-tab>" . me/org-cycle-parent)
-   ("<C-S-down>" . nil)
-   ("<C-S-up>" . nil)
-   ("<M-S-down>" . nil)
-   ("<M-S-up>" . nil))
   :hook
   (org-mode . me/hydra-set-super)
   :custom
@@ -341,10 +337,10 @@ authoring documents with a fast and effective plain-text system.
     (org-previous-visible-heading argument))
   (org-cycle))
 
-(defun me/org-src--buffer-name (buffer-name &rest _)
+(defun me/org-src--buffer-name (name &rest _)
   "Construct the buffer name for a source editing buffer.
 See `org-src--construct-edit-buffer-name'."
-  (format "*%s*" buffer-name))
+  (format "*%s*" name))
 #+END_SRC
 
 ** YAML
@@ -829,35 +825,6 @@ Augment Ivy's interface with details for candidates.
 (use-package ivy-rich
   :after ivy
   :defer nil
-  :preface
-  (defun me/ivy-rich-describe-variable-value (candidate)
-    "Return the value of the variable in a `counsel-describe-variable' session."
-    (let* ((symbol (intern candidate))
-           (value (and (boundp symbol) (symbol-value symbol)))
-           (print-level 3))
-      (replace-regexp-in-string
-       "[\n\t\^[\^M\^@\^G]" " "
-       (cond ((booleanp value)
-              (propertize (format "%s" value) 'face (if (null value) 'shadow 'success)))
-             ((keymapp value)
-              (propertize "<keymap>" 'face 'font-lock-type-face))
-             ((listp value)
-              (prin1-to-string value))
-             ((stringp value)
-              (propertize (format "%S" value) 'face 'font-lock-string-face))
-             ((symbolp value)
-              (propertize (format "'%s" value) 'face 'font-lock-function-name-face))
-             ((format "%s" value)))
-       t)))
-  (defun me/ivy-rich-switch-buffer-size (candidate)
-    "Return the buffer size in a `ivy-switch-buffer' session."
-    (with-current-buffer
-        (get-buffer candidate)
-      (let ((size (buffer-size)))
-        (cond
-         ((> size 1000000) (format "%.1fM" (/ size 1000000.0)))
-         ((> size 1000) (format "%.1fk" (/ size 1000.0)))
-         (t (format "%d" size))))))
   :custom
   (ivy-rich-parse-remote-buffer nil)
   :config
@@ -906,6 +873,39 @@ Augment Ivy's interface with details for candidates.
                  (ivy-rich-package-install-summary (:face font-lock-doc-face)))
                 :delimiter "  ")))
   (ivy-rich-set-display-transformer))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/ivy-rich-describe-variable-value (candidate)
+  "Return the value of the variable in a `counsel-describe-variable' session."
+  (let* ((symbol (intern candidate))
+         (value (and (boundp symbol) (symbol-value symbol)))
+         (print-level 3))
+    (replace-regexp-in-string
+     "[\n\t\^[\^M\^@\^G]" " "
+     (cond ((booleanp value)
+            (propertize
+             (format "%s" value) 'face (if (null value) 'shadow 'success)))
+           ((keymapp value)
+            (propertize "<keymap>" 'face 'font-lock-type-face))
+           ((listp value)
+            (prin1-to-string value))
+           ((stringp value)
+            (propertize (format "%S" value) 'face 'font-lock-string-face))
+           ((symbolp value)
+            (propertize (format "'%s" value) 'face 'font-lock-function-name-face))
+           ((format "%s" value)))
+     t)))
+
+(defun me/ivy-rich-switch-buffer-size (candidate)
+  "Return the buffer size in a `ivy-switch-buffer' session."
+  (with-current-buffer
+      (get-buffer candidate)
+    (let ((size (buffer-size)))
+      (cond
+       ((> size 1000000) (format "%.1fM" (/ size 1000000.0)))
+       ((> size 1000) (format "%.1fk" (/ size 1000.0)))
+       (t (format "%d" size))))))
 #+END_SRC
 
 ** Ivy / Counsel
