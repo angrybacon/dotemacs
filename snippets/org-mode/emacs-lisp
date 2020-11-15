@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# key: s
+# key: el
 # --
 #+BEGIN_SRC ${1:emacs-lisp}
 $0
