@@ -525,6 +525,8 @@ Python.
 
 Olivetti lets you center your buffer for aesthetics and focus.
 
+| TODO | Disable =olivetti-mode= with 2+ windows |
+
 #+BEGIN_SRC emacs-lisp
 (use-package olivetti
   :custom
@@ -1871,7 +1873,7 @@ variables of interest, then copying them into the Emacs environment.
   :hook
   (after-init . exec-path-from-shell-initialize)
   :custom
-  (exec-path-from-shell-check-startup-files nil))
+  (exec-path-from-shell-arguments '("-l")))
 #+END_SRC
 
 Augment Emacs experience for MacOS users.
