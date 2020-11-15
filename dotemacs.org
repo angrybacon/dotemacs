@@ -448,6 +448,7 @@ completion candidates.
 
 | =desktop=   | Built-in                              |
 | =eyebrowse= | https://github.com/wasamasa/eyebrowse |
+| =olivetti=  | https://github.com/rnkn/olivetti      |
 | =shackle=   | https://github.com/wasamasa/shackle   |
 | =windmove=  | Built-in                              |
 | =winner=    | Built-in                              |
@@ -493,6 +494,21 @@ Python.
   (eyebrowse-mode-line-left-delimiter "")
   (eyebrowse-mode-line-right-delimiter "")
   (eyebrowse-new-workspace t))
+#+END_SRC
+
+Olivetti lets you center your buffer for aesthetics and focus.
+
+#+BEGIN_SRC emacs-lisp
+(use-package olivetti
+  :custom
+  (olivetti-body-width 100)
+  (olivetti-enable-visual-line-mode nil))
+#+END_SRC
+
+You can enable Olivetti on a per-file basis with the following =.dir-local.el= entry.
+
+#+BEGIN_SRC emacs-lisp :tangle no
+((org-mode . ((mode . olivetti))))
 #+END_SRC
 
 Window management.
