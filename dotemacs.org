@@ -308,6 +308,8 @@ authoring documents with a fast and effective plain-text system.
   (:map org-mode-map
    ("<C-return>" . nil)
    ("<C-tab>" . me/org-cycle-parent)
+   ("C-j" . me/org-show-next-heading-tidily)
+   ("C-k" . me/org-show-previous-heading-tidily))
   :hook
   (org-mode . me/hydra-set-super)
   :custom
@@ -336,6 +338,35 @@ authoring documents with a fast and effective plain-text system.
       (outline-up-heading argument)
     (org-previous-visible-heading argument))
   (org-cycle))
+
+(defun me/org-show-next-heading-tidily ()
+  "Show next entry, keeping other entries closed."
+  (interactive)
+  (if (save-excursion (end-of-line) (outline-invisible-p))
+      (progn (org-show-entry) (show-children))
+    (outline-next-heading)
+    (unless (and (bolp) (org-on-heading-p))
+      (org-up-heading-safe)
+      (hide-subtree)
+      (user-error "Boundary reached"))
+    (org-overview)
+    (org-reveal t)
+    (org-show-entry)
+    (show-children)))
+
+(defun me/org-show-previous-heading-tidily ()
+  "Show previous entry, keeping other entries closed."
+  (interactive)
+  (let ((pos (point)))
+    (outline-previous-heading)
+    (unless (and (< (point) pos) (bolp) (org-on-heading-p))
+      (goto-char pos)
+      (hide-subtree)
+      (user-error "Boundary reached"))
+    (org-overview)
+    (org-reveal t)
+    (org-show-entry)
+    (show-children)))
 
 (defun me/org-src--buffer-name (name &rest _)
   "Construct the buffer name for a source editing buffer.
