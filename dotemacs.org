@@ -71,6 +71,7 @@ Change a few indenting behaviors.
 
 #+BEGIN_SRC emacs-lisp
 (put 'add-function 'lisp-indent-function 2)
+(put 'evil-define-key* 'lisp-indent-function 'defun)
 #+END_SRC
 
 Garbage-collect on focus-out, Emacs /should/ feel snappier overall.
