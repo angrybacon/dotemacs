@@ -1003,23 +1003,26 @@ Group Ivy commands.
 
 ** Hydra / LSP
 
-Group Markdown commands. This hydra is bound in =lsp-mode-map=.
+Group LSP commands. This hydra is bound in =lsp-mode-map=.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-lsp (:color blue)
-  (concat "\n " (me/hydra-heading "LSP" "Do" "Server")
+  (concat "\n " (me/hydra-heading "LSP" "Do" "Find" "Server")
           "
- _q_ quit              _i_ imenu             _d_ describe          ^^
- ^^                    _f_ format            _R_ restart           ^^
- ^^                    ^^                    _S_ shutdown          ^^
+ _q_ quit              _i_ imenu             _f_ definition        _d_ describe
+ ^^                    _F_ format            _r_ references        _R_ restart
+ ^^                    ^^                    _t_ types             _S_ shutdown
  ^^                    ^^                    ^^                    ^^
 ")
   ("q" nil)
   ("d" lsp-describe-session)
-  ("f" lsp-format-buffer)
+  ("f" lsp-find-definition)
+  ("F" lsp-format-buffer)
   ("i" lsp-ui-imenu)
+  ("r" lsp-find-references)
   ("R" lsp-workspace-restart)
-  ("S" lsp-workspace-shutdown))
+  ("S" lsp-workspace-shutdown)
+  ("t" lsp-find-type-definition))
 #+END_SRC
 
 ** Hydra / Markdown
