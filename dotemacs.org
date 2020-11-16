@@ -935,8 +935,8 @@ Group Magit commands.
           "
  _q_ quit              _b_ blame             _p_ previous          ^^
  _m_ smerge...         _c_ clone             _n_ next              ^^
- ^^                    _g_ status            _s_ stage             ^^
- ^^                    _i_ init              ^^                    ^^
+ ^^                    _g_ status            _r_ revert            ^^
+ ^^                    _i_ init              _s_ stage             ^^
 ")
   ("q" nil)
   ("b" magit-blame)
@@ -946,6 +946,7 @@ Group Magit commands.
   ("m" hydra-git/smerge/body)
   ("n" git-gutter:next-hunk :color red)
   ("p" git-gutter:previous-hunk :color red)
+  ("r" git-gutter:revert-hunk)
   ("s" git-gutter:stage-hunk :color red))
 #+END_SRC
 
@@ -1168,7 +1169,7 @@ Group system-related commands.
 
 ** Hydra / UI
 
-Group system-related commands.
+Group interface-related commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-ui (:color red)
