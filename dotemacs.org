@@ -71,6 +71,7 @@ Change a few indenting behaviors.
 
 #+BEGIN_SRC emacs-lisp
 (put 'add-function 'lisp-indent-function 2)
+(put 'advice-add 'lisp-indent-function 2)
 (put 'evil-define-key* 'lisp-indent-function 'defun)
 #+END_SRC
 
@@ -336,7 +337,7 @@ authoring documents with a fast and effective plain-text system.
   (org-support-shift-select 'always)
   :config
   (modify-syntax-entry ?' "'" org-mode-syntax-table)
-  (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src--buffer-name))
+  (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer-name))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -377,9 +378,8 @@ authoring documents with a fast and effective plain-text system.
     (org-show-entry)
     (outline-show-children)))
 
-(defun me/org-src--buffer-name (name &rest _)
-  "Construct the buffer name for a source editing buffer.
-See `org-src--construct-edit-buffer-name'."
+(defun me/org-src-buffer-name (name &rest _)
+  "Simple buffer name."
   (format "*%s*" name))
 #+END_SRC
 
@@ -433,48 +433,10 @@ completion candidates.
 
 #+BEGIN_SRC emacs-lisp
 (use-package company-box
-  :after company
-  :defer nil
   :hook
   (company-mode . company-box-mode)
   :custom
-  (company-box-icons-all-the-icons
-   (let ((all-the-icons-default-adjust -.22)
-         (all-the-icons-scale-factor .8)
-         (blue 'all-the-icons-blue)
-         (green 'all-the-icons-gree)
-         (maroon 'all-the-icons-maroon)
-         (pink 'all-the-icons-pink)
-         (purple 'all-the-icons-purple)
-         (red 'all-the-icons-red))
-     `((Class         . ,(all-the-icons-material "class"                    :face red))
-       (Color         . ,(all-the-icons-material "palette"                  :face red))
-       (Constant      . ,(all-the-icons-material "pause_circle_filled"      :face blue))
-       (Constructor   . ,(all-the-icons-material "functions"                :face red))
-       (Enum          . ,(all-the-icons-material "plus_one"                 :face blue))
-       (EnumMember    . ,(all-the-icons-material "people"                   :face blue))
-       (Event         . ,(all-the-icons-material "event"                    :face red))
-       (Field         . ,(all-the-icons-material "functions"                :face red))
-       (File          . ,(all-the-icons-material "insert_drive_file"        :face pink))
-       (Folder        . ,(all-the-icons-material "folder"                   :face maroon))
-       (Function      . ,(all-the-icons-material "functions"                :face red))
-       (Interface     . ,(all-the-icons-material "settings_input_component" :face red))
-       (Keyword       . ,(all-the-icons-material "filter_center_focus"      :face red))
-       (Method        . ,(all-the-icons-material "functions"                :face red))
-       (Module        . ,(all-the-icons-material "view_module"              :face red))
-       (Operator      . ,(all-the-icons-material "control_point"            :face red))
-       (Property      . ,(all-the-icons-material "settings"                 :face red))
-       (Reference     . ,(all-the-icons-material "collections_bookmark"     :face red))
-       (Snippet       . ,(all-the-icons-material "short_text"               :face pink))
-       (Struct        . ,(all-the-icons-material "streetview"               :face blue))
-       (Template      . ,(all-the-icons-material "short_text"               :face green))
-       (Text          . ,(all-the-icons-material "text_fields"              :face green))
-       (TypeParameter . ,(all-the-icons-material "class"                    :face red))
-       (Unit          . ,(all-the-icons-material "straighten"               :face red))
-       (Unknown       . ,(all-the-icons-material "find_in_page"             :face purple))
-       (Value         . ,(all-the-icons-material "filter_1"                 :face red))
-       (Variable      . ,(all-the-icons-material "adjust"                   :face blue)))))
-  (company-box-icons-alist 'company-box-icons-all-the-icons)
+  (company-box-enable-icon nil)
   (company-box-max-candidates 50)
   (company-box-scrollbar nil)
   (company-box-show-single-candidate 'always))
@@ -1000,29 +962,6 @@ seamless, it's like a minor mode that disables itself auto-magically.
 
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
-  :preface
-  (defvar-local me/hydra-super-body nil)
-  (defun me/hydra-heading (&rest headings)
-    "Format HEADINGS to look pretty in a hydra docstring."
-    (mapconcat (lambda (it)
-                 (propertize (format "%-20s" it) 'face 'shadow))
-               headings
-               nil))
-  (defun me/hydra-set-super ()
-    (when-let* ((suffix "-mode")
-                (position (- (length suffix)))
-                (mode (symbol-name major-mode))
-                (name (if (string= suffix (substring mode position))
-                          (substring mode 0 position)
-                        mode))
-                (body (intern (format "hydra-%s/body" name))))
-      (when (functionp body)
-        (setq me/hydra-super-body body))))
-  (defun me/hydra-super ()
-    (interactive)
-    (if me/hydra-super-body
-        (funcall me/hydra-super-body)
-      (user-error "me/hydra-super: me/hydra-super-body is not set")))
   :bind
   ("C-c d" . hydra-dates/body)
   ("C-c e" . hydra-eyebrowse/body)
@@ -1036,6 +975,34 @@ seamless, it's like a minor mode that disables itself auto-magically.
   ("C-c w" . hydra-windows/body)
   :custom
   (hydra-default-hint nil))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defvar-local me/hydra-super-body nil)
+
+(defun me/hydra-heading (&rest headings)
+  "Format HEADINGS to look pretty in a hydra docstring."
+  (mapconcat (lambda (it)
+               (propertize (format "%-20s" it) 'face 'shadow))
+             headings
+             nil))
+
+(defun me/hydra-set-super ()
+  (when-let* ((suffix "-mode")
+              (position (- (length suffix)))
+              (mode (symbol-name major-mode))
+              (name (if (string= suffix (substring mode position))
+                        (substring mode 0 position)
+                      mode))
+              (body (intern (format "hydra-%s/body" name))))
+    (when (functionp body)
+      (setq me/hydra-super-body body))))
+
+(defun me/hydra-super ()
+  (interactive)
+  (if me/hydra-super-body
+      (funcall me/hydra-super-body)
+    (user-error "me/hydra-super: me/hydra-super-body is not set")))
 #+END_SRC
 
 ** Hydra / Dates
@@ -1400,19 +1367,6 @@ Group window-related commands.
 #+BEGIN_SRC emacs-lisp
 (use-package erc
   :ensure nil
-  :preface
-  (defun me/erc ()
-    "Connect to `me/erc-server' on `me/erc-port' as `me/erc-nick' with
-    `me/erc-password'."
-    (interactive)
-    (erc :server me/erc-server
-         :port me/erc-port
-         :nick me/erc-nick
-         :password me/erc-password))
-  (defun me/erc-bol-shifted ()
-    "See `erc-bol'. Support shift."
-    (interactive "^")
-    (erc-bol))
   :bind
   (:map erc-mode-map
    ([remap erc-bol] . me/erc-bol-shifted)
@@ -1431,6 +1385,22 @@ Group window-related commands.
   (erc-timestamp-format nil)
   :config
   (erc-scrolltobottom-enable))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/erc ()
+  "Connect to `me/erc-server' on `me/erc-port' as `me/erc-nick' with
+  `me/erc-password'."
+  (interactive)
+  (erc :server me/erc-server
+       :port me/erc-port
+       :nick me/erc-nick
+       :password me/erc-password))
+
+(defun me/erc-bol-shifted ()
+  "See `erc-bol'. Support shift."
+  (interactive "^")
+  (erc-bol))
 #+END_SRC
 
 Highlight ERC nicks with unique colors.
@@ -2088,14 +2058,6 @@ use with =selected=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package selected
-  :preface
-  (defvar-local me/pretty-print-function nil)
-  (defun me/pretty-print (beg end)
-    (interactive "r")
-    (if me/pretty-print-function
-        (progn (funcall me/pretty-print-function beg end)
-               (setq deactivate-mark t))
-      (user-error "me/pretty-print: me/pretty-print-function is not set")))
   :bind
   (:map selected-keymap
    ("C-?"         . hydra-selected/body)
@@ -2130,6 +2092,17 @@ use with =selected=.
   (after-init . selected-global-mode)
   :config
   (require 'browse-url))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defvar-local me/pretty-print-function nil)
+
+(defun me/pretty-print (beg end)
+  (interactive "r")
+  (if me/pretty-print-function
+      (progn (funcall me/pretty-print-function beg end)
+             (setq deactivate-mark t))
+    (user-error "me/pretty-print: me/pretty-print-function is not set")))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
