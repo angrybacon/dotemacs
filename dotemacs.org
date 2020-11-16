@@ -631,12 +631,6 @@ Define words using Wordnik.
 (use-package define-word)
 #+END_SRC
 
-Translate using Google.
-
-#+BEGIN_SRC emacs-lisp
-(use-package google-translate)
-#+END_SRC
-
 ** Diff
 
 | =ediff-wind= | Built-in |
