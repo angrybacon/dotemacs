@@ -780,6 +780,472 @@ Provide better detailed help buffers.
       (kbd "<tab>") #'forward-button)))
 #+END_SRC
 
+** Hydra
+
+| =hydra= | https://github.com/abo-abo/hydra |
+
+Hydra allows me to group binds together. It also shows a list of all implemented
+commands in the echo area.
+
+#+BEGIN_QUOTE
+Once you summon the Hydra through the prefixed binding (the body + any one
+head), all heads can be called in succession with only a short extension.
+
+The Hydra is vanquished once Hercules, any binding that isn't the Hydra's head,
+arrives. Note that Hercules, besides vanquishing the Hydra, will still serve his
+original purpose, calling his proper command. This makes the Hydra very
+seamless, it's like a minor mode that disables itself auto-magically.
+
+--- Oleh Krehel
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package hydra
+  :bind
+  ("C-c d" . hydra-dates/body)
+  ("C-c e" . hydra-eyebrowse/body)
+  ("C-c f" . hydra-flycheck/body)
+  ("C-c g" . hydra-git/body)
+  ("C-c i" . hydra-ivy/body)
+  ("C-c o" . me/hydra-super)
+  ("C-c p" . hydra-projectile/body)
+  ("C-c s" . hydra-system/body)
+  ("C-c u" . hydra-ui/body)
+  ("C-c w" . hydra-windows/body)
+  :custom
+  (hydra-default-hint nil))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defvar-local me/hydra-super-body nil)
+
+(defun me/hydra-heading (&rest headings)
+  "Format HEADINGS to look pretty in a hydra docstring."
+  (mapconcat (lambda (it)
+               (propertize (format "%-20s" it) 'face 'shadow))
+             headings
+             nil))
+
+(defun me/hydra-set-super ()
+  (when-let* ((suffix "-mode")
+              (position (- (length suffix)))
+              (mode (symbol-name major-mode))
+              (name (if (string= suffix (substring mode position))
+                        (substring mode 0 position)
+                      mode))
+              (body (intern (format "hydra-%s/body" name))))
+    (when (functionp body)
+      (setq me/hydra-super-body body))))
+
+(defun me/hydra-super ()
+  (interactive)
+  (if me/hydra-super-body
+      (funcall me/hydra-super-body)
+    (user-error "me/hydra-super: me/hydra-super-body is not set")))
+#+END_SRC
+
+** Hydra / Dates
+
+Group date-related commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-dates (:color blue)
+  (concat "\n " (me/hydra-heading "Dates" "Insert" "Insert with Time")
+          "
+ _q_ quit              _d_ short             _D_ short             ^^
+ ^^                    _i_ iso               _I_ iso               ^^
+ ^^                    _l_ long              _L_ long              ^^
+")
+  ("q" nil)
+  ("d" me/date-short)
+  ("D" me/date-short-with-time)
+  ("i" me/date-iso)
+  ("I" me/date-iso-with-time)
+  ("l" me/date-long)
+  ("L" me/date-long-with-time))
+#+END_SRC
+
+** Hydra / Eyebrowse
+
+Group Eyebrowse commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-eyebrowse (:color blue)
+  (concat "\n " (me/hydra-heading "Eyebrowse" "Do" "Switch")
+          "
+ _q_ quit              _c_ create            _0_-_9_ %s(eyebrowse-mode-line-indicator)
+ ^^                    _k_ kill              _<_ previous          ^^
+ ^^                    _r_ rename            _>_ next              ^^
+ ^^                    ^^                    _e_ last              ^^
+ ^^                    ^^                    _s_ switch            ^^
+")
+  ("q" nil)
+  ("0" eyebrowse-switch-to-window-config-0)
+  ("1" eyebrowse-switch-to-window-config-1)
+  ("2" eyebrowse-switch-to-window-config-2)
+  ("3" eyebrowse-switch-to-window-config-3)
+  ("4" eyebrowse-switch-to-window-config-4)
+  ("5" eyebrowse-switch-to-window-config-5)
+  ("6" eyebrowse-switch-to-window-config-6)
+  ("7" eyebrowse-switch-to-window-config-7)
+  ("8" eyebrowse-switch-to-window-config-8)
+  ("9" eyebrowse-switch-to-window-config-9)
+  ("<" eyebrowse-prev-window-config :color red)
+  (">" eyebrowse-next-window-config :color red)
+  ("c" eyebrowse-create-window-config)
+  ("e" eyebrowse-last-window-config)
+  ("k" eyebrowse-close-window-config :color red)
+  ("r" eyebrowse-rename-window-config)
+  ("s" eyebrowse-switch-to-window-config))
+#+END_SRC
+
+** Hydra / Flycheck
+
+Group Flycheck commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-flycheck (:color blue)
+  (concat "\n " (me/hydra-heading "Flycheck" "Do" "Errors" "Checker")
+          "
+ _q_ quit              _v_ verify setup      _<_ previous          _?_ describe
+ ^^                    ^^                    _>_ next              _d_ disable
+ ^^                    ^^                    _f_ goto              _s_ select
+ ^^                    ^^                    _F_ check             ^^
+ ^^                    ^^                    _l_ list              ^^
+")
+  ("q" nil)
+  ("<" flycheck-previous-error :color red)
+  (">" flycheck-next-error :color red)
+  ("?" flycheck-describe-checker)
+  ("d" flycheck-disable-checker)
+  ("f" (flycheck-next-error 1 t))
+  ("F" flycheck-buffer)
+  ("l" flycheck-list-errors)
+  ("s" flycheck-select-checker)
+  ("v" flycheck-verify-setup))
+#+END_SRC
+
+** Hydra / Git
+
+Group Magit commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-git (:color blue)
+  (concat "\n " (me/hydra-heading "Git" "Do" "Gutter")
+          "
+ _q_ quit              _b_ blame             _p_ previous          ^^
+ _m_ smerge...         _c_ clone             _n_ next              ^^
+ ^^                    _g_ status            _s_ stage             ^^
+ ^^                    _i_ init              ^^                    ^^
+")
+  ("q" nil)
+  ("b" magit-blame)
+  ("c" magit-clone)
+  ("g" magit-status)
+  ("i" magit-init)
+  ("m" hydra-git/smerge/body)
+  ("n" git-gutter:next-hunk :color red)
+  ("p" git-gutter:previous-hunk :color red)
+  ("s" git-gutter:stage-hunk :color red))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-git/smerge
+  (:color pink :pre (if (not smerge-mode) (smerge-mode 1)) :post (smerge-auto-leave))
+  (concat "\n " (me/hydra-heading "Git / SMerge" "Move" "Keep" "Diff")
+          "
+ _q_ quit              _g_ first             _RET_ current         _=_ upper / lower
+ ^^                    _G_ last              _a_ all               _<_ upper / base
+ ^^                    _C-j_ next            _b_ base              _>_ base / lower
+ ^^                    _C-k_ previous        _l_ lower             _E_ ediff
+ ^^                    ^^                    _u_ upper             _H_ highlight
+")
+  ("q" nil :color blue)
+  ("C-j" smerge-next)
+  ("C-k" smerge-prev)
+  ("<" smerge-diff-base-upper)
+  (">" smerge-diff-base-lower)
+  ("=" smerge-diff-upper-lower)
+  ("RET" smerge-keep-current)
+  ("a" smerge-keep-all)
+  ("b" smerge-keep-base)
+  ("E" smerge-ediff)
+  ("g" (progn (goto-char (point-min)) (smerge-next)))
+  ("G" (progn (goto-char (point-max)) (smerge-prev)))
+  ("H" smerge-refine)
+  ("l" smerge-keep-lower)
+  ("u" smerge-keep-upper))
+#+END_SRC
+
+** Hydra / Ivy
+
+Group Ivy commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-ivy (:color blue)
+  (concat "\n " (me/hydra-heading "Ivy" "Do" "Browse")
+          "
+ _q_ quit              _r_ resume            _f_ faces             ^^
+ ^^                    ^^                    _i_ imenu             ^^
+ ^^                    ^^                    _l_ libraries         ^^
+ ^^                    ^^                    _s_ symbols           ^^
+ ^^                    ^^                    _u_ unicode           ^^
+")
+  ("q" nil)
+  ("f" counsel-faces)
+  ("i" counsel-imenu)
+  ("l" counsel-find-library)
+  ("r" ivy-resume)
+  ("s" counsel-info-lookup-symbol)
+  ("u" counsel-unicode-char))
+#+END_SRC
+
+** Hydra / LSP
+
+Group Markdown commands. This hydra is bound in =lsp-mode-map=.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-lsp (:color blue)
+  (concat "\n " (me/hydra-heading "LSP" "Do" "Server")
+          "
+ _q_ quit              _i_ imenu             _d_ describe          ^^
+ ^^                    _f_ format            _R_ restart           ^^
+ ^^                    ^^                    _S_ shutdown          ^^
+ ^^                    ^^                    ^^                    ^^
+")
+  ("q" nil)
+  ("d" lsp-describe-session)
+  ("f" lsp-format-buffer)
+  ("i" lsp-ui-imenu)
+  ("R" lsp-workspace-restart)
+  ("S" lsp-workspace-shutdown))
+#+END_SRC
+
+** Hydra / Markdown
+
+Group Markdown commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-markdown (:color pink)
+  (concat "\n " (me/hydra-heading "Markdown" "Table Columns" "Table Rows")
+          "
+ _q_ quit              _c_ insert            _r_ insert            ^^
+ ^^                    _C_ delete            _R_ delete            ^^
+ ^^                    _M-<left>_ left       _M-<down>_ down       ^^
+ ^^                    _M-<right>_ right     _M-<up>_ up           ^^
+")
+  ("q" nil)
+  ("c" markdown-table-insert-column)
+  ("C" markdown-table-delete-column)
+  ("r" markdown-table-insert-row)
+  ("R" markdown-table-delete-row)
+  ("M-<left>" markdown-table-move-column-left)
+  ("M-<right>" markdown-table-move-column-right)
+  ("M-<down>" markdown-table-move-row-down)
+  ("M-<up>" markdown-table-move-row-up))
+#+END_SRC
+
+** Hydra / Org
+
+Group Org commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-org (:color pink)
+  (concat "\n " (me/hydra-heading "Org" "Links" "Outline")
+          "
+ _q_ quit              _i_ insert            _<_ previous          ^^
+ ^^                    _n_ next              _>_ next              ^^
+ ^^                    _p_ previous          _a_ all               ^^
+ ^^                    _s_ store             _g_ go                ^^
+ ^^                    ^^                    _v_ overview          ^^
+")
+  ("q" nil)
+  ("<" org-backward-element)
+  (">" org-forward-element)
+  ("a" outline-show-all :color blue)
+  ("g" counsel-org-goto :color blue)
+  ("i" org-insert-link :color blue)
+  ("n" org-next-link)
+  ("p" org-previous-link)
+  ("s" org-store-link)
+  ("v" org-overview :color blue))
+#+END_SRC
+
+** Hydra / Projectile
+
+Group Projectile commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-projectile (:color blue)
+  (concat "\n " (me/hydra-heading "Projectile" "Do" "Find" "Search")
+          "
+ _q_ quit              _K_ kill buffers      _b_ buffer            _r_ replace
+ ^^                    _i_ reset cache       _d_ directory         _R_ regexp replace
+ ^^                    _n_ new               _D_ root              _s_ rg
+ ^^                    _S_ save buffers      _f_ file              ^^
+ ^^                    ^^                    _p_ project           ^^
+")
+  ("q" nil)
+  ("b" counsel-projectile-switch-to-buffer)
+  ("d" counsel-projectile-find-dir)
+  ("D" projectile-dired)
+  ("f" counsel-projectile-find-file)
+  ("i" projectile-invalidate-cache :color red)
+  ("K" projectile-kill-buffers)
+  ("n" projectile-add-known-project)
+  ("p" counsel-projectile-switch-project)
+  ("r" projectile-replace)
+  ("R" projectile-replace-regexp)
+  ("s" counsel-projectile-rg)
+  ("S" projectile-save-project-buffers))
+#+END_SRC
+
+** Hydra / RJSX
+
+Group React JavaScript commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-rjsx (:color blue)
+  (concat "\n " (me/hydra-heading "RJSX" "JSDoc")
+          "
+ _q_ quit              _f_ function          ^^                    ^^
+ ^^                    _F_ file              ^^                    ^^
+")
+  ("q" nil)
+  ("f" js-doc-insert-function-doc-snippet)
+  ("F" js-doc-insert-file-doc))
+#+END_SRC
+
+** Hydra / System
+
+Group system-related commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-system (:color blue)
+  (concat "\n " (me/hydra-heading "System" "Packages" "Shell" "Other")
+          "
+ _q_ quit              _i_ install           _e_ eshell            _d_ clear byte-compiled
+ ^^                    _p_ list              _t_ term              _D_ clear desktop
+ ^^                    _r_ refresh           _T_ ansi-term         _Q_ clear and kill Emacs
+ ^^                    ^^                    ^^                    _s_ list processes
+")
+  ("q" nil)
+  ("d" me/byte-delete)
+  ("D" desktop-remove)
+  ("e" (eshell t))
+  ("i" package-install)
+  ("p" package-list-packages)
+  ("Q" (let ((desktop-save nil))
+         (me/byte-delete)
+         (desktop-remove)
+         (save-buffers-kill-terminal)))
+  ("r" package-refresh-contents :color red)
+  ("s" list-processes)
+  ("t" term)
+  ("T" ansi-term))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/byte-delete ()
+  (interactive)
+  (let ((default-directory user-emacs-directory))
+    (shell-command "find . -name \"*.elc\" -type f | xargs rm -f")))
+#+END_SRC
+
+** Hydra / UI
+
+Group system-related commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-ui (:color red)
+  (concat "\n " (me/hydra-heading "UI" "Frame" "Zoom" "Line Numbers")
+          "
+ _q_ quit              _m_ maximize          _-_ out               _n_ mode: %s`display-line-numbers
+ ^^                    ^^                    _=_ in                _N_ absolute: %s`display-line-numbers-current-absolute
+ ^^                    ^^                    _0_ reset             ^^
+")
+  ("q" nil)
+  ("m" toggle-frame-maximized :color blue)
+  ("n" me/display-line-numbers-toggle-type)
+  ("N" me/display-line-numbers-toggle-absolute)
+  ("-" default-text-scale-decrease)
+  ("=" default-text-scale-increase)
+  ("0" default-text-scale-reset :color blue))
+#+END_SRC
+
+** Hydra / Windows
+
+Group window-related commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-windows (:color pink)
+  (concat "\n " (me/hydra-heading "Windows" "Size" "Buffers")
+          "
+ _q_ quit              _b_ balance           _w_ revert            ^^
+ ^^                    _i_ heighten          ^^                    ^^
+ ^^                    _j_ narrow            ^^                    ^^
+ ^^                    _k_ lower             ^^                    ^^
+ ^^                    _l_ widen             ^^                    ^^
+")
+  ("q" nil)
+  ("b" balance-windows :color blue)
+  ("i" enlarge-window)
+  ("j" shrink-window-horizontally)
+  ("k" shrink-window)
+  ("l" enlarge-window-horizontally)
+  ("w" (revert-buffer nil t) :color blue))
+#+END_SRC
+
+** IRC
+
+| =erc=          | Built-in                                 |
+| =erc-hl-nicks= | https://github.com/leathekd/erc-hl-nicks |
+
+#+BEGIN_SRC emacs-lisp
+(use-package erc
+  :ensure nil
+  :bind
+  (:map erc-mode-map
+   ([remap erc-bol] . me/erc-bol-shifted)
+   ("<M-down>" . erc-next-command)
+   ("<M-up>" . erc-previous-command))
+  :hook
+  (erc-mode . (lambda () (setq-local scroll-margin 0)))
+  :custom
+  (erc-autojoin-channels-alist '(("freenode.net" "#emacs")))
+  (erc-fill-function 'erc-fill-static)
+  (erc-fill-static-center 20)
+  (erc-header-line-format nil)
+  (erc-insert-timestamp-function 'erc-insert-timestamp-left)
+  (erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
+  (erc-prompt (format "%19s" ">"))
+  (erc-timestamp-format nil)
+  :config
+  (erc-scrolltobottom-enable))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/erc ()
+  "Connect to `me/erc-server' on `me/erc-port' as `me/erc-nick' with
+  `me/erc-password'."
+  (interactive)
+  (erc :server me/erc-server
+       :port me/erc-port
+       :nick me/erc-nick
+       :password me/erc-password))
+
+(defun me/erc-bol-shifted ()
+  "See `erc-bol'. Support shift."
+  (interactive "^")
+  (erc-bol))
+#+END_SRC
+
+Highlight ERC nicks with unique colors.
+
+#+BEGIN_SRC emacs-lisp
+(use-package erc-hl-nicks)
+#+END_SRC
+
 ** Ivy
 
 | =counsel=  | https://github.com/abo-abo/swiper#counsel |
@@ -935,474 +1401,6 @@ Augment Ivy's interface with details for candidates.
   (swiper-goto-start-of-match t))
 #+END_SRC
 
-** Hydra
-
-| =hydra= | https://github.com/abo-abo/hydra |
-
-Hydra allows me to group binds together. It also shows a list of all implemented
-commands in the echo area.
-
-#+BEGIN_QUOTE
-Once you summon the Hydra through the prefixed binding (the body + any one
-head), all heads can be called in succession with only a short extension.
-
-The Hydra is vanquished once Hercules, any binding that isn't the Hydra's head,
-arrives. Note that Hercules, besides vanquishing the Hydra, will still serve his
-original purpose, calling his proper command. This makes the Hydra very
-seamless, it's like a minor mode that disables itself auto-magically.
-
---- Oleh Krehel
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package hydra
-  :bind
-  ("C-c d" . hydra-dates/body)
-  ("C-c e" . hydra-eyebrowse/body)
-  ("C-c f" . hydra-flycheck/body)
-  ("C-c g" . hydra-git/body)
-  ("C-c i" . hydra-ivy/body)
-  ("C-c o" . me/hydra-super)
-  ("C-c p" . hydra-projectile/body)
-  ("C-c s" . hydra-system/body)
-  ("C-c u" . hydra-ui/body)
-  ("C-c w" . hydra-windows/body)
-  :custom
-  (hydra-default-hint nil))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defvar-local me/hydra-super-body nil)
-
-(defun me/hydra-heading (&rest headings)
-  "Format HEADINGS to look pretty in a hydra docstring."
-  (mapconcat (lambda (it)
-               (propertize (format "%-20s" it) 'face 'shadow))
-             headings
-             nil))
-
-(defun me/hydra-set-super ()
-  (when-let* ((suffix "-mode")
-              (position (- (length suffix)))
-              (mode (symbol-name major-mode))
-              (name (if (string= suffix (substring mode position))
-                        (substring mode 0 position)
-                      mode))
-              (body (intern (format "hydra-%s/body" name))))
-    (when (functionp body)
-      (setq me/hydra-super-body body))))
-
-(defun me/hydra-super ()
-  (interactive)
-  (if me/hydra-super-body
-      (funcall me/hydra-super-body)
-    (user-error "me/hydra-super: me/hydra-super-body is not set")))
-#+END_SRC
-
-** Hydra / Dates
-
-Group date-related commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-dates (:color blue)
-  (concat "\n " (me/hydra-heading "Dates" "Insert" "Insert with Time")
-          "
- _q_ quit              _d_ short             _D_ short             ^^
- ^^                    _i_ iso               _I_ iso               ^^
- ^^                    _l_ long              _L_ long              ^^
-")
-  ("q" nil)
-  ("d" me/date-short)
-  ("D" me/date-short-with-time)
-  ("i" me/date-iso)
-  ("I" me/date-iso-with-time)
-  ("l" me/date-long)
-  ("L" me/date-long-with-time))
-#+END_SRC
-
-** Hydra / Eyebrowse
-
-Group Eyebrowse commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-eyebrowse (:color blue)
-  (concat "\n " (me/hydra-heading "Eyebrowse" "Do" "Switch")
-          "
- _q_ quit              _c_ create            _0_-_9_ %s(eyebrowse-mode-line-indicator)
- ^^                    _k_ kill              _<_ previous          ^^
- ^^                    _r_ rename            _>_ next              ^^
- ^^                    ^^                    _e_ last              ^^
- ^^                    ^^                    _s_ switch            ^^
-")
-  ("q" nil)
-  ("0" eyebrowse-switch-to-window-config-0)
-  ("1" eyebrowse-switch-to-window-config-1)
-  ("2" eyebrowse-switch-to-window-config-2)
-  ("3" eyebrowse-switch-to-window-config-3)
-  ("4" eyebrowse-switch-to-window-config-4)
-  ("5" eyebrowse-switch-to-window-config-5)
-  ("6" eyebrowse-switch-to-window-config-6)
-  ("7" eyebrowse-switch-to-window-config-7)
-  ("8" eyebrowse-switch-to-window-config-8)
-  ("9" eyebrowse-switch-to-window-config-9)
-  ("<" eyebrowse-prev-window-config :color red)
-  (">" eyebrowse-next-window-config :color red)
-  ("c" eyebrowse-create-window-config)
-  ("e" eyebrowse-last-window-config)
-  ("k" eyebrowse-close-window-config :color red)
-  ("r" eyebrowse-rename-window-config)
-  ("s" eyebrowse-switch-to-window-config))
-#+END_SRC
-
-** Hydra / Flycheck
-
-Group Flycheck commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-flycheck (:color blue)
-  (concat "\n " (me/hydra-heading "Flycheck" "Errors" "Checker")
-          "
- _q_ quit              _<_ previous          _?_ describe          ^^
- _m_ manual            _>_ next              _d_ disable           ^^
- _v_ verify setup      _f_ goto              _s_ select            ^^
- ^^                    _F_ check             ^^                    ^^
- ^^                    _l_ list              ^^                    ^^
-")
-  ("q" nil)
-  ("<" flycheck-previous-error :color red)
-  (">" flycheck-next-error :color red)
-  ("?" flycheck-describe-checker)
-  ("d" flycheck-disable-checker)
-  ("f" (flycheck-next-error 1 t))
-  ("F" flycheck-buffer)
-  ("l" flycheck-list-errors)
-  ("m" flycheck-manual)
-  ("s" flycheck-select-checker)
-  ("v" flycheck-verify-setup))
-#+END_SRC
-
-** Hydra / Git
-
-Group Magit commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-git (:color blue)
-  (concat "\n " (me/hydra-heading "Git" "Do" "Gutter" "More")
-          "
- _q_ quit              _b_ blame             _p_ previous          _m_ smerge...
- ^^                    _c_ clone             _n_ next              ^^
- ^^                    _g_ status            _s_ stage             ^^
- ^^                    _i_ init              ^^                    ^^
-")
-  ("q" nil)
-  ("b" magit-blame)
-  ("c" magit-clone)
-  ("g" magit-status)
-  ("i" magit-init)
-  ("m" hydra-smerge/body)
-  ("n" git-gutter:next-hunk :color red)
-  ("p" git-gutter:previous-hunk :color red)
-  ("s" git-gutter:stage-hunk :color red))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-smerge
-  (:color pink :pre (if (not smerge-mode) (smerge-mode 1)) :post (smerge-auto-leave))
-  (concat "\n " (me/hydra-heading "SMerge" "Move" "Keep" "Diff")
-          "
- _q_ quit              _g_ first             _RET_ current         _=_ upper / lower
- ^^                    _G_ last              _a_ all               _<_ upper / base
- ^^                    _C-j_ next            _b_ base              _>_ base / lower
- ^^                    _C-k_ previous        _l_ lower             _E_ ediff
- ^^                    ^^                    _u_ upper             _H_ highlight
-")
-  ("q" nil :color blue)
-  ("C-j" smerge-next)
-  ("C-k" smerge-prev)
-  ("<" smerge-diff-base-upper)
-  (">" smerge-diff-base-lower)
-  ("=" smerge-diff-upper-lower)
-  ("RET" smerge-keep-current)
-  ("a" smerge-keep-all)
-  ("b" smerge-keep-base)
-  ("E" smerge-ediff)
-  ("g" (progn (goto-char (point-min)) (smerge-next)))
-  ("G" (progn (goto-char (point-max)) (smerge-prev)))
-  ("H" smerge-refine)
-  ("l" smerge-keep-lower)
-  ("u" smerge-keep-upper))
-#+END_SRC
-
-** Hydra / Ivy
-
-Group Ivy commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-ivy (:color blue)
-  (concat "\n " (me/hydra-heading "Ivy" "Do" "Browse")
-          "
- _q_ quit              _m_ mark              _f_ faces             ^^
- _r_ resume            _M_ unmark            _i_ imenu             ^^
- ^^                    ^^                    _l_ libraries         ^^
- ^^                    ^^                    _s_ symbols           ^^
- ^^                    ^^                    _u_ unicode           ^^
-")
-  ("q" nil)
-  ("f" counsel-faces)
-  ("i" counsel-imenu)
-  ("l" counsel-find-library)
-  ("m" ivy-mark :color red)
-  ("M" ivy-unmark :color red)
-  ("r" ivy-resume)
-  ("s" counsel-info-lookup-symbol)
-  ("u" counsel-unicode-char))
-#+END_SRC
-
-** Hydra / LSP
-
-Group Markdown commands. This hydra is bound in =lsp-mode-map=.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-lsp (:color blue)
-  (concat "\n " (me/hydra-heading "LSP" "Do" "Server")
-          "
- _q_ quit              _i_ imenu             _d_ describe          ^^
- ^^                    _f_ format            _R_ restart           ^^
- ^^                    ^^                    _S_ shutdown          ^^
- ^^                    ^^                    ^^                    ^^
-")
-  ("q" nil)
-  ("d" lsp-describe-session)
-  ("f" lsp-format-buffer)
-  ("i" lsp-ui-imenu)
-  ("R" lsp-workspace-restart)
-  ("S" lsp-workspace-shutdown))
-#+END_SRC
-
-** Hydra / Markdown
-
-Group Markdown commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-markdown (:color pink)
-  (concat "\n " (me/hydra-heading "Markdown" "Table Columns" "Table Rows")
-          "
- _q_ quit              _c_ insert            _r_ insert            ^^
- ^^                    _C_ delete            _R_ delete            ^^
- ^^                    _M-<left>_ left       _M-<down>_ down       ^^
- ^^                    _M-<right>_ right     _M-<up>_ up           ^^
-")
-  ("q" nil)
-  ("c" markdown-table-insert-column)
-  ("C" markdown-table-delete-column)
-  ("r" markdown-table-insert-row)
-  ("R" markdown-table-delete-row)
-  ("M-<left>" markdown-table-move-column-left)
-  ("M-<right>" markdown-table-move-column-right)
-  ("M-<down>" markdown-table-move-row-down)
-  ("M-<up>" markdown-table-move-row-up))
-#+END_SRC
-
-** Hydra / Org
-
-Group Org commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-org (:color pink)
-  (concat "\n " (me/hydra-heading "Org" "Links" "Outline")
-          "
- _q_ quit              _i_ insert            _<_ previous          ^^
- ^^                    _n_ next              _>_ next              ^^
- ^^                    _p_ previous          _a_ all               ^^
- ^^                    _s_ store             _g_ go                ^^
- ^^                    ^^                    _v_ overview          ^^
-")
-  ("q" nil)
-  ("<" org-backward-element)
-  (">" org-forward-element)
-  ("a" outline-show-all :color blue)
-  ("g" counsel-org-goto :color blue)
-  ("i" org-insert-link :color blue)
-  ("n" org-next-link)
-  ("p" org-previous-link)
-  ("s" org-store-link)
-  ("v" org-overview :color blue))
-#+END_SRC
-
-** Hydra / Projectile
-
-Group Projectile commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-projectile (:color blue)
-  (concat "\n " (me/hydra-heading "Projectile" "Buffers" "Find" "Search")
-          "
- _q_ quit              _b_ list              _d_ directory         _r_ replace
- _i_ reset cache       _K_ kill all          _D_ root              _R_ regexp replace
- _n_ new               _S_ save all          _f_ file              _s_ rg
- ^^                    ^^                    _p_ project           ^^
-")
-  ("q" nil)
-  ("b" counsel-projectile-switch-to-buffer)
-  ("d" counsel-projectile-find-dir)
-  ("D" projectile-dired)
-  ("f" counsel-projectile-find-file)
-  ("i" projectile-invalidate-cache :color red)
-  ("K" projectile-kill-buffers)
-  ("n" projectile-add-known-project)
-  ("p" counsel-projectile-switch-project)
-  ("r" projectile-replace)
-  ("R" projectile-replace-regexp)
-  ("s" counsel-projectile-rg)
-  ("S" projectile-save-project-buffers))
-#+END_SRC
-
-** Hydra / RJSX
-
-Group React JavaScript commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-rjsx (:color blue)
-  (concat "\n " (me/hydra-heading "RJSX" "JSDoc")
-          "
- _q_ quit              _f_ function          ^^                    ^^
- ^^                    _F_ file              ^^                    ^^
-")
-  ("q" nil)
-  ("f" js-doc-insert-function-doc-snippet)
-  ("F" js-doc-insert-file-doc))
-#+END_SRC
-
-** Hydra / System
-
-Group system-related commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-system (:color blue)
-  (concat "\n " (me/hydra-heading "System" "Packages" "Shell" "Other")
-          "
- _q_ quit              _i_ install           _e_ eshell            _d_ clear byte-compiled
- ^^                    _p_ list              _t_ term              _D_ clear desktop
- ^^                    _r_ refresh           _T_ ansi-term         _Q_ clear and kill Emacs
- ^^                    ^^                    ^^                    _s_ list processes
-")
-  ("q" nil)
-  ("d" me/byte-delete)
-  ("D" desktop-remove)
-  ("e" (eshell t))
-  ("i" package-install)
-  ("p" package-list-packages)
-  ("Q" (let ((desktop-save nil))
-         (me/byte-delete)
-         (desktop-remove)
-         (save-buffers-kill-terminal)))
-  ("r" package-refresh-contents :color red)
-  ("s" list-processes)
-  ("t" term)
-  ("T" ansi-term))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defun me/byte-delete ()
-  (interactive)
-  (let ((default-directory user-emacs-directory))
-    (shell-command "find . -name \"*.elc\" -type f | xargs rm -f")))
-#+END_SRC
-
-** Hydra / UI
-
-Group system-related commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-ui (:color red)
-  (concat "\n " (me/hydra-heading "User Interface" "Frame" "Zoom" "Line Numbers")
-          "
- _q_ quit              _m_ maximize          _-_ out               _n_ mode: %s`display-line-numbers
- ^^                    ^^                    _=_ in                _N_ absolute: %s`display-line-numbers-current-absolute
- ^^                    ^^                    _0_ reset             ^^
-")
-  ("q" nil)
-  ("m" toggle-frame-maximized :color blue)
-  ("n" me/display-line-numbers-toggle-type)
-  ("N" me/display-line-numbers-toggle-absolute)
-  ("-" default-text-scale-decrease)
-  ("=" default-text-scale-increase)
-  ("0" default-text-scale-reset :color blue))
-#+END_SRC
-
-** Hydra / Windows
-
-Group window-related commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-windows (:color pink)
-  (concat "\n " (me/hydra-heading "Windows" "Size" "Buffers")
-          "
- _q_ quit              _b_ balance           _w_ revert            ^^
- ^^                    _i_ heighten          ^^                    ^^
- ^^                    _j_ narrow            ^^                    ^^
- ^^                    _k_ lower             ^^                    ^^
- ^^                    _l_ widen             ^^                    ^^
-")
-  ("q" nil)
-  ("b" balance-windows :color blue)
-  ("i" enlarge-window)
-  ("j" shrink-window-horizontally)
-  ("k" shrink-window)
-  ("l" enlarge-window-horizontally)
-  ("w" (revert-buffer nil t) :color blue))
-#+END_SRC
-
-** IRC
-
-| =erc=          | Built-in                                 |
-| =erc-hl-nicks= | https://github.com/leathekd/erc-hl-nicks |
-
-#+BEGIN_SRC emacs-lisp
-(use-package erc
-  :ensure nil
-  :bind
-  (:map erc-mode-map
-   ([remap erc-bol] . me/erc-bol-shifted)
-   ("<M-down>" . erc-next-command)
-   ("<M-up>" . erc-previous-command))
-  :hook
-  (erc-mode . (lambda () (setq-local scroll-margin 0)))
-  :custom
-  (erc-autojoin-channels-alist '(("freenode.net" "#emacs")))
-  (erc-fill-function 'erc-fill-static)
-  (erc-fill-static-center 20)
-  (erc-header-line-format nil)
-  (erc-insert-timestamp-function 'erc-insert-timestamp-left)
-  (erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
-  (erc-prompt (format "%19s" ">"))
-  (erc-timestamp-format nil)
-  :config
-  (erc-scrolltobottom-enable))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defun me/erc ()
-  "Connect to `me/erc-server' on `me/erc-port' as `me/erc-nick' with
-  `me/erc-password'."
-  (interactive)
-  (erc :server me/erc-server
-       :port me/erc-port
-       :nick me/erc-nick
-       :password me/erc-password))
-
-(defun me/erc-bol-shifted ()
-  "See `erc-bol'. Support shift."
-  (interactive "^")
-  (erc-bol))
-#+END_SRC
-
-Highlight ERC nicks with unique colors.
-
-#+BEGIN_SRC emacs-lisp
-(use-package erc-hl-nicks)
-#+END_SRC
-
 ** Line Numbers
 
 Display relative line numbers in most editing modes.
@@ -1434,8 +1432,8 @@ Cycle between nil, t and 'relative."
 
 ** Linters
 
-| flycheck | https://github.com/flycheck/flycheck   |
-| prettier | https://github.com/jscheid/prettier.el |
+| =flycheck= | https://github.com/flycheck/flycheck   |
+| =prettier= | https://github.com/jscheid/prettier.el |
 
 Flycheck lints warnings and errors directly within buffers. It can check a lot
 of different syntaxes, as long as you make sure that Emacs has access to the
@@ -1485,8 +1483,8 @@ minimal overhead, by request or transparently on file save.
 
 Yup, Emacs supports LSP.
 
-| lsp-mode | https://github.com/emacs-lsp/lsp-mode |
-| lsp-ui   | https://github.com/emacs-lsp/lsp-ui   |
+| =lsp-mode= | https://github.com/emacs-lsp/lsp-mode |
+| =lsp-ui=   | https://github.com/emacs-lsp/lsp-ui   |
 
 #+BEGIN_SRC emacs-lisp
 (use-package lsp-mode
