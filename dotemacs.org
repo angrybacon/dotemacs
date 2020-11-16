@@ -1122,27 +1122,41 @@ Group system-related commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-system (:color blue)
-  (concat "\n " (me/hydra-heading "System" "Packages" "Shell" "Other")
+  (concat "\n " (me/hydra-heading "System" "Packages" "Toggle" "Other")
           "
- _q_ quit              _i_ install           _e_ eshell            _d_ clear byte-compiled
- ^^                    _p_ list              _t_ term              _D_ clear desktop
- ^^                    _r_ refresh           _T_ ansi-term         _Q_ clear and kill Emacs
- ^^                    ^^                    ^^                    _s_ list processes
+ _q_ quit              _i_ install           _g_ debug: %-3s`debug-on-error        _d_ clear byte-compiled
+ _s_ shell...          _p_ list              ^^                    _D_ clear desktop
+ ^^                    _r_ refresh           ^^                    _l_ list processes
+ ^^                    ^^                    ^^                    _Q_ clear and kill Emacs
 ")
   ("q" nil)
   ("d" me/byte-delete)
   ("D" desktop-remove)
-  ("e" (eshell t))
+  ("g" (setq debug-on-error (not debug-on-error)))
   ("i" package-install)
+  ("l" list-processes)
   ("p" package-list-packages)
   ("Q" (let ((desktop-save nil))
          (me/byte-delete)
          (desktop-remove)
          (save-buffers-kill-terminal)))
   ("r" package-refresh-contents :color red)
-  ("s" list-processes)
-  ("t" term)
-  ("T" ansi-term))
+  ("s" hydra-system/shell/body))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-system/shell (:color blue)
+  (concat "\n " (me/hydra-heading "System / Shell" "Start")
+          "
+ _q_ quit              _a_ ansi              ^^                    ^^
+ ^^                    _e_ eshell            ^^                    ^^
+ ^^                    _t_ term              ^^                    ^^
+ ^^                    ^^                    ^^                    ^^
+")
+  ("q" nil)
+  ("a" ansi-term)
+  ("e" (eshell t))
+  ("t" term))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
