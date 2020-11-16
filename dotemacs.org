@@ -255,6 +255,8 @@ HTML mode is defined in =sgml-mode.el=.
   (web-mode . sgml-electric-tag-pair-mode)
   :custom
   (web-mode-code-indent-offset 2)
+  (web-mode-enable-auto-opening nil)
+  (web-mode-enable-auto-pairing nil)
   (web-mode-enable-auto-quoting nil)
   (web-mode-markup-indent-offset 2)
   (web-mode-enable-auto-indentation nil))
