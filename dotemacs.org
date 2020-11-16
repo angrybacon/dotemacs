@@ -2485,7 +2485,7 @@ Display indicators in the left fringe for Git changes.
   (after-change-major-mode . me/git-gutter-enable)
   :config
   (define-fringe-bitmap 'git-gutter-fr:added [192] nil nil '(center t))
-  (define-fringe-bitmap 'git-gutter-fr:deleted [192 192 192 192] nil nil 'bottom)
+  (define-fringe-bitmap 'git-gutter-fr:deleted [192] nil nil '(center t))
   (define-fringe-bitmap 'git-gutter-fr:modified [192] nil nil '(center t)))
 #+END_SRC
 
