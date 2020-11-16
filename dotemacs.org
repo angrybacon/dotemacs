@@ -32,7 +32,7 @@ Here are what I consider better defaults as per my own experience.
  tab-width 4                                      ; Set width for tabs
  uniquify-buffer-name-style 'forward              ; Uniquify buffer names
  window-combination-resize t                      ; Resize windows proportionally
- window-divider-default-right-width 1             ; Thin window vertical dividers
+ window-divider-default-right-width 2             ; Thin window vertical dividers
  x-stretch-cursor t)                              ; Stretch cursor to the glyph width
 (cd "~/")                                         ; Move to the user directory
 (delete-selection-mode 1)                         ; Replace region when inserting text
