@@ -690,10 +690,8 @@ Comment things using Evil operators.
 
 #+BEGIN_SRC emacs-lisp
 (use-package evil-commentary
-  :after evil
-  :defer nil
-  :config
-  (evil-commentary-mode))
+  :hook
+  (evil-mode . evil-commentary-mode))
 #+END_SRC
 
 ** Expand
@@ -821,12 +819,10 @@ Augment Ivy's interface with details for candidates.
 
 #+BEGIN_SRC emacs-lisp
 (use-package ivy-rich
-  :after ivy
-  :defer nil
+  :defer 1
   :custom
   (ivy-rich-parse-remote-buffer nil)
   :config
-  (ivy-rich-mode 1)
   (setq-default
    ivy-rich-display-transformers-list
    (plist-put ivy-rich-display-transformers-list
@@ -910,31 +906,27 @@ Augment Ivy's interface with details for candidates.
 
 #+BEGIN_SRC emacs-lisp
 (use-package counsel
-  :after ivy
-  :defer nil
+  :hook
+  (ivy-mode . counsel-mode)
   :custom
   (ivy-initial-inputs-alist nil)
   (counsel-describe-function-function #'helpful-function)
   (counsel-describe-symbol-function #'helpful-symbol)
   (counsel-describe-variable-function #'helpful-variable)
   (counsel-outline-face-style 'org)
-  (counsel-outline-path-separator " / ")
-  :config
-  (counsel-mode 1))
+  (counsel-outline-path-separator " / "))
 
 (use-package counsel-projectile
-  :after counsel
-  :defer nil
-  :config
-  (counsel-projectile-mode 1))
+  :hook
+  (ivy-mode . counsel-projectile-mode))
 #+END_SRC
 
 ** Ivy / Swiper
 
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
-  :after ivy
-  :defer nil
+  :commands
+  (swiper)
   :bind
   ("C-s" . swiper)
   :custom
@@ -1542,7 +1534,6 @@ Yup, Emacs supports LSP.
   (doom-modeline-bar-width 1)
   (doom-modeline-buffer-file-name-style 'truncate-with-project)
   (doom-modeline-enable-word-count t)
-  (doom-modeline-icon (display-graphic-p))
   (doom-modeline-major-mode-icon nil)
   (doom-modeline-percent-position nil)
   (doom-modeline-vcs-max-length 28)
@@ -1709,11 +1700,9 @@ Evil-snipe emulates =vim-seek= and/or =vim-sneak= in =evil-mode=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package evil-snipe
-  :after evil
-  :defer nil
-  :config
-  (evil-snipe-mode)
-  (evil-snipe-override-mode)
+  :hook
+  (evil-mode . evil-snipe-mode)
+  (evil-mode . evil-snipe-override-mode)
   :custom
   (evil-snipe-char-fold t)
   (evil-snipe-repeat-scope 'visible)
@@ -2510,8 +2499,8 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
 (use-package magit
   :bind
   (:map magit-file-section-map
-   ("<return>" . magit-diff-visit-file-other-window))
-  (:map magit-hunk-section-map
+   ("<return>" . magit-diff-visit-file-other-window)
+   :map magit-hunk-section-map
    ("<return>" . magit-diff-visit-file-other-window))
   :custom
   (epg-pinentry-mode 'loopback)
@@ -2538,7 +2527,7 @@ necessary.
   (after-init . pinentry-start))
 #+END_SRC
 
-In the case of GPG-signed commits use the below configuration files
+In the case of GPG-signed commits use the below configuration files.
 
 =~./profile=
 
