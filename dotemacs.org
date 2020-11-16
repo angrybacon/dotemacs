@@ -67,10 +67,19 @@ Enable fullscreen.
   (set-frame-parameter nil 'fullscreen 'fullboth))
 #+END_SRC
 
+Change a few indenting behaviors.
+
+#+BEGIN_SRC emacs-lisp
+(put 'add-function 'lisp-indent-function 2)
+#+END_SRC
+
 Garbage-collect on focus-out, Emacs /should/ feel snappier overall.
 
 #+BEGIN_SRC emacs-lisp
-(add-hook 'focus-out-hook #'garbage-collect)
+(add-function :after after-focus-change-function
+  (defun me/garbage-collect-maybe ()
+    (unless (frame-focus-state)
+      (garbage-collect))))
 #+END_SRC
 
 ** Load =.custom.el=
