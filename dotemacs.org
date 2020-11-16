@@ -1466,11 +1466,7 @@ binaries.
   (flycheck-disabled-checkers '(emacs-lisp-checkdoc))
   (flycheck-display-errors-delay .1)
   (flycheck-emacs-lisp-load-path 'inherit)
-  (flycheck-indication-mode nil)
-  :config
-  (define-fringe-bitmap 'me/flycheck-fringe-bitmap [224] nil nil '(center t))
-  (flycheck-redefine-standard-error-levels nil 'me/flycheck-fringe-bitmap)
-  (flycheck-add-mode 'javascript-eslint 'web-mode))
+  (flycheck-indication-mode nil))
 #+END_SRC
 
 Run Prettier against the whole buffer on save. Toggle the minor mode on through
@@ -1518,8 +1514,7 @@ Yup, Emacs supports LSP.
   :custom
   (lsp-auto-guess-root t)
   (lsp-idle-delay .01)
-  (lsp-diagnostics-provider :none)
-  (lsp-eldoc-hook nil)
+  (lsp-eldoc-enable-hover nil)
   (lsp-session-file (expand-file-name ".lsp" user-emacs-directory)))
 #+END_SRC
 
@@ -1527,7 +1522,7 @@ Yup, Emacs supports LSP.
 (use-package lsp-ui
   :custom
   (lsp-ui-doc-enable t)
-  (lsp-ui-doc-delay .1)
+  (lsp-ui-doc-delay .01)
   (lsp-ui-doc-header nil)
   (lsp-ui-doc-max-height 16)
   (lsp-ui-doc-max-width 80)
