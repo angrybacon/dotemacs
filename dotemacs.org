@@ -143,7 +143,7 @@ Load the theme and fix some faces to match my personal preferences.
     '(flycheck-info :underline `(:color ,highlight :style line))
     '(flycheck-warning :underline `(:color ,warning :style line))
     '(fringe :background 'unspecified)
-    '(helpful-heading :foreground red :height me/font-size-large)
+    '(helpful-heading :foreground red :height 'unspecified)
     '(info-title-4 :bold nil :foreground red)
     '(isearch :inherit 'highlight)
     '(italic :italic nil)
@@ -172,7 +172,7 @@ Load the theme and fix some faces to match my personal preferences.
     '(magit-diff-removed-highlight
       :background 'unspecified
       :inherit 'magit-diff-context-highlight)
-    '(magit-section-heading :foreground red :height me/font-size-large)
+    '(magit-section-heading :foreground red)
     '(magit-section-highlight :inherit nil)
     '(markdown-table-face :height me/font-size-small)
     '(mode-line-inactive :background bg-alt)
