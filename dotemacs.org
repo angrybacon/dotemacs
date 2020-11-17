@@ -73,6 +73,7 @@ Change a few indenting behaviors.
 (put 'add-function 'lisp-indent-function 2)
 (put 'advice-add 'lisp-indent-function 2)
 (put 'evil-define-key* 'lisp-indent-function 'defun)
+(put 'plist-put 'lisp-indent-function 2)
 #+END_SRC
 
 Garbage-collect on focus-out, Emacs /should/ feel snappier overall.
@@ -572,7 +573,18 @@ you can press ctrl-c right (calling =winner-redo=).
 
 ** Comments
 
-| =newcomment= | Built-in |
+| =evil-commentary= | https://github.com/linktohack/evil-commentary |
+| =newcomment=      | Built-in                                      |
+
+Comment things using Evil operators.
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-commentary
+  :hook
+  (evil-mode . evil-commentary-mode))
+#+END_SRC
+
+Customize the way default comments should be handled.
 
 #+BEGIN_SRC emacs-lisp
 (use-package newcomment
@@ -646,8 +658,7 @@ explorer.
 
 ** Evil
 
-| =evil=            | https://github.com/emacs-evil/evil            |
-| =evil-commentary= | https://github.com/linktohack/evil-commentary |
+| =evil= | https://github.com/emacs-evil/evil |
 
 Evil emulates and manages the infamous Vim states and motions ported to Emacs.
 
@@ -686,14 +697,6 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
   "Like `evil-indent' but save excursion."
   (save-excursion
     (apply original arguments)))
-#+END_SRC
-
-Comment things using Evil operators.
-
-#+BEGIN_SRC emacs-lisp
-(use-package evil-commentary
-  :hook
-  (evil-mode . evil-commentary-mode))
 #+END_SRC
 
 ** Expand
@@ -1311,47 +1314,42 @@ Augment Ivy's interface with details for candidates.
   :config
   (setq-default
    ivy-rich-display-transformers-list
-   (plist-put ivy-rich-display-transformers-list
-              'counsel-M-x
-              '(:columns
-                ((counsel-M-x-transformer (:width .2))
-                 (ivy-rich-counsel-function-docstring (:face font-lock-doc-face)))
-                :delimiter "  "))
+   (plist-put ivy-rich-display-transformers-list 'counsel-M-x
+     '(:columns
+       ((counsel-M-x-transformer (:width .2))
+        (ivy-rich-counsel-function-docstring (:face font-lock-doc-face)))
+       :delimiter "  "))
    ivy-rich-display-transformers-list
-   (plist-put ivy-rich-display-transformers-list
-              'counsel-describe-function
-              '(:columns
-                ((counsel-describe-function-transformer (:width .2))
-                 (ivy-rich-counsel-function-docstring (:face font-lock-doc-face)))
-                :delimiter "  "))
+   (plist-put ivy-rich-display-transformers-list 'counsel-describe-function
+     '(:columns
+       ((counsel-describe-function-transformer (:width .2))
+        (ivy-rich-counsel-function-docstring (:face font-lock-doc-face)))
+       :delimiter "  "))
    ivy-rich-display-transformers-list
-   (plist-put ivy-rich-display-transformers-list
-              'counsel-describe-variable
-              '(:columns
-                ((counsel-describe-variable-transformer (:width .2))
-                 (me/ivy-rich-describe-variable-value (:width .2))
-                 (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face)))
-                :delimiter "  "))
+   (plist-put ivy-rich-display-transformers-list 'counsel-describe-variable
+     '(:columns
+       ((counsel-describe-variable-transformer (:width .2))
+        (me/ivy-rich-describe-variable-value (:width .2))
+        (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face)))
+       :delimiter "  "))
    ivy-rich-display-transformers-list
-   (plist-put ivy-rich-display-transformers-list
-              'ivy-switch-buffer
-              '(:columns
-                ((ivy-switch-buffer-transformer (:width .2))
-                 (me/ivy-rich-switch-buffer-size (:align left :face shadow :width 8))
-                 (ivy-rich-switch-buffer-major-mode (:face warning :width 22))
-                 (ivy-rich-switch-buffer-project (:face success :width 34))
-                 (ivy-rich-switch-buffer-path))
-                :delimiter "  "
-                :predicate (lambda (cand) (get-buffer cand))))
+   (plist-put ivy-rich-display-transformers-list 'ivy-switch-buffer
+     '(:columns
+       ((ivy-switch-buffer-transformer (:width .2))
+        (me/ivy-rich-switch-buffer-size (:align left :face shadow :width 8))
+        (ivy-rich-switch-buffer-major-mode (:face warning :width 22))
+        (ivy-rich-switch-buffer-project (:face success :width 34))
+        (ivy-rich-switch-buffer-path))
+       :delimiter "  "
+       :predicate (lambda (cand) (get-buffer cand))))
    ivy-rich-display-transformers-list
-   (plist-put ivy-rich-display-transformers-list
-              'package-install
-              '(:columns
-                ((ivy-rich-candidate (:width .2))
-                 (ivy-rich-package-version (:face shadow :width 13))
-                 (ivy-rich-package-archive-summary (:face font-lock-builtin-face :width 5))
-                 (ivy-rich-package-install-summary (:face font-lock-doc-face)))
-                :delimiter "  ")))
+   (plist-put ivy-rich-display-transformers-list 'package-install
+     '(:columns
+       ((ivy-rich-candidate (:width .2))
+        (ivy-rich-package-version (:face shadow :width 13))
+        (ivy-rich-package-archive-summary (:face font-lock-builtin-face :width 5))
+        (ivy-rich-package-install-summary (:face font-lock-doc-face)))
+       :delimiter "  ")))
   (ivy-rich-set-display-transformer))
 #+END_SRC
 
