@@ -499,19 +499,38 @@ Python.
 
 Olivetti lets you center your buffer for aesthetics and focus.
 
-| TODO | Disable =olivetti-mode= with 2+ windows |
-
 #+BEGIN_SRC emacs-lisp
 (use-package olivetti
+  :hook
+  (window-configuration-change . me/olivetti-mode-maybe)
   :custom
-  (olivetti-body-width 100)
-  (olivetti-enable-visual-line-mode nil))
+  (olivetti-body-width 100))
 #+END_SRC
 
-You can enable Olivetti on a per-file basis with the following =.dir-local.el= entry.
+| TODO | Prefer =cl-lib= routines |
 
-#+BEGIN_SRC emacs-lisp :tangle no
-((org-mode . ((mode . olivetti))))
+#+BEGIN_SRC emacs-lisp
+(defvar me/olivetti-whitelist-modes '(erc-mode lisp-interaction-mode special-mode))
+(defun me/olivetti-mode-maybe (&optional frame)
+  "Turn on `olivetti-mode' for lone buffers.
+
+Doesn't count volatile windows unless the major-mode of their associated buffer
+is found in `me/olivetti-whitelist-modes' or is derived from one of them.
+
+If more than one active window is found in the current frame, turn on
+`olivetti-mode'. Otherwise, disable it in all visible buffers."
+  (let* ((whitelist-modes me/olivetti-whitelist-modes)
+         (predicate (lambda (window)
+                      (with-selected-window window
+                        (or (buffer-file-name)
+                            (apply 'derived-mode-p whitelist-modes)))))
+         (windows (seq-filter predicate (window-list frame))))
+    (if (= 1 (length windows))
+        (with-selected-window (car windows)
+          (olivetti-mode 1))
+      (dolist (window windows)
+        (with-selected-window window
+          (olivetti-mode -1))))))
 #+END_SRC
 
 Window management.
