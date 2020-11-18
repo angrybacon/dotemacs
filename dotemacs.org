@@ -177,8 +177,8 @@ Load the theme and fix some faces to match my personal preferences.
     '(org-block-begin-line :background (doom-lighten bg .03))
     '(org-quote :background 'unspecified :inherit '(font-lock-doc-face org-block))
     '(outline-1 :foreground red)
-    '(tooltip :background base1)
     '(secondary-selection :background (doom-darken dark-cyan .6))
+    '(tooltip :background base1)
     '(variable-pitch :family 'unspecified)
     '(vertical-border :background 'unspecified :inverse-video t)
     '(which-key-command-description-face :foreground 'unspecified)
@@ -1539,6 +1539,7 @@ Yup, Emacs supports LSP.
    ("C-c l" . hydra-lsp/body))
   :custom
   (lsp-auto-guess-root t)
+  (lsp-enable-folding nil)
   (lsp-idle-delay .01)
   (lsp-eldoc-enable-hover nil)
   (lsp-session-file (expand-file-name ".lsp")))
@@ -1555,7 +1556,12 @@ Yup, Emacs supports LSP.
   (lsp-ui-doc-position 'top)
   (lsp-ui-imenu-enable nil)
   (lsp-ui-peek-enable nil)
-  (lsp-ui-sideline-enable nil))
+  (lsp-ui-sideline-enable nil)
+  :config
+  (advice-add 'lsp-ui-doc--mv-at-point :filter-args
+    (defun me/lsp-ui-doc--mv-at-point-with-margin (arguments)
+      (cl-destructuring-bind (width height x y) arguments
+        `(,width ,height ,x ,(- y 10))))))
 #+END_SRC
 
 ** Mode-Line
