@@ -84,22 +84,17 @@ Garbage-collect on focus-out, Emacs /should/ feel snappier overall.
       (garbage-collect))))
 #+END_SRC
 
-** Load =.custom.el=
+I chose to lay out my configurations and customizations in this very Org document
+for better visibility and maintainability through time and various upgrades.
+Albeit useful, the =customize-*= routines go against that strategy by writing
+directly at the end of the =user-init-file= or into a dedicated file when set
+accordingly.
 
-One is able to use the customization interface that is bundled within Emacs. It
-is meant to help people who are not familiar with Emacs Lisp in the
-configuration of Emacs itself. By default, changes in the customization will be
-automatically detected and appended at the end of the configuration file,
-=init.el=.
-
-Since that in my case, the actual configuration file is a new one, crafted by
-=org-mode=, adding code at the end of =init.el= might mess things up. The
-following tells Emacs to add extra code in another file that would be then
-loaded, if existing.
+To fight the littering I've decided to completely disable this feature and
+redirect the writing to =/dev/null=.
 
 #+BEGIN_SRC emacs-lisp
-(setq-default custom-file (expand-file-name ".custom.el" user-emacs-directory))
-(load custom-file t)
+(setq-default custom-file null-device)
 #+END_SRC
 
 ** Load =.secret.el=
