@@ -4,7 +4,7 @@
 
 * Bootstrap
 
-** Use better defaults
+** Use Better Defaults
 
 Here are what I consider better defaults as per my own experience.
 
@@ -34,7 +34,6 @@ Here are what I consider better defaults as per my own experience.
  window-combination-resize t                      ; Resize windows proportionally
  window-divider-default-right-width 2             ; Thin window vertical dividers
  x-stretch-cursor t)                              ; Stretch cursor to the glyph width
-(cd "~/")                                         ; Move to the user directory
 (delete-selection-mode 1)                         ; Replace region when inserting text
 (fset 'yes-or-no-p 'y-or-n-p)                     ; Replace yes/no prompts with y/n
 (global-subword-mode 1)                           ; Iterate through CamelCase words
@@ -105,9 +104,10 @@ loaded, if existing.
 
 ** Load =.secret.el=
 
-I load =~/.emacs.d/.secret.el= to keep sensible things out of version control.
-For instance, you could set your identity by customizing both =user-full-name=
-and =user-mail-address=. This is also where you want your API tokens to live.
+Load =.secret.el= to keep sensible things out of version control. For instance,
+you could set your identity by customizing both =user-full-name= and
+=user-mail-address=. This is also where you want your machine-specific values to
+be.
 
 #+BEGIN_SRC emacs-lisp
 (defvar me/erc-nick           nil                 "The ERC nick to use.")
@@ -119,7 +119,7 @@ and =user-mail-address=. This is also where you want your API tokens to live.
 (defvar me/font-size-large    1.2                 "The font size to use for larger text.")
 (defvar me/font-size-small    .8                  "The font size to use for smaller text.")
 
-(let ((secret.el (expand-file-name ".secret.el" user-emacs-directory)))
+(let ((secret.el (expand-file-name ".secret.el")))
   (load secret.el t))
 #+END_SRC
 
@@ -169,7 +169,6 @@ Load the theme and fix some faces to match my personal preferences.
       :background 'unspecified
       :foreground violet
       :inherit 'org-block-begin-line)
-    ;; '(magit-diff-hunk-heading-highlight :background 'unspecified :foreground 'unspecified)
     '(magit-diff-hunk-region :inherit 'region)
     '(magit-diff-removed :background 'unspecified)
     '(magit-diff-removed-highlight
@@ -304,8 +303,8 @@ HTML mode is defined in =sgml-mode.el=.
 
 | =org= | Built-in |
 
-This very file is organized with =org-mode=. I am definitely not a power user of
-Org, but I'm getting there. :-)
+This very file is organized with =org-mode=. Like Markdown, but with
+superpowers.
 
 #+BEGIN_QUOTE
 Org mode is for keeping notes, maintaining TODO lists, planning projects, and
@@ -768,7 +767,6 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
   (prog-mode . yas-minor-mode)
   (text-mode . yas-minor-mode)
   :custom
-  (yas-snippet-dirs `(,(expand-file-name "snippets/" user-emacs-directory)))
   (yas-verbosity 2)
   :config
   (yas-reload-all))
@@ -1156,7 +1154,7 @@ Group system-related commands.
  ^^                    ^^                    ^^                    _Q_ clear and kill Emacs
 ")
   ("q" nil)
-  ("d" me/byte-delete)
+  ("d" (shell-command "find . -name \"*.elc\" -type f | xargs rm -f"))
   ("D" desktop-remove)
   ("g" (setq debug-on-error (not debug-on-error)))
   ("i" package-install)
@@ -1183,13 +1181,6 @@ Group system-related commands.
   ("a" ansi-term)
   ("e" (eshell t))
   ("t" term))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defun me/byte-delete ()
-  (interactive)
-  (let ((default-directory user-emacs-directory))
-    (shell-command "find . -name \"*.elc\" -type f | xargs rm -f")))
 #+END_SRC
 
 ** Hydra / UI
@@ -1536,7 +1527,7 @@ Yup, Emacs supports LSP.
   (lsp-auto-guess-root t)
   (lsp-idle-delay .01)
   (lsp-eldoc-enable-hover nil)
-  (lsp-session-file (expand-file-name ".lsp" user-emacs-directory)))
+  (lsp-session-file (expand-file-name ".lsp")))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -2064,7 +2055,7 @@ Enable multiple cursors outside Evil. Some witchcraft at work here.
    ("M-l" . mc/insert-letters)
    ("M-n" . mc/insert-numbers))
   :init
-  (setq-default mc/list-file (expand-file-name ".multiple-cursors.el" user-emacs-directory))
+  (setq-default mc/list-file (expand-file-name ".multiple-cursors.el"))
   :custom
   (mc/edit-lines-empty-lines 'ignore)
   (mc/insert-numbers-default 1))
@@ -2213,8 +2204,8 @@ exists as well).
   (after-init . projectile-mode)
   :init
   (setq-default
-   projectile-cache-file (expand-file-name ".projectile.cache" user-emacs-directory)
-   projectile-known-projects-file (expand-file-name ".projectile.eld" user-emacs-directory))
+   projectile-cache-file (expand-file-name ".projectile.cache")
+   projectile-known-projects-file (expand-file-name ".projectile.eld"))
   :custom
   (projectile-completion-system 'ivy)
   (projectile-dynamic-mode-line nil)
@@ -2282,7 +2273,7 @@ Sort interactive commands by usage.
 #+BEGIN_SRC emacs-lisp
 (use-package amx
   :custom
-  (amx-save-file (expand-file-name ".amx" user-emacs-directory))
+  (amx-save-file (expand-file-name ".amx"))
   (amx-show-key-bindings nil))
 #+END_SRC
 
@@ -2341,7 +2332,7 @@ Customize the noisy default towards backup files.
   :ensure nil
   :custom
   (backup-by-copying t)
-  (backup-directory-alist `(("." . ,(expand-file-name "backups/" user-emacs-directory))))
+  (backup-directory-alist `(("." . ,(expand-file-name "backups/"))))
   (delete-old-versions t)
   (version-control t))
 #+END_SRC
