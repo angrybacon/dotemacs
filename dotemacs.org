@@ -827,7 +827,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
   ("C-c f" . hydra-flycheck/body)
   ("C-c g" . hydra-git/body)
   ("C-c i" . hydra-ivy/body)
-  ("C-c o" . me/hydra-super)
+  ("C-c o" . me/hydra-super-maybe)
   ("C-c p" . hydra-projectile/body)
   ("C-c s" . hydra-system/body)
   ("C-c u" . hydra-ui/body)
@@ -857,7 +857,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
     (when (functionp body)
       (setq me/hydra-super-body body))))
 
-(defun me/hydra-super ()
+(defun me/hydra-super-maybe ()
   (interactive)
   (if me/hydra-super-body
       (funcall me/hydra-super-body)
