@@ -531,7 +531,7 @@ If more than one active window is found in the current frame, turn on
 
 Window management.
 
-| TODO | Shackle Magit windows |
+| TODO | Check out Doom popups |
 
 #+BEGIN_QUOTE
 =shackle= gives you the means to put an end to popped up buffers not behaving
@@ -643,6 +643,9 @@ Ediff is a visual interface to Unix =diff=.
 
 Configure Dired buffers. Amongst many other things, Emacs is also a file
 explorer.
+
+| TODO | Check out =dired-collapse= |
+| TODO | Check out =dired-imenu=    |
 
 #+BEGIN_SRC emacs-lisp
 (use-package dired
@@ -1070,6 +1073,8 @@ Group Markdown commands.
 
 Group Org commands.
 
+| TODO | Add heads for =org-table-*= |
+
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-org (:color pink)
   (concat "\n " (me/hydra-heading "Org" "Links" "Outline")
@@ -1184,6 +1189,10 @@ Group system-related commands.
 
 Group interface-related commands.
 
+| TODO | Check out =defhydradio=               |
+| TODO | Make a persistent toggle for Olivetti |
+| TODO | Merge =hydra-windows=                 |
+
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-ui (:color red)
   (concat "\n " (me/hydra-heading "UI" "Frame" "Zoom" "Line Numbers")
@@ -1228,6 +1237,8 @@ Group window-related commands.
 
 | =erc=          | Built-in                                 |
 | =erc-hl-nicks= | https://github.com/leathekd/erc-hl-nicks |
+
+| TODO | Advice =erc-bol= to support shift |
 
 #+BEGIN_SRC emacs-lisp
 (use-package erc
@@ -1312,6 +1323,9 @@ efficient, smaller, simpler, and smoother to use yet highly customizable.
 #+END_SRC
 
 Augment Ivy's interface with details for candidates.
+
+| TODO | Add default value column to =counsel-describe-variable= |
+| TODO | Add face attribute columns to =counsel-faces=           |
 
 #+BEGIN_SRC emacs-lisp
 (use-package ivy-rich
@@ -1504,6 +1518,8 @@ Yup, Emacs supports LSP.
 
 | =lsp-mode= | https://github.com/emacs-lsp/lsp-mode |
 | =lsp-ui=   | https://github.com/emacs-lsp/lsp-ui   |
+
+| TODO | Make a minor mode for =me/lsp-optimize= |
 
 #+BEGIN_SRC emacs-lisp
 (use-package lsp-mode
@@ -2195,6 +2211,8 @@ exists as well).
 --- Bozhidar Batsov
 #+END_QUOTE
 
+| TODO | Bind =projectile-commander= to =counsel-projectile-switch-project-action= |
+
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
   :hook
@@ -2412,6 +2430,8 @@ Emacs can also emulate an interactive REST client.
 | =esh-mode=  | Built-in |
 | =esh-proc=  | Built-in |
 | =term=      | Built-in |
+
+| TODO | Advice =eshell-bol= to support shift |
 
 #+BEGIN_SRC emacs-lisp
 (use-package em-banner
