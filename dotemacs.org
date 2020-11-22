@@ -506,7 +506,7 @@ Olivetti lets you center your buffer for aesthetics and focus.
 
 #+BEGIN_SRC emacs-lisp
 (defvar me/olivetti-whitelist-modes
-  '(Custom-mode erc-mode lisp-interaction-mode special-mode))
+  '(Custom-mode dired-mode erc-mode lisp-interaction-mode special-mode))
 
 (defun me/olivetti-mode-maybe (&optional frame)
   "Turn on `olivetti-mode' for lone buffers.
