@@ -1946,6 +1946,8 @@ No package seem to please my person.
 
 | =webpaste= | https://github.com/etu/webpaste.el |
 
+| TODO | Prefer a default provider that supports https |
+
 #+BEGIN_QUOTE
 This mode allows to paste whole buffers or parts of buffers to pastebin-like
 services. It supports more than one service and will failover if one service
@@ -1954,8 +1956,12 @@ fails.
 --- Elis Hirwing
 #+END_QUOTE
 
+| TODO | Handle Org blocks https://github.com/etu/webpaste.el/issues/13 |
+
 #+BEGIN_SRC emacs-lisp
-(use-package webpaste)
+(use-package webpaste
+  :custom
+  (webpaste-provider-priority '("paste.mozilla.org" "dpaste.org")))
 #+END_SRC
 
 ** Point and Region / Expand
