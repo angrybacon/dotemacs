@@ -824,6 +824,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
   :bind
+  ("C-c a" . hydra-applications/body)
   ("C-c d" . hydra-dates/body)
   ("C-c e" . hydra-eyebrowse/body)
   ("C-c f" . hydra-flycheck/body)
@@ -864,6 +865,25 @@ seamless, it's like a minor mode that disables itself auto-magically.
   (if me/hydra-super-body
       (funcall me/hydra-super-body)
     (user-error "me/hydra-super: me/hydra-super-body is not set")))
+#+END_SRC
+
+** Hydra / Applications
+
+Group commands for high-level applications.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-applications (:color blue)
+  (concat "\n " (me/hydra-heading "Applications" "Launch" "Shell")
+          "
+ _q_ quit              _i_ erc               _e_ eshell            ^^
+ ^^                    ^^                    _t_ ansi-term         ^^
+ ^^                    ^^                    _T_ term              ^^
+")
+  ("q" nil)
+  ("e" (eshell t))
+  ("i" me/erc)
+  ("t" ansi-term)
+  ("T" term))
 #+END_SRC
 
 ** Hydra / Dates
@@ -1153,7 +1173,7 @@ Group system-related commands.
   (concat "\n " (me/hydra-heading "System" "Packages" "Toggle" "Other")
           "
  _q_ quit              _i_ install           _g_ debug: %-3s`debug-on-error        _d_ clear byte-compiled
- _s_ shell...          _p_ list              ^^                    _D_ clear desktop
+ ^^                    _p_ list              ^^                    _D_ clear desktop
  ^^                    _r_ refresh           ^^                    _l_ list processes
  ^^                    ^^                    ^^                    _Q_ clear and kill Emacs
 ")
@@ -1168,23 +1188,7 @@ Group system-related commands.
          (me/byte-delete)
          (desktop-remove)
          (save-buffers-kill-terminal)))
-  ("r" package-refresh-contents :color red)
-  ("s" hydra-system/shell/body))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-system/shell (:color blue)
-  (concat "\n " (me/hydra-heading "System / Shell" "Start")
-          "
- _q_ quit              _a_ ansi              ^^                    ^^
- ^^                    _e_ eshell            ^^                    ^^
- ^^                    _t_ term              ^^                    ^^
- ^^                    ^^                    ^^                    ^^
-")
-  ("q" nil)
-  ("a" ansi-term)
-  ("e" (eshell t))
-  ("t" term))
+  ("r" package-refresh-contents :color red))
 #+END_SRC
 
 ** Hydra / UI
