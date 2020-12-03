@@ -2527,9 +2527,7 @@ Auto-fill commit messages.
 #+BEGIN_SRC emacs-lisp
 (use-package git-commit
   :hook
-  (git-commit-mode . (lambda () (setq-local fill-column 72)))
-  :custom
-  (git-commit-summary-max-length 50))
+  (git-commit-mode . (lambda () (setq-local fill-column 72))))
 #+END_SRC
 
 Display indicators in the left fringe for Git changes.
