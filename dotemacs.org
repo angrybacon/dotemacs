@@ -1336,7 +1336,10 @@ efficient, smaller, simpler, and smoother to use yet highly customizable.
   (ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
   (ivy-virtual-abbreviate 'full)
   :config
-  (setf (alist-get 't ivy-format-functions-alist) #'ivy-format-function-line))
+  (setf (alist-get 't ivy-format-functions-alist) #'ivy-format-function-line)
+  (advice-add 'ivy-more-chars :filter-return
+    (defun me/ivy-more-chars-inhibit (entries)
+      (when entries '("")))))
 #+END_SRC
 
 Augment Ivy's interface with details for candidates.
