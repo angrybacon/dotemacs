@@ -493,7 +493,8 @@ Python.
   (eyebrowse-new-workspace t))
 #+END_SRC
 
-Olivetti lets you center your buffer for aesthetics and focus.
+Olivetti lets you center your buffer for aesthetics and focus. I have it set up
+to turn on automatically when visiting a single buffer, and disable itself otherwise.
 
 #+BEGIN_SRC emacs-lisp
 (use-package olivetti
@@ -503,7 +504,8 @@ Olivetti lets you center your buffer for aesthetics and focus.
   (olivetti-body-width 100))
 #+END_SRC
 
-| TODO | Prefer =cl-lib= routines |
+| TODO | Prefer =cl-lib= routines      |
+| TODO | Enable for =*scratch*= buffer |
 
 #+BEGIN_SRC emacs-lisp
 (defvar me/olivetti-whitelist-modes
@@ -820,6 +822,8 @@ seamless, it's like a minor mode that disables itself auto-magically.
 
 --- Oleh Krehel
 #+END_QUOTE
+
+| TODO | =C-c l= conflicts with =selected-keymap= |
 
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
@@ -1421,6 +1425,8 @@ Augment Ivy's interface with details for candidates.
 
 ** Ivy / Counsel
 
+| TODO | Make a Hydra for =counsel-rg= |
+
 #+BEGIN_SRC emacs-lisp
 (use-package counsel
   :hook
@@ -1796,6 +1802,11 @@ jump from one paragraph to another.
 | =pulse= | Built-in |
 
 Pulse temporarily highlights the background color of a line or region.
+
+| TODO | Pulse yanks             |
+| TODO | Pulse evaluation blocks |
+| TODO | Pulse =rg= jumps        |
+| TODO | Pulse =magit= jumps     |
 
 #+BEGIN_SRC emacs-lisp
 (use-package pulse :ensure nil)
