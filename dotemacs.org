@@ -876,7 +876,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
 Group commands for high-level applications.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-applications (:color blue)
+(defhydra hydra-applications (:color teal)
   (concat "\n " (me/hydra-heading "Applications" "Launch" "Shell")
           "
  _q_ quit              _i_ erc               _e_ eshell            ^^
@@ -895,7 +895,7 @@ Group commands for high-level applications.
 Group date-related commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-dates (:color blue)
+(defhydra hydra-dates (:color teal)
   (concat "\n " (me/hydra-heading "Dates" "Insert" "Insert with Time")
           "
  _q_ quit              _d_ short             _D_ short             ^^
@@ -916,7 +916,7 @@ Group date-related commands.
 Group Eyebrowse commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-eyebrowse (:color blue)
+(defhydra hydra-eyebrowse (:color teal)
   (concat "\n " (me/hydra-heading "Eyebrowse" "Do" "Switch")
           "
  _q_ quit              _c_ create            _0_-_9_ %s(eyebrowse-mode-line-indicator)
@@ -950,7 +950,7 @@ Group Eyebrowse commands.
 Group Flycheck commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-flycheck (:color blue)
+(defhydra hydra-flycheck (:color teal)
   (concat "\n " (me/hydra-heading "Flycheck" "Do" "Errors" "Checker")
           "
  _q_ quit              _v_ verify setup      _<_ previous          _?_ describe
@@ -976,7 +976,7 @@ Group Flycheck commands.
 Group Magit commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-git (:color blue)
+(defhydra hydra-git (:color teal)
   (concat "\n " (me/hydra-heading "Git" "Do" "Gutter")
           "
  _q_ quit              _b_ blame             _p_ previous          ^^
@@ -1029,7 +1029,7 @@ Group Magit commands.
 Group Ivy commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-ivy (:color blue)
+(defhydra hydra-ivy (:color teal)
   (concat "\n " (me/hydra-heading "Ivy" "Do" "Browse")
           "
  _q_ quit              _r_ resume            _f_ faces             ^^
@@ -1052,7 +1052,7 @@ Group Ivy commands.
 Group LSP commands. This hydra is bound in =lsp-mode-map=.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-lsp (:color blue)
+(defhydra hydra-lsp (:color teal)
   (concat "\n " (me/hydra-heading "LSP" "Do" "Find" "Server")
           "
  _q_ quit              _i_ imenu             _f_ definition        _d_ describe
@@ -1128,7 +1128,7 @@ Group Org commands.
 Group Projectile commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-projectile (:color blue)
+(defhydra hydra-projectile (:color teal)
   (concat "\n " (me/hydra-heading "Projectile" "Do" "Find" "Search")
           "
  _q_ quit              _K_ kill buffers      _b_ buffer            _r_ replace
@@ -1157,7 +1157,7 @@ Group Projectile commands.
 Group React JavaScript commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-rjsx (:color blue)
+(defhydra hydra-rjsx (:color teal)
   (concat "\n " (me/hydra-heading "RJSX" "JSDoc")
           "
  _q_ quit              _f_ function          ^^                    ^^
@@ -1173,7 +1173,7 @@ Group React JavaScript commands.
 Group system-related commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-system (:color blue)
+(defhydra hydra-system (:color teal)
   (concat "\n " (me/hydra-heading "System" "Packages" "Toggle" "Other")
           "
  _q_ quit              _i_ install           _g_ debug: %-3s`debug-on-error        _d_ clear byte-compiled
@@ -1210,7 +1210,7 @@ Group interface-related commands.
 | TODO | Merge =hydra-windows=                 |
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-ui (:color red)
+(defhydra hydra-ui (:color pink)
   (concat "\n " (me/hydra-heading "UI" "Frame" "Zoom" "Line Numbers")
           "
  _q_ quit              _m_ maximize          _-_ out               _n_ mode: %s`display-line-numbers
