@@ -1,9 +1,6 @@
 # Emacs
-.custom.el
-.secret.el
 auto-save-list/
 backups/
-dotemacs.el
 elpa/
 eshell/
 games/
@@ -12,8 +9,11 @@ semanticdb/
 server/
 transient/
 url/
+.secret.el
+dotemacs.el
 
 # Third-party packages
+.cache/
 .amx
 .desktop*
 .lsp
