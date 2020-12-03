@@ -1001,22 +1001,22 @@ Group Magit commands.
   (:color pink :pre (if (not smerge-mode) (smerge-mode 1)) :post (smerge-auto-leave))
   (concat "\n " (me/hydra-heading "Git / SMerge" "Move" "Keep" "Diff")
           "
- _q_ quit              _g_ first             _RET_ current         _=_ upper / lower
- ^^                    _G_ last              _a_ all               _<_ upper / base
- ^^                    _C-j_ next            _b_ base              _>_ base / lower
- ^^                    _C-k_ previous        _l_ lower             _E_ ediff
+ _q_ quit              _g_ first             _RET_ current         _<_ upper / base
+ ^^                    _G_ last              _a_ all               _=_ upper / lower
+ ^^                    _j_ next              _b_ base              _>_ base / lower
+ ^^                    _k_ previous          _l_ lower             _E_ ediff
  ^^                    ^^                    _u_ upper             _H_ highlight
 ")
   ("q" nil :color blue)
-  ("C-j" smerge-next)
-  ("C-k" smerge-prev)
-  ("<" smerge-diff-base-upper)
-  (">" smerge-diff-base-lower)
-  ("=" smerge-diff-upper-lower)
+  ("j" smerge-next)
+  ("k" smerge-prev)
+  ("<" smerge-diff-base-upper :color blue)
+  ("=" smerge-diff-upper-lower :color blue)
+  (">" smerge-diff-base-lower :color blue)
   ("RET" smerge-keep-current)
   ("a" smerge-keep-all)
   ("b" smerge-keep-base)
-  ("E" smerge-ediff)
+  ("E" smerge-ediff :color blue)
   ("g" (progn (goto-char (point-min)) (smerge-next)))
   ("G" (progn (goto-char (point-max)) (smerge-prev)))
   ("H" smerge-refine)
@@ -1134,7 +1134,7 @@ Group Projectile commands.
  _q_ quit              _K_ kill buffers      _b_ buffer            _r_ replace
  ^^                    _i_ reset cache       _d_ directory         _R_ regexp replace
  ^^                    _n_ new               _D_ root              _s_ rg
- ^^                    _S_ save buffers      _f_ file              ^^
+ ^^                    _v_ save buffers      _f_ file              _S_ grep
  ^^                    ^^                    _p_ project           ^^
 ")
   ("q" nil)
@@ -1149,7 +1149,8 @@ Group Projectile commands.
   ("r" projectile-replace)
   ("R" projectile-replace-regexp)
   ("s" counsel-projectile-rg)
-  ("S" projectile-save-project-buffers))
+  ("S" counsel-projectile-grep)
+  ("v" projectile-save-project-buffers))
 #+END_SRC
 
 ** Hydra / RJSX
