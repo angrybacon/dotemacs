@@ -1329,7 +1329,7 @@ efficient, smaller, simpler, and smoother to use yet highly customizable.
   :custom
   (ivy-count-format "")
   (ivy-fixed-height-minibuffer t)
-  (ivy-height 16)
+  (ivy-height 12)
   (ivy-initial-inputs-alist nil)
   (ivy-more-chars-alist '((t . 1)))
   (ivy-on-del-error-function 'ignore)
