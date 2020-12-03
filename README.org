@@ -60,8 +60,8 @@ within each buffer.
 #+BEGIN_SRC sh
 npm install -g eslint                                 # JavaScript
 npm install -g jsonlint                               # JSON
+npm install -g stylelint                              # SCSS
 pip install flake8                                    # Python
-gem install scss_lint scss_lint_reporter_checkstyle   # SCSS
 #+END_SRC
 
 ** Icons
@@ -78,7 +78,7 @@ files.
 ** LSP
 
 In order for Emacs to connect to the LSP servers, install the language-specific
-packages.
+dependencies.
 
 #+BEGIN_SRC sh
 npm install -g typescript typescript-language-server  # JavaScript

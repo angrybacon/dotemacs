@@ -1498,19 +1498,20 @@ Flycheck lints warnings and errors directly within buffers. It can check a lot
 of different syntaxes, as long as you make sure that Emacs has access to the
 binaries.
 
+See this table for the differences between Flycheck and the built-in Flymake:
+https://www.flycheck.org/en/latest/user/flycheck-versus-flymake.html.
+
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
   :hook
   (css-mode . flycheck-mode)
   (emacs-lisp-mode . flycheck-mode)
-  (js-mode . flycheck-mode)
-  (web-mode . flycheck-mode)
   (python-mode . flycheck-mode)
   :custom
   (flycheck-check-syntax-automatically '(idle-buffer-switch save))
   (flycheck-disabled-checkers '(emacs-lisp-checkdoc))
-  (flycheck-display-errors-delay .1)
   (flycheck-emacs-lisp-load-path 'inherit)
+  (flycheck-display-errors-delay .01)
   (flycheck-indication-mode 'right-fringe)
   :config
   (define-fringe-bitmap 'flycheck-fringe-bitmap-double-arrow [192] nil nil '(center t)))
@@ -1563,9 +1564,17 @@ Yup, Emacs supports LSP.
   :custom
   (lsp-auto-guess-root t)
   (lsp-enable-folding nil)
+  (lsp-enable-file-watchers nil)
   (lsp-idle-delay .01)
   (lsp-eldoc-enable-hover nil)
   (lsp-session-file (expand-file-name ".lsp")))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package lsp-eslint
+  :ensure nil
+  :custom
+  (lsp-eslint-run "onSave"))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
