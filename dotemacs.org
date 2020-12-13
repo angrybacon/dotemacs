@@ -1512,8 +1512,7 @@ https://www.flycheck.org/en/latest/user/flycheck-versus-flymake.html.
   (emacs-lisp-mode . flycheck-mode)
   (python-mode . flycheck-mode)
   :custom
-  (flycheck-check-syntax-automatically '(idle-buffer-switch save))
-  (flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+  (flycheck-check-syntax-automatically '(idle-buffer-switch idle-change save))
   (flycheck-display-errors-delay .01)
   (flycheck-emacs-lisp-load-path 'inherit)
   (flycheck-indication-mode 'right-fringe)
