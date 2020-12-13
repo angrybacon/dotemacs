@@ -1514,8 +1514,8 @@ https://www.flycheck.org/en/latest/user/flycheck-versus-flymake.html.
   :custom
   (flycheck-check-syntax-automatically '(idle-buffer-switch save))
   (flycheck-disabled-checkers '(emacs-lisp-checkdoc))
-  (flycheck-emacs-lisp-load-path 'inherit)
   (flycheck-display-errors-delay .01)
+  (flycheck-emacs-lisp-load-path 'inherit)
   (flycheck-indication-mode 'right-fringe)
   :config
   (define-fringe-bitmap 'flycheck-fringe-bitmap-double-arrow [192] nil nil '(center t)))
@@ -2113,11 +2113,8 @@ Enable multiple cursors outside Evil. Some witchcraft at work here.
 
 #+BEGIN_SRC emacs-lisp
 (use-package multiple-cursors
-  :bind
-  (("C-S-c C-S-a" . mc/vertical-align-with-space)
-   ("C-S-c C-S-c" . mc/edit-lines)
-   ("C-S-c C-S-n" . mc/insert-numbers)
-   :map mc/keymap
+  :bind*
+  (:map mc/keymap
    ("M-a" . mc/vertical-align-with-space)
    ("M-h" . mc-hide-unmatched-lines-mode)
    ("M-l" . mc/insert-letters)
@@ -2138,16 +2135,16 @@ use with =selected=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package selected
-  :bind
+  :bind*
   (:map selected-keymap
    ("C-?"         . hydra-selected/body)
    ("<"           . mc/mark-previous-like-this)
    (">"           . mc/mark-next-like-this)
    ("C-<"         . mc/unmark-previous-like-this)
    ("C->"         . mc/unmark-next-like-this)
-   ("C-M-<"       . mc/skip-to-previous-like-this)
-   ("C-M->"       . mc/skip-to-next-like-this)
-   ("C-c C-c"     . me/eval-region-and-kill-mark)
+   ("M-<"         . mc/skip-to-previous-like-this)
+   ("M->"         . mc/skip-to-next-like-this)
+   ("C-c >"       . mc/edit-lines)
    ("C-b"         . me/browse-url-and-kill-mark)
    ("C-c c"       . capitalize-region)
    ("C-c k"       . me/kebab-region)
@@ -2155,10 +2152,10 @@ use with =selected=.
    ("C-c u"       . upcase-region)
    ("C-d"         . define-word-at-point)
    ("C-f"         . fill-region)
-   ("C-g"         . selected-off)
    ("C-h h"       . hlt-highlight-region)
    ("C-h H"       . hlt-unhighlight-region)
    ("C-p"         . webpaste-paste-region)
+   ("C-q"         . selected-off)
    ("C-s r"       . reverse-region)
    ("C-s s"       . sort-lines)
    ("C-s w"       . me/sort-words)
