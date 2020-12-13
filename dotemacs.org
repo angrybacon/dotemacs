@@ -273,7 +273,29 @@ HTML mode is defined in =sgml-mode.el=.
 
 ** Lisp
 
-| =ielm= | Built-in |
+| =elisp-mode= | Built-in |
+| =ielm=       | Built-in |
+
+#+BEGIN_SRC emacs-lisp
+(use-package elisp-mode
+  :ensure nil
+  :bind
+  (:map emacs-lisp-mode-map
+   ("C-c C-c" . me/eval-region-dwim)
+   :map lisp-interaction-mode-map
+   ("C-c C-c" . me/eval-region-dwim)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/eval-region-dwim ()
+  "When region is active, evaluate it and kill the mark. Else, evaluate the
+whole buffer."
+  (interactive)
+  (if (not (region-active-p))
+      (eval-buffer)
+    (eval-region (region-beginning) (region-end))
+    (setq-local deactivate-mark t)))
+#+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package ielm
