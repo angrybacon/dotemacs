@@ -1136,9 +1136,9 @@ Group Projectile commands.
           "
  _q_ quit              _K_ kill buffers      _b_ buffer            _r_ replace
  ^^                    _i_ reset cache       _d_ directory         _R_ regexp replace
- ^^                    _n_ new               _D_ root              _s_ rg
- ^^                    _v_ save buffers      _f_ file              _S_ grep
- ^^                    ^^                    _p_ project           ^^
+ ^^                    _n_ new project       _D_ root              _s_ rg
+ ^^                    _N_ prune projects    _f_ file              _S_ grep
+ ^^                    _v_ save buffers      _p_ project           ^^
 ")
   ("q" nil)
   ("b" counsel-projectile-switch-to-buffer)
@@ -1148,6 +1148,7 @@ Group Projectile commands.
   ("i" projectile-invalidate-cache :color red)
   ("K" projectile-kill-buffers)
   ("n" projectile-add-known-project)
+  ("N" projectile-cleanup-known-projects)
   ("p" counsel-projectile-switch-project)
   ("r" projectile-replace)
   ("R" projectile-replace-regexp)
