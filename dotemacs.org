@@ -2344,6 +2344,14 @@ Sort interactive commands by usage.
   (amx-show-key-bindings nil))
 #+END_SRC
 
+Use =conf-mode= automatically for configuration files.
+
+#+BEGIN_SRC emacs-lisp
+(use-package conf-mode
+  :ensure nil
+  :mode "\\(?:\\.env\\.\\(?:development\\|local\\|test\\)\\)")
+#+END_SRC
+
 Insert the current date. See [[#hydra--dates][Hydra / Dates]].
 
 #+BEGIN_SRC emacs-lisp
