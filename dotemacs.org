@@ -2462,6 +2462,20 @@ Display the available keybindings following your current input.
   (which-key-use-C-h-commands nil))
 #+END_SRC
 
+Tail =*Messages*= windows. This is useful when debugging naively with repeated
+calls to the =message= function.
+
+#+BEGIN_SRC emacs-lisp
+(advice-add 'message :after
+  (defun me/message-tail (&rest _)
+    (let* ((name "*Messages*")
+           (buffer (get-buffer-create name)))
+      (when (not (string= name (buffer-name)))
+        (dolist (window (get-buffer-window-list name nil t))
+          (with-selected-window window
+            (goto-char (point-max))))))))
+#+END_SRC
+
 ** REST Client
 
 | =restclient= | https://github.com/pashky/restclient.el |
