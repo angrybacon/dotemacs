@@ -1219,11 +1219,11 @@ Group interface-related commands.
   (concat "\n " (me/hydra-heading "UI" "Frame" "Zoom" "Line Numbers")
           "
  _q_ quit              _m_ maximize          _-_ out               _n_ mode: %s`display-line-numbers
- ^^                    ^^                    _=_ in                _N_ absolute: %s`display-line-numbers-current-absolute
+^^                     ^^                    _=_ in                _N_ absolute: %s`display-line-numbers-current-absolute
  ^^                    ^^                    _0_ reset             ^^
 ")
   ("q" nil)
-  ("m" toggle-frame-maximized :color blue)
+  ("m" toggle-frame-maximized)
   ("n" me/display-line-numbers-toggle-type)
   ("N" me/display-line-numbers-toggle-absolute)
   ("-" default-text-scale-decrease)
