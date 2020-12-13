@@ -46,6 +46,8 @@ Here are what I consider better defaults as per my own experience.
 
 Some UI elements are rather invasive. No-mouse master race.
 
+| TODO | Move these to =early-init.el= |
+
 #+BEGIN_SRC emacs-lisp
 (when window-system
   (blink-cursor-mode 0)                           ; Disable the cursor blinking
@@ -496,6 +498,9 @@ Python.
 Olivetti lets you center your buffer for aesthetics and focus. I have it set up
 to turn on automatically when visiting a single buffer, and disable itself otherwise.
 
+| TODO | Allow horizontally lone buffers too |
+| TODO | Hide Magit margin content           |
+
 #+BEGIN_SRC emacs-lisp
 (use-package olivetti
   :hook
@@ -822,8 +827,6 @@ seamless, it's like a minor mode that disables itself auto-magically.
 
 --- Oleh Krehel
 #+END_QUOTE
-
-| TODO | =C-c l= conflicts with =selected-keymap= |
 
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
@@ -1545,6 +1548,7 @@ Yup, Emacs supports LSP.
 | =lsp-ui=   | https://github.com/emacs-lsp/lsp-ui   |
 
 | TODO | Make a minor mode for =me/lsp-optimize= |
+| TODO | =C-c l= conflicts with =selected-keymap= |
 
 #+BEGIN_SRC emacs-lisp
 (use-package lsp-mode

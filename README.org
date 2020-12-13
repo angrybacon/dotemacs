@@ -22,8 +22,7 @@ https://drive.google.com/open?id=0BwTSOByd3qSFWUtYYnlYeTIzNFU
 #+BEGIN_QUOTE
 Tested on macOS only.
 
-I trust your Google-fu to be potent enough that you can make the most of the
-below instructions.
+I trust your Google-fu to make the most of the below instructions.
 #+END_QUOTE
 
 | =jansson=  | Enable native JSON parsing              |
@@ -38,12 +37,13 @@ brew install jansson libvterm pinentry ripgrep
 ** Emacs
 
 Install Emacs 27 or above. I prefer
-[[https://github.com/d12frosted/homebrew-emacs-plus][=emacs-plus=]] for its
-additional compilation flags.
+[[https://github.com/d12frosted/homebrew-emacs-plus][ =emacs-plus= ]] for its
+additional compilation flags, specifically the ability not to have a title bar
+ie. fake fullscreen since it has its downsides on macOS.
 
 #+BEGIN_SRC sh
 brew tap d12frosted/emacs-plus
-brew install emacs-plus@27 --with-modern-papirus-icon --with-no-titlebar
+brew install emacs-plus@28 --with-no-titlebar
 #+END_SRC
 
 Clone the repository into your user directory.
@@ -71,8 +71,8 @@ The mode-line utilizes features from =all-the-icons=.
 Run the following when Emacs loads up in order to download the required font
 files.
 
-#+BEGIN_SRC emacs-lisp
-(all-the-icons-install-fonts)
+#+BEGIN_SRC
+M-x all-the-icons-install-fonts RET
 #+END_SRC
 
 ** LSP
@@ -81,5 +81,9 @@ In order for Emacs to connect to the LSP servers, install the language-specific
 dependencies.
 
 #+BEGIN_SRC sh
-npm install -g typescript typescript-language-server  # JavaScript
+npm install -g typescript typescript-language-server
+#+END_SRC
+
+#+BEGIN_SRC
+M-x lsp-install-server RET eslint RET
 #+END_SRC
