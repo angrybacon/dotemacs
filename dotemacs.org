@@ -443,7 +443,7 @@ completion candidates.
   (company-dabbrev-ignore-case nil)
   (company-dabbrev-other-buffers nil)
   (company-global-modes '(not help-mode message-mode))
-  (company-idle-delay .0)
+  (company-idle-delay 0)
   (company-minimum-prefix-length 1)
   (company-require-match nil)
   (company-selection-wrap-around t)
@@ -536,21 +536,33 @@ to turn on automatically when visiting a single buffer, and disable itself other
 | TODO | Enable for =*scratch*= buffer |
 
 #+BEGIN_SRC emacs-lisp
+(defvar me/olivetti-whitelist-buffers
+  '("*sratch*"))
+
 (defvar me/olivetti-whitelist-modes
-  '(Custom-mode dired-mode erc-mode lisp-interaction-mode special-mode))
+  '(Custom-mode
+    dired-mode
+    erc-mode
+    lisp-interaction-mode
+    special-mode
+    vterm-mode))
 
 (defun me/olivetti-mode-maybe (&optional frame)
   "Turn on `olivetti-mode' for lone buffers.
 
 Doesn't count volatile windows unless the major-mode of their associated buffer
 is found in `me/olivetti-whitelist-modes' or is derived from one of them.
+Windows from buffers whose names are found in `me/olivetti-whitelist-buffers'
+are also considered.
 
-If more than one active window is found in the current frame, turn on
-`olivetti-mode'. Otherwise, disable it in all visible buffers."
-  (let* ((whitelist-modes me/olivetti-whitelist-modes)
+If FRAME shows exactly one window, turn on `olivetti-mode' for that window.
+Otherwise, disable it everywhere."
+  (let* ((whitelist-buffers me/olivetti-whitelist-buffers)
+         (whitelist-modes me/olivetti-whitelist-modes)
          (predicate (lambda (window)
                       (with-selected-window window
                         (or (buffer-file-name)
+                            (member (buffer-name) whitelist-buffers)
                             (apply 'derived-mode-p whitelist-modes)))))
          (windows (seq-filter predicate (window-list frame))))
     (if (= 1 (length windows))
@@ -2478,7 +2490,8 @@ Turn on =auto-fill-mode= /almost/ everywhere.
   (text-mode . auto-fill-mode))
 #+END_SRC
 
-Display the available keybindings following your current input.
+Display the available keybindings following your current input. I find
+=which-key= too intrusive and enable it on demand through =M-x which-key-mode=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package which-key
