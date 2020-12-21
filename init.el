@@ -46,6 +46,7 @@
     (package-refresh-contents)
     (package-install 'use-package t))
   (setq-default
+   package-native-compile t
    use-package-always-defer t
    use-package-always-ensure t)
 
