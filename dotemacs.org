@@ -10,39 +10,40 @@ Here are what I consider better defaults as per my own experience.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default
- ad-redefinition-action 'accept                   ; Silence warnings for redefinition
- auto-save-list-file-prefix nil                   ; Prevent tracking for auto-saves
- cursor-in-non-selected-windows nil               ; Hide the cursor in inactive windows
- cursor-type 'bar                                 ; Prefer a bar-shaped cursor
- custom-unlispify-menu-entries nil                ; Prefer kebab-case for titles
- custom-unlispify-tag-names nil                   ; Prefer kebab-case for symbols
- delete-by-moving-to-trash t                      ; Delete files to trash
- fill-column 80                                   ; Set width for automatic line breaks
- gc-cons-threshold (* 8 1024 1024)                ; We're not using Game Boys anymore
- help-window-select t                             ; Focus new help windows when opened
- indent-tabs-mode nil                             ; Stop using tabs to indent
- inhibit-startup-screen t                         ; Disable start-up screen
- initial-scratch-message ""                       ; Empty the initial *scratch* buffer
- mouse-yank-at-point t                            ; Yank at point rather than pointer
- recenter-positions '(5 top bottom)               ; Set re-centering positions
- scroll-conservatively 101                        ; Avoid recentering when scrolling too far
- scroll-margin 2                                  ; Add a margin when scrolling vertically
- select-enable-clipboard t                        ; Merge system's and Emacs' clipboard
- sentence-end-double-space nil                    ; Use a single space after dots
- show-help-function nil                           ; Disable help text everywhere
- tab-width 4                                      ; Set width for tabs
- uniquify-buffer-name-style 'forward              ; Uniquify buffer names
- window-combination-resize t                      ; Resize windows proportionally
- window-divider-default-right-width 2             ; Thin window vertical dividers
- x-stretch-cursor t)                              ; Stretch cursor to the glyph width
-(delete-selection-mode 1)                         ; Replace region when inserting text
-(fset 'yes-or-no-p 'y-or-n-p)                     ; Replace yes/no prompts with y/n
-(global-subword-mode 1)                           ; Iterate through CamelCase words
-(menu-bar-mode 0)                                 ; Disable the menu bar
-(mouse-avoidance-mode 'exile)                     ; Avoid collision of mouse with point
-(put 'downcase-region 'disabled nil)              ; Enable downcase-region
-(put 'upcase-region 'disabled nil)                ; Enable upcase-region
-(set-default-coding-systems 'utf-8)               ; Default to utf-8 encoding
+ ad-redefinition-action 'accept         ; Silence warnings for redefinition
+ auto-save-list-file-prefix nil         ; Prevent tracking for auto-saves
+ cursor-in-non-selected-windows nil     ; Hide the cursor in inactive windows
+ cursor-type 'bar                       ; Prefer a bar-shaped cursor
+ custom-unlispify-menu-entries nil      ; Prefer kebab-case for titles
+ custom-unlispify-tag-names nil         ; Prefer kebab-case for symbols
+ delete-by-moving-to-trash t            ; Delete files to trash
+ fill-column 80                         ; Set width for automatic line breaks
+ gc-cons-threshold (* 8 1024 1024)      ; We're not using Game Boys anymore
+ help-window-select t                   ; Focus new help windows when opened
+ indent-tabs-mode nil                   ; Stop using tabs to indent
+ inhibit-startup-screen t               ; Disable start-up screen
+ initial-scratch-message ""             ; Empty the initial *scratch* buffer
+ mouse-yank-at-point t                  ; Yank at point rather than pointer
+ recenter-positions '(5 top bottom)     ; Set re-centering positions
+ scroll-conservatively 101              ; Avoid recentering when scrolling far
+ scroll-margin 2                        ; Add a margin when scrolling vertically
+ select-enable-clipboard t              ; Merge system's and Emacs' clipboard
+ sentence-end-double-space nil          ; Use a single space after dots
+ show-help-function nil                 ; Disable help text everywhere
+ tab-width 4                            ; Set width for tabs
+ uniquify-buffer-name-style 'forward    ; Uniquify buffer names
+ window-combination-resize t            ; Resize windows proportionally
+ window-divider-default-right-width 2   ; Thin window vertical dividers
+ x-stretch-cursor t)                    ; Stretch cursor to the glyph width
+(delete-selection-mode 1)               ; Replace region when inserting text
+(fset 'yes-or-no-p 'y-or-n-p)           ; Replace yes/no prompts with y/n
+(global-subword-mode 1)                 ; Iterate through CamelCase words
+(menu-bar-mode 0)                       ; Disable the menu bar
+(mouse-avoidance-mode 'exile)           ; Avoid collision of mouse with point
+(put 'downcase-region 'disabled nil)    ; Enable downcase-region
+(put 'upcase-region 'disabled nil)      ; Enable upcase-region
+(set-default-coding-systems 'utf-8)     ; Default to utf-8 encoding
+#+END_SRC
 #+END_SRC
 
 Some UI elements are rather invasive. No-mouse master race.
@@ -51,12 +52,12 @@ Some UI elements are rather invasive. No-mouse master race.
 
 #+BEGIN_SRC emacs-lisp
 (when window-system
-  (blink-cursor-mode 0)                           ; Disable the cursor blinking
-  (fringe-mode 2)                                 ; Initialize thinner vertical fringes
-  (scroll-bar-mode 0)                             ; Disable the scroll bar
-  (tool-bar-mode 0)                               ; Disable the tool bar
-  (tooltip-mode 0)                                ; Disable the tooltips
-  (window-divider-mode 1)                         ; Disable the tooltips
+  (blink-cursor-mode 0)                 ; Disable the cursor blinking
+  (fringe-mode 2)                       ; Initialize thinner vertical fringes
+  (scroll-bar-mode 0)                   ; Disable the scroll bar
+  (tool-bar-mode 0)                     ; Disable the tool bar
+  (tooltip-mode 0)                      ; Disable the tooltips
+  (window-divider-mode 1)               ; Disable the tooltips
 
   (define-fringe-bitmap 'left-curly-arrow [192] nil nil '(center t)))
 #+END_SRC
@@ -87,11 +88,11 @@ Garbage-collect on focus-out, Emacs /should/ feel snappier overall.
       (garbage-collect))))
 #+END_SRC
 
-I chose to lay out my configurations and customizations in this very Org document
-for better visibility and maintainability through time and various upgrades.
-Albeit useful, the =customize-*= routines go against that strategy by writing
-directly at the end of the =user-init-file= or into a dedicated file when set
-accordingly.
+I chose to lay out my configurations and customizations in this very Org
+document for better visibility and maintainability through time and various
+upgrades. Albeit useful, the =customize-*= routines go against that strategy by
+writing directly at the end of the =user-init-file= or into a dedicated file
+when set accordingly.
 
 To fight the littering I've decided to completely disable this feature and
 redirect the writing to =/dev/null=.
@@ -108,14 +109,14 @@ you could set your identity by customizing both =user-full-name= and
 be.
 
 #+BEGIN_SRC emacs-lisp
-(defvar me/erc-nick           nil                 "The ERC nick to use.")
-(defvar me/erc-password       nil                 "The ERC password to use.")
-(defvar me/erc-port           nil                 "The ERC port to use.")
-(defvar me/erc-server         nil                 "The ERC server to use.")
-(defvar me/font-family        "Monaco"            "The font to use.")
-(defvar me/font-size-default  120                 "The font size to use for default text.")
-(defvar me/font-size-large    1.2                 "The font size to use for larger text.")
-(defvar me/font-size-small    .8                  "The font size to use for smaller text.")
+(defvar me/erc-nick           nil       "The ERC nick to use.")
+(defvar me/erc-password       nil       "The ERC password to use.")
+(defvar me/erc-port           nil       "The ERC port to use.")
+(defvar me/erc-server         nil       "The ERC server to use.")
+(defvar me/font-family        "Monaco"  "The font to use.")
+(defvar me/font-size-default  120       "The font size to use for default text.")
+(defvar me/font-size-large    1.2       "The font size to use for larger text.")
+(defvar me/font-size-small    .8        "The font size to use for smaller text.")
 
 (let ((secret.el (expand-file-name ".secret.el")))
   (load secret.el t))
@@ -519,7 +520,8 @@ Python.
 #+END_SRC
 
 Olivetti lets you center your buffer for aesthetics and focus. I have it set up
-to turn on automatically when visiting a single buffer, and disable itself otherwise.
+to turn on automatically when visiting a single buffer, and disable itself
+otherwise.
 
 | TODO | Allow horizontally lone buffers too |
 | TODO | Hide Magit margin content           |
@@ -1961,11 +1963,11 @@ Augment Emacs experience for MacOS users.
 #+BEGIN_SRC emacs-lisp
 (when (eq system-type 'darwin)
   (setq-default
-   dired-use-ls-dired nil                            ; MacOS's ls does not support --dired
-   ns-alternate-modifier 'super                      ; Map Super to the Alt key
-   ns-command-modifier 'meta                         ; Map Meta to the Cmd key
-   ns-pop-up-frames nil                              ; Always re-use the same frame
-   ns-use-mwheel-momentum nil))                      ; Disable smooth scroll
+   dired-use-ls-dired nil               ; MacOS's ls does not support --dired
+   ns-alternate-modifier 'super         ; Map Super to the Alt key
+   ns-command-modifier 'meta            ; Map Meta to the Cmd key
+   ns-pop-up-frames nil                 ; Always re-use the same frame
+   ns-use-mwheel-momentum nil))         ; Disable smooth scroll
 #+END_SRC
 
 Provide a way to invoke =bash= on Windows. This requires /Developer Mode/ to be
@@ -2652,7 +2654,8 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
   (epg-pinentry-mode 'loopback)
   (magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
   (magit-diff-highlight-hunk-region-functions
-   '(magit-diff-highlight-hunk-region-dim-outside magit-diff-highlight-hunk-region-using-face))
+   '(magit-diff-highlight-hunk-region-dim-outside
+     magit-diff-highlight-hunk-region-using-face))
   (magit-module-sections-nested nil)
   (magit-section-initial-visibility-alist
    '((modules . show) (stashes . show) (unpulled . show) (unpushed . show)))
