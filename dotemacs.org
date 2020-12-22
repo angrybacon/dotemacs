@@ -141,6 +141,7 @@ Load the theme and fix some faces to match my personal preferences.
   (doom-themes-set-faces nil
     '(default :font me/font-family :height me/font-size-default)
     '(doom-modeline-bar :background 'unspecified)
+    '(doom-visual-bell :background (doom-darken red 0.6))
     '(flycheck-error :underline `(:color ,error :style line))
     '(flycheck-info :underline `(:color ,highlight :style line))
     '(flycheck-warning :underline `(:color ,warning :style line))
