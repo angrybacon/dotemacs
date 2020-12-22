@@ -2537,13 +2537,14 @@ Emacs can also emulate an interactive REST client.
 
 ** Shell and Terminal
 
-| =em-banner= | Built-in |
-| =em-hist=   | Built-in |
-| =esh-mode=  | Built-in |
-| =esh-proc=  | Built-in |
-| =term=      | Built-in |
+| =em-banner= | Built-in                                 |
+| =em-hist=   | Built-in                                 |
+| =esh-mode=  | Built-in                                 |
+| =esh-proc=  | Built-in                                 |
+| =vterm=     | https://github.com/akermu/emacs-libvterm |
 
-| TODO | Advice =eshell-bol= to support shift |
+| TODO | Advice =eshell-bol= to support shift    |
+| TODO | Advice =vterm= motions to support shift |
 
 #+BEGIN_SRC emacs-lisp
 (use-package em-banner
@@ -2581,10 +2582,9 @@ Emacs can also emulate an interactive REST client.
 Yes, Emacs emulates terminals too.
 
 #+BEGIN_SRC emacs-lisp
-(use-package term
-  :ensure nil
-  :hook
-  (term-mode . (lambda () (setq-local scroll-margin 0))))
+(use-package vterm
+  :bind
+  ("C-!" . vterm))
 #+END_SRC
 
 ** Version Control
