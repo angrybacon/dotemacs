@@ -44,6 +44,45 @@ Here are what I consider better defaults as per my own experience.
 (put 'upcase-region 'disabled nil)      ; Enable upcase-region
 (set-default-coding-systems 'utf-8)     ; Default to utf-8 encoding
 #+END_SRC
+
+** EXWM
+
+| =exwm= | https://github.com/ch11ng/exwm |
+
+| TODO | Make =xdg-open= switch workspace/eyebrowse automatically |
+| TODO | Notifications                                            |
+| TODO | Remove =exwm-config-default= dependency                  |
+| TODO | Clean up system tray setup                               |
+| TODO | Check out https://github.com/agzam/exwm-edit             |
+| TODO | Load display setup from =.xinitrc= or =.secret.el=       |
+| TODO | Export EXWM configuration to =desktop.org=               |
+
+#+BEGIN_SRC emacs-lisp
+(use-package exwm
+  :demand t
+  :hook
+  (exwm-randr-screen-change . me/exwm-xrandr)
+  :custom
+  (exwm-randr-workspace-monitor-plist '(0 "DVI-D-0" 1 "HDMI-0"))
+  (exwm-workspace-index-map (lambda (index) (number-to-string (1+ index))))
+  :config
+  (require 'exwm-config)
+  (exwm-config-default)
+  (setq exwm-workspace-number 2)
+  (ido-mode 0)
+  (require 'exwm-randr)
+  (exwm-randr-enable)
+  (require 'exwm-systemtray)
+  (exwm-systemtray-enable))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/exwm-xrandr ()
+  "Set resolution for EXWM displays."
+  (start-process-shell-command
+   "xrandr" nil "xrandr \
+--output HDMI-0 --mode 1920x1080 --pos 0x0 \
+--output DVI-D-0 --mode 1920x1080 --pos 1920x0"))
 #+END_SRC
 
 Some UI elements are rather invasive. No-mouse master race.
@@ -64,7 +103,9 @@ Some UI elements are rather invasive. No-mouse master race.
 
 Enable fullscreen.
 
-#+BEGIN_SRC emacs-lisp
+| TODO | Prevent fullscreen to apply to EXWM sessions |
+
+#+BEGIN_SRC emacs-lisp :tangle nil
 (if (eq window-system 'ns)
     (set-frame-parameter nil 'fullscreen 'maximized)
   (set-frame-parameter nil 'fullscreen 'fullboth))
@@ -495,7 +536,8 @@ configurations.
   :custom
   (desktop-base-file-name ".desktop")
   (desktop-base-lock-name ".desktop.lock")
-  (desktop-restore-eager 4))
+  (desktop-restore-eager 4)
+  (desktop-restore-forces-onscreen nil))
 #+END_SRC
 
 Workspaces within Emacs.
@@ -881,6 +923,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
   ("C-c s" . hydra-system/body)
   ("C-c u" . hydra-ui/body)
   ("C-c w" . hydra-windows/body)
+  ("C-c x" . hydra-x/body)
   :custom
   (hydra-default-hint nil))
 #+END_SRC
@@ -1289,6 +1332,23 @@ Group window-related commands.
   ("k" shrink-window)
   ("l" enlarge-window-horizontally)
   ("w" (revert-buffer nil t) :color blue))
+#+END_SRC
+
+** Hydra / X
+
+Group window-related commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-x (:color blue)
+  (concat "\n " (me/hydra-heading "X" "Do" "Toggle")
+          "
+ _q_ quit              _r_ reset             _f_ floating          ^^
+ ^^                    _R_ restart           ^^                    ^^
+")
+  ("q" nil)
+  ("f" exwm-floating-toggle-floating)
+  ("r" exwm-reset)
+  ("R" exwm-restart))
 #+END_SRC
 
 ** IRC

@@ -1,6 +1,7 @@
 # Emacs
 auto-save-list/
 backups/
+eln-cache/
 elpa/
 eshell/
 games/

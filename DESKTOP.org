@@ -1,0 +1,95 @@
+#+TITLE: Desktop
+#+AUTHOR: Mathieu Marques
+#+PROPERTY: header-args :results silent
+
+* Take Screenshots
+
+** Region
+
+#+BEGIN_SRC shell :dir "/sudo::"
+pacman -S maim xclip
+#+END_SRC
+
+#+BEGIN_SRC shell
+maim -s -u | xclip -selection clipboard -t image/png -i
+#+END_SRC
+
+* Peripherals
+
+** Mouse
+
+#+BEGIN_SRC shell :dir "/sudo::"
+pacman -S piper
+#+END_SRC
+
+* Fonts
+
+#+BEGIN_SRC shell :dir "/sudo::"
+pacman -S noto-fonts ttf-fira-code
+#+END_SRC
+
+#+BEGIN_SRC shell
+yay -S ttf-monaco ttf-roboto-slab
+#+END_SRC
+
+#+BEGIN_SRC shell :dir "/sudo::"
+rm -f /etc/fonts/conf.d/10-hinting-slight.conf
+ln -s /etc/fonts/conf.avail/10-hinting-full.conf /etc/fonts/conf.d
+ln -s /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d
+ln -s /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
+ln -s /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
+#+END_SRC
+
+Uncomment FreeType hinting in =/etc/profile.d/freetype2.sh=.
+
+#+BEGIN_SRC shell
+export FREETYPE_PROPERTIES\="truetype:interpreter-version=40"
+#+END_SRC
+
+Set default font for classes in =/etc/fonts/local.conf=.
+
+#+BEGIN_SRC xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+  <!-- <match> -->
+  <!--   <edit mode="prepend" name="family"> -->
+  <!--     <string>Noto Sans</string> -->
+  <!--   </edit> -->
+  <!-- </match> -->
+  <match target="pattern">
+    <test qual="any" name="family">
+      <string>serif</string>
+    </test>
+    <edit name="family" mode="assign" binding="same">
+      <string>Robot Slab</string>
+    </edit>
+  </match>
+  <match target="pattern">
+    <test qual="any" name="family">
+      <string>sans-serif</string>
+    </test>
+    <edit name="family" mode="assign" binding="same">
+      <string>Roboto</string>
+    </edit>
+  </match>
+  <match target="pattern">
+    <test qual="any" name="family">
+      <string>monospace</string>
+    </test>
+    <edit name="family" mode="assign" binding="same">
+      <string>Monaco</string>
+    </edit>
+  </match>
+</fontconfig>
+#+END_SRC
+
+* SSH
+
+#+BEGIN_SRC shell :dir "/sudo::"
+pacman -S openssh
+#+END_SRC
+
+#+BEGIN_SRC shell
+ssh-keygen -t rsa -b 4096
+#+END_SRC
