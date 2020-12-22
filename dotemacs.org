@@ -1647,6 +1647,7 @@ Yup, Emacs supports LSP.
   :custom
   (doom-modeline-bar-width 1)
   (doom-modeline-buffer-file-name-style 'truncate-with-project)
+  (doom-modeline-height 36)
   (doom-modeline-enable-word-count t)
   (doom-modeline-major-mode-icon nil)
   (doom-modeline-percent-position nil)
