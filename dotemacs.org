@@ -105,7 +105,7 @@ Enable fullscreen.
 
 | TODO | Prevent fullscreen to apply to EXWM sessions |
 
-#+BEGIN_SRC emacs-lisp :tangle nil
+#+BEGIN_SRC emacs-lisp :tangle no
 (if (eq window-system 'ns)
     (set-frame-parameter nil 'fullscreen 'maximized)
   (set-frame-parameter nil 'fullscreen 'fullboth))
@@ -384,9 +384,7 @@ authoring documents with a fast and effective plain-text system.
   :bind
   (:map org-mode-map
    ("<C-return>" . nil)
-   ("<C-tab>" . me/org-cycle-parent)
-   ("C-j" . me/org-show-next-heading-tidily)
-   ("C-k" . me/org-show-previous-heading-tidily))
+   ("<C-tab>" . me/org-cycle-parent))
   :hook
   (org-mode . me/hydra-set-super)
   :custom
@@ -404,7 +402,11 @@ authoring documents with a fast and effective plain-text system.
   (org-support-shift-select 'always)
   :config
   (modify-syntax-entry ?' "'" org-mode-syntax-table)
-  (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer-name))
+  (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer-name)
+  (with-eval-after-load 'evil
+    (evil-define-key* 'motion org-mode-map
+      (kbd "C-j") #'me/org-show-next-heading-tidily
+      (kbd "C-k") #'me/org-show-previous-heading-tidily)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -1617,13 +1619,14 @@ https://www.flycheck.org/en/latest/user/flycheck-versus-flymake.html.
   (define-fringe-bitmap 'flycheck-fringe-bitmap-double-arrow [192] nil nil '(center t)))
 #+END_SRC
 
-Run Prettier against the whole buffer on save. Toggle the minor mode on through
-a strategically positioned =.dir-locals.el= containing the major modes for which
-to activate it. Use =nil= to enable Prettier for all major modes in that
-directory. ie.
+Run Prettier against the whole buffer on save. You can toggle the minor mode on
+through a strategically positioned =.dir-locals.el= containing the major modes
+for which to activate it, or use =nil= to enable =prettier-mode= for all major
+modes in that directory.
 
 #+BEGIN_SRC emacs-lisp :tangle no
-((nil . ((mode . prettier))))
+((nil . ((mode . prettier)))
+ (web-mode . ((prettier-parsers . (typescript)))))
 #+END_SRC
 
 #+BEGIN_QUOTE
@@ -1644,7 +1647,7 @@ Yup, Emacs supports LSP.
 | =lsp-mode= | https://github.com/emacs-lsp/lsp-mode |
 | =lsp-ui=   | https://github.com/emacs-lsp/lsp-ui   |
 
-| TODO | Make a minor mode for =me/lsp-optimize= |
+| TODO | Make a minor mode for =me/lsp-optimize=  |
 | TODO | =C-c l= conflicts with =selected-keymap= |
 
 #+BEGIN_SRC emacs-lisp
@@ -1664,10 +1667,10 @@ Yup, Emacs supports LSP.
    ("C-c l" . hydra-lsp/body))
   :custom
   (lsp-auto-guess-root t)
-  (lsp-enable-folding nil)
-  (lsp-enable-file-watchers nil)
-  (lsp-idle-delay .01)
   (lsp-eldoc-enable-hover nil)
+  (lsp-enable-file-watchers nil)
+  (lsp-enable-folding nil)
+  (lsp-idle-delay .01)
   (lsp-session-file (expand-file-name ".lsp")))
 #+END_SRC
 
