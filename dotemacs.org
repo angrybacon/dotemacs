@@ -45,7 +45,7 @@ Here are what I consider better defaults as per my own experience.
 (set-default-coding-systems 'utf-8)     ; Default to utf-8 encoding
 #+END_SRC
 
-Use =.cache/= to contain all local data. This is to avoid littering in the Emacs
+Use =.cache/= to contain local data. This is to avoid littering in the Emacs
 directory with an ever-growing number of packages used on a daily basis.
 
 #+BEGIN_SRC emacs-lisp
@@ -394,6 +394,9 @@ whole buffer."
 
 | =org= | Built-in |
 
+
+| TODO | Check out =org-capture= |
+
 This very file is organized with =org-mode=. Like Markdown, but with
 superpowers.
 
@@ -607,8 +610,9 @@ otherwise.
   (olivetti-body-width 100))
 #+END_SRC
 
-| TODO | Prefer =cl-lib= routines      |
-| TODO | Enable for =*scratch*= buffer |
+| TODO | Prefer =cl-lib= routines              |
+| TODO | Enable for =*scratch*= buffer         |
+| TODO | Provide a Hydra head to toggle it off |
 
 #+BEGIN_SRC emacs-lisp
 (defvar me/olivetti-whitelist-buffers
@@ -2464,6 +2468,8 @@ electric-indent-mode.
 #+END_SRC
 
 Sort interactive commands by usage.
+
+| TODO | Checkout whether =prescient= is lighter |
 
 #+BEGIN_SRC emacs-lisp
 (use-package amx
