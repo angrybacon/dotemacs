@@ -86,4 +86,5 @@ npm install -g typescript typescript-language-server
 
 #+BEGIN_SRC
 M-x lsp-install-server RET eslint RET
+M-x lsp-install-server RET ts-ls RET
 #+END_SRC
