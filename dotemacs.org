@@ -49,6 +49,7 @@ Here are what I consider better defaults as per my own experience.
 
 | =exwm= | https://github.com/ch11ng/exwm |
 
+
 | TODO | Make =xdg-open= switch workspace/eyebrowse automatically |
 | TODO | Notifications                                            |
 | TODO | Remove =exwm-config-default= dependency                  |
@@ -401,6 +402,8 @@ authoring documents with a fast and effective plain-text system.
   (org-startup-truncated nil)
   (org-support-shift-select 'always)
   :config
+  (require 'ob-shell)
+  (add-to-list 'org-babel-load-languages '(shell . t))
   (modify-syntax-entry ?' "'" org-mode-syntax-table)
   (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer-name)
   (with-eval-after-load 'evil
@@ -2643,6 +2646,8 @@ Emacs can also emulate an interactive REST client.
 #+END_SRC
 
 Yes, Emacs emulates terminals too.
+
+| TODO | Fix cursor shape when jumping out of =curses=-based applications |
 
 #+BEGIN_SRC emacs-lisp
 (use-package vterm
