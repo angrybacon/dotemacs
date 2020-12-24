@@ -1698,6 +1698,7 @@ Yup, Emacs supports LSP.
   (lsp-eldoc-enable-hover nil)
   (lsp-enable-file-watchers nil)
   (lsp-enable-folding nil)
+  (lsp-headerline-breadcrumb-enable nil)
   (lsp-idle-delay .01))
 #+END_SRC
 
