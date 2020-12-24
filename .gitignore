@@ -1,22 +1,5 @@
-# Emacs
-auto-save-list/
-backups/
+.cache/
 eln-cache/
 elpa/
-eshell/
-games/
-request/
-semanticdb/
-server/
-transient/
-url/
 .secret.el
 dotemacs.el
-
-# Third-party packages
-.cache/
-.amx
-.desktop*
-.lsp
-.multiple-cursors.el
-.projectile*

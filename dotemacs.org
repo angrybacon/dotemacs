@@ -45,6 +45,30 @@ Here are what I consider better defaults as per my own experience.
 (set-default-coding-systems 'utf-8)     ; Default to utf-8 encoding
 #+END_SRC
 
+Use =.cache/= to contain all local data. This is to avoid littering in the Emacs
+directory with an ever-growing number of packages used on a daily basis.
+
+#+BEGIN_SRC emacs-lisp
+(defconst me/cache-directory
+  (expand-file-name ".cache/")
+  "Directory where all cache files should be saved")
+
+(defun me/cache-concat (name)
+  "Return the absolute path of NAME under `me/cache-directory'."
+  (let ((directory (file-name-as-directory me/cache-directory)))
+    (make-directory directory t)
+    (convert-standard-filename (concat directory name))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(with-eval-after-load 'request
+  (setq-default request-storage-directory (me/cache-concat "request/")))
+(with-eval-after-load 'tramp
+  (setq-default tramp-persistency-file-name (me/cache-concat "tramp")))
+(with-eval-after-load 'url
+  (setq-default url-configuration-directory (me/cache-concat "url/")))
+#+END_SRC
+
 ** EXWM
 
 | =exwm= | https://github.com/ch11ng/exwm |
@@ -57,6 +81,7 @@ Here are what I consider better defaults as per my own experience.
 | TODO | Check out https://github.com/agzam/exwm-edit             |
 | TODO | Load display setup from =.xinitrc= or =.secret.el=       |
 | TODO | Export EXWM configuration to =desktop.org=               |
+| TODO | Reduce flickering on startup                             |
 
 #+BEGIN_SRC emacs-lisp
 (use-package exwm
@@ -143,11 +168,11 @@ redirect the writing to =/dev/null=.
 (setq-default custom-file null-device)
 #+END_SRC
 
-** Load =.secret.el=
+** Load Secrets
 
 Load =.secret.el= to keep sensible things out of version control. For instance,
 you could set your identity by customizing both =user-full-name= and
-=user-mail-address=. This is also where you want your machine-specific values to
+=user-mail-address=. This is also where you want your machine-specific settings to
 be.
 
 #+BEGIN_SRC emacs-lisp
@@ -539,8 +564,8 @@ configurations.
   (after-init . desktop-read)
   (after-init . desktop-save-mode)
   :custom
-  (desktop-base-file-name ".desktop")
-  (desktop-base-lock-name ".desktop.lock")
+  (desktop-base-file-name (me/cache-concat ".desktop"))
+  (desktop-base-lock-name (me/cache-concat ".desktop.lock"))
   (desktop-restore-eager 4)
   (desktop-restore-forces-onscreen nil))
 #+END_SRC
@@ -1673,8 +1698,7 @@ Yup, Emacs supports LSP.
   (lsp-eldoc-enable-hover nil)
   (lsp-enable-file-watchers nil)
   (lsp-enable-folding nil)
-  (lsp-idle-delay .01)
-  (lsp-session-file (expand-file-name ".lsp")))
+  (lsp-idle-delay .01))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -2223,7 +2247,7 @@ Enable multiple cursors outside Evil. Some witchcraft at work here.
    ("M-l" . mc/insert-letters)
    ("M-n" . mc/insert-numbers))
   :init
-  (setq-default mc/list-file (expand-file-name ".multiple-cursors.el"))
+  (setq-default mc/list-file (me/cache-concat ".multiple-cursors.el"))
   :custom
   (mc/edit-lines-empty-lines 'ignore)
   (mc/insert-numbers-default 1))
@@ -2374,8 +2398,8 @@ exists as well).
   (after-init . projectile-mode)
   :init
   (setq-default
-   projectile-cache-file (expand-file-name ".projectile.cache")
-   projectile-known-projects-file (expand-file-name ".projectile.eld"))
+   projectile-cache-file (me/cache-concat ".projectile.cache")
+   projectile-known-projects-file (me/cache-concat ".projectile.eld"))
   :custom
   (projectile-completion-system 'ivy)
   (projectile-dynamic-mode-line nil)
@@ -2443,7 +2467,7 @@ Sort interactive commands by usage.
 #+BEGIN_SRC emacs-lisp
 (use-package amx
   :custom
-  (amx-save-file (expand-file-name ".amx"))
+  (amx-save-file (me/cache-concat ".amx"))
   (amx-show-key-bindings nil))
 #+END_SRC
 
@@ -2510,7 +2534,7 @@ Customize the noisy default towards backup files.
   :ensure nil
   :custom
   (backup-by-copying t)
-  (backup-directory-alist `(("." . ,(expand-file-name "backups/"))))
+  (backup-directory-alist `(("." . ,(me/cache-concat "backups/"))))
   (delete-old-versions t)
   (version-control t))
 #+END_SRC
@@ -2664,6 +2688,7 @@ Yes, Emacs emulates terminals too.
 | =gitignore-mode=     | https://github.com/magit/git-modes#gitignore-mode             |
 | =magit=              | https://github.com/magit/magit                                |
 | =pinentry=           | https://elpa.gnu.org/packages/pinentry.html                   |
+| =transient=          | https://github.com/magit/transient                            |
 
 Auto-fill commit messages.
 
@@ -2729,8 +2754,6 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
   (magit-module-sections-nested nil)
   (magit-section-initial-visibility-alist
    '((modules . show) (stashes . show) (unpulled . show) (unpushed . show)))
-  (transient-default-level 5)
-  (transient-mode-line-format nil)
   :config
   (magit-add-section-hook
    'magit-status-sections-hook 'magit-insert-modules-overview 'magit-insert-merge-log)
@@ -2769,6 +2792,22 @@ pinentry-program /usr/local/bin/pinentry
     signingkey = 1234567890ABCDEF
 [commit]
     gpgsign = true
+#+END_SRC
+
+Transient is the package behind the modal maps and prefixes depicted in Magit.
+It is currently used by Magit only in my configuration so it will stay in this
+section for now.
+
+#+BEGIN_SRC emacs-lisp
+(use-package transient
+  :init
+  (setq-default
+   transient-history-file (me/cache-concat "transient/history.el")
+   transient-levels-file (me/cache-concat "transient/levels.el")
+   transient-values-file (me/cache-concat "transient/values.el"))
+  :custom
+  (transient-default-level 5)
+  (transient-mode-line-format nil))
 #+END_SRC
 
 ** Whitespaces
