@@ -51,7 +51,7 @@
    use-package-always-ensure t)
 
   ;; Tangle configuration
-  (org-babel-load-file (expand-file-name "dotemacs.org" user-emacs-directory))
+  (org-babel-load-file (expand-file-name "dotemacs.org" user-emacs-directory) t)
   (garbage-collect))
 
 ;; Reset the working directory regardless of where Emacs was started
