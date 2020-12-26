@@ -193,7 +193,35 @@ be.
 
 | =doom-themes= | https://github.com/hlissner/emacs-doom-themes |
 
-Load the theme and fix some faces to match my personal preferences.
+Initialize known themes and provide a helper to cycle through known themes.
+
+#+BEGIN_SRC emacs-lisp
+(defvar me/theme-known-themes '(doom-one doom-nord-light)
+  "List of themes to take into account with `me/theme-cycle'.")
+
+(defun me/theme-load-themes (&optional themes)
+  "Load `me/theme-known-themes' without enabling them.
+Consider THEMES instead if not nil."
+  (interactive)
+  (when themes
+    (setq me/theme-known-themes themes))
+  (dolist (theme me/theme-known-themes)
+    (load-theme theme t t)))
+
+(defun me/theme-cycle ()
+  "Cycle through themes from `me/theme-known-themes' in succession.
+End the loop with no theme enabled."
+  (interactive)
+  (let* ((current (car custom-enabled-themes))
+         (next (if current
+                   (cadr (memq current me/theme-known-themes))
+                 (car me/theme-known-themes))))
+    (mapc #'disable-theme custom-enabled-themes)
+    (when next
+      (load-theme next t))))
+#+END_SRC
+
+Load the themes and fix some high-level faces to match my personal preferences.
 
 #+BEGIN_SRC emacs-lisp
 (use-package doom-themes
@@ -202,60 +230,88 @@ Load the theme and fix some faces to match my personal preferences.
   (doom-themes-enable-bold nil)
   (doom-themes-enable-italic nil)
   :config
-  (load-theme 'doom-one t)
+  (load-theme 'doom-nord-light t)
   (doom-themes-org-config)
   (doom-themes-visual-bell-config)
   (doom-themes-set-faces nil
     '(default :font me/font-family :height me/font-size-default)
     '(doom-modeline-bar :background 'unspecified)
-    '(doom-visual-bell :background (doom-darken red 0.6))
     '(flycheck-error :underline `(:color ,error :style line))
     '(flycheck-info :underline `(:color ,highlight :style line))
     '(flycheck-warning :underline `(:color ,warning :style line))
     '(fringe :background 'unspecified)
-    '(helpful-heading :foreground red :height 'unspecified)
-    '(info-title-4 :bold nil :foreground red)
-    '(isearch :inherit 'highlight)
-    '(italic :italic nil)
-    '(ivy-minibuffer-match-highlight :background (doom-darken blue .6) :extend t)
-    '(lazy-highlight :foreground blue)
-    '(line-number :background 'unspecified :foreground base5)
-    '(line-number-current-line :inherit 'line-number)
-    '(lsp-face-highlight-read :foreground fg)
-    '(lsp-face-highlight-textual :foreground fg)
-    '(lsp-face-highlight-write :foreground fg)
-    '(magit-diff-added :background 'unspecified)
-    '(magit-diff-added-highlight
-      :background 'unspecified
-      :inherit 'magit-diff-context-highlight)
-    '(magit-diff-context :background 'unspecified)
-    '(magit-diff-context-highlight
-      :background 'unspecified
-      :foreground 'unspecified
-      :inherit '(magit-diff-context org-block))
-    '(magit-diff-hunk-heading
-      :background 'unspecified
-      :foreground violet
-      :inherit 'org-block-begin-line)
-    '(magit-diff-hunk-region :inherit 'region)
-    '(magit-diff-removed :background 'unspecified)
-    '(magit-diff-removed-highlight
-      :background 'unspecified
-      :inherit 'magit-diff-context-highlight)
-    '(magit-section-heading :foreground red)
-    '(magit-section-highlight :inherit nil)
-    '(markdown-table-face :height me/font-size-small)
-    '(mode-line-inactive :background bg-alt)
-    '(org-block :background (doom-lighten bg .06))
-    '(org-block-begin-line :background (doom-lighten bg .03))
+    '(helpful-heading :height 'unspecified)
+    '(org-block-begin-line :background 'unspecified :inherit 'shadow)
     '(org-quote :background 'unspecified :inherit '(font-lock-doc-face org-block))
-    '(outline-1 :foreground red)
-    '(secondary-selection :background (doom-darken dark-cyan .6))
-    '(tooltip :background base1)
-    '(variable-pitch :family 'unspecified)
+    '(swiper-line-face :extend t)
     '(vertical-border :background 'unspecified :inverse-video t)
-    '(which-key-command-description-face :foreground 'unspecified)
-    '(whitespace-empty :background red :extend t)))
+    '(which-key-command-description-face :foreground 'unspecified)))
+#+END_SRC
+
+Customize =doom-nord-light= theme.
+
+#+BEGIN_SRC emacs-lisp
+(with-eval-after-load 'doom-themes
+  (load-theme 'doom-nord-light t t)
+  (setq-default doom-nord-light-padded-modeline t)
+  (let ((custom--inhibit-theme-enable nil))
+    (doom-themes-set-faces 'doom-nord-light
+      '(doom-visual-bell :background (doom-lighten red .5))
+      '(doom-modeline-evil-emacs-state :foreground (doom-lighten violet .3))
+      '(evil-snipe-first-match-face :foreground fg)
+      '(helpful-heading :foreground orange)
+      '(isearch :background cyan :foreground base0)
+      '(lazy-highlight :background (doom-lighten cyan .4))
+      '(lsp-face-highlight-read :background (doom-lighten cyan .4) :foreground base0)
+      '(lsp-face-highlight-textual :background (doom-lighten cyan .4) :foreground base0)
+      '(lsp-face-highlight-write :background (doom-lighten cyan .4) :foreground base0)
+      '(mode-line :background bg-alt)
+      '(mode-line-inactive :background bg-alt))))
+#+END_SRC
+
+Customize =doom-one= theme.
+
+#+BEGIN_SRC emacs-lisp
+(with-eval-after-load 'doom-themes
+  (load-theme 'doom-one t t)
+  (let ((custom--inhibit-theme-enable nil))
+    (doom-themes-set-faces 'doom-one
+      '(doom-visual-bell :background dark-blue)
+      '(helpful-heading :foreground red)
+      '(info-title-4 :bold nil :foreground red)
+      '(isearch :inherit 'highlight)
+      '(ivy-minibuffer-match-highlight :background (doom-darken blue .6) :extend t)
+      '(lazy-highlight :foreground blue)
+      '(line-number :foreground base5)
+      '(lsp-face-highlight-read :foreground fg)
+      '(lsp-face-highlight-textual :foreground fg)
+      '(lsp-face-highlight-write :foreground fg)
+      '(magit-diff-added :background 'unspecified)
+      '(magit-diff-added-highlight
+        :background 'unspecified
+        :inherit 'magit-diff-context-highlight)
+      '(magit-diff-context :background 'unspecified)
+      '(magit-diff-context-highlight
+        :background 'unspecified
+        :foreground 'unspecified
+        :inherit '(magit-diff-context org-block))
+      '(magit-diff-hunk-heading
+        :background 'unspecified
+        :foreground violet
+        :inherit 'org-block-begin-line)
+      '(magit-diff-hunk-region :inherit 'region)
+      '(magit-diff-removed :background 'unspecified)
+      '(magit-diff-removed-highlight
+        :background 'unspecified
+        :inherit 'magit-diff-context-highlight)
+      '(magit-section-heading :foreground red)
+      '(magit-section-highlight :inherit nil)
+      '(markdown-table-face :height me/font-size-small)
+      '(org-block :background (doom-lighten bg .06))
+      '(outline-1 :foreground red)
+      '(secondary-selection :background (doom-darken dark-cyan .6))
+      '(tooltip :background base1)
+      '(variable-pitch :family 'unspecified))))
 #+END_SRC
 
 
