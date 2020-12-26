@@ -25,11 +25,11 @@ pacman -S piper
 * Fonts
 
 #+BEGIN_SRC shell :dir "/sudo::"
-pacman -S noto-fonts ttf-fira-code
+pacman -S ttf-hack
 #+END_SRC
 
 #+BEGIN_SRC shell
-yay -S ttf-monaco ttf-roboto-slab
+yay -S ttf-roboto-slab
 #+END_SRC
 
 #+BEGIN_SRC shell :dir "/sudo::"
@@ -78,7 +78,7 @@ Set default font for classes in =/etc/fonts/local.conf=.
       <string>monospace</string>
     </test>
     <edit name="family" mode="assign" binding="same">
-      <string>Monaco</string>
+      <string>Hack</string>
     </edit>
   </match>
 </fontconfig>
