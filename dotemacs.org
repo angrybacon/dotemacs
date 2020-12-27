@@ -293,7 +293,27 @@ preferences.
     '(org-quote :background 'unspecified :inherit '(font-lock-doc-face org-block))
     '(swiper-line-face :extend t)
     '(vertical-border :background 'unspecified :inverse-video t)
-    '(which-key-command-description-face :foreground 'unspecified)))
+    '(which-key-command-description-face :foreground 'unspecified)
+    '(whitespace-empty :extend t)))
+#+END_SRC
+
+Customize =doom-nord-light= theme.
+
+#+BEGIN_SRC emacs-lisp :tangle no
+(me/theme-set-faces doom-nord-light
+  '(doom-visual-bell :background (doom-lighten red .5))
+  '(doom-modeline-evil-emacs-state :foreground (doom-lighten violet .3))
+  '(evil-snipe-first-match-face :foreground fg)
+  '(helpful-heading :foreground orange)
+  '(isearch :background cyan :foreground base0)
+  '(lazy-highlight :background (doom-lighten cyan .4))
+  '(lsp-face-highlight-read :background (doom-lighten cyan .4) :foreground base0)
+  '(lsp-face-highlight-textual :background (doom-lighten cyan .4) :foreground base0)
+  '(lsp-face-highlight-write :background (doom-lighten cyan .4) :foreground base0)
+  '(magit-section-highlight :inherit nil)
+  '(mode-line :background bg-alt)
+  '(mode-line-inactive :background bg-alt)
+  '(org-block :background base2))
 #+END_SRC
 
 Customize =doom-one= theme.
@@ -1788,7 +1808,7 @@ Yup, Emacs supports LSP.
   :custom
   (doom-modeline-bar-width 1)
   (doom-modeline-buffer-file-name-style 'truncate-with-project)
-  (doom-modeline-height 48)
+  (doom-modeline-height 40)
   (doom-modeline-enable-word-count t)
   (doom-modeline-major-mode-icon nil)
   (doom-modeline-percent-position nil)
