@@ -1340,17 +1340,19 @@ Group Projectile commands.
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-projectile (:color teal)
   (concat (me/hydra-heading "Projectile" "Do" "Find" "Search") "
- _q_ quit            _K_ Kill Buffers    _b_ Buffer          _r_ Replace
- ^^                  _i_ Reset Cache     _d_ Directory       _R_ Regexp Replace
- ^^                  _n_ New Project     _D_ Root            _s_ Rg
- ^^                  _N_ Prune Projects  _f_ File            _S_ Grep
- ^^                  _v_ save buffers    _p_ project         ^^
+ _q_ quit            _K_ kill buffers    _b_ buffer          _r_ replace
+ ^^                  _i_ reset cache     _d_ directory       _R_ regexp Replace
+ ^^                  _n_ new project     _D_ root            _s_ rg
+ ^^                  _N_ prune projects  _f_ file            _S_ grep
+ ^^                  _v_ save buffers    _F_ file, no cache  ^^
+ ^^                  ^^                  _p_ project         ^^
 ")
   ("q" nil)
   ("b" counsel-projectile-switch-to-buffer)
   ("d" counsel-projectile-find-dir)
   ("D" projectile-dired)
   ("f" counsel-projectile-find-file)
+  ("F" (progn (projectile-invalidate-cache nil) (counsel-projectile-find-file)))
   ("i" projectile-invalidate-cache :color red)
   ("K" projectile-kill-buffers)
   ("n" projectile-add-known-project)
@@ -1423,7 +1425,7 @@ Group interface-related commands.
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-ui (:color pink)
   (concat (me/hydra-heading "Theme" "Windows" "Zoom" "Line Numbers") "
- _t_ cycle           _b_ balance windows _-_ out             _n_ mode: %s`display-line-numbers
+ _t_ cycle           _b_ balance         _-_ out             _n_ mode: %s`display-line-numbers
  ^^                  _m_ maximize frame  _=_ in              _N_ absolute: %s`display-line-numbers-current-absolute
  ^^                  ^^                  _0_ reset           ^^
  ^^                  ^^                  ^^                  ^^
