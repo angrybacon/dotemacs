@@ -204,11 +204,13 @@ End the loop with no theme enabled."
                    (cadr (memq current me/theme-known-themes))
                  (car me/theme-known-themes))))
     (mapc #'disable-theme custom-enabled-themes)
-    (when next
-      (load-theme next t))))
+    (if next
+        (progn (load-theme next t) (message "%s" next))
+      (message "No theme"))))
 #+END_SRC
 
-Load the themes and fix some high-level faces to match my personal preferences.
+Load the current theme and fix some high-level faces to match my personal
+preferences.
 
 #+BEGIN_SRC emacs-lisp
 (use-package doom-themes
@@ -217,12 +219,12 @@ Load the themes and fix some high-level faces to match my personal preferences.
   (doom-themes-enable-bold nil)
   (doom-themes-enable-italic nil)
   :config
-  (load-theme 'doom-nord-light t)
+  (load-theme 'doom-nord t)
   (doom-themes-org-config)
   (doom-themes-visual-bell-config)
   (doom-themes-set-faces nil
     '(default :font me/font-family :height me/font-size-default)
-    '(doom-modeline-bar :background 'unspecified)
+    '(doom-modeline-bar :background nil :inherit nil)
     '(flycheck-error :underline `(:color ,error :style line))
     '(flycheck-info :underline `(:color ,highlight :style line))
     '(flycheck-warning :underline `(:color ,warning :style line))
@@ -1758,7 +1760,7 @@ Yup, Emacs supports LSP.
   :custom
   (doom-modeline-bar-width 1)
   (doom-modeline-buffer-file-name-style 'truncate-with-project)
-  (doom-modeline-height 36)
+  (doom-modeline-height 48)
   (doom-modeline-enable-word-count t)
   (doom-modeline-major-mode-icon nil)
   (doom-modeline-percent-position nil)
