@@ -4,7 +4,7 @@
 
 * Bootstrap
 
-** Use Better Defaults
+** Better Defaults
 
 Here are what I consider better defaults as per my own experience.
 
@@ -55,60 +55,19 @@ directory with an ever-growing number of packages used on a daily basis.
 
 (defun me/cache-concat (name)
   "Return the absolute path of NAME under `me/cache-directory'."
-  (let ((directory (file-name-as-directory me/cache-directory)))
-    (make-directory directory t)
-    (convert-standard-filename (concat directory name))))
+  (let* ((directory (file-name-as-directory me/cache-directory))
+         (path (convert-standard-filename (concat directory name))))
+    (make-directory (file-name-directory path) t)
+    path))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (with-eval-after-load 'request
   (setq-default request-storage-directory (me/cache-concat "request/")))
 (with-eval-after-load 'tramp
-  (setq-default tramp-persistency-file-name (me/cache-concat "tramp")))
+  (setq-default tramp-persistency-file-name (me/cache-concat "tramp.eld")))
 (with-eval-after-load 'url
   (setq-default url-configuration-directory (me/cache-concat "url/")))
-#+END_SRC
-
-** EXWM
-
-| =exwm= | https://github.com/ch11ng/exwm |
-
-
-| TODO | Make =xdg-open= switch workspace/eyebrowse automatically |
-| TODO | Notifications                                            |
-| TODO | Remove =exwm-config-default= dependency                  |
-| TODO | Clean up system tray setup                               |
-| TODO | Check out https://github.com/agzam/exwm-edit             |
-| TODO | Load display setup from =.xinitrc= or =.secret.el=       |
-| TODO | Export EXWM configuration to =desktop.org=               |
-| TODO | Reduce flickering on startup                             |
-
-#+BEGIN_SRC emacs-lisp
-(use-package exwm
-  :demand t
-  :hook
-  (exwm-randr-screen-change . me/exwm-xrandr)
-  :custom
-  (exwm-randr-workspace-monitor-plist '(0 "DVI-D-0" 1 "HDMI-0"))
-  (exwm-workspace-index-map (lambda (index) (number-to-string (1+ index))))
-  :config
-  (require 'exwm-config)
-  (exwm-config-default)
-  (setq exwm-workspace-number 2)
-  (ido-mode 0)
-  (require 'exwm-randr)
-  (exwm-randr-enable)
-  (require 'exwm-systemtray)
-  (exwm-systemtray-enable))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defun me/exwm-xrandr ()
-  "Set resolution for EXWM displays."
-  (start-process-shell-command
-   "xrandr" nil "xrandr \
---output HDMI-0 --mode 1920x1080 --pos 0x0 \
---output DVI-D-0 --mode 1920x1080 --pos 1920x0"))
 #+END_SRC
 
 Some UI elements are rather invasive. No-mouse master race.
@@ -168,25 +127,46 @@ redirect the writing to =/dev/null=.
 (setq-default custom-file null-device)
 #+END_SRC
 
-** Load Secrets
+** EXWM
 
-Load =.secret.el= to keep sensible things out of version control. For instance,
-you could set your identity by customizing both =user-full-name= and
-=user-mail-address=. This is also where you want your machine-specific settings to
-be.
+| =exwm= | https://github.com/ch11ng/exwm |
+
+
+| TODO | Make =xdg-open= switch workspace/eyebrowse automatically |
+| TODO | Notifications                                            |
+| TODO | Remove =exwm-config-default= dependency                  |
+| TODO | Clean up system tray setup                               |
+| TODO | Check out https://github.com/agzam/exwm-edit             |
+| TODO | Load display setup from =.xinitrc= or =.secret.el=       |
+| TODO | Export EXWM configuration to =desktop.org=               |
+| TODO | Reduce flickering on startup                             |
 
 #+BEGIN_SRC emacs-lisp
-(defvar me/erc-nick           nil       "The ERC nick to use.")
-(defvar me/erc-password       nil       "The ERC password to use.")
-(defvar me/erc-port           nil       "The ERC port to use.")
-(defvar me/erc-server         nil       "The ERC server to use.")
-(defvar me/font-family        "Monaco"  "The font to use.")
-(defvar me/font-size-default  120       "The font size to use for default text.")
-(defvar me/font-size-large    1.2       "The font size to use for larger text.")
-(defvar me/font-size-small    .8        "The font size to use for smaller text.")
+(use-package exwm
+  :demand t
+  :hook
+  (exwm-randr-screen-change . me/exwm-xrandr)
+  :custom
+  (exwm-randr-workspace-monitor-plist '(0 "DVI-D-0" 1 "HDMI-0"))
+  (exwm-workspace-index-map (lambda (index) (number-to-string (1+ index))))
+  :config
+  (require 'exwm-config)
+  (exwm-config-default)
+  (setq exwm-workspace-number 2)
+  (ido-mode 0)
+  (require 'exwm-randr)
+  (exwm-randr-enable)
+  (require 'exwm-systemtray)
+  (exwm-systemtray-enable))
+#+END_SRC
 
-(let ((secret.el (expand-file-name ".secret.el")))
-  (load secret.el t))
+#+BEGIN_SRC emacs-lisp
+(defun me/exwm-xrandr ()
+  "Set resolution for EXWM displays."
+  (start-process-shell-command
+   "xrandr" nil "xrandr \
+--output HDMI-0 --mode 1920x1080 --pos 0x0 \
+--output DVI-D-0 --mode 1920x1080 --pos 1920x0"))
 #+END_SRC
 
 ** Theme
@@ -248,72 +228,27 @@ Load the themes and fix some high-level faces to match my personal preferences.
     '(which-key-command-description-face :foreground 'unspecified)))
 #+END_SRC
 
-Customize =doom-nord-light= theme.
+
+** Load Secrets
+
+Load =.secret.el= to keep sensible things out of version control. For instance,
+you could set your identity by customizing both =user-full-name= and
+=user-mail-address=. This is also where you want your machine-specific settings to
+be.
 
 #+BEGIN_SRC emacs-lisp
-(with-eval-after-load 'doom-themes
-  (load-theme 'doom-nord-light t t)
-  (setq-default doom-nord-light-padded-modeline t)
-  (let ((custom--inhibit-theme-enable nil))
-    (doom-themes-set-faces 'doom-nord-light
-      '(doom-visual-bell :background (doom-lighten red .5))
-      '(doom-modeline-evil-emacs-state :foreground (doom-lighten violet .3))
-      '(evil-snipe-first-match-face :foreground fg)
-      '(helpful-heading :foreground orange)
-      '(isearch :background cyan :foreground base0)
-      '(lazy-highlight :background (doom-lighten cyan .4))
-      '(lsp-face-highlight-read :background (doom-lighten cyan .4) :foreground base0)
-      '(lsp-face-highlight-textual :background (doom-lighten cyan .4) :foreground base0)
-      '(lsp-face-highlight-write :background (doom-lighten cyan .4) :foreground base0)
-      '(mode-line :background bg-alt)
-      '(mode-line-inactive :background bg-alt))))
+(defvar me/erc-nick           nil       "The ERC nick to use.")
+(defvar me/erc-password       nil       "The ERC password to use.")
+(defvar me/erc-port           nil       "The ERC port to use.")
+(defvar me/erc-server         nil       "The ERC server to use.")
+(defvar me/font-family        "Monaco"  "The font to use.")
+(defvar me/font-size-default  120       "The font size to use for default text.")
+(defvar me/font-size-large    1.2       "The font size to use for larger text.")
+(defvar me/font-size-small    .8        "The font size to use for smaller text.")
+
+(let ((secret.el (expand-file-name ".secret.el")))
+  (load secret.el t))
 #+END_SRC
-
-Customize =doom-one= theme.
-
-#+BEGIN_SRC emacs-lisp
-(with-eval-after-load 'doom-themes
-  (load-theme 'doom-one t t)
-  (let ((custom--inhibit-theme-enable nil))
-    (doom-themes-set-faces 'doom-one
-      '(doom-visual-bell :background dark-blue)
-      '(helpful-heading :foreground red)
-      '(info-title-4 :bold nil :foreground red)
-      '(isearch :inherit 'highlight)
-      '(ivy-minibuffer-match-highlight :background (doom-darken blue .6) :extend t)
-      '(lazy-highlight :foreground blue)
-      '(line-number :foreground base5)
-      '(lsp-face-highlight-read :foreground fg)
-      '(lsp-face-highlight-textual :foreground fg)
-      '(lsp-face-highlight-write :foreground fg)
-      '(magit-diff-added :background 'unspecified)
-      '(magit-diff-added-highlight
-        :background 'unspecified
-        :inherit 'magit-diff-context-highlight)
-      '(magit-diff-context :background 'unspecified)
-      '(magit-diff-context-highlight
-        :background 'unspecified
-        :foreground 'unspecified
-        :inherit '(magit-diff-context org-block))
-      '(magit-diff-hunk-heading
-        :background 'unspecified
-        :foreground violet
-        :inherit 'org-block-begin-line)
-      '(magit-diff-hunk-region :inherit 'region)
-      '(magit-diff-removed :background 'unspecified)
-      '(magit-diff-removed-highlight
-        :background 'unspecified
-        :inherit 'magit-diff-context-highlight)
-      '(magit-section-heading :foreground red)
-      '(magit-section-highlight :inherit nil)
-      '(markdown-table-face :height me/font-size-small)
-      '(org-block :background (doom-lighten bg .06))
-      '(outline-1 :foreground red)
-      '(secondary-selection :background (doom-darken dark-cyan .6))
-      '(tooltip :background base1)
-      '(variable-pitch :family 'unspecified))))
-#+END_SRC
-
 
 * Languages
 
@@ -400,6 +335,7 @@ HTML mode is defined in =sgml-mode.el=.
 
 | =elisp-mode= | Built-in |
 | =ielm=       | Built-in |
+| =lisp-mode=  | Built-in |
 
 #+BEGIN_SRC emacs-lisp
 (use-package elisp-mode
@@ -427,6 +363,12 @@ whole buffer."
   :ensure nil
   :hook
   (ielm-mode . (lambda () (setq-local scroll-margin 0))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package lisp-mode
+  :ensure nil
+  :mode ("\\.eld\\'" . lisp-data-mode))
 #+END_SRC
 
 ** Markdown
@@ -623,8 +565,8 @@ configurations.
   (after-init . desktop-read)
   (after-init . desktop-save-mode)
   :custom
-  (desktop-base-file-name (me/cache-concat ".desktop"))
-  (desktop-base-lock-name (me/cache-concat ".desktop.lock"))
+  (desktop-base-file-name (me/cache-concat "desktop"))
+  (desktop-base-lock-name (me/cache-concat "desktop.lock"))
   (desktop-restore-eager 4)
   (desktop-restore-forces-onscreen nil))
 #+END_SRC
@@ -1729,7 +1671,8 @@ Yup, Emacs supports LSP.
   (lsp-enable-file-watchers nil)
   (lsp-enable-folding nil)
   (lsp-headerline-breadcrumb-enable nil)
-  (lsp-idle-delay .01))
+  (lsp-idle-delay .01)
+  (lsp-session-file (me/cache-concat "lsp/session.eld")))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -2278,7 +2221,7 @@ Enable multiple cursors outside Evil. Some witchcraft at work here.
    ("M-l" . mc/insert-letters)
    ("M-n" . mc/insert-numbers))
   :init
-  (setq-default mc/list-file (me/cache-concat ".multiple-cursors.el"))
+  (setq-default mc/list-file (me/cache-concat "multiple-cursors.el"))
   :custom
   (mc/edit-lines-empty-lines 'ignore)
   (mc/insert-numbers-default 1))
@@ -2430,8 +2373,8 @@ exists as well).
   (after-init . projectile-mode)
   :init
   (setq-default
-   projectile-cache-file (me/cache-concat ".projectile.cache")
-   projectile-known-projects-file (me/cache-concat ".projectile.eld"))
+   projectile-cache-file (me/cache-concat "projectile/cache")
+   projectile-known-projects-file (me/cache-concat "projectile/projects.eld"))
   :custom
   (projectile-completion-system 'ivy)
   (projectile-dynamic-mode-line nil)
@@ -2501,7 +2444,7 @@ Sort interactive commands by usage.
 #+BEGIN_SRC emacs-lisp
 (use-package amx
   :custom
-  (amx-save-file (me/cache-concat ".amx"))
+  (amx-save-file (me/cache-concat "amx.eld"))
   (amx-show-key-bindings nil))
 #+END_SRC
 
