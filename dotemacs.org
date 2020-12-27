@@ -131,29 +131,55 @@ redirect the writing to =/dev/null=.
 
 | =exwm= | https://github.com/ch11ng/exwm |
 
+When no window manager is detected, Emacs will act as one. Bind a number of
+/system-wide/ all prefixed with the =super= modifier.
 
-| TODO | Make =xdg-open= switch workspace/eyebrowse automatically |
+While the =s-1= and =s-2= keybindings might look strange at first, their
+respective command are swapped on purpose so that =s-1= corresponds to my left
+monitor, and =s-2= to my right monitor which is the main one.
+
+| TODO | Make =xdg-open= switch workspace/eyebrowse accordingly   |
 | TODO | Notifications                                            |
-| TODO | Remove =exwm-config-default= dependency                  |
-| TODO | Clean up system tray setup                               |
 | TODO | Check out https://github.com/agzam/exwm-edit             |
-| TODO | Load display setup from =.xinitrc= or =.secret.el=       |
+| TODO | Load display setup from =.xinitrc= and/or =.secret.el=   |
 | TODO | Export EXWM configuration to =desktop.org=               |
 | TODO | Reduce flickering on startup                             |
+| TODO | Bind media keys                                          |
 
 #+BEGIN_SRC emacs-lisp
 (use-package exwm
   :demand t
+  :bind
+  (:map exwm-mode-map
+   ("C-q" . exwmp-input-send-next-key))
   :hook
   (exwm-randr-screen-change . me/exwm-xrandr)
+  (exwm-update-class . me/exwm-rename-buffer)
   :custom
+  (exwm-input-global-keys
+   `((,(kbd "s-!") . me/exwm-read-shell-command)
+     (,(kbd "s-1") . (lambda () (interactive) (exwm-workspace-switch-create 1)))
+     (,(kbd "s-2") . (lambda () (interactive) (exwm-workspace-switch-create 0)))
+     (,(kbd "s-SPC") . counsel-linux-app)
+     (,(kbd "s-h") . windmove-left)
+     (,(kbd "s-j") . windmove-down)
+     (,(kbd "s-k") . windmove-up)
+     (,(kbd "s-l") . windmove-right)
+     (,(kbd "s-r") . exwm-reset)
+     (,(kbd "s-R") . exwm-restart)
+     (,(kbd "s-w") . exwm-workspace-switch)))
+  (exwm-input-simulation-keys
+   `((,(kbd "C-a") . [home])
+     (,(kbd "C-e") . [end])
+     (,(kbd "C-w") . ,(kbd "C-x"))
+     (,(kbd "C-y") . ,(kbd "C-v"))
+     (,(kbd "M-w") . ,(kbd "C-c"))))
   (exwm-randr-workspace-monitor-plist '(0 "DVI-D-0" 1 "HDMI-0"))
   (exwm-workspace-index-map (lambda (index) (number-to-string (1+ index))))
+  (exwm-workspace-number 2)
+  (exwm-workspace-warp-cursor t)
   :config
-  (require 'exwm-config)
-  (exwm-config-default)
-  (setq exwm-workspace-number 2)
-  (ido-mode 0)
+  (exwm-enable)
   (require 'exwm-randr)
   (exwm-randr-enable)
   (require 'exwm-systemtray)
@@ -161,12 +187,43 @@ redirect the writing to =/dev/null=.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+(defun me/exwm-read-shell-command (command)
+  "Prettify name for new buffers after their more descriptive WM_CLASS string."
+  (interactive (list (read-shell-command "$ ")))
+  (start-process-shell-command command nil command))
+
+(defun me/exwm-rename-buffer ()
+  "Prettify name for new buffers after their more descriptive WM_CLASS string."
+  (exwm-workspace-rename-buffer exwm-class-name))
+
 (defun me/exwm-xrandr ()
-  "Set resolution for EXWM displays."
+  "Set resolution for EXWM displays ie. workspaces."
   (start-process-shell-command
    "xrandr" nil "xrandr \
 --output HDMI-0 --mode 1920x1080 --pos 0x0 \
 --output DVI-D-0 --mode 1920x1080 --pos 1920x0"))
+#+END_SRC
+
+** Load Secrets
+
+
+Load =.secret.el= to keep sensible things out of version control. For instance,
+you could set your identity by customizing both =user-full-name= and
+=user-mail-address=. This is also where you want your machine-specific settings to
+be.
+
+#+BEGIN_SRC emacs-lisp
+(defvar me/erc-nick           nil       "The ERC nick to use.")
+(defvar me/erc-password       nil       "The ERC password to use.")
+(defvar me/erc-port           nil       "The ERC port to use.")
+(defvar me/erc-server         nil       "The ERC server to use.")
+(defvar me/font-family        "Monaco"  "The font to use.")
+(defvar me/font-size-default  120       "The font size to use for default text.")
+(defvar me/font-size-large    1.2       "The font size to use for larger text.")
+(defvar me/font-size-small    .8        "The font size to use for smaller text.")
+
+(let ((secret.el (expand-file-name ".secret.el")))
+  (load secret.el t))
 #+END_SRC
 
 ** Theme
@@ -174,6 +231,8 @@ redirect the writing to =/dev/null=.
 | =doom-themes= | https://github.com/hlissner/emacs-doom-themes |
 
 Initialize known themes and provide a helper to cycle through known themes.
+
+| TODO | Allow cycling backwards |
 
 #+BEGIN_SRC emacs-lisp
 (defcustom me/theme-known-themes '(doom-nord doom-nord-light)
@@ -278,26 +337,6 @@ Customize =doom-one= theme.
   '(variable-pitch :family 'unspecified))
 #+END_SRC
 
-** Load Secrets
-
-Load =.secret.el= to keep sensible things out of version control. For instance,
-you could set your identity by customizing both =user-full-name= and
-=user-mail-address=. This is also where you want your machine-specific settings to
-be.
-
-#+BEGIN_SRC emacs-lisp
-(defvar me/erc-nick           nil       "The ERC nick to use.")
-(defvar me/erc-password       nil       "The ERC password to use.")
-(defvar me/erc-port           nil       "The ERC port to use.")
-(defvar me/erc-server         nil       "The ERC server to use.")
-(defvar me/font-family        "Monaco"  "The font to use.")
-(defvar me/font-size-default  120       "The font size to use for default text.")
-(defvar me/font-size-large    1.2       "The font size to use for larger text.")
-(defvar me/font-size-small    .8        "The font size to use for smaller text.")
-
-(let ((secret.el (expand-file-name ".secret.el")))
-  (load secret.el t))
-#+END_SRC
 
 * Languages
 
@@ -723,18 +762,6 @@ currently selected window.
                    (helpful-mode :same t)
                    (process-menu-mode :same t)))
   (shackle-select-reused-windows t))
-#+END_SRC
-
-Bind commands to move around windows.
-
-#+BEGIN_SRC emacs-lisp
-(use-package windmove
-  :ensure nil
-  :bind
-  ("C-M-k". windmove-up)
-  ("C-M-l". windmove-right)
-  ("C-M-j". windmove-down)
-  ("C-M-h". windmove-left))
 #+END_SRC
 
 Allow undo's and redo's with window configurations.
@@ -1496,6 +1523,7 @@ Augment Ivy's interface with details for candidates.
 
 | TODO | Add default value column to =counsel-describe-variable= |
 | TODO | Add face attribute columns to =counsel-faces=           |
+| TODO | Prettify =counsel-linux-app=                            |
 
 #+BEGIN_SRC emacs-lisp
 (use-package ivy-rich
@@ -1583,6 +1611,8 @@ Augment Ivy's interface with details for candidates.
 
 #+BEGIN_SRC emacs-lisp
 (use-package counsel
+  :commands
+  (counsel-linux-app)
   :hook
   (ivy-mode . counsel-mode)
   :custom
