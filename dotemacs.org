@@ -852,8 +852,6 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
 
 #+BEGIN_SRC emacs-lisp
 (use-package evil
-  :hook
-  (after-init . evil-mode)
   :bind
   (:map evil-inner-text-objects-map
    ("g" . me/evil-whole-buffer)
