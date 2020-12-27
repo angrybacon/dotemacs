@@ -51,6 +51,7 @@
    use-package-always-ensure t)
 
   ;; Tangle configuration
+  (setq-default safe-local-variable-values '((after-save-hook . (org-babel-tangle t))))
   (org-babel-load-file (expand-file-name "dotemacs.org" user-emacs-directory) t)
   (garbage-collect))
 

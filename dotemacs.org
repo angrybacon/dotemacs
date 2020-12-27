@@ -1,6 +1,8 @@
+# -*- after-save-hook: (org-babel-tangle t); -*-
 #+TITLE: DotEmacs
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args :results silent
+#+PROPERTY: header-args:emacs-lisp :tangle yes
 
 * Bootstrap
 
