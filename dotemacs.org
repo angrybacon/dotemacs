@@ -1260,15 +1260,16 @@ Group LSP commands. This hydra is bound in =lsp-mode-map=.
 (defhydra hydra-lsp (:color teal)
   (concat (me/hydra-heading "LSP" "Do" "Find" "Server") "
  _q_ quit            _i_ imenu           _f_ definition      _d_ describe
- ^^                  _F_ format          _r_ references      _R_ restart
- ^^                  ^^                  _t_ types           _S_ shutdown
- ^^                  ^^                  ^^                  ^^
+ ^^                  _F_ format          _r_ references      _I_ install
+ ^^                  ^^                  _t_ types           _R_ restart
+ ^^                  ^^                  ^^                  _S_ shutdown
 ")
   ("q" nil)
   ("d" lsp-describe-session)
   ("f" lsp-find-definition)
   ("F" lsp-format-buffer)
   ("i" lsp-ui-imenu)
+  ("I" lsp-install-server)
   ("r" lsp-find-references)
   ("R" lsp-workspace-restart)
   ("S" lsp-workspace-shutdown)
