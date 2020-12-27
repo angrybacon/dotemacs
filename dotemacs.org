@@ -174,9 +174,7 @@ left monitor, and the latter to my right monitor which is the primary one.
      (,(kbd "s-R") . exwm-restart)
      (,(kbd "s-w") . exwm-workspace-switch)))
   (exwm-input-simulation-keys
-   `((,(kbd "C-a") . [home])
-     (,(kbd "C-e") . [end])
-     (,(kbd "C-w") . ,(kbd "C-x"))
+   `((,(kbd "C-w") . ,(kbd "C-x"))
      (,(kbd "C-y") . ,(kbd "C-v"))
      (,(kbd "M-w") . ,(kbd "C-c"))))
   (exwm-randr-workspace-monitor-plist '(0 "DVI-D-0" 1 "HDMI-0"))
