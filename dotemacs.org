@@ -86,14 +86,17 @@ Some UI elements are rather invasive. No-mouse master race.
   (define-fringe-bitmap 'left-curly-arrow [192] nil nil '(center t)))
 #+END_SRC
 
-Enable fullscreen.
+Enable fullscreen. Given there are differences in meaning for /fullscreen/
+between window managers, the following tree aims to provide a pain-free
+experience with regard to fullscreen in most setups.
 
-| TODO | Prevent fullscreen to apply to EXWM sessions |
+In the case of macOS, fullscreen means Emacs will occupy a dedicated workspace
+so we want to maximize it instead. Works best with titlebar-less frames.
 
-#+BEGIN_SRC emacs-lisp :tangle no
-(if (eq window-system 'ns)
-    (set-frame-parameter nil 'fullscreen 'maximized)
-  (set-frame-parameter nil 'fullscreen 'fullboth))
+#+BEGIN_SRC emacs-lisp
+(pcase window-system
+  ('ns (set-frame-parameter nil 'fullscreen 'maximized))
+  ('w32 (set-frame-parameter nil 'fullscreen 'fullboth)))
 #+END_SRC
 
 Change a few indenting behaviors.
@@ -135,16 +138,16 @@ When no window manager is detected, Emacs will act as one. Bind a number of
 /system-wide/ all prefixed with the =super= modifier.
 
 While the =s-1= and =s-2= keybindings might look strange at first, their
-respective command are swapped on purpose so that =s-1= corresponds to my left
-monitor, and =s-2= to my right monitor which is the main one.
+respective command are swapped on purpose so that the former corresponds to my
+left monitor, and the latter to my right monitor which is the primary one.
 
-| TODO | Make =xdg-open= switch workspace/eyebrowse accordingly   |
-| TODO | Notifications                                            |
-| TODO | Check out https://github.com/agzam/exwm-edit             |
-| TODO | Load display setup from =.xinitrc= and/or =.secret.el=   |
-| TODO | Export EXWM configuration to =desktop.org=               |
-| TODO | Reduce flickering on startup                             |
-| TODO | Bind media keys                                          |
+| TODO | Make =xdg-open= switch workspace/eyebrowse accordingly |
+| TODO | Notifications                                          |
+| TODO | Check out https://github.com/agzam/exwm-edit           |
+| TODO | Load display setup from =.xinitrc= and/or =.secret.el= |
+| TODO | Export EXWM configuration to =desktop.org=             |
+| TODO | Reduce flickering on startup                           |
+| TODO | Bind media keys                                        |
 
 #+BEGIN_SRC emacs-lisp
 (use-package exwm
@@ -654,8 +657,10 @@ completion candidates.
 | =eyebrowse= | https://github.com/wasamasa/eyebrowse |
 | =olivetti=  | https://github.com/rnkn/olivetti      |
 | =shackle=   | https://github.com/wasamasa/shackle   |
-| =windmove=  | Built-in                              |
 | =winner=    | Built-in                              |
+
+
+| TODO | Bind =s-(hjkl)= outside of EXWM |
 
 Don't ask before killing a buffer. I'm a consenting adult.
 
