@@ -721,16 +721,17 @@ otherwise.
 | TODO | Provide a Hydra head to toggle it off |
 
 #+BEGIN_SRC emacs-lisp
-(defvar me/olivetti-whitelist-buffers
-  '("*sratch*"))
+(defcustom me/olivetti-whitelist-buffers '("*sratch*")
+  "List of buffers for which `olivetti-mode' should be enabled automatically.")
 
-(defvar me/olivetti-whitelist-modes
-  '(Custom-mode
-    dired-mode
-    erc-mode
-    lisp-interaction-mode
-    special-mode
-    vterm-mode))
+(defcustom me/olivetti-whitelist-modes '(Custom-mode
+                                         Info-mode
+                                         dired-mode
+                                         erc-mode
+                                         lisp-interaction-mode
+                                         special-mode
+                                         vterm-mode)
+  "List of modes for which `olivetti-mode' should be enabled automatically.")
 
 (defun me/olivetti-mode-maybe (&optional frame)
   "Turn on `olivetti-mode' for lone buffers.
