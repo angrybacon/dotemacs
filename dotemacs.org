@@ -1403,7 +1403,7 @@ Group commands to take screenshots with various options.
   "Invoke a screenshot script according to VARIANT."
   (interactive (list (completing-read "Variant: " me/screenshot-variants)))
   (let ((command (format "scripts/screenshot.%s.sh" variant)))
-    (start-process-shell-command command "*Messages*" command)))
+    (call-process-shell-command command)))
 #+END_SRC
 
 ** Hydra / System
