@@ -936,8 +936,7 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
 #+BEGIN_SRC emacs-lisp
 (defun me/evil-indent (original &rest arguments)
   "Like `evil-indent' but save excursion."
-  (save-excursion
-    (apply original arguments)))
+  (save-excursion (apply original arguments)))
 #+END_SRC
 
 ** Expand
@@ -2095,12 +2094,24 @@ various search modes.
 
 | =mwheel= | Built-in |
 
+Customize the scrolling behavior using the mouse wheel.
+
 #+BEGIN_SRC emacs-lisp
 (use-package mwheel
   :ensure nil
   :custom
   (mouse-wheel-progressive-speed nil)
-  (mouse-wheel-scroll-amount '(2 ((control) . 8))))
+  (mouse-wheel-scroll-amount '(2 ((control) . 8)))
+  :config
+  (advice-add 'mwheel-scroll :around #'me/mwheel-scroll))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/mwheel-scroll (original &rest arguments)
+  "Like `mwheel-scroll' but preserve screen position.
+See `scroll-preserve-screen-position'."
+  (let ((scroll-preserve-screen-position :always))
+    (apply original arguments)))
 #+END_SRC
 
 ** Navigation / Search
