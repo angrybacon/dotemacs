@@ -187,7 +187,8 @@ left monitor, and the latter to my right monitor which is the primary one.
   (require 'exwm-randr)
   (exwm-randr-enable)
   (require 'exwm-systemtray)
-  (exwm-systemtray-enable))
+  (exwm-systemtray-enable)
+  (unbind-key "C-z"))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -1805,6 +1806,7 @@ Yup, Emacs supports LSP.
   (lsp-enable-folding nil)
   (lsp-headerline-breadcrumb-enable nil)
   (lsp-idle-delay .01)
+  (lsp-keymap-prefix nil)
   (lsp-session-file (me/cache-concat "lsp/session.eld")))
 #+END_SRC
 
