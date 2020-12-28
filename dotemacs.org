@@ -172,6 +172,7 @@ left monitor, and the latter to my right monitor which is the primary one.
      (,(kbd "s-l") . windmove-right)
      (,(kbd "s-r") . exwm-reset)
      (,(kbd "s-R") . exwm-restart)
+     (,(kbd "s-s") . hydra-screenshot/body)
      (,(kbd "s-w") . exwm-workspace-switch)))
   (exwm-input-simulation-keys
    `((,(kbd "C-w") . ,(kbd "C-x"))
@@ -1376,6 +1377,37 @@ Group React JavaScript commands.
   ("q" nil)
   ("f" js-doc-insert-function-doc-snippet)
   ("F" js-doc-insert-file-doc))
+#+END_SRC
+
+** Hydra / Screenshot
+
+Group commands to take screenshots with various options.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-screenshot (:color teal)
+  (concat (me/hydra-heading "Screenshot" "Region" "Window" "Root") "
+ _q_ quit            _s_ plain           _w_ plain           _r_ plain
+ ^^                  _S_ shadow          ^W^ shadow          ^R^ shadow
+")
+  ("q" nil)
+  ("r" (me/screenshot "root"))
+  ("s" (me/screenshot "region"))
+  ("S" (me/screenshot "region-shadow"))
+  ("w" (me/screenshot "window")))
+#+END_SRC
+
+| TODO | Output to the echo area instead |
+
+#+BEGIN_SRC emacs-lisp
+(defcustom me/screenshot-variants
+  '("region" "region-shadow" "root" "window")
+  "List of supported variants for `me/screenshot'.")
+
+(defun me/screenshot (variant)
+  "Invoke a screenshot script according to VARIANT."
+  (interactive (list (completing-read "Variant: " me/screenshot-variants)))
+  (let ((command (format "scripts/screenshot.%s.sh" variant)))
+    (start-process-shell-command command "*Messages*" command)))
 #+END_SRC
 
 ** Hydra / System

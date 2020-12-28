@@ -1,17 +1,59 @@
+# -*- after-save-hook: (org-babel-tangle t); -*-
 #+TITLE: Desktop
 #+AUTHOR: Mathieu Marques
-#+PROPERTY: header-args :results silent
+#+PROPERTY: header-args :mkdirp yes :results silent
+
+| TODO | Tangle on startup |
 
 * Take Screenshots
 
-** Region
+| TODO | Share clipboard from EXWM |
 
 #+BEGIN_SRC shell :dir "/sudo::"
 pacman -S maim xclip
 #+END_SRC
 
-#+BEGIN_SRC shell
-maim -s -u | xclip -selection clipboard -t image/png -i
+** Region
+
+#+BEGIN_SRC shell :shebang #!/bin/sh :tangle scripts/screenshot.region.sh
+maim --hidecursor --select \
+    | xclip -selection clipboard -target image/png
+#+END_SRC
+
+** Region with Background Shadow
+
+#+BEGIN_SRC shell :dir "/sudo::"
+pacman -S imagemagick
+#+END_SRC
+
+| TODO | Export to clipboard instead |
+
+#+BEGIN_SRC shell :shebang #!/bin/sh :tangle scripts/screenshot.region-shadow.sh
+maim --hidecursor --select \
+    | convert - \( +clone -background black -shadow 80x3+5+5 \) +swap \
+              -background none -layers merge +repage shadow.png
+#+END_SRC
+
+** Window
+
+#+BEGIN_SRC shell :dir "/sudo::"
+pacman -S xdotool
+#+END_SRC
+
+| TODO | =xdotool= is not able to retrieve the active window under EXWM |
+| TODO | Make a shadow variant                                          |
+
+#+BEGIN_SRC shell :shebang #!/bin/sh :tangle scripts/screenshot.window.sh
+maim --window=$(xdotool getactivewindow) \
+    | xclip -selection clipboard -target image/png
+#+END_SRC
+
+** Root
+
+| TODO | Make a shadow variant                                          |
+
+#+BEGIN_SRC shell :shebang #!/bin/sh :tangle scripts/screenshot.root.sh
+maim | xclip -selection clipboard -target image/png
 #+END_SRC
 
 * Peripherals

@@ -1,5 +1,6 @@
 .cache/
 eln-cache/
 elpa/
+scripts/
 .secret.el
 dotemacs.el
