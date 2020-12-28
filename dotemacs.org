@@ -293,6 +293,19 @@ preferences.
     '(flycheck-warning :underline `(:color ,warning :style line))
     '(fringe :background 'unspecified)
     '(helpful-heading :height 'unspecified)
+    '(magit-diff-added :background 'unspecified)
+    '(magit-diff-added-highlight
+      :background 'unspecified
+      :inherit 'magit-diff-context-highlight)
+    '(magit-diff-context-highlight
+      :background 'unspecified
+      :foreground 'unspecified
+      :inherit 'magit-diff-context)
+    '(magit-diff-hunk-region :inherit 'region)
+    '(magit-diff-removed :background 'unspecified)
+    '(magit-diff-removed-highlight
+      :background 'unspecified
+      :inherit 'magit-diff-context-highlight)
     '(org-block-begin-line :background 'unspecified :inherit 'shadow)
     '(org-quote :background 'unspecified :inherit '(font-lock-doc-face org-block))
     '(swiper-line-face :extend t)
@@ -334,24 +347,7 @@ Customize =doom-one= theme.
   '(lsp-face-highlight-read :foreground fg)
   '(lsp-face-highlight-textual :foreground fg)
   '(lsp-face-highlight-write :foreground fg)
-  '(magit-diff-added :background 'unspecified)
-  '(magit-diff-added-highlight
-    :background 'unspecified
-    :inherit 'magit-diff-context-highlight)
   '(magit-diff-context :background 'unspecified)
-  '(magit-diff-context-highlight
-    :background 'unspecified
-    :foreground 'unspecified
-    :inherit '(magit-diff-context org-block))
-  '(magit-diff-hunk-heading
-    :background 'unspecified
-    :foreground violet
-    :inherit 'org-block-begin-line)
-  '(magit-diff-hunk-region :inherit 'region)
-  '(magit-diff-removed :background 'unspecified)
-  '(magit-diff-removed-highlight
-    :background 'unspecified
-    :inherit 'magit-diff-context-highlight)
   '(magit-section-heading :foreground red)
   '(markdown-table-face :height me/font-size-small)
   '(org-block :background (doom-lighten bg .06))
