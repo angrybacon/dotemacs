@@ -318,20 +318,18 @@ Initialize known themes and provide a helper to cycle through known themes.
   "List of themes to take into account with `me/theme-cycle'.
 See `custom-available-themes'.")
 
-(defmacro me/theme-set-faces (theme &rest faces)
+(defun me/theme-set-faces (theme &rest faces)
   "Customize THEME with FACES specs.
 If THEME was not loaded yet, load it without enabling it. See
 `doom-themes-set-faces' for the proper format of FACES specs.
 If THEME is currently active, customizations are effective immediately, see
 `custom--inhibit-theme-enable'."
-  (declare (indent 1))
   (with-eval-after-load 'doom-themes
     (unless (memq theme custom-known-themes)
       (load-theme theme t t))
     (let* ((active (eq theme (car custom-enabled-themes)))
-           ;; FIXME: This value is not propagated to `doom-themes--build-face'
            (custom--inhibit-theme-enable (if active nil 'apply-only-user)))
-      `(doom-themes-set-faces ',theme ,@faces))))
+      (apply 'doom-themes-set-faces (append `(,theme) faces)))))
 
 (defun me/theme-cycle ()
   "Cycle through themes from `me/theme-known-themes' in succession.
@@ -389,10 +387,17 @@ preferences.
     '(whitespace-empty :extend t)))
 #+END_SRC
 
+Customize =doom-nord= theme.
+
+#+BEGIN_SRC emacs-lisp :tangle no
+(me/theme-set-faces 'doom-nord
+  '(doom-visual-bell :background (doom-darken red .5)))
+#+END_SRC
+
 Customize =doom-nord-light= theme.
 
 #+BEGIN_SRC emacs-lisp :tangle no
-(me/theme-set-faces doom-nord-light
+(me/theme-set-faces 'doom-nord-light
   '(doom-visual-bell :background (doom-lighten red .5))
   '(doom-modeline-evil-emacs-state :foreground (doom-lighten violet .3))
   '(evil-snipe-first-match-face :foreground fg)
@@ -411,7 +416,7 @@ Customize =doom-nord-light= theme.
 Customize =doom-one= theme.
 
 #+BEGIN_SRC emacs-lisp :tangle no
-(me/theme-set-faces doom-one
+(me/theme-set-faces 'doom-one
   '(doom-visual-bell :background dark-blue)
   '(helpful-heading :foreground red)
   '(info-title-4 :bold nil :foreground red)
