@@ -4,6 +4,81 @@
 #+PROPERTY: header-args :results silent
 #+PROPERTY: header-args:emacs-lisp :tangle yes
 
+* Table of Content
+:PROPERTIES:
+:TOC:      :ignore this :include all :depth 2
+:END:
+:CONTENTS:
+- [[#bootstrap][Bootstrap]]
+  - [[#better-defaults][Better Defaults]]
+  - [[#exwm][EXWM]]
+  - [[#load-secrets][Load Secrets]]
+  - [[#theme][Theme]]
+- [[#languages][Languages]]
+  - [[#css][CSS]]
+  - [[#html][HTML]]
+  - [[#javascript][JavaScript]]
+  - [[#json][JSON]]
+  - [[#lisp][Lisp]]
+  - [[#markdown][Markdown]]
+  - [[#org][Org]]
+  - [[#yaml][YAML]]
+- [[#features][Features]]
+  - [[#auto-completion][Auto-Completion]]
+  - [[#buffers-and-windows][Buffers and Windows]]
+  - [[#comments][Comments]]
+  - [[#dictionary][Dictionary]]
+  - [[#diff][Diff]]
+  - [[#dired][Dired]]
+  - [[#evil][Evil]]
+  - [[#expand][Expand]]
+  - [[#help][Help]]
+  - [[#hydra][Hydra]]
+  - [[#hydra--applications][Hydra / Applications]]
+  - [[#hydra--dates][Hydra / Dates]]
+  - [[#hydra--eyebrowse][Hydra / Eyebrowse]]
+  - [[#hydra--flycheck][Hydra / Flycheck]]
+  - [[#hydra--git][Hydra / Git]]
+  - [[#hydra--ivy][Hydra / Ivy]]
+  - [[#hydra--lsp][Hydra / LSP]]
+  - [[#hydra--markdown][Hydra / Markdown]]
+  - [[#hydra--org][Hydra / Org]]
+  - [[#hydra--projectile][Hydra / Projectile]]
+  - [[#hydra--rjsx][Hydra / RJSX]]
+  - [[#hydra--screenshot][Hydra / Screenshot]]
+  - [[#hydra--system][Hydra / System]]
+  - [[#hydra--ui][Hydra / UI]]
+  - [[#hydra--x][Hydra / X]]
+  - [[#irc][IRC]]
+  - [[#ivy][Ivy]]
+  - [[#ivy--counsel][Ivy / Counsel]]
+  - [[#ivy--swiper][Ivy / Swiper]]
+  - [[#line-numbers][Line Numbers]]
+  - [[#linters][Linters]]
+  - [[#lsp][LSP]]
+  - [[#mode-line][Mode-Line]]
+  - [[#navigation--avy][Navigation / Avy]]
+  - [[#navigation--inline][Navigation / Inline]]
+  - [[#navigation--paragraphs][Navigation / Paragraphs]]
+  - [[#navigation--pulse][Navigation / Pulse]]
+  - [[#navigation--replace][Navigation / Replace]]
+  - [[#navigation--scroll][Navigation / Scroll]]
+  - [[#navigation--search][Navigation / Search]]
+  - [[#os-specific][OS-Specific]]
+  - [[#parentheses][Parentheses]]
+  - [[#paste][Paste]]
+  - [[#point-and-region--expand][Point and Region / Expand]]
+  - [[#point-and-region--lines][Point and Region / Lines]]
+  - [[#point-and-region--multiple-cursors][Point and Region / Multiple Cursors]]
+  - [[#point-and-region--selected][Point and Region / Selected]]
+  - [[#projectile][Projectile]]
+  - [[#quality-of-life][Quality of Life]]
+  - [[#rest-client][REST Client]]
+  - [[#shell-and-terminal][Shell and Terminal]]
+  - [[#version-control][Version Control]]
+  - [[#whitespaces][Whitespaces]]
+:END:
+
 * Bootstrap
 
 ** Better Defaults
@@ -211,7 +286,6 @@ left monitor, and the latter to my right monitor which is the primary one.
 
 ** Load Secrets
 
-
 Load =.secret.el= to keep sensible things out of version control. For instance,
 you could set your identity by customizing both =user-full-name= and
 =user-mail-address=. This is also where you want your machine-specific settings to
@@ -358,7 +432,6 @@ Customize =doom-one= theme.
   '(variable-pitch :family 'unspecified))
 #+END_SRC
 
-
 * Languages
 
 ** CSS
@@ -499,13 +572,13 @@ whole buffer."
 
 ** Org
 
-| =org= | Built-in |
-
-
-| TODO | Check out =org-capture= |
+| =org=          | Built-in                                  |
+| =org-make-toc= | https://github.com/alphapapa/org-make-toc |
 
 This very file is organized with =org-mode=. Like Markdown, but with
 superpowers.
+
+| TODO | Check out =org-capture= |
 
 #+BEGIN_QUOTE
 Org mode is for keeping notes, maintaining TODO lists, planning projects, and
@@ -590,6 +663,15 @@ authoring documents with a fast and effective plain-text system.
   (format "*%s*" name))
 #+END_SRC
 
+Provide commands to upsert a TOC within an Org buffer. Automatically update the
+table on save.
+
+#+BEGIN_SRC emacs-lisp
+(use-package org-make-toc
+  :hook
+  (org-mode . org-make-toc-mode))
+#+END_SRC
+
 ** YAML
 
 | =yaml-mode= | https://github.com/yoshiki/yaml-mode |
@@ -597,7 +679,6 @@ authoring documents with a fast and effective plain-text system.
 #+BEGIN_SRC emacs-lisp
 (use-package yaml-mode)
 #+END_SRC
-
 
 * Features
 
@@ -658,7 +739,7 @@ completion candidates.
 | =winner=    | Built-in                              |
 
 
-| TODO | Bind =s-(hjkl)= outside of EXWM |
+| TODO | Bind =s-{h,j,k,l}= outside of EXWM |
 
 Don't ask before killing a buffer. I'm a consenting adult.
 
