@@ -1561,14 +1561,18 @@ Group window-related commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-x (:color blue)
-  (concat (me/hydra-heading "X" "Do" "Toggle") "
- _q_ quit            _r_ reset           _f_ floating        ^^
- ^^                  _R_ restart         ^^                  ^^
+  (concat (me/hydra-heading "Do" "Toggle" "Window" "Workspace") "
+ _r_ reset           _f_ fullscreen      _m_ move            _s_ swap
+ _R_ restart         _l_ floating        ^^                  _w_ switch
 ")
   ("q" nil)
-  ("f" exwm-floating-toggle-floating)
+  ("f" exwm-layout-set-fullscreen)
+  ("l" exwm-floating-toggle-floating)
+  ("m" exwm-workspace-move-window)
   ("r" exwm-reset)
-  ("R" exwm-restart))
+  ("R" exwm-restart)
+  ("s" (exwm-workspace-swap (car exwm-workspace--list) (cadr exwm-workspace--list)))
+  ("w" exwm-workspace-switch))
 #+END_SRC
 
 ** IRC
