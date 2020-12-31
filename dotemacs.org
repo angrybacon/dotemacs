@@ -214,6 +214,12 @@ redirect the writing to =/dev/null=.
 When no window manager is detected, Emacs will act as one. Bind a number of
 /system-wide/ all prefixed with the =super= modifier.
 
+Until a better implementation is found, machine-local preferably, the EXWM
+configuration throughout this entire file assumes that 2 monitors are available
+and that they each have their own EXWM workspace. This makes writing commands
+for workspace and window swapping easier. Actual workspace features are instead
+delegated to =eyebrowse=.
+
 While the =s-1= and =s-2= keybindings might look strange at first, their
 respective command are swapped on purpose so that the former corresponds to my
 left monitor, and the latter to my right monitor which is the primary one.
