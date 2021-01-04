@@ -325,7 +325,7 @@ Initialize known themes and provide a helper to cycle through known themes.
 | TODO | Allow cycling backwards |
 
 #+BEGIN_SRC emacs-lisp
-(defcustom me/theme-known-themes '(doom-nord doom-nord-light)
+(defvar me/theme-known-themes '(doom-nord doom-nord-light)
   "List of themes to take into account with `me/theme-cycle'.
 See `custom-available-themes'.")
 
@@ -822,16 +822,16 @@ otherwise.
 | TODO | Provide a Hydra head to toggle it off |
 
 #+BEGIN_SRC emacs-lisp
-(defcustom me/olivetti-whitelist-buffers '("*sratch*")
+(defvar me/olivetti-whitelist-buffers '("*sratch*")
   "List of buffers for which `olivetti-mode' should be enabled automatically.")
 
-(defcustom me/olivetti-whitelist-modes '(Custom-mode
-                                         Info-mode
-                                         dired-mode
-                                         erc-mode
-                                         lisp-interaction-mode
-                                         special-mode
-                                         vterm-mode)
+(defvar me/olivetti-whitelist-modes '(Custom-mode
+                                      Info-mode
+                                      dired-mode
+                                      erc-mode
+                                      lisp-interaction-mode
+                                      special-mode
+                                      vterm-mode)
   "List of modes for which `olivetti-mode' should be enabled automatically.")
 
 (defun me/olivetti-mode-maybe (&optional frame)
@@ -1003,9 +1003,9 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
 (use-package evil
   :bind
   (:map evil-inner-text-objects-map
-   ("g" . me/evil-whole-buffer)
+   ("g" . me/evil-buffer)
    :map evil-outer-text-objects-map
-   ("g" . me/evil-whole-buffer)
+   ("g" . me/evil-buffer)
    :map evil-motion-state-map
    ("q" . nil)
    ("gs" . avy-goto-char-timer)
@@ -1022,7 +1022,7 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
   (add-to-list 'evil-emacs-state-modes 'dired-mode)
   (add-to-list 'evil-emacs-state-modes 'vterm-mode)
   (add-to-list 'evil-motion-state-modes 'helpful-mode)
-  (evil-define-text-object me/evil-whole-buffer (_ &optional _ _ type)
+  (evil-define-text-object me/evil-buffer (_count &optional _begin _end type)
     "Text object to select the whole buffer."
     (evil-range (point-min) (point-max) type))
   (advice-add 'evil-indent :around #'me/evil-indent))
@@ -1493,7 +1493,7 @@ Group commands to take screenshots with various options.
 | TODO | Output to the echo area instead |
 
 #+BEGIN_SRC emacs-lisp
-(defcustom me/screenshot-variants
+(defvar me/screenshot-variants
   '("region" "region-shadow" "root" "window")
   "List of supported variants for `me/screenshot'.")
 
