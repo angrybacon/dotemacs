@@ -234,6 +234,7 @@ left monitor, and the latter to my right monitor which is the primary one.
 
 #+BEGIN_SRC emacs-lisp
 (use-package exwm
+  :if (eq system-type 'gnu/linux)
   :demand t
   :bind
   (:map exwm-mode-map
