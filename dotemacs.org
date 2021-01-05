@@ -8,6 +8,7 @@
 :END:
 :CONTENTS:
 - [[#bootstrap][Bootstrap]]
+  - [[#packages][Packages]]
   - [[#better-defaults][Better Defaults]]
   - [[#exwm][EXWM]]
   - [[#load-secrets][Load Secrets]]
@@ -79,6 +80,30 @@
 
 * Bootstrap
 
+** Packages
+
+| =package=     | Built-in                                |
+| =use-package= | https://github.com/jwiegley/use-package |
+
+Setup MELPA.
+
+#+BEGIN_SRC emacs-lisp
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(package-initialize)
+#+END_SRC
+
+Install the =use-package= dependency.
+
+#+BEGIN_SRC emacs-lisp
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package t))
+(setq-default
+ use-package-always-defer t
+ use-package-always-ensure t)
+#+END_SRC
+
 ** Better Defaults
 
 Here are what I consider better defaults as per my own experience.
@@ -108,12 +133,10 @@ Here are what I consider better defaults as per my own experience.
  tab-width 4                            ; Set width for tabs
  uniquify-buffer-name-style 'forward    ; Uniquify buffer names
  window-combination-resize t            ; Resize windows proportionally
- window-divider-default-right-width 2   ; Thin window vertical dividers
  x-stretch-cursor t)                    ; Stretch cursor to the glyph width
 (delete-selection-mode 1)               ; Replace region when inserting text
 (fset 'yes-or-no-p 'y-or-n-p)           ; Replace yes/no prompts with y/n
 (global-subword-mode 1)                 ; Iterate through CamelCase words
-(menu-bar-mode 0)                       ; Disable the menu bar
 (mouse-avoidance-mode 'exile)           ; Avoid collision of mouse with point
 (put 'downcase-region 'disabled nil)    ; Enable downcase-region
 (put 'upcase-region 'disabled nil)      ; Enable upcase-region
@@ -143,22 +166,6 @@ directory with an ever-growing number of packages used on a daily basis.
   (setq-default tramp-persistency-file-name (me/cache-concat "tramp.eld")))
 (with-eval-after-load 'url
   (setq-default url-configuration-directory (me/cache-concat "url/")))
-#+END_SRC
-
-Some UI elements are rather invasive. No-mouse master race.
-
-| TODO | Move these to =early-init.el= |
-
-#+BEGIN_SRC emacs-lisp
-(when window-system
-  (blink-cursor-mode 0)                 ; Disable the cursor blinking
-  (fringe-mode 2)                       ; Initialize thinner vertical fringes
-  (scroll-bar-mode 0)                   ; Disable the scroll bar
-  (tool-bar-mode 0)                     ; Disable the tool bar
-  (tooltip-mode 0)                      ; Disable the tooltips
-  (window-divider-mode 1)               ; Disable the tooltips
-
-  (define-fringe-bitmap 'left-curly-arrow [192] nil nil '(center t)))
 #+END_SRC
 
 Enable fullscreen. Given there are differences in meaning for /fullscreen/
@@ -445,6 +452,12 @@ Customize =doom-one= theme.
   '(secondary-selection :background (doom-darken dark-cyan .6))
   '(tooltip :background base1)
   '(variable-pitch :family 'unspecified))
+#+END_SRC
+
+Prettify fringe bitmaps.
+
+#+BEGIN_SRC emacs-lisp
+(define-fringe-bitmap 'left-curly-arrow [192] nil nil '(center t))
 #+END_SRC
 
 * Languages

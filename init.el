@@ -5,7 +5,6 @@
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: October 16, 2014
 ;; Homepage: https://github.com/angrybacon/dotemacs
-;; Keywords: abbrev, convenience, faces, maint, outlines, vc
 
 ;; This program is free software. You can redistribute it and/or modify it under
 ;; the terms of the Do What The Fuck You Want To Public License, version 2 as
@@ -24,6 +23,8 @@
 
 ;;; Code:
 
+(require 'org)
+
 (let ((default-directory user-emacs-directory)
       (file-name-handler-alist nil)
       (gc-cons-percentage .6)
@@ -31,31 +32,22 @@
       (read-process-output-max (* 1024 1024)))
 
   ;; Disable that pesky echo message
-  (setq-default inhibit-startup-echo-area-message (user-login-name))
+  (setq inhibit-startup-echo-area-message user-login-name)
 
-  ;; Set repositories
-  (require 'package)
-  (setq-default
-   load-prefer-newer t
-   package-enable-at-startup nil)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-  (package-initialize)
+  ;; Tangle and compile if necessary only, then load the configuration
+  (let* ((.org "dotemacs.org")
+         (.el (concat (file-name-sans-extension .org) ".el"))
+         (modification-time
+          (file-attribute-modification-time (file-attributes .org))))
+    (unless (org-file-newer-than-p .el modification-time)
+      (org-babel-tangle-file .org .el "emacs-lisp")
+      (byte-compile-file .el))
+    (load-file .el))
 
-  ;; Install `use-package' dependency by hand
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package t))
-  (setq-default
-   package-native-compile t
-   use-package-always-defer t
-   use-package-always-ensure t)
+  ;; Set the working directory to home regardless of where Emacs was started from
+  (cd "~/")
 
-  ;; Tangle configuration
-  (setq-default safe-local-variable-values '((after-save-hook . (org-babel-tangle t))))
-  (org-babel-load-file (expand-file-name "dotemacs.org" user-emacs-directory) t)
+  ;; Collect garbage when all else is done
   (garbage-collect))
-
-;; Reset the working directory regardless of where Emacs was started
-(cd "~/")
 
 ;;; init.el ends here
