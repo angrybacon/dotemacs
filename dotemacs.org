@@ -1091,8 +1091,18 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
 
 ** Help
 
+| =help-fns=  | Built-in                           |
 | =help-mode= | Built-in                           |
 | =helpful=   | https://github.com/Wilfred/helpful |
+
+Bind useful commands in help buffers.
+
+#+BEGIN_SRC emacs-lisp
+(use-package help-fns
+  :ensure nil
+  :bind
+  ("C-h K" . describe-keymap))
+#+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package help-mode
