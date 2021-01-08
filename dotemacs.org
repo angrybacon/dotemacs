@@ -309,14 +309,16 @@ you could set your identity by customizing both =user-full-name= and
 be.
 
 #+BEGIN_SRC emacs-lisp
-(defvar me/erc-nick           nil       "The ERC nick to use.")
-(defvar me/erc-password       nil       "The ERC password to use.")
-(defvar me/erc-port           nil       "The ERC port to use.")
-(defvar me/erc-server         nil       "The ERC server to use.")
-(defvar me/font-family        "Monaco"  "The font to use.")
-(defvar me/font-size-default  120       "The font size to use for default text.")
-(defvar me/font-size-large    1.2       "The font size to use for larger text.")
-(defvar me/font-size-small    .8        "The font size to use for smaller text.")
+(defvar me/erc-nick nil                 "The ERC nick to use.")
+(defvar me/erc-password nil             "The ERC password to use.")
+(defvar me/erc-port nil                 "The ERC port to use.")
+(defvar me/erc-server nil               "The ERC server to use.")
+(defvar me/font-default "monospace"     "The font to use for default text.")
+(defvar me/font-heading "sans-serif"    "The font to use for headings.")
+(defvar me/font-size-default 120        "The font size to use for default text.")
+(defvar me/font-size-heading 1.6        "The font size to use for headings.")
+(defvar me/font-size-large 1.2          "The font size to use for larger text.")
+(defvar me/font-size-small .9           "The font size to use for smaller text.")
 
 (let ((secret.el (expand-file-name ".secret.el")))
   (load secret.el t))
@@ -374,50 +376,57 @@ preferences.
   :config
   (load-theme 'doom-nord t)
   (doom-themes-org-config)
-  (doom-themes-visual-bell-config)
-  (doom-themes-set-faces nil
-    '(default :font me/font-family :height me/font-size-default)
-    '(doom-modeline-bar :background nil :inherit nil)
-    '(flycheck-error :underline `(:color ,error :style line))
-    '(flycheck-info :underline `(:color ,highlight :style line))
-    '(flycheck-warning :underline `(:color ,warning :style line))
-    '(fringe :background 'unspecified)
-    '(helpful-heading :height 'unspecified)
-    '(magit-diff-added :background 'unspecified)
-    '(magit-diff-added-highlight
-      :background 'unspecified
-      :inherit 'magit-diff-context-highlight)
-    '(magit-diff-context-highlight
-      :background 'unspecified
-      :foreground 'unspecified
-      :inherit 'magit-diff-context)
-    '(magit-diff-hunk-region :inherit 'region)
-    '(magit-diff-removed :background 'unspecified)
-    '(magit-diff-removed-highlight
-      :background 'unspecified
-      :inherit 'magit-diff-context-highlight)
-    '(org-block-begin-line :background 'unspecified :inherit 'shadow)
-    '(org-quote :background 'unspecified :inherit '(font-lock-doc-face org-block))
-    '(swiper-line-face :extend t)
-    '(vertical-border :background 'unspecified :inverse-video t)
-    '(which-key-command-description-face :foreground 'unspecified)
-    '(whitespace-empty :extend t)))
+  (doom-themes-visual-bell-config))
+#+END_SRC
+
+Customize faces for all Doom themes.
+
+#+BEGIN_SRC emacs-lisp
+(doom-themes-set-faces nil
+  '(default :font me/font-default :height me/font-size-default)
+  '(doom-modeline-bar :background nil :inherit nil)
+  '(flycheck-error :underline `(:color ,error :style line))
+  '(flycheck-info :underline `(:color ,highlight :style line))
+  '(flycheck-warning :underline `(:color ,warning :style line))
+  '(fringe :background 'unspecified)
+  '(helpful-heading :font me/font-heading :height me/font-size-heading)
+  '(lsp-ui-peek-highlight :box nil)
+  '(magit-diff-added :background 'unspecified)
+  '(magit-diff-added-highlight
+    :background 'unspecified
+    :inherit 'magit-diff-context-highlight)
+  '(magit-diff-context-highlight
+    :background 'unspecified
+    :foreground 'unspecified
+    :inherit 'magit-diff-context)
+  '(magit-diff-hunk-region :inherit 'region)
+  '(magit-diff-removed :background 'unspecified)
+  '(magit-diff-removed-highlight
+    :background 'unspecified
+    :inherit 'magit-diff-context-highlight)
+  '(markdown-table-face :height me/font-size-small)
+  '(org-block-begin-line :background 'unspecified :inherit 'shadow)
+  '(org-quote :background 'unspecified :inherit '(font-lock-doc-face org-block))
+  '(swiper-line-face :extend t)
+  '(vertical-border :background 'unspecified :inverse-video t)
+  '(which-key-command-description-face :foreground 'unspecified)
+  '(whitespace-empty :extend t))
 #+END_SRC
 
 Customize =doom-nord= theme.
 
-#+BEGIN_SRC emacs-lisp :tangle no
+#+BEGIN_SRC emacs-lisp
 (me/theme-set-faces 'doom-nord
-  '(doom-visual-bell :background (doom-darken red .5)))
+  '(doom-visual-bell :background (doom-darken red .5))
+  '(helpful-heading :foreground orange))
 #+END_SRC
 
 Customize =doom-nord-light= theme.
 
-#+BEGIN_SRC emacs-lisp :tangle no
+#+BEGIN_SRC emacs-lisp
 (me/theme-set-faces 'doom-nord-light
   '(doom-visual-bell :background (doom-lighten red .5))
   '(doom-modeline-evil-emacs-state :foreground (doom-lighten violet .3))
-  '(evil-snipe-first-match-face :foreground fg)
   '(helpful-heading :foreground orange)
   '(isearch :background cyan :foreground base0)
   '(lazy-highlight :background (doom-lighten cyan .4))
@@ -426,13 +435,12 @@ Customize =doom-nord-light= theme.
   '(lsp-face-highlight-write :background (doom-lighten cyan .4) :foreground base0)
   '(magit-section-highlight :inherit nil)
   '(mode-line :background bg-alt)
-  '(mode-line-inactive :background bg-alt)
-  '(org-block :background base2))
+  '(mode-line-inactive :background bg-alt))
 #+END_SRC
 
 Customize =doom-one= theme.
 
-#+BEGIN_SRC emacs-lisp :tangle no
+#+BEGIN_SRC emacs-lisp
 (me/theme-set-faces 'doom-one
   '(doom-visual-bell :background dark-blue)
   '(helpful-heading :foreground red)
@@ -446,7 +454,6 @@ Customize =doom-one= theme.
   '(lsp-face-highlight-write :foreground fg)
   '(magit-diff-context :background 'unspecified)
   '(magit-section-heading :foreground red)
-  '(markdown-table-face :height me/font-size-small)
   '(org-block :background (doom-lighten bg .06))
   '(outline-1 :foreground red)
   '(secondary-selection :background (doom-darken dark-cyan .6))
