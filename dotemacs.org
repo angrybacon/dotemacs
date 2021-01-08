@@ -1561,7 +1561,7 @@ Group interface-related commands.
 (defhydra hydra-ui (:color pink)
   (concat (me/hydra-heading "Theme" "Windows" "Zoom" "Line Numbers") "
  _t_ cycle           _b_ balance         _-_ out             _n_ mode: %s`display-line-numbers
- ^^                  _m_ maximize frame  _=_ in              _N_ absolute: %s`display-line-numbers-current-absolute
+ _T_ cycle (noexit)  _m_ maximize frame  _=_ in              _N_ absolute: %s`display-line-numbers-current-absolute
  ^^                  ^^                  _0_ reset           ^^
  ^^                  ^^                  ^^                  ^^
  ^^                  ^^                  ^^                  ^^
@@ -1574,7 +1574,8 @@ Group interface-related commands.
   ("m" toggle-frame-maximized)
   ("n" me/display-line-numbers-toggle-type)
   ("N" me/display-line-numbers-toggle-absolute)
-  ("t" me/theme-cycle))
+  ("t" me/theme-cycle :color blue)
+  ("T" me/theme-cycle))
 #+END_SRC
 
 ** Hydra / X
