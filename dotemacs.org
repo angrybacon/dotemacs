@@ -76,6 +76,7 @@
   - [[#shell-and-terminal][Shell and Terminal]]
   - [[#version-control][Version Control]]
   - [[#whitespaces][Whitespaces]]
+  - [[#workspaces][Workspaces]]
 :END:
 
 * Bootstrap
@@ -797,28 +798,6 @@ configurations.
   (desktop-restore-forces-onscreen nil))
 #+END_SRC
 
-Workspaces within Emacs.
-
-#+BEGIN_QUOTE
-=eyebrowse= is a global minor mode for Emacs that allows you to manage your
-window configurations in a simple manner, just like tiling window managers like
-i3wm with their workspaces do. It displays their current state in the modeline
-by default. The behaviour is modeled after =ranger=, a file manager written in
-Python.
-
---- Vasilij Schneidermann
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package eyebrowse
-  :hook
-  (after-init . eyebrowse-mode)
-  :custom
-  (eyebrowse-mode-line-left-delimiter "")
-  (eyebrowse-mode-line-right-delimiter "")
-  (eyebrowse-new-workspace t))
-#+END_SRC
-
 Olivetti lets you center your buffer for aesthetics and focus. I have it set up
 to turn on automatically when visiting a single buffer, and disable itself
 otherwise.
@@ -1245,14 +1224,13 @@ Group Eyebrowse commands.
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-eyebrowse (:color teal)
   (concat (me/hydra-heading "Eyebrowse" "Do" "Switch") "
- _q_ quit            _c_ create          _0_-_9_ %s(eyebrowse-mode-line-indicator)
+ _q_ quit            _c_ create          _1_-_9_ %s(eyebrowse-mode-line-indicator)
  ^^                  _k_ kill            _<_ previous        ^^
  ^^                  _r_ rename          _>_ next            ^^
  ^^                  ^^                  _e_ last            ^^
  ^^                  ^^                  _s_ switch          ^^
 ")
   ("q" nil)
-  ("0" eyebrowse-switch-to-window-config-0)
   ("1" eyebrowse-switch-to-window-config-1)
   ("2" eyebrowse-switch-to-window-config-2)
   ("3" eyebrowse-switch-to-window-config-3)
@@ -1298,7 +1276,9 @@ Group Flycheck commands.
 
 ** Hydra / Git
 
-Group Magit commands.
+Group =git= commands.
+
+| TODO | Add clone to Projectile projects |
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-git (:color teal)
@@ -2478,6 +2458,8 @@ Add support for multiple cursors within Evil.
 
 Enable multiple cursors outside Evil. Some witchcraft at work here.
 
+| TODO | Fix =mc/keymap= not always being on top |
+
 #+BEGIN_SRC emacs-lisp
 (use-package multiple-cursors
   :bind*
@@ -2987,7 +2969,12 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
   (:map magit-file-section-map
    ("<return>" . magit-diff-visit-file-other-window)
    :map magit-hunk-section-map
-   ("<return>" . magit-diff-visit-file-other-window))
+   ("<return>" . magit-diff-visit-file-other-window)
+   :map magit-status-mode-map
+   ("M-1" . nil)
+   ("M-2" . nil)
+   ("M-3" . nil)
+   ("M-4" . nil))
   :custom
   (epg-pinentry-mode 'loopback)
   (magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
@@ -3068,4 +3055,41 @@ lines.
   (text-mode . whitespace-mode)
   :custom
   (whitespace-style '(face empty indentation::space tab trailing)))
+#+END_SRC
+
+** Workspaces
+
+Workspaces within Emacs.
+
+| TODO | Free =M-{1-9,0}= in  EXWM buffers |
+
+#+BEGIN_QUOTE
+=eyebrowse= is a global minor mode for Emacs that allows you to manage your
+window configurations in a simple manner, just like tiling window managers like
+i3wm with their workspaces do. It displays their current state in the modeline
+by default. The behaviour is modeled after =ranger=, a file manager written in
+Python.
+
+--- Vasilij Schneidermann
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package eyebrowse
+  :bind
+  ("M-0" . eyebrowse-last-window-config)
+  ("M-1" . eyebrowse-switch-to-window-config-1)
+  ("M-2" . eyebrowse-switch-to-window-config-2)
+  ("M-3" . eyebrowse-switch-to-window-config-3)
+  ("M-4" . eyebrowse-switch-to-window-config-4)
+  ("M-5" . eyebrowse-switch-to-window-config-5)
+  ("M-6" . eyebrowse-switch-to-window-config-6)
+  ("M-7" . eyebrowse-switch-to-window-config-7)
+  ("M-8" . eyebrowse-switch-to-window-config-8)
+  ("M-9" . eyebrowse-switch-to-window-config-9)
+  :hook
+  (after-init . eyebrowse-mode)
+  :custom
+  (eyebrowse-mode-line-left-delimiter "")
+  (eyebrowse-mode-line-right-delimiter "")
+  (eyebrowse-new-workspace t))
 #+END_SRC
