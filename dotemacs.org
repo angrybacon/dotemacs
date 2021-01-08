@@ -1001,11 +1001,15 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
   (:map evil-inner-text-objects-map
    ("g" . me/evil-buffer)
    :map evil-outer-text-objects-map
-   ("g" . me/evil-buffer)
+   ("g" . me/evil-buffer))
+  (:map evil-insert-state-map
+   ("C-a" . nil)
+   ("C-e" . nil)
    :map evil-motion-state-map
    ("q" . nil)
    ("gs" . avy-goto-char-timer)
    ("gS" . avy-goto-char)
+   ("C-e" . nil)
    :map evil-normal-state-map
    ("q" . nil))
   :custom
