@@ -369,6 +369,7 @@ Customize faces for all Doom themes.
   '(magit-diff-removed-highlight
     :background 'unspecified
     :inherit 'magit-diff-context-highlight)
+  '(magit-section-highlight :inherit nil)
   '(markdown-table-face :height me/font-size-small)
   '(org-block-begin-line :background 'unspecified :inherit 'shadow)
   '(org-quote :background 'unspecified :inherit '(font-lock-doc-face org-block))
@@ -432,16 +433,17 @@ Customize =doom-nord-light= theme.
 #+BEGIN_SRC emacs-lisp
 (me/theme-set-faces 'doom-nord-light
   '(doom-visual-bell :background (doom-lighten red .5))
-  '(doom-modeline-evil-emacs-state :foreground (doom-lighten violet .3))
+  '(doom-modeline-evil-emacs-state :foreground (doom-lighten violet .4))
+  '(doom-modeline-evil-insert-state :foreground (doom-lighten blue .4))
+  '(doom-modeline-evil-normal-state :foreground (doom-lighten green .4))
+  '(doom-modeline-evil-replace-state :foreground (doom-lighten red .2))
+  '(doom-modeline-evil-visual-state :foreground (doom-lighten yellow .4))
   '(helpful-heading :foreground orange)
   '(isearch :background cyan :foreground base0)
   '(lazy-highlight :background (doom-lighten cyan .4))
   '(lsp-face-highlight-read :background (doom-lighten cyan .4) :foreground base0)
   '(lsp-face-highlight-textual :background (doom-lighten cyan .4) :foreground base0)
-  '(lsp-face-highlight-write :background (doom-lighten cyan .4) :foreground base0)
-  '(magit-section-highlight :inherit nil)
-  '(mode-line :background bg-alt)
-  '(mode-line-inactive :background bg-alt))
+  '(lsp-face-highlight-write :background (doom-lighten cyan .4) :foreground base0))
 #+END_SRC
 
 Customize =doom-one= theme.
