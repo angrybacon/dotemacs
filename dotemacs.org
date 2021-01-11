@@ -378,12 +378,48 @@ Customize faces for all Doom themes.
   '(whitespace-empty :extend t))
 #+END_SRC
 
+Initialize known themes and provide a helper to cycle through known themes.
+
+| TODO | Allow cycling backwards                                      |
+| TODO | Make hydra-ui T head prefer =enable-theme= over =load-theme= |
+
+#+BEGIN_SRC emacs-lisp
+(defvar me/theme-known-themes '(doom-nord doom-nord-light)
+  "List of themes to take into account with `me/theme-cycle'.
+See `custom-available-themes'.")
+
+(defun me/theme-set-faces (theme &rest faces)
+  "Customize THEME with FACES specs.
+If THEME was not loaded yet, load it without enabling it. See
+`doom-themes-set-faces' for the proper format of FACES specs.
+If THEME is currently active, customizations are effective immediately, see
+`custom--inhibit-theme-enable'."
+  (with-eval-after-load 'doom-themes
+    (unless (memq theme custom-known-themes)
+      (load-theme theme t t))
+    (let* ((active (eq theme (car custom-enabled-themes)))
+           (custom--inhibit-theme-enable (if active nil 'apply-only-user)))
+      (apply 'doom-themes-set-faces (append `(,theme) faces)))))
+
+(defun me/theme-cycle ()
+  "Cycle through themes from `me/theme-known-themes' in succession."
+  (interactive)
+  (let* ((current (car custom-enabled-themes))
+         (next (or (cadr (memq current me/theme-known-themes))
+                   (car me/theme-known-themes))))
+    (mapc #'disable-theme custom-enabled-themes)
+    (when next
+      (load-theme next t))
+    (message "%s" next)))
+#+END_SRC
+
 Customize =doom-nord= theme.
 
 #+BEGIN_SRC emacs-lisp
 (me/theme-set-faces 'doom-nord
   '(doom-visual-bell :background (doom-darken red .5))
-  '(helpful-heading :foreground orange))
+  '(helpful-heading :foreground orange)
+  '(isearch :background magenta))
 #+END_SRC
 
 Customize =doom-nord-light= theme.
@@ -424,40 +460,6 @@ Customize =doom-one= theme.
   '(secondary-selection :background (doom-darken dark-cyan .6))
   '(tooltip :background base1)
   '(variable-pitch :family 'unspecified))
-#+END_SRC
-
-Initialize known themes and provide a helper to cycle through known themes.
-
-| TODO | Allow cycling backwards |
-
-#+BEGIN_SRC emacs-lisp
-(defvar me/theme-known-themes '(doom-nord doom-nord-light)
-  "List of themes to take into account with `me/theme-cycle'.
-See `custom-available-themes'.")
-
-(defun me/theme-set-faces (theme &rest faces)
-  "Customize THEME with FACES specs.
-If THEME was not loaded yet, load it without enabling it. See
-`doom-themes-set-faces' for the proper format of FACES specs.
-If THEME is currently active, customizations are effective immediately, see
-`custom--inhibit-theme-enable'."
-  (with-eval-after-load 'doom-themes
-    (unless (memq theme custom-known-themes)
-      (load-theme theme t t))
-    (let* ((active (eq theme (car custom-enabled-themes)))
-           (custom--inhibit-theme-enable (if active nil 'apply-only-user)))
-      (apply 'doom-themes-set-faces (append `(,theme) faces)))))
-
-(defun me/theme-cycle ()
-  "Cycle through themes from `me/theme-known-themes' in succession."
-  (interactive)
-  (let* ((current (car custom-enabled-themes))
-         (next (or (cadr (memq current me/theme-known-themes))
-                   (car me/theme-known-themes))))
-    (mapc #'disable-theme custom-enabled-themes)
-    (if next
-        (progn (load-theme next t) (message "%s" next))
-      (message "No theme"))))
 #+END_SRC
 
 Prettify fringe bitmaps.
