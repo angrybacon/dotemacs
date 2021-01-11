@@ -388,6 +388,11 @@ Initialize known themes and provide a helper to cycle through known themes.
   "List of themes to take into account with `me/theme-cycle'.
 See `custom-available-themes'.")
 
+(defun me/theme-disable ()
+  "Disable all themes found in `custom-enable-themes'."
+  (interactive)
+  (mapc #'disable-theme custom-enabled-themes))
+
 (defun me/theme-set-faces (theme &rest faces)
   "Customize THEME with FACES specs.
 If THEME was not loaded yet, load it without enabling it. See
@@ -407,7 +412,7 @@ If THEME is currently active, customizations are effective immediately, see
   (let* ((current (car custom-enabled-themes))
          (next (or (cadr (memq current me/theme-known-themes))
                    (car me/theme-known-themes))))
-    (mapc #'disable-theme custom-enabled-themes)
+    (me/theme-disable)
     (when next
       (load-theme next t))
     (message "%s" next)))
