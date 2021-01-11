@@ -1532,7 +1532,7 @@ Group system-related commands.
 (defhydra hydra-system (:color teal)
   (concat (me/hydra-heading "System" "Packages" "Toggle" "Other") "
  _q_ quit            _i_ install         _g_ debug: %-3s`debug-on-error      _d_ clear byte-compiled
- ^^                  _p_ list            ^^                  _D_ clear desktop
+ ^^                  _p_ list            _w_ which-key %-3s`which-key-mode   _D_ clear desktop
  ^^                  _r_ refresh         ^^                  _l_ list processes
  ^^                  ^^                  ^^                  _Q_ clear and kill Emacs
  ^^                  ^^                  ^^                  _s_ revert buffer
@@ -1549,7 +1549,8 @@ Group system-related commands.
          (desktop-remove)
          (save-buffers-kill-terminal)))
   ("r" package-refresh-contents :color red)
-  ("s" (revert-buffer nil t)))
+  ("s" (revert-buffer nil t))
+  ("w" which-key-mode))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
