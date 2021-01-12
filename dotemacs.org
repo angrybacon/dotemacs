@@ -226,10 +226,6 @@ and that they each have their own EXWM workspace. This makes writing commands
 for workspace and window swapping easier. Actual workspace features are instead
 delegated to =eyebrowse=.
 
-While the =s-1= and =s-2= keybindings might look strange at first, their
-respective command are swapped on purpose so that the former corresponds to my
-left monitor, and the latter to my right monitor which is the primary one.
-
 | TODO | Make =xdg-open= switch workspace/eyebrowse accordingly |
 | TODO | Notifications                                          |
 | TODO | Check out https://github.com/agzam/exwm-edit           |
@@ -251,8 +247,8 @@ left monitor, and the latter to my right monitor which is the primary one.
   :custom
   (exwm-input-global-keys
    `((,(kbd "s-!") . me/exwm-read-shell-command)
-     (,(kbd "s-1") . (lambda () (interactive) (exwm-workspace-switch-create 1)))
-     (,(kbd "s-2") . (lambda () (interactive) (exwm-workspace-switch-create 0)))
+     (,(kbd "s-1") . (lambda () (interactive) (exwm-workspace-switch 0)))
+     (,(kbd "s-2") . (lambda () (interactive) (exwm-workspace-switch 1)))
      (,(kbd "s-SPC") . counsel-linux-app)
      (,(kbd "s-h") . windmove-left)
      (,(kbd "s-j") . windmove-down)
@@ -270,8 +266,8 @@ left monitor, and the latter to my right monitor which is the primary one.
   ;;       https://github.com/ch11ng/exwm/issues/563#issuecomment-752813915
   (exwm-manage-configurations
    '(((member exwm-instance-name '("brave-browser" "discord" "spotify"))
-      workspace 1)))
-  (exwm-randr-workspace-monitor-plist '(0 "DVI-D-0" 1 "HDMI-0"))
+      workspace 0)))
+  (exwm-randr-workspace-monitor-plist '(0 "DVI-D-1" 1 "HDMI-1"))
   (exwm-workspace-index-map (lambda (index) (number-to-string (1+ index))))
   (exwm-workspace-number 2)
   (exwm-workspace-warp-cursor t)
@@ -298,8 +294,8 @@ left monitor, and the latter to my right monitor which is the primary one.
   "Set resolution for EXWM displays ie. workspaces."
   (start-process-shell-command
    "xrandr" nil "xrandr \
---output HDMI-0 --mode 1920x1080 --pos 0x0 \
---output DVI-D-0 --mode 1920x1080 --pos 1920x0"))
+--output DVI-D-1 --auto \
+--output HDMI-1 --auto --right-of DVI-D-1"))
 #+END_SRC
 
 ** Load Secrets
