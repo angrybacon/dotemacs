@@ -32,10 +32,10 @@
 (setq-default
  default-frame-alist
  '((horizontal-scroll-bars . nil)       ;; No horizontal scroll-bars
-   (left-fringe . 2)                    ;; Thin left fringe
+   (left-fringe . 3)                    ;; Thin left fringe
    (menu-bar-lines . 0)                 ;; No menu bar
-   (right-divider-width . 2)            ;; Thin vertical window divider
-   (right-fringe . 2)                   ;; Thin right fringe
+   (right-divider-width . 1)            ;; Thin vertical window divider
+   (right-fringe . 3)                   ;; Thin right fringe
    (tool-bar-lines . 0)                 ;; No tool bar
    (vertical-scroll-bars . nil)))       ;; No vertical scroll-bars
 

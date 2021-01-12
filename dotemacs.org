@@ -472,7 +472,7 @@ Customize =doom-one= theme.
 Prettify fringe bitmaps.
 
 #+BEGIN_SRC emacs-lisp
-(define-fringe-bitmap 'left-curly-arrow [192] nil nil '(center t))
+(define-fringe-bitmap 'left-curly-arrow [255] nil nil '(center t))
 #+END_SRC
 
 * Languages
@@ -1875,7 +1875,7 @@ https://www.flycheck.org/en/latest/user/flycheck-versus-flymake.html.
   (flycheck-emacs-lisp-load-path 'inherit)
   (flycheck-indication-mode 'right-fringe)
   :config
-  (define-fringe-bitmap 'flycheck-fringe-bitmap-double-arrow [192] nil nil '(center t)))
+  (define-fringe-bitmap 'flycheck-fringe-bitmap-double-arrow [255] nil nil '(center t)))
 #+END_SRC
 
 Run Prettier against the whole buffer on save. You can toggle the minor mode on
@@ -2963,9 +2963,9 @@ Display indicators in the left fringe for Git changes.
   :hook
   (after-change-major-mode . me/git-gutter-enable)
   :config
-  (define-fringe-bitmap 'git-gutter-fr:added [192] nil nil '(center t))
-  (define-fringe-bitmap 'git-gutter-fr:deleted [192 192 192 192] nil nil 'bottom)
-  (define-fringe-bitmap 'git-gutter-fr:modified [192] nil nil '(center t)))
+  (define-fringe-bitmap 'git-gutter-fr:added [255] nil nil '(center t))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [255 255 255 255] nil nil 'bottom)
+  (define-fringe-bitmap 'git-gutter-fr:modified [255] nil nil '(center t)))
 #+END_SRC
 
 Major modes for Git-specific files.
