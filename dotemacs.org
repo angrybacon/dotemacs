@@ -419,21 +419,25 @@ Customize =doom-nord= theme.
 
 #+BEGIN_SRC emacs-lisp
 (me/theme-set-faces 'doom-nord
+  '(doom-modeline-evil-emacs-state :foreground magenta)
   '(doom-visual-bell :background (doom-darken red .5))
   '(helpful-heading :foreground orange)
-  '(isearch :background magenta))
+  '(isearch :background magenta)
+  '(lsp-face-highlight-read :background (doom-darken yellow .5) :foreground fg)
+  '(lsp-face-highlight-textual :background (doom-darken yellow .5) :foreground fg)
+  '(lsp-face-highlight-write :background (doom-darken yellow .5) :foreground fg))
 #+END_SRC
 
 Customize =doom-nord-light= theme.
 
 #+BEGIN_SRC emacs-lisp
 (me/theme-set-faces 'doom-nord-light
-  '(doom-visual-bell :background (doom-lighten red .5))
   '(doom-modeline-evil-emacs-state :foreground (doom-lighten violet .4))
   '(doom-modeline-evil-insert-state :foreground (doom-lighten blue .4))
   '(doom-modeline-evil-normal-state :foreground (doom-lighten green .4))
   '(doom-modeline-evil-replace-state :foreground (doom-lighten red .2))
   '(doom-modeline-evil-visual-state :foreground (doom-lighten yellow .4))
+  '(doom-visual-bell :background (doom-lighten red .5))
   '(helpful-heading :foreground orange)
   '(isearch :background cyan :foreground base0)
   '(lazy-highlight :background (doom-lighten cyan .4))
