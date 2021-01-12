@@ -2807,6 +2807,7 @@ Highlight line under point.
 (use-package hl-line
   :ensure nil
   :hook
+  (dired-mode . hl-line-mode)
   (prog-mode . hl-line-mode)
   (special-mode . hl-line-mode)
   (text-mode . hl-line-mode)
