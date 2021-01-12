@@ -73,7 +73,7 @@
   - [[#projectile][Projectile]]
   - [[#quality-of-life][Quality of Life]]
   - [[#rest-client][REST Client]]
-  - [[#shell-and-terminal][Shell and Terminal]]
+  - [[#terminal][Terminal]]
   - [[#version-control][Version Control]]
   - [[#whitespaces][Whitespaces]]
   - [[#workspaces][Workspaces]]
@@ -2887,56 +2887,20 @@ Emacs can also emulate an interactive REST client.
   (restclient-mode . display-line-numbers-mode))
 #+END_SRC
 
-** Shell and Terminal
+** Terminal
 
-| =em-banner= | Built-in                                 |
-| =em-hist=   | Built-in                                 |
-| =esh-mode=  | Built-in                                 |
-| =esh-proc=  | Built-in                                 |
 | =vterm=     | https://github.com/akermu/emacs-libvterm |
-
-| TODO | Advice =eshell-bol= to support shift    |
-| TODO | Advice =vterm= motions to support shift |
-
-#+BEGIN_SRC emacs-lisp
-(use-package em-banner
-  :ensure nil
-  :custom
-  (eshell-banner-message ""))
-
-(use-package em-hist
-  :ensure nil
-  :custom
-  (eshell-hist-ignoredups t))
-
-(use-package esh-mode
-  :ensure nil
-  :preface
-  (defun me/eshell-bol-shifted ()
-    "See `eshell-bol'. Support shift."
-    (interactive "^")
-    (eshell-bol))
-  :bind
-  (:map eshell-mode-map
-   ([remap eshell-bol] . me/eshell-bol-shifted))
-  :hook
-  (eshell-mode . (lambda () (setq-local scroll-margin 0)))
-  :custom
-  (eshell-scroll-to-bottom-on-input 'all)
-  (eshell-scroll-to-bottom-on-output 'all))
-
-(use-package esh-proc
-  :ensure nil
-  :custom
-  (eshell-kill-processes-on-exit t))
-#+END_SRC
 
 Yes, Emacs emulates terminals too.
 
+| TODO | Advice =vterm= motions to support shift                          |
 | TODO | Fix cursor shape when jumping out of =curses=-based applications |
+| TODO | Remove confirm prompt when killing =vterm= buffers               |
 
 #+BEGIN_SRC emacs-lisp
 (use-package vterm
+  :commands
+  (vterm vterm-other-window)
   :bind
   ("C-!" . vterm))
 #+END_SRC
