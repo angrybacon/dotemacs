@@ -2397,10 +2397,10 @@ Work on lines.
 | TODO | Handle regions |
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "<M-down>") #'me/swap-line-down)
-(global-set-key (kbd "<M-up>") #'me/swap-line-up)
-(global-set-key (kbd "<M-S-up>") #'me/duplicate-backward)
-(global-set-key (kbd "<M-S-down>") #'me/duplicate-forward)
+(global-set-key (kbd "M-p") #'me/swap-up)
+(global-set-key (kbd "M-n") #'me/swap-down)
+(global-set-key (kbd "M-P") #'me/duplicate-backward)
+(global-set-key (kbd "M-N") #'me/duplicate-forward)
 
 (defun me/duplicate-line (&optional stay)
   "Duplicate current line.
@@ -2435,7 +2435,7 @@ If region was active, keep it so that the command can be repeated."
         (push-mark point))
     (me/duplicate-line)))
 
-(defun me/swap-line-down ()
+(defun me/swap-down ()
   "Move down the line under point."
   (interactive)
   (forward-line 1)
@@ -2443,7 +2443,7 @@ If region was active, keep it so that the command can be repeated."
   (forward-line -1)
   (indent-according-to-mode))
 
-(defun me/swap-line-up ()
+(defun me/swap-up ()
   "Move up the line under point."
   (interactive)
   (transpose-lines 1)
