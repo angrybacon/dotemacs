@@ -1543,7 +1543,7 @@ Group system-related commands.
   ("D" desktop-remove)
   ("g" (setq debug-on-error (not debug-on-error)))
   ("i" package-install)
-  ("l" list-processes)
+  ("l" counsel-list-processes)
   ("p" package-list-packages)
   ("Q" (let ((desktop-save nil))
          (me/byte-delete)
