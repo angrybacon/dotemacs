@@ -251,10 +251,6 @@ delegated to =eyebrowse=.
      (,(kbd "s-1") . (lambda () (interactive) (exwm-workspace-switch 0)))
      (,(kbd "s-2") . (lambda () (interactive) (exwm-workspace-switch 1)))
      (,(kbd "s-SPC") . counsel-linux-app)
-     (,(kbd "s-h") . windmove-left)
-     (,(kbd "s-j") . windmove-down)
-     (,(kbd "s-k") . windmove-up)
-     (,(kbd "s-l") . windmove-right)
      (,(kbd "s-r") . exwm-reset)
      (,(kbd "s-R") . exwm-restart)
      (,(kbd "s-s") . hydra-screenshot/body)
@@ -781,6 +777,7 @@ completion candidates.
 | =eyebrowse= | https://github.com/wasamasa/eyebrowse |
 | =olivetti=  | https://github.com/rnkn/olivetti      |
 | =shackle=   | https://github.com/wasamasa/shackle   |
+| =windmove=  | Built-in                              |
 | =winner=    | Built-in                              |
 
 
@@ -890,6 +887,18 @@ currently selected window.
                    (helpful-mode :same t)
                    (process-menu-mode :same t)))
   (shackle-select-reused-windows t))
+#+END_SRC
+
+Bind shorthands to move between windows.
+
+#+BEGIN_SRC emacs-lisp
+(use-package windmove
+  :ensure nil
+  :bind
+  ("s-h" . windmove-left)
+  ("s-j" . windmove-down)
+  ("s-k" . windmove-up)
+  ("s-l" . windmove-right))
 #+END_SRC
 
 Allow undo's and redo's with window configurations.
