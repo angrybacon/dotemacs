@@ -639,6 +639,7 @@ authoring documents with a fast and effective plain-text system.
   :custom
   (org-adapt-indentation nil)
   (org-confirm-babel-evaluate nil)
+  (org-cycle-separator-lines 0)
   (org-descriptive-links nil)
   (org-edit-src-content-indentation 0)
   (org-edit-src-persistent-message nil)
