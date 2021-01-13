@@ -1037,17 +1037,20 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
    ("]" . next-buffer)
    ("u" . winner-undo)
    ("C-r" . winner-redo))
+  :hook
+  (after-init . evil-mode)
   :custom
   (evil-echo-state nil)
   (evil-emacs-state-cursor (default-value 'cursor-type))
   (evil-undo-system 'undo-redo)
+  (evil-visual-state-cursor 'hollow)
   (evil-want-C-u-scroll t)
   (evil-want-keybinding nil)
   :config
-  (add-to-list 'evil-insert-state-modes 'with-editor-mode)
   (add-to-list 'evil-emacs-state-modes 'exwm-mode)
   (add-to-list 'evil-emacs-state-modes 'dired-mode)
-  (add-to-list 'evil-emacs-state-modes 'vterm-mode)
+  (add-to-list 'evil-insert-state-modes 'vterm-mode)
+  (add-to-list 'evil-insert-state-modes 'with-editor-mode)
   (add-to-list 'evil-motion-state-modes 'helpful-mode)
   (evil-define-text-object me/evil-buffer (_count &optional _begin _end type)
     "Text object to select the whole buffer."
