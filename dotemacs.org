@@ -906,9 +906,7 @@ Allow undo's and redo's with window configurations.
 #+BEGIN_QUOTE
 Winner mode is a global minor mode that records the changes in the window
 configuration (i.e. how the frames are partitioned into windows) so that the
-changes can be "undone" using the command =winner-undo=. By default this one is
-bound to the key sequence ctrl-c left. If you change your mind (while undoing),
-you can press ctrl-c right (calling =winner-redo=).
+changes can be "undone" using the command =winner-undo=.
 
 --- Ivar Rummelhoff
 #+END_QUOTE
@@ -1014,6 +1012,8 @@ explorer.
 
 Evil emulates and manages the infamous Vim states and motions ported to Emacs.
 
+| TODO | Make transient maps for buffer motions and =winner= commands |
+
 #+BEGIN_SRC emacs-lisp
 (use-package evil
   :bind
@@ -1030,7 +1030,12 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
    ("gS" . avy-goto-char)
    ("C-e" . nil)
    :map evil-normal-state-map
-   ("q" . nil))
+   ("q" . nil)
+   :map evil-window-map
+   ("[" . previous-buffer)
+   ("]" . next-buffer)
+   ("u" . winner-undo)
+   ("C-r" . winner-redo))
   :custom
   (evil-echo-state nil)
   (evil-emacs-state-cursor (default-value 'cursor-type))
