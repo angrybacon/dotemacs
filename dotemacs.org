@@ -1633,16 +1633,43 @@ Group window-related commands.
 (defhydra hydra-x (:color blue)
   (concat (me/hydra-heading "Do" "Toggle" "Window" "Workspace") "
  _r_ reset           _f_ fullscreen      _m_ move            _s_ swap
- _R_ restart         _l_ floating        ^^                  _w_ switch
+ _R_ reboot          _l_ floating        ^^                  _w_ switch
+ _S_ suspend         ^^                  ^^                  ^^
 ")
   ("q" nil)
   ("f" exwm-layout-set-fullscreen)
   ("l" exwm-floating-toggle-floating)
   ("m" exwm-workspace-move-window)
   ("r" exwm-reset)
-  ("R" exwm-restart)
+  ("R" me/x-reboot)
   ("s" (exwm-workspace-swap (car exwm-workspace--list) (cadr exwm-workspace--list)))
+  ("S" me/x-suspend)
   ("w" exwm-workspace-switch))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defvar me/x-reboot-command "systemctl reboot"
+  "Shell command to reboot the machine.")
+
+(defun me/x-reboot ()
+  "Run `me/x-reboot-command' after cleaning up EXWM buffers."
+  (interactive)
+  (save-some-buffers)
+  (dolist (buffer (buffer-list))
+    (with-current-buffer buffer
+      (when exwm-instance-name
+        (kill-buffer))))
+  (run-with-timer 1 nil 'shell-command me/x-reboot-command))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defvar me/x-suspend-command "systemctl suspend"
+  "Shell commant to suspend the machine.")
+
+(defun me/x-suspend ()
+  "Run `me/x-suspend-command'."
+  (interactive)
+  (shell-command me/x-suspend-command))
 #+END_SRC
 
 ** IRC
