@@ -227,6 +227,7 @@ and that they each have their own EXWM workspace. This makes writing commands
 for workspace and window swapping easier. Actual workspace features are instead
 delegated to =eyebrowse=.
 
+| TODO | Make =eyebrowse-other-workspace-switch-*= commands     |
 | TODO | Make =xdg-open= switch workspace/eyebrowse accordingly |
 | TODO | Notifications                                          |
 | TODO | Check out https://github.com/agzam/exwm-edit           |
@@ -241,7 +242,7 @@ delegated to =eyebrowse=.
   :demand t
   :bind
   (:map exwm-mode-map
-   ("C-q" . exwmp-input-send-next-key))
+   ("C-q" . exwm-input-send-next-key))
   :hook
   (exwm-randr-screen-change . me/exwm-xrandr)
   (exwm-update-class . me/exwm-rename-buffer)
@@ -255,12 +256,23 @@ delegated to =eyebrowse=.
      (,(kbd "s-R") . exwm-restart)
      (,(kbd "s-s") . hydra-screenshot/body)
      (,(kbd "s-w") . exwm-workspace-switch)))
+  (exwm-input-prefix-keys
+   `,@(mapcar (lambda (vector) (aref vector 0))
+              `(,(kbd "C-h")
+                ,(kbd "C-u")
+                ,(kbd "C-x")
+                ,(kbd "M-&")
+                ,(kbd "M-:")
+                ,(kbd "M-`")
+                ,(kbd "M-x")
+                ,@(mapcar (lambda (i) (kbd (format "M-%s" i)))
+                          (number-sequence 0 9)))))
   (exwm-input-simulation-keys
    `((,(kbd "C-w") . ,(kbd "C-x"))
      (,(kbd "C-y") . ,(kbd "C-v"))
      (,(kbd "M-w") . ,(kbd "C-c"))))
-  ;; NOTE: Following configurations are not taken into account due to
-  ;;       https://github.com/ch11ng/exwm/issues/563#issuecomment-752813915
+  ;; NOTE Following configurations are not taken into account due to
+  ;;      https://github.com/ch11ng/exwm/issues/563#issuecomment-752813915
   (exwm-manage-configurations
    '(((member exwm-instance-name '("brave-browser" "discord" "spotify"))
       workspace 0)))
@@ -299,8 +311,8 @@ delegated to =eyebrowse=.
 
 Load =.secret.el= to keep sensible things out of version control. For instance,
 you could set your identity by customizing both =user-full-name= and
-=user-mail-address=. This is also where you want your machine-specific settings to
-be.
+=user-mail-address=. This is also where you want your machine-specific settings
+to be.
 
 #+BEGIN_SRC emacs-lisp
 (defvar me/erc-nick nil                 "The ERC nick to use.")
@@ -3071,8 +3083,6 @@ lines.
 ** Workspaces
 
 Workspaces within Emacs.
-
-| TODO | Free =M-{1-9,0}= in  EXWM buffers |
 
 #+BEGIN_QUOTE
 =eyebrowse= is a global minor mode for Emacs that allows you to manage your
