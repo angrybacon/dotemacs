@@ -80,7 +80,11 @@ yay -S piper
 * Fonts
 
 #+BEGIN_SRC shell
-yay -S ttf-hack ttf-roboto-slab
+yay -S \
+    ttf-cascadia-code \
+    ttf-fira-code ttf-fira-sans \
+    ttf-hack \
+    ttf-roboto ttf-roboto-slab
 #+END_SRC
 
 #+BEGIN_SRC shell
@@ -104,11 +108,6 @@ Set default font for classes in =/etc/fonts/local.conf=.
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
 <fontconfig>
-  <!-- <match> -->
-  <!--   <edit mode="prepend" name="family"> -->
-  <!--     <string>Noto Sans</string> -->
-  <!--   </edit> -->
-  <!-- </match> -->
   <match target="pattern">
     <test qual="any" name="family">
       <string>serif</string>
