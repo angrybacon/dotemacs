@@ -144,3 +144,12 @@ yay -S openssh
 #+BEGIN_SRC shell
 ssh-keygen -t rsa -b 4096
 #+END_SRC
+
+* Zoom
+
+Edit =~/.config/zoomus.conf= to disable the automatic mini-view.
+
+#+BEGIN_SRC diff
+-enableMiniWindow=true
++enableMiniWindow=false
+#+END_SRC
