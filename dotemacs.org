@@ -268,8 +268,7 @@ delegated to =eyebrowse=.
                 ,@(mapcar (lambda (i) (kbd (format "M-%s" i)))
                           (number-sequence 0 9)))))
   (exwm-input-simulation-keys
-   `((,(kbd "C-w") . ,(kbd "C-x"))
-     (,(kbd "C-y") . ,(kbd "C-v"))
+   `((,(kbd "C-y") . ,(kbd "C-v"))
      (,(kbd "M-w") . ,(kbd "C-c"))))
   ;; NOTE Following configurations are not taken into account due to
   ;;      https://github.com/ch11ng/exwm/issues/563#issuecomment-752813915
