@@ -11,7 +11,7 @@
 | TODO | Fix clipboard sharing from EXWM |
 
 #+BEGIN_SRC shell
-pacman -S maim xclip
+yay -S maim xclip
 #+END_SRC
 
 ** Region
@@ -27,7 +27,7 @@ maim --hidecursor --select \
 ** Region with Background Shadow
 
 #+BEGIN_SRC shell
-pacman -S imagemagick
+yay -S imagemagick
 #+END_SRC
 
 | TODO | Export to clipboard instead |
@@ -44,7 +44,7 @@ maim --hidecursor --select \
 ** Window
 
 #+BEGIN_SRC shell
-pacman -S xdotool
+yay -S xdotool
 #+END_SRC
 
 | TODO | =xdotool= is not able to retrieve the active window under EXWM |
@@ -74,17 +74,13 @@ maim | xclip -selection clipboard -target image/png
 ** Mouse
 
 #+BEGIN_SRC shell
-pacman -S piper
+yay -S piper
 #+END_SRC
 
 * Fonts
 
 #+BEGIN_SRC shell
-pacman -S ttf-hack
-#+END_SRC
-
-#+BEGIN_SRC shell
-yay -S ttf-roboto-slab
+yay -S ttf-hack ttf-roboto-slab
 #+END_SRC
 
 #+BEGIN_SRC shell
@@ -143,7 +139,7 @@ Set default font for classes in =/etc/fonts/local.conf=.
 * SSH
 
 #+BEGIN_SRC shell
-pacman -S openssh
+yay -S openssh
 #+END_SRC
 
 #+BEGIN_SRC shell
