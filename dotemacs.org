@@ -821,11 +821,17 @@ Olivetti lets you center your buffer for aesthetics and focus. I have it set up
 to turn on automatically when visiting a single buffer, and disable itself
 otherwise.
 
+The configuration also conveniently silences left clicks on each of the two
+margins.
+
 | TODO | Allow horizontally lone buffers too |
 | TODO | Hide Magit margin content           |
 
 #+BEGIN_SRC emacs-lisp
 (use-package olivetti
+  :bind
+  ("<left-margin> <mouse-1>" . ignore)
+  ("<right-margin> <mouse-1>" . ignore)
   :hook
   (window-configuration-change . me/olivetti-mode-maybe)
   :custom
