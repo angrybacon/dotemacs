@@ -365,7 +365,6 @@ Customize faces for all Doom themes.
     :background 'unspecified
     :inherit 'magit-diff-context-highlight)
   '(magit-diff-context-highlight
-    :background 'unspecified
     :foreground 'unspecified
     :inherit 'magit-diff-context)
   '(magit-diff-hunk-region :inherit 'region)
