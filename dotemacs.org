@@ -3029,6 +3029,8 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
    ("M-2" . nil)
    ("M-3" . nil)
    ("M-4" . nil))
+  :hook
+  (magit-post-stage-hook . me/magit-recenter)
   :custom
   (epg-pinentry-mode 'loopback)
   (magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
@@ -3042,6 +3044,17 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
   (magit-add-section-hook
    'magit-status-sections-hook 'magit-insert-modules-overview 'magit-insert-merge-log)
   (remove-hook 'magit-section-highlight-hook #'magit-section-highlight))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/magit-recenter ()
+  "Recenter the current hunk at 25% from the top of the window."
+  (when (magit-section-match 'hunk)
+    (let ((top (max 0 scroll-margin (truncate (/ (window-body-height) 4)))))
+      (message "%s" top)
+      (save-excursion
+        (magit-section-goto (magit-current-section))
+        (recenter top)))))
 #+END_SRC
 
 Start =pinentry= in order for Emacs to be able to prompt for passphrases when
