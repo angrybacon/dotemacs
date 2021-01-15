@@ -8,13 +8,6 @@ This repository contains my personal Emacs configuration.
 If you are wondering where has gone all of the Lisp, fear not, for it is
 automagically tangled from an Org file into a Lisp file.
 
-* Screenshots
-
-My Emacs configuration is a living mixture that I edit on a daily basis. As
-such, the following screenshots might not reflect exactly what is on =:master=.
-
-https://drive.google.com/open?id=0BwTSOByd3qSFWUtYYnlYeTIzNFU
-
 * Installation
 
 ** Dependencies

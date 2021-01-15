@@ -3,32 +3,39 @@
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args :mkdirp yes :results silent
 
-| TODO | Tangle on startup |
+| TODO | Tangle on startup  |
+| TODO | Enable sudo prompt |
 
-* Take Screenshots
+* Screenshots
 
-| TODO | Share clipboard from EXWM |
+| TODO | Fix clipboard sharing from EXWM |
 
-#+BEGIN_SRC shell :dir "/sudo::"
+#+BEGIN_SRC shell
 pacman -S maim xclip
 #+END_SRC
 
 ** Region
 
-#+BEGIN_SRC shell :shebang #!/bin/sh :tangle scripts/screenshot.region.sh
+#+HEADER: :shebang #!/bin/sh
+#+HEADER: :tangle scripts/screenshot.region.sh
+#+HEADER: :tangle-mode (identity #o755)
+#+BEGIN_SRC shell
 maim --hidecursor --select \
     | xclip -selection clipboard -target image/png
 #+END_SRC
 
 ** Region with Background Shadow
 
-#+BEGIN_SRC shell :dir "/sudo::"
+#+BEGIN_SRC shell
 pacman -S imagemagick
 #+END_SRC
 
 | TODO | Export to clipboard instead |
 
-#+BEGIN_SRC shell :shebang #!/bin/sh :tangle scripts/screenshot.region-shadow.sh
+#+HEADER: :shebang #!/bin/sh
+#+HEADER: :tangle scripts/screenshot.region-shadow.sh
+#+HEADER: :tangle-mode (identity #o755)
+#+BEGIN_SRC shell
 maim --hidecursor --select \
     | convert - \( +clone -background black -shadow 80x3+5+5 \) +swap \
               -background none -layers merge +repage shadow.png
@@ -36,14 +43,17 @@ maim --hidecursor --select \
 
 ** Window
 
-#+BEGIN_SRC shell :dir "/sudo::"
+#+BEGIN_SRC shell
 pacman -S xdotool
 #+END_SRC
 
 | TODO | =xdotool= is not able to retrieve the active window under EXWM |
 | TODO | Make a shadow variant                                          |
 
-#+BEGIN_SRC shell :shebang #!/bin/sh :tangle scripts/screenshot.window.sh
+#+HEADER: :shebang #!/bin/sh
+#+HEADER: :tangle scripts/screenshot.window.sh
+#+HEADER: :tangle-mode (identity #o755)
+#+BEGIN_SRC shell
 maim --window=$(xdotool getactivewindow) \
     | xclip -selection clipboard -target image/png
 #+END_SRC
@@ -52,7 +62,10 @@ maim --window=$(xdotool getactivewindow) \
 
 | TODO | Make a shadow variant                                          |
 
-#+BEGIN_SRC shell :shebang #!/bin/sh :tangle scripts/screenshot.root.sh
+#+HEADER: :shebang #!/bin/sh
+#+HEADER: :tangle scripts/screenshot.root.sh
+#+HEADER: :tangle-mode (identity #o755)
+#+BEGIN_SRC shell
 maim | xclip -selection clipboard -target image/png
 #+END_SRC
 
@@ -60,13 +73,13 @@ maim | xclip -selection clipboard -target image/png
 
 ** Mouse
 
-#+BEGIN_SRC shell :dir "/sudo::"
+#+BEGIN_SRC shell
 pacman -S piper
 #+END_SRC
 
 * Fonts
 
-#+BEGIN_SRC shell :dir "/sudo::"
+#+BEGIN_SRC shell
 pacman -S ttf-hack
 #+END_SRC
 
@@ -74,7 +87,7 @@ pacman -S ttf-hack
 yay -S ttf-roboto-slab
 #+END_SRC
 
-#+BEGIN_SRC shell :dir "/sudo::"
+#+BEGIN_SRC shell
 rm -f /etc/fonts/conf.d/10-hinting-slight.conf
 ln -s /etc/fonts/conf.avail/10-hinting-full.conf /etc/fonts/conf.d
 ln -s /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d
@@ -84,8 +97,9 @@ ln -s /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
 
 Uncomment FreeType hinting in =/etc/profile.d/freetype2.sh=.
 
-#+BEGIN_SRC shell
-export FREETYPE_PROPERTIES\="truetype:interpreter-version=40"
+#+BEGIN_SRC diff
+-# export FREETYPE_PROPERTIES="truetype:interpreter-version=40"
++export FREETYPE_PROPERTIES="truetype:interpreter-version=40"
 #+END_SRC
 
 Set default font for classes in =/etc/fonts/local.conf=.
@@ -128,7 +142,7 @@ Set default font for classes in =/etc/fonts/local.conf=.
 
 * SSH
 
-#+BEGIN_SRC shell :dir "/sudo::"
+#+BEGIN_SRC shell
 pacman -S openssh
 #+END_SRC
 
