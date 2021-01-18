@@ -238,8 +238,7 @@ delegated to =eyebrowse=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package exwm
-  :if (eq system-type 'gnu/linux)
-  :demand t
+  :demand
   :bind
   (:map exwm-mode-map
    ("C-q" . exwm-input-send-next-key))
@@ -276,6 +275,7 @@ delegated to =eyebrowse=.
    '(((member exwm-instance-name '("brave-browser" "discord" "spotify"))
       workspace 0)))
   (exwm-randr-workspace-monitor-plist '(0 "DVI-D-1" 1 "HDMI-1"))
+  (exwm-replace nil)
   (exwm-workspace-index-map (lambda (index) (number-to-string (1+ index))))
   (exwm-workspace-number 2)
   (exwm-workspace-warp-cursor t)
