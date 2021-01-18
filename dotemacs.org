@@ -665,10 +665,9 @@ authoring documents with a fast and effective plain-text system.
   (org-edit-src-persistent-message nil)
   (org-fontify-done-headline t)
   (org-fontify-quote-and-verse-blocks t)
-  (org-hide-leading-stars nil)
   (org-src-tab-acts-natively t)
   (org-src-window-setup 'current-window)
-  (org-startup-folded nil)
+  (org-startup-folded 'content)
   (org-startup-truncated nil)
   (org-support-shift-select 'always)
   :config
