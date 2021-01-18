@@ -1,3 +1,4 @@
+# -*- display-line-numbers-width: 4; -*-
 #+TITLE: DotEmacs
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args :results silent

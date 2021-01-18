@@ -34,6 +34,9 @@
   ;; Disable that pesky echo message
   (setq inhibit-startup-echo-area-message user-login-name)
 
+  ;; Mark safe variables early so that tangling won't break
+  (put 'display-line-numbers-width 'safe-local-variable 'integerp)
+
   ;; Tangle and compile if necessary only, then load the configuration
   (let* ((.org "dotemacs.org")
          (.el (concat (file-name-sans-extension .org) ".el"))
