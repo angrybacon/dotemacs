@@ -2946,6 +2946,16 @@ Emacs can also emulate an interactive REST client.
 
 Yes, Emacs emulates terminals too.
 
+The default command bound to =C-!= tries and finds the current project context,
+opens up a terminal at this location. Focus the existing window if already
+displayed, while reusing existing buffers.
+
+If already in the terminal window, spawn a new one in place.
+
+Until a proper popup system is implemented, use =C-`= to close the bottom
+=vterm= windows in order to build muscle memory since the future
+=me/popup-toggle= will likely be bound there. Soon :tm:
+
 | TODO | Advice =vterm= motions to support shift                          |
 | TODO | Fix cursor shape when jumping out of =curses=-based applications |
 | TODO | Remove confirm prompt when killing =vterm= buffers               |
@@ -2955,7 +2965,57 @@ Yes, Emacs emulates terminals too.
   :commands
   (vterm vterm-other-window)
   :bind
-  ("C-!" . vterm))
+  ("C-!" . me/vterm-dwim)
+  ("C-`" . me/vterm-close))
+#+END_SRC
+
+| TODO | Merge in vterm-specific shackle rules instead of naively overwrite |
+| TODO | Stack rightwards new vterm buffers                                 |
+| TODO | Reset height as per =me/vterm-shackles= specifications             |
+| TODO | Make a proper popup system                                         |
+
+#+BEGIN_SRC emacs-lisp
+(defun me/vterm-close ()
+  "Find and close the bottom `vterm-mode' window."
+  (interactive)
+  (walk-windows
+   (lambda (window)
+     (let ((windmove-wrap-around nil))
+       (with-selected-window window
+         (when (and (eq major-mode 'vterm-mode)
+                    (window-in-direction 'up)
+                    (not (window-in-direction 'down)))
+           (delete-window)))))
+   nil (selected-frame)))
+
+(defvar me/vterm-shackles '(:align 'below :popup t :size .25)
+  "Shackle rules in the context of `me/vterm-dwim'.
+To see the supported options, see the documentation for `shackle-rules'.")
+
+(defun me/vterm-dwim (&optional argument)
+  "Invoke `vterm' according to context and current location.
+
+With a \\[universal-argument] prefix or if no project is found, force a new
+buffer to be created in place.
+
+If existing, bring back the first vterm window following `me/vterm-shackles'
+specifications. Otherwise create a new buffer with a unique name at the project
+root."
+  (interactive "P")
+  (if (or argument (not (projectile-project-root)))
+      (vterm)
+    (let* ((project (projectile-acquire-root))
+           (buffer (format "*vterm: %s*" (projectile-project-name project)))
+           (replace (string= buffer (buffer-name)))
+           (buffer (if replace (generate-new-buffer-name buffer) buffer))
+           (shackle-rules (if replace shackle-rules
+                            `((vterm-mode ,@me/vterm-shackles)))))
+      (if (buffer-live-p (get-buffer buffer))
+          (pop-to-buffer buffer)
+        (projectile-with-default-dir project
+          (unless (require 'vterm nil :noerror)
+            (error "Package 'vterm' not found"))
+          (vterm buffer))))))
 #+END_SRC
 
 ** Version Control
