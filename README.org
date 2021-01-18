@@ -23,11 +23,13 @@ I trust your Google-fu to make the most of the below instructions.
 | =pinentry= | Let Emacs prompt for passphrases        |
 | =ripgrep=  | Prefer =rg= over =grep=                 |
 
-#+BEGIN_SRC sh
-brew install jansson libvterm pinentry ripgrep
-#+END_SRC
-
 ** Emacs
+
+*** Manjaro
+
+See [[./MANJARO.org][MANJARO]].
+
+*** MacOS
 
 Install Emacs 27 or above. I prefer
 [[https://github.com/d12frosted/homebrew-emacs-plus][ =emacs-plus= ]] for its
@@ -42,27 +44,32 @@ brew install emacs-plus@28 --with-no-titlebar
 Clone the repository into your user directory.
 
 #+BEGIN_SRC sh
-git clone https://github.com/angrybacon/dotemacs.git ~/.emacs.d/ --recurse-submodules
+git clone https://github.com/angrybacon/dotemacs.git ~/.config/emacs/
 #+END_SRC
 
 ** Flycheck
 
 I use =flycheck= as linter framework to display syntax warnings and errors
-within each buffer.
+within each buffer. It is recommended to have your linting dependencies
+version-controlled next to your code. Assuming that's correctly set up, Emacs
+will find them automatically so that your linting corresponds to that of your
+team.
+
+However, if you needed linting feedback outside of a collaborative project, you
+would need to install the following dependencies globally.
 
 #+BEGIN_SRC sh
-npm install -g eslint                                 # JavaScript
-npm install -g jsonlint                               # JSON
-npm install -g stylelint                              # SCSS
-pip install flake8                                    # Python
+npm install -g eslint                   # JavaScript
+npm install -g jsonlint                 # JSON
+npm install -g stylelint                # SCSS
 #+END_SRC
 
 ** Icons
 
 The mode-line utilizes features from =all-the-icons=.
 
-Run the following when Emacs loads up in order to download the required font
-files.
+Run the following when Emacs starts for the first time in order to download the
+required fonts.
 
 #+BEGIN_SRC
 M-x all-the-icons-install-fonts RET
@@ -72,10 +79,6 @@ M-x all-the-icons-install-fonts RET
 
 In order for Emacs to connect to the LSP servers, install the language-specific
 dependencies.
-
-#+BEGIN_SRC sh
-npm install -g typescript typescript-language-server
-#+END_SRC
 
 #+BEGIN_SRC
 M-x lsp-install-server RET eslint RET
