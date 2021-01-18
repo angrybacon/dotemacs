@@ -1960,7 +1960,7 @@ through a strategically positioned =.dir-locals.el= containing the major modes
 for which to activate it, or use =nil= to enable =prettier-mode= for all major
 modes in that directory.
 
-#+BEGIN_SRC emacs-lisp :tangle no
+#+BEGIN_SRC lisp-data :tangle no
 ((nil . ((mode . prettier)))
  (web-mode . ((prettier-parsers . (typescript)))))
 #+END_SRC
@@ -3144,7 +3144,7 @@ In the case of GPG-signed commits use the below configuration files.
 
 =~./profile=
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh :tangle no
 export GPG_TTY=$TTY
 #+END_SRC
 
@@ -3158,7 +3158,7 @@ pinentry-program /usr/local/bin/pinentry
 
 =~/path/to/my/project/.git/config=
 
-#+BEGIN_SRC conf
+#+BEGIN_SRC conf :tangle no
 [user]
     signingkey = 1234567890ABCDEF
 [commit]
