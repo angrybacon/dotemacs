@@ -232,10 +232,19 @@ delegated to =eyebrowse=.
 | TODO | Make =xdg-open= switch workspace/eyebrowse accordingly |
 | TODO | Notifications                                          |
 | TODO | Check out https://github.com/agzam/exwm-edit           |
-| TODO | Load display setup from =.xinitrc= and/or =.secret.el= |
+| TODO | Load monitor setup from machine-local files            |
 | TODO | Export EXWM configuration to =desktop.org=             |
 | TODO | Reduce flickering on startup                           |
 | TODO | Bind media keys                                        |
+
+#+BEGIN_SRC emacs-lisp
+(defun me/read-lisp-data (filename)
+  "Read FILENAME and yield the extracted Lisp value"
+  (when (file-exists-p filename)
+    (with-temp-buffer
+      (insert-file-contents filename)
+      (read (buffer-string)))))
+#+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package exwm
@@ -275,7 +284,7 @@ delegated to =eyebrowse=.
   (exwm-manage-configurations
    '(((member exwm-instance-name '("brave-browser" "discord" "spotify"))
       workspace 0)))
-  (exwm-randr-workspace-monitor-plist '(0 "DVI-D-1" 1 "HDMI-1"))
+  (exwm-randr-workspace-monitor-plist (me/read-lisp-data "exwm/workspaces.eld"))
   (exwm-replace nil)
   (exwm-workspace-index-map (lambda (index) (number-to-string (1+ index))))
   (exwm-workspace-number 2)
