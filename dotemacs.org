@@ -384,7 +384,10 @@ Customize faces for all Doom themes.
     :inherit 'magit-diff-context-highlight)
   '(magit-section-highlight :inherit nil)
   '(markdown-table-face :height me/font-size-small)
-  '(org-block-begin-line :background 'unspecified :inherit 'shadow)
+  '(org-block-begin-line
+     :background 'unspecified
+     :foreground 'unspecified
+     :inherit 'shadow)
   '(org-quote :background 'unspecified :inherit '(font-lock-doc-face org-block))
   '(swiper-line-face :extend t)
   '(vertical-border :background 'unspecified :inverse-video t)
