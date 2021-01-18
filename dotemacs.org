@@ -26,6 +26,7 @@
 - [[#features][Features]]
   - [[#auto-completion][Auto-Completion]]
   - [[#buffers-and-windows][Buffers and Windows]]
+  - [[#completion][Completion]]
   - [[#comments][Comments]]
   - [[#dictionary][Dictionary]]
   - [[#diff][Diff]]
@@ -50,9 +51,6 @@
   - [[#hydra--ui][Hydra / UI]]
   - [[#hydra--x][Hydra / X]]
   - [[#irc][IRC]]
-  - [[#ivy][Ivy]]
-  - [[#ivy--counsel][Ivy / Counsel]]
-  - [[#ivy--swiper][Ivy / Swiper]]
   - [[#line-numbers][Line Numbers]]
   - [[#linters][Linters]]
   - [[#lsp][LSP]]
@@ -947,6 +945,169 @@ changes can be "undone" using the command =winner-undo=.
   (after-init . winner-mode))
 #+END_SRC
 
+** Completion
+
+| =counsel=  | https://github.com/abo-abo/swiper#counsel |
+| =ivy=      | https://github.com/abo-abo/swiper#ivy     |
+| =ivy-rich= | https://github.com/Yevgnen/ivy-rich       |
+| =swiper=   | https://github.com/abo-abo/swiper#swiper  |
+
+*** Counsel
+
+| TODO | Make a Hydra for =counsel-rg= |
+
+#+BEGIN_SRC emacs-lisp
+(use-package counsel
+  :commands
+  (counsel-linux-app)
+  :hook
+  (ivy-mode . counsel-mode)
+  :custom
+  (ivy-initial-inputs-alist nil)
+  (counsel-describe-function-function #'helpful-function)
+  (counsel-describe-symbol-function #'helpful-symbol)
+  (counsel-describe-variable-function #'helpful-variable)
+  (counsel-outline-face-style 'org)
+  (counsel-outline-path-separator " / "))
+
+(use-package counsel-projectile
+  :hook
+  (ivy-mode . counsel-projectile-mode))
+#+END_SRC
+
+*** Ivy
+
+#+BEGIN_QUOTE
+Ivy is a generic completion mechanism for Emacs. While it operates similarly to
+other completion schemes such as =icomplete-mode=, Ivy aims to be more
+efficient, smaller, simpler, and smoother to use yet highly customizable.
+
+--- Oleh Krehel
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package ivy
+  :bind
+  (:map ivy-minibuffer-map
+   ("<C-down>" . ivy-next-line-and-call)
+   ("<C-return>" . ivy-call)
+   ("<C-up>" . ivy-previous-line-and-call))
+  :hook
+  (after-init . ivy-mode)
+  :custom
+  (ivy-count-format "")
+  (ivy-fixed-height-minibuffer t)
+  (ivy-height 10)
+  (ivy-initial-inputs-alist nil)
+  (ivy-more-chars-alist '((t . 1)))
+  (ivy-on-del-error-function 'ignore)
+  (ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
+  (ivy-virtual-abbreviate 'full)
+  :config
+  (setf (alist-get 't ivy-format-functions-alist) #'ivy-format-function-line)
+  (advice-add 'ivy-more-chars :filter-return
+    (defun me/ivy-more-chars-inhibit (entries)
+      (when entries '("")))))
+#+END_SRC
+
+Augment Ivy's interface with details for candidates.
+
+| TODO | Add default value column to =counsel-describe-variable= |
+| TODO | Add face attribute columns to =counsel-faces=           |
+| TODO | Prettify =counsel-linux-app=                            |
+
+#+BEGIN_SRC emacs-lisp
+(use-package ivy-rich
+  :defer 1
+  :custom
+  (ivy-rich-parse-remote-buffer nil)
+  :config
+  (setq-default
+   ivy-rich-display-transformers-list
+   (plist-put ivy-rich-display-transformers-list 'counsel-M-x
+     '(:columns
+       ((counsel-M-x-transformer (:width .2))
+        (ivy-rich-counsel-function-docstring (:face font-lock-doc-face)))
+       :delimiter "  "))
+   ivy-rich-display-transformers-list
+   (plist-put ivy-rich-display-transformers-list 'counsel-describe-function
+     '(:columns
+       ((counsel-describe-function-transformer (:width .2))
+        (ivy-rich-counsel-function-docstring (:face font-lock-doc-face)))
+       :delimiter "  "))
+   ivy-rich-display-transformers-list
+   (plist-put ivy-rich-display-transformers-list 'counsel-describe-variable
+     '(:columns
+       ((counsel-describe-variable-transformer (:width .2))
+        (me/ivy-rich-describe-variable-value (:width .2))
+        (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face)))
+       :delimiter "  "))
+   ivy-rich-display-transformers-list
+   (plist-put ivy-rich-display-transformers-list 'ivy-switch-buffer
+     '(:columns
+       ((ivy-switch-buffer-transformer (:width .2))
+        (me/ivy-rich-switch-buffer-size (:align left :face shadow :width 8))
+        (ivy-rich-switch-buffer-major-mode (:face warning :width 22))
+        (ivy-rich-switch-buffer-project (:face success :width 34))
+        (ivy-rich-switch-buffer-path))
+       :delimiter "  "
+       :predicate (lambda (cand) (get-buffer cand))))
+   ivy-rich-display-transformers-list
+   (plist-put ivy-rich-display-transformers-list 'package-install
+     '(:columns
+       ((ivy-rich-candidate (:width .2))
+        (ivy-rich-package-version (:face shadow :width 13))
+        (ivy-rich-package-archive-summary (:face font-lock-builtin-face :width 5))
+        (ivy-rich-package-install-summary (:face font-lock-doc-face)))
+       :delimiter "  ")))
+  (ivy-rich-set-display-transformer))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/ivy-rich-describe-variable-value (candidate)
+  "Return the value of the variable in a `counsel-describe-variable' session."
+  (let* ((symbol (intern candidate))
+         (value (and (boundp symbol) (symbol-value symbol)))
+         (print-level 3))
+    (replace-regexp-in-string
+     "[\n\t\^[\^M\^@\^G]" " "
+     (cond ((booleanp value)
+            (propertize
+             (format "%s" value) 'face (if (null value) 'shadow 'success)))
+           ((keymapp value)
+            (propertize "<keymap>" 'face 'font-lock-type-face))
+           ((listp value)
+            (prin1-to-string value))
+           ((stringp value)
+            (propertize (format "%S" value) 'face 'font-lock-string-face))
+           ((symbolp value)
+            (propertize (format "'%s" value) 'face 'font-lock-function-name-face))
+           ((format "%s" value)))
+     t)))
+
+(defun me/ivy-rich-switch-buffer-size (candidate)
+  "Return the buffer size in a `ivy-switch-buffer' session."
+  (with-current-buffer
+      (get-buffer candidate)
+    (let ((size (buffer-size)))
+      (cond
+       ((> size 1000000) (format "%.1fM" (/ size 1000000.0)))
+       ((> size 1000) (format "%.1fk" (/ size 1000.0)))
+       (t (format "%d" size))))))
+#+END_SRC
+
+*** Swiper
+
+#+BEGIN_SRC emacs-lisp
+(use-package swiper
+  :commands
+  (swiper)
+  :bind
+  ("C-s" . swiper)
+  :custom
+  (swiper-goto-start-of-match t))
+#+END_SRC
+
 ** Comments
 
 | =evil-commentary= | https://github.com/linktohack/evil-commentary |
@@ -1637,6 +1798,23 @@ Group interface-related commands.
   ("T" me/theme-cycle))
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+(defun me/display-line-numbers-toggle-absolute ()
+  "Toggle the value of `display-line-numbers-current-absolute'."
+  (interactive)
+  (let ((value display-line-numbers-current-absolute))
+    (setq-local display-line-numbers-current-absolute (not value))))
+
+(defun me/display-line-numbers-toggle-type ()
+  "Cycle through the possible values of `display-line-numbers'.
+Cycle between nil, t and 'relative."
+  (interactive)
+  (let* ((range '(nil t relative))
+         (position (1+ (cl-position display-line-numbers range)))
+         (position (if (= position (length range)) 0 position)))
+    (setq-local display-line-numbers (nth position range))))
+#+END_SRC
+
 ** Hydra / X
 
 Group window-related commands.
@@ -1736,167 +1914,6 @@ Highlight ERC nicks with unique colors.
 (use-package erc-hl-nicks)
 #+END_SRC
 
-** Ivy
-
-| =counsel=  | https://github.com/abo-abo/swiper#counsel |
-| =ivy=      | https://github.com/abo-abo/swiper#ivy     |
-| =ivy-rich= | https://github.com/Yevgnen/ivy-rich       |
-| =swiper=   | https://github.com/abo-abo/swiper#swiper  |
-
-#+BEGIN_QUOTE
-Ivy is a generic completion mechanism for Emacs. While it operates similarly to
-other completion schemes such as =icomplete-mode=, Ivy aims to be more
-efficient, smaller, simpler, and smoother to use yet highly customizable.
-
---- Oleh Krehel
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package ivy
-  :bind
-  (:map ivy-minibuffer-map
-   ("<C-down>" . ivy-next-line-and-call)
-   ("<C-return>" . ivy-call)
-   ("<C-up>" . ivy-previous-line-and-call))
-  :hook
-  (after-init . ivy-mode)
-  :custom
-  (ivy-count-format "")
-  (ivy-fixed-height-minibuffer t)
-  (ivy-height 10)
-  (ivy-initial-inputs-alist nil)
-  (ivy-more-chars-alist '((t . 1)))
-  (ivy-on-del-error-function 'ignore)
-  (ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
-  (ivy-virtual-abbreviate 'full)
-  :config
-  (setf (alist-get 't ivy-format-functions-alist) #'ivy-format-function-line)
-  (advice-add 'ivy-more-chars :filter-return
-    (defun me/ivy-more-chars-inhibit (entries)
-      (when entries '("")))))
-#+END_SRC
-
-Augment Ivy's interface with details for candidates.
-
-| TODO | Add default value column to =counsel-describe-variable= |
-| TODO | Add face attribute columns to =counsel-faces=           |
-| TODO | Prettify =counsel-linux-app=                            |
-
-#+BEGIN_SRC emacs-lisp
-(use-package ivy-rich
-  :defer 1
-  :custom
-  (ivy-rich-parse-remote-buffer nil)
-  :config
-  (setq-default
-   ivy-rich-display-transformers-list
-   (plist-put ivy-rich-display-transformers-list 'counsel-M-x
-     '(:columns
-       ((counsel-M-x-transformer (:width .2))
-        (ivy-rich-counsel-function-docstring (:face font-lock-doc-face)))
-       :delimiter "  "))
-   ivy-rich-display-transformers-list
-   (plist-put ivy-rich-display-transformers-list 'counsel-describe-function
-     '(:columns
-       ((counsel-describe-function-transformer (:width .2))
-        (ivy-rich-counsel-function-docstring (:face font-lock-doc-face)))
-       :delimiter "  "))
-   ivy-rich-display-transformers-list
-   (plist-put ivy-rich-display-transformers-list 'counsel-describe-variable
-     '(:columns
-       ((counsel-describe-variable-transformer (:width .2))
-        (me/ivy-rich-describe-variable-value (:width .2))
-        (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face)))
-       :delimiter "  "))
-   ivy-rich-display-transformers-list
-   (plist-put ivy-rich-display-transformers-list 'ivy-switch-buffer
-     '(:columns
-       ((ivy-switch-buffer-transformer (:width .2))
-        (me/ivy-rich-switch-buffer-size (:align left :face shadow :width 8))
-        (ivy-rich-switch-buffer-major-mode (:face warning :width 22))
-        (ivy-rich-switch-buffer-project (:face success :width 34))
-        (ivy-rich-switch-buffer-path))
-       :delimiter "  "
-       :predicate (lambda (cand) (get-buffer cand))))
-   ivy-rich-display-transformers-list
-   (plist-put ivy-rich-display-transformers-list 'package-install
-     '(:columns
-       ((ivy-rich-candidate (:width .2))
-        (ivy-rich-package-version (:face shadow :width 13))
-        (ivy-rich-package-archive-summary (:face font-lock-builtin-face :width 5))
-        (ivy-rich-package-install-summary (:face font-lock-doc-face)))
-       :delimiter "  ")))
-  (ivy-rich-set-display-transformer))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defun me/ivy-rich-describe-variable-value (candidate)
-  "Return the value of the variable in a `counsel-describe-variable' session."
-  (let* ((symbol (intern candidate))
-         (value (and (boundp symbol) (symbol-value symbol)))
-         (print-level 3))
-    (replace-regexp-in-string
-     "[\n\t\^[\^M\^@\^G]" " "
-     (cond ((booleanp value)
-            (propertize
-             (format "%s" value) 'face (if (null value) 'shadow 'success)))
-           ((keymapp value)
-            (propertize "<keymap>" 'face 'font-lock-type-face))
-           ((listp value)
-            (prin1-to-string value))
-           ((stringp value)
-            (propertize (format "%S" value) 'face 'font-lock-string-face))
-           ((symbolp value)
-            (propertize (format "'%s" value) 'face 'font-lock-function-name-face))
-           ((format "%s" value)))
-     t)))
-
-(defun me/ivy-rich-switch-buffer-size (candidate)
-  "Return the buffer size in a `ivy-switch-buffer' session."
-  (with-current-buffer
-      (get-buffer candidate)
-    (let ((size (buffer-size)))
-      (cond
-       ((> size 1000000) (format "%.1fM" (/ size 1000000.0)))
-       ((> size 1000) (format "%.1fk" (/ size 1000.0)))
-       (t (format "%d" size))))))
-#+END_SRC
-
-** Ivy / Counsel
-
-| TODO | Make a Hydra for =counsel-rg= |
-
-#+BEGIN_SRC emacs-lisp
-(use-package counsel
-  :commands
-  (counsel-linux-app)
-  :hook
-  (ivy-mode . counsel-mode)
-  :custom
-  (ivy-initial-inputs-alist nil)
-  (counsel-describe-function-function #'helpful-function)
-  (counsel-describe-symbol-function #'helpful-symbol)
-  (counsel-describe-variable-function #'helpful-variable)
-  (counsel-outline-face-style 'org)
-  (counsel-outline-path-separator " / "))
-
-(use-package counsel-projectile
-  :hook
-  (ivy-mode . counsel-projectile-mode))
-#+END_SRC
-
-** Ivy / Swiper
-
-#+BEGIN_SRC emacs-lisp
-(use-package swiper
-  :commands
-  (swiper)
-  :bind
-  ("C-s" . swiper)
-  :custom
-  (swiper-goto-start-of-match t))
-#+END_SRC
-
 ** Line Numbers
 
 Display relative line numbers in most editing modes.
@@ -1906,24 +1923,9 @@ Display relative line numbers in most editing modes.
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 (add-hook 'text-mode-hook #'display-line-numbers-mode)
 (setq-default
- display-line-numbers-current-absolute nil        ; Current line is 0
- display-line-numbers-type 'relative              ; Prefer relative numbers
- display-line-numbers-width 2)                    ; Enforce width to reduce computation
-
-(defun me/display-line-numbers-toggle-absolute ()
-  "Toggle the value of `display-line-numbers-current-absolute'."
-  (interactive)
-  (let ((value display-line-numbers-current-absolute))
-    (setq-local display-line-numbers-current-absolute (not value))))
-
-(defun me/display-line-numbers-toggle-type ()
-  "Cycle through the possible values of `display-line-numbers'.
-Cycle between nil, t and 'relative."
-  (interactive)
-  (let* ((range '(nil t relative))
-         (position (1+ (cl-position display-line-numbers range)))
-         (position (if (= position (length range)) 0 position)))
-    (setq-local display-line-numbers (nth position range))))
+ display-line-numbers-current-absolute nil
+ display-line-numbers-type 'relative
+ display-line-numbers-width 2)
 #+END_SRC
 
 ** Linters
