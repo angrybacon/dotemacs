@@ -35,6 +35,8 @@
   (setq inhibit-startup-echo-area-message user-login-name)
 
   ;; Mark safe variables early so that tangling won't break
+  (put 'after-save-hook 'safe-local-variable
+       (lambda (value) (equal value '(org-babel-tangle t))))
   (put 'display-line-numbers-width 'safe-local-variable 'integerp)
 
   ;; Tangle and compile if necessary only, then load the configuration
