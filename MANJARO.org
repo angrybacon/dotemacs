@@ -138,11 +138,14 @@ yay -S \
 #+BEGIN_SRC shell
 yay -S \
     brave chromium firefox-developer-edition \
+    cockatrice \
     discord \
     piper \
+    qbittorrent \
     signal-desktop \
     slack-desktop \
-    spotify
+    spotify \
+    vlc
 #+END_SRC
 
 ** Plex
