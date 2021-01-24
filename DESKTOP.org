@@ -6,6 +6,14 @@
 | TODO | Tangle on startup  |
 | TODO | Enable sudo prompt |
 
+* Desktop Entry
+
+Enable Emacs in the list of eligible window managers.
+
+#+BEGIN_SRC shell
+sudo ln -fs ~/.config/emacs/exwm/emacs.desktop /usr/share/xsessions/
+#+END_SRC
+
 * Screenshots
 
 | TODO | Fix clipboard sharing from EXWM |
@@ -69,15 +77,9 @@ maim --window=$(xdotool getactivewindow) \
 maim | xclip -selection clipboard -target image/png
 #+END_SRC
 
-* Peripherals
-
-** Mouse
-
-#+BEGIN_SRC shell
-yay -S piper
-#+END_SRC
-
 * Fonts
+
+** Dependencies
 
 #+BEGIN_SRC shell
 yay -S \
@@ -86,6 +88,8 @@ yay -S \
     ttf-hack \
     ttf-roboto ttf-roboto-slab
 #+END_SRC
+
+** Configuration
 
 #+BEGIN_SRC shell
 rm -f /etc/fonts/conf.d/10-hinting-slight.conf
@@ -133,16 +137,6 @@ Set default font for classes in =/etc/fonts/local.conf=.
     </edit>
   </match>
 </fontconfig>
-#+END_SRC
-
-* SSH
-
-#+BEGIN_SRC shell
-yay -S openssh
-#+END_SRC
-
-#+BEGIN_SRC shell
-ssh-keygen -t rsa -b 4096
 #+END_SRC
 
 * Zoom

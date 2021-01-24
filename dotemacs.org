@@ -262,7 +262,8 @@ delegated to =eyebrowse=.
      (,(kbd "s-r") . exwm-reset)
      (,(kbd "s-R") . exwm-restart)
      (,(kbd "s-s") . hydra-screenshot/body)
-     (,(kbd "s-w") . exwm-workspace-switch)))
+     (,(kbd "s-w") . delete-window)
+     (,(kbd "s-W") . kill-this-buffer)))
   (exwm-input-prefix-keys
    `,@(mapcar (lambda (vector) (aref vector 0))
               `(,(kbd "C-h")
@@ -800,15 +801,6 @@ completion candidates.
 | =shackle=   | https://github.com/wasamasa/shackle   |
 | =windmove=  | Built-in                              |
 | =winner=    | Built-in                              |
-
-
-| TODO | Bind =s-{h,j,k,l}= outside of EXWM |
-
-Don't ask before killing a buffer. I'm a consenting adult.
-
-#+BEGIN_SRC emacs-lisp
-(global-set-key [remap kill-buffer] #'kill-this-buffer)
-#+END_SRC
 
 Save and restore Emacs status, including buffers, point and window
 configurations.

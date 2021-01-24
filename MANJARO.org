@@ -32,7 +32,6 @@ Install the Node version manager. See https://github.com/nvm-sh/nvm for more det
 #+BEGIN_SRC emacs-lisp
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
 nvm install node
-yay -S yarn
 #+END_SRC
 
 ** Prompt
@@ -111,10 +110,18 @@ CMake is necessary in order to compile the dependencies to =vterm= at runtime.
 yay -S emacs-native-comp-git cmake
 #+END_SRC
 
+* SSH
+
+#+BEGIN_SRC shell
+yay -S openssh
+ssh-keygen -t rsa -b 4096
+#+END_SRC
+
 * Other Utilities
 
 #+BEGIN_SRC shell
 yay -S \
+    emoji-keyboard \
     htop \
     tree
 #+END_SRC
@@ -125,6 +132,7 @@ yay -S \
 yay -S \
     brave chromium firefox-developer-edition \
     discord \
+    piper \
     signal-desktop \
     slack-desktop \
     spotify
