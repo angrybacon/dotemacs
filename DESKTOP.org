@@ -14,6 +14,17 @@ Enable Emacs in the list of eligible window managers.
 sudo ln -fs ~/.config/emacs/exwm/emacs.desktop /usr/share/xsessions/
 #+END_SRC
 
+* Compositor
+
+Set a compositor to handle complex graphic interactions eg. dragging,
+transparency, shadows.
+
+Identify the running compositor program.
+
+#+BEGIN_SRC shell
+inxi -Gxx | grep compositor
+#+END_SRC
+
 * Screenshots
 
 | TODO | Fix clipboard sharing from EXWM |
