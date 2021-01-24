@@ -34,6 +34,13 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
 nvm install node
 #+END_SRC
 
+And install additional utilities =npm= and =yarn= globally in case packages
+don't support NVM paths.
+
+#+BEGIN_SRC shell
+yay -S npm yarn
+#+END_SRC
+
 ** Prompt
 
 Install the =pure= promt.
