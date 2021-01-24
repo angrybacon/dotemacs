@@ -25,9 +25,9 @@ I trust your Google-fu to make the most of the below instructions.
 
 ** Emacs
 
-*** Manjaro
+*** Arch
 
-See [[./MANJARO.org][MANJARO]].
+See [[ARCH.org#Emacs][ARCH]].
 
 *** MacOS
 
