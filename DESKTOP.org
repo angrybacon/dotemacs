@@ -150,6 +150,12 @@ Set default font for classes in =/etc/fonts/local.conf=.
 </fontconfig>
 #+END_SRC
 
+* Theme
+
+#+BEGIN_SRC shell
+yay -S materia-gtk-theme
+#+END_SRC
+
 * Zoom
 
 Edit =~/.config/zoomus.conf= to disable the automatic mini-view.
