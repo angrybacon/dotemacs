@@ -1,3 +1,4 @@
+# -*- display-line-numbers-width: 3; -*-
 #+TITLE: Setting up Arch
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args :mkdirp yes :results silent

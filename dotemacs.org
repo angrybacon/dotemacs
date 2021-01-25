@@ -2994,7 +2994,7 @@ Until a proper popup system is implemented, use =C-`= to close the bottom
            (delete-window)))))
    nil (selected-frame)))
 
-(defvar me/vterm-shackles '(:align 'below :popup t :size .25)
+(defvar me/vterm-shackles '(:align 'below :popup t :size .3)
   "Shackle rules in the context of `me/vterm-dwim'.
 To see the supported options, see the documentation for `shackle-rules'.")
 
