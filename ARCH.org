@@ -7,11 +7,18 @@ This file documents the steps I've followed to install my machine running Arch.
 
 * Bootstrap
 
-As well as core utilities (somehow not included by default).
+** Core Dependencies and Paru
 
 #+BEGIN_SRC shell
-pacman -S yay
-yay -S base-devel
+pacman -S base-devel cmake git
+#+END_SRC
+
+Paru is now stable enough that it should be preferred over =yay=.
+
+#+BEGIN_SRC shell
+git clone https://aur.archlinux.org/paru.git /tmp/paru
+cd /tmp/paru
+makepkg -si
 #+END_SRC
 
 ** Dot Files
@@ -36,7 +43,7 @@ And install additional utilities =npm= and =yarn= globally in case packages
 don't support NVM paths.
 
 #+BEGIN_SRC shell
-yay -S npm yarn
+paru -S npm yarn
 #+END_SRC
 
 ** Prompt
@@ -44,7 +51,7 @@ yay -S npm yarn
 Install the =pure= promt.
 
 #+BEGIN_SRC shell
-yay -S zsh-pure-prompt-git
+paru -S zsh-pure-prompt-git
 #+END_SRC
 
 Add add the following setup to =~/.zshrc=.
@@ -100,7 +107,7 @@ Install the preferred =gccemacs=. Details at http://akrl.sdf.org/gccemacs.html.
 CMake is necessary in order to compile the dependencies to =vterm= at runtime.
 
 #+BEGIN_SRC shell
-yay -S emacs-native-comp-git cmake
+paru -S emacs-native-comp-git
 #+END_SRC
 
 * Fonts
@@ -108,7 +115,7 @@ yay -S emacs-native-comp-git cmake
 Install my favorite fonts.
 
 #+BEGIN_SRC shell
-yay -S \
+paru -S \
     ttf-cascadia-code \
     ttf-google-sans \
     ttf-roboto \
@@ -122,7 +129,7 @@ yay -S \
 Install the server.
 
 #+BEGIN_SRC shell
-yay -S plex-media-server
+paru -S plex-media-server
 #+END_SRC
 
 ** Permissions
@@ -180,20 +187,20 @@ systemctl start plexmediaserver.service
 * SSH
 
 #+BEGIN_SRC shell
-yay -S openssh
+paru -S openssh
 ssh-keygen -t rsa -b 4096
 #+END_SRC
 
 * Steam
 
 #+BEGIN_SRC shell
-yay -S steam steam-native ttf-liberation wqy-zenhei
+paru -S steam steam-native ttf-liberation wqy-zenhei
 #+END_SRC
 
 * Other Utilities
 
 #+BEGIN_SRC shell
-yay -S \
+paru -S \
     emoji-keyboard \
     htop \
     tree
@@ -202,7 +209,7 @@ yay -S \
 * Other Applications
 
 #+BEGIN_SRC shell
-yay -S \
+paru -S \
     brave chromium firefox-developer-edition \
     cockatrice \
     discord \
