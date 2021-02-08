@@ -23,8 +23,6 @@
 
 ;;; Code:
 
-(require 'org)
-
 (let ((default-directory user-emacs-directory)
       (file-name-handler-alist nil)
       (gc-cons-percentage .6)
@@ -44,7 +42,9 @@
          (.el (concat (file-name-sans-extension .org) ".el"))
          (modification-time
           (file-attribute-modification-time (file-attributes .org))))
+    (require 'org-macs)
     (unless (org-file-newer-than-p .el modification-time)
+      (require 'ob-tangle)
       (org-babel-tangle-file .org .el "emacs-lisp")
       (byte-compile-file .el))
     (load-file .el))
