@@ -183,7 +183,6 @@ delegated to =eyebrowse=.
    `((,(kbd "s-!") . me/exwm-read-shell-command)
      (,(kbd "s-1") . (lambda () (interactive) (exwm-workspace-switch 0)))
      (,(kbd "s-2") . (lambda () (interactive) (exwm-workspace-switch 1)))
-     (,(kbd "s-SPC") . counsel-linux-app)
      (,(kbd "s-r") . exwm-reset)
      (,(kbd "s-R") . exwm-restart)
      (,(kbd "s-s") . hydra-screenshot/body)
@@ -848,163 +847,6 @@ changes can be "undone" using the command =winner-undo=.
 
 ** Completion
 
-*** Ivy
-
-| =counsel=  | https://github.com/abo-abo/swiper#counsel |
-| =ivy=      | https://github.com/abo-abo/swiper#ivy     |
-| =ivy-rich= | https://github.com/Yevgnen/ivy-rich       |
-| =swiper=   | https://github.com/abo-abo/swiper#swiper  |
-
-| TODO | Make a Hydra for =counsel-rg= |
-
-#+BEGIN_SRC emacs-lisp
-(use-package counsel
-  :commands
-  (counsel-linux-app)
-  :hook
-  (ivy-mode . counsel-mode)
-  :custom
-  (ivy-initial-inputs-alist nil)
-  (counsel-describe-function-function #'helpful-function)
-  (counsel-describe-symbol-function #'helpful-symbol)
-  (counsel-describe-variable-function #'helpful-variable)
-  (counsel-outline-face-style 'org)
-  (counsel-outline-path-separator " / "))
-
-(use-package counsel-projectile
-  :hook
-  (ivy-mode . counsel-projectile-mode))
-#+END_SRC
-
-#+BEGIN_QUOTE
-Ivy is a generic completion mechanism for Emacs. While it operates similarly to
-other completion schemes such as =icomplete-mode=, Ivy aims to be more
-efficient, smaller, simpler, and smoother to use yet highly customizable.
-
---- Oleh Krehel
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package ivy
-  :bind
-  (:map ivy-minibuffer-map
-   ("<C-down>" . ivy-next-line-and-call)
-   ("<C-return>" . ivy-call)
-   ("<C-up>" . ivy-previous-line-and-call))
-  :hook
-  (after-init . ivy-mode)
-  :custom
-  (ivy-count-format "")
-  (ivy-fixed-height-minibuffer t)
-  (ivy-height 10)
-  (ivy-initial-inputs-alist nil)
-  (ivy-more-chars-alist '((t . 1)))
-  (ivy-on-del-error-function 'ignore)
-  (ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
-  (ivy-virtual-abbreviate 'full)
-  :config
-  (setf (alist-get 't ivy-format-functions-alist) #'ivy-format-function-line)
-  (advice-add 'ivy-more-chars :filter-return
-    (defun me/ivy-more-chars-inhibit (entries)
-      (when entries '("")))))
-#+END_SRC
-
-Augment Ivy's interface with details for candidates.
-
-| TODO | Add default value column to =counsel-describe-variable= |
-| TODO | Add face attribute columns to =counsel-faces=           |
-| TODO | Prettify =counsel-linux-app=                            |
-
-#+BEGIN_SRC emacs-lisp
-(use-package ivy-rich
-  :defer 1
-  :custom
-  (ivy-rich-parse-remote-buffer nil)
-  :config
-  (setq-default
-   ivy-rich-display-transformers-list
-   (plist-put ivy-rich-display-transformers-list 'counsel-M-x
-     '(:columns
-       ((counsel-M-x-transformer (:width .2))
-        (ivy-rich-counsel-function-docstring (:face font-lock-doc-face)))
-       :delimiter "  "))
-   ivy-rich-display-transformers-list
-   (plist-put ivy-rich-display-transformers-list 'counsel-describe-function
-     '(:columns
-       ((counsel-describe-function-transformer (:width .2))
-        (ivy-rich-counsel-function-docstring (:face font-lock-doc-face)))
-       :delimiter "  "))
-   ivy-rich-display-transformers-list
-   (plist-put ivy-rich-display-transformers-list 'counsel-describe-variable
-     '(:columns
-       ((counsel-describe-variable-transformer (:width .2))
-        (me/ivy-rich-describe-variable-value (:width .2))
-        (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face)))
-       :delimiter "  "))
-   ivy-rich-display-transformers-list
-   (plist-put ivy-rich-display-transformers-list 'ivy-switch-buffer
-     '(:columns
-       ((ivy-switch-buffer-transformer (:width .2))
-        (me/ivy-rich-switch-buffer-size (:align left :face shadow :width 8))
-        (ivy-rich-switch-buffer-major-mode (:face warning :width 22))
-        (ivy-rich-switch-buffer-project (:face success :width 34))
-        (ivy-rich-switch-buffer-path))
-       :delimiter "  "
-       :predicate (lambda (cand) (get-buffer cand))))
-   ivy-rich-display-transformers-list
-   (plist-put ivy-rich-display-transformers-list 'package-install
-     '(:columns
-       ((ivy-rich-candidate (:width .2))
-        (ivy-rich-package-version (:face shadow :width 13))
-        (ivy-rich-package-archive-summary (:face font-lock-builtin-face :width 5))
-        (ivy-rich-package-install-summary (:face font-lock-doc-face)))
-       :delimiter "  ")))
-  (ivy-rich-set-display-transformer))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defun me/ivy-rich-describe-variable-value (candidate)
-  "Return the value of the variable in a `counsel-describe-variable' session."
-  (let* ((symbol (intern candidate))
-         (value (and (boundp symbol) (symbol-value symbol)))
-         (print-level 3))
-    (replace-regexp-in-string
-     "[\n\t\^[\^M\^@\^G]" " "
-     (cond ((booleanp value)
-            (propertize
-             (format "%s" value) 'face (if (null value) 'shadow 'success)))
-           ((keymapp value)
-            (propertize "<keymap>" 'face 'font-lock-type-face))
-           ((listp value)
-            (prin1-to-string value))
-           ((stringp value)
-            (propertize (format "%S" value) 'face 'font-lock-string-face))
-           ((symbolp value)
-            (propertize (format "'%s" value) 'face 'font-lock-function-name-face))
-           ((format "%s" value)))
-     t)))
-
-(defun me/ivy-rich-switch-buffer-size (candidate)
-  "Return the buffer size in a `ivy-switch-buffer' session."
-  (with-current-buffer
-      (get-buffer candidate)
-    (let ((size (buffer-size)))
-      (cond
-       ((> size 1000000) (format "%.1fM" (/ size 1000000.0)))
-       ((> size 1000) (format "%.1fk" (/ size 1000.0)))
-       (t (format "%d" size))))))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(use-package swiper
-  :commands
-  (swiper)
-  :bind
-  ([remap isearch-forward] . swiper)
-  :custom
-  (swiper-goto-start-of-match t))
-#+END_SRC
-
 ** Comments
 
 | =evil-commentary= | https://github.com/linktohack/evil-commentary |
@@ -1239,6 +1081,9 @@ Provide better detailed help buffers.
 
 #+BEGIN_SRC emacs-lisp
 (use-package helpful
+  :bind
+  ([remap describe-function] . helpful-callable)
+  ([remap describe-variable] . helpful-variable)
   :config
   (with-eval-after-load 'evil
     (evil-define-key* 'motion helpful-mode-map
@@ -1272,7 +1117,6 @@ seamless, it's like a minor mode that disables itself auto-magically.
   ("C-c e" . hydra-eyebrowse/body)
   ("C-c f" . hydra-flycheck/body)
   ("C-c g" . hydra-git/body)
-  ("C-c i" . hydra-ivy/body)
   ("C-c o" . me/hydra-super-maybe)
   ("C-c p" . hydra-projectile/body)
   ("C-c s" . hydra-system/body)
@@ -1459,28 +1303,6 @@ Group =git= commands.
   ("u" smerge-keep-upper))
 #+END_SRC
 
-*** Hydra: Ivy
-
-Group Ivy commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-ivy (:color teal)
-  (concat (me/hydra-heading "Ivy" "Do" "Browse") "
- _q_ quit            _r_ resume          _f_ faces           ^^
- ^^                  ^^                  _i_ imenu           ^^
- ^^                  ^^                  _l_ libraries       ^^
- ^^                  ^^                  _s_ symbols         ^^
- ^^                  ^^                  _u_ unicode         ^^
-")
-  ("q" nil)
-  ("f" counsel-faces)
-  ("i" counsel-imenu)
-  ("l" counsel-find-library)
-  ("r" ivy-resume)
-  ("s" counsel-info-lookup-symbol)
-  ("u" counsel-unicode-char))
-#+END_SRC
-
 *** Hydra: LSP
 
 Group LSP commands. This hydra is bound in =lsp-mode-map=.
@@ -1540,14 +1362,12 @@ Group Org commands.
  _q_ quit            _i_ insert          _<_ previous        ^^
  ^^                  _n_ next            _>_ next            ^^
  ^^                  _p_ previous        _a_ all             ^^
- ^^                  _s_ store           _g_ go              ^^
- ^^                  ^^                  _v_ overview        ^^
+ ^^                  _s_ store           _v_ overview        ^^
 ")
   ("q" nil)
   ("<" org-backward-element)
   (">" org-forward-element)
   ("a" outline-show-all :color blue)
-  ("g" counsel-org-goto :color blue)
   ("i" org-insert-link :color blue)
   ("n" org-next-link)
   ("p" org-previous-link)
@@ -1564,26 +1384,24 @@ Group Projectile commands.
   (concat (me/hydra-heading "Projectile" "Do" "Find" "Search") "
  _q_ quit            _K_ kill buffers    _b_ buffer          _r_ replace
  ^^                  _i_ reset cache     _d_ directory       _R_ regexp Replace
- ^^                  _n_ new project     _D_ root            _s_ rg
- ^^                  _N_ prune projects  _f_ file            _S_ grep
+ ^^                  _n_ new project     _D_ root            ^^
+ ^^                  _N_ prune projects  _f_ file            ^^
  ^^                  _v_ save buffers    _F_ file, no cache  ^^
  ^^                  ^^                  _p_ project         ^^
 ")
   ("q" nil)
-  ("b" counsel-projectile-switch-to-buffer)
-  ("d" counsel-projectile-find-dir)
+  ("b" projectile-switch-to-buffer)
+  ("d" projectile-find-dir)
   ("D" projectile-dired)
-  ("f" counsel-projectile-find-file)
-  ("F" (progn (projectile-invalidate-cache nil) (counsel-projectile-find-file)))
+  ("f" projectile-find-file)
+  ("F" (progn (projectile-invalidate-cache nil) (projectile-find-file)))
   ("i" projectile-invalidate-cache :color red)
   ("K" projectile-kill-buffers)
   ("n" projectile-add-known-project)
   ("N" projectile-cleanup-known-projects)
-  ("p" counsel-projectile-switch-project)
+  ("p" projectile-switch-project)
   ("r" projectile-replace)
   ("R" projectile-replace-regexp)
-  ("s" counsel-projectile-rg)
-  ("S" counsel-projectile-grep)
   ("v" projectile-save-project-buffers))
 #+END_SRC
 
@@ -2618,8 +2436,6 @@ exists as well).
 
 --- Bozhidar Batsov
 #+END_QUOTE
-
-| TODO | Bind =projectile-commander= to =counsel-projectile-switch-project-action= |
 
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
