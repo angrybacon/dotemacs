@@ -112,6 +112,7 @@ Change a few indenting behaviors.
 #+BEGIN_SRC emacs-lisp
 (put 'add-function 'lisp-indent-function 2)
 (put 'advice-add 'lisp-indent-function 2)
+(put 'custom-theme-set-faces 'lisp-indent-function 'defun)
 (put 'evil-define-key* 'lisp-indent-function 'defun)
 (put 'plist-put 'lisp-indent-function 2)
 #+END_SRC
@@ -259,59 +260,9 @@ to be.
 
 ** Theme
 
-| =doom-themes= | https://github.com/hlissner/emacs-doom-themes |
+| =zenburn-theme= | https://github.com/bbatsov/zenburn-emacs |
 
-Load the current theme and fix some high-level faces to match my personal
-preferences.
-
-#+BEGIN_SRC emacs-lisp
-(use-package doom-themes
-  :demand t
-  :custom
-  (doom-themes-enable-bold nil)
-  (doom-themes-enable-italic nil)
-  :config
-  (load-theme 'doom-nord t)
-  (doom-themes-org-config)
-  (doom-themes-visual-bell-config))
-#+END_SRC
-
-Customize faces for all Doom themes.
-
-#+BEGIN_SRC emacs-lisp
-(doom-themes-set-faces nil
-  '(default :font me/font-default :height me/font-size-default)
-  '(doom-modeline-bar :background nil :inherit nil)
-  '(flycheck-error :underline `(:color ,error :style line))
-  '(flycheck-info :underline `(:color ,highlight :style line))
-  '(flycheck-warning :underline `(:color ,warning :style line))
-  '(fringe :background 'unspecified)
-  '(helpful-heading :font me/font-heading :height me/font-size-heading)
-  '(lsp-ui-peek-highlight :box nil)
-  '(magit-diff-added :background 'unspecified)
-  '(magit-diff-added-highlight
-    :background 'unspecified
-    :inherit 'magit-diff-context-highlight)
-  '(magit-diff-context-highlight
-    :foreground 'unspecified
-    :inherit 'magit-diff-context)
-  '(magit-diff-hunk-region :inherit 'region)
-  '(magit-diff-removed :background 'unspecified)
-  '(magit-diff-removed-highlight
-    :background 'unspecified
-    :inherit 'magit-diff-context-highlight)
-  '(magit-section-highlight :inherit nil)
-  '(markdown-table-face :height me/font-size-small)
-  '(org-block-begin-line
-     :background 'unspecified
-     :foreground 'unspecified
-     :inherit 'shadow)
-  '(org-quote :background 'unspecified :inherit '(font-lock-doc-face org-block))
-  '(swiper-line-face :extend t)
-  '(vertical-border :background 'unspecified :inverse-video t)
-  '(which-key-command-description-face :foreground 'unspecified)
-  '(whitespace-empty :extend t))
-#+END_SRC
+*** Helpers
 
 Initialize known themes and provide a helper to cycle through known themes.
 
@@ -319,7 +270,7 @@ Initialize known themes and provide a helper to cycle through known themes.
 | TODO | Make hydra-ui T head prefer =enable-theme= over =load-theme= |
 
 #+BEGIN_SRC emacs-lisp
-(defvar me/theme-known-themes '(doom-nord doom-nord-light)
+(defvar me/theme-known-themes '(zenburn modus-operandi)
   "List of themes to take into account with `me/theme-cycle'.
 See `custom-available-themes'.")
 
@@ -327,19 +278,6 @@ See `custom-available-themes'.")
   "Disable all themes found in `custom-enable-themes'."
   (interactive)
   (mapc #'disable-theme custom-enabled-themes))
-
-(defun me/theme-set-faces (theme &rest faces)
-  "Customize THEME with FACES specs.
-If THEME was not loaded yet, load it without enabling it. See
-`doom-themes-set-faces' for the proper format of FACES specs.
-If THEME is currently active, customizations are effective immediately, see
-`custom--inhibit-theme-enable'."
-  (with-eval-after-load 'doom-themes
-    (unless (memq theme custom-known-themes)
-      (load-theme theme t t))
-    (let* ((active (eq theme (car custom-enabled-themes)))
-           (custom--inhibit-theme-enable (if active nil 'apply-only-user)))
-      (apply 'doom-themes-set-faces (append `(,theme) faces)))))
 
 (defun me/theme-cycle ()
   "Cycle through themes from `me/theme-known-themes' in succession."
@@ -353,64 +291,74 @@ If THEME is currently active, customizations are effective immediately, see
     (message "%s" next)))
 #+END_SRC
 
-Customize =doom-nord= theme.
-
-#+BEGIN_SRC emacs-lisp
-(me/theme-set-faces 'doom-nord
-  '(doom-modeline-evil-emacs-state :foreground magenta)
-  '(doom-visual-bell :background (doom-darken red .5))
-  '(helpful-heading :foreground orange)
-  '(isearch :background magenta)
-  '(lsp-face-highlight-read :background (doom-darken yellow .5) :foreground fg)
-  '(lsp-face-highlight-textual :background (doom-darken yellow .5) :foreground fg)
-  '(lsp-face-highlight-write :background (doom-darken yellow .5) :foreground fg))
-#+END_SRC
-
-Customize =doom-nord-light= theme.
-
-#+BEGIN_SRC emacs-lisp
-(me/theme-set-faces 'doom-nord-light
-  '(doom-modeline-evil-emacs-state :foreground (doom-lighten violet .4))
-  '(doom-modeline-evil-insert-state :foreground (doom-lighten blue .4))
-  '(doom-modeline-evil-normal-state :foreground (doom-lighten green .4))
-  '(doom-modeline-evil-replace-state :foreground (doom-lighten red .2))
-  '(doom-modeline-evil-visual-state :foreground (doom-lighten yellow .4))
-  '(doom-visual-bell :background (doom-lighten red .5))
-  '(helpful-heading :foreground orange)
-  '(isearch :background cyan :foreground base0)
-  '(lazy-highlight :background (doom-lighten cyan .4))
-  '(lsp-face-highlight-read :background (doom-lighten cyan .4) :foreground base0)
-  '(lsp-face-highlight-textual :background (doom-lighten cyan .4) :foreground base0)
-  '(lsp-face-highlight-write :background (doom-lighten cyan .4) :foreground base0))
-#+END_SRC
-
-Customize =doom-one= theme.
-
-#+BEGIN_SRC emacs-lisp
-(me/theme-set-faces 'doom-one
-  '(doom-visual-bell :background dark-blue)
-  '(helpful-heading :foreground red)
-  '(info-title-4 :bold nil :foreground red)
-  '(isearch :inherit 'highlight)
-  '(ivy-minibuffer-match-highlight :background (doom-darken blue .6) :extend t)
-  '(lazy-highlight :foreground blue)
-  '(line-number :foreground base5)
-  '(lsp-face-highlight-read :foreground fg)
-  '(lsp-face-highlight-textual :foreground fg)
-  '(lsp-face-highlight-write :foreground fg)
-  '(magit-diff-context :background 'unspecified)
-  '(magit-section-heading :foreground red)
-  '(org-block :background (doom-lighten bg .06))
-  '(outline-1 :foreground red)
-  '(secondary-selection :background (doom-darken dark-cyan .6))
-  '(tooltip :background base1)
-  '(variable-pitch :family 'unspecified))
-#+END_SRC
-
 Prettify fringe bitmaps.
 
 #+BEGIN_SRC emacs-lisp
 (define-fringe-bitmap 'left-curly-arrow [255] nil nil '(center t))
+#+END_SRC
+
+*** Zenburn
+
+#+BEGIN_SRC emacs-lisp
+(use-package zenburn-theme
+  :demand
+  :config
+  (load-theme 'zenburn t)
+  (dolist (face '(bold font-lock-keyword-face mode-line-buffer-id))
+    (set-face-bold face nil))
+  (let ((custom--inhibit-theme-enable nil))
+    (zenburn-with-color-variables
+      (custom-theme-set-faces 'zenburn
+        `(company-tooltip ((t (:inherit 'tooltip))))
+        `(company-tooltip-annotation ((t (:foreground ,zenburn-orange))))
+        `(company-tooltip-annotation-selection
+          ((t (:inherit 'company-tooltip-annotation))))
+        `(company-tooltip-selection ((t (:background ,zenburn-bg+1))))
+        `(completions-annotations ((t (:inherit 'font-lock-comment-face))))
+        `(consult-preview-line ((t (:extend t :inherit 'hl-line))))
+        `(default
+           ((t (:background ,zenburn-bg
+                :font ,me/font-default
+                :foreground ,zenburn-fg
+                :height ,me/font-size-default))))
+        `(doom-modeline-bar ((t (:background nil))))
+        `(doom-modeline-bar-inactive ((t (:background nil))))
+        `(doom-modeline-evil-emacs-state ((t (:foreground ,zenburn-magenta))))
+        `(doom-modeline-evil-insert-state ((t (:foreground ,zenburn-blue+1))))
+        `(doom-modeline-project-dir ((t (:foreground ,zenburn-cyan))))
+        `(error ((t (:foreground ,zenburn-red))))
+        `(font-lock-builtin-face ((t (:foreground ,zenburn-fg+1))))
+        `(fringe ((t (:background nil))))
+        `(git-gutter-fr:modified ((t (:foreground ,zenburn-blue-2))))
+        `(highlight ((t (:background ,zenburn-bg+1))))
+        `(hl-line ((t (:inherit 'highlight))))
+        `(line-number ((t (:foreground ,zenburn-fg-05))))
+        `(lsp-ui-doc-background ((t (:background ,zenburn-bg-08))))
+        `(magit-diff-added ((t (:foreground ,zenburn-green))))
+        `(magit-diff-added-highlight ((t (:foreground ,zenburn-green+1))))
+        `(magit-diff-context ((t (:foreground ,zenburn-fg-05))))
+        `(magit-diff-context-highlight ((t (:inherit 'magit-diff-context))))
+        `(magit-diff-hunk-region ((t (:inherit 'region))))
+        `(magit-diff-removed ((t (:foreground ,zenburn-red))))
+        `(magit-diff-removed-highlight ((t (:foreground ,zenburn-red+1))))
+        `(mode-line ((t (:background ,zenburn-bg-1 :foreground ,zenburn-green+1))))
+        `(mode-line-inactive
+          ((t (:background ,zenburn-bg-05
+               :box (:color ,zenburn-bg-1 :line-width -1)
+               :foreground ,zenburn-green-2))))
+        `(orderless-match-face-0
+          ((t (:background ,zenburn-blue-5 :foreground ,zenburn-cyan))))
+        `(orderless-match-face-1
+          ((t (:background ,zenburn-fg-1 :foreground ,zenburn-yellow))))
+        `(orderless-match-face-2
+          ((t (:background ,zenburn-green-4 :foreground ,zenburn-green+4))))
+        `(orderless-match-face-3
+          ((t (:background ,zenburn-red-6 :foreground ,zenburn-red+2))))
+        `(org-block ((t (:background nil))))
+        `(region ((t (:background ,zenburn-fg-1))))
+        `(selectrum-current-candidate ((t (:inherit 'highlight))))
+        `(tooltip ((t (:background ,zenburn-bg-05))))
+        `(window-divider ((t (:foreground ,zenburn-bg))))))))
 #+END_SRC
 
 * Languages
@@ -584,7 +532,6 @@ authoring documents with a fast and effective plain-text system.
   (org-edit-src-content-indentation 0)
   (org-edit-src-persistent-message nil)
   (org-fontify-done-headline t)
-  (org-fontify-quote-and-verse-blocks t)
   (org-src-tab-acts-natively t)
   (org-src-window-setup 'current-window)
   (org-startup-folded 'content)
