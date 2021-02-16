@@ -278,11 +278,6 @@ delegated to =eyebrowse=.
   (exwm-input-simulation-keys
    `((,(kbd "C-y") . ,(kbd "C-v"))
      (,(kbd "M-w") . ,(kbd "C-c"))))
-  ;; NOTE Following configurations are not taken into account due to
-  ;;      https://github.com/ch11ng/exwm/issues/563#issuecomment-752813915
-  (exwm-manage-configurations
-   '(((member exwm-instance-name '("brave-browser" "discord" "spotify"))
-      workspace 0)))
   (exwm-randr-workspace-monitor-plist (me/read-lisp-data "exwm/workspaces.eld"))
   (exwm-replace nil)
   (exwm-workspace-index-map (lambda (index) (number-to-string (1+ index))))
@@ -299,7 +294,7 @@ delegated to =eyebrowse=.
 
 #+BEGIN_SRC emacs-lisp
 (defun me/exwm-read-shell-command (command)
-  "Prettify name for new buffers after their more descriptive WM_CLASS string."
+  "Run a shell command in the background."
   (interactive (list (read-shell-command "$ ")))
   (start-process-shell-command command nil command))
 
@@ -852,7 +847,6 @@ margins.
                                       dired-mode
                                       erc-mode
                                       lisp-interaction-mode
-                                      special-mode
                                       vterm-mode)
   "List of modes for which `olivetti-mode' should be enabled automatically.")
 
