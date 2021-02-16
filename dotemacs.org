@@ -847,6 +847,89 @@ changes can be "undone" using the command =winner-undo=.
 
 ** Completion
 
+| =consult=    | https://github.com/minad/consult         |
+| =marginalia= | https://github.com/minad/marginalia      |
+| =orderless=  | https://github.com/oantolin/orderless    |
+| =selectrum=  | https://github.com/raxod502/selectrum    |
+
+*** Consult
+
+| TODO | Overwrite =selectrum='s TAB to yank word or symbol in =consult-line= |
+| TODO | Make =me/consult-applications=                                       |
+
+Provide various commands to list and /consult/ existing collections.
+
+#+BEGIN_SRC emacs-lisp
+(use-package consult
+  :after selectrum
+  :bind
+  ([remap goto-line] . consult-goto-line)
+  ([remap isearch-forward] . consult-line)
+  ([remap switch-to-buffer] . consult-buffer)
+  :hook
+  (org-mode . (lambda () (setq-local consult-fontify-preserve nil)))
+  :config
+  (with-eval-after-load 'evil
+    (evil-global-set-key 'motion "gC" 'me/consult-faces)
+    (evil-global-set-key 'motion "gm" 'consult-mark)
+    (evil-global-set-key 'motion "gM" 'consult-imenu)
+    (evil-global-set-key 'motion "go" 'consult-outline)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/consult-faces ()
+  "Search for faces.
+Default to the face at point using `get-text-property'."
+  (interactive)
+  (let* ((candidates (consult--with-increased-gc (face-list)))
+         (faces (get-text-property (point) 'face))
+         (face (if (listp faces) (car faces) faces)))
+    (consult--read candidates
+                   :category 'face
+                   :default face
+                   :lookup (lambda (_input _candidates match) (describe-face match))
+                   :prompt "Faces: ")))
+#+END_SRC
+
+*** Marginalia
+
+#+BEGIN_SRC emacs-lisp
+(use-package marginalia
+  :bind
+  (:map minibuffer-local-map
+   ("M-T" . marginalia-cycle))
+  :hook
+  (selectrum-mode . marginalia-mode))
+#+END_SRC
+
+*** Orderless
+
+Allow completion based on space-separated tokens, out of order.
+
+#+BEGIN_SRC emacs-lisp
+(use-package orderless
+  :custom
+  (completion-styles '(orderless))
+  (orderless-component-separator 'orderless-escapable-split-on-space))
+#+END_SRC
+
+*** Selectrum
+
+Prettify the completion minibuffer and augment incremental narrowing features
+with live-reload.
+
+#+BEGIN_SRC emacs-lisp
+(use-package selectrum
+  :bind
+  ("C-x C-z" . selectrum-repeat)
+  :hook
+  (after-init . selectrum-mode)
+  :custom
+  (selectrum-extend-current-candidate-highlight t)
+  (selectrum-fix-vertical-window-height t)
+  (selectrum-max-window-height 8))
+#+END_SRC
+
 ** Comments
 
 | =evil-commentary= | https://github.com/linktohack/evil-commentary |
@@ -1384,8 +1467,8 @@ Group Projectile commands.
   (concat (me/hydra-heading "Projectile" "Do" "Find" "Search") "
  _q_ quit            _K_ kill buffers    _b_ buffer          _r_ replace
  ^^                  _i_ reset cache     _d_ directory       _R_ regexp Replace
- ^^                  _n_ new project     _D_ root            ^^
- ^^                  _N_ prune projects  _f_ file            ^^
+ ^^                  _n_ new project     _D_ root            _s_ ripgrep
+ ^^                  _N_ prune projects  _f_ file            _S_ grep
  ^^                  _v_ save buffers    _F_ file, no cache  ^^
  ^^                  ^^                  _p_ project         ^^
 ")
@@ -1402,6 +1485,8 @@ Group Projectile commands.
   ("p" projectile-switch-project)
   ("r" projectile-replace)
   ("R" projectile-replace-regexp)
+  ("s" (consult-ripgrep (projectile-project-root)))
+  ("S" (consult-grep (projectile-project-root)))
   ("v" projectile-save-project-buffers))
 #+END_SRC
 
