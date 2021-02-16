@@ -3,81 +3,6 @@
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args :results silent
 
-* Table of Content
-:PROPERTIES:
-:TOC:      :ignore this :include all :depth 2
-:END:
-:CONTENTS:
-- [[#bootstrap][Bootstrap]]
-  - [[#packages][Packages]]
-  - [[#better-defaults][Better Defaults]]
-  - [[#exwm][EXWM]]
-  - [[#load-secrets][Load Secrets]]
-  - [[#theme][Theme]]
-- [[#languages][Languages]]
-  - [[#css][CSS]]
-  - [[#html][HTML]]
-  - [[#javascript][JavaScript]]
-  - [[#json][JSON]]
-  - [[#lisp][Lisp]]
-  - [[#markdown][Markdown]]
-  - [[#org][Org]]
-  - [[#yaml][YAML]]
-- [[#features][Features]]
-  - [[#auto-completion][Auto-Completion]]
-  - [[#buffers-and-windows][Buffers and Windows]]
-  - [[#completion][Completion]]
-  - [[#comments][Comments]]
-  - [[#dictionary][Dictionary]]
-  - [[#diff][Diff]]
-  - [[#dired][Dired]]
-  - [[#evil][Evil]]
-  - [[#expand][Expand]]
-  - [[#help][Help]]
-  - [[#hydra][Hydra]]
-  - [[#hydra--applications][Hydra / Applications]]
-  - [[#hydra--dates][Hydra / Dates]]
-  - [[#hydra--eyebrowse][Hydra / Eyebrowse]]
-  - [[#hydra--flycheck][Hydra / Flycheck]]
-  - [[#hydra--git][Hydra / Git]]
-  - [[#hydra--ivy][Hydra / Ivy]]
-  - [[#hydra--lsp][Hydra / LSP]]
-  - [[#hydra--markdown][Hydra / Markdown]]
-  - [[#hydra--org][Hydra / Org]]
-  - [[#hydra--projectile][Hydra / Projectile]]
-  - [[#hydra--rjsx][Hydra / RJSX]]
-  - [[#hydra--screenshot][Hydra / Screenshot]]
-  - [[#hydra--system][Hydra / System]]
-  - [[#hydra--ui][Hydra / UI]]
-  - [[#hydra--x][Hydra / X]]
-  - [[#irc][IRC]]
-  - [[#line-numbers][Line Numbers]]
-  - [[#linters][Linters]]
-  - [[#lsp][LSP]]
-  - [[#mode-line][Mode-Line]]
-  - [[#navigation--avy][Navigation / Avy]]
-  - [[#navigation--inline][Navigation / Inline]]
-  - [[#navigation--paragraphs][Navigation / Paragraphs]]
-  - [[#navigation--pulse][Navigation / Pulse]]
-  - [[#navigation--replace][Navigation / Replace]]
-  - [[#navigation--scroll][Navigation / Scroll]]
-  - [[#navigation--search][Navigation / Search]]
-  - [[#os-specific][OS-Specific]]
-  - [[#parentheses][Parentheses]]
-  - [[#paste][Paste]]
-  - [[#point-and-region--expand][Point and Region / Expand]]
-  - [[#point-and-region--lines][Point and Region / Lines]]
-  - [[#point-and-region--multiple-cursors][Point and Region / Multiple Cursors]]
-  - [[#point-and-region--selected][Point and Region / Selected]]
-  - [[#projectile][Projectile]]
-  - [[#quality-of-life][Quality of Life]]
-  - [[#rest-client][REST Client]]
-  - [[#terminal][Terminal]]
-  - [[#version-control][Version Control]]
-  - [[#whitespaces][Whitespaces]]
-  - [[#workspaces][Workspaces]]
-:END:
-
 * Bootstrap
 
 ** Packages
@@ -630,7 +555,6 @@ whole buffer."
 ** Org
 
 | =org=          | Built-in                                  |
-| =org-make-toc= | https://github.com/alphapapa/org-make-toc |
 
 This very file is organized with =org-mode=. Like Markdown, but with
 superpowers.
@@ -721,15 +645,6 @@ authoring documents with a fast and effective plain-text system.
   (format "*%s*" name))
 #+END_SRC
 
-Provide commands to upsert a TOC within an Org buffer. Automatically update the
-table on save.
-
-#+BEGIN_SRC emacs-lisp
-(use-package org-make-toc
-  :hook
-  (org-mode . org-make-toc-mode))
-#+END_SRC
-
 ** YAML
 
 | =yaml-mode= | https://github.com/yoshiki/yaml-mode |
@@ -740,7 +655,7 @@ table on save.
 
 * Features
 
-** Auto-Completion
+*** Company
 
 | =company=     | https://github.com/company-mode/company-mode |
 | =company-box= | https://github.com/sebastiencs/company-box   |
@@ -933,12 +848,12 @@ changes can be "undone" using the command =winner-undo=.
 
 ** Completion
 
+*** Ivy
+
 | =counsel=  | https://github.com/abo-abo/swiper#counsel |
 | =ivy=      | https://github.com/abo-abo/swiper#ivy     |
 | =ivy-rich= | https://github.com/Yevgnen/ivy-rich       |
 | =swiper=   | https://github.com/abo-abo/swiper#swiper  |
-
-*** Counsel
 
 | TODO | Make a Hydra for =counsel-rg= |
 
@@ -960,8 +875,6 @@ changes can be "undone" using the command =winner-undo=.
   :hook
   (ivy-mode . counsel-projectile-mode))
 #+END_SRC
-
-*** Ivy
 
 #+BEGIN_QUOTE
 Ivy is a generic completion mechanism for Emacs. While it operates similarly to
@@ -1082,14 +995,12 @@ Augment Ivy's interface with details for candidates.
        (t (format "%d" size))))))
 #+END_SRC
 
-*** Swiper
-
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
   :commands
   (swiper)
   :bind
-  ("C-s" . swiper)
+  ([remap isearch-forward] . swiper)
   :custom
   (swiper-goto-start-of-match t))
 #+END_SRC
@@ -1152,8 +1063,10 @@ Ediff is a visual interface to Unix =diff=.
 Configure Dired buffers. Amongst many other things, Emacs is also a file
 explorer.
 
-| TODO | Check out =dired-collapse= |
-| TODO | Check out =dired-imenu=    |
+| TODO | Check out =dired-collapse=               |
+| TODO | Check out =dired-imenu=                  |
+| TODO | Make =dired-bob= and =dired-eob=         |
+| TODO | Highlight =wdired-mode= in the mode-line |
 
 #+BEGIN_SRC emacs-lisp
 (use-package dired
@@ -1398,7 +1311,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
     (user-error "me/hydra-super: me/hydra-super-body is not set")))
 #+END_SRC
 
-** Hydra / Applications
+*** Hydra: Applications
 
 Group commands for high-level applications.
 
@@ -1414,7 +1327,7 @@ Group commands for high-level applications.
   ("T" (eshell t)))
 #+END_SRC
 
-** Hydra / Dates
+*** Hydra: Dates
 
 Group date-related commands.
 
@@ -1434,7 +1347,7 @@ Group date-related commands.
   ("L" me/date-long-with-time))
 #+END_SRC
 
-** Hydra / Eyebrowse
+*** Hydra: Eyebrowse
 
 Group Eyebrowse commands.
 
@@ -1468,7 +1381,7 @@ Group Eyebrowse commands.
   ("s" eyebrowse-switch-to-window-config))
 #+END_SRC
 
-** Hydra / Flycheck
+*** Hydra: Flycheck
 
 Group Flycheck commands.
 
@@ -1493,7 +1406,7 @@ Group Flycheck commands.
   ("v" flycheck-verify-setup))
 #+END_SRC
 
-** Hydra / Git
+*** Hydra: Git
 
 Group =git= commands.
 
@@ -1546,7 +1459,7 @@ Group =git= commands.
   ("u" smerge-keep-upper))
 #+END_SRC
 
-** Hydra / Ivy
+*** Hydra: Ivy
 
 Group Ivy commands.
 
@@ -1568,7 +1481,7 @@ Group Ivy commands.
   ("u" counsel-unicode-char))
 #+END_SRC
 
-** Hydra / LSP
+*** Hydra: LSP
 
 Group LSP commands. This hydra is bound in =lsp-mode-map=.
 
@@ -1592,7 +1505,7 @@ Group LSP commands. This hydra is bound in =lsp-mode-map=.
   ("t" lsp-find-type-definition))
 #+END_SRC
 
-** Hydra / Markdown
+*** Hydra: Markdown
 
 Group Markdown commands.
 
@@ -1615,7 +1528,7 @@ Group Markdown commands.
   ("M-<up>" markdown-table-move-row-up))
 #+END_SRC
 
-** Hydra / Org
+*** Hydra: Org
 
 Group Org commands.
 
@@ -1642,7 +1555,7 @@ Group Org commands.
   ("v" org-overview :color blue))
 #+END_SRC
 
-** Hydra / Projectile
+*** Hydra: Projectile
 
 Group Projectile commands.
 
@@ -1674,7 +1587,7 @@ Group Projectile commands.
   ("v" projectile-save-project-buffers))
 #+END_SRC
 
-** Hydra / RJSX
+*** Hydra: RJSX
 
 Group React JavaScript commands.
 
@@ -1689,7 +1602,7 @@ Group React JavaScript commands.
   ("F" js-doc-insert-file-doc))
 #+END_SRC
 
-** Hydra / Screenshot
+*** Hydra: Screenshot
 
 Group commands to take screenshots with various options.
 
@@ -1720,7 +1633,7 @@ Group commands to take screenshots with various options.
     (call-process-shell-command command)))
 #+END_SRC
 
-** Hydra / System
+*** Hydra: System
 
 Group system-related commands.
 
@@ -1738,7 +1651,7 @@ Group system-related commands.
   ("D" desktop-remove)
   ("g" (setq debug-on-error (not debug-on-error)))
   ("i" package-install)
-  ("l" counsel-list-processes)
+  ("l" list-processes)
   ("p" package-list-packages)
   ("Q" (let ((desktop-save nil))
          (me/byte-delete)
@@ -1755,7 +1668,7 @@ Group system-related commands.
   (shell-command "find . -name \"*.elc\" -type f | xargs rm -f"))
 #+END_SRC
 
-** Hydra / UI
+*** Hydra: UI
 
 Group interface-related commands.
 
@@ -1801,7 +1714,7 @@ Cycle between nil, t and 'relative."
     (setq-local display-line-numbers (nth position range))))
 #+END_SRC
 
-** Hydra / X
+*** Hydra: X
 
 Group window-related commands.
 
@@ -2152,7 +2065,9 @@ Yup, Emacs supports LSP.
     '(irc-buffers matches me/process debug me/major-mode workspace-name)))
 #+END_SRC
 
-** Navigation / Avy
+** Navigation
+
+*** Navigation: Avy
 
 | =avy= | https://github.com/abo-abo/avy |
 
@@ -2176,7 +2091,7 @@ same idea.
 )
 #+END_SRC
 
-** Navigation / Inline
+*** Navigation: Inline
 
 | =evil-snipe= | https://github.com/hlissner/evil-snipe |
 
@@ -2211,7 +2126,7 @@ Evil-snipe emulates =vim-seek= and/or =vim-sneak= in =evil-mode=.
   (evil-snipe-smart-case t))
 #+END_SRC
 
-** Navigation / Paragraphs
+*** Navigation: Paragraphs
 
 I disagree with Emacs' definition of paragraphs so I redefined the way it should
 jump from one paragraph to another.
@@ -2239,7 +2154,7 @@ jump from one paragraph to another.
   (skip-chars-forward "\n"))
 #+END_SRC
 
-** Navigation / Pulse
+*** Navigation: Pulse
 
 | =pulse= | Built-in |
 
@@ -2254,7 +2169,7 @@ Pulse temporarily highlights the background color of a line or region.
 (use-package pulse :ensure nil)
 #+END_SRC
 
-** Navigation / Replace
+*** Navigation: Replace
 
 | =anzu= | https://github.com/syohex/emacs-anzu |
 
@@ -2276,7 +2191,7 @@ various search modes.
   ([remap query-replace] . anzu-query-replace-regexp))
 #+END_SRC
 
-** Navigation / Scroll
+*** Navigation: Scroll
 
 | =mwheel= | Built-in |
 
@@ -2300,7 +2215,7 @@ See `scroll-preserve-screen-position'."
     (apply original arguments)))
 #+END_SRC
 
-** Navigation / Search
+*** Navigation: Search
 
 | =isearch= | Built-in |
 
@@ -2440,7 +2355,9 @@ fails.
   (webpaste-provider-priority '("paste.mozilla.org" "dpaste.org")))
 #+END_SRC
 
-** Point and Region / Expand
+** Point and Region
+
+*** Point and Region: Expand
 
 | =expand-region= | https://github.com/magnars/expand-region.el |
 
@@ -2453,7 +2370,7 @@ the structure of the current major mode.
   ("C-=" . er/expand-region))
 #+END_SRC
 
-** Point and Region / Lines
+*** Point and Region: Lines
 
 Work on lines.
 
@@ -2514,7 +2431,7 @@ If region was active, keep it so that the command can be repeated."
   (indent-according-to-mode))
 #+END_SRC
 
-** Point and Region / Multiple Cursors
+*** Point and Region: Multiple Cursors
 
 | =evil-multiedit=   | https://github.com/hlissner/evil-multiedit     |
 | =multiple-cursors= | https://github.com/magnars/multiple-cursors.el |
@@ -2564,7 +2481,7 @@ Enable multiple cursors outside Evil. Some witchcraft at work here.
   (mc/insert-numbers-default 1))
 #+END_SRC
 
-** Point and Region / Selected
+*** Point and Region: Selected
 
 | =selected= | https://github.com/Kungsgeten/selected.el |
 
@@ -2713,7 +2630,6 @@ exists as well).
    projectile-cache-file (me/cache-concat "projectile/cache")
    projectile-known-projects-file (me/cache-concat "projectile/projects.eld"))
   :custom
-  (projectile-completion-system 'ivy)
   (projectile-dynamic-mode-line nil)
   (projectile-enable-caching t)
   (projectile-indexing-method 'hybrid)
@@ -2730,14 +2646,12 @@ exists as well).
   (assq-delete-all ?v projectile-commander-methods)
   (def-projectile-commander-method ?K "Kill all buffers." (projectile-kill-buffers))
   (def-projectile-commander-method ?R "Replace a regexp." (projectile-replace-regexp))
-  (def-projectile-commander-method ?g "Magit status." (magit-status))
-  (def-projectile-commander-method ?s "Run ripgrep." (counsel-projectile-rg)))
+  (def-projectile-commander-method ?g "Magit status." (magit-status)))
 #+END_SRC
 
 ** Quality of Life
 
 | =aggressive-indent=       | https://github.com/Malabarba/aggressive-indent-mode    |
-| =amx=                     | https://github.com/DarwinAwardWinner/amx               |
 | =default-text-scale=      | https://github.com/purcell/default-text-scale          |
 | =files=                   | Built-in                                               |
 | =highlight-indent-guides= | https://github.com/DarthFennec/highlight-indent-guides |
@@ -2772,17 +2686,6 @@ electric-indent-mode.
   (aggressive-indent-comments-too t)
   :config
   (add-to-list 'aggressive-indent-protected-commands 'comment-dwim))
-#+END_SRC
-
-Sort interactive commands by usage.
-
-| TODO | Checkout whether =prescient= is lighter |
-
-#+BEGIN_SRC emacs-lisp
-(use-package amx
-  :custom
-  (amx-save-file (me/cache-concat "amx.eld"))
-  (amx-show-key-bindings nil))
 #+END_SRC
 
 Use =conf-mode= automatically for configuration files.
