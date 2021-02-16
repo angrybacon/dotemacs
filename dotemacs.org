@@ -1077,6 +1077,26 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
   (save-excursion (apply original arguments)))
 #+END_SRC
 
+Activate volatile keymaps for split sizing.
+
+#+BEGIN_SRC emacs-lisp
+(defun me/evil-window-resize-continue (&optional _count)
+  "Activate a sparse keymap for evil window resizing routines in order to
+support repeated key strokes."
+  (set-transient-map
+   (let ((map (make-sparse-keymap)))
+     (define-key map (kbd "-") #'evil-window-decrease-height)
+     (define-key map (kbd "+") #'evil-window-increase-height)
+     (define-key map (kbd "<") #'evil-window-decrease-width)
+     (define-key map (kbd ">") #'evil-window-increase-width)
+     map)))
+
+(advice-add 'evil-window-decrease-height :after #'me/evil-window-resize-continue)
+(advice-add 'evil-window-increase-height :after #'me/evil-window-resize-continue)
+(advice-add 'evil-window-decrease-width :after #'me/evil-window-resize-continue)
+(advice-add 'evil-window-increase-width :after #'me/evil-window-resize-continue)
+#+END_SRC
+
 ** Expand
 
 | =emmet-mode= | https://github.com/smihica/emmet-mode   |
