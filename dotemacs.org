@@ -2733,6 +2733,7 @@ Display the available keybindings following your current input. I find
   :custom
   (which-key-add-column-padding 1)
   (which-key-allow-evil-operators t)
+  (which-key-idle-delay 2.0)
   (which-key-dont-use-unicode t)
   (which-key-separator " ")
   (which-key-sort-order 'which-key-prefix-then-key-order)
