@@ -1009,6 +1009,8 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
   :config
   (add-to-list 'evil-emacs-state-modes 'exwm-mode)
   (add-to-list 'evil-emacs-state-modes 'dired-mode)
+  (add-to-list 'evil-emacs-state-modes 'process-menu-mode)
+  (add-to-list 'evil-emacs-state-modes 'profiler-report-mode)
   (add-to-list 'evil-emacs-state-modes 'vterm-mode)
   (add-to-list 'evil-insert-state-modes 'with-editor-mode)
   (add-to-list 'evil-motion-state-modes 'helpful-mode)
