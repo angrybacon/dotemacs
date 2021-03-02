@@ -260,7 +260,7 @@ to be.
 
 ** Theme
 
-| =zenburn-theme= | https://github.com/bbatsov/zenburn-emacs |
+| =zenmelt-theme= | =lisp/zenmelt/= |
 
 *** Helpers
 
@@ -270,7 +270,7 @@ Initialize known themes and provide a helper to cycle through known themes.
 | TODO | Make hydra-ui T head prefer =enable-theme= over =load-theme= |
 
 #+BEGIN_SRC emacs-lisp
-(defvar me/theme-known-themes '(zenburn modus-operandi)
+(defvar me/theme-known-themes '(zenmelt modus-operandi)
   "List of themes to take into account with `me/theme-cycle'.
 See `custom-available-themes'.")
 
@@ -297,68 +297,15 @@ Prettify fringe bitmaps.
 (define-fringe-bitmap 'left-curly-arrow [255] nil nil '(center t))
 #+END_SRC
 
-*** Zenburn
+*** Zenmelt
 
 #+BEGIN_SRC emacs-lisp
-(use-package zenburn-theme
+(use-package zenmelt-theme
+  :load-path "lisp/zenmelt"
   :demand
   :config
-  (load-theme 'zenburn t)
-  (dolist (face '(bold font-lock-keyword-face mode-line-buffer-id))
-    (set-face-bold face nil))
-  (let ((custom--inhibit-theme-enable nil))
-    (zenburn-with-color-variables
-      (custom-theme-set-faces 'zenburn
-        `(company-tooltip ((t (:inherit 'tooltip))))
-        `(company-tooltip-annotation ((t (:foreground ,zenburn-orange))))
-        `(company-tooltip-annotation-selection
-          ((t (:inherit 'company-tooltip-annotation))))
-        `(company-tooltip-selection ((t (:background ,zenburn-bg+1))))
-        `(completions-annotations ((t (:inherit 'font-lock-comment-face))))
-        `(consult-preview-line ((t (:extend t :inherit 'hl-line))))
-        `(default
-           ((t (:background ,zenburn-bg
-                :font ,me/font-default
-                :foreground ,zenburn-fg
-                :height ,me/font-size-default))))
-        `(doom-modeline-bar ((t (:background nil))))
-        `(doom-modeline-bar-inactive ((t (:background nil))))
-        `(doom-modeline-evil-emacs-state ((t (:foreground ,zenburn-magenta))))
-        `(doom-modeline-evil-insert-state ((t (:foreground ,zenburn-blue+1))))
-        `(doom-modeline-project-dir ((t (:foreground ,zenburn-cyan))))
-        `(error ((t (:foreground ,zenburn-red))))
-        `(font-lock-builtin-face ((t (:foreground ,zenburn-fg+1))))
-        `(fringe ((t (:background nil))))
-        `(git-gutter-fr:modified ((t (:foreground ,zenburn-blue-2))))
-        `(highlight ((t (:background ,zenburn-bg+1))))
-        `(hl-line ((t (:inherit 'highlight))))
-        `(line-number ((t (:foreground ,zenburn-fg-05))))
-        `(lsp-ui-doc-background ((t (:background ,zenburn-bg-08))))
-        `(magit-diff-added ((t (:foreground ,zenburn-green))))
-        `(magit-diff-added-highlight ((t (:foreground ,zenburn-green+1))))
-        `(magit-diff-context ((t (:foreground ,zenburn-fg-05))))
-        `(magit-diff-context-highlight ((t (:inherit 'magit-diff-context))))
-        `(magit-diff-hunk-region ((t (:inherit 'region))))
-        `(magit-diff-removed ((t (:foreground ,zenburn-red))))
-        `(magit-diff-removed-highlight ((t (:foreground ,zenburn-red+1))))
-        `(mode-line ((t (:background ,zenburn-bg-1 :foreground ,zenburn-green+1))))
-        `(mode-line-inactive
-          ((t (:background ,zenburn-bg-05
-               :box (:color ,zenburn-bg-1 :line-width -1)
-               :foreground ,zenburn-green-2))))
-        `(orderless-match-face-0
-          ((t (:background ,zenburn-blue-5 :foreground ,zenburn-cyan))))
-        `(orderless-match-face-1
-          ((t (:background ,zenburn-fg-1 :foreground ,zenburn-yellow))))
-        `(orderless-match-face-2
-          ((t (:background ,zenburn-green-4 :foreground ,zenburn-green+4))))
-        `(orderless-match-face-3
-          ((t (:background ,zenburn-red-6 :foreground ,zenburn-red+2))))
-        `(org-block ((t (:background nil))))
-        `(region ((t (:background ,zenburn-fg-1))))
-        `(selectrum-current-candidate ((t (:inherit 'highlight))))
-        `(tooltip ((t (:background ,zenburn-bg-05))))
-        `(window-divider ((t (:foreground ,zenburn-bg))))))))
+  (load-theme 'zenmelt t)
+  (set-face-attribute 'default nil :font me/font-default :height me/font-size-default))
 #+END_SRC
 
 * Languages
@@ -809,6 +756,7 @@ Provide various commands to list and /consult/ existing collections.
 #+BEGIN_SRC emacs-lisp
 (use-package consult
   :after selectrum
+  :defer nil
   :bind
   ([remap goto-line] . consult-goto-line)
   ([remap isearch-forward] . consult-line)
