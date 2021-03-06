@@ -75,7 +75,7 @@ required fonts.
 M-x all-the-icons-install-fonts RET
 #+END_SRC
 
-** LSP
+** Language Servers
 
 In order for Emacs to connect to the LSP servers, install the language-specific
 dependencies.
