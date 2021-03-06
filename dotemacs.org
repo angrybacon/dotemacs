@@ -403,7 +403,9 @@ HTML mode is defined in =sgml-mode.el=.
   (:map emacs-lisp-mode-map
    ("C-c C-c" . me/eval-region-dwim)
    :map lisp-interaction-mode-map
-   ("C-c C-c" . me/eval-region-dwim)))
+   ("C-c C-c" . me/eval-region-dwim))
+  :hook
+  (emacs-lisp-mode . outline-minor-mode))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
