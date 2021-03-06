@@ -57,6 +57,7 @@ Here are what I consider better defaults as per my own experience.
  show-help-function nil                 ; Disable help text everywhere
  tab-width 4                            ; Set width for tabs
  uniquify-buffer-name-style 'forward    ; Uniquify buffer names
+ warning-minimum-level :error           ; Skip warning buffers
  window-combination-resize t            ; Resize windows proportionally
  x-stretch-cursor t)                    ; Stretch cursor to the glyph width
 (blink-cursor-mode 0)                   ; Prefer a still cursor
