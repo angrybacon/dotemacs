@@ -2872,8 +2872,8 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
   (epg-pinentry-mode 'loopback)
   (magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
   (magit-diff-highlight-hunk-region-functions
-   '(magit-diff-highlight-hunk-region-dim-outside
-     magit-diff-highlight-hunk-region-using-face))
+   '(magit-diff-highlight-hunk-region-using-face))
+  (magit-diff-refine-hunk 'all)
   (magit-module-sections-nested nil)
   (magit-section-initial-visibility-alist
    '((modules . show) (stashes . show) (unpulled . show) (unpushed . show)))
