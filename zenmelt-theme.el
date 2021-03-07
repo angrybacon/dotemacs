@@ -269,6 +269,10 @@ See `custom--inhibit-theme-enable'."
     `(selectrum-group-separator         ((t :foreground ,bg+4 :strike-through t)))
     `(selectrum-primary-highlight       ((t :background ,green-2)))
     `(selectrum-secondary-highlight     ((t :background ,green)))
+;;;;; Help
+    `(helpful-heading                   ((t :foreground ,orange
+                                            :height 1.6
+                                            :inherit variable-pitch)))
 ;;;;; Version Control
 ;;;;;; Magit: bisect
     `(magit-bisect-good                 ((t :foreground ,green)))
