@@ -264,7 +264,9 @@ See `custom--inhibit-theme-enable'."
     `(orderless-match-face-1            ((t :background ,fg-2 :foreground ,yellow)))
     `(orderless-match-face-2            ((t :background ,green-4 :foreground ,green+4)))
     `(orderless-match-face-3            ((t :background ,red-6 :foreground ,red+2)))
-    `(selectrum-current-candidate       ((t :inherit highlight)))
+    `(selectrum-current-candidate       ((t :extend t :inherit highlight)))
+    `(selectrum-group-title             ((t :inherit shadow :italic t)))
+    `(selectrum-group-separator         ((t :foreground ,bg+4 :strike-through t)))
     `(selectrum-primary-highlight       ((t :background ,green-2)))
     `(selectrum-secondary-highlight     ((t :background ,green)))
 ;;;;; Version Control
