@@ -143,6 +143,9 @@ See `custom--inhibit-theme-enable'."
     `(custom-variable-tag               ((t :foreground ,blue :weight bold)))
 ;;;;; Help
     `(Info-quoted                       ((t :inherit font-lock-constant-face)))
+    `(eldoc-box-body                    ((t :inherit tooltip)))
+    `(eldoc-box-border                  ((t :background ,red)))
+    `(eldoc-highlight-function-argument ((t :inherit highlight)))
     `(woman-bold                        ((t :inherit font-lock-keyword-face)))
     `(woman-italic                      ((t :inherit (font-lock-string-face italic))))
 ;;;;; Interface
