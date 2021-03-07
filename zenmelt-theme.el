@@ -141,15 +141,6 @@ See `custom--inhibit-theme-enable'."
     `(custom-group-tag                  ((t :foreground ,blue)))
     `(custom-state                      ((t :foreground ,green+4)))
     `(custom-variable-tag               ((t :foreground ,blue :weight bold)))
-;;;;; Diff
-    `(diff-added                        ((t :foreground ,green)))
-    `(diff-changed                      ((t :foreground ,yellow)))
-    `(diff-file-header                  ((,class :background ,bg+3) (t :inverse-video t)))
-    `(diff-header                       ((,class :background ,bg+3) (t :inverse-video t)))
-    `(diff-refine-added                 ((t :background ,bg+3)))
-    `(diff-refine-changed               ((t :inherit diff-refine-added)))
-    `(diff-refine-removed               ((t :inherit diff-refine-added)))
-    `(diff-removed                      ((t :foreground ,red-2)))
 ;;;;; Help
     `(Info-quoted                       ((t :inherit font-lock-constant-face)))
     `(woman-bold                        ((t :inherit font-lock-keyword-face)))
@@ -240,6 +231,20 @@ See `custom--inhibit-theme-enable'."
     `(isearch-fail                      ((t :foreground ,red)))
     `(lazy-highlight                    ((t :inherit highlight)))
     `(match                             ((t :background ,bg-3 :foreground ,orange)))
+;;;;; Version Control
+    `(diff-added                        ((t :foreground ,green+2)))
+    `(diff-changed                      ((t :foreground ,yellow)))
+    `(diff-file-header                  ((,class :background ,bg+3) (t :inverse-video t)))
+    `(diff-header                       ((,class :background ,bg+3) (t :inverse-video t)))
+    `(diff-refine-added                 ((t :background ,bg+3)))
+    `(diff-refine-changed               ((t :inherit diff-refine-added)))
+    `(diff-refine-removed               ((t :inherit diff-refine-added)))
+    `(diff-removed                      ((t :foreground ,red)))
+    `(smerge-lower                      ((t :background ,bg+1 :inherit diff-added)))
+    `(smerge-markers                    ((t :background ,bg+1 :inherit shadow)))
+    `(smerge-refined-added              ((t :inherit diff-refine-added)))
+    `(smerge-refined-removed            ((t :inherit diff-refine-removed)))
+    `(smerge-upper                      ((t :background ,bg+1 :inherit diff-removed)))
 ;;;; Third-party
 ;;;;; Completion
     `(company-preview                   ((t :background ,green+2)))
@@ -274,9 +279,9 @@ See `custom--inhibit-theme-enable'."
     `(magit-blame-date                  ((t :background ,bg-3 :foreground ,orange)))
     `(magit-blame-summary               ((t :background ,bg-3 :foreground ,blue-2)))
 ;;;;;; Magit: diff
-    `(magit-diff-added                  ((t :inherit diff-added)))
-    `(magit-diff-added-highlight        ((t :foreground ,green+2
-                                            :inherit magit-diff-context-highlight)))
+    `(magit-diff-added                  ((t :foreground ,green)))
+    `(magit-diff-added-highlight        ((t :inherit (diff-added
+                                                      magit-diff-context-highlight))))
     `(magit-diff-context                ((t :inherit shadow)))
     `(magit-diff-context-highlight      ((t :background ,bg+1
                                             :inherit magit-diff-context)))
@@ -288,9 +293,9 @@ See `custom--inhibit-theme-enable'."
     `(magit-diff-hunk-heading-selection ((t :background ,bg+3 :foreground ,orange)))
     `(magit-diff-hunk-region            ((t :inherit region)))
     `(magit-diff-lines-heading          ((t :background ,orange :foreground ,bg+3)))
-    `(magit-diff-removed                ((t :inherit diff-removed)))
-    `(magit-diff-removed-highlight      ((t :foreground ,red
-                                            :inherit magit-diff-context-highlight)))
+    `(magit-diff-removed                ((t :foreground ,red-2)))
+    `(magit-diff-removed-highlight      ((t :inherit (diff-removed
+                                                      magit-diff-context-highlight))))
     `(magit-diffstat-added              ((t :foreground ,green+4)))
     `(magit-diffstat-removed            ((t :foreground ,red)))
 ;;;;;; Magit: headings
