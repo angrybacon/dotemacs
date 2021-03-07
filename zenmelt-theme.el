@@ -273,6 +273,8 @@ See `custom--inhibit-theme-enable'."
     `(helpful-heading                   ((t :foreground ,orange
                                             :height 1.6
                                             :inherit variable-pitch)))
+;;;;; Language Servers
+    `(eglot-highlight-symbol-face       ((t :inherit highlight)))
 ;;;;; Version Control
 ;;;;;; Magit: bisect
     `(magit-bisect-good                 ((t :foreground ,green)))
