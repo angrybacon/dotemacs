@@ -167,7 +167,7 @@ See `custom--inhibit-theme-enable'."
     `(region                            ((,class :background ,blue-5)
                                          (t :inverse-video t)))
     `(secondary-selection               ((t :background ,bg+3)))
-    `(tooltip                           ((t :background ,bg+2 :foreground ,fg)))
+    `(tooltip                           ((t :background ,bg-3)))
     `(trailing-whitespace               ((t :background ,red)))
     `(vertical-border                   ((t :inherit default)))
     `(widget-field                      ((t :background ,bg+4 :foreground ,fg)))
@@ -237,8 +237,10 @@ See `custom--inhibit-theme-enable'."
 ;;;;; Version Control
     `(diff-added                        ((t :foreground ,green+2)))
     `(diff-changed                      ((t :foreground ,yellow)))
-    `(diff-file-header                  ((,class :background ,bg+3) (t :inverse-video t)))
-    `(diff-header                       ((,class :background ,bg+3) (t :inverse-video t)))
+    `(diff-file-header                  ((,class :background ,bg+3)
+                                         (t :inverse-video t)))
+    `(diff-header                       ((,class :background ,bg+3)
+                                         (t :inverse-video t)))
     `(diff-refine-added                 ((t :background ,bg+3)))
     `(diff-refine-changed               ((t :inherit diff-refine-added)))
     `(diff-refine-removed               ((t :inherit diff-refine-added)))
@@ -251,7 +253,8 @@ See `custom--inhibit-theme-enable'."
 ;;;; Third-party
 ;;;;; Completion
     `(company-preview                   ((t :background ,green+2)))
-    `(company-preview-common            ((t :background ,bg-3 :inherit 'company-preview)))
+    `(company-preview-common            ((t :background ,bg-3
+                                            :inherit 'company-preview)))
     `(company-scrollbar-bg              ((t :background ,bg+3)))
     `(company-scrollbar-fg              ((t :background ,bg-3)))
     `(company-tooltip                   ((t :inherit 'tooltip)))
@@ -259,7 +262,7 @@ See `custom--inhibit-theme-enable'."
     `(company-tooltip-common            ((t :foreground ,green+2)))
     `(company-tooltip-common-selection  ((t :inherit 'company-tooltip-common)))
     `(company-tooltip-mouse             ((t :inherit 'company-tooltip-selection)))
-    `(company-tooltip-selection         ((t :background ,bg-3)))
+    `(company-tooltip-selection         ((t :foreground ,fg :inherit highlight)))
     `(completions-annotations           ((t :foreground ,fg-1)))
     `(consult-preview-cursor            ((t :inherit isearch)))
     `(consult-preview-line              ((t :extend t :inherit highlight)))
