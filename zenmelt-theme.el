@@ -234,6 +234,16 @@ See `custom--inhibit-theme-enable'."
     `(isearch-fail                      ((t :foreground ,red)))
     `(lazy-highlight                    ((t :inherit highlight)))
     `(match                             ((t :background ,bg-3 :foreground ,orange)))
+;;;;; Syntax
+    `(flymake-error                     ((t :background ,red-5
+                                            :foreground ,red+1
+                                            :underline t)))
+    `(flymake-note                      ((t :background ,blue-5
+                                            :foreground ,blue+1
+                                            :underline t)))
+    `(flymake-warning                   ((t :background ,fg-2
+                                            :foreground ,orange
+                                            :underline t)))
 ;;;;; Version Control
     `(diff-added                        ((t :foreground ,green+2)))
     `(diff-changed                      ((t :foreground ,yellow)))
@@ -575,12 +585,12 @@ See `custom--inhibit-theme-enable'."
 ;;;;; flx
     `(flx-highlight-face                ((t :foreground ,green+2 :weight bold)))
 ;;;;; flycheck
-    `(flycheck-error                    ((t :underline (:color ,red-1 :style wave))))
-    `(flycheck-info                     ((t :underline (:color ,cyan :style wave))))
-    `(flycheck-warning                  ((t :underline (:color ,yellow :style wave))))
-    `(flycheck-fringe-error             ((t :foreground ,red-1)))
-    `(flycheck-fringe-info              ((t :foreground ,cyan)))
-    `(flycheck-fringe-warning           ((t :foreground ,yellow)))
+    `(flycheck-error                    ((t :inherit flymake-error)))
+    `(flycheck-info                     ((t :inherit flymake-note)))
+    `(flycheck-warning                  ((t :inherit flymake-warning)))
+    `(flycheck-fringe-error             ((t :foreground ,red)))
+    `(flycheck-fringe-info              ((t :foreground ,blue)))
+    `(flycheck-fringe-warning           ((t :foreground ,orange)))
 ;;;;; full-ack
     `(ack-separator                     ((t :foreground ,fg)))
     `(ack-file                          ((t :foreground ,blue)))
