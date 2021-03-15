@@ -726,7 +726,7 @@ completion candidates.
   (company-dabbrev-other-buffers nil)
   (company-global-modes '(not help-mode message-mode))
   (company-idle-delay 0)
-  (company-minimum-prefix-length 1)
+  (company-minimum-prefix-length 2)
   (company-require-match nil)
   (company-selection-wrap-around t)
   (company-tooltip-align-annotations t)
