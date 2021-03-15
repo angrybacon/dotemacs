@@ -2748,8 +2748,8 @@ Until a proper popup system is implemented, use =C-`= to close the bottom
   :commands
   (vterm vterm-other-window)
   :bind
-  ("C-!" . me/vterm-dwim)
-  ("C-`" . me/vterm-close))
+  ("s-<return>" . me/vterm-dwim)
+  ("s-'" . me/vterm-close))
 #+END_SRC
 
 | TODO | Merge in vterm-specific shackle rules instead of naively overwrite |
