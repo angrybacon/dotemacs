@@ -1064,6 +1064,7 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
 (use-package eldoc
   :ensure nil
   :custom
+  (eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
   (eldoc-idle-delay .1))
 #+END_SRC
 
@@ -1664,8 +1665,13 @@ Yup, Emacs supports LSP.
 
 #+BEGIN_SRC emacs-lisp
 (use-package eglot
+  :commands
+  (eglot eglot-ensure)
   :hook
   (web-mode . eglot-ensure)
+  :custom
+  (eglot-autoshutdown t)
+  (eglot-stay-out-of '(eldoc-documentation-strategy))
   :init
   (put 'eglot-server-programs 'safe-local-variable 'listp))
 #+END_SRC
