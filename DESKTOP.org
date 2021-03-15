@@ -3,15 +3,20 @@
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args :mkdirp yes :results silent
 
-| TODO | Tangle on startup  |
-| TODO | Enable sudo prompt |
+Below are instructions to configure EXWM ie. Emacs as your window manager.
+
+| TODO | Can that be tangled on startup? |
 
 * Desktop Entry
 
 Enable Emacs in the list of eligible window managers.
 
-#+BEGIN_SRC shell
-sudo ln -fs ~/.config/emacs/exwm/emacs.desktop /usr/share/xsessions/
+#+BEGIN_SRC conf :tangle /sudo:://usr/share/xsessions/emacs.desktop
+[Desktop Entry]
+Comment=Emacs X Window Manager
+Exec=dbus-launch --exit-with-session emacs --debug-init --maximized
+Name=EXWM
+Type=Application
 #+END_SRC
 
 * Compositor
@@ -21,15 +26,19 @@ transparency, shadows.
 
 Identify the running compositor program.
 
-#+BEGIN_SRC shell
+#+BEGIN_SRC sh
 inxi -Gxx | grep compositor
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+paru -S picom-ibhagwan-git
 #+END_SRC
 
 * Screenshots
 
 | TODO | Fix clipboard sharing from EXWM |
 
-#+BEGIN_SRC shell
+#+BEGIN_SRC sh
 yay -S maim xclip
 #+END_SRC
 
@@ -38,14 +47,14 @@ yay -S maim xclip
 #+HEADER: :shebang #!/bin/sh
 #+HEADER: :tangle scripts/screenshot.region.sh
 #+HEADER: :tangle-mode (identity #o755)
-#+BEGIN_SRC shell
+#+BEGIN_SRC sh
 maim --hidecursor --select \
     | xclip -selection clipboard -target image/png
 #+END_SRC
 
 ** Region with Background Shadow
 
-#+BEGIN_SRC shell
+#+BEGIN_SRC sh
 yay -S imagemagick
 #+END_SRC
 
@@ -54,7 +63,7 @@ yay -S imagemagick
 #+HEADER: :shebang #!/bin/sh
 #+HEADER: :tangle scripts/screenshot.region-shadow.sh
 #+HEADER: :tangle-mode (identity #o755)
-#+BEGIN_SRC shell
+#+BEGIN_SRC sh
 maim --hidecursor --select \
     | convert - \( +clone -background black -shadow 80x3+5+5 \) +swap \
               -background none -layers merge +repage shadow.png
@@ -62,7 +71,7 @@ maim --hidecursor --select \
 
 ** Window
 
-#+BEGIN_SRC shell
+#+BEGIN_SRC sh
 yay -S xdotool
 #+END_SRC
 
@@ -72,37 +81,27 @@ yay -S xdotool
 #+HEADER: :shebang #!/bin/sh
 #+HEADER: :tangle scripts/screenshot.window.sh
 #+HEADER: :tangle-mode (identity #o755)
-#+BEGIN_SRC shell
+#+BEGIN_SRC sh
 maim --window=$(xdotool getactivewindow) \
     | xclip -selection clipboard -target image/png
 #+END_SRC
 
 ** Root
 
-| TODO | Make a shadow variant                                          |
+| TODO | Make a shadow variant |
 
 #+HEADER: :shebang #!/bin/sh
 #+HEADER: :tangle scripts/screenshot.root.sh
 #+HEADER: :tangle-mode (identity #o755)
-#+BEGIN_SRC shell
+#+BEGIN_SRC sh
 maim | xclip -selection clipboard -target image/png
 #+END_SRC
 
 * Fonts
 
-** Dependencies
+Enable aliasing and hinting presets.
 
-#+BEGIN_SRC shell
-yay -S \
-    ttf-cascadia-code \
-    ttf-fira-code ttf-fira-sans \
-    ttf-hack \
-    ttf-roboto ttf-roboto-slab
-#+END_SRC
-
-** Configuration
-
-#+BEGIN_SRC shell
+#+BEGIN_SRC sh
 rm -f /etc/fonts/conf.d/10-hinting-slight.conf
 ln -s /etc/fonts/conf.avail/10-hinting-full.conf /etc/fonts/conf.d
 ln -s /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d
@@ -152,8 +151,35 @@ Set default font for classes in =/etc/fonts/local.conf=.
 
 * Theme
 
-#+BEGIN_SRC shell
+#+BEGIN_SRC sh
 yay -S materia-gtk-theme
+#+END_SRC
+
+Enable the theme in GTK settings files: =~/.config/gtk-3.0/settings.ini= and
+=~/.config/gtk-4.0/settings.ini=.
+
+#+BEGIN_SRC diff
++gtk-auto-mnemonics=0
++gtk-enable-mnemonics=0
+#+END_SRC
+
+* Notifications
+
+#+BEGIN_SRC sh
+paru -S dunst
+#+END_SRC
+
+Configure notification styles. Work in progress...
+
+#+BEGIN_SRC conf :tangle ~/.config/dunst/dunstrc
+[global]
+corner_radius = 4
+font = Google Sans 14
+geometry = "0x5-12+12"
+horizontal_padding = 16
+indicate_hidden = yes
+monitor = 0
+padding = 8
 #+END_SRC
 
 * Zoom

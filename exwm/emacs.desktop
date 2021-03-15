@@ -1,5 +1,0 @@
-[Desktop Entry]
-Comment=Emacs X Window Manager
-Exec=dbus-launch --exit-with-session emacs --debug-init --maximized
-Name=EXWM
-Type=Application

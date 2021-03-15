@@ -10,13 +10,13 @@ automagically tangled from an Org file into a Lisp file.
 
 * Installation
 
-** Dependencies
-
 #+BEGIN_QUOTE
-Tested on macOS only.
+Tested daily on Arch only.
 
 I trust your Google-fu to make the most of the below instructions.
 #+END_QUOTE
+
+** Dependencies
 
 | =jansson=  | Enable native JSON parsing              |
 | =libvterm= | Used by terminal emulation within Emacs |
@@ -80,7 +80,6 @@ M-x all-the-icons-install-fonts RET
 In order for Emacs to connect to the LSP servers, install the language-specific
 dependencies.
 
-#+BEGIN_SRC
-M-x lsp-install-server RET eslint RET
-M-x lsp-install-server RET ts-ls RET
+#+BEGIN_SRC sh
+paru -S typescript-language-server
 #+END_SRC
