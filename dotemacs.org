@@ -940,6 +940,9 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
    ("C-w" . nil)
    :map evil-motion-state-map
    ("q" . nil)
+   ("gb" . switch-to-buffer)
+   ("gB" . projectile-switch-to-buffer)
+   ("gp" . projectile-switch-project)
    ("gs" . avy-goto-char-timer)
    ("gS" . avy-goto-char)
    ("C-e" . nil)
