@@ -638,8 +638,6 @@ Otherwise, disable it everywhere."
 
 Window management.
 
-| TODO | Check out Doom popups |
-
 #+BEGIN_QUOTE
 =shackle= gives you the means to put an end to popped up buffers not behaving
 they way you'd like them to. By setting up simple rules you can for instance
@@ -655,8 +653,7 @@ currently selected window.
   (after-init . shackle-mode)
   :custom
   (shackle-inhibit-window-quit-on-same-windows t)
-  (shackle-rules '((flycheck-verify-mode :same t)
-                   (help-mode :same t)
+  (shackle-rules '((help-mode :same t)
                    (helpful-mode :same t)
                    (process-menu-mode :same t)))
   (shackle-select-reused-windows t))
@@ -750,6 +747,7 @@ completion candidates.
 
 | TODO | Overwrite =selectrum='s TAB to yank word or symbol in =consult-line= |
 | TODO | Make =me/consult-applications=                                       |
+| TODO | Let =me/consult-line-from-point= fail silenty                        |
 
 Provide various commands to list and /consult/ existing collections.
 
@@ -759,7 +757,7 @@ Provide various commands to list and /consult/ existing collections.
   :defer nil
   :bind
   ([remap goto-line] . consult-goto-line)
-  ([remap isearch-forward] . consult-line)
+  ([remap isearch-forward] . me/consult-line-from-point)
   ([remap switch-to-buffer] . consult-buffer)
   :hook
   (org-mode . (lambda () (setq-local consult-fontify-preserve nil)))
@@ -784,6 +782,12 @@ Default to the face at point using `get-text-property'."
                    :default face
                    :lookup (lambda (_input _candidates match) (describe-face match))
                    :prompt "Faces: ")))
+
+(defun me/consult-line-from-point ()
+  "Search for symbol at point in the current buffer.
+See `consult-line'."
+  (interactive)
+  (consult-line (thing-at-point 'symbol)))
 #+END_SRC
 
 *** Marginalia
@@ -1125,7 +1129,6 @@ seamless, it's like a minor mode that disables itself auto-magically.
   ("C-c a" . hydra-applications/body)
   ("C-c d" . hydra-dates/body)
   ("C-c e" . hydra-eyebrowse/body)
-  ("C-c f" . hydra-flycheck/body)
   ("C-c g" . hydra-git/body)
   ("C-c o" . me/hydra-super-maybe)
   ("C-c p" . hydra-projectile/body)
@@ -1233,31 +1236,6 @@ Group Eyebrowse commands.
   ("k" eyebrowse-close-window-config :color red)
   ("r" eyebrowse-rename-window-config)
   ("s" eyebrowse-switch-to-window-config))
-#+END_SRC
-
-*** Hydra: Flycheck
-
-Group Flycheck commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-flycheck (:color teal)
-  (concat (me/hydra-heading "Flycheck" "Do" "Errors" "Checker") "
- _q_ quit            _v_ verify setup    _<_ previous        _?_ describe
- ^^                  ^^                  _>_ next            _d_ disable
- ^^                  ^^                  _f_ goto            _s_ select
- ^^                  ^^                  _F_ check           ^^
- ^^                  ^^                  _l_ list            ^^
-")
-  ("q" nil)
-  ("<" flycheck-previous-error :color red)
-  (">" flycheck-next-error :color red)
-  ("?" flycheck-describe-checker)
-  ("d" flycheck-disable-checker)
-  ("f" (flycheck-next-error 1 t))
-  ("F" flycheck-buffer)
-  ("l" flycheck-list-errors)
-  ("s" flycheck-select-checker)
-  ("v" flycheck-verify-setup))
 #+END_SRC
 
 *** Hydra: Git
@@ -1699,30 +1677,7 @@ Display relative line numbers in most editing modes.
 
 ** Linters
 
-| =flycheck= | https://github.com/flycheck/flycheck   |
 | =prettier= | https://github.com/jscheid/prettier.el |
-
-Flycheck lints warnings and errors directly within buffers. It can check a lot
-of different syntaxes, as long as you make sure that Emacs has access to the
-binaries.
-
-See this table for the differences between Flycheck and the built-in Flymake:
-https://www.flycheck.org/en/latest/user/flycheck-versus-flymake.html.
-
-#+BEGIN_SRC emacs-lisp
-(use-package flycheck
-  :hook
-  (css-mode . flycheck-mode)
-  (emacs-lisp-mode . flycheck-mode)
-  (python-mode . flycheck-mode)
-  :custom
-  (flycheck-check-syntax-automatically '(idle-buffer-switch idle-change save))
-  (flycheck-display-errors-delay .01)
-  (flycheck-emacs-lisp-load-path 'inherit)
-  (flycheck-indication-mode 'right-fringe)
-  :config
-  (define-fringe-bitmap 'flycheck-fringe-bitmap-double-arrow [255] nil nil '(center t)))
-#+END_SRC
 
 Run Prettier against the whole buffer on save. You can toggle the minor mode on
 through a strategically positioned =.dir-locals.el= containing the major modes
@@ -1852,12 +1807,12 @@ Yup, Emacs supports LSP.
       (concat (doom-modeline-spc)
               (propertize (abbreviate-file-name default-directory) 'face face)
               (doom-modeline-spc))))
-  (doom-modeline-def-segment me/flycheck
+  (doom-modeline-def-segment me/flymake
     "The error status with color codes and icons."
-    (when (bound-and-true-p flycheck-mode)
+    (when (bound-and-true-p flymake-mode)
       (let ((active (doom-modeline--active))
-            (icon doom-modeline--flycheck-icon)
-            (text doom-modeline--flycheck-text))
+            (icon doom-modeline--flymake-icon)
+            (text doom-modeline--flymake-text))
         (concat
          (when icon
            (concat (doom-modeline-spc)
@@ -1913,13 +1868,13 @@ Yup, Emacs supports LSP.
     '(bar modals me/buffer me/info me/buffer-position selection-info)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'main
-    '(bar modals me/buffer remote-host me/buffer-position me/flycheck selection-info)
+    '(bar modals me/buffer remote-host me/buffer-position me/flymake selection-info)
     '(irc-buffers matches me/process me/vcs debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'message
     '(bar modals me/buffer-simple me/buffer-position selection-info)
     '(irc-buffers matches me/process me/major-mode workspace-name))
   (doom-modeline-def-modeline 'org-src
-    '(bar modals me/buffer-simple me/buffer-position me/flycheck selection-info)
+    '(bar modals me/buffer-simple me/buffer-position me/flymake selection-info)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'package
     '(bar modals me/space package)
