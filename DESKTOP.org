@@ -4,8 +4,8 @@
 #+PROPERTY: header-args :mkdirp yes :results silent
 
 Below are instructions to configure EXWM ie. Emacs as your window manager.
-
-| TODO | Can that be tangled on startup? |
+Blocks are automatically tangled on save from this very document. To see the
+complete tangling parameters, consider browsing the raw version of this file.
 
 * Desktop Entry
 
@@ -14,7 +14,7 @@ Enable Emacs in the list of eligible window managers.
 #+BEGIN_SRC conf :tangle /sudo:://usr/share/xsessions/emacs.desktop
 [Desktop Entry]
 Comment=Emacs X Window Manager
-Exec=dbus-launch --exit-with-session emacs --debug-init --maximized
+Exec=emacs --debug-init --maximized
 Name=EXWM
 Type=Application
 #+END_SRC
@@ -169,22 +169,26 @@ Enable the theme in GTK settings files: =~/.config/gtk-3.0/settings.ini= and
 paru -S dunst
 #+END_SRC
 
-Configure notification styles. Work in progress...
+Configure notification styles. Still experimenting with the options.
+
+=~/.config/dunst/dunstrc=
 
 #+BEGIN_SRC conf :tangle ~/.config/dunst/dunstrc
 [global]
 corner_radius = 4
 font = Google Sans 14
-geometry = "0x5-12+12"
+geometry = "0x5-20+20"
 horizontal_padding = 16
 indicate_hidden = yes
 monitor = 0
 padding = 8
+transparency = 90
 #+END_SRC
 
 * Zoom
 
-Edit =~/.config/zoomus.conf= to disable the automatic mini-view.
+Edit =~/.config/zoomus.conf= to disable the automatic mini-view since it will
+eventually mess up your current window configuration.
 
 #+BEGIN_SRC diff
 -enableMiniWindow=true
