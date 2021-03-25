@@ -835,8 +835,9 @@ with live-reload.
   :hook
   (after-init . selectrum-mode)
   :custom
+  (selectrum-display-action '(display-buffer-at-bottom
+                              (window-parameters (mode-line-format . none))))
   (selectrum-extend-current-candidate-highlight t)
-  (selectrum-fix-vertical-window-height t)
   (selectrum-max-window-height 8))
 #+END_SRC
 
