@@ -2519,7 +2519,7 @@ Use =conf-mode= automatically for configuration files.
 #+BEGIN_SRC emacs-lisp
 (use-package conf-mode
   :ensure nil
-  :mode "\\(?:\\.env\\.\\(?:development\\|local\\|test\\)\\)")
+  :mode "\\(?:\\.env\\.\\(?:development\\|local\\|test\\)\\|CODEOWNERS\\)")
 #+END_SRC
 
 Insert the current date. See [[#hydra--dates][Hydra / Dates]].
