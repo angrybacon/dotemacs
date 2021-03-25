@@ -245,8 +245,9 @@ to be.
 (defvar me/erc-password nil             "The ERC password to use.")
 (defvar me/erc-port nil                 "The ERC port to use.")
 (defvar me/erc-server nil               "The ERC server to use.")
-(defvar me/font-default "monospace"     "The font to use for default text.")
-(defvar me/font-heading "sans-serif"    "The font to use for headings.")
+(defvar me/font-default "monospace"     "The font to use in default text.")
+(defvar me/font-fixed "monospace"       "The font to use in fixed-pitch text.")
+(defvar me/font-variable "sans-serif"   "The font to use in variable-pitch text.")
 (defvar me/font-size-default 120        "The font size to use for default text.")
 (defvar me/font-size-heading 1.6        "The font size to use for headings.")
 (defvar me/font-size-large 1.2          "The font size to use for larger text.")
@@ -303,7 +304,9 @@ Prettify fringe bitmaps.
   :demand
   :config
   (load-theme 'zenmelt t)
-  (set-face-attribute 'default nil :font me/font-default :height me/font-size-default))
+  (set-face-attribute 'default nil :font me/font-default :height me/font-size-default)
+  (set-face-attribute 'fixed-pitch nil :font me/font-fixed)
+  (set-face-attribute 'variable-pitch nil :font me/font-variable))
 #+END_SRC
 
 * Languages
