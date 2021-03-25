@@ -185,9 +185,7 @@ delegated to =eyebrowse=.
      (,(kbd "s-2") . (lambda () (interactive) (exwm-workspace-switch 1)))
      (,(kbd "s-r") . exwm-reset)
      (,(kbd "s-R") . exwm-restart)
-     (,(kbd "s-s") . hydra-screenshot/body)
-     (,(kbd "s-w") . delete-window)
-     (,(kbd "s-W") . kill-this-buffer)))
+     (,(kbd "s-s") . hydra-screenshot/body)))
   (exwm-input-prefix-keys
    `,@(mapcar (lambda (vector) (aref vector 0))
               `(,(kbd "C-h")
@@ -557,6 +555,13 @@ authoring documents with a fast and effective plain-text system.
 | =shackle=   | https://github.com/wasamasa/shackle   |
 | =windmove=  | Built-in                              |
 | =winner=    | Built-in                              |
+
+Bind keys to manage windows and buffers that are more popular.
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "s-w") #'delete-window)
+(global-set-key (kbd "s-W") #'kill-this-buffer)
+#+END_SRC
 
 Save and restore Emacs status, including buffers, point and window
 configurations.
