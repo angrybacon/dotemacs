@@ -204,6 +204,7 @@ delegated to =eyebrowse=.
   (exwm-replace nil)
   (exwm-workspace-index-map (lambda (index) (number-to-string (1+ index))))
   (exwm-workspace-number 2)
+  (exwm-workspace-show-all-buffers t)
   (exwm-workspace-warp-cursor t)
   :config
   (exwm-enable)
