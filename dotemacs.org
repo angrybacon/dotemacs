@@ -1638,8 +1638,8 @@ Yup, Emacs supports LSP.
   (web-mode . eglot-ensure)
   :custom
   (eglot-autoshutdown t)
-  (eglot-stay-out-of '(eldoc-documentation-strategy))
   :init
+  (setq-default eglot-stay-out-of '(eldoc-documentation-strategy))
   (put 'eglot-server-programs 'safe-local-variable 'listp))
 #+END_SRC
 
@@ -1765,6 +1765,10 @@ Yup, Emacs supports LSP.
 ** Mode-Line
 
 | =doom-modeline= | https://github.com/seagle0128/doom-modeline |
+
+Prettify the mode-line with customizable and conditional segments.
+
+| TODO | Make a =arecord -vvv -f dat /dev/null= segment |
 
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
