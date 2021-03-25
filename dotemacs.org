@@ -933,7 +933,8 @@ explorer.
 
 ** Evil
 
-| =evil= | https://github.com/emacs-evil/evil |
+| =evil=          | https://github.com/emacs-evil/evil          |
+| =evil-surround= | https://github.com/emacs-evil/evil-surround |
 
 Evil emulates and manages the infamous Vim states and motions ported to Emacs.
 
@@ -992,6 +993,14 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
 (defun me/evil-indent (original &rest arguments)
   "Like `evil-indent' but save excursion."
   (save-excursion (apply original arguments)))
+#+END_SRC
+
+Emulate =vim-surround=. Take actions with surrounding pairs.
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-surround
+  :hook
+  (evil-mode . evil-surround-mode))
 #+END_SRC
 
 Activate volatile keymaps for split sizing.
