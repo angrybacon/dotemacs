@@ -113,8 +113,6 @@ Change a few indenting behaviors.
 #+BEGIN_SRC emacs-lisp
 (put 'add-function 'lisp-indent-function 2)
 (put 'advice-add 'lisp-indent-function 2)
-(put 'custom-theme-set-faces 'lisp-indent-function 'defun)
-(put 'evil-define-key* 'lisp-indent-function 'defun)
 (put 'plist-put 'lisp-indent-function 2)
 #+END_SRC
 
@@ -451,7 +449,7 @@ whole buffer."
 
 ** Org
 
-| =org=          | Built-in                                  |
+| =org= | Built-in |
 
 This very file is organized with =org-mode=. Like Markdown, but with
 superpowers.
@@ -572,8 +570,7 @@ configurations.
   :custom
   (desktop-base-file-name (me/cache-concat "desktop"))
   (desktop-base-lock-name (me/cache-concat "desktop.lock"))
-  (desktop-restore-eager 4)
-  (desktop-restore-forces-onscreen nil))
+  (desktop-restore-eager 4))
 #+END_SRC
 
 Olivetti lets you center your buffer for aesthetics and focus. I have it set up
@@ -1066,14 +1063,6 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
   :custom
   (eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
   (eldoc-idle-delay .1))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(use-package eldoc-box
-  :after eldoc
-  :defer nil
-  :hook
-  (eldoc-mode . eldoc-box-hover-mode))
 #+END_SRC
 
 Bind useful commands in help buffers.
@@ -1691,7 +1680,7 @@ Find code references.
   :config
   (with-eval-after-load 'evil
     (evil-define-key* 'motion xref--xref-buffer-mode-map
- (kbd "RET") #'xref-goto-xref)))
+      (kbd "<return") #'xref-goto-xref)))
 #+END_SRC
 
 ** Line Numbers
@@ -2373,7 +2362,8 @@ use with =selected=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package selected
-  :bind*
+  ;; :bind*
+  :bind
   (:map selected-keymap
    ("<"           . mc/mark-previous-like-this)
    (">"           . mc/mark-next-like-this)
@@ -2405,7 +2395,9 @@ use with =selected=.
   :hook
   (after-init . selected-global-mode)
   :config
-  (require 'browse-url))
+  (require 'browse-url)
+  :custom
+  (selected-minor-mode-override t))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
