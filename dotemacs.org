@@ -1085,6 +1085,15 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
 | =help-mode= | Built-in                           |
 | =helpful=   | https://github.com/Wilfred/helpful |
 
+When [[https://debbugs.gnu.org/cgi/bugreport.cgi?bug=47109][this patch]] is
+sorted out, we'll be able to use a new format function to have pieces of
+documentation joined with a horizontal rule. eg.
+
+#+BEGIN_SRC emacs-lisp :tangoe no
+(setq-default
+ eldoc-documentation-format-function #'eldoc-documentation-format-concat-hr)
+#+END_SRC
+
 #+BEGIN_SRC emacs-lisp
 (use-package eldoc
   :ensure nil
@@ -1680,9 +1689,15 @@ Find code references.
 (use-package xref
   :ensure nil
   :config
+  (with-eval-after-load 'consult
+    (setq-default
+     xref-show-definitions-function #'consult-xref
+     xref-show-xrefs-function #'consult-xref))
   (with-eval-after-load 'evil
     (evil-define-key* 'motion xref--xref-buffer-mode-map
-      (kbd "<return") #'xref-goto-xref)))
+      (kbd "<backtab") #'xref-prev-group
+      (kbd "<return") #'xref-goto-xref
+      (kbd "<tab>") #'xref-next-group)))
 #+END_SRC
 
 ** Line Numbers
