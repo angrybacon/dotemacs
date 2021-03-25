@@ -6,7 +6,7 @@ This repository contains my personal Emacs configuration.
 * What the .el
 
 If you are wondering where has gone all of the Lisp, fear not, for it is
-automagically tangled from an Org file into a Lisp file.
+automagically tangled from an Org file into a Lisp file. See [[dotemacs.org]].
 
 * Installation
 
@@ -27,7 +27,7 @@ I trust your Google-fu to make the most of the below instructions.
 
 *** Arch
 
-See [[ARCH.org#Emacs][ARCH]].
+See [[https://github.com/angrybacon/dot/blob/master/ARCH.org#emacs]].
 
 *** MacOS
 
