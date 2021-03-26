@@ -973,7 +973,6 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
   (evil-emacs-state-cursor (default-value 'cursor-type))
   (evil-undo-system 'undo-redo)
   (evil-visual-state-cursor 'hollow)
-  (evil-want-C-u-scroll t)
   (evil-want-keybinding nil)
   :config
   (add-to-list 'evil-emacs-state-modes 'exwm-mode)
