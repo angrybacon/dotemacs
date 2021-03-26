@@ -31,7 +31,9 @@
 
 (setq-default
  default-frame-alist
- '((fullscreen . fullboth)
+ '((background-color . "#3F3F3F")       ;; Default background color
+   (foreground-color . "#DCDCCC")       ;; Default foreground color
+   (fullscreen . fullboth)              ;; Fullscreen by default
    (horizontal-scroll-bars . nil)       ;; No horizontal scroll-bars
    (left-fringe . 8)                    ;; Thin left fringe
    (menu-bar-lines . 0)                 ;; No menu bar
