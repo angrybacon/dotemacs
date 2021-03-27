@@ -25,6 +25,12 @@ I trust your Google-fu to make the most of the below instructions.
 
 ** Emacs
 
+Clone the repository into your user directory.
+
+#+BEGIN_SRC sh
+git clone https://github.com/angrybacon/dotemacs.git ~/.config/emacs/
+#+END_SRC
+
 *** Arch
 
 See [[https://github.com/angrybacon/dot/blob/master/ARCH.org#emacs]].
@@ -39,29 +45,6 @@ ie. fake fullscreen since it has its downsides on macOS.
 #+BEGIN_SRC sh
 brew tap d12frosted/emacs-plus
 brew install emacs-plus@28 --with-no-titlebar
-#+END_SRC
-
-Clone the repository into your user directory.
-
-#+BEGIN_SRC sh
-git clone https://github.com/angrybacon/dotemacs.git ~/.config/emacs/
-#+END_SRC
-
-** Flycheck
-
-I use =flycheck= as linter framework to display syntax warnings and errors
-within each buffer. It is recommended to have your linting dependencies
-version-controlled next to your code. Assuming that's correctly set up, Emacs
-will find them automatically so that your linting corresponds to that of your
-team.
-
-However, if you needed linting feedback outside of a collaborative project, you
-would need to install the following dependencies globally.
-
-#+BEGIN_SRC sh
-npm install -g eslint                   # JavaScript
-npm install -g jsonlint                 # JSON
-npm install -g stylelint                # SCSS
 #+END_SRC
 
 ** Icons
