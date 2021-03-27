@@ -1323,30 +1323,6 @@ Group =git= commands.
   ("u" smerge-keep-upper))
 #+END_SRC
 
-*** COMMENT Hydra: LSP
-
-Group LSP commands. This hydra is bound in =lsp-mode-map=.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-lsp (:color teal)
-  (concat (me/hydra-heading "LSP" "Do" "Find" "Server") "
- _q_ quit            _i_ imenu           _f_ definition      _d_ describe
- ^^                  _F_ format          _r_ references      _I_ install
- ^^                  ^^                  _t_ types           _R_ restart
- ^^                  ^^                  ^^                  _S_ shutdown
-")
-  ("q" nil)
-  ("d" lsp-describe-session)
-  ("f" lsp-find-definition)
-  ("F" lsp-format-buffer)
-  ("i" lsp-ui-imenu)
-  ("I" lsp-install-server)
-  ("r" lsp-find-references)
-  ("R" lsp-workspace-restart)
-  ("S" lsp-workspace-shutdown)
-  ("t" lsp-find-type-definition))
-#+END_SRC
-
 *** Hydra: Markdown
 
 Group Markdown commands.
@@ -1736,68 +1712,6 @@ minimal overhead, by request or transparently on file save.
 
 #+BEGIN_SRC emacs-lisp
 (use-package prettier)
-#+END_SRC
-
-** COMMENT LSP
-
-Yup, Emacs supports LSP.
-
-| =lsp-mode= | https://github.com/emacs-lsp/lsp-mode |
-| =lsp-ui=   | https://github.com/emacs-lsp/lsp-ui   |
-
-| TODO | Make a minor mode for =me/lsp-optimize=  |
-| TODO | =C-c l= conflicts with =selected-keymap= |
-
-#+BEGIN_SRC emacs-lisp
-(use-package lsp-mode
-  :preface
-  (defun me/lsp-optimize ()
-    (setq-local
-     gc-cons-threshold (* 100 1024 1024)
-     read-process-output-max (* 1024 1024)))
-  :hook
-  (js2-mode . lsp-deferred)
-  (lsp-mode . me/lsp-optimize)
-  (rjsx-mode . lsp-deferred)
-  (web-mode . lsp-deferred)
-  :bind
-  (:map lsp-mode-map
-   ("C-c l" . hydra-lsp/body))
-  :custom
-  (lsp-auto-guess-root t)
-  (lsp-eldoc-enable-hover nil)
-  (lsp-enable-file-watchers nil)
-  (lsp-enable-folding nil)
-  (lsp-headerline-breadcrumb-enable nil)
-  (lsp-idle-delay .01)
-  (lsp-keymap-prefix nil)
-  (lsp-session-file (me/cache-concat "lsp/session.eld")))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(use-package lsp-eslint
-  :ensure nil
-  :custom
-  (lsp-eslint-run "onSave"))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(use-package lsp-ui
-  :custom
-  (lsp-ui-doc-enable t)
-  (lsp-ui-doc-delay .01)
-  (lsp-ui-doc-header nil)
-  (lsp-ui-doc-max-height 16)
-  (lsp-ui-doc-max-width 80)
-  (lsp-ui-doc-position 'top)
-  (lsp-ui-imenu-enable nil)
-  (lsp-ui-peek-enable nil)
-  (lsp-ui-sideline-enable nil)
-  :config
-  (advice-add 'lsp-ui-doc--mv-at-point :filter-args
-    (defun me/lsp-ui-doc--mv-at-point-with-margin (arguments)
-      (cl-destructuring-bind (width height x y) arguments
-        `(,width ,height ,x ,(- y 10))))))
 #+END_SRC
 
 ** Mode-Line
