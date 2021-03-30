@@ -105,7 +105,7 @@ so we want to maximize it instead. Works best with titlebar-less frames.
 #+BEGIN_SRC emacs-lisp
 (pcase window-system
   ('ns (set-frame-parameter nil 'fullscreen 'maximized))
-  ('w32 (set-frame-parameter nil 'fullscreen 'fullboth)))
+  (_ (set-frame-parameter nil 'fullscreen 'fullboth)))
 #+END_SRC
 
 Change a few indenting behaviors.
@@ -229,8 +229,8 @@ delegated to =eyebrowse=.
   "Set resolution for EXWM displays ie. workspaces."
   (start-process-shell-command
    "xrandr" nil "xrandr \
---output DVI-D-1 --auto \
---output HDMI-1 --auto --right-of DVI-D-1"))
+--output DVI-D-0 --auto \
+--output HDMI-0 --auto --right-of DVI-D-0"))
 #+END_SRC
 
 ** Load Secrets
@@ -617,6 +617,8 @@ margins.
                                       Info-mode
                                       dired-mode
                                       erc-mode
+                                      help-mode
+                                      helpful-mode
                                       lisp-interaction-mode
                                       vterm-mode)
   "List of modes for which `olivetti-mode' should be enabled automatically.")
@@ -2112,8 +2114,6 @@ No package seem to please my person.
 
 | =webpaste= | https://github.com/etu/webpaste.el |
 
-| TODO | Prefer a default provider that supports https |
-
 #+BEGIN_QUOTE
 This mode allows to paste whole buffers or parts of buffers to pastebin-like
 services. It supports more than one service and will failover if one service
@@ -2379,7 +2379,7 @@ See `sort-regexp-fields'."
   (sort-regexp-fields reverse "\\w+" "\\&" beg end))
 #+END_SRC
 
-** Projectile
+** Project
 
 | =projectile= | https://github.com/bbatsov/projectile |
 
@@ -2646,7 +2646,9 @@ Until a proper popup system is implemented, use =C-`= to close the bottom
   (vterm vterm-other-window)
   :bind
   ("s-<return>" . me/vterm-dwim)
-  ("s-'" . me/vterm-close))
+  ("s-'" . me/vterm-close)
+  (:map vterm-mode-map
+   ("C-c C-c" . vterm-send-C-c)))
 #+END_SRC
 
 | TODO | Merge in vterm-specific shackle rules instead of naively overwrite |
