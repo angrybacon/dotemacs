@@ -768,7 +768,7 @@ Provide various commands to list and /consult/ existing collections.
   :defer nil
   :bind
   ([remap goto-line] . consult-goto-line)
-  ([remap isearch-forward] . me/consult-line-from-point)
+  ([remap isearch-forward] . consult-line)
   ([remap switch-to-buffer] . consult-buffer)
   :hook
   (org-mode . (lambda () (setq-local consult-fontify-preserve nil)))
@@ -793,12 +793,6 @@ Default to the face at point using `get-text-property'."
                    :default face
                    :lookup (lambda (_input _candidates match) (describe-face match))
                    :prompt "Faces: ")))
-
-(defun me/consult-line-from-point ()
-  "Search for symbol at point in the current buffer.
-See `consult-line'."
-  (interactive)
-  (consult-line (thing-at-point 'symbol)))
 #+END_SRC
 
 *** Marginalia
