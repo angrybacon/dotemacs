@@ -55,7 +55,6 @@ Here are what I consider better defaults as per my own experience.
  select-enable-clipboard t              ; Merge system's and Emacs' clipboard
  sentence-end-double-space nil          ; Use a single space after dots
  show-help-function nil                 ; Disable help text everywhere
- tab-width 4                            ; Set width for tabs
  uniquify-buffer-name-style 'forward    ; Uniquify buffer names
  warning-minimum-level :error           ; Skip warning buffers
  window-combination-resize t            ; Resize windows proportionally
@@ -183,6 +182,7 @@ delegated to =eyebrowse=.
    `((,(kbd "s-!") . me/exwm-read-shell-command)
      (,(kbd "s-1") . (lambda () (interactive) (exwm-workspace-switch 0)))
      (,(kbd "s-2") . (lambda () (interactive) (exwm-workspace-switch 1)))
+     (,(kbd "s-SPC") . me/exwm-read-shell-command)
      (,(kbd "s-r") . exwm-reset)
      (,(kbd "s-R") . exwm-restart)
      (,(kbd "s-s") . hydra-screenshot/body)))
@@ -200,6 +200,11 @@ delegated to =eyebrowse=.
   (exwm-input-simulation-keys
    `((,(kbd "C-y") . ,(kbd "C-v"))
      (,(kbd "M-w") . ,(kbd "C-c"))))
+  ;; NOTE Following configurations are not taken into account due to
+  ;;      https://github.com/ch11ng/exwm/issues/563#issuecomment-752813915
+  (exwm-manage-configurations
+   '(((member exwm-instance-name '("brave-browser" "discord" "spotify"))
+      workspace 0)))
   (exwm-randr-workspace-monitor-plist (me/read-lisp-data "exwm/workspaces.eld"))
   (exwm-replace nil)
   (exwm-workspace-index-map (lambda (index) (number-to-string (1+ index))))
@@ -240,6 +245,8 @@ you could set your identity by customizing both =user-full-name= and
 =user-mail-address=. This is also where you want your machine-specific settings
 to be.
 
+| TODO | Use =me/secret= instead |
+
 #+BEGIN_SRC emacs-lisp
 (defvar me/erc-nick nil                 "The ERC nick to use.")
 (defvar me/erc-password nil             "The ERC password to use.")
@@ -255,6 +262,21 @@ to be.
 
 (let ((secret.el (expand-file-name ".secret.el")))
   (load secret.el t))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/secret (&optional name)
+  "Read a Lisp structure from the secret file.
+When NAME is provided, return the value associated to this key."
+  (let ((file (expand-file-name ".secrets.eld")))
+    (when (file-exists-p file)
+      (with-demoted-errors "Error while parsing secret file: %S"
+        (with-temp-buffer
+          (insert-file-contents file)
+          (if-let ((content (read (buffer-string)))
+                   (name))
+              (alist-get name content)
+            content))))))
 #+END_SRC
 
 ** Theme
@@ -1157,6 +1179,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
   ("C-c a" . hydra-applications/body)
   ("C-c d" . hydra-dates/body)
   ("C-c e" . hydra-eyebrowse/body)
+  ("C-c f" . hydra-spotify/body)
   ("C-c g" . hydra-git/body)
   ("C-c o" . me/hydra-super-maybe)
   ("C-c p" . hydra-projectile/body)
@@ -1443,6 +1466,32 @@ Group commands to take screenshots with various options.
   (interactive (list (completing-read "Variant: " me/screenshot-variants)))
   (let ((command (format "scripts/screenshot.%s.sh" variant)))
     (call-process-shell-command command)))
+#+END_SRC
+
+*** Hydra: Spotify
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-spotify (:color pink)
+  (concat (me/hydra-heading "Spotify" "Search" "Controls" "Sound") "
+ _q_ quit            _t_ track           _<_ previous        _-_ down
+ ^^                  _p_ playlist        _>_ next            _=_ up
+ ^^                  _P_ featured        _f_ play            _d_ device
+ ^^                  ^^                  _r_ repeat          _m_ mute
+ ^^                  ^^                  _s_ shuffle         ^^
+")
+  ("q" nil)
+  ("-" smudge-controller-volume-down)
+  ("<" smudge-controller-previous-track)
+  ("=" smudge-controller-volume-up)
+  (">" smudge-controller-next-track)
+  ("P" smudge-featured-playlists :color blue)
+  ("d" smudge-select-device)
+  ("f" smudge-controller-toggle-play :color blue)
+  ("m" smudge-controller-volume-mute-unmute)
+  ("p" smudge-my-playlists :color blue)
+  ("r" smudge-controller-toggle-repeat)
+  ("s" smudge-controller-toggle-shuffle)
+  ("t" smudge-track-search :color blue))
 #+END_SRC
 
 *** Hydra: System
@@ -2618,6 +2667,20 @@ Emacs can also emulate an interactive REST client.
   :mode ("\\.http\\'" . restclient-mode)
   :hook
   (restclient-mode . display-line-numbers-mode))
+#+END_SRC
+
+** Spotify
+
+| =smudge= | https://github.com/danielfm/smudge |
+
+Control your Spotify clients from within Emacs.
+
+#+BEGIN_SRC emacs-lisp
+(use-package smudge
+  :commands smudge-controller-toggle-play
+  :custom
+  (smudge-oauth2-client-id (me/secret 'spotify-id))
+  (smudge-oauth2-client-secret (me/secret 'spotify-secret)))
 #+END_SRC
 
 ** Terminal

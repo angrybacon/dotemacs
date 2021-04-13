@@ -3,9 +3,10 @@
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args :mkdirp yes :results silent
 
-Below are instructions to configure EXWM ie. Emacs as your window manager.
-Blocks are automatically tangled on save from this very document. To see the
-complete tangling parameters, consider browsing the raw version of this file.
+Below are instructions to configure EXWM under an Arch-based distribution ie.
+Emacs as your window manager. Blocks are automatically tangled on save from this
+very document. To see the complete tangling parameters, consider browsing the
+raw version of this file.
 
 * Desktop Entry
 
@@ -14,7 +15,7 @@ Enable Emacs in the list of eligible window managers.
 #+BEGIN_SRC conf :tangle /sudo:://usr/share/xsessions/emacs.desktop
 [Desktop Entry]
 Comment=Emacs X Window Manager
-Exec=emacs --debug-init --maximized
+Exec=dbus-launch --exit-with-session emacs --debug-init --maximized
 Name=EXWM
 Type=Application
 #+END_SRC
@@ -36,10 +37,10 @@ paru -S picom-ibhagwan-git
 
 * Screenshots
 
-| TODO | Fix clipboard sharing from EXWM |
+Export scripts to take screenshots in various contexts.
 
 #+BEGIN_SRC sh
-yay -S maim xclip
+paru -S imagemagick maim xclip
 #+END_SRC
 
 ** Region
@@ -54,12 +55,6 @@ maim --hidecursor --select \
 
 ** Region with Background Shadow
 
-#+BEGIN_SRC sh
-yay -S imagemagick
-#+END_SRC
-
-| TODO | Export to clipboard instead |
-
 #+HEADER: :shebang #!/bin/sh
 #+HEADER: :tangle scripts/screenshot.region-shadow.sh
 #+HEADER: :tangle-mode (identity #o755)
@@ -72,7 +67,7 @@ maim --hidecursor --select \
 ** Window
 
 #+BEGIN_SRC sh
-yay -S xdotool
+paru -S xdotool
 #+END_SRC
 
 | TODO | =xdotool= is not able to retrieve the active window under EXWM |
@@ -182,7 +177,7 @@ horizontal_padding = 16
 indicate_hidden = yes
 monitor = 0
 padding = 8
-transparency = 90
+transparency = 32
 #+END_SRC
 
 * Zoom

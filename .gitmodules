@@ -11,5 +11,5 @@
     path = lisp/mtg
     url = https://github.com/angrybacon/mtg.git
 [submodule "zenmelt"]
-	path = lisp/zenmelt
-	url = git@github.com:angrybacon/emacs-zenmelt.git
+    path = lisp/zenmelt
+    url = git@github.com:angrybacon/emacs-zenmelt.git

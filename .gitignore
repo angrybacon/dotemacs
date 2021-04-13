@@ -3,4 +3,5 @@ eln-cache/
 elpa/
 scripts/
 .secret.el
+.secrets.eld
 dotemacs.el
