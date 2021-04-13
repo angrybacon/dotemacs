@@ -848,10 +848,16 @@ with live-reload.
 
 #+BEGIN_SRC emacs-lisp
 (use-package selectrum
+  :preface
+  (defvar me/selectrum-candidates-map (make-sparse-keymap))
   :bind
-  ("C-x C-z" . selectrum-repeat)
+  (("C-x C-z" . selectrum-repeat)
+   :map me/selectrum-candidates-map
+   ("q" . abort-recursive-edit)
+   ([remap keyboard-quit] . abort-recursive-edit))
   :hook
   (after-init . selectrum-mode)
+  (selectrum-display-action . (lambda () (use-local-map me/selectrum-candidates-map)))
   :custom
   (selectrum-display-action '(display-buffer-at-bottom
                               (window-parameters (mode-line-format . none))))
