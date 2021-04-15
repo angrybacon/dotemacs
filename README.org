@@ -28,7 +28,7 @@ I trust your Google-fu to make the most of the below instructions.
 Clone the repository into your user directory.
 
 #+BEGIN_SRC sh
-git clone https://github.com/angrybacon/dotemacs.git ~/.config/emacs/
+git clone --recurse-submodules https://github.com/angrybacon/dotemacs.git ~/.config/emacs/
 #+END_SRC
 
 *** Arch

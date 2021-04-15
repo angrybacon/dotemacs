@@ -1,15 +1,18 @@
 [submodule "company-mtg"]
     path = lisp/company-mtg
-    url = https://github.com/angrybacon/company-mtg.git
+    url = git@github.com:angrybacon/company-mtg.git
+[submodule "leyline"]
+    path = lisp/leyline
+    url = git@github.com:angrybacon/leyline.git
 [submodule "locust"]
     path = lisp/locust
-    url = https://github.com/angrybacon/locust.git
+    url = git@github.com:angrybacon/locust.git
 [submodule "mdi"]
     path = lisp/mdi
-    url = https://github.com/angrybacon/mdi.git
+    url = git@github.com:angrybacon/mdi.git
 [submodule "mtg"]
     path = lisp/mtg
-    url = https://github.com/angrybacon/mtg.git
+    url = git@github.com:angrybacon/mtg.git
 [submodule "zenmelt"]
     path = lisp/zenmelt
     url = git@github.com:angrybacon/emacs-zenmelt.git
