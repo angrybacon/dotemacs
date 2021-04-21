@@ -235,6 +235,7 @@ See `custom--inhibit-theme-enable'."
     `(org-time-grid                     ((t :foreground ,orange)))
     `(org-todo                          ((t :foreground ,red :weight bold)))
     `(org-upcoming-deadline             ((t :inherit font-lock-keyword-face)))
+    `(org-verbatim                      ((t :background ,bg+1 :inherit shadow)))
     `(org-warning                       ((t :foreground ,red)))
 ;;;;; Search
     `(grep-context-face                 ((t :foreground ,fg)))
