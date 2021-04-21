@@ -817,6 +817,9 @@ with live-reload.
 (use-package selectrum
   :preface
   (defvar me/selectrum-candidates-map (make-sparse-keymap))
+  (defun me/selectrum--set-candidates-map ()
+    (use-local-map me/selectrum-candidates-map)
+    (setq-local truncate-lines t))
   :bind
   (("C-x C-z" . selectrum-repeat)
    :map me/selectrum-candidates-map
@@ -824,7 +827,7 @@ with live-reload.
    ([remap keyboard-quit] . abort-recursive-edit))
   :hook
   (after-init . selectrum-mode)
-  (selectrum-display-action . (lambda () (use-local-map me/selectrum-candidates-map)))
+  (selectrum-display-action . me/selectrum--set-candidates-map)
   :custom
   (selectrum-display-action '(display-buffer-at-bottom
                               (window-parameters (mode-line-format . none))))
