@@ -92,7 +92,8 @@ See `custom--inhibit-theme-enable'."
 
 ;;; Theme Faces
 (zenmelt-with-colors nil
-  (custom-theme-set-faces 'zenmelt
+  (custom-theme-set-faces
+   'zenmelt
 ;;;; Built-in
 ;;;;; Base
     `(default                           ((t :background ,bg :foreground ,fg)))
@@ -174,6 +175,16 @@ See `custom--inhibit-theme-enable'."
     `(window-divider                    ((t :inherit vertical-border :inverse-video t)))
     `(window-divider-first-pixel        ((t :inherit window-divider)))
     `(window-divider-last-pixel         ((t :inherit window-divider)))
+;;;;; Language
+    `(flymake-error                     ((t :background ,red-5
+                                            :foreground ,red+1
+                                            :underline t)))
+    `(flymake-note                      ((t :background ,blue-5
+                                            :foreground ,blue+1
+                                            :underline t)))
+    `(flymake-warning                   ((t :background ,fg-2
+                                            :foreground ,orange
+                                            :underline t)))
 ;;;;; Org
     `(org-agenda-date-today             ((t :foreground ,fg+1 :slant italic)))
     `(org-agenda-structure              ((t :inherit font-lock-comment-face)))
@@ -235,15 +246,16 @@ See `custom--inhibit-theme-enable'."
     `(lazy-highlight                    ((t :inherit highlight)))
     `(match                             ((t :background ,bg-3 :foreground ,orange)))
 ;;;;; Syntax
-    `(flymake-error                     ((t :background ,red-5
-                                            :foreground ,red+1
-                                            :underline t)))
-    `(flymake-note                      ((t :background ,blue-5
-                                            :foreground ,blue+1
-                                            :underline t)))
-    `(flymake-warning                   ((t :background ,fg-2
-                                            :foreground ,orange
-                                            :underline t)))
+    `(whitespace-empty                  ((t :background ,yellow-2 :extend t)))
+    `(whitespace-hspace                 ((t :background ,bg+2 :foreground ,bg+2)))
+    `(whitespace-indentation            ((t :background ,bg+1 :foreground ,red)))
+    `(whitespace-line                   ((t :background ,bg :foreground ,magenta)))
+    `(whitespace-newline                ((t :foreground ,bg+2)))
+    `(whitespace-space                  ((t :background ,bg+2 :foreground ,bg+2)))
+    `(whitespace-space-after-tab        ((t :background ,yellow-2 :foreground ,red)))
+    `(whitespace-space-before-tab       ((t :background ,orange :foreground ,orange)))
+    `(whitespace-tab                    ((t :background ,red-1)))
+    `(whitespace-trailing               ((t :inherit trailing-whitespace)))
 ;;;;; Version Control
     `(diff-added                        ((t :foreground ,green+2)))
     `(diff-changed                      ((t :foreground ,yellow)))
@@ -795,10 +807,10 @@ See `custom--inhibit-theme-enable'."
     `(org-ref-glossary-face             ((t :underline t)))
     `(org-ref-acronym-face              ((t :underline t)))
 ;;;;; outline
-    `(outline-1                         ((t :foreground ,orange)))
-    `(outline-2                         ((t :foreground ,green+4)))
-    `(outline-3                         ((t :foreground ,blue-1)))
-    `(outline-4                         ((t :foreground ,yellow-2)))
+    `(outline-1                         ((t :foreground ,orange))) ; 1.3
+    `(outline-2                         ((t :foreground ,green+4))) ; 1.2
+    `(outline-3                         ((t :foreground ,blue-1))) ; 1.15
+    `(outline-4                         ((t :foreground ,yellow-2))) ; 1.1
     `(outline-5                         ((t :foreground ,cyan)))
     `(outline-6                         ((t :foreground ,green+2)))
     `(outline-7                         ((t :foreground ,red-4)))
@@ -903,7 +915,7 @@ See `custom--inhibit-theme-enable'."
 ;;;;; term
     `(term-color-black                  ((t :foreground ,bg :background ,bg-3)))
     `(term-color-red                    ((t :foreground ,red-2 :background ,red-4)))
-    `(term-color-green                  ((t :foreground ,green :background ,green+2)))
+    `(term-color-green                  ((t :foreground ,green :background ,green-5)))
     `(term-color-yellow                 ((t :foreground ,orange :background ,yellow)))
     `(term-color-blue                   ((t :foreground ,blue-1 :background ,blue-4)))
     `(term-color-magenta                ((t :foreground ,magenta :background ,red)))
@@ -951,17 +963,6 @@ See `custom--inhibit-theme-enable'."
     `(web-mode-symbol-face              ((t :inherit font-lock-constant-face)))
     `(web-mode-warning-face             ((t :inherit font-lock-warning-face)))
     `(web-mode-whitespaces-face         ((t :background ,red)))
-;;;;; whitespace-mode
-    `(whitespace-space                  ((t :background ,bg+2 :foreground ,bg+2)))
-    `(whitespace-hspace                 ((t :background ,bg+2 :foreground ,bg+2)))
-    `(whitespace-tab                    ((t :background ,red-1)))
-    `(whitespace-newline                ((t :foreground ,bg+2)))
-    `(whitespace-trailing               ((t :background ,red)))
-    `(whitespace-line                   ((t :background ,bg :foreground ,magenta)))
-    `(whitespace-space-before-tab       ((t :background ,orange :foreground ,orange)))
-    `(whitespace-indentation            ((t :background ,yellow :foreground ,red)))
-    `(whitespace-empty                  ((t :background ,yellow)))
-    `(whitespace-space-after-tab        ((t :background ,yellow :foreground ,red)))
 ;;;;; wanderlust
     `(wl-highlight-folder-few-face      ((t :foreground ,red-2)))
     `(wl-highlight-folder-many-face     ((t :foreground ,red-1)))
@@ -1003,7 +1004,8 @@ See `custom--inhibit-theme-enable'."
 
 ;;; Theme Variables
 (zenmelt-with-colors nil
-  (custom-theme-set-variables 'zenmelt
+  (custom-theme-set-variables
+   'zenmelt
 ;;;;; ansi-color
     `(ansi-color-names-vector [,bg ,red ,green ,yellow ,blue ,magenta ,cyan ,fg])
 ;;;;; company-quickhelp
