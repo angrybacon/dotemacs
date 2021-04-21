@@ -387,6 +387,11 @@ See `custom--inhibit-theme-enable'."
     `(magit-sequence-part               ((t :foreground ,yellow)))
     `(magit-sequence-pick               ((t :foreground ,yellow-2)))
     `(magit-sequence-stop               ((t :foreground ,green)))
+;;;;; Markdown
+    `(markdown-inline-code-face         ((t :background ,bg+2
+                                            :inherit (markdown-code-face
+                                                      font-lock-constant-face))))
+
 ;;;; TODO
 ;;;;; git-annex
     `(git-annex-dired-annexed-available ((t :inherit success :weight normal)))
