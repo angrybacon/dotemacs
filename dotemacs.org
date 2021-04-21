@@ -1150,6 +1150,8 @@ seamless, it's like a minor mode that disables itself auto-magically.
 --- Oleh Krehel
 #+END_QUOTE
 
+*** Hydra: Bootstrap
+
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
   :bind
@@ -1478,8 +1480,8 @@ Group system-related commands.
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-system (:color teal)
   (concat (me/hydra-heading "System" "Buffer" "Packages" "Toggle") "
- _d_ clear compiled  _s_ revert          _i_ install         _g_ debug: %-3s`debug-on-error
- _D_ clear desktop   ^^                  _I_ reinstall       _w_ which-key %-3s`which-key-mode
+ _d_ clear compiled  _m_ minor modes     _i_ install         _g_ debug: %-3s`debug-on-error
+ _D_ clear desktop   _s_ revert          _I_ reinstall       _w_ which-key %-3s`which-key-mode
  _l_ processes       ^^                  _p_ list            ^^
  _Q_ clear and kill  ^^                  _r_ refresh         ^^
 ")
@@ -1490,6 +1492,7 @@ Group system-related commands.
   ("i" package-install)
   ("I" package-reinstall)
   ("l" list-processes)
+  ("m" consult-minor-mode-menu)
   ("p" package-list-packages)
   ("Q" (let ((desktop-save nil))
          (me/byte-delete)
