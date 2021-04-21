@@ -56,6 +56,7 @@ Here are what I consider better defaults as per my own experience.
  sentence-end-double-space nil          ; Use a single space after dots
  show-help-function nil                 ; Disable help text everywhere
  tab-always-indent 'complete            ; Tab indents first then tries completions
+ tab-width 4                            ; Smaller width for tab characters
  uniquify-buffer-name-style 'forward    ; Uniquify buffer names
  warning-minimum-level :error           ; Skip warning buffers
  window-combination-resize t            ; Resize windows proportionally
