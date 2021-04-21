@@ -303,7 +303,7 @@ See `custom--inhibit-theme-enable'."
     `(selectrum-secondary-highlight     ((t :background ,green)))
 ;;;;; Help
     `(helpful-heading                   ((t :foreground ,orange
-                                            :height 1.6
+                                            :height 1.4
                                             :inherit variable-pitch)))
 ;;;;; Language Servers
     `(eglot-highlight-symbol-face       ((t :inherit highlight)))
