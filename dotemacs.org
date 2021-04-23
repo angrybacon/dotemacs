@@ -648,7 +648,7 @@ margins.
   "List of modes for which `olivetti-mode' should be enabled automatically.")
 
 (defun me/olivetti-mode-maybe (&optional frame)
-  "Turn on `olivetti-mode' for lone buffers.
+  "Turn on `olivetti-mode' for lone buffers in FRAME.
 
 Doesn't count volatile windows unless the major-mode of their associated buffer
 is found in `me/olivetti-whitelist-modes' or is derived from one of them.
@@ -657,15 +657,13 @@ are also considered.
 
 If FRAME shows exactly one window, turn on `olivetti-mode' for that window.
 Otherwise, disable it everywhere."
-  (let* ((whitelist-buffers me/olivetti-whitelist-buffers)
-         (whitelist-modes me/olivetti-whitelist-modes)
-         (predicate (lambda (window)
+  (let* ((predicate (lambda (window)
                       (with-selected-window window
                         (or (buffer-file-name)
-                            (member (buffer-name) whitelist-buffers)
-                            (apply 'derived-mode-p whitelist-modes)))))
+                            (member (buffer-name) me/olivetti-whitelist-buffers)
+                            (apply 'derived-mode-p me/olivetti-whitelist-modes)))))
          (windows (seq-filter predicate (window-list frame))))
-    (if (= 1 (length windows))
+    (if (length= windows 1)
         (with-selected-window (car windows)
           (olivetti-mode 1))
       (dolist (window windows)
@@ -910,20 +908,8 @@ explorer.
   (dired-auto-revert-buffer t)
   (dired-dwim-target t)
   (dired-hide-details-hide-symlink-targets nil)
-  (dired-listing-switches "-agho")
-  (dired-recursive-copies 'always)
-  :config
-  (advice-add 'dired-readin :after #'me/dired-readin--directories-first))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defun me/dired-readin--directories-first ()
-  "Sort dired listings with directories first before adding marks."
-  (save-excursion
-    (let (buffer-read-only)
-      (forward-line 2)
-      (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
-    (set-buffer-modified-p nil)))
+  (dired-listing-switches "-agho --group-directories-first")
+  (dired-recursive-copies 'always))
 #+END_SRC
 
 ** Evil
