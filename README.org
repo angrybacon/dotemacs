@@ -31,13 +31,13 @@ Clone the repository into your user directory.
 git clone --recurse-submodules git@github.com:angrybacon/dotemacs.git ~/.config/emacs/
 #+END_SRC
 
-*** Arch
+*** Linux
 
-See [[https://github.com/angrybacon/dot/blob/master/ARCH.org#emacs]].
+See [[https://github.com/angrybacon/dot/blob/master/LINUX.org#emacs]].
 
 *** MacOS
 
-Install Emacs 27 or above. I prefer
+Install Emacs 28 or above. I prefer
 [[https://github.com/d12frosted/homebrew-emacs-plus][ =emacs-plus= ]] for its
 additional compilation flags, specifically the ability not to have a title bar
 ie. fake fullscreen since it has its downsides on macOS.
@@ -66,3 +66,7 @@ dependencies.
 #+BEGIN_SRC sh
 paru -S typescript-language-server
 #+END_SRC
+
+* Window Manager
+
+Emacs can be used as a window manager under Linux. See [[DESKTOP.org]].

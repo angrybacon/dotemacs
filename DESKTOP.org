@@ -1,12 +1,15 @@
 # -*- after-save-hook: (org-babel-tangle t); -*-
 #+TITLE: Desktop
 #+AUTHOR: Mathieu Marques
-#+PROPERTY: header-args :mkdirp yes :results silent
+#+PROPERTY: header-args :results silent
 
 Below are instructions to configure EXWM under an Arch-based distribution ie.
 Emacs as your window manager. Blocks are automatically tangled on save from this
 very document. To see the complete tangling parameters, consider browsing the
 raw version of this file.
+
+The instructions assume you have a working Linux distribution in the first
+place.
 
 * Desktop Entry
 
@@ -18,21 +21,6 @@ Comment=Emacs X Window Manager
 Exec=dbus-launch --exit-with-session emacs --debug-init --maximized
 Name=EXWM
 Type=Application
-#+END_SRC
-
-* Compositor
-
-Set a compositor to handle complex graphic interactions eg. dragging,
-transparency, shadows.
-
-Identify the running compositor program.
-
-#+BEGIN_SRC sh
-inxi -Gxx | grep compositor
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-paru -S picom-ibhagwan-git
 #+END_SRC
 
 * Screenshots
@@ -92,95 +80,23 @@ maim --window=$(xdotool getactivewindow) \
 maim | xclip -selection clipboard -target image/png
 #+END_SRC
 
-* Fonts
+* Extra
 
-Enable aliasing and hinting presets.
+** Gnome
 
-#+BEGIN_SRC sh
-rm -f /etc/fonts/conf.d/10-hinting-slight.conf
-ln -s /etc/fonts/conf.avail/10-hinting-full.conf /etc/fonts/conf.d
-ln -s /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d
-ln -s /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
-ln -s /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
-#+END_SRC
+Once in a while I'll log in under something more stable -- read when I break my
+system -- like Gnome.
 
-Uncomment FreeType hinting in =/etc/profile.d/freetype2.sh=.
-
-#+BEGIN_SRC diff
--# export FREETYPE_PROPERTIES="truetype:interpreter-version=40"
-+export FREETYPE_PROPERTIES="truetype:interpreter-version=40"
-#+END_SRC
-
-Set default font for classes in =/etc/fonts/local.conf=.
-
-#+BEGIN_SRC xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
-<fontconfig>
-  <match target="pattern">
-    <test qual="any" name="family">
-      <string>serif</string>
-    </test>
-    <edit name="family" mode="assign" binding="same">
-      <string>Robot Slab</string>
-    </edit>
-  </match>
-  <match target="pattern">
-    <test qual="any" name="family">
-      <string>sans-serif</string>
-    </test>
-    <edit name="family" mode="assign" binding="same">
-      <string>Roboto</string>
-    </edit>
-  </match>
-  <match target="pattern">
-    <test qual="any" name="family">
-      <string>monospace</string>
-    </test>
-    <edit name="family" mode="assign" binding="same">
-      <string>Hack</string>
-    </edit>
-  </match>
-</fontconfig>
-#+END_SRC
-
-* Theme
+Below are a couple settings to make the temporary excursion less
+painful.
 
 #+BEGIN_SRC sh
-paru -S materia-gtk-theme
+gsettings set org.gnome.desktop.peripherals.keyboard delay 200
+gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 20
+gsettings set org.gnome.desktop.wm.preferences audible-bell false
 #+END_SRC
 
-Enable the theme in GTK settings files: =~/.config/gtk-3.0/settings.ini= and
-=~/.config/gtk-4.0/settings.ini=.
-
-#+BEGIN_SRC diff
-+gtk-auto-mnemonics=0
-+gtk-enable-mnemonics=0
-#+END_SRC
-
-* Notifications
-
-#+BEGIN_SRC sh
-paru -S dunst
-#+END_SRC
-
-Configure notification styles. Still experimenting with the options.
-
-=~/.config/dunst/dunstrc=
-
-#+BEGIN_SRC conf :tangle ~/.config/dunst/dunstrc
-[global]
-corner_radius = 4
-font = Google Sans 14
-geometry = "0x5-20+20"
-horizontal_padding = 16
-indicate_hidden = yes
-monitor = 0
-padding = 8
-transparency = 32
-#+END_SRC
-
-* Zoom
+** Zoom
 
 Edit =~/.config/zoomus.conf= to disable the automatic mini-view since it will
 eventually mess up your current window configuration.
