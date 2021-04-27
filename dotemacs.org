@@ -138,107 +138,6 @@ redirect the writing to =/dev/null=.
 (setq-default custom-file null-device)
 #+END_SRC
 
-** EXWM
-
-| =exwm= | https://github.com/ch11ng/exwm |
-
-When no window manager is detected, Emacs will act as one. Bind a number of
-/system-wide/ all prefixed with the =super= modifier.
-
-Until a better implementation is found, machine-local preferably, the EXWM
-configuration throughout this entire file assumes that 2 monitors are available
-and that they each have their own EXWM workspace. This makes writing commands
-for workspace and window swapping easier. Actual workspace features are instead
-delegated to =eyebrowse=.
-
-| TODO | Make =eyebrowse-other-workspace-switch-*= commands     |
-| TODO | Make =xdg-open= switch workspace/eyebrowse accordingly |
-| TODO | Notifications                                          |
-| TODO | Check out https://github.com/agzam/exwm-edit           |
-| TODO | Load monitor setup from machine-local files            |
-| TODO | Export EXWM configuration to =desktop.org=             |
-| TODO | Reduce flickering on startup                           |
-| TODO | Bind media keys                                        |
-
-#+BEGIN_SRC emacs-lisp
-(defun me/read-lisp-data (filename)
-  "Read FILENAME and yield the extracted Lisp value"
-  (when (file-exists-p filename)
-    (with-temp-buffer
-      (insert-file-contents filename)
-      (read (buffer-string)))))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(use-package exwm
-  :demand
-  :bind
-  (:map exwm-mode-map
-   ("C-q" . exwm-input-send-next-key))
-  :hook
-  (exwm-randr-screen-change . me/exwm-xrandr)
-  (exwm-update-class . me/exwm-rename-buffer)
-  :custom
-  (exwm-input-global-keys
-   `((,(kbd "s-!") . me/exwm-read-shell-command)
-     (,(kbd "s-1") . (lambda () (interactive) (exwm-workspace-switch 0)))
-     (,(kbd "s-2") . (lambda () (interactive) (exwm-workspace-switch 1)))
-     (,(kbd "s-SPC") . me/exwm-read-shell-command)
-     (,(kbd "s-r") . exwm-reset)
-     (,(kbd "s-R") . exwm-restart)
-     (,(kbd "s-s") . hydra-screenshot/body)))
-  (exwm-input-prefix-keys
-   `,@(mapcar (lambda (vector) (aref vector 0))
-              `(,(kbd "C-h")
-                ,(kbd "C-u")
-                ,(kbd "C-x")
-                ,(kbd "M-&")
-                ,(kbd "M-:")
-                ,(kbd "M-`")
-                ,(kbd "M-x")
-                ,@(mapcar (lambda (i) (kbd (format "M-%s" i)))
-                          (number-sequence 0 9)))))
-  (exwm-input-simulation-keys
-   `((,(kbd "C-y") . ,(kbd "C-v"))
-     (,(kbd "M-w") . ,(kbd "C-c"))))
-  ;; NOTE Following configurations are not taken into account due to
-  ;;      https://github.com/ch11ng/exwm/issues/563#issuecomment-752813915
-  (exwm-manage-configurations
-   '(((member exwm-instance-name '("brave-browser" "discord" "spotify"))
-      workspace 0)))
-  (exwm-randr-workspace-monitor-plist (me/read-lisp-data "exwm/workspaces.eld"))
-  (exwm-replace nil)
-  (exwm-workspace-index-map (lambda (index) (number-to-string (1+ index))))
-  (exwm-workspace-number 2)
-  (exwm-workspace-show-all-buffers t)
-  (exwm-workspace-warp-cursor t)
-  :config
-  (exwm-enable)
-  (require 'exwm-randr)
-  (exwm-randr-enable)
-  (require 'exwm-systemtray)
-  (exwm-systemtray-enable)
-  (unbind-key "C-z"))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defun me/exwm-read-shell-command (command)
-  "Run a shell command in the background."
-  (interactive (list (read-shell-command "$ ")))
-  (start-process-shell-command command nil command))
-
-(defun me/exwm-rename-buffer ()
-  "Prettify name for new buffers after their more descriptive WM_CLASS string."
-  (exwm-workspace-rename-buffer exwm-class-name))
-
-(defun me/exwm-xrandr ()
-  "Set resolution for EXWM displays ie. workspaces."
-  (start-process-shell-command
-   "xrandr" nil "xrandr \
---output DVI-D-0 --auto \
---output HDMI-0 --auto --right-of DVI-D-0"))
-#+END_SRC
-
 ** Load Secrets
 
 Load =.secret.el= to keep sensible things out of version control. For instance,
@@ -1149,7 +1048,6 @@ seamless, it's like a minor mode that disables itself auto-magically.
   ("C-c p" . hydra-projectile/body)
   ("C-c s" . hydra-system/body)
   ("C-c u" . hydra-ui/body)
-  ("C-c x" . hydra-x/body)
   :custom
   (hydra-default-hint nil))
 #+END_SRC
@@ -1538,55 +1436,6 @@ Cycle between nil, t and 'relative."
          (position (1+ (cl-position display-line-numbers range)))
          (position (if (= position (length range)) 0 position)))
     (setq-local display-line-numbers (nth position range))))
-#+END_SRC
-
-*** Hydra: X
-
-Group window-related commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-x (:color blue)
-  (concat (me/hydra-heading "Do" "Toggle" "Window" "Workspace") "
- _r_ reset           _f_ fullscreen      _b_ buffer          _s_ swap
- _R_ reboot          _l_ floating        _o_ move            _w_ switch
- _S_ suspend         _m_ mode-line       ^^                  ^^
-")
-  ("q" nil)
-  ("b" exwm-workspace-switch-to-buffer)
-  ("f" exwm-layout-set-fullscreen)
-  ("l" exwm-floating-toggle-floating)
-  ("m" exwm-layout-toggle-mode-line :color red)
-  ("o" exwm-workspace-move-window)
-  ("r" exwm-reset)
-  ("R" me/x-reboot)
-  ("s" (exwm-workspace-swap (car exwm-workspace--list) (cadr exwm-workspace--list)))
-  ("S" me/x-suspend)
-  ("w" exwm-workspace-switch))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defvar me/x-reboot-command "systemctl reboot"
-  "Shell command to reboot the machine.")
-
-(defun me/x-reboot ()
-  "Run `me/x-reboot-command' after cleaning up EXWM buffers."
-  (interactive)
-  (save-some-buffers)
-  (dolist (buffer (buffer-list))
-    (with-current-buffer buffer
-      (when exwm-instance-name
-        (kill-buffer))))
-  (run-with-timer 1 nil 'shell-command me/x-reboot-command))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defvar me/x-suspend-command "systemctl suspend"
-  "Shell commant to suspend the machine.")
-
-(defun me/x-suspend ()
-  "Run `me/x-suspend-command'."
-  (interactive)
-  (shell-command me/x-suspend-command))
 #+END_SRC
 
 ** IRC

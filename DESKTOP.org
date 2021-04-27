@@ -147,7 +147,7 @@ Set default font for classes in =/etc/fonts/local.conf=.
 * Theme
 
 #+BEGIN_SRC sh
-yay -S materia-gtk-theme
+paru -S materia-gtk-theme
 #+END_SRC
 
 Enable the theme in GTK settings files: =~/.config/gtk-3.0/settings.ini= and
