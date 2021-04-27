@@ -140,28 +140,13 @@ redirect the writing to =/dev/null=.
 
 ** Load Secrets
 
-Load =.secret.el= to keep sensible things out of version control. For instance,
-you could set your identity by customizing both =user-full-name= and
-=user-mail-address=. This is also where you want your machine-specific settings
-to be.
+Small framework to read secrets out of =.secrets.eld= in order to keep sensible
+things out of version control. This is also used to have machine-specific
+settings. Usage:
 
-| TODO | Use =me/secret= instead |
-
-#+BEGIN_SRC emacs-lisp
-(defvar me/erc-nick nil                 "The ERC nick to use.")
-(defvar me/erc-password nil             "The ERC password to use.")
-(defvar me/erc-port nil                 "The ERC port to use.")
-(defvar me/erc-server nil               "The ERC server to use.")
-(defvar me/font-default "monospace"     "The font to use in default text.")
-(defvar me/font-fixed "monospace"       "The font to use in fixed-pitch text.")
-(defvar me/font-variable "sans-serif"   "The font to use in variable-pitch text.")
-(defvar me/font-size-default 120        "The font size to use for default text.")
-(defvar me/font-size-heading 1.6        "The font size to use for headings.")
-(defvar me/font-size-large 1.2          "The font size to use for larger text.")
-(defvar me/font-size-small .9           "The font size to use for smaller text.")
-
-(let ((secret.el (expand-file-name ".secret.el")))
-  (load secret.el t))
+#+BEGIN_SRC emacs-lisp :tangle no
+(me/secret 'irc-password)               ; 4815162342
+(me/secret 'nothing)                    ; nil
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -226,9 +211,11 @@ Prettify fringe bitmaps.
   :demand
   :config
   (load-theme 'zenmelt t)
-  (set-face-attribute 'default nil :font me/font-default :height me/font-size-default)
-  (set-face-attribute 'fixed-pitch nil :font me/font-fixed)
-  (set-face-attribute 'variable-pitch nil :font me/font-variable))
+  (set-face-attribute 'default nil
+                      :font (me/secret 'font-default)
+                      :height (me/secret 'font-size))
+  (set-face-attribute 'fixed-pitch nil :font (me/secret 'font-fixed))
+  (set-face-attribute 'variable-pitch nil :font (me/secret 'font-variable)))
 #+END_SRC
 
 * Languages
@@ -761,7 +748,6 @@ Customize the way default comments should be handled.
 ** Dictionary
 
 | =define-word=      | https://github.com/abo-abo/define-word        |
-| =google-translate= | https://github.com/atykhonov/google-translate |
 
 Define words using Wordnik.
 
@@ -1473,10 +1459,10 @@ Cycle between nil, t and 'relative."
   "Connect to `me/erc-server' on `me/erc-port' as `me/erc-nick' with
   `me/erc-password'."
   (interactive)
-  (erc :server me/erc-server
-       :port me/erc-port
-       :nick me/erc-nick
-       :password me/erc-password))
+  (erc :server (me/secret 'irc-server)
+       :port (me/secret 'irc-port)
+       :nick (me/secret 'irc-nick)
+       :password (me/secret 'irc-password)))
 
 (defun me/erc-bol-shifted ()
   "See `erc-bol'. Support shift."
@@ -2154,7 +2140,6 @@ use with =selected=.
    ("C-s r"       . reverse-region)
    ("C-s s"       . sort-lines)
    ("C-s w"       . me/sort-words)
-   ("C-t"         . google-translate-at-point)
    ("<C-tab>"     . me/pretty-print)
    ("<M-left>"    . me/indent-rigidly-left-and-keep-mark)
    ("<M-right>"   . me/indent-rigidly-right-and-keep-mark)
