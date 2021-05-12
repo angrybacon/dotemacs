@@ -660,13 +660,13 @@ Default to the face at point using `get-text-property'."
 *** Corfu
 
 Minimal completion-at-point. This is an experiment to try and replace the
-heavier =company= package.
-
-Note that =corfu= breaks line numbers at the time of writing. See
-https://github.com/minad/corfu/issues/10.
+heavier =company= alternative. With =display-line-numbers-type=, prefer the
+='visual= value as ='relative= numbers break when the completion overlay opens.
 
 #+BEGIN_SRC emacs-lisp
-(use-package corfu)
+(use-package corfu
+  :hook
+  (after-init . corfu-global-mode))
 #+END_SRC
 
 *** Marginalia
