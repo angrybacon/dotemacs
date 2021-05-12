@@ -734,6 +734,17 @@ Customize the way default comments should be handled.
   (comment-multi-line t))
 #+END_SRC
 
+** Context Actions
+
+| =embark= | https://github.com/oantolin/embark |
+
+#+BEGIN_SRC emacs-lisp
+(use-package embark
+  :bind
+  ("C-;" . embark-act)
+  ([remap describe-bindings] . embark-bindings))
+#+END_SRC
+
 ** Dictionary
 
 | =define-word=      | https://github.com/abo-abo/define-word        |
