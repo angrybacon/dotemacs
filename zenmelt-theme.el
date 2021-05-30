@@ -91,7 +91,7 @@ See `custom--inhibit-theme-enable'."
      ,@body))
 
 ;;; Theme Faces
-(zenmelt-with-colors :immediate
+(zenmelt-with-colors nil
   (custom-theme-set-faces
    'zenmelt
 ;;;; Built-in
