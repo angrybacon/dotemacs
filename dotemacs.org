@@ -149,6 +149,8 @@ settings. Usage:
 (me/secret 'nothing)                    ; nil
 #+END_SRC
 
+| TODO | Add support for a fallback value |
+
 #+BEGIN_SRC emacs-lisp
 (defun me/secret (&optional name)
   "Read a Lisp structure from the secret file.
@@ -164,9 +166,7 @@ When NAME is provided, return the value associated to this key."
             content))))))
 #+END_SRC
 
-** Theme
-
-| =zenmelt-theme= | =lisp/zenmelt/= |
+** Customize Theme
 
 *** Helpers
 
@@ -176,11 +176,11 @@ Initialize known themes and provide a helper to cycle through known themes.
 | TODO | Make hydra-ui T head prefer =enable-theme= over =load-theme= |
 
 #+BEGIN_SRC emacs-lisp
-(defvar me/theme-known-themes '(zenmelt modus-operandi)
+(defvar me/theme-known-themes '(zenmelt modus-operandi modus-vivendi)
   "List of themes to take into account with `me/theme-cycle'.
 See `custom-available-themes'.")
 
-(defun me/theme-disable ()
+(defun me/theme-disable-themes ()
   "Disable all themes found in `custom-enable-themes'."
   (interactive)
   (mapc #'disable-theme custom-enabled-themes))
@@ -191,7 +191,7 @@ See `custom-available-themes'.")
   (let* ((current (car custom-enabled-themes))
          (next (or (cadr (memq current me/theme-known-themes))
                    (car me/theme-known-themes))))
-    (me/theme-disable)
+    (me/theme-disable-themes)
     (when next
       (load-theme next t))
     (message "%s" next)))
@@ -203,19 +203,48 @@ Prettify fringe bitmaps.
 (define-fringe-bitmap 'left-curly-arrow [255] nil nil '(center t))
 #+END_SRC
 
-*** Zenmelt
+*** Themes
+
+| =modus-themes=  | Built-in        |
+| =zenmelt-theme= | =lisp/zenmelt/= |
+
+#+BEGIN_SRC emacs-lisp
+(use-package modus-themes
+  :ensure nil
+  :defer nil
+  :custom
+  (modus-themes-mode-line 'borderless-accented)
+  (modus-themes-operandi-color-overrides
+   '((bg-main . "#FAFAFA")
+     (bg-main . "#101010")
+     (fg-window-divider-inner . "#FAFAFA")))
+  (modus-themes-vivendi-color-overrides
+   '((bg-main . "#101010")
+     (fg-main . "#FAFAFA")
+     (fg-window-divider-inner . "#101010")))
+  (modus-themes-org-blocks 'tinted-background)
+  :custom-face
+  (web-mode-keyword-face ((t (:inherit font-lock-keyword-face))))
+  :config
+  (load-theme 'modus-operandi t))
+#+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package zenmelt-theme
   :load-path "lisp/zenmelt"
   :demand
   :config
-  (load-theme 'zenmelt t)
-  (set-face-attribute 'default nil
-                      :font (me/secret 'font-default)
-                      :height (me/secret 'font-size))
-  (set-face-attribute 'fixed-pitch nil :font (me/secret 'font-fixed))
-  (set-face-attribute 'variable-pitch nil :font (me/secret 'font-variable)))
+  (load-theme 'zenmelt t t))
+#+END_SRC
+
+*** Customize Typography
+
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'default nil
+                    :font (me/secret 'font-default)
+                    :height (me/secret 'font-size))
+(set-face-attribute 'fixed-pitch nil :font (me/secret 'font-fixed))
+(set-face-attribute 'variable-pitch nil :font (me/secret 'font-variable))
 #+END_SRC
 
 * Languages
@@ -1485,8 +1514,7 @@ Yup, Emacs supports LSP.
 
 #+BEGIN_SRC emacs-lisp
 (use-package eglot
-  :commands
-  (eglot eglot-ensure)
+  :commands (eglot eglot-ensure)
   :hook
   (web-mode . eglot-ensure)
   :custom
@@ -1578,6 +1606,9 @@ Prettify the mode-line with customizable and conditional segments.
   (doom-modeline-major-mode-icon nil)
   (doom-modeline-percent-position nil)
   (doom-modeline-vcs-max-length 28)
+  :custom-face
+  (doom-modeline-bar ((t (:inherit mode-line))))
+  (doom-modeline-bar-inactive ((t (:background nil :inherit mode-line-inactive))))
   :config
   (doom-modeline-def-segment me/buffer
     "The buffer description and major mode icon."
@@ -2476,7 +2507,7 @@ Control your Spotify clients from within Emacs.
 
 #+BEGIN_SRC emacs-lisp
 (use-package smudge
-  :commands smudge-controller-toggle-play
+  :commands (smudge-controller-toggle-play)
   :custom
   (smudge-oauth2-client-id (me/secret 'spotify-id))
   (smudge-oauth2-client-secret (me/secret 'spotify-secret)))
@@ -2504,8 +2535,7 @@ Until a proper popup system is implemented, use =s-"= to close the bottom
 
 #+BEGIN_SRC emacs-lisp
 (use-package vterm
-  :commands
-  (vterm vterm-other-window)
+  :commands (vterm vterm-other-window)
   :bind
   ("s-'" . me/vterm-dwim)
   ("s-\"" . me/vterm-close)
