@@ -647,23 +647,17 @@ changes can be "undone" using the command =winner-undo=.
 
 *** Consult
 
-| TODO | Overwrite =selectrum='s TAB to yank word or symbol in =consult-line= |
-| TODO | Make =me/consult-applications=                                       |
-| TODO | Let =me/consult-line-from-point= fail silenty                        |
-
 Provide various commands to list and /consult/ existing collections.
 
 #+BEGIN_SRC emacs-lisp
 (use-package consult
-  :after selectrum
-  :defer nil
   :bind
   ([remap goto-line] . consult-goto-line)
   ([remap isearch-forward] . consult-line)
   ([remap switch-to-buffer] . consult-buffer)
   :hook
   (org-mode . (lambda () (setq-local consult-fontify-preserve nil)))
-  :config
+  :init
   (with-eval-after-load 'evil
     (evil-global-set-key 'motion "gC" 'me/consult-faces)
     (evil-global-set-key 'motion "gm" 'consult-mark)
