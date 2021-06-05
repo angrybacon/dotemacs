@@ -893,8 +893,10 @@ See `sort-regexp-fields'."
 
 ** Diagnostics
 
-| =eglot= | https://github.com/joaotavora/eglot |
-| =xref=  | Built-in                            |
+| =eglot=          | https://github.com/joaotavora/eglot            |
+| =flymake=        | Built-in                                       |
+| =flymake-eslint= | https://github.com/orzechowskid/flymake-eslint |
+| =xref=           | Built-in                                       |
 
 *** Code References
 
@@ -924,9 +926,12 @@ Yup, Emacs supports LSP.
   :commands (eglot eglot-ensure)
   :hook
   (web-mode . eglot-ensure)
+  (eglot--managed-mode
+   . (lambda ()
+       (add-hook 'flymake-diagnostic-functions 'eglot-flymake-backend nil t)))
   :custom
   (eglot-autoshutdown t)
-  (eglot-stay-out-of '(eldoc-documentation-strategy))
+  (eglot-stay-out-of '(eldoc-documentation-strategy flymake))
   :init
   (put 'eglot-server-programs 'safe-local-variable 'listp))
 #+END_SRC
@@ -936,6 +941,22 @@ Customize servers per mode using directory-local variables.
 #+BEGIN_SRC lisp-data :tangle no
 ((web-mode . ((eglot-server-programs
                . ((web-mode . ("typescript-language-server" "--stdio")))))))
+#+END_SRC
+
+*** Linters
+
+#+BEGIN_QUOTE
+The current implementation of =flymake-eslint-enable= prevents local setups
+relying on project dependencies ie. running =npx eslint= rather than =eslint=
+directly. Until I can make my own =flymake-eslint= package or provide a fix, the
+=flymake-eslint--create-process= has to be patched by hand to allow ="npx
+eslint"= as binary.
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package flymake-eslint
+  :custom
+  (flymake-eslint-executable-name "npx"))
 #+END_SRC
 
 ** Dictionary
