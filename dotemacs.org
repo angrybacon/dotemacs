@@ -217,6 +217,7 @@ Prettify fringe bitmaps.
   :ensure nil
   :defer nil
   :custom
+  (modus-themes-diffs 'fg-only)
   (modus-themes-mode-line 'borderless-accented)
   (modus-themes-operandi-color-overrides
    '((bg-main . "#FAFAFA")
