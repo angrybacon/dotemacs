@@ -524,7 +524,8 @@ configurations.
   (desktop-base-file-name (me/cache-concat "desktop"))
   (desktop-base-lock-name (me/cache-concat "desktop.lock"))
   (desktop-restore-eager 4)
-  (desktop-restore-frames nil))
+  (desktop-restore-forces-onscreen nil)
+  (desktop-restore-frames t))
 #+END_SRC
 
 Olivetti lets you center your buffer for aesthetics and focus. I have it set up
