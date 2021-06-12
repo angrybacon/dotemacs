@@ -231,7 +231,7 @@ Prettify fringe bitmaps.
   :custom-face
   (web-mode-keyword-face ((t (:inherit font-lock-keyword-face))))
   :config
-  (load-theme 'modus-operandi t))
+  (load-theme 'modus-operandi t t))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -239,7 +239,7 @@ Prettify fringe bitmaps.
   :load-path "lisp/zenmelt"
   :demand
   :config
-  (load-theme 'zenmelt t t))
+  (load-theme 'zenmelt t))
 #+END_SRC
 
 *** Customize Typography
@@ -295,7 +295,7 @@ HTML mode is defined in =sgml-mode.el=.
 
 (use-package js2-mode
   :ensure nil
-  :mode "\\.js\\'"
+  :mode (rx ".js" eos)
   :custom
   (js-indent-level 2)
   (js-switch-indent-offset 2)
@@ -305,14 +305,17 @@ HTML mode is defined in =sgml-mode.el=.
   (js2-mode-show-strict-warnings nil))
 
 (use-package rjsx-mode
-  :mode ("\\.jsx\\'" "components/.+\\.js$" "pages/.+\\.js$")
+  :mode
+  (rx (or ".jsx"
+          (and (or "components" "pages") "/" (* anything) ".js"))
+      eos)
   :hook
   (rjsx-mode . (lambda () (setq me/pretty-print-function #'sgml-pretty-print)))
   (rjsx-mode . me/hydra-set-super)
   (rjsx-mode . sgml-electric-tag-pair-mode))
 
 (use-package web-mode
-  :mode ("\\.ts\\'" "\\.tsx\\'")
+  :mode (rx (or ".php" ".ts" ".tsx") eos)
   :hook
   (web-mode . sgml-electric-tag-pair-mode)
   :custom
@@ -330,7 +333,7 @@ HTML mode is defined in =sgml-mode.el=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package json-mode
-  :mode "\\.json\\'")
+  :mode (rx ".json" eos))
 #+END_SRC
 
 ** Lisp
@@ -372,7 +375,7 @@ whole buffer."
 #+BEGIN_SRC emacs-lisp
 (use-package lisp-mode
   :ensure nil
-  :mode ("\\.eld\\'" . lisp-data-mode))
+  :mode ((rx ".eld" eos) . lisp-data-mode))
 #+END_SRC
 
 ** Markdown
@@ -381,7 +384,7 @@ whole buffer."
 
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
-  :mode ("INSTALL\\'" "CONTRIBUTORS\\'" "LICENSE\\'" "README\\'")
+  :mode (rx (or "INSTALL" "CONTRIBUTORS" "LICENSE" "README" ".mdx") eos)
   :hook
   (markdown-mode . me/hydra-set-super)
   :custom
@@ -549,9 +552,8 @@ margins.
   (olivetti-body-width 100))
 #+END_SRC
 
-| TODO | Prefer =cl-lib= routines              |
-| TODO | Enable for =*scratch*= buffer         |
-| TODO | Provide a Hydra head to toggle it off |
+| TODO | Prefer =cl-lib= routines                             |
+| TODO | Provide a Hydra head to pause the automatic toggling |
 
 #+BEGIN_SRC emacs-lisp
 (defvar me/olivetti-whitelist-buffers '("*sratch*")
@@ -954,9 +956,12 @@ Customize servers per mode using directory-local variables.
 #+BEGIN_QUOTE
 The current implementation of =flymake-eslint-enable= prevents local setups
 relying on project dependencies ie. running =npx eslint= rather than =eslint=
-directly. Until I can make my own =flymake-eslint= package or provide a fix, the
-=flymake-eslint--create-process= has to be patched by hand to allow ="npx
-eslint"= as binary.
+directly. Until I can make my own =flymake-eslint= package or provide with a
+fix, the =flymake-eslint--create-process= has to be patched by hand to allow
+="npx eslint"= as binary.
+
+Until then, manually enable in-buffer ESLint diagnostics with =M-x
+flymake-eslint-enable=.
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
@@ -2377,7 +2382,10 @@ Use =conf-mode= automatically for configuration files.
 #+BEGIN_SRC emacs-lisp
 (use-package conf-mode
   :ensure nil
-  :mode "\\(?:\\.env\\.\\(?:development\\|local\\|test\\)\\|CODEOWNERS\\)")
+  :mode
+  (rx (or "CODEOWNERS" "rc"
+          (and ".env" (? (or ".development" ".local" ".test"))))
+      eos))
 #+END_SRC
 
 Insert the current date. See [[#hydra--dates][Hydra / Dates]].
@@ -2523,7 +2531,7 @@ Emacs can also emulate an interactive REST client.
 
 #+BEGIN_SRC emacs-lisp
 (use-package restclient
-  :mode ("\\.http\\'" . restclient-mode)
+  :mode ((rx ".http" eos) . restclient-mode)
   :hook
   (restclient-mode . display-line-numbers-mode))
 #+END_SRC
