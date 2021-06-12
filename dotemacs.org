@@ -48,6 +48,7 @@ Here are what I consider better defaults as per my own experience.
  inhibit-startup-screen t               ; Disable start-up screen
  initial-scratch-message ""             ; Empty the initial *scratch* buffer
  mouse-yank-at-point t                  ; Yank at point rather than pointer
+ read-process-output-max (* 1024 1024)  ; Increase read size per process
  recenter-positions '(5 top bottom)     ; Set re-centering positions
  scroll-conservatively 101              ; Avoid recentering when scrolling far
  scroll-margin 2                        ; Add a margin when scrolling vertically
