@@ -71,6 +71,57 @@ Here are what I consider better defaults as per my own experience.
 (set-default-coding-systems 'utf-8)     ; Default to utf-8 encoding
 #+END_SRC
 
+Change a few indenting behaviors.
+
+#+BEGIN_SRC emacs-lisp
+(put 'add-function 'lisp-indent-function 2)
+(put 'advice-add 'lisp-indent-function 2)
+(put 'plist-put 'lisp-indent-function 2)
+#+END_SRC
+
+** Fullscreen
+
+Enable fullscreen. Given there are differences in meaning for /fullscreen/
+between window managers, the following tree aims to provide a pain-free
+experience with regard to fullscreen in most setups.
+
+In the case of macOS, fullscreen means Emacs will occupy a dedicated workspace
+so we want to maximize it instead. Works best with titlebar-less frames.
+
+#+BEGIN_SRC emacs-lisp
+(pcase window-system
+  ('w32 (set-frame-parameter nil 'fullscreen 'fullboth))
+  (_ (set-frame-parameter nil 'fullscreen 'maximized)))
+#+END_SRC
+
+** Load Secrets
+
+Small framework to read secrets out of =.secrets.eld= in order to keep sensible
+things out of version control. This is also used to have machine-specific
+settings. See =.secrets.eld.ori= for a preview of the supported format. Usage:
+
+#+BEGIN_SRC emacs-lisp :tangle no
+(me/secret 'irc-password)               ; 4815162342
+(me/secret 'nothing)                    ; nil
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/secret (&optional name)
+  "Read a Lisp structure from the secret file.
+When NAME is provided, return the value associated to this key."
+  (let ((file (expand-file-name ".secrets.eld")))
+    (when (file-exists-p file)
+      (with-demoted-errors "Error while parsing secret file: %S"
+        (with-temp-buffer
+          (insert-file-contents file)
+          (if-let ((content (read (buffer-string)))
+                   (name))
+              (alist-get name content)
+            content))))))
+#+END_SRC
+
+** Cache
+
 Use =.cache/= to contain local data. This is to avoid littering in the Emacs
 directory with an ever-growing number of packages used on a daily basis.
 
@@ -96,27 +147,6 @@ directory with an ever-growing number of packages used on a daily basis.
   (setq-default url-configuration-directory (me/cache-concat "url/")))
 #+END_SRC
 
-Enable fullscreen. Given there are differences in meaning for /fullscreen/
-between window managers, the following tree aims to provide a pain-free
-experience with regard to fullscreen in most setups.
-
-In the case of macOS, fullscreen means Emacs will occupy a dedicated workspace
-so we want to maximize it instead. Works best with titlebar-less frames.
-
-#+BEGIN_SRC emacs-lisp
-(pcase window-system
-  ('ns (set-frame-parameter nil 'fullscreen 'maximized))
-  (_ (set-frame-parameter nil 'fullscreen 'fullboth)))
-#+END_SRC
-
-Change a few indenting behaviors.
-
-#+BEGIN_SRC emacs-lisp
-(put 'add-function 'lisp-indent-function 2)
-(put 'advice-add 'lisp-indent-function 2)
-(put 'plist-put 'lisp-indent-function 2)
-#+END_SRC
-
 Garbage-collect on focus-out, Emacs /should/ feel snappier overall.
 
 #+BEGIN_SRC emacs-lisp
@@ -139,35 +169,7 @@ redirect the writing to =/dev/null=.
 (setq-default custom-file null-device)
 #+END_SRC
 
-** Load Secrets
-
-Small framework to read secrets out of =.secrets.eld= in order to keep sensible
-things out of version control. This is also used to have machine-specific
-settings. Usage:
-
-#+BEGIN_SRC emacs-lisp :tangle no
-(me/secret 'irc-password)               ; 4815162342
-(me/secret 'nothing)                    ; nil
-#+END_SRC
-
-| TODO | Add support for a fallback value |
-
-#+BEGIN_SRC emacs-lisp
-(defun me/secret (&optional name)
-  "Read a Lisp structure from the secret file.
-When NAME is provided, return the value associated to this key."
-  (let ((file (expand-file-name ".secrets.eld")))
-    (when (file-exists-p file)
-      (with-demoted-errors "Error while parsing secret file: %S"
-        (with-temp-buffer
-          (insert-file-contents file)
-          (if-let ((content (read (buffer-string)))
-                   (name))
-              (alist-get name content)
-            content))))))
-#+END_SRC
-
-** Customize Theme
+** Theme
 
 *** Helpers
 
