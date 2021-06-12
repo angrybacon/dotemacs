@@ -45,8 +45,7 @@
     (require 'org-macs)
     (unless (org-file-newer-than-p .el modification-time)
       (require 'ob-tangle)
-      (org-babel-tangle-file .org .el "emacs-lisp")
-      (byte-compile-file .el))
+      (org-babel-tangle-file .org .el "emacs-lisp"))
     (load-file .el))
 
   ;; Set the working directory to home regardless of where Emacs was started from
