@@ -106,9 +106,10 @@ settings. See =.secrets.eld.ori= for a preview of the supported format. Usage:
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(defun me/secret (&optional name)
+(defun me/secret (&optional name fallback)
   "Read a Lisp structure from the secret file.
-When NAME is provided, return the value associated to this key."
+When NAME is provided, return the value associated to this key. If no value was
+found for NAME, return FALLBACK instead which defaults to nil."
   (let ((file (expand-file-name ".secrets.eld")))
     (when (file-exists-p file)
       (with-demoted-errors "Error while parsing secret file: %S"
@@ -116,7 +117,7 @@ When NAME is provided, return the value associated to this key."
           (insert-file-contents file)
           (if-let ((content (read (buffer-string)))
                    (name))
-              (alist-get name content)
+              (alist-get name content fallback)
             content))))))
 #+END_SRC
 
@@ -1749,7 +1750,7 @@ Prettify the mode-line with customizable and conditional segments.
   :custom
   (doom-modeline-bar-width 1)
   (doom-modeline-buffer-file-name-style 'truncate-with-project)
-  (doom-modeline-height 40)
+  (doom-modeline-height (me/secret 'mode-line-height 30))
   (doom-modeline-enable-word-count t)
   (doom-modeline-major-mode-icon nil)
   (doom-modeline-percent-position nil)
@@ -2588,9 +2589,7 @@ Until a proper popup system is implemented, use =s-"= to close the bottom
            (delete-window)))))
    nil (selected-frame)))
 
-(defvar me/vterm-shackles `(:align 'below
-                            :popup t
-                            :size ,(or (me/secret 'popup-height) .33))
+(defvar me/vterm-shackles `(:align 'below :popup t :size ,(me/secret 'popup-height .33))
   "Shackle rules in the context of `me/vterm-dwim'.
 To see the supported options, see the documentation for `shackle-rules'.")
 
