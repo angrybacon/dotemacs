@@ -2314,6 +2314,7 @@ exists as well).
 (use-package projectile
   :hook
   (after-init . projectile-mode)
+  (projectile-mode . me/projectile-commander-set)
   :init
   (setq-default
    projectile-cache-file (me/cache-concat "projectile/cache")
@@ -2323,19 +2324,19 @@ exists as well).
   (projectile-enable-caching t)
   (projectile-indexing-method 'hybrid)
   (projectile-track-known-projects-automatically nil)
-  (projectile-switch-project-action #'projectile-commander)
-  :config
-  (assq-delete-all ?T projectile-commander-methods)
-  (assq-delete-all ?V projectile-commander-methods)
-  (assq-delete-all ?a projectile-commander-methods)
-  (assq-delete-all ?e projectile-commander-methods)
-  (assq-delete-all ?j projectile-commander-methods)
-  (assq-delete-all ?k projectile-commander-methods)
-  (assq-delete-all ?o projectile-commander-methods)
-  (assq-delete-all ?v projectile-commander-methods)
-  (def-projectile-commander-method ?K "Kill all buffers." (projectile-kill-buffers))
-  (def-projectile-commander-method ?R "Replace a regexp." (projectile-replace-regexp))
-  (def-projectile-commander-method ?g "Magit status." (magit-status)))
+  (projectile-switch-project-action #'projectile-commander))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/projectile-commander-set ()
+  "Initialize commander keybindings. See `projectile-commander-methods'."
+  (setq projectile-commander-methods nil)
+  (def-projectile-commander-method ?b "Switch to buffer." (projectile-switch-to-buffer))
+  (def-projectile-commander-method ?d "Find directory." (projectile-find-dir))
+  (def-projectile-commander-method ?D "Go to root directory." (projectile-dired))
+  (def-projectile-commander-method ?f "Find file." (projectile-find-file))
+  (def-projectile-commander-method ?g "Magit status." (magit-status))
+  (def-projectile-commander-method ?s "Ripgrep." (consult-ripgrep (projectile-project-root))))
 #+END_SRC
 
 ** Quality of Life
