@@ -500,12 +500,11 @@ authoring documents with a fast and effective plain-text system.
 
 ** Buffers and Windows
 
-| =desktop=   | Built-in                              |
-| =eyebrowse= | https://github.com/wasamasa/eyebrowse |
-| =olivetti=  | https://github.com/rnkn/olivetti      |
-| =shackle=   | https://github.com/wasamasa/shackle   |
-| =windmove=  | Built-in                              |
-| =winner=    | Built-in                              |
+| =desktop=  | Built-in                            |
+| =olivetti= | https://github.com/rnkn/olivetti    |
+| =shackle=  | https://github.com/wasamasa/shackle |
+| =windmove= | Built-in                            |
+| =winner=   | Built-in                            |
 
 Bind keys to manage windows and buffers that are more popular.
 
@@ -1347,15 +1346,15 @@ Group Eyebrowse commands.
  ^^                  ^^                  _s_ switch          ^^
 ")
   ("q" nil)
-  ("1" eyebrowse-switch-to-window-config-1)
-  ("2" eyebrowse-switch-to-window-config-2)
-  ("3" eyebrowse-switch-to-window-config-3)
-  ("4" eyebrowse-switch-to-window-config-4)
-  ("5" eyebrowse-switch-to-window-config-5)
-  ("6" eyebrowse-switch-to-window-config-6)
-  ("7" eyebrowse-switch-to-window-config-7)
-  ("8" eyebrowse-switch-to-window-config-8)
-  ("9" eyebrowse-switch-to-window-config-9)
+  ("1" me/eyebrowse-switch-1)
+  ("2" me/eyebrowse-switch-2)
+  ("3" me/eyebrowse-switch-3)
+  ("4" me/eyebrowse-switch-4)
+  ("5" me/eyebrowse-switch-5)
+  ("6" me/eyebrowse-switch-6)
+  ("7" me/eyebrowse-switch-7)
+  ("8" me/eyebrowse-switch-8)
+  ("9" me/eyebrowse-switch-9)
   ("<" eyebrowse-prev-window-config :color red)
   (">" eyebrowse-next-window-config :color red)
   ("c" eyebrowse-create-window-config)
@@ -2798,6 +2797,8 @@ lines.
 
 ** Workspaces
 
+| =eyebrowse= | https://github.com/wasamasa/eyebrowse |
+
 Workspaces within Emacs.
 
 #+BEGIN_QUOTE
@@ -2814,19 +2815,43 @@ Python.
 (use-package eyebrowse
   :bind
   ("M-0" . eyebrowse-last-window-config)
-  ("M-1" . eyebrowse-switch-to-window-config-1)
-  ("M-2" . eyebrowse-switch-to-window-config-2)
-  ("M-3" . eyebrowse-switch-to-window-config-3)
-  ("M-4" . eyebrowse-switch-to-window-config-4)
-  ("M-5" . eyebrowse-switch-to-window-config-5)
-  ("M-6" . eyebrowse-switch-to-window-config-6)
-  ("M-7" . eyebrowse-switch-to-window-config-7)
-  ("M-8" . eyebrowse-switch-to-window-config-8)
-  ("M-9" . eyebrowse-switch-to-window-config-9)
+  ("M-1" . me/eyebrowse-switch-1)
+  ("M-2" . me/eyebrowse-switch-2)
+  ("M-3" . me/eyebrowse-switch-3)
+  ("M-4" . me/eyebrowse-switch-4)
+  ("M-5" . me/eyebrowse-switch-5)
+  ("M-6" . me/eyebrowse-switch-6)
+  ("M-7" . me/eyebrowse-switch-7)
+  ("M-8" . me/eyebrowse-switch-8)
+  ("M-9" . me/eyebrowse-switch-9)
   :hook
   (after-init . eyebrowse-mode)
   :custom
   (eyebrowse-mode-line-left-delimiter "")
   (eyebrowse-mode-line-right-delimiter "")
   (eyebrowse-new-workspace t))
+#+END_SRC
+
+I've got used to how workspaces work in Qtile, where hitting the key for the
+current workspace while in that workspace moves you to the last visited
+workspace instead. The below code makes commands to /maybe-switch/ to a given
+=eyebrowse= configuration in the same manner. ie. Go to the specified Nth
+configuration, or to the last visited one if already visiting the Nth
+configuration.
+
+#+BEGIN_SRC emacs-lisp
+(defun me/eyebrowse-switch (n)
+  "Switch to configuration N or to the last visited."
+  (if (eq (eyebrowse--get 'current-slot) n)
+      (eyebrowse-last-window-config)
+    (funcall (intern (format "eyebrowse-switch-to-window-config-%s" n)))))
+
+(dotimes (n 9)
+  (let* ((n (1+ n))
+         (name (intern (format "me/eyebrowse-switch-%s" n)))
+         (documentation (format "Switch to configuration %s or to the last visited." n)))
+    (eval `(defun ,name ()
+             ,documentation
+             (interactive)
+             (me/eyebrowse-switch ,n)))))
 #+END_SRC
