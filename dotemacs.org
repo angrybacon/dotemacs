@@ -930,24 +930,14 @@ Yup, Emacs supports LSP.
 
 #+BEGIN_SRC emacs-lisp
 (use-package eglot
-  :commands (eglot eglot-ensure)
-  :hook
-  (web-mode . eglot-ensure)
-  (eglot--managed-mode
-   . (lambda ()
-       (add-hook 'flymake-diagnostic-functions 'eglot-flymake-backend nil t)))
+  :commands (eglot)
   :custom
   (eglot-autoshutdown t)
   (eglot-stay-out-of '(eldoc-documentation-strategy))
   :init
-  (put 'eglot-server-programs 'safe-local-variable 'listp))
-#+END_SRC
-
-Customize servers per mode using directory-local variables.
-
-#+BEGIN_SRC lisp-data :tangle no
-((web-mode . ((eglot-server-programs
-               . ((web-mode . ("typescript-language-server" "--stdio")))))))
+  (put 'eglot-server-programs 'safe-local-variable 'listp)
+  :config
+  (add-to-list 'eglot-server-programs '(web-mode . ("typescript-language-server" "--stdio"))))
 #+END_SRC
 
 *** Linters
@@ -1721,25 +1711,14 @@ Display relative line numbers in most editing modes.
 
 | =prettier= | https://github.com/jscheid/prettier.el |
 
-Run Prettier against the whole buffer on save. You can toggle the minor mode on
-through a strategically positioned =.dir-locals.el= containing the major modes
-for which to activate it, or use =nil= to enable =prettier-mode= for all major
-modes in that directory.
-
-#+BEGIN_SRC lisp-data :tangle no
-((nil . ((mode . prettier)))
- (web-mode . ((prettier-parsers . (typescript)))))
-#+END_SRC
-
-#+BEGIN_QUOTE
-The =prettier= Emacs package reformats your code by running Prettier with
-minimal overhead, by request or transparently on file save.
-
---- Julian Scheid
-#+END_QUOTE
+Run Prettier against the whole buffer on save. See the
+[[#directory-local-variables][Directory-Local Variables]] section for automatic
+enabling of the minor mode.
 
 #+BEGIN_SRC emacs-lisp
-(use-package prettier)
+(use-package prettier
+  :config
+  (add-to-list 'prettier-enabled-parsers 'json-stringify))
 #+END_SRC
 
 ** Mode-Line
@@ -2293,7 +2272,57 @@ Enable multiple cursors outside Evil. Some witchcraft at work here.
 
 ** Project
 
+| =files=      | Built-in                              |
 | =projectile= | https://github.com/bbatsov/projectile |
+
+*** Directory-Local Variables
+
+In order to customize specifics directories recursively and without polluting
+the Emacs Lisp configuration, one can provide directory-local variables through
+a strategically positioned =.dir-locals.el= file or resort to /directory
+classes/ for reusability.
+
+Define standard setups for projects that I use on a daily basis.
+
+#+BEGIN_SRC emacs-lisp
+(dir-locals-set-class-variables 'python
+ '((python-mode . ((eval . (eglot-ensure))))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(dir-locals-set-class-variables 'react
+ '((js-mode . ((eval . (prettier-mode))))
+   (json-mode . ((eval . (prettier-mode))))
+   (rjsx-mode . ((eval . (prettier-mode))))
+   (scss-mode . ((eval . (prettier-mode))))
+   (web-mode . ((eval . (eglot-ensure))
+                (eval . (prettier-mode))))))
+#+END_SRC
+
+Assign paths to specific classes according to specifications found in secrets.
+
+#+BEGIN_SRC emacs-lisp
+(mapc (lambda (it) (dir-locals-set-directory-class it 'react))
+      (me/secret 'project-python))
+(mapc (lambda (it) (dir-locals-set-directory-class it 'react))
+      (me/secret 'project-react))
+#+END_SRC
+
+#+BEGIN_SRC lisp-data :tangle no
+((project-python . nil)
+ (project-react
+  . ("~/path/to/react/project/one/"
+     "~/path/to/react/project/two/")))
+#+END_SRC
+
+Allow specific =eval= form in directory-local mecanisms.
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'safe-local-eval-forms '(prettier-mode))
+(add-to-list 'safe-local-eval-forms '(eglot-ensure))
+#+END_SRC
+
+*** Projectile
 
 Projectile brings project-level facilities to Emacs such as grep, find and
 replace.
