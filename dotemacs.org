@@ -2296,13 +2296,14 @@ Define standard setups for projects that I use on a daily basis.
    (rjsx-mode . ((eval . (prettier-mode))))
    (scss-mode . ((eval . (prettier-mode))))
    (web-mode . ((eval . (eglot-ensure))
-                (eval . (prettier-mode))))))
+                (eval . (prettier-mode))
+                (prettier-parsers . (typescript))))))
 #+END_SRC
 
 Assign paths to specific classes according to specifications found in secrets.
 
 #+BEGIN_SRC emacs-lisp
-(mapc (lambda (it) (dir-locals-set-directory-class it 'react))
+(mapc (lambda (it) (dir-locals-set-directory-class it 'python))
       (me/secret 'project-python))
 (mapc (lambda (it) (dir-locals-set-directory-class it 'react))
       (me/secret 'project-react))
