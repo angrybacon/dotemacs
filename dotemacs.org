@@ -933,11 +933,11 @@ Yup, Emacs supports LSP.
   :commands (eglot)
   :custom
   (eglot-autoshutdown t)
-  (eglot-stay-out-of '(eldoc-documentation-strategy))
   :init
   (put 'eglot-server-programs 'safe-local-variable 'listp)
   :config
-  (add-to-list 'eglot-server-programs '(web-mode . ("typescript-language-server" "--stdio"))))
+  (add-to-list 'eglot-server-programs '(web-mode . ("typescript-language-server" "--stdio")))
+  (add-to-list 'eglot-stay-out-of 'eldoc-documentation-strategy))
 #+END_SRC
 
 *** Linters
