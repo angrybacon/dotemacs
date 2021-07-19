@@ -2309,6 +2309,9 @@ Assign paths to specific classes according to specifications found in secrets.
       (me/secret 'project-react))
 #+END_SRC
 
+Below is an example of secrets setting no Python project and 2 React projects.
+See how to load secrets for more details: [[#load-secrets][Load Secrets]].
+
 #+BEGIN_SRC lisp-data :tangle no
 ((project-python . nil)
  (project-react
