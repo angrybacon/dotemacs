@@ -1083,7 +1083,7 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
   (add-to-list 'evil-insert-state-modes 'with-editor-mode)
   (add-to-list 'evil-motion-state-modes 'helpful-mode)
   (evil-define-text-object me/evil-buffer (_count &optional _begin _end type)
-    "Text object to select the whole buffer."
+    "Text object to represent the whole buffer."
     (evil-range (point-min) (point-max) type))
   (advice-add 'evil-indent :around #'me/evil-indent))
 #+END_SRC
@@ -2011,27 +2011,26 @@ See `scroll-preserve-screen-position'."
 | =isearch= | Built-in |
 
 Isearch stands for /incremental search/. This means that search results are
-highlighted while you are typing your query, incrementally. Since he who can do
-more can do less, I've replaced default bindings with the regexp-equivalent
-commands.
+updated and highlighted while you are typing your query, incrementally.
 
 #+BEGIN_SRC emacs-lisp
 (use-package isearch
   :ensure nil
   :bind
   (("C-S-r" . isearch-backward-regexp)
-   ("C-S-s" . isearch-forward-regexp)
-   :map isearch-mode-map
-   ("<M-down>" . isearch-ring-advance)
-   ("<M-up>" . isearch-ring-retreat)
-   :map minibuffer-local-isearch-map
-   ("<M-down>" . next-history-element)
-   ("<M-up>" . previous-history-element))
+   ("C-S-s" . isearch-forward-regexp))
   :custom
   (isearch-allow-scroll t)
   (lazy-highlight-buffer t)
   (lazy-highlight-cleanup nil)
-  (lazy-highlight-initial-delay 0))
+  (lazy-highlight-initial-delay 0)
+  :hook
+  (isearch-update-post . me/isearch-aim-beginning)
+  :preface
+  (defun me/isearch-aim-beginning ()
+    "Move cursor back to the beginning of the current match."
+    (when (and isearch-forward (number-or-marker-p isearch-other-end))
+      (goto-char isearch-other-end))))
 #+END_SRC
 
 ** OS-Specific
