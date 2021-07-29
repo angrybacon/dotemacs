@@ -775,7 +775,9 @@ Customize the way default comments should be handled.
 (use-package embark
   :bind
   ("C-;" . embark-act)
-  ([remap describe-bindings] . embark-bindings))
+  ([remap describe-bindings] . embark-bindings)
+  :custom
+  (prefix-help-command #'embark-prefix-help-command))
 #+END_SRC
 
 *** Selected
@@ -1567,7 +1569,7 @@ Group system-related commands.
 (defhydra hydra-system (:color teal)
   (concat (me/hydra-heading "System" "Buffer" "Packages" "Toggle") "
  _d_ clear compiled  _m_ minor modes     _i_ install         _g_ debug: %-3s`debug-on-error
- _D_ clear desktop   _s_ revert          _I_ reinstall       _w_ which-key %-3s`which-key-mode
+ _D_ clear desktop   _s_ revert          _I_ reinstall       ^^
  _l_ processes       ^^                  _p_ list            ^^
  _Q_ clear and kill  ^^                  _r_ refresh         ^^
 ")
@@ -1585,8 +1587,7 @@ Group system-related commands.
          (desktop-remove)
          (save-buffers-kill-terminal)))
   ("r" package-refresh-contents :color red)
-  ("s" (revert-buffer nil t))
-  ("w" which-key-mode))
+  ("s" (revert-buffer nil t)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -2379,7 +2380,6 @@ exists as well).
 | =hl-line=                 | Built-in                                               |
 | =rainbow-mode=            | https://elpa.gnu.org/packages/rainbow-mode.html        |
 | =simple=                  | Built-in                                               |
-| =which-key=               | https://github.com/justbur/emacs-which-key             |
 
 Auto-indent code as you write.
 
@@ -2524,21 +2524,6 @@ Turn on =auto-fill-mode= /almost/ everywhere.
   (org-mode . auto-fill-mode)
   (prog-mode . auto-fill-mode)
   (text-mode . auto-fill-mode))
-#+END_SRC
-
-Display the available keybindings following your current input. I find
-=which-key= too intrusive and enable it on demand through =M-x which-key-mode=.
-
-#+BEGIN_SRC emacs-lisp
-(use-package which-key
-  :custom
-  (which-key-add-column-padding 1)
-  (which-key-allow-evil-operators t)
-  (which-key-idle-delay 2.0)
-  (which-key-dont-use-unicode t)
-  (which-key-separator " ")
-  (which-key-sort-order 'which-key-prefix-then-key-order)
-  (which-key-use-C-h-commands nil))
 #+END_SRC
 
 Tail =*Messages*= windows. This is useful when debugging naively with repeated
