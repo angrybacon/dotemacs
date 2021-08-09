@@ -429,6 +429,7 @@ authoring documents with a fast and effective plain-text system.
   (org-edit-src-persistent-message nil)
   (org-fontify-done-headline t)
   (org-fontify-quote-and-verse-blocks t)
+  (org-return-follows-link t)
   (org-src-tab-acts-natively t)
   (org-src-window-setup 'current-window)
   (org-startup-folded 'content)
