@@ -2777,31 +2777,6 @@ necessary.
   (after-init . pinentry-start))
 #+END_SRC
 
-In the case of GPG-signed commits use the below configuration files.
-
-=~./profile=
-
-#+BEGIN_SRC sh :tangle no
-export GPG_TTY=$TTY
-#+END_SRC
-
-=~/.gnupg/gpg-agent.conf=
-
-#+BEGIN_SRC
-allow-emacs-pinentry
-allow-loopback-pinentry
-pinentry-program /usr/local/bin/pinentry
-#+END_SRC
-
-=~/path/to/my/project/.git/config=
-
-#+BEGIN_SRC conf :tangle no
-[user]
-    signingkey = 1234567890ABCDEF
-[commit]
-    gpgsign = true
-#+END_SRC
-
 Transient is the package behind the modal maps and prefixes depicted in Magit.
 It is currently used by Magit only in my configuration so it will stay in this
 section for now.
