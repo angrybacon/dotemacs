@@ -385,6 +385,10 @@ whole buffer."
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
   :mode (rx (or "INSTALL" "CONTRIBUTORS" "LICENSE" "README" ".mdx") eos)
+  :bind
+  (:map markdown-mode-map
+   ("M-n" . nil)
+   ("M-p" . nil))
   :hook
   (markdown-mode . me/hydra-set-super)
   :custom
