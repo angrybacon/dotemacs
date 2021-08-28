@@ -1062,6 +1062,7 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
    :map evil-normal-state-map
    ("gb" . switch-to-buffer)
    ("gB" . projectile-switch-to-buffer)
+   ("gD" . me/evil-goto-definition-other-window)
    ("gp" . projectile-switch-project)
    ("gr" . revert-buffer)
    ("q" . nil)
@@ -1094,6 +1095,15 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
 (defun me/evil-indent (original &rest arguments)
   "Like `evil-indent' but save excursion."
   (save-excursion (apply original arguments)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/evil-goto-definition-other-window ()
+  "Like `evil-goto-definition' but use another window to display the result."
+  (interactive)
+  (switch-to-buffer-other-window (current-buffer))
+  (goto-char (point))
+  (evil-goto-definition))
 #+END_SRC
 
 Emulate =vim-surround=. Take actions with surrounding pairs.
