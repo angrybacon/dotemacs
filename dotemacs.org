@@ -667,6 +667,8 @@ Provide various commands to list and /consult/ existing collections.
   ([remap goto-line] . consult-goto-line)
   ([remap isearch-forward] . consult-line)
   ([remap switch-to-buffer] . consult-buffer)
+  :custom
+  (consult-line-start-from-top t)
   :hook
   (org-mode . (lambda () (setq-local consult-fontify-preserve nil)))
   :init
