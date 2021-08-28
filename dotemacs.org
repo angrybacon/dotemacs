@@ -2371,6 +2371,7 @@ exists as well).
   (projectile-dynamic-mode-line nil)
   (projectile-enable-caching t)
   (projectile-indexing-method 'hybrid)
+  (projectile-kill-buffers-filter 'kill-only-files)
   (projectile-track-known-projects-automatically nil)
   (projectile-switch-project-action #'projectile-commander))
 #+END_SRC
