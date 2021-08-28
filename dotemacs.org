@@ -2559,6 +2559,12 @@ Emacs can also emulate an interactive REST client.
 #+BEGIN_SRC emacs-lisp
 (use-package restclient
   :mode ((rx ".http" eos) . restclient-mode)
+  :bind
+  (:map restclient-mode-map
+   ([remap restclient-http-send-current]
+    . restclient-http-send-current-stay-in-window)
+   ("C-n" . restclient-jump-next)
+   ("C-p" . restclient-jump-prev))
   :hook
   (restclient-mode . display-line-numbers-mode))
 #+END_SRC
