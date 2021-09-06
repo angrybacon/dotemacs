@@ -170,7 +170,7 @@ See `custom--inhibit-theme-enable'."
    `(secondary-selection               ((t :background ,bg+3)))
    `(tooltip                           ((t :background ,bg-3)))
    `(trailing-whitespace               ((t :background ,red)))
-   `(vertical-border                   ((t :inherit default)))
+   `(vertical-border                   ((t :background ,bg-1)))
    `(widget-field                      ((t :background ,bg+4 :foreground ,fg)))
    `(window-divider                    ((t :inherit vertical-border :inverse-video t)))
    `(window-divider-first-pixel        ((t :inherit window-divider)))
