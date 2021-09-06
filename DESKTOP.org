@@ -23,63 +23,6 @@ Name=EXWM
 Type=Application
 #+END_SRC
 
-* Screenshots
-
-Export scripts to take screenshots in various contexts.
-
-#+BEGIN_SRC sh
-paru -S imagemagick maim xclip
-#+END_SRC
-
-** Region
-
-#+HEADER: :shebang #!/bin/sh
-#+HEADER: :tangle scripts/screenshot.region.sh
-#+HEADER: :tangle-mode (identity #o755)
-#+BEGIN_SRC sh
-maim --hidecursor --select \
-    | xclip -selection clipboard -target image/png
-#+END_SRC
-
-** Region with Background Shadow
-
-#+HEADER: :shebang #!/bin/sh
-#+HEADER: :tangle scripts/screenshot.region-shadow.sh
-#+HEADER: :tangle-mode (identity #o755)
-#+BEGIN_SRC sh
-maim --hidecursor --select \
-    | convert - \( +clone -background black -shadow 80x3+5+5 \) +swap \
-              -background none -layers merge +repage shadow.png
-#+END_SRC
-
-** Window
-
-#+BEGIN_SRC sh
-paru -S xdotool
-#+END_SRC
-
-| TODO | =xdotool= is not able to retrieve the active window under EXWM |
-| TODO | Make a shadow variant                                          |
-
-#+HEADER: :shebang #!/bin/sh
-#+HEADER: :tangle scripts/screenshot.window.sh
-#+HEADER: :tangle-mode (identity #o755)
-#+BEGIN_SRC sh
-maim --window=$(xdotool getactivewindow) \
-    | xclip -selection clipboard -target image/png
-#+END_SRC
-
-** Root
-
-| TODO | Make a shadow variant |
-
-#+HEADER: :shebang #!/bin/sh
-#+HEADER: :tangle scripts/screenshot.root.sh
-#+HEADER: :tangle-mode (identity #o755)
-#+BEGIN_SRC sh
-maim | xclip -selection clipboard -target image/png
-#+END_SRC
-
 * Extra
 
 ** Gnome
