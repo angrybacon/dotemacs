@@ -190,6 +190,7 @@ See `custom--inhibit-theme-enable'."
    `(org-agenda-structure              ((t :inherit font-lock-comment-face)))
    `(org-archived                      ((t :foreground ,fg :weight bold)))
    `(org-block                         ((t :background ,bg+1 :extend t)))
+   `(org-block-begin-line              ((t :foreground ,bg+3)))
    `(org-checkbox                      ((t :background ,bg+3
                                            :box (:line-width 1 :style released-button)
                                            :foreground ,fg+1)))
@@ -213,14 +214,17 @@ See `custom--inhibit-theme-enable'."
    `(org-habit-ready-future-face       ((t :background ,green-2)))
    `(org-headline-done                 ((t :foreground ,green+3)))
    `(org-hide                          ((t :foreground ,bg)))
-   `(org-level-1                       ((t :foreground ,orange)))
-   `(org-level-2                       ((t :foreground ,green+4)))
-   `(org-level-3                       ((t :foreground ,blue-1)))
-   `(org-level-4                       ((t :foreground ,yellow-2)))
-   `(org-level-5                       ((t :foreground ,cyan)))
-   `(org-level-6                       ((t :foreground ,green+2)))
-   `(org-level-7                       ((t :foreground ,red-4)))
-   `(org-level-8                       ((t :foreground ,blue-4)))
+   `(org-level-1                       ((t :background ,bg+1
+                                           :foreground ,orange
+                                           :height 1.6
+                                           :overline t)))
+   `(org-level-2                       ((t :foreground ,green+4 :inherit org-level-1)))
+   `(org-level-3                       ((t :foreground ,blue-1 :inherit org-level-1)))
+   `(org-level-4                       ((t :foreground ,yellow-2 :inherit org-level-1)))
+   `(org-level-5                       ((t :foreground ,cyan :inherit org-level-1)))
+   `(org-level-6                       ((t :foreground ,green+2 :inherit org-level-1)))
+   `(org-level-7                       ((t :foreground ,red-4 :inherit org-level-1)))
+   `(org-level-8                       ((t :foreground ,blue-4 :inherit org-level-1)))
    `(org-link                          ((t :foreground ,yellow-2 :underline t)))
    `(org-mode-line-clock               ((t :foreground ,fg :background ,bg-3)))
    `(org-mode-line-clock-overrun       ((t :background ,red-1 :foreground ,bg)))
