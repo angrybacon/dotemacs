@@ -158,7 +158,7 @@ See `custom--inhibit-theme-enable'."
                                            :foreground ,yellow)))
    `(hl-line                           ((t :background ,bg+2)))
    `(line-number                       ((t :foreground ,bg+4)))
-   `(line-number-current-line          ((t :foreground ,yellow-2 :inherit line-number)))
+   `(line-number-current-line          ((t :foreground ,yellow-2 :inherit hl-line)))
    `(menu                              ((t :foreground ,fg :background ,bg)))
    `(mode-line                         ((,class :background ,bg-3 :foreground ,green+1)
                                         (t :inverse-video t)))
