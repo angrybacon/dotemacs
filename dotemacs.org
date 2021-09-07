@@ -1077,6 +1077,7 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
    ("C-r" . winner-redo))
   :hook
   (after-init . evil-mode)
+  (after-save . evil-normal-state)
   :custom
   (evil-echo-state nil)
   (evil-emacs-state-cursor (default-value 'cursor-type))
