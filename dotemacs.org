@@ -437,7 +437,6 @@ authoring documents with a fast and effective plain-text system.
   (org-return-follows-link t)
   (org-src-tab-acts-natively t)
   (org-src-window-setup 'current-window)
-  (org-startup-folded 'content)
   (org-startup-truncated nil)
   (org-support-shift-select 'always)
   :config
