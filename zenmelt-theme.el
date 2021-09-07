@@ -228,7 +228,7 @@ See `custom--inhibit-theme-enable'."
    `(org-link                          ((t :foreground ,yellow-2 :underline t)))
    `(org-mode-line-clock               ((t :foreground ,fg :background ,bg-3)))
    `(org-mode-line-clock-overrun       ((t :background ,red-1 :foreground ,bg)))
-   `(org-quote                         ((t :background ,bg+1 :extend t)))
+   `(org-quote                         ((t :foreground ,fg-1 :italic t)))
    `(org-scheduled                     ((t :foreground ,green+4)))
    `(org-scheduled-previously          ((t :foreground ,red)))
    `(org-scheduled-today               ((t :foreground ,blue+1)))
@@ -239,7 +239,7 @@ See `custom--inhibit-theme-enable'."
    `(org-time-grid                     ((t :foreground ,orange)))
    `(org-todo                          ((t :foreground ,red :weight bold)))
    `(org-upcoming-deadline             ((t :inherit font-lock-keyword-face)))
-   `(org-verbatim                      ((t :background ,bg+1 :inherit shadow)))
+   `(org-verbatim                      ((t :background ,bg+1 :foreground ,orange)))
    `(org-warning                       ((t :foreground ,red)))
 ;;;;; Search
    `(grep-context-face                 ((t :foreground ,fg)))
