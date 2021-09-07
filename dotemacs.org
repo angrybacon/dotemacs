@@ -1070,7 +1070,7 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
    ("gB" . projectile-switch-to-buffer)
    ("gD" . me/evil-goto-definition-other-window)
    ("gp" . projectile-switch-project)
-   ("gr" . revert-buffer)
+   ("gr" . (lambda () (interactive) (revert-buffer nil t)))
    ("q" . nil)
    :map evil-window-map
    ("u" . winner-undo)
