@@ -1537,8 +1537,8 @@ Group system-related commands.
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-system (:color teal)
   (concat (me/hydra-heading "System" "Buffer" "Packages" "Toggle") "
- _d_ clear compiled  _m_ minor modes     _i_ install         _g_ debug: %-3s`debug-on-error
- _D_ clear desktop   _s_ revert          _I_ reinstall       ^^
+ _d_ clear compiled  _s_ revert          _i_ install         _g_ debug: %-3s`debug-on-error
+ _D_ clear desktop   _v_ visit...        _I_ reinstall       ^^
  _l_ processes       ^^                  _p_ list            ^^
  _Q_ clear and kill  ^^                  _r_ refresh         ^^
 ")
@@ -1549,14 +1549,27 @@ Group system-related commands.
   ("i" package-install)
   ("I" package-reinstall)
   ("l" list-processes)
-  ("m" consult-minor-mode-menu)
   ("p" package-list-packages)
   ("Q" (let ((desktop-save nil))
          (me/byte-delete)
          (desktop-remove)
          (save-buffers-kill-terminal)))
   ("r" package-refresh-contents :color red)
-  ("s" (revert-buffer nil t)))
+  ("s" (revert-buffer nil t))
+  ("v" (hydra-system/visit/body)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-system/visit (:color teal)
+  (concat (me/hydra-heading "Visit" "Configuration") "
+ _q_ quit            _e_ emacs           ^^                  ^^
+ ^^                  _l_ linux           ^^                  ^^
+ ^^                  _q_ qtile           ^^                  ^^
+")
+  ("q" nil)
+  ("e" (find-file (concat user-emacs-directory "dotemacs.org")))
+  ("l" (find-file "~/Workspace/dot/LINUX.org"))
+  ("q" (find-file "~/Workspace/dot/config/qtile.org")))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
