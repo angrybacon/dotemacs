@@ -207,6 +207,16 @@ Prettify fringe bitmaps.
 (define-fringe-bitmap 'left-curly-arrow [255] nil nil '(center t))
 #+END_SRC
 
+*** Customize Typography
+
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'default nil
+                    :font (me/secret 'font-default)
+                    :height (me/secret 'font-size))
+(set-face-attribute 'fixed-pitch nil :font (me/secret 'font-fixed))
+(set-face-attribute 'variable-pitch nil :font (me/secret 'font-variable))
+#+END_SRC
+
 *** Themes
 
 | =modus-themes=  | Built-in        |
@@ -240,16 +250,6 @@ Prettify fringe bitmaps.
   :demand
   :config
   (load-theme 'zenmelt t))
-#+END_SRC
-
-*** Customize Typography
-
-#+BEGIN_SRC emacs-lisp
-(set-face-attribute 'default nil
-                    :font (me/secret 'font-default)
-                    :height (me/secret 'font-size))
-(set-face-attribute 'fixed-pitch nil :font (me/secret 'font-fixed))
-(set-face-attribute 'variable-pitch nil :font (me/secret 'font-variable))
 #+END_SRC
 
 * Languages
@@ -391,8 +391,8 @@ whole buffer."
   (markdown-asymmetric-header t)
   (markdown-split-window-direction 'right)
   :config
-  (unbind-key "<M-down>" markdown-mode-map)
-  (unbind-key "<M-up>" markdown-mode-map))
+  (unbind-key "M-<down>" markdown-mode-map)
+  (unbind-key "M-<up>" markdown-mode-map))
 #+END_SRC
 
 ** Org
@@ -416,8 +416,8 @@ authoring documents with a fast and effective plain-text system.
   :ensure nil
   :bind
   (:map org-mode-map
-   ("<C-return>" . nil)
-   ("<C-tab>" . me/org-cycle-parent))
+   ("C-<return>" . nil)
+   ("C-<tab>" . me/org-cycle-parent))
   :hook
   (org-mode . me/hydra-set-super)
   :custom
@@ -778,7 +778,7 @@ Customize the way default comments should be handled.
 (use-package newcomment
   :ensure nil
   :bind
-  ("<M-return>" . comment-indent-new-line)
+  ("M-<return>" . comment-indent-new-line)
   :hook
   (prog-mode . (lambda () (setq-local comment-auto-fill-only-comments t)))
   :custom
@@ -834,11 +834,11 @@ use with =selected=.
    ("C-s r"       . reverse-region)
    ("C-s s"       . sort-lines)
    ("C-s w"       . me/sort-words)
-   ("<C-tab>"     . me/pretty-print)
-   ("<M-left>"    . me/indent-rigidly-left-and-keep-mark)
-   ("<M-right>"   . me/indent-rigidly-right-and-keep-mark)
-   ("<M-S-left>"  . me/indent-rigidly-left-tab-and-keep-mark)
-   ("<M-S-right>" . me/indent-rigidly-right-tab-and-keep-mark))
+   ("C-<tab>"     . me/pretty-print)
+   ("M-<left>"    . me/indent-rigidly-left-and-keep-mark)
+   ("M-<right>"   . me/indent-rigidly-right-and-keep-mark)
+   ("M-S-<left>"  . me/indent-rigidly-left-tab-and-keep-mark)
+   ("M-S-<right>" . me/indent-rigidly-right-tab-and-keep-mark))
   :hook
   (after-init . selected-global-mode)
   :config
@@ -1110,7 +1110,7 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
 (use-package emmet-mode
   :bind
   (:map emmet-mode-keymap
-   ("<C-return>" . nil))
+   ("C-<return>" . nil))
   :hook
   (css-mode . emmet-mode)
   (html-mode . emmet-mode)
@@ -1131,7 +1131,7 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
     (interactive "P")
     (when emmet-mode (emmet-expand-line args)))
   :bind
-  ("<C-return>" . hippie-expand)
+  ("C-<return>" . hippie-expand)
   :custom
   (hippie-expand-try-functions-list '(yas-hippie-try-expand me/emmet-hippie-try-expand))
   (hippie-expand-verbose nil))
@@ -1709,8 +1709,8 @@ flymake-eslint-enable=.
   :bind
   (:map erc-mode-map
    ([remap erc-bol] . me/erc-bol-shifted)
-   ("<M-down>" . erc-next-command)
-   ("<M-up>" . erc-previous-command))
+   ("M-<down>" . erc-next-command)
+   ("M-<up>" . erc-previous-command))
   :hook
   (erc-mode . (lambda () (setq-local scroll-margin 0)))
   :custom
@@ -2162,11 +2162,11 @@ No package seem to please my person.
 #+BEGIN_SRC emacs-lisp
 (use-package smartparens
   :bind
-  ("<M-backspace>" . sp-unwrap-sexp)
-  ("<M-left>" . sp-forward-barf-sexp)
-  ("<M-right>" . sp-forward-slurp-sexp)
-  ("<M-S-left>" . sp-backward-slurp-sexp)
-  ("<M-S-right>" . sp-backward-barf-sexp)
+  ("M-<backspace>" . sp-unwrap-sexp)
+  ("M-<left>" . sp-forward-barf-sexp)
+  ("M-<right>" . sp-forward-slurp-sexp)
+  ("M-S-<left>" . sp-backward-slurp-sexp)
+  ("M-S-<right>" . sp-backward-barf-sexp)
   :hook
   (after-init . smartparens-global-mode)
   :custom
