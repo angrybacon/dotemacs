@@ -790,6 +790,10 @@ Customize the way default comments should be handled.
   ("C-;" . embark-act)
   ([remap describe-bindings] . embark-bindings)
   :custom
+  (embark-indicators
+   '(embark-highlight-indicator
+     embark-isearch-highlight-indicator
+     embark-minimal-indicator))
   (prefix-help-command #'embark-prefix-help-command))
 #+END_SRC
 
