@@ -681,6 +681,7 @@ Provide various commands to list and /consult/ existing collections.
   ([remap goto-line] . consult-goto-line)
   ([remap isearch-forward] . consult-line)
   ([remap switch-to-buffer] . consult-buffer)
+  ("C-h M" . consult-minor-mode-menu)
   :custom
   (consult-line-start-from-top t)
   :hook
@@ -1176,8 +1177,12 @@ Provide better detailed help buffers.
 #+BEGIN_SRC emacs-lisp
 (use-package helpful
   :bind
+  ([remap describe-command] . helpful-command)
   ([remap describe-function] . helpful-callable)
+  ([remap describe-key] . helpful-key)
+  ([remap describe-symbol] . helpful-symbol)
   ([remap describe-variable] . helpful-variable)
+  ("C-h F" . helpful-function)
   :config
   (with-eval-after-load 'evil
     (evil-define-key* 'motion helpful-mode-map
