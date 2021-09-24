@@ -960,12 +960,28 @@ explorer.
   (dired-mode . dired-hide-details-mode)
   :bind
   ("C-x C-g" . dired-jump)
+  (:map dired-mode-map
+   ("C-<return>" . me/dired-open-externally))
   :custom
   (dired-auto-revert-buffer t)
   (dired-dwim-target t)
   (dired-hide-details-hide-symlink-targets nil)
   (dired-listing-switches "-agho --group-directories-first")
   (dired-recursive-copies 'always))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/dired-open-externally (argument)
+  "Open file under point with an external program.
+With positive ARGUMENT, prompt for the command to use."
+  (interactive "P")
+  (let* ((file (dired-get-file-for-visit))
+         (command (and (not argument)
+                       (pcase system-type
+                         ('darwin "open")
+                         ((or 'gnu 'gnu/kfreebsd 'gnu/linux) "xdg-open"))))
+         (command (or command (read-shell-command "Open with: "))))
+    (call-process command nil 0 nil file)))
 #+END_SRC
 
 ** Documentation
