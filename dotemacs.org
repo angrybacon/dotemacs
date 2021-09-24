@@ -669,7 +669,7 @@ changes can be "undone" using the command =winner-undo=.
 | =corfu=      | https://github.com/minad/corfu        |
 | =marginalia= | https://github.com/minad/marginalia   |
 | =orderless=  | https://github.com/oantolin/orderless |
-| =selectrum=  | https://github.com/raxod502/selectrum |
+| =vertico=    | https://github.com/minad/vertico      |
 
 *** Consult
 
@@ -724,11 +724,8 @@ heavier =company= alternative. With =display-line-numbers-type=, prefer the
 
 #+BEGIN_SRC emacs-lisp
 (use-package marginalia
-  :bind
-  (:map minibuffer-local-map
-   ("M-T" . marginalia-cycle))
   :hook
-  (selectrum-mode . marginalia-mode))
+  (after-init . marginalia-mode))
 #+END_SRC
 
 *** Orderless
@@ -742,21 +739,15 @@ Allow completion based on space-separated tokens, out of order.
   (orderless-component-separator 'orderless-escapable-split-on-space))
 #+END_SRC
 
-*** Selectrum
+*** Vertico
 
-Prettify the completion minibuffer and augment incremental narrowing features
+Prettify the completion minibuffer featuring keyboard-driven vertical navigation
 with live-reload.
 
 #+BEGIN_SRC emacs-lisp
-(use-package selectrum
-  :bind
-  ("C-x C-z" . selectrum-repeat)
+(use-package vertico
   :hook
-  (after-init . selectrum-mode)
-  :custom
-  (selectrum-extend-current-candidate-highlight t)
-  (selectrum-fix-vertical-window-height t)
-  (selectrum-max-window-height .15))
+  (after-init . vertico-mode))
 #+END_SRC
 
 ** Comments
