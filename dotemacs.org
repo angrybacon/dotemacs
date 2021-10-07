@@ -285,10 +285,10 @@ HTML mode is defined in =sgml-mode.el=.
 
 ** JavaScript
 
-| =js-doc=    | https://github.com/mooz/js-doc           |
-| =js2-mode=  | Built-in                                 |
-| =rjsx-mode= | https://github.com/felipeochoa/rjsx-mode |
-| =web-mode=  | https://github.com/fxbois/web-mode       |
+| =js-doc=          | https://github.com/mooz/js-doc                    |
+| =js2-mode=        | Built-in                                          |
+| =rjsx-mode=       | https://github.com/felipeochoa/rjsx-mode          |
+| =typescript-mode= | https://github.com/emacs-typescript/typescript.el |
 
 #+BEGIN_SRC emacs-lisp
 (use-package js-doc)
@@ -306,25 +306,21 @@ HTML mode is defined in =sgml-mode.el=.
 
 (use-package rjsx-mode
   :mode
-  (rx (or ".jsx"
-          (and (or "components" "pages") "/" (* anything) ".js"))
+  (rx (or ".jsx" (and (or "components" "pages") "/" (* anything) ".js"))
       eos)
   :hook
   (rjsx-mode . (lambda () (setq me/pretty-print-function #'sgml-pretty-print)))
   (rjsx-mode . me/hydra-set-super)
   (rjsx-mode . sgml-electric-tag-pair-mode))
 
-(use-package web-mode
-  :mode (rx (or ".php" ".ts" ".tsx") eos)
-  :hook
-  (web-mode . sgml-electric-tag-pair-mode)
+(use-package typescript-mode
+  :init
+  (define-derived-mode typescript-tsx-mode typescript-mode "TSX")
+  :config
+  (add-hook 'typescript-tsx-mode-hook #'sgml-electric-tag-pair-mode)
+  (add-to-list 'auto-mode-alist `(,(rx ".tsx" eos) . typescript-tsx-mode))
   :custom
-  (web-mode-code-indent-offset 2)
-  (web-mode-enable-auto-opening nil)
-  (web-mode-enable-auto-pairing nil)
-  (web-mode-enable-auto-quoting nil)
-  (web-mode-markup-indent-offset 2)
-  (web-mode-enable-auto-indentation nil))
+  (typescript-indent-level 2))
 #+END_SRC
 
 ** JSON
@@ -491,6 +487,24 @@ authoring documents with a fast and effective plain-text system.
 (defun me/org-src-buffer-name (name &rest _)
   "Simple buffer name."
   (format "*%s*" name))
+#+END_SRC
+
+** PHP
+
+| =web-mode= | https://github.com/fxbois/web-mode |
+
+#+BEGIN_SRC emacs-lisp
+(use-package web-mode
+  :mode (rx ".php" eos)
+  :hook
+  (web-mode . sgml-electric-tag-pair-mode)
+  :custom
+  (web-mode-code-indent-offset 2)
+  (web-mode-enable-auto-opening nil)
+  (web-mode-enable-auto-pairing nil)
+  (web-mode-enable-auto-quoting nil)
+  (web-mode-markup-indent-offset 2)
+  (web-mode-enable-auto-indentation nil))
 #+END_SRC
 
 ** YAML
@@ -907,67 +921,6 @@ See `sort-regexp-fields'."
   (sort-regexp-fields reverse "\\w+" "\\&" beg end))
 #+END_SRC
 
-** Diagnostics
-
-| =eglot=          | https://github.com/joaotavora/eglot            |
-| =flymake=        | Built-in                                       |
-| =flymake-eslint= | https://github.com/orzechowskid/flymake-eslint |
-| =xref=           | Built-in                                       |
-
-*** Code References
-
-Find code references throughout a codebase.
-
-#+BEGIN_SRC emacs-lisp
-(use-package xref
-  :ensure nil
-  :config
-  (with-eval-after-load 'consult
-    (setq-default
-     xref-show-definitions-function #'consult-xref
-     xref-show-xrefs-function #'consult-xref))
-  (with-eval-after-load 'evil
-    (evil-define-key* 'motion xref--xref-buffer-mode-map
-      (kbd "<backtab") #'xref-prev-group
-      (kbd "<return") #'xref-goto-xref
-      (kbd "<tab>") #'xref-next-group)))
-#+END_SRC
-
-*** Language Server Protocol
-
-Yup, Emacs supports LSP.
-
-#+BEGIN_SRC emacs-lisp
-(use-package eglot
-  :commands (eglot)
-  :custom
-  (eglot-autoshutdown t)
-  :init
-  (put 'eglot-server-programs 'safe-local-variable 'listp)
-  :config
-  (add-to-list 'eglot-server-programs '(web-mode . ("typescript-language-server" "--stdio")))
-  (add-to-list 'eglot-stay-out-of 'eldoc-documentation-strategy))
-#+END_SRC
-
-*** Linters
-
-#+BEGIN_QUOTE
-The current implementation of =flymake-eslint-enable= prevents local setups
-relying on project dependencies ie. running =npx eslint= rather than =eslint=
-directly. Until I can make my own =flymake-eslint= package or provide with a
-fix, the =flymake-eslint--create-process= has to be patched by hand to allow
-="npx eslint"= as binary.
-
-Until then, manually enable in-buffer ESLint diagnostics with =M-x
-flymake-eslint-enable=.
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package flymake-eslint
-  :custom
-  (flymake-eslint-executable-name "npx"))
-#+END_SRC
-
 ** Dictionary
 
 | =define-word=      | https://github.com/abo-abo/define-word        |
@@ -1160,6 +1113,7 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
   (css-mode . emmet-mode)
   (html-mode . emmet-mode)
   (rjsx-mode . emmet-mode)
+  (typescript-tsx-mode . emmet-mode)
   (web-mode . emmet-mode)
   :custom
   (emmet-insert-flash-time .1)
@@ -1657,6 +1611,87 @@ Cycle between nil, t and 'relative."
          (position (1+ (cl-position display-line-numbers range)))
          (position (if (= position (length range)) 0 position)))
     (setq-local display-line-numbers (nth position range))))
+#+END_SRC
+
+** Intellisense
+
+| =eglot=             | https://github.com/joaotavora/eglot                    |
+| =flymake=           | Built-in                                               |
+| =flymake-eslint=    | https://github.com/orzechowskid/flymake-eslint         |
+| =tree-sitter=       | https://github.com/emacs-tree-sitter/elisp-tree-sitter |
+| =tree-sitter-langs= | https://github.com/emacs-tree-sitter/tree-sitter-langs |
+| =xref=              | Built-in                                               |
+
+*** Code References
+
+Find code references throughout a codebase.
+
+#+BEGIN_SRC emacs-lisp
+(use-package xref
+  :ensure nil
+  :config
+  (with-eval-after-load 'consult
+    (setq-default
+     xref-show-definitions-function #'consult-xref
+     xref-show-xrefs-function #'consult-xref))
+  (with-eval-after-load 'evil
+    (evil-define-key* 'motion xref--xref-buffer-mode-map
+      (kbd "<backtab") #'xref-prev-group
+      (kbd "<return") #'xref-goto-xref
+      (kbd "<tab>") #'xref-next-group)))
+#+END_SRC
+
+*** Language Server Protocol
+
+Yup, Emacs supports LSP.
+
+#+BEGIN_SRC emacs-lisp
+(use-package eglot
+  :commands (eglot)
+  :custom
+  (eglot-autoshutdown t)
+  :init
+  (put 'eglot-server-programs 'safe-local-variable 'listp)
+  :config
+  (add-to-list 'eglot-stay-out-of 'eldoc-documentation-strategy)
+  :hook
+  (typescript-mode . eglot-ensure))
+#+END_SRC
+
+*** Linters
+
+#+BEGIN_QUOTE
+The current implementation of =flymake-eslint-enable= prevents local setups
+relying on project dependencies ie. running =npx eslint= rather than =eslint=
+directly. Until I can make my own =flymake-eslint= package or provide with a
+fix, the =flymake-eslint--create-process= has to be patched by hand to allow
+="npx eslint"= as binary.
+
+Until then, manually enable in-buffer ESLint diagnostics with =M-x
+flymake-eslint-enable=.
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package flymake-eslint
+  :custom
+  (flymake-eslint-executable-name "npx"))
+#+END_SRC
+
+*** Tree-Sitter
+
+#+BEGIN_SRC emacs-lisp
+(use-package tree-sitter
+  :hook
+  (typescript-mode . tree-sitter-hl-mode)
+  (typescript-tsx-mode . tree-sitter-hl-mode))
+
+(use-package tree-sitter-langs
+  :after tree-sitter
+  :defer nil
+  :config
+  (tree-sitter-require 'tsx)
+  (add-to-list 'tree-sitter-major-mode-language-alist
+               '(typescript-tsx-mode . tsx)))
 #+END_SRC
 
 ** IRC
@@ -2302,36 +2337,28 @@ classes/ for reusability.
 Define standard setups for projects that I use on a daily basis.
 
 #+BEGIN_SRC emacs-lisp
-(dir-locals-set-class-variables 'python
- '((python-mode . ((eval . (eglot-ensure))))))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(dir-locals-set-class-variables 'react
+(dir-locals-set-class-variables 'prettier
  '((js-mode . ((eval . (prettier-mode))))
    (json-mode . ((eval . (prettier-mode))))
    (rjsx-mode . ((eval . (prettier-mode))))
    (scss-mode . ((eval . (prettier-mode))))
-   (web-mode . ((eval . (eglot-ensure))
-                (eval . (prettier-mode))
+   (typescript-mode . ((eval . (prettier-mode))))
+   (web-mode . ((eval . (prettier-mode))
                 (prettier-parsers . (typescript))))))
 #+END_SRC
 
 Assign paths to specific classes according to specifications found in secrets.
 
 #+BEGIN_SRC emacs-lisp
-(mapc (lambda (it) (dir-locals-set-directory-class it 'python))
-      (me/secret 'project-python))
-(mapc (lambda (it) (dir-locals-set-directory-class it 'react))
-      (me/secret 'project-react))
+(mapc (lambda (it) (dir-locals-set-directory-class it 'prettier))
+      (me/secret 'project-prettier))
 #+END_SRC
 
 Below is an example of secrets setting no Python project and 2 React projects.
 See how to load secrets for more details: [[#load-secrets][Load Secrets]].
 
 #+BEGIN_SRC lisp-data :tangle no
-((project-python . nil)
- (project-react
+((project-react
   . ("~/path/to/react/project/one/"
      "~/path/to/react/project/two/")))
 #+END_SRC
