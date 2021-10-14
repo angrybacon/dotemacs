@@ -316,9 +316,9 @@ HTML mode is defined in =sgml-mode.el=.
 (use-package typescript-mode
   :init
   (define-derived-mode typescript-tsx-mode typescript-mode "TSX")
+  (add-to-list 'auto-mode-alist `(,(rx ".tsx" eos) . typescript-tsx-mode))
   :config
   (add-hook 'typescript-tsx-mode-hook #'sgml-electric-tag-pair-mode)
-  (add-to-list 'auto-mode-alist `(,(rx ".tsx" eos) . typescript-tsx-mode))
   :custom
   (typescript-indent-level 2))
 #+END_SRC
