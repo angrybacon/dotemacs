@@ -684,6 +684,7 @@ Provide various commands to list and /consult/ existing collections.
   ("C-h M" . consult-minor-mode-menu)
   :custom
   (consult-line-start-from-top t)
+  (consult-project-root-function #'me/project-root)
   :hook
   (org-mode . (lambda () (setq-local consult-fontify-preserve nil)))
   :init
@@ -1032,9 +1033,8 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
    ("C-e" . nil)
    :map evil-normal-state-map
    ("gb" . switch-to-buffer)
-   ("gB" . projectile-switch-to-buffer)
    ("gD" . me/evil-goto-definition-other-window)
-   ("gp" . projectile-switch-project)
+   ("gp" . project-switch-project)
    ("gr" . (lambda () (interactive) (revert-buffer nil t)))
    ("q" . nil)
    :map evil-visual-state-map
@@ -1239,7 +1239,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
   ("C-c f" . hydra-spotify/body)
   ("C-c g" . hydra-git/body)
   ("C-c o" . me/hydra-super-maybe)
-  ("C-c p" . hydra-projectile/body)
+  ("C-c p" . hydra-project/body)
   ("C-c s" . hydra-system/body)
   ("C-c u" . hydra-ui/body)
   :custom
@@ -1349,8 +1349,6 @@ Group Eyebrowse commands.
 
 Group =git= commands.
 
-| TODO | Add clone to Projectile projects |
-
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-git (:color teal)
   (concat (me/hydra-heading "Git" "Do" "Gutter") "
@@ -1446,36 +1444,30 @@ Group Org commands.
   ("v" org-overview :color blue))
 #+END_SRC
 
-*** Hydra: Projectile
+*** Hydra: Project
 
-Group Projectile commands.
+Group project commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-projectile (:color teal)
-  (concat (me/hydra-heading "Projectile" "Do" "Find" "Search") "
+(defhydra hydra-project (:color teal)
+  (concat (me/hydra-heading "Project" "Do" "Find" "Search") "
  _q_ quit            _K_ kill buffers    _b_ buffer          _r_ replace
- ^^                  _i_ reset cache     _d_ directory       _R_ regexp Replace
- ^^                  _n_ new project     _D_ root            _s_ ripgrep
- ^^                  _N_ prune projects  _f_ file            _S_ grep
- ^^                  _v_ save buffers    _F_ file, no cache  ^^
+ ^^                  _t_ forget project  _d_ directory       _s_ ripgrep
+ ^^                  _T_ prune projects  _D_ root            ^^
+ ^^                  ^^                  _f_ file            ^^
  ^^                  ^^                  _p_ project         ^^
 ")
   ("q" nil)
-  ("b" projectile-switch-to-buffer)
-  ("d" projectile-find-dir)
-  ("D" projectile-dired)
-  ("f" projectile-find-file)
-  ("F" (progn (projectile-invalidate-cache nil) (projectile-find-file)))
-  ("i" projectile-invalidate-cache :color red)
-  ("K" projectile-kill-buffers)
-  ("n" projectile-add-known-project)
-  ("N" projectile-cleanup-known-projects)
-  ("p" projectile-switch-project)
-  ("r" (progn (projectile-invalidate-cache nil) (projectile-replace)))
-  ("R" (progn (projectile-invalidate-cache nil) (projectile-replace-regexp)))
-  ("s" (consult-ripgrep (projectile-project-root)))
-  ("S" (consult-grep (projectile-project-root)))
-  ("v" projectile-save-project-buffers))
+  ("b" project-switch-to-buffer)
+  ("d" project-find-dir)
+  ("D" project-dired)
+  ("f" project-find-file)
+  ("K" project-kill-buffers)
+  ("p" project-switch-project)
+  ("r" project-query-replace-regexp)
+  ("s" me/project-search)
+  ("t" project-forget-project)
+  ("T" project-forget-zombie-projects))
 #+END_SRC
 
 *** Hydra: RJSX
@@ -2355,8 +2347,47 @@ Enable multiple cursors outside Evil. Some witchcraft at work here.
 
 ** Project
 
-| =files=      | Built-in                              |
-| =projectile= | https://github.com/bbatsov/projectile |
+| =files=   | Built-in |
+| =project= | Built-in |
+
+*** Project.el
+
+Provide project-wide commands and utilities.
+
+#+BEGIN_SRC emacs-lisp
+(use-package project
+  :custom
+  (project-list-file (me/cache-concat "projects.eld"))
+  (project-switch-commands '((project-dired "Root" "D")
+                             (project-find-file "File" "f")
+                             (magit-project-status "Git" "g")
+                             (me/project-search "Search" "s")
+                             (me/vterm-dwim "Terminal" "t"))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/project-name (&optional project)
+  "Return the name for PROJECT.
+If PROJECT is not specified, assume current project root."
+  (when-let (root (or project (me/project-root)))
+    (file-name-nondirectory
+     (directory-file-name
+      (file-name-directory root)))))
+
+(defun me/project-search ()
+  "Run ripgrep against project root.
+If ripgrep is not installed, use grep instead."
+  (interactive)
+  (let ((root (me/project-root)))
+    (if (executable-find "rg")
+        (consult-ripgrep root)
+      (consult-grep root))))
+
+(defun me/project-root ()
+  "Return the current project root."
+  (when-let (project (project-current))
+    (project-root project)))
+#+END_SRC
 
 *** Directory-Local Variables
 
@@ -2399,52 +2430,6 @@ Allow specific =eval= form in directory-local mecanisms.
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'safe-local-eval-forms '(prettier-mode))
 (add-to-list 'safe-local-eval-forms '(eglot-ensure))
-#+END_SRC
-
-*** Projectile
-
-Projectile brings project-level facilities to Emacs such as grep, find and
-replace.
-
-#+BEGIN_QUOTE
-Projectile is a project interaction library for Emacs. Its goal is to provide a
-nice set of features operating on a project level without introducing external
-dependencies (when feasible). For instance - finding project files has a
-portable implementation written in pure Emacs Lisp without the use of GNU find
-(but for performance sake an indexing mechanism backed by external commands
-exists as well).
-
---- Bozhidar Batsov
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package projectile
-  :hook
-  (after-init . projectile-mode)
-  (projectile-mode . me/projectile-commander-set)
-  :init
-  (setq-default
-   projectile-cache-file (me/cache-concat "projectile/cache")
-   projectile-known-projects-file (me/cache-concat "projectile/projects.eld"))
-  :custom
-  (projectile-dynamic-mode-line nil)
-  (projectile-enable-caching t)
-  (projectile-indexing-method 'hybrid)
-  (projectile-kill-buffers-filter 'kill-only-files)
-  (projectile-track-known-projects-automatically nil)
-  (projectile-switch-project-action #'projectile-commander))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defun me/projectile-commander-set ()
-  "Initialize commander keybindings. See `projectile-commander-methods'."
-  (setq projectile-commander-methods nil)
-  (def-projectile-commander-method ?b "Switch to buffer." (projectile-switch-to-buffer))
-  (def-projectile-commander-method ?d "Find directory." (projectile-find-dir))
-  (def-projectile-commander-method ?D "Go to root directory." (projectile-dired))
-  (def-projectile-commander-method ?f "Find file." (projectile-find-file))
-  (def-projectile-commander-method ?g "Magit status." (magit-status))
-  (def-projectile-commander-method ?s "Ripgrep." (consult-ripgrep (projectile-project-root))))
 #+END_SRC
 
 ** Quality of Life
@@ -2705,27 +2690,27 @@ To see the supported options, see the documentation for `shackle-rules'.")
 (defun me/vterm-dwim (&optional argument)
   "Invoke `vterm' according to context and current location.
 
-With a \\[universal-argument] prefix or if no project is found, force a new
-buffer to be created in place.
+With a \\[universal-argument] prefix or if no project is found, invoke a dumb
+`vterm' in place.
 
 If existing, bring back the first vterm window following `me/vterm-shackles'
 specifications. Otherwise create a new buffer with a unique name at the project
 root."
   (interactive "P")
-  (if (or argument (not (projectile-project-root)))
-      (vterm)
-    (let* ((project (projectile-acquire-root))
-           (buffer (format "*vterm: %s*" (projectile-project-name project)))
-           (replace (string= buffer (buffer-name)))
-           (buffer (if replace (generate-new-buffer-name buffer) buffer))
-           (shackle-rules (if replace shackle-rules
-                            `((vterm-mode ,@me/vterm-shackles)))))
-      (if (buffer-live-p (get-buffer buffer))
-          (pop-to-buffer buffer)
-        (projectile-with-default-dir project
-          (unless (require 'vterm nil :noerror)
-            (error "Package 'vterm' not found"))
-          (vterm buffer))))))
+  (unless (require 'vterm nil :noerror)
+    (error "Package 'vterm' not found"))
+  (let ((project (me/project-root)))
+    (if (or argument (not project))
+        (vterm)
+      (let* ((buffer (format "*vterm: %s*" (me/project-name project)))
+             (replace (string= buffer (buffer-name)))
+             (buffer (if replace (generate-new-buffer-name buffer) buffer))
+             (shackle-rules (if replace shackle-rules
+                              `((vterm-mode ,@me/vterm-shackles)))))
+        (if (buffer-live-p (get-buffer buffer))
+            (pop-to-buffer buffer)
+          (let ((default-directory project))
+            (vterm buffer)))))))
 #+END_SRC
 
 ** Version Control
