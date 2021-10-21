@@ -748,6 +748,8 @@ with live-reload.
 
 #+BEGIN_SRC emacs-lisp
 (use-package vertico
+  :custom
+  (vertico-resize nil)
   :hook
   (after-init . vertico-mode))
 #+END_SRC
