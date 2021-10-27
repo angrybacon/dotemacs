@@ -431,6 +431,7 @@ authoring documents with a fast and effective plain-text system.
   (org-fontify-quote-and-verse-blocks t)
   (org-fontify-whole-heading-line t)
   (org-return-follows-link t)
+  (org-src-preserve-indentation t)
   (org-src-tab-acts-natively t)
   (org-src-window-setup 'current-window)
   (org-startup-truncated nil)
@@ -1251,7 +1252,6 @@ seamless, it's like a minor mode that disables itself auto-magically.
   ("C-c a" . hydra-applications/body)
   ("C-c d" . hydra-dates/body)
   ("C-c e" . hydra-eyebrowse/body)
-  ("C-c f" . hydra-spotify/body)
   ("C-c g" . hydra-git/body)
   ("C-c o" . me/hydra-super-maybe)
   ("C-c p" . hydra-project/body)
@@ -1500,63 +1500,6 @@ Group React JavaScript commands.
   ("F" js-doc-insert-file-doc))
 #+END_SRC
 
-*** Hydra: Screenshot
-
-Group commands to take screenshots with various options.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-screenshot (:color teal)
-  (concat (me/hydra-heading "Screenshot" "Region" "Window" "Root") "
- _q_ quit            _s_ plain           _w_ plain           _r_ plain
- ^^                  _S_ shadow          ^W^ shadow          ^R^ shadow
-")
-  ("q" nil)
-  ("r" (me/screenshot "root"))
-  ("s" (me/screenshot "region"))
-  ("S" (me/screenshot "region-shadow"))
-  ("w" (me/screenshot "window")))
-#+END_SRC
-
-| TODO | Output to the echo area instead |
-
-#+BEGIN_SRC emacs-lisp
-(defvar me/screenshot-variants
-  '("region" "region-shadow" "root" "window")
-  "List of supported variants for `me/screenshot'.")
-
-(defun me/screenshot (variant)
-  "Invoke a screenshot script according to VARIANT."
-  (interactive (list (completing-read "Variant: " me/screenshot-variants)))
-  (let ((command (format "scripts/screenshot.%s.sh" variant)))
-    (call-process-shell-command command)))
-#+END_SRC
-
-*** Hydra: Spotify
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-spotify (:color pink)
-  (concat (me/hydra-heading "Spotify" "Search" "Controls" "Sound") "
- _q_ quit            _t_ track           _<_ previous        _-_ down
- ^^                  _p_ playlist        _>_ next            _=_ up
- ^^                  _P_ featured        _f_ play            _d_ device
- ^^                  ^^                  _r_ repeat          _m_ mute
- ^^                  ^^                  _s_ shuffle         ^^
-")
-  ("q" nil)
-  ("-" smudge-controller-volume-down)
-  ("<" smudge-controller-previous-track)
-  ("=" smudge-controller-volume-up)
-  (">" smudge-controller-next-track)
-  ("P" smudge-featured-playlists :color blue)
-  ("d" smudge-select-device)
-  ("f" smudge-controller-toggle-play :color blue)
-  ("m" smudge-controller-volume-mute-unmute)
-  ("p" smudge-my-playlists :color blue)
-  ("r" smudge-controller-toggle-repeat)
-  ("s" smudge-controller-toggle-shuffle)
-  ("t" smudge-track-search :color blue))
-#+END_SRC
-
 *** Hydra: System
 
 Group system-related commands.
@@ -1592,11 +1535,13 @@ Group system-related commands.
  _q_ quit            _e_ emacs           ^^                  ^^
  ^^                  _l_ linux           ^^                  ^^
  ^^                  _q_ qtile           ^^                  ^^
+ ^^                  _z_ zsh             ^^                  ^^
 ")
   ("q" nil)
   ("e" (find-file (concat user-emacs-directory "dotemacs.org")))
   ("l" (find-file "~/Workspace/dot/LINUX.org"))
-  ("q" (find-file "~/Workspace/dot/config/qtile.org")))
+  ("q" (find-file "~/Workspace/dot/config/qtile.org"))
+  ("z" (find-file "~/Workspace/dot/config/zsh.org")))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -2634,20 +2579,6 @@ Emacs can also emulate an interactive REST client.
    ("C-p" . restclient-jump-prev))
   :hook
   (restclient-mode . display-line-numbers-mode))
-#+END_SRC
-
-** Spotify
-
-| =smudge= | https://github.com/danielfm/smudge |
-
-Control your Spotify clients from within Emacs.
-
-#+BEGIN_SRC emacs-lisp
-(use-package smudge
-  :commands (smudge-controller-toggle-play)
-  :custom
-  (smudge-oauth2-client-id (me/secret 'spotify-id))
-  (smudge-oauth2-client-secret (me/secret 'spotify-secret)))
 #+END_SRC
 
 ** Terminal
