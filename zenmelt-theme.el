@@ -99,7 +99,7 @@ See `custom--inhibit-theme-enable'."
    `(default                           ((t :background ,bg :foreground ,fg)))
    `(error                             ((t :foreground ,red)))
    `(escape-glyph                      ((t :foreground ,yellow :weight bold)))
-   `(font-lock-builtin-face            ((t :foreground ,fg+1)))
+   `(font-lock-builtin-face            ((t :foreground ,blue)))
    `(font-lock-comment-delimiter-face  ((t :foreground ,green-2)))
    `(font-lock-comment-face            ((t :foreground ,green)))
    `(font-lock-constant-face           ((t :foreground ,green+4)))
