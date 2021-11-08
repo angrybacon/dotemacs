@@ -2106,7 +2106,6 @@ Augment Emacs experience for MacOS users.
 #+BEGIN_SRC emacs-lisp
 (when (eq system-type 'darwin)
   (setq-default
-   dired-use-ls-dired nil               ; MacOS's ls does not support --dired
    ns-alternate-modifier 'super         ; Map Super to the Alt key
    ns-command-modifier 'meta            ; Map Meta to the Cmd key
    ns-pop-up-frames nil                 ; Always re-use the same frame

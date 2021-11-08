@@ -27,7 +27,7 @@ Type=Application
 
 ** Gnome
 
-Once in a while I'll log in under something more stable -- read when I break my
+Once in a while I'll log in under something more stable -- read: when I break my
 system -- like Gnome.
 
 Below are a couple settings to make the temporary excursion less
