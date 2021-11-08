@@ -201,10 +201,18 @@ See `custom-available-themes'.")
     (message "%s" next)))
 #+END_SRC
 
-Prettify fringe bitmaps.
+Customize line continuation indicator bitmaps.
 
 #+BEGIN_SRC emacs-lisp
-(define-fringe-bitmap 'left-curly-arrow [255] nil nil '(center t))
+(define-fringe-bitmap 'left-curly-arrow [16 48 112 240 240 112 48 16])
+(define-fringe-bitmap 'right-curly-arrow [8 12 14 15 15 14 12 8])
+#+END_SRC
+
+Mute their colors as well.
+
+#+BEGIN_SRC emacs-lisp
+(set-fringe-bitmap-face 'left-curly-arrow 'shadow)
+(set-fringe-bitmap-face 'right-curly-arrow 'shadow)
 #+END_SRC
 
 *** Customize Typography
@@ -2692,9 +2700,9 @@ Display indicators in the left fringe for Git changes.
   :hook
   (after-change-major-mode . me/git-gutter-enable)
   :config
-  (define-fringe-bitmap 'git-gutter-fr:added [255] nil nil '(center t))
-  (define-fringe-bitmap 'git-gutter-fr:deleted [255 255 255 255] nil nil 'bottom)
-  (define-fringe-bitmap 'git-gutter-fr:modified [255] nil nil '(center t)))
+  (define-fringe-bitmap 'git-gutter-fr:added [240] nil nil '(center t))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [240 240 240 240] nil nil 'bottom)
+  (define-fringe-bitmap 'git-gutter-fr:modified [240] nil nil '(center t)))
 #+END_SRC
 
 Major modes for Git-specific files.
@@ -2734,7 +2742,8 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
   (magit-post-stage-hook . me/magit-recenter)
   :custom
   (epg-pinentry-mode 'loopback)
-  (magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
+  (magit-display-buffer-function
+   'magit-display-buffer-same-window-except-diff-v1)
   (magit-diff-highlight-hunk-region-functions
    '(magit-diff-highlight-hunk-region-using-face))
   (magit-diff-refine-hunk 'all)
@@ -2743,7 +2752,9 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
    '((modules . show) (stashes . show) (unpulled . show) (unpushed . show)))
   :config
   (magit-add-section-hook
-   'magit-status-sections-hook 'magit-insert-modules-overview 'magit-insert-merge-log)
+   'magit-status-sections-hook
+   'magit-insert-modules-overview
+   'magit-insert-merge-log)
   (remove-hook 'magit-section-highlight-hook #'magit-section-highlight))
 #+END_SRC
 
@@ -2773,14 +2784,14 @@ section for now.
 
 #+BEGIN_SRC emacs-lisp
 (use-package transient
+  :custom
+  (transient-default-level 5)
+  (transient-mode-line-format nil)
   :init
   (setq-default
    transient-history-file (me/cache-concat "transient/history.el")
    transient-levels-file (me/cache-concat "transient/levels.el")
-   transient-values-file (me/cache-concat "transient/values.el"))
-  :custom
-  (transient-default-level 5)
-  (transient-mode-line-format nil))
+   transient-values-file (me/cache-concat "transient/values.el")))
 #+END_SRC
 
 ** Whitespaces
