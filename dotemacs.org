@@ -451,6 +451,7 @@ authoring documents with a fast and effective plain-text system.
   (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer-name)
   (with-eval-after-load 'evil
     (evil-define-key* 'motion org-mode-map
+      (kbd "<tab>") #'org-cycle
       (kbd "C-j") #'me/org-show-next-heading-tidily
       (kbd "C-k") #'me/org-show-previous-heading-tidily)))
 #+END_SRC
