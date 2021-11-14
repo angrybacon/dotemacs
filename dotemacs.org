@@ -2679,9 +2679,7 @@ root."
 
 | =git-commit=         | https://github.com/magit/magit/blob/master/lisp/git-commit.el |
 | =git-gutter-fringe=  | https://github.com/emacsorphanage/git-gutter-fringe           |
-| =gitattributes-mode= | https://github.com/magit/git-modes#gitattributes-mode         |
-| =gitconfig-mode=     | https://github.com/magit/git-modes#gitconfig-mode             |
-| =gitignore-mode=     | https://github.com/magit/git-modes#gitignore-mode             |
+| =git-modes=          | https://github.com/magit/git-modes                            |
 | =magit=              | https://github.com/magit/magit                                |
 | =pinentry=           | https://elpa.gnu.org/packages/pinentry.html                   |
 | =transient=          | https://github.com/magit/transient                            |
@@ -2716,9 +2714,7 @@ Display indicators in the left fringe for Git changes.
 Major modes for Git-specific files.
 
 #+BEGIN_SRC emacs-lisp
-(use-package gitattributes-mode)
-(use-package gitconfig-mode)
-(use-package gitignore-mode)
+(use-package git-modes)
 #+END_SRC
 
 Magit provides Git facilities directly from within Emacs.
