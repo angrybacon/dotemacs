@@ -984,7 +984,7 @@ The variable `sort-fold-case' determines whether the case affects the sort. See
 
 ** Dictionary
 
-| =define-word=      | https://github.com/abo-abo/define-word        |
+| =define-word= | https://github.com/abo-abo/define-word |
 
 Define words using Wordnik.
 
