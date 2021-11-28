@@ -79,6 +79,14 @@ Change a few indenting behaviors.
 (put 'plist-put 'lisp-indent-function 2)
 #+END_SRC
 
+Allow a number of commonly safe file variables for further reference.
+
+#+BEGIN_SRC emacs-lisp
+(put 'after-save-hook 'safe-local-variable
+     (lambda (value) (equal value '(org-babel-tangle t))))
+(put 'display-line-numbers-width 'safe-local-variable 'integerp)
+#+END_SRC
+
 ** Fullscreen
 
 Enable fullscreen. Given there are differences in meaning for /fullscreen/
@@ -87,6 +95,9 @@ experience with regard to fullscreen in most setups.
 
 In the case of macOS, fullscreen means Emacs will occupy a dedicated workspace
 so we want to maximize it instead. Works best with titlebar-less frames.
+
+Ideally, this stays near the top of the file so that Emacs appear fullscreen
+immediately.
 
 #+BEGIN_SRC emacs-lisp
 (pcase window-system
@@ -128,7 +139,7 @@ directory with an ever-growing number of packages used on a daily basis.
 
 #+BEGIN_SRC emacs-lisp
 (defconst me/cache-directory
-  (expand-file-name ".cache/")
+  (expand-file-name ".cache/" user-emacs-directory)
   "Directory where all cache files should be saved")
 
 (defun me/cache-concat (name)
@@ -170,9 +181,9 @@ redirect the writing to =/dev/null=.
 (setq-default custom-file null-device)
 #+END_SRC
 
-** Theme
+* Theme
 
-*** Helpers
+** Helpers
 
 Initialize known themes and provide a helper to cycle through known themes.
 
@@ -215,7 +226,7 @@ Mute their colors as well.
 (set-fringe-bitmap-face 'right-curly-arrow 'shadow)
 #+END_SRC
 
-*** Customize Typography
+** Customize Typography
 
 #+BEGIN_SRC emacs-lisp
 (set-face-attribute 'default nil
@@ -225,7 +236,7 @@ Mute their colors as well.
 (set-face-attribute 'variable-pitch nil :font (me/secret 'font-variable))
 #+END_SRC
 
-*** Themes
+** Themes
 
 | =modus-themes=  | Built-in        |
 | =zenmelt-theme= | =lisp/zenmelt/= |
@@ -342,12 +353,12 @@ HTML mode is defined in =sgml-mode.el=.
 
 ** Lisp
 
-| =elisp-mode= | Built-in |
-| =ielm=       | Built-in |
-| =lisp-mode=  | Built-in |
+| =emacs-lisp-mode= | Built-in |
+| =ielm=            | Built-in |
+| =lisp-mode=       | Built-in |
 
 #+BEGIN_SRC emacs-lisp
-(use-package elisp-mode
+(use-package emacs-lisp-mode
   :ensure nil
   :bind
   (:map emacs-lisp-mode-map
@@ -2323,7 +2334,6 @@ Enable multiple cursors outside Evil. Some witchcraft at work here.
 
 ** Project
 
-| =files=   | Built-in |
 | =project= | Built-in |
 
 *** Project.el
@@ -2873,5 +2883,6 @@ configuration.
     (eval `(defun ,name ()
              ,documentation
              (interactive)
-             (me/eyebrowse-switch ,n)))))
+             (me/eyebrowse-switch ,n))
+          t)))
 #+END_SRC

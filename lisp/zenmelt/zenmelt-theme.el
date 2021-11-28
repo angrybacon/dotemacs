@@ -216,15 +216,26 @@ See `custom--inhibit-theme-enable'."
    `(org-hide                          ((t :foreground ,bg)))
    `(org-level-1                       ((t :background ,bg+1
                                            :foreground ,orange
-                                           :height 1.6
-                                           :overline t)))
-   `(org-level-2                       ((t :foreground ,green+4 :inherit org-level-1)))
-   `(org-level-3                       ((t :foreground ,blue-1 :inherit org-level-1)))
-   `(org-level-4                       ((t :foreground ,yellow-2 :inherit org-level-1)))
-   `(org-level-5                       ((t :foreground ,cyan :inherit org-level-1)))
-   `(org-level-6                       ((t :foreground ,green+2 :inherit org-level-1)))
-   `(org-level-7                       ((t :foreground ,red-4 :inherit org-level-1)))
-   `(org-level-8                       ((t :foreground ,blue-4 :inherit org-level-1)))
+                                           :height 1.2
+                                           :overline t
+                                           :underline t)))
+   `(org-level-2                       ((t :foreground ,green+4
+                                           :inherit org-level-1)))
+   `(org-level-3                       ((t :background ,bg
+                                           :foreground ,blue-1
+                                           :inherit org-level-2
+                                           :overline nil
+                                           :underline nil)))
+   `(org-level-4                       ((t :foreground ,yellow-2
+                                           :inherit org-level-3)))
+   `(org-level-5                       ((t :foreground ,cyan
+                                           :inherit org-level-4)))
+   `(org-level-6                       ((t :foreground ,green+2
+                                           :inherit org-level-5)))
+   `(org-level-7                       ((t :foreground ,red-4
+                                           :inherit org-level-6)))
+   `(org-level-8                       ((t :foreground ,blue-4
+                                           :inherit org-level-7)))
    `(org-link                          ((t :foreground ,yellow-2 :underline t)))
    `(org-mode-line-clock               ((t :foreground ,fg :background ,bg-3)))
    `(org-mode-line-clock-overrun       ((t :background ,red-1 :foreground ,bg)))
@@ -1020,39 +1031,39 @@ See `custom--inhibit-theme-enable'."
   (custom-theme-set-variables
    'zenmelt
 ;;;;; ansi-color
-    `(ansi-color-names-vector [,bg ,red ,green ,yellow ,blue ,magenta ,cyan ,fg])
+   `(ansi-color-names-vector [,bg ,red ,green ,yellow ,blue ,magenta ,cyan ,fg])
 ;;;;; company-quickhelp
-    `(company-quickhelp-color-background ,bg+2)
-    `(company-quickhelp-color-foreground ,fg)
+   `(company-quickhelp-color-background ,bg+2)
+   `(company-quickhelp-color-foreground ,fg)
 ;;;;; fill-column-indicator
-    `(fci-rule-color ,bg-1)
+   `(fci-rule-color ,bg-1)
 ;;;;; nrepl-client
-    `(nrepl-message-colors
-      '(,red ,orange ,yellow ,green ,green+4 ,cyan ,blue+1 ,magenta))
+   `(nrepl-message-colors
+     '(,red ,orange ,yellow ,green ,green+4 ,cyan ,blue+1 ,magenta))
 ;;;;; pdf-tools
-    `(pdf-view-midnight-colors '(,fg . ,bg-1))
+   `(pdf-view-midnight-colors '(,fg . ,bg-1))
 ;;;;; vc-annotate
-    `(vc-annotate-color-map
-      '(( 20. . ,red-1)
-        ( 40. . ,red)
-        ( 60. . ,orange)
-        ( 80. . ,yellow-2)
-        (100. . ,yellow-1)
-        (120. . ,yellow)
-        (140. . ,green-2)
-        (160. . ,green)
-        (180. . ,green+1)
-        (200. . ,green+2)
-        (220. . ,green+3)
-        (240. . ,green+4)
-        (260. . ,cyan)
-        (280. . ,blue-2)
-        (300. . ,blue-1)
-        (320. . ,blue)
-        (340. . ,blue+1)
-        (360. . ,magenta)))
-    `(vc-annotate-very-old-color ,magenta)
-    `(vc-annotate-background ,bg-3)))
+   `(vc-annotate-color-map
+     '(( 20. . ,red-1)
+       ( 40. . ,red)
+       ( 60. . ,orange)
+       ( 80. . ,yellow-2)
+       (100. . ,yellow-1)
+       (120. . ,yellow)
+       (140. . ,green-2)
+       (160. . ,green)
+       (180. . ,green+1)
+       (200. . ,green+2)
+       (220. . ,green+3)
+       (240. . ,green+4)
+       (260. . ,cyan)
+       (280. . ,blue-2)
+       (300. . ,blue-1)
+       (320. . ,blue)
+       (340. . ,blue+1)
+       (360. . ,magenta)))
+   `(vc-annotate-very-old-color ,magenta)
+   `(vc-annotate-background ,bg-3)))
 
 ;;;###autoload
 (when (and (boundp 'custom-theme-load-path) load-file-name)
