@@ -1,6 +1,16 @@
 #+TITLE: DotEmacs
 #+AUTHOR: Mathieu Marques
 
+[[https://img.shields.io/github/license/angrybacon/dotemacs.svg?style=flat-square]]
+[[https://img.shields.io/github/forks/angrybacon/dotemacs.svg?style=flat-square]]
+[[https://img.shields.io/github/stars/angrybacon/dotemacs.svg?style=flat-square]]
+[[https://img.shields.io/github/commit-activity/m/angrybacon/dotemacs.svg?style=flat-square]]
+[[https://img.shields.io/tokei/lines/github/angrybacon/dotemacs.svg?style=flat-square]]
+
+[[https://img.shields.io/badge/arch-yes-success.svg?logo=archlinux&style=flat-square]]
+[[https://img.shields.io/badge/macos-yes-success.svg?logo=apple&style=flat-square]]
+[[https://img.shields.io/badge/windows-untested-important.svg?logo=windows&style=flat-square]]
+
 This repository contains my personal Emacs configuration.
 
 * What the .el
