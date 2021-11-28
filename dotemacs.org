@@ -2377,6 +2377,7 @@ Allow specific =eval= form in directory-local mecanisms.
 | =highlight-indent-guides= | https://github.com/DarthFennec/highlight-indent-guides |
 | =hl-line=                 | Built-in                                               |
 | =rainbow-mode=            | https://elpa.gnu.org/packages/rainbow-mode.html        |
+| =repeat=                  | Built-in                                               |
 | =simple=                  | Built-in                                               |
 
 Auto-indent code as you write.
@@ -2511,6 +2512,19 @@ Colorize colors as text with their value.
   (prog-mode . rainbow-mode)
   :custom
   (rainbow-x-colors nil))
+#+END_SRC
+
+Enable /repeat mode/ for various commands. The mode basically allows transient
+keymaps to persist after an interactive command in order to repeat it with the
+single press of a button: typically the same end character of the key binding.
+
+For instance, cycle through windows with =C-x o=, =o=... or =O=, =O=...
+
+#+BEGIN_SRC emacs-lisp
+(use-package repeat
+  :straight nil
+  :hook
+  (after-init . repeat-mode))
 #+END_SRC
 
 Turn on =auto-fill-mode= /almost/ everywhere.
