@@ -628,7 +628,6 @@ implementation.")
 (defvar me/olivetti-whitelist-modes '(Custom-mode
                                       Info-mode
                                       dired-mode
-                                      erc-mode
                                       help-mode
                                       helpful-mode
                                       lisp-interaction-mode
@@ -1345,12 +1344,11 @@ Group commands for high-level applications.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-applications (:color teal)
-  (concat (me/hydra-heading "Applications" "Launch" "Shell") "
- _q_ quit            _i_ erc             _t_ vterm           ^^
- ^^                  ^^                  _T_ eshell          ^^
+  (concat (me/hydra-heading "Applications" "Shell") "
+ _q_ quit            _t_ vterm           ^^                  ^^
+ ^^                  _T_ eshell          ^^                  ^^
 ")
   ("q" nil)
-  ("i" me/erc)
   ("t" vterm)
   ("T" (eshell t)))
 #+END_SRC
@@ -1725,58 +1723,6 @@ flymake-eslint-enable=.
   (tree-sitter-require 'tsx)
   (add-to-list 'tree-sitter-major-mode-language-alist
                '(typescript-tsx-mode . tsx)))
-#+END_SRC
-
-** IRC
-
-| =erc=          | Built-in                                 |
-| =erc-hl-nicks= | https://github.com/leathekd/erc-hl-nicks |
-
-| TODO | Advice =erc-bol= to support shift |
-
-#+BEGIN_SRC emacs-lisp
-(use-package erc
-  :ensure nil
-  :bind
-  (:map erc-mode-map
-   ([remap erc-bol] . me/erc-bol-shifted)
-   ("M-<down>" . erc-next-command)
-   ("M-<up>" . erc-previous-command))
-  :hook
-  (erc-mode . (lambda () (setq-local scroll-margin 0)))
-  :custom
-  (erc-autojoin-channels-alist '(("freenode.net" "#emacs")))
-  (erc-fill-function 'erc-fill-static)
-  (erc-fill-static-center 20)
-  (erc-header-line-format nil)
-  (erc-insert-timestamp-function 'erc-insert-timestamp-left)
-  (erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
-  (erc-prompt (format "%19s" ">"))
-  (erc-timestamp-format nil)
-  :config
-  (erc-scrolltobottom-enable))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defun me/erc ()
-  "Connect to `me/erc-server' on `me/erc-port' as `me/erc-nick' with
-  `me/erc-password'."
-  (interactive)
-  (erc :server (me/secret 'irc-server)
-       :port (me/secret 'irc-port)
-       :nick (me/secret 'irc-nick)
-       :password (me/secret 'irc-password)))
-
-(defun me/erc-bol-shifted ()
-  "See `erc-bol'. Support shift."
-  (interactive "^")
-  (erc-bol))
-#+END_SRC
-
-Highlight ERC nicks with unique colors.
-
-#+BEGIN_SRC emacs-lisp
-(use-package erc-hl-nicks)
 #+END_SRC
 
 ** Line Numbers
