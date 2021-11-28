@@ -4,30 +4,6 @@
 
 * Bootstrap
 
-** Packages
-
-| =package=     | Built-in                                |
-| =use-package= | https://github.com/jwiegley/use-package |
-
-Setup MELPA.
-
-#+BEGIN_SRC emacs-lisp
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(package-initialize)
-#+END_SRC
-
-Install the =use-package= dependency.
-
-#+BEGIN_SRC emacs-lisp
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package t))
-(setq-default
- use-package-always-defer t
- use-package-always-ensure t)
-#+END_SRC
-
 ** Better Defaults
 
 Here are what I consider better defaults as per my own experience.
@@ -181,6 +157,47 @@ redirect the writing to =/dev/null=.
 (setq-default custom-file null-device)
 #+END_SRC
 
+** Packages
+
+| =straight=    | https://github.com/raxod502/straight.el#getting-started |
+| =use-package= | https://github.com/jwiegley/use-package                 |
+
+This configuration relies on =straight= and prefers latest Git heads for its
+packages over the default behavior from the built-in =package.el= which pulls
+releases from (M)ELPA.
+
+For customizing and loading the packages, =use-package= incentivizes clearly
+defined, consistent and more efficient configurations for all packages used in
+this document.
+
+#+BEGIN_SRC emacs-lisp
+(setq-default
+ straight-base-dir me/cache-directory   ;; Keep builds in the cache directory
+ straight-use-package-by-default t)     ;; Allow `use-package' interface
+#+END_SRC
+
+Bootstrap =straight=.
+
+#+BEGIN_SRC emacs-lisp
+(let ((bootstrap-file (me/cache-concat "straight/repos/straight.el/bootstrap.el"))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (let ((install.el
+           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"))
+      (with-current-buffer
+          (url-retrieve-synchronously install.el 'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp))))
+  (load bootstrap-file nil 'nomessage))
+#+END_SRC
+
+Install =use-package= and defer all packages by default.
+
+#+BEGIN_SRC emacs-lisp
+(straight-use-package 'use-package)
+(setq-default use-package-always-defer t)
+#+END_SRC
+
 * Theme
 
 ** Helpers
@@ -243,7 +260,7 @@ Mute their colors as well.
 
 #+BEGIN_SRC emacs-lisp
 (use-package modus-themes
-  :ensure nil
+  :straight nil
   :defer nil
   :custom
   (modus-themes-diffs 'fg-only)
@@ -265,6 +282,7 @@ Mute their colors as well.
 
 #+BEGIN_SRC emacs-lisp
 (use-package zenmelt-theme
+  :straight nil
   :load-path "lisp/zenmelt"
   :demand
   :config
@@ -275,12 +293,11 @@ Mute their colors as well.
 
 ** CSS
 
-| =css-mode=  | Built-in |
-| =scss-mode= | Built-in |
+| =css-mode= | Built-in |
 
 #+BEGIN_SRC emacs-lisp
 (use-package css-mode
-  :ensure nil
+  :straight nil
   :custom
   (css-indent-offset 2))
 #+END_SRC
@@ -293,7 +310,7 @@ HTML mode is defined in =sgml-mode.el=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package sgml-mode
-  :ensure nil
+  :straight nil
   :hook
   (html-mode . (lambda () (setq me/pretty-print-function #'sgml-pretty-print)))
   (html-mode . sgml-electric-tag-pair-mode)
@@ -304,16 +321,23 @@ HTML mode is defined in =sgml-mode.el=.
 
 ** JavaScript
 
-| =js-doc=          | https://github.com/mooz/js-doc                    |
 | =js2-mode=        | Built-in                                          |
 | =rjsx-mode=       | https://github.com/felipeochoa/rjsx-mode          |
 | =typescript-mode= | https://github.com/emacs-typescript/typescript.el |
 
-#+BEGIN_SRC emacs-lisp
-(use-package js-doc)
+There might be confusion between =js-mode=, =js2-mode= and =js2-minor-mode=. All
+three are built-in JavaScript modes. The former is the original major mode to
+edit JavaScript files. The two latters are based on =js-mode=, one major mode
+with various improvements with regards to syntax highlighting amongst other
+things and one minor mode for earlier Emacs versions that might still be using
+=js-mode= as a major mode but willing to take advantage of the AST parsing
+implementation from =js2= as a minor mode.
 
+See [[https://github.com/mooz/js2-mode]] for more details.
+
+#+BEGIN_SRC emacs-lisp
 (use-package js2-mode
-  :ensure nil
+  :straight nil
   :mode (rx ".js" eos)
   :custom
   (js-indent-level 2)
@@ -324,9 +348,7 @@ HTML mode is defined in =sgml-mode.el=.
   (js2-mode-show-strict-warnings nil))
 
 (use-package rjsx-mode
-  :mode
-  (rx (or ".jsx" (and (or "components" "pages") "/" (* anything) ".js"))
-      eos)
+  :mode (rx (or ".jsx" (and "components/" (* anything) ".js")) eos)
   :hook
   (rjsx-mode . (lambda () (setq me/pretty-print-function #'sgml-pretty-print)))
   (rjsx-mode . me/hydra-set-super)
@@ -359,7 +381,7 @@ HTML mode is defined in =sgml-mode.el=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package emacs-lisp-mode
-  :ensure nil
+  :straight nil
   :bind
   (:map emacs-lisp-mode-map
    ("C-c C-c" . me/eval-region-dwim)
@@ -382,14 +404,14 @@ whole buffer."
 
 #+BEGIN_SRC emacs-lisp
 (use-package ielm
-  :ensure nil
+  :straight nil
   :hook
   (ielm-mode . (lambda () (setq-local scroll-margin 0))))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package lisp-mode
-  :ensure nil
+  :straight nil
   :mode ((rx ".eld" eos) . lisp-data-mode))
 #+END_SRC
 
@@ -432,7 +454,7 @@ authoring documents with a fast and effective plain-text system.
 
 #+BEGIN_SRC emacs-lisp
 (use-package org
-  :ensure nil
+  :straight nil
   :bind
   (:map org-mode-map
    ("C-<return>" . nil)
@@ -558,7 +580,7 @@ configurations.
 
 #+BEGIN_SRC emacs-lisp
 (use-package desktop
-  :ensure nil
+  :straight nil
   :hook
   (after-init . desktop-read)
   (after-init . desktop-save-mode)
@@ -672,7 +694,7 @@ Bind shorthands to move between windows.
 
 #+BEGIN_SRC emacs-lisp
 (use-package windmove
-  :ensure nil
+  :straight nil
   :bind
   ("s-h" . windmove-left)
   ("s-j" . windmove-down)
@@ -692,7 +714,7 @@ changes can be "undone" using the command =winner-undo=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package winner
-  :ensure nil
+  :straight nil
   :hook
   (after-init . winner-mode))
 #+END_SRC
@@ -805,7 +827,7 @@ Customize the way default comments should be handled.
 
 #+BEGIN_SRC emacs-lisp
 (use-package newcomment
-  :ensure nil
+  :straight nil
   :bind
   ("M-<return>" . comment-indent-new-line)
   :hook
@@ -979,7 +1001,7 @@ Ediff is a visual interface to Unix =diff=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package ediff-wind
-  :ensure nil
+  :straight nil
   :custom
   (ediff-split-window-function #'split-window-horizontally)
   (ediff-window-setup-function #'ediff-setup-windows-plain))
@@ -999,7 +1021,7 @@ explorer.
 
 #+BEGIN_SRC emacs-lisp
 (use-package dired
-  :ensure nil
+  :straight nil
   :hook
   (dired-mode . dired-hide-details-mode)
   :bind
@@ -1043,7 +1065,7 @@ documentation joined with a horizontal rule. eg.
 
 #+BEGIN_SRC emacs-lisp
 (use-package eldoc
-  :ensure nil
+  :straight nil
   :custom
   (eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
   (eldoc-idle-delay .1))
@@ -1179,7 +1201,7 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
 
 #+BEGIN_SRC emacs-lisp
 (use-package hippie-exp
-  :ensure nil
+  :straight nil
   :preface
   (defun me/emmet-hippie-try-expand (args)
     "Try `emmet-expand-line' if `emmet-mode' is active. Else, does nothing."
@@ -1217,14 +1239,14 @@ Bind useful commands in help buffers.
 
 #+BEGIN_SRC emacs-lisp
 (use-package help-fns
-  :ensure nil
+  :straight nil
   :bind
   ("C-h K" . describe-keymap))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package help-mode
-  :ensure nil
+  :straight nil
   :bind
   (:map help-mode-map
    ("<" . help-go-back)
@@ -1534,25 +1556,25 @@ Group system-related commands.
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-system (:color teal)
   (concat (me/hydra-heading "System" "Buffer" "Packages" "Toggle") "
- _d_ clear compiled  _s_ revert          _i_ install         _g_ debug: %-3s`debug-on-error
- _D_ clear desktop   _v_ visit...        _I_ reinstall       ^^
- _l_ processes       ^^                  _p_ list            ^^
- _Q_ clear and kill  ^^                  _r_ refresh         ^^
+ _d_ clear compiled  _s_ revert          _p_ install         _g_ debug: %-3s`debug-on-error
+ _D_ clear desktop   _v_ visit...        _P_ prune           ^^
+ _l_ processes       ^^                  _u_ update          ^^
+ _Q_ clear and kill  ^^                  _U_ update all      ^^
 ")
   ("q" nil)
   ("d" me/byte-delete)
   ("D" desktop-remove)
   ("g" (setq debug-on-error (not debug-on-error)))
-  ("i" package-install)
-  ("I" package-reinstall)
   ("l" list-processes)
-  ("p" package-list-packages)
+  ("p" straight-use-package)
+  ("P" (progn (straight-remove-unused-repos) (straight-prune-build)))
   ("Q" (let ((desktop-save nil))
          (me/byte-delete)
          (desktop-remove)
          (save-buffers-kill-terminal)))
-  ("r" package-refresh-contents :color red)
   ("s" (revert-buffer nil t))
+  ("u" straight-pull-package)
+  ("U" straight-pull-all)
   ("v" (hydra-system/visit/body)))
 #+END_SRC
 
@@ -1639,7 +1661,7 @@ Find code references throughout a codebase.
 
 #+BEGIN_SRC emacs-lisp
 (use-package xref
-  :ensure nil
+  :straight nil
   :config
   (with-eval-after-load 'consult
     (setq-default
@@ -1906,9 +1928,6 @@ Prettify the mode-line with customizable and conditional segments.
   (doom-modeline-def-modeline 'org-src
     '(bar modals me/buffer-simple me/buffer-position me/flymake selection-info)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
-  (doom-modeline-def-modeline 'package
-    '(bar modals me/space package)
-    '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'project
     '(bar modals me/default-directory)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
@@ -2009,21 +2028,6 @@ jump from one paragraph to another.
   (skip-chars-forward "\n"))
 #+END_SRC
 
-*** Navigation: Pulse
-
-| =pulse= | Built-in |
-
-Pulse temporarily highlights the background color of a line or region.
-
-| TODO | Pulse yanks             |
-| TODO | Pulse evaluation blocks |
-| TODO | Pulse =rg= jumps        |
-| TODO | Pulse =magit= jumps     |
-
-#+BEGIN_SRC emacs-lisp
-(use-package pulse :ensure nil)
-#+END_SRC
-
 *** Navigation: Replace
 
 | =anzu= | https://github.com/syohex/emacs-anzu |
@@ -2054,7 +2058,7 @@ Customize the scrolling behavior using the mouse wheel.
 
 #+BEGIN_SRC emacs-lisp
 (use-package mwheel
-  :ensure nil
+  :straight nil
   :custom
   (mouse-wheel-progressive-speed nil)
   (mouse-wheel-scroll-amount '(2 ((control) . 8)))
@@ -2079,7 +2083,7 @@ updated and highlighted while you are typing your query, incrementally.
 
 #+BEGIN_SRC emacs-lisp
 (use-package isearch
-  :ensure nil
+  :straight nil
   :bind
   (("C-S-r" . isearch-backward-regexp)
    ("C-S-s" . isearch-forward-regexp))
@@ -2342,6 +2346,7 @@ Provide project-wide commands and utilities.
 
 #+BEGIN_SRC emacs-lisp
 (use-package project
+  :straight nil
   :custom
   (project-list-file (me/cache-concat "projects.eld"))
   (project-switch-commands '((project-dired "Root" "D")
@@ -2460,7 +2465,7 @@ Use =conf-mode= automatically for configuration files.
 
 #+BEGIN_SRC emacs-lisp
 (use-package conf-mode
-  :ensure nil
+  :straight nil
   :mode
   (rx (or "CODEOWNERS" "rc"
           (and ".env" (? (or ".development" ".local" ".test"))))
@@ -2519,7 +2524,7 @@ Customize the noisy default towards backup files.
 
 #+BEGIN_SRC emacs-lisp
 (use-package files
-  :ensure nil
+  :straight nil
   :custom
   (backup-by-copying t)
   (backup-directory-alist `(("." . ,(me/cache-concat "backups/"))))
@@ -2542,7 +2547,7 @@ Highlight line under point.
 
 #+BEGIN_SRC emacs-lisp
 (use-package hl-line
-  :ensure nil
+  :straight nil
   :hook
   (dired-mode . hl-line-mode)
   (prog-mode . hl-line-mode)
@@ -2566,7 +2571,7 @@ Turn on =auto-fill-mode= /almost/ everywhere.
 
 #+BEGIN_SRC emacs-lisp
 (use-package simple
-  :ensure nil
+  :straight nil
   :hook
   (org-mode . auto-fill-mode)
   (prog-mode . auto-fill-mode)
@@ -2817,7 +2822,7 @@ lines.
 
 #+BEGIN_SRC emacs-lisp
 (use-package whitespace
-  :ensure nil
+  :straight nil
   :hook
   (prog-mode . whitespace-mode)
   (text-mode . whitespace-mode)
