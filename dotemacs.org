@@ -332,7 +332,7 @@ See [[https://github.com/mooz/js2-mode]] for more details.
   :mode (rx (or ".jsx" (and "components/" (* anything) ".js")) eos)
   :hook
   (rjsx-mode . (lambda () (setq me/pretty-print-function #'sgml-pretty-print)))
-  (rjsx-mode . me/hydra-set-super)
+  (rjsx-mode . hydra-plus-set-super)
   (rjsx-mode . sgml-electric-tag-pair-mode))
 
 (use-package typescript-mode
@@ -408,7 +408,7 @@ whole buffer."
    ("M-n" . nil)
    ("M-p" . nil))
   :hook
-  (markdown-mode . me/hydra-set-super)
+  (markdown-mode . hydra-plus-set-super)
   :custom
   (markdown-asymmetric-header t)
   (markdown-split-window-direction 'right)
@@ -441,7 +441,7 @@ authoring documents with a fast and effective plain-text system.
    ("C-<return>" . nil)
    ("C-<tab>" . me/org-cycle-parent))
   :hook
-  (org-mode . me/hydra-set-super)
+  (org-mode . hydra-plus-set-super)
   :custom
   (org-adapt-indentation nil)
   (org-confirm-babel-evaluate nil)
@@ -1217,7 +1217,8 @@ Provide better detailed help buffers.
 
 ** Hydra
 
-| =hydra= | https://github.com/abo-abo/hydra |
+| =hydra=      | https://github.com/abo-abo/hydra |
+| =hydra-plus= | =lisp/hydra-plus=                |
 
 Hydra allows me to group binds together. It also shows a list of all implemented
 commands in the echo area.
@@ -1243,7 +1244,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
   ("C-c d" . hydra-dates/body)
   ("C-c e" . hydra-eyebrowse/body)
   ("C-c g" . hydra-git/body)
-  ("C-c o" . me/hydra-super-maybe)
+  ("C-c o" . hydra-plus-super-maybe)
   ("C-c p" . hydra-project/body)
   ("C-c s" . hydra-system/body)
   ("C-c u" . hydra-ui/body)
@@ -1251,33 +1252,13 @@ seamless, it's like a minor mode that disables itself auto-magically.
   (hydra-default-hint nil))
 #+END_SRC
 
+Augments and helpers for =hydra=.
+
 #+BEGIN_SRC emacs-lisp
-(defvar-local me/hydra-super-body nil)
-
-(defun me/hydra-heading (&rest headings)
-  "Format HEADINGS to look pretty in a hydra docstring."
-  (concat "\n "
-          (mapconcat (lambda (heading)
-                       (propertize (format "%-18s" heading) 'face 'shadow))
-                     headings
-                     nil)))
-
-(defun me/hydra-set-super ()
-  (when-let* ((suffix "-mode")
-              (position (- (length suffix)))
-              (mode (symbol-name major-mode))
-              (name (if (string= suffix (substring mode position))
-                        (substring mode 0 position)
-                      mode))
-              (body (intern (format "hydra-%s/body" name))))
-    (when (functionp body)
-      (setq me/hydra-super-body body))))
-
-(defun me/hydra-super-maybe ()
-  (interactive)
-  (if me/hydra-super-body
-      (funcall me/hydra-super-body)
-    (user-error "me/hydra-super: me/hydra-super-body is not set")))
+(use-package hydra-plus
+  :demand
+  :load-path "lisp/hydra-plus"
+  :straight nil)
 #+END_SRC
 
 *** Hydra: Applications
@@ -1286,7 +1267,7 @@ Group commands for high-level applications.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-applications (:color teal)
-  (concat (me/hydra-heading "Applications" "Shell") "
+  (concat (hydra-plus-heading "Applications" "Shell") "
  _q_ quit            _t_ vterm           ^^                  ^^
  ^^                  _T_ eshell          ^^                  ^^
 ")
@@ -1301,7 +1282,7 @@ Group date-related commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-dates (:color teal)
-  (concat (me/hydra-heading "Dates" "Insert" "Insert with Time") "
+  (concat (hydra-plus-heading "Dates" "Insert" "Insert with Time") "
  _q_ quit            _d_ short           _D_ short           ^^
  ^^                  _i_ iso             _I_ iso             ^^
  ^^                  _l_ long            _L_ long            ^^
@@ -1323,7 +1304,7 @@ Group Eyebrowse commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-eyebrowse (:color teal)
-  (concat (me/hydra-heading "Eyebrowse" "Do" "Switch") "
+  (concat (hydra-plus-heading "Eyebrowse" "Do" "Switch") "
  _q_ quit            _c_ create          _1_-_9_ %s(eyebrowse-mode-line-indicator)
  ^^                  _k_ kill            _<_ previous        ^^
  ^^                  _r_ rename          _>_ next            ^^
@@ -1355,7 +1336,7 @@ Group =git= commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-git (:color teal)
-  (concat (me/hydra-heading "Git" "Do" "Gutter") "
+  (concat (hydra-plus-heading "Git" "Do" "Gutter") "
  _q_ quit            _b_ blame           _p_ previous        ^^
  _m_ smerge...       _c_ clone           _n_ next            ^^
  ^^                  _g_ status          _r_ revert          ^^
@@ -1376,7 +1357,7 @@ Group =git= commands.
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-git/smerge
   (:color pink :pre (if (not smerge-mode) (smerge-mode 1)) :post (smerge-auto-leave))
-  (concat (me/hydra-heading "Git / SMerge" "Move" "Keep" "Diff") "
+  (concat (hydra-plus-heading "Git / SMerge" "Move" "Keep" "Diff") "
  _q_ quit            _g_ first           _RET_ current       _<_ upper / base
  ^^                  _G_ last            _a_ all             _=_ upper / lower
  ^^                  _j_ next            _b_ base            _>_ base / lower
@@ -1406,7 +1387,7 @@ Group Markdown commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-markdown (:color pink)
-  (concat (me/hydra-heading "Markdown" "Table Columns" "Table Rows") "
+  (concat (hydra-plus-heading "Markdown" "Table Columns" "Table Rows") "
  _q_ quit            _c_ insert          _r_ insert          ^^
  ^^                  _C_ delete          _R_ delete          ^^
  ^^                  _M-<left>_ left     _M-<down>_ down     ^^
@@ -1431,7 +1412,7 @@ Group Org commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-org (:color pink)
-  (concat (me/hydra-heading "Org" "Links" "Outline") "
+  (concat (hydra-plus-heading "Org" "Links" "Outline") "
  _q_ quit            _i_ insert          _<_ previous        ^^
  ^^                  _n_ next            _>_ next            ^^
  ^^                  _p_ previous        _a_ all             ^^
@@ -1454,7 +1435,7 @@ Group project commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-project (:color teal)
-  (concat (me/hydra-heading "Project" "Do" "Find" "Search") "
+  (concat (hydra-plus-heading "Project" "Do" "Find" "Search") "
  _q_ quit            _K_ kill buffers    _b_ buffer          _r_ replace
  ^^                  _t_ forget project  _d_ directory       _s_ ripgrep
  ^^                  _T_ prune projects  _D_ root            ^^
@@ -1480,7 +1461,7 @@ Group React JavaScript commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-rjsx (:color teal)
-  (concat (me/hydra-heading "RJSX" "JSDoc") "
+  (concat (hydra-plus-heading "RJSX" "JSDoc") "
  _q_ quit            _f_ function        ^^                  ^^
  ^^                  _F_ file            ^^                  ^^
 ")
@@ -1495,7 +1476,7 @@ Group system-related commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-system (:color teal)
-  (concat (me/hydra-heading "System" "Buffer" "Packages" "Toggle") "
+  (concat (hydra-plus-heading "System" "Buffer" "Packages" "Toggle") "
  _d_ clear compiled  _s_ revert          _p_ install         _g_ debug: %-3s`debug-on-error
  _D_ clear desktop   _v_ visit...        _P_ prune           ^^
  _l_ processes       ^^                  _u_ update          ^^
@@ -1520,7 +1501,7 @@ Group system-related commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-system/visit (:color teal)
-  (concat (me/hydra-heading "Visit" "Configuration") "
+  (concat (hydra-plus-heading "Visit" "Configuration") "
  _q_ quit            _e_ emacs           ^^                  ^^
  ^^                  _l_ linux           ^^                  ^^
  ^^                  _q_ qtile           ^^                  ^^
@@ -1549,7 +1530,7 @@ Group interface-related commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-ui (:color pink)
-  (concat (me/hydra-heading "Theme" "Windows" "Zoom" "Line Numbers") "
+  (concat (hydra-plus-heading "Theme" "Windows" "Zoom" "Line Numbers") "
  _t_ cycle           _b_ balance         _-_ out             _n_ mode: %s`display-line-numbers
  _T_ cycle (noexit)  _m_ maximize frame  _=_ in              _N_ absolute: %s`display-line-numbers-current-absolute
  ^^                  _o_ olivetti: %-3s`me/olivetti-automatic   _0_ reset           ^^
