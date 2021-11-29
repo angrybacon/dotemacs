@@ -2010,6 +2010,7 @@ No package seem to please my person.
   ("M-S-<right>" . sp-backward-barf-sexp)
   :hook
   (after-init . smartparens-global-mode)
+  (wdired-mode . smartparens-mode)
   :custom
   (sp-highlight-pair-overlay nil)
   (sp-highlight-wrap-overlay nil)

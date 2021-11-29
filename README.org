@@ -22,7 +22,7 @@ automagically tangled from an Org file into a Lisp file. See
 * Installation
 
 #+BEGIN_QUOTE
-Tested daily on Arch only.
+Tested daily on Arch and MacOS.
 
 I trust your Google-fu. Try and make the most of the below notes.
 #+END_QUOTE
@@ -39,11 +39,16 @@ I trust your Google-fu. Try and make the most of the below notes.
 Clone the repository into your user directory.
 
 #+BEGIN_SRC sh
-git clone --recurse-submodules git@github.com:angrybacon/dotemacs.git ~/.config/emacs/
+git clone git@github.com:angrybacon/dotemacs.git ~/.config/emacs/
 #+END_SRC
 
+There used to be Git submodules under =lisp/=. Since I'm basically the only
+consumer of these packages and that they mostly exist to clean up my
+configuration, I don't plan on releasing any of them anytime soon. So they're
+back to being simple directories for now.
+
 The configuration is used daily under latest Emacs and doesn't guard against
-undefined functions from earlier versions by choice.
+undefined functions from earlier versions (by choice).
 
 *** Linux
 
@@ -69,8 +74,8 @@ since =dired= relies on it.
 
 The mode-line utilizes features from =all-the-icons=.
 
-Run the following command when Emacs starts for the first time in order to
-download the required fonts.
+Run the following command when you start this configuration for the first time
+in order to download the required fonts on your system.
 
 #+BEGIN_SRC
 M-x all-the-icons-install-fonts RET
