@@ -838,7 +838,7 @@ use with =selected=.
    ("M->"         . mc/skip-to-next-like-this)
    ("C-c >"       . mc/edit-lines)
    ("C-c c"       . capitalize-region)
-   ("C-c k"       . me/kebab-region)
+   ("C-c k"       . barrinalo-kebab)
    ("C-c l"       . downcase-region)
    ("C-c u"       . upcase-region)
    ("C-f"         . fill-region)
@@ -846,17 +846,18 @@ use with =selected=.
    ("C-h H"       . hlt-unhighlight-region)
    ("C-p"         . webpaste-paste-region)
    ("C-q"         . selected-off)
-   ("C-s r"       . me/reverse-region)
+   ("C-s r"       . barrinalo-reverse)
    ("C-s s"       . sort-lines)
-   ("C-s w"       . me/sort-words)
+   ("C-s w"       . barrinalo-sort-words)
    ("C-<tab>"     . me/pretty-print)
-   ("M-<left>"    . me/indent-rigidly-left-and-keep-mark)
-   ("M-<right>"   . me/indent-rigidly-right-and-keep-mark)
-   ("M-S-<left>"  . me/indent-rigidly-left-tab-and-keep-mark)
-   ("M-S-<right>" . me/indent-rigidly-right-tab-and-keep-mark))
+   ("M-<left>"    . barrinalo-indent-leftward)
+   ("M-<right>"   . barrinalo-indent-rightward)
+   ("M-S-<left>"  . barrinalo-indent-leftward-tab)
+   ("M-S-<right>" . barrinalo-indent-rightward-tab))
   :hook
   (after-init . selected-global-mode)
   :config
+  (require 'barrinalo)
   (require 'browse-url)
   :custom
   (selected-minor-mode-override t))
@@ -871,61 +872,6 @@ use with =selected=.
       (progn (funcall me/pretty-print-function beg end)
              (setq deactivate-mark t))
     (user-error "me/pretty-print: me/pretty-print-function is not set")))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defun me/indent-rigidly-left-and-keep-mark (begin end)
-  "Indent all lines between BEG and END leftward by one space.
-Call `indent-rigidly-left' and keep mark."
-  (interactive "*r")
-  (indent-rigidly-left begin end)
-  (setq deactivate-mark nil))
-
-(defun me/indent-rigidly-left-tab-and-keep-mark (begin end)
-  "Indent all lines between BEG and END leftward to a tab stop.
-Call `indent-rigidly-left-to-tab-stop' and keep mark."
-  (interactive "*r")
-  (indent-rigidly-left-to-tab-stop begin end)
-  (setq deactivate-mark nil))
-
-(defun me/indent-rigidly-right-and-keep-mark (begin end)
-  "Indent all lines between BEG and END rightward by one space.
-Call `indent-rigidly-right' and keep mark."
-  (interactive "*r")
-  (indent-rigidly-right begin end)
-  (setq deactivate-mark nil))
-
-(defun me/indent-rigidly-right-tab-and-keep-mark (begin end)
-  "Indent all lines between BEG and END rightward to a tab stop.
-Call `indent-rigidly-right-to-tab-stop' and keep mark."
-  (interactive "*r")
-  (indent-rigidly-right-to-tab-stop beg end)
-  (setq deactivate-mark nil))
-
-(defun me/kebab-region (begin end)
-  "Convert region to kebab-case."
-  (interactive "*r")
-  (downcase-region begin end)
-  (save-excursion
-    (perform-replace " +" "-" nil t nil nil nil begin end)))
-
-(defun me/reverse-region (reverse begin end)
-  "Reverse lines in region.
-If region only has one line or when prefixed with \\[universal-argument],
-reverse characters in region instead."
-  (interactive "*r")
-  (if (= (count-lines begin end) 1)
-      (insert (nreverse (delete-and-extract-region begin end)))
-    (reverse-region begin end)))
-
-(defun me/sort-words (reverse beg end)
-  "Sort words in region alphabetically.
-Prefixed with \\[universal-argument], sort in REVERSE instead.
-
-The variable `sort-fold-case' determines whether the case affects the sort. See
-`sort-regexp-fields'."
-  (interactive "*P\nr")
-  (sort-regexp-fields reverse "\\w+" "\\&" beg end))
 #+END_SRC
 
 ** Diff
@@ -1877,11 +1823,7 @@ same idea.
   :custom
   (avy-background t)
   (avy-style 'at-full)
-  (avy-timeout-seconds .3)
-  ;; :config
-  ;; (set-face-italic 'avy-goto-char-timer-face nil)
-  ;; (set-face-italic 'avy-lead-face nil)
-)
+  (avy-timeout-seconds .3))
 #+END_SRC
 
 *** Navigation: Inline
@@ -2282,6 +2224,7 @@ Allow specific =eval= form in directory-local mecanisms.
 ** Quality of Life
 
 | =aggressive-indent=       | https://github.com/Malabarba/aggressive-indent-mode    |
+| =barrinalo=               | =lisp/barrinalo=                                       |
 | =default-text-scale=      | https://github.com/purcell/default-text-scale          |
 | =expand-region=           | https://github.com/magnars/expand-region.el            |
 | =files=                   | Built-in                                               |
@@ -2317,6 +2260,19 @@ electric-indent-mode.
   (aggressive-indent-comments-too t)
   :config
   (add-to-list 'aggressive-indent-protected-commands 'comment-dwim))
+#+END_SRC
+
+A collection of case-changing and transpose functions.
+
+#+BEGIN_SRC emacs-lisp
+(use-package barrinalo
+  :load-path "lisp/barrinalo"
+  :straight nil
+  :bind
+  ("M-p" . barrinalo-swap-up)
+  ("M-n" . barrinalo-swap-down)
+  ("M-P" . barrinalo-duplicate-backward)
+  ("M-N" . barrinalo-duplicate-forward))
 #+END_SRC
 
 Use =conf-mode= automatically for configuration files.
