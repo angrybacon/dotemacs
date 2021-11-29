@@ -202,32 +202,16 @@ Install =use-package= and defer all packages by default.
 
 ** Helpers
 
-Initialize known themes and provide a helper to cycle through known themes.
-
-| TODO | Allow cycling backwards                                      |
-| TODO | Make hydra-ui T head prefer =enable-theme= over =load-theme= |
+| =morophon= | =lisp/morophon= |
 
 #+BEGIN_SRC emacs-lisp
-(defvar me/theme-known-themes '(zenmelt modus-operandi modus-vivendi)
-  "List of themes to take into account with `me/theme-cycle'.
-See `custom-available-themes'.")
-
-(defun me/theme-disable-themes ()
-  "Disable all themes found in `custom-enable-themes'."
-  (interactive)
-  (mapc #'disable-theme custom-enabled-themes))
-
-(defun me/theme-cycle ()
-  "Cycle through themes from `me/theme-known-themes' in succession."
-  (interactive)
-  (let* ((current (car custom-enabled-themes))
-         (next (or (cadr (memq current me/theme-known-themes))
-                   (car me/theme-known-themes))))
-    (me/theme-disable-themes)
-    (when next
-      (load-theme next t))
-    (message "%s" next)))
+(use-package morophon
+  :load-path "lisp/morophon"
+  :straight nil
+  :commands (morophon-cycle morophon-disable-themes))
 #+END_SRC
+
+** Customize Fringes
 
 Customize line continuation indicator bitmaps.
 
@@ -256,12 +240,11 @@ Mute their colors as well.
 ** Themes
 
 | =modus-themes=  | Built-in        |
-| =zenmelt-theme= | =lisp/zenmelt/= |
+| =zenmelt-theme= | =lisp/zenmelt=  |
 
 #+BEGIN_SRC emacs-lisp
 (use-package modus-themes
   :straight nil
-  :defer nil
   :custom
   (modus-themes-diffs 'fg-only)
   (modus-themes-mode-line 'borderless-accented)
@@ -274,16 +257,14 @@ Mute their colors as well.
      (fg-main . "#FAFAFA")
      (fg-window-divider-inner . "#101010")))
   (modus-themes-org-blocks 'tinted-background)
-  :custom-face
-  (web-mode-keyword-face ((t (:inherit font-lock-keyword-face))))
   :config
   (load-theme 'modus-operandi t t))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package zenmelt-theme
-  :straight nil
   :load-path "lisp/zenmelt"
+  :straight nil
   :demand
   :config
   (load-theme 'zenmelt t))
@@ -600,7 +581,6 @@ The configuration also conveniently silences left clicks on each of the two
 margins.
 
 | TODO | Allow horizontally lone buffers too |
-| TODO | Hide Magit margin content           |
 
 #+BEGIN_SRC emacs-lisp
 (use-package olivetti
@@ -744,25 +724,9 @@ Provide various commands to list and /consult/ existing collections.
   (org-mode . (lambda () (setq-local consult-fontify-preserve nil)))
   :init
   (with-eval-after-load 'evil
-    (evil-global-set-key 'motion "gC" 'me/consult-faces)
     (evil-global-set-key 'motion "gm" 'consult-mark)
     (evil-global-set-key 'motion "gM" 'consult-imenu)
     (evil-global-set-key 'motion "go" 'consult-outline)))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defun me/consult-faces ()
-  "Search for faces.
-Default to the face at point using `get-text-property'."
-  (interactive)
-  (let* ((candidates (mapcar 'symbol-name (face-list)))
-         (faces (get-text-property (point) 'face))
-         (face (if (listp faces) (car faces) faces)))
-    (consult--read (consult--with-increased-gc candidates)
-                   :category 'face
-                   :default face
-                   :lookup (lambda (_input _candidates match) (describe-face match))
-                   :prompt "Face: ")))
 #+END_SRC
 
 *** Corfu
@@ -864,8 +828,7 @@ use with =selected=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package selected
-  ;; :bind*
-  :bind
+  :bind*
   (:map selected-keymap
    ("<"           . mc/mark-previous-like-this)
    (">"           . mc/mark-next-like-this)
@@ -874,12 +837,10 @@ use with =selected=.
    ("M-<"         . mc/skip-to-previous-like-this)
    ("M->"         . mc/skip-to-next-like-this)
    ("C-c >"       . mc/edit-lines)
-   ("C-b"         . me/browse-url-and-kill-mark)
    ("C-c c"       . capitalize-region)
    ("C-c k"       . me/kebab-region)
    ("C-c l"       . downcase-region)
    ("C-c u"       . upcase-region)
-   ("C-d"         . define-word-at-point)
    ("C-f"         . fill-region)
    ("C-h h"       . hlt-highlight-region)
    ("C-h H"       . hlt-unhighlight-region)
@@ -913,21 +874,6 @@ use with =selected=.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(defun me/eval-region-and-kill-mark (begin end)
-  "Execute the region as Lisp code.
-Call `eval-region' and kill mark. Move back to the beginning of the region."
-  (interactive "r")
-  (eval-region begin end)
-  (setq deactivate-mark t)
-  (goto-char beg))
-
-(defun me/browse-url-and-kill-mark (url &rest args)
-  "Ask a WWW browser to load URL.
-Call `browse-url' and kill mark."
-  (interactive (browse-url-interactive-arg "URL: "))
-  (apply #'browse-url url args)
-  (setq deactivate-mark t))
-
 (defun me/indent-rigidly-left-and-keep-mark (begin end)
   "Indent all lines between BEG and END leftward by one space.
 Call `indent-rigidly-left' and keep mark."
@@ -980,16 +926,6 @@ The variable `sort-fold-case' determines whether the case affects the sort. See
 `sort-regexp-fields'."
   (interactive "*P\nr")
   (sort-regexp-fields reverse "\\w+" "\\&" beg end))
-#+END_SRC
-
-** Dictionary
-
-| =define-word= | https://github.com/abo-abo/define-word |
-
-Define words using Wordnik.
-
-#+BEGIN_SRC emacs-lisp
-(use-package define-word)
 #+END_SRC
 
 ** Diff
@@ -1082,30 +1018,34 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
 #+BEGIN_SRC emacs-lisp
 (use-package evil
   :bind
-  (:map evil-inner-text-objects-map
-   ("g" . me/evil-buffer)
-   :map evil-outer-text-objects-map
-   ("g" . me/evil-buffer))
-  (:map evil-insert-state-map
-   ("C-a" . nil)
-   ("C-e" . nil)
-   ("C-w" . nil)
-   :map evil-motion-state-map
-   ("gs" . avy-goto-char-timer)
-   ("gS" . avy-goto-char)
-   ("q" . nil)
-   ("C-e" . nil)
-   :map evil-normal-state-map
-   ("gb" . switch-to-buffer)
-   ("gD" . me/evil-goto-definition-other-window)
-   ("gp" . project-switch-project)
-   ("gr" . (lambda () (interactive) (revert-buffer nil t)))
-   ("q" . nil)
-   :map evil-visual-state-map
-   ("f" . fill-region)
-   :map evil-window-map
-   ("u" . winner-undo)
-   ("C-r" . winner-redo))
+  (;; Text objects
+   (:map evil-inner-text-objects-map
+    ("g" . me/evil-buffer)
+    :map evil-outer-text-objects-map
+    ("g" . me/evil-buffer))
+   ;; States
+   (:map evil-insert-state-map
+    ("C-a" . nil)
+    ("C-e" . nil)
+    ("C-w" . nil)
+    :map evil-motion-state-map
+    ("gs" . avy-goto-char-timer)
+    ("gS" . avy-goto-char)
+    ("q" . nil)
+    ("C-e" . nil)
+    :map evil-normal-state-map
+    ("gb" . switch-to-buffer)
+    ("gC" . describe-face)
+    ("gD" . me/evil-goto-definition-other-window)
+    ("gp" . project-switch-project)
+    ("gr" . (lambda () (interactive) (revert-buffer nil t)))
+    ("q" . nil)
+    :map evil-visual-state-map
+    ("f" . fill-region))
+   ;; Rest
+   (:map evil-window-map
+    ("u" . winner-undo)
+    ("C-r" . winner-redo)))
   :hook
   (after-init . evil-mode)
   (after-save . evil-normal-state)
@@ -1153,6 +1093,8 @@ Emulate =vim-surround=. Take actions with surrounding pairs.
 #+END_SRC
 
 Activate volatile keymaps for split sizing.
+
+| TODO | Use =repeat-mode= instead |
 
 #+BEGIN_SRC emacs-lisp
 (defun me/evil-window-resize-continue (&optional _count)
@@ -1623,8 +1565,8 @@ Group interface-related commands.
   ("n" me/display-line-numbers-toggle-type)
   ("N" me/display-line-numbers-toggle-absolute)
   ("o" me/olivetti-automatic-toggle :color blue)
-  ("t" me/theme-cycle :color blue)
-  ("T" me/theme-cycle))
+  ("t" morophon-cycle :color blue)
+  ("T" morophon-cycle))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -1883,6 +1825,56 @@ Prettify the mode-line with customizable and conditional segments.
   (doom-modeline-def-modeline 'vcs
     '(bar modals me/buffer remote-host me/buffer-position selection-info)
     '(irc-buffers matches me/process debug me/major-mode workspace-name)))
+#+END_SRC
+
+** Multiple Cursors
+
+| =evil-multiedit=   | https://github.com/hlissner/evil-multiedit     |
+| =multiple-cursors= | https://github.com/magnars/multiple-cursors.el |
+
+Add support for multiple cursors within Evil.
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-multiedit
+  :after evil
+  :defer nil
+  :bind
+  (:map evil-insert-state-map
+   ("M-d". evil-multiedit-toggle-marker-here)
+   :map evil-normal-state-map
+   ("M-d". evil-multiedit-match-symbol-and-next)
+   ("M-D". evil-multiedit-match-symbol-and-prev)
+   :map evil-visual-state-map
+   ("R" . evil-multiedit-match-all)
+   ("M-d". evil-multiedit-match-symbol-and-next)
+   ("M-D". evil-multiedit-match-symbol-and-prev)
+   ("C-M-D". evil-multiedit-restore)
+   :map evil-multiedit-state-map
+   ("C-p". evil-multiedit-prev)
+   ("C-n". evil-multiedit-next)
+   ("RET". evil-multiedit-toggle-or-restrict-region)
+   :map evil-multiedit-insert-state-map
+   ("C-n". evil-multiedit-next)
+   ("C-p". evil-multiedit-prev)))
+#+END_SRC
+
+Enable multiple cursors outside Evil. Some witchcraft at work here.
+
+| TODO | Fix =mc/keymap= not always being on top |
+
+#+BEGIN_SRC emacs-lisp
+(use-package multiple-cursors
+  :bind*
+  (:map mc/keymap
+   ("M-a" . mc/vertical-align-with-space)
+   ("M-h" . mc-hide-unmatched-lines-mode)
+   ("M-l" . mc/insert-letters)
+   ("M-n" . mc/insert-numbers))
+  :init
+  (setq-default mc/list-file (me/cache-concat "multiple-cursors.el"))
+  :custom
+  (mc/edit-lines-empty-lines 'ignore)
+  (mc/insert-numbers-default 1))
 #+END_SRC
 
 ** Navigation
@@ -2158,19 +2150,6 @@ fails.
 
 ** Point and Region
 
-*** Point and Region: Expand
-
-| =expand-region= | https://github.com/magnars/expand-region.el |
-
-Increase region by semantic units. It tries to be smart about it and adapt to
-the structure of the current major mode.
-
-#+BEGIN_SRC emacs-lisp
-(use-package expand-region
-  :bind
-  ("C-=" . er/expand-region))
-#+END_SRC
-
 *** Point and Region: Lines
 
 Work on lines.
@@ -2230,56 +2209,6 @@ If region was active, keep it so that the command can be repeated."
   (transpose-lines 1)
   (forward-line -2)
   (indent-according-to-mode))
-#+END_SRC
-
-*** Point and Region: Multiple Cursors
-
-| =evil-multiedit=   | https://github.com/hlissner/evil-multiedit     |
-| =multiple-cursors= | https://github.com/magnars/multiple-cursors.el |
-
-Add support for multiple cursors within Evil.
-
-#+BEGIN_SRC emacs-lisp
-(use-package evil-multiedit
-  :after evil
-  :defer nil
-  :bind
-  (:map evil-insert-state-map
-   ("M-d". evil-multiedit-toggle-marker-here)
-   :map evil-normal-state-map
-   ("M-d". evil-multiedit-match-symbol-and-next)
-   ("M-D". evil-multiedit-match-symbol-and-prev)
-   :map evil-visual-state-map
-   ("R" . evil-multiedit-match-all)
-   ("M-d". evil-multiedit-match-symbol-and-next)
-   ("M-D". evil-multiedit-match-symbol-and-prev)
-   ("C-M-D". evil-multiedit-restore)
-   :map evil-multiedit-state-map
-   ("C-n". evil-multiedit-next)
-   ("C-p". evil-multiedit-prev)
-   ("RET". evil-multiedit-toggle-or-restrict-region)
-   :map evil-multiedit-insert-state-map
-   ("C-n". evil-multiedit-next)
-   ("C-p". evil-multiedit-prev)))
-#+END_SRC
-
-Enable multiple cursors outside Evil. Some witchcraft at work here.
-
-| TODO | Fix =mc/keymap= not always being on top |
-
-#+BEGIN_SRC emacs-lisp
-(use-package multiple-cursors
-  :bind*
-  (:map mc/keymap
-   ("M-a" . mc/vertical-align-with-space)
-   ("M-h" . mc-hide-unmatched-lines-mode)
-   ("M-l" . mc/insert-letters)
-   ("M-n" . mc/insert-numbers))
-  :init
-  (setq-default mc/list-file (me/cache-concat "multiple-cursors.el"))
-  :custom
-  (mc/edit-lines-empty-lines 'ignore)
-  (mc/insert-numbers-default 1))
 #+END_SRC
 
 ** Project
@@ -2373,6 +2302,7 @@ Allow specific =eval= form in directory-local mecanisms.
 
 | =aggressive-indent=       | https://github.com/Malabarba/aggressive-indent-mode    |
 | =default-text-scale=      | https://github.com/purcell/default-text-scale          |
+| =expand-region=           | https://github.com/magnars/expand-region.el            |
 | =files=                   | Built-in                                               |
 | =highlight-indent-guides= | https://github.com/DarthFennec/highlight-indent-guides |
 | =hl-line=                 | Built-in                                               |
@@ -2465,6 +2395,15 @@ size in all GUI Emacs frames -- it is like an Emacs-wide version of
 
 #+BEGIN_SRC emacs-lisp
 (use-package default-text-scale)
+#+END_SRC
+
+Increase region by semantic units. It tries to be smart about it and adapt to
+the structure of the current major mode.
+
+#+BEGIN_SRC emacs-lisp
+(use-package expand-region
+  :bind
+  ("C-=" . er/expand-region))
 #+END_SRC
 
 Customize the noisy default towards backup files.

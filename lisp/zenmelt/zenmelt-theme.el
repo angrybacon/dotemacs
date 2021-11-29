@@ -4,7 +4,7 @@
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: February 08, 2021
-;; Homepage: https://github.com/angrybacon/zenmelt
+;; Homepage: https://github.com/angrybacon/dotemacs/tree/master/lisp/zenmelt
 
 ;; This program is free software. You can redistribute it and/or modify it under
 ;; the terms of the Do What The Fuck You Want To Public License, version 2 as
