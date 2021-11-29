@@ -895,10 +895,9 @@ Ediff is a visual interface to Unix =diff=.
 Configure Dired buffers. Amongst many other things, Emacs is also a file
 explorer.
 
-| TODO | Check out =dired-collapse=               |
-| TODO | Check out =dired-imenu=                  |
-| TODO | Make =dired-bob= and =dired-eob=         |
-| TODO | Highlight =wdired-mode= in the mode-line |
+| TODO | Check out =dired-collapse=       |
+| TODO | Check out =dired-imenu=          |
+| TODO | Make =dired-bob= and =dired-eob= |
 
 #+BEGIN_SRC emacs-lisp
 (use-package dired
@@ -1806,9 +1805,11 @@ Enable multiple cursors outside Evil. Some witchcraft at work here.
 
 ** Navigation
 
-*** Navigation: Avy
+*** Navigation: Jump Around
 
-| =avy= | https://github.com/abo-abo/avy |
+| =avy=        | https://github.com/abo-abo/avy         |
+| =hanna=      | =lisp/hanna=                           |
+| =evil-snipe= | https://github.com/hlissner/evil-snipe |
 
 #+BEGIN_QUOTE
 =avy= is a GNU Emacs package for jumping to visible text using a char-based
@@ -1826,22 +1827,17 @@ same idea.
   (avy-timeout-seconds .3))
 #+END_SRC
 
-*** Navigation: Inline
-
-| =evil-snipe= | https://github.com/hlissner/evil-snipe |
-
-Smarter =C-a=.
+I disagree with some of Emacs' opinion with regards to paragraphs amongst other
+things. =hanna= is a collection of replacement for the aforementioned defaults.
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key [remap move-beginning-of-line] #'me/move-beginning-of-line-dwim)
-
-(defun me/move-beginning-of-line-dwim ()
-  "Move point to first non-whitespace character, or beginning of line."
-  (interactive "^")
-  (let ((origin (point)))
-    (beginning-of-line)
-    (and (= origin (point))
-         (back-to-indentation))))
+(use-package hanna
+  :load-path "lisp/hanna"
+  :straight nil
+  :bind
+  ([remap move-beginning-of-line] . hanna-beginning-of-line)
+  ([remap backward-paragraph] . hanna-paragraph-backward)
+  ([remap forward-paragraph] . hanna-paragraph-forward))
 #+END_SRC
 
 #+BEGIN_QUOTE
@@ -1859,34 +1855,6 @@ Evil-snipe emulates =vim-seek= and/or =vim-sneak= in =evil-mode=.
   (evil-snipe-char-fold t)
   (evil-snipe-repeat-scope 'visible)
   (evil-snipe-smart-case t))
-#+END_SRC
-
-*** Navigation: Paragraphs
-
-I disagree with Emacs' definition of paragraphs so I redefined the way it should
-jump from one paragraph to another.
-
-| TODO | Ignore invisible text |
-
-#+BEGIN_SRC emacs-lisp
-(global-set-key [remap backward-paragraph] #'me/backward-paragraph-dwim)
-(global-set-key [remap forward-paragraph] #'me/forward-paragraph-dwim)
-
-(defun me/backward-paragraph-dwim ()
-  "Move backward to start of paragraph."
-  (interactive "^")
-  (skip-chars-backward "\n")
-  (unless (search-backward-regexp "\n[[:blank:]]*\n" nil t)
-    (goto-char (point-min)))
-  (skip-chars-forward "\n"))
-
-(defun me/forward-paragraph-dwim ()
-  "Move forward to start of next paragraph."
-  (interactive "^")
-  (skip-chars-forward "\n")
-  (unless (search-forward-regexp "\n[[:blank:]]*\n" nil t)
-    (goto-char (point-max)))
-  (skip-chars-forward "\n"))
 #+END_SRC
 
 *** Navigation: Replace
@@ -2069,69 +2037,6 @@ fails.
 (use-package webpaste
   :custom
   (webpaste-provider-priority '("paste.mozilla.org" "dpaste.org")))
-#+END_SRC
-
-** Point and Region
-
-*** Point and Region: Lines
-
-Work on lines.
-
-| TODO | Handle regions |
-
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "M-p") #'me/swap-up)
-(global-set-key (kbd "M-n") #'me/swap-down)
-(global-set-key (kbd "M-P") #'me/duplicate-backward)
-(global-set-key (kbd "M-N") #'me/duplicate-forward)
-
-(defun me/duplicate-line (&optional stay)
-  "Duplicate current line.
-With optional argument STAY true, leave point where it was."
-  (save-excursion
-    (move-end-of-line nil)
-    (save-excursion
-      (insert (buffer-substring (point-at-bol) (point-at-eol))))
-    (newline))
-  (unless stay
-    (let ((column (current-column)))
-      (forward-line)
-      (forward-char column))))
-
-(defun me/duplicate-backward ()
-  "Duplicate current line upward or region backward.
-If region was active, keep it so that the command can be repeated."
-  (interactive)
-  (if (region-active-p)
-      (let (deactivate-mark)
-        (save-excursion
-          (insert (buffer-substring (region-beginning) (region-end)))))
-    (me/duplicate-line t)))
-
-(defun me/duplicate-forward ()
-  "Duplicate current line downward or region forward.
-If region was active, keep it so that the command can be repeated."
-  (interactive)
-  (if (region-active-p)
-      (let (deactivate-mark (point (point)))
-        (insert (buffer-substring (region-beginning) (region-end)))
-        (push-mark point))
-    (me/duplicate-line)))
-
-(defun me/swap-down ()
-  "Move down the line under point."
-  (interactive)
-  (forward-line 1)
-  (transpose-lines 1)
-  (forward-line -1)
-  (indent-according-to-mode))
-
-(defun me/swap-up ()
-  "Move up the line under point."
-  (interactive)
-  (transpose-lines 1)
-  (forward-line -2)
-  (indent-according-to-mode))
 #+END_SRC
 
 ** Project
