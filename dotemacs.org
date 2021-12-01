@@ -1546,15 +1546,16 @@ Yup, Emacs supports LSP.
 
 #+BEGIN_SRC emacs-lisp
 (use-package eglot
-  :commands (eglot)
   :custom
   (eglot-autoshutdown t)
+  :hook
+  (typescript-mode . eglot-ensure)
   :init
   (put 'eglot-server-programs 'safe-local-variable 'listp)
   :config
   (add-to-list 'eglot-stay-out-of 'eldoc-documentation-strategy)
-  :hook
-  (typescript-mode . eglot-ensure))
+  (put 'eglot-error 'flymake-overlay-control nil)
+  (put 'eglot-warning 'flymake-overlay-control nil))
 #+END_SRC
 
 *** Linters
@@ -1762,23 +1763,15 @@ Add support for multiple cursors within Evil.
 
 #+BEGIN_SRC emacs-lisp
 (use-package evil-multiedit
-  :after evil
-  :defer nil
   :bind
   (:map evil-insert-state-map
    ("M-d". evil-multiedit-toggle-marker-here)
    :map evil-normal-state-map
-   ("M-d". evil-multiedit-match-symbol-and-next)
-   ("M-D". evil-multiedit-match-symbol-and-prev)
-   :map evil-visual-state-map
-   ("R" . evil-multiedit-match-all)
-   ("M-d". evil-multiedit-match-symbol-and-next)
-   ("M-D". evil-multiedit-match-symbol-and-prev)
-   ("C-M-D". evil-multiedit-restore)
+   ("M-d". evil-multiedit-match-and-next)
+   ("M-D". evil-multiedit-match-and-prev)
    :map evil-multiedit-state-map
    ("C-p". evil-multiedit-prev)
    ("C-n". evil-multiedit-next)
-   ("RET". evil-multiedit-toggle-or-restrict-region)
    :map evil-multiedit-insert-state-map
    ("C-n". evil-multiedit-next)
    ("C-p". evil-multiedit-prev)))
