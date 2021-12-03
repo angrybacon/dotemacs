@@ -72,13 +72,54 @@ experience with regard to fullscreen in most setups.
 In the case of macOS, fullscreen means Emacs will occupy a dedicated workspace
 so we want to maximize it instead. Works best with titlebar-less frames.
 
-Ideally, this stays near the top of the file so that Emacs appear fullscreen
-immediately.
+Ideally, this should stay near the top of the file so that Emacs appear
+fullscreen immediately.
 
 #+BEGIN_SRC emacs-lisp
 (pcase window-system
   ('w32 (set-frame-parameter nil 'fullscreen 'fullboth))
   (_ (set-frame-parameter nil 'fullscreen 'maximized)))
+#+END_SRC
+
+** Packages
+
+| =straight=    | https://github.com/raxod502/straight.el#getting-started |
+| =use-package= | https://github.com/jwiegley/use-package                 |
+
+This configuration relies on =straight= and prefers latest Git heads for its
+packages over the default behavior from the built-in =package.el= which pulls
+releases from (M)ELPA.
+
+For customizing and loading the packages, =use-package= incentivizes clearly
+defined, consistent and more efficient configurations for all packages used in
+this document.
+
+#+BEGIN_SRC emacs-lisp
+(setq-default
+ straight-use-package-by-default t)     ;; Allow `use-package' interface
+#+END_SRC
+
+Bootstrap =straight=.
+
+#+BEGIN_SRC emacs-lisp
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (let ((install.el
+           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"))
+      (with-current-buffer
+          (url-retrieve-synchronously install.el 'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp))))
+  (load bootstrap-file nil 'nomessage))
+#+END_SRC
+
+Install =use-package= and defer all packages by default.
+
+#+BEGIN_SRC emacs-lisp
+(straight-use-package 'use-package)
+(setq-default use-package-always-defer t)
 #+END_SRC
 
 ** Load Secrets
@@ -155,47 +196,6 @@ redirect the writing to =/dev/null=.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default custom-file null-device)
-#+END_SRC
-
-** Packages
-
-| =straight=    | https://github.com/raxod502/straight.el#getting-started |
-| =use-package= | https://github.com/jwiegley/use-package                 |
-
-This configuration relies on =straight= and prefers latest Git heads for its
-packages over the default behavior from the built-in =package.el= which pulls
-releases from (M)ELPA.
-
-For customizing and loading the packages, =use-package= incentivizes clearly
-defined, consistent and more efficient configurations for all packages used in
-this document.
-
-#+BEGIN_SRC emacs-lisp
-(setq-default
- straight-base-dir me/cache-directory   ;; Keep builds in the cache directory
- straight-use-package-by-default t)     ;; Allow `use-package' interface
-#+END_SRC
-
-Bootstrap =straight=.
-
-#+BEGIN_SRC emacs-lisp
-(let ((bootstrap-file (me/cache-concat "straight/repos/straight.el/bootstrap.el"))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (let ((install.el
-           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"))
-      (with-current-buffer
-          (url-retrieve-synchronously install.el 'silent 'inhibit-cookies)
-        (goto-char (point-max))
-        (eval-print-last-sexp))))
-  (load bootstrap-file nil 'nomessage))
-#+END_SRC
-
-Install =use-package= and defer all packages by default.
-
-#+BEGIN_SRC emacs-lisp
-(straight-use-package 'use-package)
-(setq-default use-package-always-defer t)
 #+END_SRC
 
 * Theme

@@ -1,5 +1,6 @@
 .cache/
 eln-cache/
 scripts/
+straight/
 .secrets.eld
 dotemacs.el
