@@ -223,15 +223,21 @@ Mute their colors as well.
 ** Customize Typography
 
 #+BEGIN_SRC emacs-lisp
-(let ((font-default (szadek-get 'font-default "monospace"))
-      (font-fixed (szadek-get 'font-fixed "monospace"))
-      (font-size (szadek-get 'font-size 120))
-      (font-variable (szadek-get 'font-variable "monospace")))
-  (set-face-attribute 'default nil :font font-default :height font-size)
-  (set-face-attribute 'fixed-pitch nil :font font-fixed)
-  (set-face-attribute 'mode-line nil :font font-default :height font-size)
-  (set-face-attribute 'mode-line-active nil :inherit 'mode-line)
-  (set-face-attribute 'variable-pitch nil :font font-variable))
+(defun me/typography-reset ()
+  (let ((font-default (szadek-get 'font-default "monospace"))
+        (font-fixed (szadek-get 'font-fixed "monospace"))
+        (font-size (szadek-get 'font-size 120))
+        (font-variable (szadek-get 'font-variable "monospace")))
+    (set-face-attribute 'default nil :font font-default :height font-size)
+    (set-face-attribute 'fixed-pitch nil :font font-fixed)
+    (set-face-attribute 'mode-line nil :font font-default :height font-size)
+    (set-face-attribute 'mode-line-active nil :inherit 'mode-line)
+    (set-face-attribute 'variable-pitch nil :font font-variable)))
+(me/typography-reset)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'szadek-on-save-hook #'me/typography-reset)
 #+END_SRC
 
 ** Themes
