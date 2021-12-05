@@ -5,6 +5,7 @@
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: November 29, 2021
 ;; Homepage: https://github.com/angrybacon/dotemacs/tree/master/lisp/morophon
+;; Package-Requires: ((emacs "29.1"))
 
 ;; This program is free software. You can redistribute it and/or modify it under
 ;; the terms of the Do What The Fuck You Want To Public License, version 2 as
@@ -23,7 +24,7 @@
 
 ;;; Code:
 
-(defvar morophon-known-themes '(zenmelt modus-operandi modus-vivendi)
+(defcustom morophon-known-themes '(modus-operandi modus-vivendi)
   "List of themes to take into account with `morophon-cycle'.
 See `custom-available-themes'.")
 

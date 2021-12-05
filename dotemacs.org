@@ -208,12 +208,14 @@ redirect the writing to =/dev/null=.
 (use-package morophon
   :load-path "lisp/morophon"
   :straight nil
-  :commands (morophon-cycle morophon-disable-themes))
+  :commands (morophon-cycle morophon-disable-themes)
+  :custom
+  (morophon-known-themes '(zenmelt modus-operandi modus-vivendi)))
 #+END_SRC
 
 ** Customize Fringes
 
-Customize line continuation indicator bitmaps.
+Customize line-continuation indicator bitmaps.
 
 #+BEGIN_SRC emacs-lisp
 (define-fringe-bitmap 'left-curly-arrow [16 48 112 240 240 112 48 16])
@@ -1447,12 +1449,13 @@ Group system-related commands.
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-system/visit (:color teal)
   (concat (hydra-plus-heading "Visit" "Configuration") "
- _q_ quit            _e_ emacs           ^^                  ^^
+ _q_ quit            _a_ alacritty       _z_ zsh             ^^
+ ^^                  _e_ emacs           ^^                  ^^
  ^^                  _l_ linux           ^^                  ^^
  ^^                  _q_ qtile           ^^                  ^^
- ^^                  _z_ zsh             ^^                  ^^
 ")
   ("q" nil)
+  ("a" (find-file "~/Workspace/dot/config/alacritty.org"))
   ("e" (find-file (concat user-emacs-directory "dotemacs.org")))
   ("l" (find-file "~/Workspace/dot/LINUX.org"))
   ("q" (find-file "~/Workspace/dot/config/qtile.org"))
