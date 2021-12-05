@@ -51,6 +51,18 @@
 fallback value permanently."
   :type 'boolean)
 
+(defvar szadek-on-save-hook '()
+  "Hook run after the secret file has been saved.")
+
+(defun szadek-on-save ()
+  (let ((file szadek-file))
+    (if (file-exists-p file)
+        (when (equal (buffer-file-name) file)
+          (run-hooks 'szadek-on-save-hook))
+      (error "[Szadek] Missing secret file %S" file))))
+
+(add-hook 'after-save-hook #'szadek-on-save)
+
 (defun szadek--read-file ()
   "Return the Lisp data found in the secret file.
 The data should be a list."
