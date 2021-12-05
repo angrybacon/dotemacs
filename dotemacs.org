@@ -124,29 +124,20 @@ Install =use-package= and defer all packages by default.
 
 ** Load Secrets
 
-Small framework to read secrets out of =.secrets.eld= in order to keep sensible
-things out of version control. This is also used to have machine-specific
-settings. See =.secrets.eld.ori= for a preview of the supported format. Usage:
+| =szadek= | =lisp/szadek= |
 
-#+BEGIN_SRC emacs-lisp :tangle no
-(me/secret 'irc-password)               ; 4815162342
-(me/secret 'nothing)                    ; nil
-#+END_SRC
+Small framework to read secrets out of a machine-local file. Mostly to keep
+sensible values out of version control, this is also used to have
+machine-specific settings.
 
 #+BEGIN_SRC emacs-lisp
-(defun me/secret (&optional name fallback)
-  "Read a Lisp structure from the secret file.
-When NAME is provided, return the value associated to this key. If no value was
-found for NAME, return FALLBACK instead which defaults to nil."
-  (let ((file (expand-file-name ".secrets.eld")))
-    (when (file-exists-p file)
-      (with-demoted-errors "Error while parsing secret file: %S"
-        (with-temp-buffer
-          (insert-file-contents file)
-          (if-let ((content (read (buffer-string)))
-                   (name))
-              (alist-get name content fallback)
-            content))))))
+(use-package szadek
+  :load-path "lisp/szadek"
+  :straight nil
+  :commands (szadek-get)
+  :custom
+  (szadek-file (me/cache-concat "szadek.eld"))
+  (szadek-fix-missing t))
 #+END_SRC
 
 ** Cache
@@ -232,11 +223,15 @@ Mute their colors as well.
 ** Customize Typography
 
 #+BEGIN_SRC emacs-lisp
-(set-face-attribute 'default nil
-                    :font (me/secret 'font-default)
-                    :height (me/secret 'font-size))
-(set-face-attribute 'fixed-pitch nil :font (me/secret 'font-fixed))
-(set-face-attribute 'variable-pitch nil :font (me/secret 'font-variable))
+(let ((font-default (szadek-get 'font-default "monospace"))
+      (font-fixed (szadek-get 'font-fixed "monospace"))
+      (font-size (szadek-get 'font-size 120))
+      (font-variable (szadek-get 'font-variable "monospace")))
+  (set-face-attribute 'default nil :font font-default :height font-size)
+  (set-face-attribute 'fixed-pitch nil :font font-fixed)
+  (set-face-attribute 'mode-line nil :font font-default :height font-size)
+  (set-face-attribute 'mode-line-active nil :inherit 'mode-line)
+  (set-face-attribute 'variable-pitch nil :font font-variable))
 #+END_SRC
 
 ** Themes
@@ -1639,7 +1634,7 @@ Prettify the mode-line with customizable and conditional segments.
   :custom
   (doom-modeline-bar-width 1)
   (doom-modeline-buffer-file-name-style 'truncate-with-project)
-  (doom-modeline-height (me/secret 'mode-line-height 30))
+  (doom-modeline-height (szadek-get 'mode-line-height 30))
   (doom-modeline-enable-word-count t)
   (doom-modeline-major-mode-icon nil)
   (doom-modeline-percent-position nil)
@@ -2104,7 +2099,7 @@ Assign paths to specific classes according to specifications found in secrets.
 
 #+BEGIN_SRC emacs-lisp
 (mapc (lambda (it) (dir-locals-set-directory-class it 'prettier))
-      (me/secret 'project-prettier))
+      (szadek-get 'project-prettier))
 #+END_SRC
 
 Below is an example of secrets setting no Python project and 2 React projects.
@@ -2398,7 +2393,7 @@ Until a proper popup system is implemented, use =s-"= to close the bottom
            (delete-window)))))
    nil (selected-frame)))
 
-(defvar me/vterm-shackles `(:align 'below :popup t :size ,(me/secret 'popup-height .33))
+(defvar me/vterm-shackles `(:align 'below :popup t :size ,(szadek-get 'popup-height .33))
   "Shackle rules in the context of `me/vterm-dwim'.
 To see the supported options, see the documentation for `shackle-rules'.")
 

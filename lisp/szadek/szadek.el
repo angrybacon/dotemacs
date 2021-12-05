@@ -1,0 +1,110 @@
+;;; szadek.el --- Framework to retrieve secrets -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2021 Mathieu Marques
+
+;; Author: Mathieu Marques <mathieumarques78@gmail.com>
+;; Created: December 5, 2021
+;; Homepage: https://github.com/angrybacon/dotemacs/tree/master/lisp/szadek
+;; Package-Requires: ((emacs "29.1"))
+
+;; This program is free software. You can redistribute it and/or modify it under
+;; the terms of the Do What The Fuck You Want To Public License, version 2 as
+;; published by Sam Hocevar.
+;;
+;; This program is distributed in the hope that it will be useful, but WITHOUT
+;; ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+;; FOR A PARTICULAR PURPOSE.
+;;
+;; You should have received a copy of the Do What The Fuck You Want To Public
+;; License along with this program. If not, see http://www.wtfpl.net/.
+
+;;; Commentary:
+
+;; A small framework to read secrets out of a machine-local file.
+;;
+;; This can be used to keep sensible things out of version control, or
+;; machine-specific settings.
+;;
+;; Usage:
+;;
+;;   (szadek-get)                          ; ((one .  1) (two . 2))
+;;   (szadek-get 'one)                     ; 1
+;;   (szadek-get 'three)                   ; nil
+;;   (szadek-get 'three 'fallback)         ; 'fallback
+
+;;; Code:
+
+(require 'cl-seq)
+(require 'pp)
+
+(defgroup szadek nil
+  "Framework to retrieve secrets"
+  :group 'convenience
+  :prefix "szadek-")
+
+(defcustom szadek-file (expand-file-name ".szadek.eld" user-emacs-directory)
+  "File used to store secrets in `lisp-data-mode' format."
+  :type 'file)
+
+(defcustom szadek-fix-missing nil
+  "Whether getting missing secrets should automatically set them to their
+fallback value permanently."
+  :type 'boolean)
+
+(defun szadek--read-file ()
+  "Return the Lisp data found in the secret file.
+The data should be a list."
+  (with-demoted-errors "[Szadek] Error while parsing secret file\n  %s"
+    (with-temp-buffer
+      (insert-file-contents szadek-file)
+      (let ((data (read (buffer-string))))
+        (if (listp data)
+            data
+          (error "Secrets should be a list"))))))
+
+(defun szadek--write-secret (secret)
+  "Write SECRET in the secret file.
+If the secret file does not exist, create it in the process."
+  (let* ((file szadek-file)
+         (initial (when (file-exists-p file) (szadek--read-file)))
+         (data (append (list secret) (or initial '()))))
+    (delete-dups data)
+    (with-temp-file file
+      (insert (let ((print-escape-newlines t)
+                    print-length
+                    print-level)
+                (pp-to-string data))))))
+
+(defun szadek--set-value (name value)
+  "Set VALUE under NAME in the secret file."
+  (let ((file szadek-file))
+    (if (file-writable-p file)
+        (szadek--write-secret `(,name . ,value))
+      (error "[Szadek] %S is not writeable" file))))
+
+(defun szadek--fallback (value &optional name)
+  "Return fallback VALUE and optionally set it permanently in the secret file
+under NAME if it is provided."
+  (when name
+    (szadek--set-value name value))
+  value)
+
+(defun szadek-get (&optional name fallback)
+  "Read the Lisp structure found in the secret file.
+When NAME is provided, return the value associated to this key only. If no value
+was found for NAME or if the secret file was not found, return FALLBACK instead
+which defaults to nil.
+When `szadek-fix-missing' is non nil, save the fallback value to the secret file
+after creating it if necessary. If the fallback value was not provided or nil,
+do nothing and return nil."
+  (if-let* ((file szadek-file)
+            (exists (file-exists-p file))
+            (data (szadek--read-file))
+            (match (cl-member-if #'(lambda (it) (eq (car it) name)) data)))
+      (cdar match)
+    (szadek--fallback fallback (when (and szadek-fix-missing fallback)
+                                 name))))
+
+(provide 'szadek)
+
+;;; szadek.el ends here
