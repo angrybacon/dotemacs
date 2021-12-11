@@ -31,7 +31,7 @@ Here are what I consider better defaults as per my own experience.
  select-enable-clipboard t              ; Merge system's and Emacs' clipboard
  sentence-end-double-space nil          ; Use a single space after dots
  show-help-function nil                 ; Disable help text everywhere
- tab-always-indent 'complete            ; Tab indents first then tries completions
+ tab-always-indent 'complete            ; Indent first then try completions
  tab-width 4                            ; Smaller width for tab characters
  uniquify-buffer-name-style 'forward    ; Uniquify buffer names
  warning-minimum-level :error           ; Skip warning buffers
@@ -102,8 +102,9 @@ this document.
 Bootstrap =straight=.
 
 #+BEGIN_SRC emacs-lisp
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+(let ((bootstrap-file (expand-file-name
+                       "straight/repos/straight.el/bootstrap.el"
+                       user-emacs-directory))
       (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
     (let ((install.el
@@ -122,49 +123,18 @@ Install =use-package= and defer all packages by default.
 (setq-default use-package-always-defer t)
 #+END_SRC
 
-** Load Secrets
-
-| =szadek= | =lisp/szadek= |
-
-Small framework to read secrets out of a machine-local file. Mostly to keep
-sensible values out of version control, this is also used to have
-machine-specific settings.
-
-#+BEGIN_SRC emacs-lisp
-(use-package szadek
-  :load-path "lisp/szadek"
-  :straight nil
-  :commands (szadek-get)
-  :custom
-  (szadek-file (me/cache-concat "szadek.eld"))
-  (szadek-fix-missing t))
-#+END_SRC
-
 ** Cache
+
+| =shelldock= | =lisp/shelldock= |
 
 Use =.cache/= to contain local data. This is to avoid littering in the Emacs
 directory with an ever-growing number of packages used on a daily basis.
 
 #+BEGIN_SRC emacs-lisp
-(defconst me/cache-directory
-  (expand-file-name ".cache/" user-emacs-directory)
-  "Directory where all cache files should be saved")
-
-(defun me/cache-concat (name)
-  "Return the absolute path of NAME under `me/cache-directory'."
-  (let* ((directory (file-name-as-directory me/cache-directory))
-         (path (convert-standard-filename (concat directory name))))
-    (make-directory (file-name-directory path) t)
-    path))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(with-eval-after-load 'request
-  (setq-default request-storage-directory (me/cache-concat "request/")))
-(with-eval-after-load 'tramp
-  (setq-default tramp-persistency-file-name (me/cache-concat "tramp.eld")))
-(with-eval-after-load 'url
-  (setq-default url-configuration-directory (me/cache-concat "url/")))
+(use-package shelldock
+  :load-path "lisp/shelldock"
+  :straight nil
+  :commands (shelldock))
 #+END_SRC
 
 Garbage-collect on focus-out, Emacs /should/ feel snappier overall.
@@ -187,6 +157,24 @@ redirect the writing to =/dev/null=.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default custom-file null-device)
+#+END_SRC
+
+** Load Secrets
+
+| =szadek= | =lisp/szadek= |
+
+Small framework to read secrets out of a machine-local file. Mostly to keep
+sensible values out of version control, this is also used to have
+machine-specific settings.
+
+#+BEGIN_SRC emacs-lisp
+(use-package szadek
+  :load-path "lisp/szadek"
+  :straight nil
+  :commands (szadek-get)
+  :custom
+  (szadek-file (shelldock "szadek.eld"))
+  (szadek-fix-missing t))
 #+END_SRC
 
 * Theme
@@ -242,8 +230,8 @@ Mute their colors as well.
 
 ** Themes
 
-| =modus-themes=  | Built-in        |
-| =zenmelt-theme= | =lisp/zenmelt=  |
+| =modus-themes=  | Built-in       |
+| =zenmelt-theme= | =lisp/zenmelt= |
 
 #+BEGIN_SRC emacs-lisp
 (use-package modus-themes
@@ -259,9 +247,7 @@ Mute their colors as well.
    '((bg-main . "#101010")
      (fg-main . "#FAFAFA")
      (fg-window-divider-inner . "#101010")))
-  (modus-themes-org-blocks 'tinted-background)
-  :config
-  (load-theme 'modus-operandi t t))
+  (modus-themes-org-blocks 'tinted-background))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -465,7 +451,8 @@ authoring documents with a fast and effective plain-text system.
   (require 'ob-shell)
   (add-to-list 'org-babel-load-languages '(shell . t))
   (modify-syntax-entry ?' "'" org-mode-syntax-table)
-  (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer-name)
+  (advice-add 'org-src--construct-edit-buffer-name :override
+    #'me/org-src-buffer-name)
   (with-eval-after-load 'evil
     (evil-define-key* 'motion org-mode-map
       (kbd "<tab>") #'org-cycle
@@ -569,8 +556,8 @@ configurations.
   (after-init . desktop-read)
   (after-init . desktop-save-mode)
   :custom
-  (desktop-base-file-name (me/cache-concat "desktop"))
-  (desktop-base-lock-name (me/cache-concat "desktop.lock"))
+  (desktop-base-file-name (shelldock "desktop"))
+  (desktop-base-lock-name (shelldock "desktop.lock"))
   (desktop-restore-eager 4)
   (desktop-restore-forces-onscreen nil)
   (desktop-restore-frames t))
@@ -638,8 +625,10 @@ Otherwise, disable it everywhere."
     (let* ((predicate (lambda (window)
                         (with-selected-window window
                           (or (buffer-file-name)
-                              (member (buffer-name) me/olivetti-whitelist-buffers)
-                              (apply 'derived-mode-p me/olivetti-whitelist-modes)))))
+                              (member (buffer-name)
+                                      me/olivetti-whitelist-buffers)
+                              (apply 'derived-mode-p
+                                     me/olivetti-whitelist-modes)))))
            (windows (seq-filter predicate (window-list frame))))
       (if (length= windows 1)
           (with-selected-window (car windows)
@@ -1099,7 +1088,8 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
   :bind
   ("C-<return>" . hippie-expand)
   :custom
-  (hippie-expand-try-functions-list '(yas-hippie-try-expand me/emmet-hippie-try-expand))
+  (hippie-expand-try-functions-list
+   '(yas-hippie-try-expand me/emmet-hippie-try-expand))
   (hippie-expand-verbose nil))
 #+END_SRC
 
@@ -1647,7 +1637,8 @@ Prettify the mode-line with customizable and conditional segments.
   (doom-modeline-vcs-max-length 28)
   :custom-face
   (doom-modeline-bar ((t (:inherit mode-line))))
-  (doom-modeline-bar-inactive ((t (:background nil :inherit mode-line-inactive))))
+  (doom-modeline-bar-inactive
+   ((t (:background nil :inherit mode-line-inactive))))
   :config
   (doom-modeline-def-segment me/buffer
     "The buffer description and major mode icon."
@@ -1665,7 +1656,8 @@ Prettify the mode-line with customizable and conditional segments.
   (doom-modeline-def-segment me/buffer-simple
     "The buffer name but simpler."
     (let* ((active (doom-modeline--active))
-           (face (cond ((and buffer-file-name (buffer-modified-p)) 'doom-modeline-buffer-modified)
+           (face (cond ((and buffer-file-name (buffer-modified-p))
+                        'doom-modeline-buffer-modified)
                        (active 'doom-modeline-buffer-file)
                        (t 'mode-line-inactive))))
       (concat (doom-modeline-spc)
@@ -1687,7 +1679,9 @@ Prettify the mode-line with customizable and conditional segments.
         (concat
          (when icon
            (concat (doom-modeline-spc)
-                   (if active icon (doom-modeline-propertize-icon icon 'mode-line-inactive))))
+                   (if active
+                       icon
+                     (doom-modeline-propertize-icon icon 'mode-line-inactive))))
          (when text
            (concat (if icon (doom-modeline-vspc) (doom-modeline-spc))
                    (if active text (propertize text 'face 'mode-line-inactive))))
@@ -1700,19 +1694,24 @@ Prettify the mode-line with customizable and conditional segments.
        (propertize " (" 'face (if active 'mode-line 'mode-line-inactive))
        (propertize (if (stringp Info-current-file)
                        (replace-regexp-in-string
-                        "%" "%%"
-                        (file-name-sans-extension (file-name-nondirectory Info-current-file)))
+                        "%" "%%" (file-name-sans-extension
+                                  (file-name-nondirectory Info-current-file)))
                      (format "*%S*" Info-current-file))
                    'face (if active 'doom-modeline-info 'mode-line-inactive))
        (propertize ") " 'face (if active 'mode-line 'mode-line-inactive))
        (when Info-current-node
-         (propertize (concat (replace-regexp-in-string "%" "%%" Info-current-node)
-                             (doom-modeline-spc))
-                     'face (if active 'doom-modeline-buffer-path 'mode-line-inactive))))))
+         (propertize (concat
+                      (replace-regexp-in-string "%" "%%" Info-current-node)
+                      (doom-modeline-spc))
+                     'face (if active
+                               'doom-modeline-buffer-path
+                             'mode-line-inactive))))))
   (doom-modeline-def-segment me/major-mode
     "The current major mode, including environment information."
     (let* ((active (doom-modeline--active))
-           (face (if active 'doom-modeline-buffer-major-mode 'mode-line-inactive)))
+           (face (if active
+                     'doom-modeline-buffer-major-mode
+                   'mode-line-inactive)))
       (concat (doom-modeline-spc)
               (propertize (format-mode-line mode-name) 'face face)
               (doom-modeline-spc))))
@@ -1739,7 +1738,8 @@ Prettify the mode-line with customizable and conditional segments.
     '(bar modals me/buffer me/info me/buffer-position selection-info)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'main
-    '(bar modals me/buffer remote-host me/buffer-position me/flymake selection-info)
+    '(bar modals me/buffer remote-host me/buffer-position me/flymake
+          selection-info)
     '(irc-buffers matches me/process me/vcs debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'message
     '(bar modals me/buffer-simple me/buffer-position selection-info)
@@ -1794,7 +1794,7 @@ Enable multiple cursors outside Evil. Some witchcraft at work here.
    ("M-l" . mc/insert-letters)
    ("M-n" . mc/insert-numbers))
   :init
-  (setq-default mc/list-file (me/cache-concat "multiple-cursors.el"))
+  (setq-default mc/list-file (shelldock "multiple-cursors.el"))
   :custom
   (mc/edit-lines-empty-lines 'ignore)
   (mc/insert-numbers-default 1))
@@ -2049,7 +2049,7 @@ Provide project-wide commands and utilities.
 (use-package project
   :straight nil
   :custom
-  (project-list-file (me/cache-concat "projects.eld"))
+  (project-list-file (shelldock "projects.eld"))
   (project-switch-commands '((project-dired "Root" "D")
                              (project-find-file "File" "f")
                              (magit-project-status "Git" "g")
@@ -2253,7 +2253,7 @@ Customize the noisy default towards backup files.
   :straight nil
   :custom
   (backup-by-copying t)
-  (backup-directory-alist `(("." . ,(me/cache-concat "backups/"))))
+  (backup-directory-alist `(("." . ,(shelldock "backups/"))))
   (delete-old-versions t)
   (version-control t))
 #+END_SRC
@@ -2399,7 +2399,9 @@ Until a proper popup system is implemented, use =s-"= to close the bottom
            (delete-window)))))
    nil (selected-frame)))
 
-(defvar me/vterm-shackles `(:align 'below :popup t :size ,(szadek-get 'popup-height .33))
+(defvar me/vterm-shackles `(:align 'below
+                            :popup t
+                            :size ,(szadek-get 'popup-height .33))
   "Shackle rules in the context of `me/vterm-dwim'.
 To see the supported options, see the documentation for `shackle-rules'.")
 
@@ -2547,9 +2549,9 @@ section for now.
   (transient-mode-line-format nil)
   :init
   (setq-default
-   transient-history-file (me/cache-concat "transient/history.el")
-   transient-levels-file (me/cache-concat "transient/levels.el")
-   transient-values-file (me/cache-concat "transient/values.el")))
+   transient-history-file (shelldock "transient/history.el")
+   transient-levels-file (shelldock "transient/levels.el")
+   transient-values-file (shelldock "transient/values.el")))
 #+END_SRC
 
 ** Whitespaces
@@ -2623,7 +2625,8 @@ configuration.
 (dotimes (n 9)
   (let* ((n (1+ n))
          (name (intern (format "me/eyebrowse-switch-%s" n)))
-         (documentation (format "Switch to configuration %s or to the last visited." n)))
+         (documentation
+          (format "Switch to configuration %s or to the last visited." n)))
     (eval `(defun ,name ()
              ,documentation
              (interactive)

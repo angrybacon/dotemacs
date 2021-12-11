@@ -38,7 +38,7 @@
 (require 'pp)
 
 (defgroup szadek nil
-  "Framework to retrieve secrets"
+  "Framework to retrieve secrets."
   :group 'convenience
   :prefix "szadek-")
 
