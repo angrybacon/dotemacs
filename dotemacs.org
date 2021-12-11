@@ -580,7 +580,7 @@ margins.
   :hook
   (window-configuration-change . me/olivetti-mode-maybe)
   :custom
-  (olivetti-body-width 100))
+  (olivetti-body-width (+ fill-column 6)))
 #+END_SRC
 
 | TODO | Prefer =cl-lib= routines                             |
@@ -601,6 +601,7 @@ implementation.")
                                       help-mode
                                       helpful-mode
                                       lisp-interaction-mode
+                                      magit-mode
                                       vterm-mode)
   "List of modes for which `olivetti-mode' should be enabled automatically.")
 
