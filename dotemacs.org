@@ -906,6 +906,7 @@ explorer.
   (dired-dwim-target t)
   (dired-hide-details-hide-symlink-targets nil)
   (dired-listing-switches "-agho --group-directories-first")
+  (dired-kill-when-opening-new-dired-buffer t)
   (dired-recursive-copies 'always))
 #+END_SRC
 
