@@ -300,10 +300,14 @@ See `custom--inhibit-theme-enable'."
    `(completions-annotations            ((t :foreground ,fg-1)))
    `(consult-preview-line               ((t :extend t :inherit highlight)))
    `(consult-preview-match              ((t :background nil)))
-   `(orderless-match-face-0             ((t :inherit highlight)))
-   `(orderless-match-face-1             ((t :background ,fg-2 :foreground ,yellow)))
-   `(orderless-match-face-2             ((t :background ,green-4 :foreground ,green+4)))
-   `(orderless-match-face-3             ((t :background ,red-6 :foreground ,red+2)))
+   `(orderless-match-face-0             ((t :background ,blue-4
+                                            :foreground ,blue+3)))
+   `(orderless-match-face-1             ((t :background ,fg-2
+                                            :foreground ,yellow)))
+   `(orderless-match-face-2             ((t :background ,green-3
+                                            :foreground ,green+4)))
+   `(orderless-match-face-3             ((t :background ,red-4
+                                            :foreground ,red+2)))
    `(selectrum-current-candidate        ((t :extend t :inherit highlight)))
    `(selectrum-group-separator          ((t :foreground ,bg+4 :strike-through t)))
    `(selectrum-group-title              ((t :inherit shadow :italic t)))
