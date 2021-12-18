@@ -250,12 +250,30 @@ Mute their colors as well.
   (modus-themes-org-blocks 'tinted-background))
 #+END_SRC
 
+All praise the alien fruit salad theme!
+[[https://kippura.org/zenburnpage/][Zenburn]].
+
+I have been using this /easy-on-the-eyes/ pastel theme for a very long time.
+After having added one too many customization to it, I went ahead and made my
+own fork: Zenmelt.
+
+It doesn't support the many packages that have made it to your own
+configurations on purpose, the idea -- albeit selfish -- is to have one place
+where I can freely customize colors following my moods without having to
+maintain a 2K lines-long file of unnecessary face properties.
+
+In addition to the already popular implementation from
+[[https://github.com/bbatsov/zenburn-emacs][Bozhidar Batsov]], this fork also
+adds a /reset/ on save when visiting the theme file.
+
 #+BEGIN_SRC emacs-lisp
 (use-package zenmelt-theme
   :load-path "lisp/zenmelt"
   :straight nil
   :demand
   :config
+  (put 'after-save-hook 'safe-local-variable
+     (lambda (value) (equal value '(zenmelt--reset t))))
   (load-theme 'zenmelt t))
 #+END_SRC
 

@@ -1013,6 +1013,16 @@ See `custom--inhibit-theme-enable'."
    `(vc-annotate-very-old-color ,magenta)
    `(vc-annotate-background ,bg-3)))
 
+(defun zenmelt--reset ()
+  "Evaluate Zenmelt with the last saved face properties and variable values.
+Apply properties and values immediately by disabling
+`custom--inhibit-theme-enable' temporarily.
+
+This should be used together with a file-local variable that appends this
+function to `after-save-hook'."
+  (let ((custom--inhibit-theme-enable nil))
+    (eval-buffer)))
+
 ;;;###autoload
 (when (and (boundp 'custom-theme-load-path) load-file-name)
   (add-to-list 'custom-theme-load-path
@@ -1021,3 +1031,7 @@ See `custom--inhibit-theme-enable'."
 (provide-theme 'zenmelt)
 
 ;;; zenmelt-theme.el ends here
+
+;; Local Variables:
+;; after-save-hook: (zenmelt--reset t)
+;; End:
