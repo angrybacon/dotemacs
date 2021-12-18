@@ -731,7 +731,10 @@ heavier =company= alternative. With =display-line-numbers-type=, prefer the
 #+BEGIN_SRC emacs-lisp
 (use-package corfu
   :hook
-  (after-init . corfu-global-mode))
+  (after-init . corfu-global-mode)
+  :custom
+  (corfu-auto t)
+  (corfu-auto-delay .5))
 #+END_SRC
 
 *** Marginalia
@@ -2073,9 +2076,10 @@ If PROJECT is not specified, assume current project root."
 If ripgrep is not installed, use grep instead."
   (interactive)
   (let ((root (me/project-root)))
-    (if (executable-find "rg")
-        (consult-ripgrep root)
-      (consult-grep root))))
+    (if (not (executable-find "rg"))
+        (consult-grep root)
+      (message "Could not find executable 'rg', using 'grep' instead")
+      (consult-ripgrep root))))
 
 (defun me/project-root ()
   "Return the current project root."
