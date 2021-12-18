@@ -355,15 +355,21 @@ See `custom--inhibit-theme-enable'."
    `(magit-diff-added-highlight         ((t :inherit
                                             (diff-added
                                              magit-diff-context-highlight))))
-   `(magit-diff-context                 ((t :inherit shadow)))
+   `(magit-diff-context                 ((t :foreground ,fg-2)))
    `(magit-diff-context-highlight       ((t :background ,bg+1
-                                            :inherit magit-diff-context)))
-   `(magit-diff-file-heading            ((t :weight bold)))
-   `(magit-diff-file-heading-highlight  ((t :background ,bg+1 :weight bold)))
-   `(magit-diff-file-heading-selection  ((t :background ,bg+1 :foreground ,orange)))
-   `(magit-diff-hunk-heading            ((t :background ,bg+2)))
-   `(magit-diff-hunk-heading-highlight  ((t :background ,bg+3)))
-   `(magit-diff-hunk-heading-selection  ((t :background ,bg+3 :foreground ,orange)))
+                                            :foreground ,fg-1)))
+   `(magit-diff-file-heading            ((t :foreground ,fg+1)))
+   `(magit-diff-file-heading-highlight  ((t :inherit hl-line)))
+   `(magit-diff-file-heading-selection  ((t :foreground ,orange)))
+   `(magit-diff-hunk-heading            ((t :background ,bg+1
+                                            :box 2
+                                            :foreground ,fg-1)))
+   `(magit-diff-hunk-heading-highlight  ((t :box 2
+                                            :foreground ,orange
+                                            :inherit magit-diff-hunk-heading)))
+   `(magit-diff-hunk-heading-selection  ((t :background ,orange
+                                            :box (:color ,orange :line-width 2)
+                                            :foreground ,bg-3)))
    `(magit-diff-hunk-region             ((t :inherit region)))
    `(magit-diff-lines-heading           ((t :inherit
                                             magit-diff-hunk-heading-selection)))
