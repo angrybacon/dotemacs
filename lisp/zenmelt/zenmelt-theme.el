@@ -295,17 +295,8 @@ See `custom--inhibit-theme-enable'."
    `(smerge-upper                       ((t :background ,bg+1 :inherit diff-removed)))
 ;;;; Third-party
 ;;;;; Completion
-   `(company-preview                    ((t :background ,green+2)))
-   `(company-preview-common             ((t :background ,bg-3
-                                            :inherit 'company-preview)))
-   `(company-scrollbar-bg               ((t :background ,bg+3)))
-   `(company-scrollbar-fg               ((t :background ,bg-3)))
-   `(company-tooltip                    ((t :inherit 'tooltip)))
-   `(company-tooltip-annotation         ((t :foreground ,orange)))
-   `(company-tooltip-common             ((t :foreground ,green+2)))
-   `(company-tooltip-common-selection   ((t :inherit 'company-tooltip-common)))
-   `(company-tooltip-mouse              ((t :inherit 'company-tooltip-selection)))
-   `(company-tooltip-selection          ((t :foreground ,fg :inherit highlight)))
+   `(corfu-current                      ((t :inherit 'highlight)))
+   `(corfu-default                      ((t :background ,bg-3)))
    `(completions-annotations            ((t :foreground ,fg-1)))
    `(consult-preview-line               ((t :extend t :inherit highlight)))
    `(consult-preview-match              ((t :background nil)))
