@@ -219,7 +219,7 @@ Mute their colors as well.
     (set-face-attribute 'default nil :font font-default :height font-size)
     (set-face-attribute 'fixed-pitch nil :font font-fixed)
     (set-face-attribute 'mode-line nil :font font-default :height font-size)
-    (set-face-attribute 'mode-line-active nil :inherit 'mode-line)
+    (set-face-attribute 'mode-line-inactive nil :inherit 'mode-line)
     (set-face-attribute 'variable-pitch nil :font font-variable)))
 (me/typography-reset)
 #+END_SRC

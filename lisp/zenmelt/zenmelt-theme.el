@@ -26,7 +26,7 @@
 
 ;;; Code:
 
-(deftheme zenmelt "The Zenmelt color theme")
+(deftheme zenmelt "The Zenmelt color theme.")
 
 (defvar zenmelt-colors-alist
   '(("bg-4"     . "#000000")
@@ -81,7 +81,7 @@
 
 (defmacro zenmelt-with-colors (immediate &rest body)
   "Let-bind all colors defined in `zenmelt-colors-alist' around BODY.
-With IMMEDIATE non nil, allow style changes immediately.
+With IMMEDIATE non nil, allow style changes immediately within the body.
 See `custom--inhibit-theme-enable'."
   (declare (indent defun))
   `(let ((class '((class color) (min-colors 89)))
@@ -100,28 +100,29 @@ See `custom--inhibit-theme-enable'."
 ;;;;; Base
    `(default                            ((t :background ,bg :foreground ,fg)))
    `(error                              ((t :foreground ,red)))
-   `(escape-glyph                       ((t :foreground ,yellow :weight bold)))
+   `(escape-glyph                       ((t :foreground ,yellow)))
    `(font-lock-builtin-face             ((t :foreground ,blue)))
    `(font-lock-comment-delimiter-face   ((t :foreground ,green-2)))
    `(font-lock-comment-face             ((t :foreground ,green)))
    `(font-lock-constant-face            ((t :foreground ,green+4)))
    `(font-lock-doc-face                 ((t :foreground ,green+2)))
    `(font-lock-function-name-face       ((t :foreground ,cyan)))
-   `(font-lock-keyword-face             ((t :foreground ,yellow :weight bold)))
-   `(font-lock-negation-char-face       ((t :foreground ,yellow :weight bold)))
+   `(font-lock-keyword-face             ((t :foreground ,yellow)))
+   `(font-lock-negation-char-face       ((t :foreground ,yellow)))
    `(font-lock-preprocessor-face        ((t :foreground ,blue+1)))
-   `(font-lock-regexp-grouping-backslash ((t :foreground ,green :weight bold)))
-   `(font-lock-regexp-grouping-construct ((t :foreground ,yellow :weight bold)))
+   `(font-lock-regexp-grouping-backslash ((t :foreground ,green)))
+   `(font-lock-regexp-grouping-construct ((t :foreground ,yellow)))
    `(font-lock-string-face              ((t :foreground ,red)))
    `(font-lock-type-face                ((t :foreground ,blue-1)))
    `(font-lock-variable-name-face       ((t :foreground ,orange)))
-   `(font-lock-warning-face             ((t :foreground ,yellow-2 :weight bold)))
-   `(highlight                          ((t :background ,blue-5 :foreground ,blue)))
+   `(font-lock-warning-face             ((t :foreground ,yellow-2)))
+   `(highlight                          ((t :background ,blue-5
+                                            :foreground ,blue)))
    `(link                               ((t :foreground ,yellow :underline t)))
    `(link-visited                       ((t :foreground ,yellow-2 :underline t)))
    `(shadow                             ((t :foreground ,fg-1)))
-   `(success                            ((t :foreground ,green :weight bold)))
-   `(warning                            ((t :foreground ,orange :weight bold)))
+   `(success                            ((t :foreground ,green)))
+   `(warning                            ((t :foreground ,orange)))
 ;;;;; Applications
    `(eww-invalid-certificate            ((t :inherit error)))
    `(eww-valid-certificate              ((t :inherit success)))
@@ -136,21 +137,22 @@ See `custom--inhibit-theme-enable'."
    `(compilation-line-face              ((t :foreground ,yellow)))
    `(compilation-line-number            ((t :foreground ,yellow)))
    `(compilation-message-face           ((t :foreground ,blue)))
-   `(compilation-mode-line-exit         ((t :foreground ,green+2 :weight bold)))
-   `(compilation-mode-line-fail         ((t :foreground ,red :weight bold)))
-   `(compilation-mode-line-run          ((t :foreground ,yellow :weight bold)))
+   `(compilation-mode-line-exit         ((t :foreground ,green+2)))
+   `(compilation-mode-line-fail         ((t :foreground ,red)))
+   `(compilation-mode-line-run          ((t :foreground ,yellow)))
    `(compilation-warning-face           ((t :foreground ,orange :underline t)))
 ;;;;; Customize
    `(custom-group-tag                   ((t :foreground ,blue)))
    `(custom-state                       ((t :foreground ,green+4)))
-   `(custom-variable-tag                ((t :foreground ,blue :weight bold)))
+   `(custom-variable-tag                ((t :foreground ,blue)))
 ;;;;; Help
    `(Info-quoted                        ((t :inherit font-lock-constant-face)))
    `(eldoc-box-body                     ((t :inherit tooltip)))
    `(eldoc-box-border                   ((t :background ,red)))
    `(eldoc-highlight-function-argument  ((t :inherit highlight)))
    `(woman-bold                         ((t :inherit font-lock-keyword-face)))
-   `(woman-italic                       ((t :inherit (font-lock-string-face italic))))
+   `(woman-italic                       ((t :inherit (font-lock-string-face
+                                                      italic))))
 ;;;;; Interface
    `(button                             ((t :underline t)))
    `(cursor                             ((t :background ,fg+1 :foreground ,fg)))
@@ -160,7 +162,8 @@ See `custom--inhibit-theme-enable'."
                                             :foreground ,yellow)))
    `(hl-line                            ((t :background ,bg+2)))
    `(line-number                        ((t :foreground ,bg+4)))
-   `(line-number-current-line           ((t :foreground ,yellow-2 :inherit hl-line)))
+   `(line-number-current-line           ((t :foreground ,yellow-2
+                                            :inherit hl-line)))
    `(menu                               ((t :foreground ,fg :background ,bg)))
    `(mode-line                          ((,class :background ,bg-3 :foreground ,green+1)
                                          (t :inverse-video t)))
@@ -174,7 +177,8 @@ See `custom--inhibit-theme-enable'."
    `(trailing-whitespace                ((t :background ,red)))
    `(vertical-border                    ((t :background ,bg-1)))
    `(widget-field                       ((t :background ,bg+4 :foreground ,fg)))
-   `(window-divider                     ((t :inherit vertical-border :inverse-video t)))
+   `(window-divider                     ((t :inherit vertical-border
+                                            :inverse-video t)))
    `(window-divider-first-pixel         ((t :inherit window-divider)))
    `(window-divider-last-pixel          ((t :inherit window-divider)))
 ;;;;; Language
@@ -190,9 +194,9 @@ See `custom--inhibit-theme-enable'."
 ;;;;; Org
    `(org-agenda-date-today              ((t :foreground ,fg+1 :slant italic)))
    `(org-agenda-structure               ((t :inherit font-lock-comment-face)))
-   `(org-archived                       ((t :foreground ,fg :weight bold)))
+   `(org-archived                       ((t :foreground ,fg)))
    `(org-block                          ((t :background ,bg+1 :extend t)))
-   `(org-block-begin-line               ((t :foreground ,bg+3)))
+   `(org-block-begin-line               ((t :inherit shadow)))
    `(org-checkbox                       ((t :background ,bg+3
                                             :box (:line-width 1 :style released-button)
                                             :foreground ,fg+1)))
@@ -201,13 +205,15 @@ See `custom--inhibit-theme-enable'."
    `(org-date                           ((t :foreground ,blue :underline t)))
    `(org-deadline-announce              ((t :foreground ,red-1)))
    `(org-document-info                  ((t :foreground ,blue)))
-   `(org-document-title                 ((t :foreground ,blue :weight bold)))
-   `(org-done                           ((t :foreground ,green+3 :weight bold)))
+   `(org-document-title                 ((t :foreground ,blue)))
+   `(org-done                           ((t :foreground ,green+3)))
    `(org-ellipsis                       ((t :foreground ,yellow-1 :underline t)))
    `(org-footnote                       ((t :foreground ,cyan :underline t)))
    `(org-formula                        ((t :foreground ,yellow-2)))
-   `(org-habit-alert-face               ((t :background ,yellow-1 :foreground ,bg)))
-   `(org-habit-alert-future-face        ((t :background ,yellow-2 :foreground ,bg)))
+   `(org-habit-alert-face               ((t :background ,yellow-1
+                                            :foreground ,bg)))
+   `(org-habit-alert-future-face        ((t :background ,yellow-2
+                                            :foreground ,bg)))
    `(org-habit-clear-face               ((t :background ,blue-3)))
    `(org-habit-clear-future-face        ((t :background ,blue-4)))
    `(org-habit-overdue-face             ((t :background ,red-3)))
@@ -248,30 +254,34 @@ See `custom--inhibit-theme-enable'."
    `(org-sexp-date                      ((t :foreground ,blue+1 :underline t)))
    `(org-special-keyword                ((t :inherit font-lock-comment-face)))
    `(org-table                          ((t :foreground ,green+2)))
-   `(org-tag                            ((t :weight bold)))
+   `(org-tag                            ((t :foreground ,fg+1)))
    `(org-time-grid                      ((t :foreground ,orange)))
-   `(org-todo                           ((t :foreground ,red :weight bold)))
+   `(org-todo                           ((t :foreground ,red)))
    `(org-upcoming-deadline              ((t :inherit font-lock-keyword-face)))
-   `(org-verbatim                       ((t :background ,bg+1 :foreground ,orange)))
+   `(org-verbatim                       ((t :background ,bg+1
+                                            :foreground ,orange)))
    `(org-warning                        ((t :foreground ,red)))
 ;;;;; Search
    `(grep-context-face                  ((t :foreground ,fg)))
    `(grep-error-face                    ((t :foreground ,red-1 :underline t)))
    `(grep-hit-face                      ((t :foreground ,blue)))
-   `(grep-match-face                    ((t :foreground ,orange :weight bold)))
+   `(grep-match-face                    ((t :foreground ,orange)))
    `(isearch                            ((t :background ,blue :foreground ,bg-3)))
    `(isearch-fail                       ((t :foreground ,red)))
    `(lazy-highlight                     ((t :inherit highlight)))
-   `(match                              ((t :background ,bg-3 :foreground ,orange)))
+   `(match                              ((t :background ,bg-3
+                                            :foreground ,orange)))
 ;;;;; Syntax
    `(whitespace-empty                   ((t :background ,yellow-2 :extend t)))
    `(whitespace-hspace                  ((t :background ,bg+2 :foreground ,bg+2)))
    `(whitespace-indentation             ((t :background ,bg+1 :foreground ,red)))
-   `(whitespace-line                    ((t :background ,bg :foreground ,magenta)))
+   `(whitespace-line                    ((t :foreground ,magenta)))
    `(whitespace-newline                 ((t :foreground ,bg+2)))
    `(whitespace-space                   ((t :background ,bg+2 :foreground ,bg+2)))
-   `(whitespace-space-after-tab         ((t :background ,yellow-2 :foreground ,red)))
-   `(whitespace-space-before-tab        ((t :background ,orange :foreground ,orange)))
+   `(whitespace-space-after-tab         ((t :background ,yellow-2
+                                            :foreground ,red)))
+   `(whitespace-space-before-tab        ((t :background ,orange
+                                            :foreground ,orange)))
    `(whitespace-tab                     ((t :background ,red-1)))
    `(whitespace-trailing                ((t :inherit trailing-whitespace)))
 ;;;;; Version Control
@@ -288,11 +298,13 @@ See `custom--inhibit-theme-enable'."
    `(diff-refine-changed                ((t :background ,bg+3)))
    `(diff-refine-removed                ((t :background ,bg+3)))
    `(diff-removed                       ((t :foreground ,red)))
-   `(smerge-lower                       ((t :background ,bg+1 :inherit diff-added)))
+   `(smerge-lower                       ((t :background ,bg+1
+                                            :inherit diff-added)))
    `(smerge-markers                     ((t :background ,bg+1 :inherit shadow)))
    `(smerge-refined-added               ((t :inherit diff-refine-added)))
    `(smerge-refined-removed             ((t :inherit diff-refine-removed)))
-   `(smerge-upper                       ((t :background ,bg+1 :inherit diff-removed)))
+   `(smerge-upper                       ((t :background ,bg+1
+                                            :inherit diff-removed)))
 ;;;; Third-party
 ;;;;; Completion
    `(corfu-current                      ((t :inherit 'highlight)))
@@ -308,11 +320,6 @@ See `custom--inhibit-theme-enable'."
                                             :foreground ,green+4)))
    `(orderless-match-face-3             ((t :background ,red-4
                                             :foreground ,red+2)))
-   `(selectrum-current-candidate        ((t :extend t :inherit highlight)))
-   `(selectrum-group-separator          ((t :foreground ,bg+4 :strike-through t)))
-   `(selectrum-group-title              ((t :inherit shadow :italic t)))
-   `(selectrum-primary-highlight        ((t :background ,green-2)))
-   `(selectrum-secondary-highlight      ((t :background ,green)))
 ;;;;; Help
    `(helpful-heading                    ((t :foreground ,orange
                                             :height 1.4
@@ -325,15 +332,19 @@ See `custom--inhibit-theme-enable'."
    `(magit-bisect-skip                  ((t :foreground ,yellow)))
    `(magit-bisect-bad                   ((t :foreground ,red)))
 ;;;;;; Magit: blame
-   `(magit-blame-heading                ((t :background ,bg-3 :foreground ,blue-2)))
-   `(magit-blame-hash                   ((t :background ,bg-3 :foreground ,blue-2)))
-   `(magit-blame-name                   ((t :background ,bg-3 :foreground ,orange)))
-   `(magit-blame-date                   ((t :background ,bg-3 :foreground ,orange)))
-   `(magit-blame-summary                ((t :background ,bg-3 :foreground ,blue-2)))
+   `(magit-blame-heading                ((t :background ,bg-3
+                                            :foreground ,blue-2)))
+   `(magit-blame-hash                   ((t :inherit magit-blame-heading)))
+   `(magit-blame-name                   ((t :foreground ,orange
+                                            :inherit magit-blame-heading)))
+   `(magit-blame-date                   ((t :foreground ,orange
+                                            :inherit magit-blame-heading)))
+   `(magit-blame-summary                ((t :inherit magit-blame-heading)))
 ;;;;;; Magit: diff
    `(magit-diff-added                   ((t :foreground ,green)))
-   `(magit-diff-added-highlight         ((t :inherit (diff-added
-                                                      magit-diff-context-highlight))))
+   `(magit-diff-added-highlight         ((t :inherit
+                                            (diff-added
+                                             magit-diff-context-highlight))))
    `(magit-diff-context                 ((t :inherit shadow)))
    `(magit-diff-context-highlight       ((t :background ,bg+1
                                             :inherit magit-diff-context)))
@@ -344,38 +355,40 @@ See `custom--inhibit-theme-enable'."
    `(magit-diff-hunk-heading-highlight  ((t :background ,bg+3)))
    `(magit-diff-hunk-heading-selection  ((t :background ,bg+3 :foreground ,orange)))
    `(magit-diff-hunk-region             ((t :inherit region)))
-   `(magit-diff-lines-heading           ((t :background ,orange :foreground ,bg+3)))
+   `(magit-diff-lines-heading           ((t :inherit
+                                            magit-diff-hunk-heading-selection)))
    `(magit-diff-removed                 ((t :foreground ,red-2)))
-   `(magit-diff-removed-highlight       ((t :inherit (diff-removed
-                                                      magit-diff-context-highlight))))
+   `(magit-diff-removed-highlight       ((t :inherit
+                                            (diff-removed
+                                             magit-diff-context-highlight))))
    `(magit-diffstat-added               ((t :foreground ,green+4)))
    `(magit-diffstat-removed             ((t :foreground ,red)))
 ;;;;;; Magit: headings
    `(magit-section-highlight            ((t :background ,bg+1)))
-   `(magit-section-heading              ((t :foreground ,yellow :weight bold)))
-   `(magit-section-heading-selection    ((t :foreground ,orange :weight bold)))
+   `(magit-section-heading              ((t :foreground ,yellow)))
+   `(magit-section-heading-selection    ((t :foreground ,orange)))
 ;;;;;; Magit: popup
-   `(magit-popup-argument               ((t :foreground ,green :weight bold)))
-   `(magit-popup-disabled-argument      ((t :foreground ,fg-2 :weight normal)))
-   `(magit-popup-heading                ((t :foreground ,yellow :weight bold)))
-   `(magit-popup-key                    ((t :foreground ,green-2 :weight bold)))
-   `(magit-popup-option-value           ((t :foreground ,blue-2 :weight bold)))
+   `(magit-popup-argument               ((t :foreground ,green)))
+   `(magit-popup-disabled-argument      ((t :foreground ,fg-2)))
+   `(magit-popup-heading                ((t :foreground ,yellow)))
+   `(magit-popup-key                    ((t :foreground ,green-2)))
+   `(magit-popup-option-value           ((t :foreground ,blue-2)))
 ;;;;;; Magit: log
    `(magit-log-author                   ((t :foreground ,orange)))
    `(magit-log-date                     ((t :foreground ,fg-2)))
    `(magit-log-graph                    ((t :foreground ,fg+1)))
 ;;;;;; Magit: process
-   `(magit-process-ok                   ((t :foreground ,green :weight bold)))
-   `(magit-process-ng                   ((t :foreground ,red :weight bold)))
+   `(magit-process-ok                   ((t :foreground ,green)))
+   `(magit-process-ng                   ((t :foreground ,red)))
 ;;;;;; Magit: references
-   `(magit-branch-current               ((t :foreground ,blue :weight bold :box t)))
-   `(magit-branch-local                 ((t :foreground ,blue :weight bold)))
-   `(magit-branch-remote                ((t :foreground ,green :weight bold)))
+   `(magit-branch-current               ((t :box t :foreground ,blue)))
+   `(magit-branch-local                 ((t :foreground ,blue)))
+   `(magit-branch-remote                ((t :foreground ,green)))
    `(magit-cherry-equivalent            ((t :foreground ,magenta)))
    `(magit-cherry-unmatched             ((t :foreground ,cyan)))
    `(magit-dimmed                       ((t :foreground ,bg+4)))
    `(magit-hash                         ((t :foreground ,bg+4)))
-   `(magit-head                         ((t :foreground ,blue :weight bold)))
+   `(magit-head                         ((t :foreground ,blue)))
    `(magit-reflog-amend                 ((t :foreground ,magenta)))
    `(magit-reflog-checkout              ((t :foreground ,blue)))
    `(magit-reflog-cherry-pick           ((t :foreground ,green)))
@@ -394,7 +407,7 @@ See `custom--inhibit-theme-enable'."
    `(magit-signature-good               ((t :foreground ,green)))
    `(magit-signature-revoked            ((t :foreground ,magenta)))
    `(magit-signature-untrusted          ((t :foreground ,yellow)))
-   `(magit-tag                          ((t :foreground ,orange :weight bold)))
+   `(magit-tag                          ((t :foreground ,orange)))
 ;;;;;; Magit: sequence
    `(magit-sequence-done                ((t :foreground ,fg-2)))
    `(magit-sequence-drop                ((t :foreground ,red)))
@@ -405,23 +418,24 @@ See `custom--inhibit-theme-enable'."
    `(magit-sequence-stop                ((t :foreground ,green)))
 ;;;;; Markdown
    `(markdown-inline-code-face          ((t :background ,bg+2
-                                           :inherit (markdown-code-face
-                                                     font-lock-constant-face))))
+                                            :inherit (markdown-code-face
+                                                      font-lock-constant-face))))
 
-;;;; TODO
+;;;; TODO Prettify useful faces and clean up the rest
 ;;;;; git-annex
-   `(git-annex-dired-annexed-available  ((t :inherit success :weight normal)))
-   `(git-annex-dired-annexed-unavailable ((t :inherit error :weight normal)))
+   `(git-annex-dired-annexed-available  ((t :inherit success)))
+   `(git-annex-dired-annexed-unavailable ((t :inherit error)))
 ;;;;; git-commit
-   `(git-commit-comment-action          ((,class :foreground ,green+1 :weight bold)))
-   `(git-commit-comment-branch          ((,class :foreground ,blue+1 :weight bold))) ; Obsolete
-   `(git-commit-comment-branch-local    ((,class :foreground ,blue+1 :weight bold)))
-   `(git-commit-comment-branch-remote   ((,class :foreground ,green :weight bold)))
-   `(git-commit-comment-heading         ((,class :foreground ,yellow :weight bold)))
+   `(git-commit-comment-action          ((,class :foreground ,green+1)))
+   `(git-commit-comment-branch          ((,class :foreground ,blue+1))) ; Obsolete
+   `(git-commit-comment-branch-local    ((,class :foreground ,blue+1)))
+   `(git-commit-comment-branch-remote   ((,class :foreground ,green)))
+   `(git-commit-comment-heading         ((,class :foreground ,yellow)))
 ;;;;; git-gutter
    `(git-gutter:added                   ((t :foreground ,green :inverse-video t)))
    `(git-gutter:deleted                 ((t :foreground ,red :inverse-video t)))
-   `(git-gutter:modified                ((t :foreground ,blue-2 :inverse-video t)))
+   `(git-gutter:modified                ((t :foreground ,blue-2
+                                            :inverse-video t)))
    `(git-gutter:unchanged               ((t :foreground ,fg :inverse-video t)))
 ;;;;; git-gutter-fr
    `(git-gutter-fr:added                ((t :foreground ,green)))
@@ -432,7 +446,8 @@ See `custom--inhibit-theme-enable'."
 ;;;;; ediff
    `(ediff-current-diff-A               ((t :background ,red-4 :foreground ,fg)))
    `(ediff-current-diff-Ancestor        ((t :background ,red-4 :foreground ,fg)))
-   `(ediff-current-diff-B               ((t :background ,green-2 :foreground ,fg)))
+   `(ediff-current-diff-B               ((t :background ,green-2
+                                            :foreground ,fg)))
    `(ediff-current-diff-C               ((t :background ,blue-5 :foreground ,fg)))
    `(ediff-even-diff-A                  ((t :background ,bg+2)))
    `(ediff-even-diff-Ancestor           ((t :background ,bg+2)))
@@ -447,35 +462,55 @@ See `custom--inhibit-theme-enable'."
    `(ediff-odd-diff-B                   ((t :background ,bg+3)))
    `(ediff-odd-diff-C                   ((t :background ,bg+3)))
 ;;;;; diff-hl
-   `(diff-hl-change                     ((,class :background ,blue-2 :foreground ,blue)))
-   `(diff-hl-delete                     ((,class :background ,red-1 :foreground ,red+1)))
+   `(diff-hl-change                     ((,class :background ,blue-2
+                                                 :foreground ,blue)))
+   `(diff-hl-delete                     ((,class :background ,red-1
+                                                 :foreground ,red+1)))
    `(diff-hl-insert                     ((,class :background ,green-2
                                                  :foreground ,green+1)))
 ;;;;; ace-jump
-   `(ace-jump-face-background           ((t :foreground ,fg-2 :background ,bg :inverse-video nil)))
-   `(ace-jump-face-foreground           ((t :foreground ,green+2 :background ,bg :inverse-video nil)))
+   `(ace-jump-face-background           ((t :background ,bg
+                                            :foreground ,fg-2
+                                            :inverse-video nil)))
+   `(ace-jump-face-foreground           ((t :background ,bg
+                                            :foreground ,green+2
+                                            :inverse-video nil)))
 ;;;;; anzu
-   `(anzu-mode-line                     ((t :foreground ,cyan :weight bold)))
-   `(anzu-mode-line-no-match            ((t :foreground ,red :weight bold)))
-   `(anzu-match-1                       ((t :foreground ,bg :background ,green)))
-   `(anzu-match-2                       ((t :foreground ,bg :background ,orange)))
-   `(anzu-match-3                       ((t :foreground ,bg :background ,blue)))
-   `(anzu-replace-to                    ((t :inherit anzu-replace-highlight :foreground ,yellow)))
+   `(anzu-mode-line                     ((t :foreground ,cyan)))
+   `(anzu-mode-line-no-match            ((t :foreground ,red)))
+   `(anzu-match-1                       ((t :background ,green
+                                            :foreground ,bg)))
+   `(anzu-match-2                       ((t :background ,orange
+                                            :foreground ,bg)))
+   `(anzu-match-3                       ((t :background ,blue
+                                            :foreground ,bg)))
+   `(anzu-replace-to                    ((t :foreground ,yellow
+                                            :inherit anzu-replace-highlight)))
 ;;;;; avy
-   `(avy-background-face                ((t :foreground ,fg-2 :background ,bg :inverse-video nil)))
-   `(avy-lead-face-0                    ((t :foreground ,green+3 :background ,bg :inverse-video nil :weight bold)))
-   `(avy-lead-face-1                    ((t :foreground ,yellow :background ,bg :inverse-video nil :weight bold)))
-   `(avy-lead-face-2                    ((t :foreground ,red+1 :background ,bg :inverse-video nil :weight bold)))
-   `(avy-lead-face                      ((t :foreground ,cyan :background ,bg :inverse-video nil :weight bold)))
+   `(avy-background-face                ((t :foreground ,fg-2
+                                            :inverse-video nil)))
+   `(avy-lead-face                      ((t :foreground ,cyan
+                                            :inverse-video nil)))
+   `(avy-lead-face-0                    ((t :foreground ,green+3
+                                            :inverse-video nil)))
+   `(avy-lead-face-1                    ((t :foreground ,yellow
+                                            :inverse-video nil)))
+   `(avy-lead-face-2                    ((t :foreground ,red+1
+                                            :inverse-video nil)))
 ;;;;; bm
-   `(bm-face                            ((t :background ,yellow-1 :foreground ,bg)))
-   `(bm-fringe-face                     ((t :background ,yellow-1 :foreground ,bg)))
-   `(bm-fringe-persistent-face          ((t :background ,green-2 :foreground ,bg)))
-   `(bm-persistent-face                 ((t :background ,green-2 :foreground ,bg)))
+   `(bm-face                            ((t :background ,yellow-1
+                                            :foreground ,bg)))
+   `(bm-fringe-face                     ((t :background ,yellow-1
+                                            :foreground ,bg)))
+   `(bm-fringe-persistent-face          ((t :background ,green-2
+                                            :foreground ,bg)))
+   `(bm-persistent-face                 ((t :background ,green-2
+                                            :foreground ,bg)))
 ;;;;; cider
    `(cider-result-overlay-face          ((t :background unspecified)))
-   `(cider-enlightened-face             ((t :box (:color ,orange :line-width -1))))
-   `(cider-enlightened-local-face       ((t :weight bold :foreground ,green+1)))
+   `(cider-enlightened-face             ((t :box
+                                            (:color ,orange :line-width -1))))
+   `(cider-enlightened-local-face       ((t :foreground ,green+1)))
    `(cider-deprecated-face              ((t :background ,yellow-2)))
    `(cider-instrumented-face            ((t :box (:color ,red :line-width -1))))
    `(cider-traced-face                  ((t :box (:color ,cyan :line-width -1))))
@@ -483,15 +518,6 @@ See `custom--inhibit-theme-enable'."
    `(cider-test-error-face              ((t :background ,magenta)))
    `(cider-test-success-face            ((t :background ,green-2)))
    `(cider-fringe-good-face             ((t :foreground ,green+4)))
-;;;;; circe
-   `(circe-highlight-nick-face          ((t :foreground ,cyan)))
-   `(circe-my-message-face              ((t :foreground ,fg)))
-   `(circe-fool-face                    ((t :foreground ,red+1)))
-   `(circe-topic-diff-removed-face      ((t :foreground ,red :weight bold)))
-   `(circe-originator-face              ((t :foreground ,fg)))
-   `(circe-server-face                  ((t :foreground ,green)))
-   `(circe-topic-diff-new-face          ((t :foreground ,orange :weight bold)))
-   `(circe-prompt-face                  ((t :foreground ,orange :background ,bg :weight bold)))
 ;;;;; context-coloring
    `(context-coloring-level-0-face      ((t :foreground ,fg)))
    `(context-coloring-level-1-face      ((t :foreground ,cyan)))
@@ -504,7 +530,8 @@ See `custom--inhibit-theme-enable'."
    `(context-coloring-level-8-face      ((t :foreground ,yellow-2)))
    `(context-coloring-level-9-face      ((t :foreground ,red+1)))
 ;;;;; coq
-   `(coq-solve-tactics-face             ((t :foreground nil :inherit font-lock-constant-face)))
+   `(coq-solve-tactics-face             ((t :foreground nil
+                                            :inherit font-lock-constant-face)))
 ;;;;; ctable
    `(ctbl:face-cell-select              ((t :background ,blue :foreground ,bg)))
    `(ctbl:face-continue-bar             ((t :background ,bg-1 :foreground ,bg)))
@@ -523,7 +550,7 @@ See `custom--inhibit-theme-enable'."
    `(diredfl-date-time                  ((t :foreground ,magenta)))
    `(diredfl-deletion                   ((t :foreground ,yellow)))
    `(diredfl-deletion-file-name         ((t :foreground ,red)))
-   `(diredfl-dir-heading                ((t :foreground ,blue :background ,bg-3)))
+   `(diredfl-dir-heading                ((t :background ,bg-3 :foreground ,blue)))
    `(diredfl-dir-priv                   ((t :foreground ,cyan)))
    `(diredfl-exec-priv                  ((t :foreground ,red)))
    `(diredfl-executable-tag             ((t :foreground ,green+1)))
@@ -563,81 +590,41 @@ See `custom--inhibit-theme-enable'."
    `(elfeed-log-info-level-face         ((t :foreground ,blue)))
    `(elfeed-log-warn-level-face         ((t :foreground ,yellow)))
    `(elfeed-search-date-face            ((t :foreground ,yellow-1
-                                            :underline t
-                                            :weight bold)))
+                                            :underline t)))
    `(elfeed-search-tag-face             ((t :foreground ,green)))
    `(elfeed-search-feed-face            ((t :foreground ,cyan)))
    `(elfeed-search-title-face           ((t :foreground ,fg-1)))
-   `(elfeed-search-unread-title-face    ((t :foreground ,fg :weight bold)))
-;;;;; emacs-w3m
-   `(w3m-anchor                         ((t :foreground ,yellow :underline t)))
-   `(w3m-arrived-anchor                 ((t :foreground ,yellow-2 :underline t)))
-   `(w3m-form                           ((t :foreground ,red-1 :underline t)))
-   `(w3m-header-line-location-title     ((t :foreground ,yellow :underline t)))
-   `(w3m-history-current-url            ((t :inherit match)))
-   `(w3m-lnum                           ((t :foreground ,green+2 :background ,bg)))
-   `(w3m-lnum-match                     ((t :background ,bg-3 :foreground ,orange)))
-   `(w3m-lnum-minibuffer-prompt         ((t :foreground ,yellow)))
-;;;;; erc
-   `(erc-action-face                    ((t :inherit erc-default-face)))
-   `(erc-bold-face                      ((t :weight bold)))
-   `(erc-current-nick-face              ((t :foreground ,blue :weight bold)))
-   `(erc-dangerous-host-face            ((t :inherit font-lock-warning-face)))
-   `(erc-default-face                   ((t :foreground ,fg)))
-   `(erc-direct-msg-face                ((t :inherit erc-default-face)))
-   `(erc-error-face                     ((t :inherit font-lock-warning-face)))
-   `(erc-fool-face                      ((t :inherit erc-default-face)))
-   `(erc-highlight-face                 ((t :inherit hover-highlight)))
-   `(erc-input-face                     ((t :foreground ,yellow)))
-   `(erc-keyword-face                   ((t :foreground ,blue :weight bold)))
-   `(erc-nick-default-face              ((t :foreground ,yellow :weight bold)))
-   `(erc-my-nick-face                   ((t :foreground ,red :weight bold)))
-   `(erc-nick-msg-face                  ((t :inherit erc-default-face)))
-   `(erc-notice-face                    ((t :foreground ,green)))
-   `(erc-pal-face                       ((t :foreground ,orange :weight bold)))
-   `(erc-prompt-face                    ((t :foreground ,orange :background ,bg)))
-   `(erc-timestamp-face                 ((t :foreground ,green+4)))
-   `(erc-underline-face                 ((t :underline t)))
+   `(elfeed-search-unread-title-face    ((t :foreground ,fg)))
 ;;;;; eros
    `(eros-result-overlay-face           ((t :background unspecified)))
 ;;;;; ert
-   `(ert-test-result-expected           ((t :foreground ,green+4 :background ,bg)))
-   `(ert-test-result-unexpected         ((t :foreground ,red :background ,bg)))
+   `(ert-test-result-expected           ((t :background ,bg
+                                            :foreground ,green+4)))
+   `(ert-test-result-unexpected         ((t :foreground ,red)))
 ;;;;; eshell
-   `(eshell-prompt                      ((t :foreground ,yellow :weight bold)))
-   `(eshell-ls-archive                  ((t :foreground ,red-1 :weight bold)))
+   `(eshell-prompt                      ((t :foreground ,yellow)))
+   `(eshell-ls-archive                  ((t :foreground ,red-1)))
    `(eshell-ls-backup                   ((t :inherit font-lock-comment-face)))
    `(eshell-ls-clutter                  ((t :inherit font-lock-comment-face)))
-   `(eshell-ls-directory                ((t :foreground ,blue+1 :weight bold)))
-   `(eshell-ls-executable               ((t :foreground ,red+1 :weight bold)))
+   `(eshell-ls-directory                ((t :foreground ,blue+1)))
+   `(eshell-ls-executable               ((t :foreground ,red+1)))
    `(eshell-ls-unreadable               ((t :foreground ,fg)))
    `(eshell-ls-missing                  ((t :inherit font-lock-warning-face)))
    `(eshell-ls-product                  ((t :inherit font-lock-doc-face)))
-   `(eshell-ls-special                  ((t :foreground ,yellow :weight bold)))
-   `(eshell-ls-symlink                  ((t :foreground ,cyan :weight bold)))
+   `(eshell-ls-special                  ((t :foreground ,yellow)))
+   `(eshell-ls-symlink                  ((t :foreground ,cyan)))
 ;;;;; flx
-   `(flx-highlight-face                 ((t :foreground ,green+2 :weight bold)))
-;;;;; flycheck
-   `(flycheck-error                     ((t :inherit flymake-error)))
-   `(flycheck-info                      ((t :inherit flymake-note)))
-   `(flycheck-warning                   ((t :inherit flymake-warning)))
-   `(flycheck-fringe-error              ((t :foreground ,red)))
-   `(flycheck-fringe-info               ((t :foreground ,blue)))
-   `(flycheck-fringe-warning            ((t :foreground ,orange)))
+   `(flx-highlight-face                 ((t :foreground ,green+2)))
 ;;;;; full-ack
    `(ack-separator                      ((t :foreground ,fg)))
    `(ack-file                           ((t :foreground ,blue)))
    `(ack-line                           ((t :foreground ,yellow)))
-   `(ack-match                          ((t :foreground ,orange :background ,bg-3)))
-;;;;; go-guru
-   `(go-guru-hl-identifier-face         ((t :foreground ,bg-3 :background ,green+1)))
+   `(ack-match                          ((t  :background ,bg-3
+                                             :foreground ,orange)))
 ;;;;; guide-key
    `(guide-key/highlight-command-face   ((t :foreground ,blue)))
    `(guide-key/key-face                 ((t :foreground ,green)))
    `(guide-key/prefix-command-face      ((t :foreground ,green+1)))
-;;;;; hackernews
-   `(hackernews-comment-count           ((t :inherit link-visited :underline nil)))
-   `(hackernews-link                    ((t :inherit link :underline nil)))
 ;;;;; highlight-numbers
    `(highlight-numbers-number           ((t :foreground ,blue)))
 ;;;;; highlight-symbol
@@ -645,44 +632,55 @@ See `custom--inhibit-theme-enable'."
 ;;;;; highlight-thing
    `(highlight-thing                    ((t :background ,bg+3)))
 ;;;;; hl-sexp
-   `(hl-sexp-face                       ((,class :background ,bg+2) (t :weight bold)))
+   `(hl-sexp-face                       ((,class :background ,bg+2) (t)))
 ;;;;; hydra
-   `(hydra-face-red                     ((t :foreground ,red-1 :background ,bg)))
-   `(hydra-face-amaranth                ((t :foreground ,red-3 :background ,bg)))
-   `(hydra-face-blue                    ((t :foreground ,blue :background ,bg)))
-   `(hydra-face-pink                    ((t :foreground ,magenta :background ,bg)))
-   `(hydra-face-teal                    ((t :foreground ,cyan :background ,bg)))
+   `(hydra-face-red                     ((t :foreground ,red-1)))
+   `(hydra-face-amaranth                ((t :foreground ,red-3)))
+   `(hydra-face-blue                    ((t :foreground ,blue)))
+   `(hydra-face-pink                    ((t :background ,bg
+                                            :foreground ,magenta)))
+   `(hydra-face-teal                    ((t :foreground ,cyan)))
 ;;;;; info+
-   `(info-command-ref-item              ((t :background ,bg-3 :foreground ,orange)))
-   `(info-constant-ref-item             ((t :background ,bg-3 :foreground ,magenta)))
+   `(info-command-ref-item              ((t :background ,bg-3
+                                            :foreground ,orange)))
+   `(info-constant-ref-item             ((t :background ,bg-3
+                                            :foreground ,magenta)))
    `(info-double-quoted-name            ((t :inherit font-lock-comment-face)))
-   `(info-file                          ((t :background ,bg-3 :foreground ,yellow)))
-   `(info-function-ref-item             ((t :background ,bg-3 :inherit font-lock-function-name-face)))
-   `(info-macro-ref-item                ((t :background ,bg-3 :foreground ,yellow)))
+   `(info-file                          ((t :background ,bg-3
+                                            :foreground ,yellow)))
+   `(info-function-ref-item             ((t :background ,bg-3
+                                            :inherit
+                                            font-lock-function-name-face)))
+   `(info-macro-ref-item                ((t :background ,bg-3
+                                            :foreground ,yellow)))
    `(info-menu                          ((t :foreground ,yellow)))
    `(info-quoted-name                   ((t :inherit font-lock-constant-face)))
    `(info-reference-item                ((t :background ,bg-3)))
    `(info-single-quote                  ((t :inherit font-lock-keyword-face)))
-   `(info-special-form-ref-item         ((t :background ,bg-3 :foreground ,yellow)))
+   `(info-special-form-ref-item         ((t :background ,bg-3
+                                            :foreground ,yellow)))
    `(info-string                        ((t :inherit font-lock-string-face)))
-   `(info-syntax-class-item             ((t :background ,bg-3 :foreground ,blue+1)))
-   `(info-user-option-ref-item          ((t :background ,bg-3 :foreground ,red)))
-   `(info-variable-ref-item             ((t :background ,bg-3 :foreground ,orange)))
+   `(info-syntax-class-item             ((t :background ,bg-3
+                                            :foreground ,blue+1)))
+   `(info-user-option-ref-item          ((t :background ,bg-3
+                                            :foreground ,red)))
+   `(info-variable-ref-item             ((t :background ,bg-3
+                                            :foreground ,orange)))
 ;;;;; irfc
-   `(irfc-head-name-face                ((t :foreground ,red :weight bold)))
-   `(irfc-head-number-face              ((t :foreground ,red :weight bold)))
-   `(irfc-reference-face                ((t :foreground ,blue-1 :weight bold)))
+   `(irfc-head-name-face                ((t :foreground ,red)))
+   `(irfc-head-number-face              ((t :foreground ,red)))
+   `(irfc-reference-face                ((t :foreground ,blue-1)))
    `(irfc-requirement-keyword-face      ((t :inherit font-lock-keyword-face)))
    `(irfc-rfc-link-face                 ((t :inherit link)))
-   `(irfc-rfc-number-face               ((t :foreground ,cyan :weight bold)))
-   `(irfc-std-number-face               ((t :foreground ,green+4 :weight bold)))
+   `(irfc-rfc-number-face               ((t :foreground ,cyan)))
+   `(irfc-std-number-face               ((t :foreground ,green+4)))
    `(irfc-table-item-face               ((t :foreground ,green+3)))
    `(irfc-title-face                    ((t :foreground ,yellow :underline t)))
 ;;;;; iedit-mode
-   `(iedit-occurrence                   ((t :background ,bg+3 :weight bold)))
+   `(iedit-occurrence                   ((t :background ,bg+3)))
 ;;;;; js2-mode
    `(js2-warning                        ((t :underline ,orange)))
-   `(js2-error                          ((t :foreground ,red :weight bold)))
+   `(js2-error                          ((t :foreground ,red)))
    `(js2-jsdoc-tag                      ((t :foreground ,green-2)))
    `(js2-jsdoc-type                     ((t :foreground ,green+2)))
    `(js2-jsdoc-value                    ((t :foreground ,green+3)))
@@ -697,44 +695,29 @@ See `custom--inhibit-theme-enable'."
    `(js2-function-call                  ((t :foreground ,cyan)))
    `(js2-private-member                 ((t :foreground ,blue-1)))
    `(js2-keywords                       ((t :foreground ,magenta)))
-;;;;; ledger-mode
-   `(ledger-font-payee-uncleared-face   ((t :foreground ,red-1 :weight bold)))
-   `(ledger-font-payee-cleared-face     ((t :foreground ,fg :weight normal)))
-   `(ledger-font-payee-pending-face     ((t :foreground ,red :weight normal)))
-   `(ledger-font-xact-highlight-face    ((t :background ,bg+2)))
-   `(ledger-font-auto-xact-face         ((t :foreground ,yellow-1 :weight normal)))
-   `(ledger-font-periodic-xact-face     ((t :foreground ,green :weight normal)))
-   `(ledger-font-pending-face           ((t :foreground ,orange weight: normal)))
-   `(ledger-font-other-face             ((t :foreground ,fg)))
-   `(ledger-font-posting-date-face      ((t :foreground ,orange :weight normal)))
-   `(ledger-font-posting-account-face   ((t :foreground ,blue-1)))
-   `(ledger-font-posting-account-cleared-face ((t :foreground ,fg)))
-   `(ledger-font-posting-account-pending-face ((t :foreground ,orange)))
-   `(ledger-font-posting-amount-face    ((t :foreground ,orange)))
-   `(ledger-occur-narrowed-face         ((t :foreground ,fg-2 :invisible t)))
-   `(ledger-occur-xact-face             ((t :background ,bg+2)))
-   `(ledger-font-comment-face           ((t :foreground ,green)))
-   `(ledger-font-reconciler-uncleared-face ((t :foreground ,red-1 :weight bold)))
-   `(ledger-font-reconciler-cleared-face ((t :foreground ,fg :weight normal)))
-   `(ledger-font-reconciler-pending-face ((t :foreground ,orange :weight normal)))
-   `(ledger-font-report-clickable-face  ((t :foreground ,orange :weight normal)))
-;;;;; linum-mode
-   `(linum                              ((t :foreground ,green+2 :background ,bg)))
 ;;;;; lispy
    `(lispy-command-name-face            ((t :background ,bg-1
-                                            :inherit ,font-lock-function-name-face)))
-   `(lispy-cursor-face                  ((t :foreground ,bg :background ,fg)))
-   `(lispy-face-hint                    ((t :inherit highlight :foreground ,yellow)))
+                                            :inherit
+                                            ,font-lock-function-name-face)))
+   `(lispy-cursor-face                  ((t :background ,fg :foreground ,bg)))
+   `(lispy-face-hint                    ((t :foreground ,yellow
+                                            :inherit highlight)))
 ;;;;; lui
    `(lui-time-stamp-face                ((t :foreground ,blue-1)))
-   `(lui-hilight-face                   ((t :foreground ,green+2 :background ,bg)))
+   `(lui-hilight-face                   ((t :background ,bg
+                                            :foreground ,green+2)))
    `(lui-button-face                    ((t :inherit hover-highlight)))
 ;;;;; macrostep
-   `(macrostep-gensym-1                 ((t :foreground ,green+2 :background ,bg-3)))
-   `(macrostep-gensym-2                 ((t :foreground ,red+1 :background ,bg-3)))
-   `(macrostep-gensym-3                 ((t :foreground ,blue+1 :background ,bg-3)))
-   `(macrostep-gensym-4                 ((t :foreground ,magenta :background ,bg-3)))
-   `(macrostep-gensym-5                 ((t :foreground ,yellow :background ,bg-3)))
+   `(macrostep-gensym-1                 ((t :background ,bg-3
+                                            :foreground ,green+2)))
+   `(macrostep-gensym-2                 ((t :background ,bg-3
+                                            :foreground ,red+1)))
+   `(macrostep-gensym-3                 ((t :background ,bg-3
+                                            :foreground ,blue+1)))
+   `(macrostep-gensym-4                 ((t :background ,bg-3
+                                            :foreground ,magenta)))
+   `(macrostep-gensym-5                 ((t :background ,bg-3
+                                            :foreground ,yellow)))
    `(macrostep-expansion-highlight-face ((t :inherit highlight)))
    `(macrostep-macro-face               ((t :underline t)))
 ;;;;; markup-faces
@@ -747,11 +730,12 @@ See `custom--inhibit-theme-enable'."
    `(markup-meta-face                   ((t :foreground ,yellow)))
    `(markup-meta-hide-face              ((t :foreground ,yellow)))
    `(markup-secondary-text-face         ((t :foreground ,yellow-1)))
-   `(markup-title-0-face                ((t :inherit font-lock-function-name-face)))
-   `(markup-title-1-face                ((t :inherit font-lock-function-name-face)))
-   `(markup-title-2-face                ((t :inherit font-lock-function-name-face)))
-   `(markup-title-3-face                ((t :inherit font-lock-function-name-face)))
-   `(markup-title-4-face                ((t :inherit font-lock-function-name-face)))
+   `(markup-title-0-face                ((t :inherit
+                                            font-lock-function-name-face)))
+   `(markup-title-1-face                ((t :inherit markup-title-0-face)))
+   `(markup-title-2-face                ((t :inherit markup-title-0-face)))
+   `(markup-title-3-face                ((t :inherit markup-title-0-face)))
+   `(markup-title-4-face                ((t :inherit markup-title-0-face)))
    `(markup-typewriter-face             ((t :inherit font-lock-constant-face)))
    `(markup-verbatim-face               ((t :inherit font-lock-constant-face)))
    `(markup-value-face                  ((t :foreground ,yellow)))
@@ -759,12 +743,12 @@ See `custom--inhibit-theme-enable'."
    `(message-cited-text                 ((t :inherit font-lock-comment-face)))
    `(message-header-name                ((t :foreground ,green+1)))
    `(message-header-other               ((t :foreground ,green)))
-   `(message-header-to                  ((t :foreground ,yellow :weight bold)))
-   `(message-header-cc                  ((t :foreground ,yellow :weight bold)))
-   `(message-header-newsgroups          ((t :foreground ,yellow :weight bold)))
-   `(message-header-subject             ((t :foreground ,orange :weight bold)))
+   `(message-header-to                  ((t :foreground ,yellow)))
+   `(message-header-cc                  ((t :foreground ,yellow)))
+   `(message-header-newsgroups          ((t :foreground ,yellow)))
+   `(message-header-subject             ((t :foreground ,orange)))
    `(message-header-xheader             ((t :foreground ,green)))
-   `(message-mml                        ((t :foreground ,yellow :weight bold)))
+   `(message-mml                        ((t :foreground ,yellow)))
    `(message-separator                  ((t :inherit font-lock-comment-face)))
 ;;;;; mew
    `(mew-face-header-subject            ((t :foreground ,orange)))
@@ -774,7 +758,7 @@ See `custom--inhibit-theme-enable'."
    `(mew-face-header-key                ((t :foreground ,green)))
    `(mew-face-header-private            ((t :foreground ,green)))
    `(mew-face-header-important          ((t :foreground ,blue)))
-   `(mew-face-header-marginal           ((t :foreground ,fg :weight bold)))
+   `(mew-face-header-marginal           ((t :foreground ,fg+1)))
    `(mew-face-header-warning            ((t :foreground ,red)))
    `(mew-face-header-xmew               ((t :foreground ,green)))
    `(mew-face-header-xmew-bad           ((t :foreground ,red)))
@@ -794,9 +778,10 @@ See `custom--inhibit-theme-enable'."
    `(mew-face-eof-message               ((t :foreground ,green)))
    `(mew-face-eof-part                  ((t :foreground ,yellow)))
 ;;;;; mic-paren
-   `(paren-face-match                   ((t :foreground ,cyan :background ,bg)))
-   `(paren-face-mismatch                ((t :foreground ,bg :background ,magenta)))
-   `(paren-face-no-match                ((t :foreground ,bg :background ,red)))
+   `(paren-face-match                   ((t :foreground ,cyan)))
+   `(paren-face-mismatch                ((t :background ,magenta
+                                            :foreground ,bg)))
+   `(paren-face-no-match                ((t :background ,red :foreground ,bg)))
 ;;;;; mingus
    `(mingus-directory-face              ((t :foreground ,blue)))
    `(mingus-pausing-face                ((t :foreground ,magenta)))
@@ -805,7 +790,7 @@ See `custom--inhibit-theme-enable'."
    `(mingus-mark-face                   ((t :foreground ,magenta)))
    `(mingus-song-file-face              ((t :foreground ,yellow)))
    `(mingus-artist-face                 ((t :foreground ,cyan)))
-   `(mingus-album-face                  ((t :underline t :foreground ,red+1)))
+   `(mingus-album-face                  ((t :foreground ,red+1 :underline t)))
    `(mingus-album-stale-face            ((t :foreground ,red+1)))
    `(mingus-stopped-face                ((t :foreground ,red)))
 ;;;;; nav
@@ -848,8 +833,8 @@ See `custom--inhibit-theme-enable'."
    `(p4-diff-ins-face                   ((t :inherit diff-added)))
 ;;;;; c/perl
    `(cperl-nonoverridable-face          ((t :foreground ,magenta)))
-   `(cperl-array-face                   ((t :foreground ,yellow, :background ,bg)))
-   `(cperl-hash-face                    ((t :foreground ,yellow-1, :background ,bg)))
+   `(cperl-array-face                   ((t :foreground ,yellow)))
+   `(cperl-hash-face                    ((t :foreground ,yellow-1)))
 ;;;;; paren-face
    `(parenthesis                        ((t :foreground ,fg-2)))
 ;;;;; racket-mode
@@ -877,29 +862,21 @@ See `custom--inhibit-theme-enable'."
    `(rcirc-server-prefix                ((t :foreground ,green+1)))
    `(rcirc-timestamp                    ((t :foreground ,green+2)))
    `(rcirc-nick-in-message              ((t :foreground ,yellow)))
-   `(rcirc-nick-in-message-full-line    ((t :weight bold)))
-   `(rcirc-prompt                       ((t :foreground ,yellow :weight bold)))
+   `(rcirc-nick-in-message-full-line    ((t :foreground ,fg+1)))
+   `(rcirc-prompt                       ((t :foreground ,yellow)))
    `(rcirc-track-nick                   ((t :inverse-video t)))
-   `(rcirc-track-keyword                ((t :weight bold)))
-   `(rcirc-url                          ((t :weight bold)))
-   `(rcirc-keyword                      ((t :foreground ,yellow :weight bold)))
+   `(rcirc-track-keyword                ((t :foreground ,fg+1)))
+   `(rcirc-url                          ((t :foreground ,fg+1)))
+   `(rcirc-keyword                      ((t :foreground ,yellow)))
 ;;;;; re-builder
-   `(reb-match-0                        ((t :foreground ,bg :background ,magenta)))
-   `(reb-match-1                        ((t :foreground ,bg :background ,blue)))
-   `(reb-match-2                        ((t :foreground ,bg :background ,orange)))
-   `(reb-match-3                        ((t :foreground ,bg :background ,red)))
-;;;;; realgud
-   `(realgud-overlay-arrow1             ((t :foreground ,green)))
-   `(realgud-overlay-arrow2             ((t :foreground ,yellow)))
-   `(realgud-overlay-arrow3             ((t :foreground ,orange)))
-   `(realgud-bp-enabled-face            ((t :inherit error)))
-   `(realgud-bp-disabled-face           ((t :inherit secondary-selection)))
-   `(realgud-bp-line-enabled-face       ((t :box (:color ,red :style nil))))
-   `(realgud-bp-line-disabled-face      ((t :box (:color "grey70" :style nil))))
-   `(realgud-line-number                ((t :foreground ,yellow)))
-   `(realgud-backtrace-number           ((t :foreground ,yellow, :weight bold)))
+   `(reb-match-0                        ((t :background ,magenta
+                                            :foreground ,bg)))
+   `(reb-match-1                        ((t :background ,blue :foreground ,bg)))
+   `(reb-match-2                        ((t :background ,orange
+                                            :foreground ,bg)))
+   `(reb-match-3                        ((t :background ,red :foreground ,bg)))
 ;;;;; regex-tool
-   `(regex-tool-matched-face            ((t :background ,blue-4 :weight bold)))
+   `(regex-tool-matched-face            ((t :background ,blue-4)))
 ;;;;; rpm-mode
    `(rpm-spec-dir-face                  ((t :foreground ,green)))
    `(rpm-spec-doc-face                  ((t :foreground ,green)))
@@ -918,30 +895,32 @@ See `custom--inhibit-theme-enable'."
    `(rst-level-5-face                   ((t :foreground ,cyan)))
    `(rst-level-6-face                   ((t :foreground ,green-2)))
 ;;;;; sh-mode
-   `(sh-heredoc                         ((t :foreground ,yellow :weight bold)))
+   `(sh-heredoc                         ((t :foreground ,yellow)))
    `(sh-quoted-exec                     ((t :foreground ,red)))
 ;;;;; show-paren
-   `(show-paren-mismatch                ((t :foreground ,red+1 :background ,bg+4)))
-   `(show-paren-match                   ((t :foreground ,fg :background ,bg+4)))
+   `(show-paren-mismatch                ((t :background ,bg+4
+                                            :foreground ,red+1)))
+   `(show-paren-match                   ((t :background ,bg+4
+                                            :foreground ,fg)))
 ;;;;; smartparens
-   `(sp-show-pair-mismatch-face         ((t :foreground ,red+1 :background ,bg+4)))
-   `(sp-show-pair-match-face            ((t :background ,bg+4 :weight bold)))
-;;;;; sml-mode-line
-   `(sml-modeline-end-face              ((t :inherit default :width condensed)))
-;;;;; solaire
-   `(solaire-default-face               ((t :inherit default :background ,bg-2)))
-   `(solaire-minibuffer-face            ((t :inherit default :background ,bg-2)))
-   `(solaire-hl-line-face               ((t :inherit hl-line :background ,bg)))
-   `(solaire-org-hide-face              ((t :inherit org-hide :background ,bg-2)))
+   `(sp-show-pair-mismatch-face         ((t :background ,bg+4
+                                            :foreground ,red+1)))
+   `(sp-show-pair-match-face            ((t :background ,bg+4)))
 ;;;;; term
-   `(term-color-black                   ((t :foreground ,bg :background ,bg-3)))
-   `(term-color-red                     ((t :foreground ,red-2 :background ,red-4)))
-   `(term-color-green                   ((t :foreground ,green :background ,green-5)))
-   `(term-color-yellow                  ((t :foreground ,orange :background ,yellow)))
-   `(term-color-blue                    ((t :foreground ,blue-1 :background ,blue-4)))
-   `(term-color-magenta                 ((t :foreground ,magenta :background ,red)))
-   `(term-color-cyan                    ((t :foreground ,cyan :background ,blue)))
-   `(term-color-white                   ((t :foreground ,fg :background ,fg-2)))
+   `(term-color-black                   ((t :background ,bg-3 :foreground ,bg)))
+   `(term-color-red                     ((t :background ,red-4
+                                            :foreground ,red-2)))
+   `(term-color-green                   ((t :background ,green-5
+                                            :foreground ,green)))
+   `(term-color-yellow                  ((t :background ,yellow
+                                            :foreground ,orange)))
+   `(term-color-blue                    ((t :background ,blue-4
+                                            :foreground ,blue-1)))
+   `(term-color-magenta                 ((t :background ,red
+                                            :foreground ,magenta)))
+   `(term-color-cyan                    ((t :background ,blue
+                                            :foreground ,cyan)))
+   `(term-color-white                   ((t :background ,fg-2 :foreground ,fg)))
    `(term-default-fg-color              ((t :inherit term-color-white)))
    `(term-default-bg-color              ((t :inherit term-color-black)))
 ;;;;; undo-tree
@@ -951,12 +930,14 @@ See `custom--inhibit-theme-enable'."
    `(undo-tree-visualizer-register-face ((t :foreground ,yellow)))
    `(undo-tree-visualizer-unmodified-face ((t :foreground ,cyan)))
 ;;;;; visual-regexp
-   `(vr/group-0                         ((t :foreground ,bg :background ,green)))
-   `(vr/group-1                         ((t :foreground ,bg :background ,orange)))
-   `(vr/group-2                         ((t :foreground ,bg :background ,blue)))
+   `(vr/group-0                         ((t :background ,green :foreground ,bg)))
+   `(vr/group-1                         ((t :background ,orange
+                                            :foreground ,bg)))
+   `(vr/group-2                         ((t :background ,blue :foreground ,bg)))
    `(vr/match-0                         ((t :inherit isearch)))
-   `(vr/match-1                         ((t :foreground ,yellow-2 :background ,bg-3)))
-   `(vr/match-separator-face            ((t :foreground ,red :weight bold)))
+   `(vr/match-1                         ((t :background ,bg-3
+                                            :foreground ,yellow-2)))
+   `(vr/match-separator-face            ((t :foreground ,red)))
 ;;;;; volatile-highlights
    `(vhl/default-face                   ((t :background ,bg-1)))
 ;;;;; web-mode
@@ -965,7 +946,7 @@ See `custom--inhibit-theme-enable'."
    `(web-mode-constant-face             ((t :inherit ,font-lock-constant-face)))
    `(web-mode-css-at-rule-face          ((t :foreground ,orange )))
    `(web-mode-css-prop-face             ((t :foreground ,orange)))
-   `(web-mode-css-pseudo-class-face     ((t :foreground ,green+3 :weight bold)))
+   `(web-mode-css-pseudo-class-face     ((t :foreground ,green+3)))
    `(web-mode-css-rule-face             ((t :foreground ,blue)))
    `(web-mode-doctype-face              ((t :inherit ,font-lock-comment-face)))
    `(web-mode-folded-face               ((t :underline t)))
@@ -974,54 +955,17 @@ See `custom--inhibit-theme-enable'."
    `(web-mode-html-attr-value-face      ((t :inherit ,font-lock-string-face)))
    `(web-mode-html-tag-face             ((t :foreground ,cyan)))
    `(web-mode-keyword-face              ((t :inherit ,font-lock-keyword-face)))
-   `(web-mode-preprocessor-face         ((t :inherit ,font-lock-preprocessor-face)))
+   `(web-mode-preprocessor-face         ((t :inherit
+                                            ,font-lock-preprocessor-face)))
    `(web-mode-string-face               ((t :inherit ,font-lock-string-face)))
    `(web-mode-type-face                 ((t :inherit ,font-lock-type-face)))
-   `(web-mode-variable-name-face        ((t :inherit ,font-lock-variable-name-face)))
-   `(web-mode-server-background-face    ((t :background ,bg)))
+   `(web-mode-variable-name-face        ((t :inherit
+                                            ,font-lock-variable-name-face)))
    `(web-mode-server-comment-face       ((t :inherit web-mode-comment-face)))
    `(web-mode-server-string-face        ((t :inherit web-mode-string-face)))
    `(web-mode-symbol-face               ((t :inherit font-lock-constant-face)))
    `(web-mode-warning-face              ((t :inherit font-lock-warning-face)))
-   `(web-mode-whitespaces-face          ((t :background ,red)))
-;;;;; wanderlust
-   `(wl-highlight-folder-few-face       ((t :foreground ,red-2)))
-   `(wl-highlight-folder-many-face      ((t :foreground ,red-1)))
-   `(wl-highlight-folder-path-face      ((t :foreground ,orange)))
-   `(wl-highlight-folder-unknown-face   ((t :foreground ,blue)))
-   `(wl-highlight-folder-unread-face    ((t :foreground ,blue)))
-   `(wl-highlight-folder-zero-face      ((t :foreground ,fg)))
-   `(wl-highlight-message-citation-header ((t :foreground ,red-1)))
-   `(wl-highlight-message-cited-text-1  ((t :foreground ,red)))
-   `(wl-highlight-message-cited-text-2  ((t :foreground ,green+2)))
-   `(wl-highlight-message-cited-text-3  ((t :foreground ,blue)))
-   `(wl-highlight-message-cited-text-4  ((t :foreground ,blue+1)))
-   `(wl-highlight-message-header-contents ((t :foreground ,green+1)))
-   `(wl-highlight-message-header-contents-face ((t :foreground ,green)))
-   `(wl-highlight-message-headers-face  ((t :foreground ,red+1)))
-   `(wl-highlight-message-important-header-contents ((t :foreground ,green+2)))
-   `(wl-highlight-message-important-header-contents2 ((t :foreground ,green+2)))
-   `(wl-highlight-message-signature     ((t :foreground ,green)))
-   `(wl-highlight-message-unimportant-header-contents ((t (:foreground ,fg))))
-   `(wl-highlight-summary-answered-face ((t :foreground ,blue)))
-   `(wl-highlight-summary-displaying-face ((t :underline t :weight bold)))
-   `(wl-highlight-summary-disposed-face ((t :foreground ,fg :slant italic)))
-   `(wl-highlight-summary-new-face      ((t :foreground ,blue)))
-   `(wl-highlight-summary-normal-face   ((t :foreground ,fg)))
-   `(wl-highlight-summary-refiled-face  ((t :foreground ,fg)))
-   `(wl-highlight-summary-thread-top-face ((t :foreground ,yellow)))
-   `(wl-highlight-thread-indent-face    ((t :foreground ,magenta)))
-;;;;; which-func-mode
-   `(which-func                         ((t :foreground ,green+4)))
-;;;;; xcscope
-   `(cscope-file-face                   ((t :foreground ,yellow :weight bold)))
-   `(cscope-function-face               ((t :foreground ,cyan :weight bold)))
-   `(cscope-line-number-face            ((t :foreground ,red :weight bold)))
-   `(cscope-mouse-face                  ((t :foreground ,bg :background ,blue+1)))
-   `(cscope-separator-face              ((t :foreground ,red :underline t :overline t)))
-;;;;; yascroll
-   `(yascroll:thumb-text-area           ((t :background ,bg-3)))
-   `(yascroll:thumb-fringe              ((t :background ,bg-3 :foreground ,bg-3)))))
+   `(web-mode-whitespaces-face          ((t :background ,red)))))
 
 ;;; Theme Variables
 (zenmelt-with-colors nil
@@ -1029,9 +973,6 @@ See `custom--inhibit-theme-enable'."
    'zenmelt
 ;;;;; ansi-color
    `(ansi-color-names-vector [,bg ,red ,green ,yellow ,blue ,magenta ,cyan ,fg])
-;;;;; company-quickhelp
-   `(company-quickhelp-color-background ,bg+2)
-   `(company-quickhelp-color-foreground ,fg)
 ;;;;; fill-column-indicator
    `(fci-rule-color ,bg-1)
 ;;;;; nrepl-client
