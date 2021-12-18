@@ -164,11 +164,13 @@ See `custom--inhibit-theme-enable'."
    `(line-number                        ((t :foreground ,bg+4)))
    `(line-number-current-line           ((t :foreground ,yellow-2
                                             :inherit hl-line)))
-   `(menu                               ((t :foreground ,fg :background ,bg)))
-   `(mode-line                          ((,class :background ,bg-3 :foreground ,green+1)
-                                         (t :inverse-video t)))
-   `(mode-line-buffer-id                ((t :foreground ,yellow :weight bold)))
-   `(mode-line-inactive                 ((t :background ,bg-1 :foreground ,green-2)))
+   `(menu                               ((t :inherit default)))
+   `(mode-line                          ((t :background ,bg-3
+                                            :foreground ,green)))
+   `(mode-line-buffer-id                ((t :foreground ,green+4)))
+   `(mode-line-highlight                ((t :inherit highlight :box -2)))
+   `(mode-line-emphasis                 ((t :inherit mode-line)))
+   `(mode-line-inactive                 ((t :background ,bg-1 :inherit shadow)))
    `(minibuffer-prompt                  ((t :foreground ,yellow)))
    `(region                             ((,class :background ,blue-5)
                                          (t :inverse-video t)))
@@ -326,6 +328,14 @@ See `custom--inhibit-theme-enable'."
                                             :inherit variable-pitch)))
 ;;;;; Language Servers
    `(eglot-highlight-symbol-face        ((t :inherit highlight)))
+;;;;; Mode-Line
+   `(doom-modeline-bar                  ((t :inherit mode-line)))
+   `(doom-modeline-bar-inactive         ((t :inherit doom-modeline-bar)))
+   `(doom-modeline-evil-emacs-state     ((t :foreground ,magenta)))
+   `(doom-modeline-evil-insert-state    ((t :foreground ,blue)))
+   `(doom-modeline-info                 ((t :foreground ,green+4)))
+   `(doom-modeline-project-dir          ((t :inherit dired-directory)))
+   `(doom-modeline-project-parent-dir   ((t :inherit shadow)))
 ;;;;; Version Control
 ;;;;;; Magit: bisect
    `(magit-bisect-good                  ((t :foreground ,green)))
@@ -567,12 +577,6 @@ See `custom--inhibit-theme-enable'."
    `(diredfl-read-priv                  ((t :foreground ,green-1)))
    `(diredfl-symlink                    ((t :foreground ,yellow)))
    `(diredfl-write-priv                 ((t :foreground ,magenta)))
-;;;;; doom-modeline
-   `(doom-modeline-bar                  ((t :background nil)))
-   `(doom-modeline-bar-inactive         ((t :background nil)))
-   `(doom-modeline-evil-emacs-state     ((t :foreground ,magenta)))
-   `(doom-modeline-evil-insert-state    ((t :foreground ,blue+1)))
-   `(doom-modeline-project-dir          ((t :foreground ,cyan)))
 ;;;;; egg
    `(egg-text-base                      ((t :foreground ,fg)))
    `(egg-help-header-1                  ((t :foreground ,yellow)))
@@ -924,8 +928,8 @@ See `custom--inhibit-theme-enable'."
    `(term-default-fg-color              ((t :inherit term-color-white)))
    `(term-default-bg-color              ((t :inherit term-color-black)))
 ;;;;; undo-tree
-   `(undo-tree-visualizer-active-branch-face ((t :foreground ,fg+1 :weight bold)))
-   `(undo-tree-visualizer-current-face  ((t :foreground ,red-1 :weight bold)))
+   `(undo-tree-visualizer-active-branch-face ((t :foreground ,fg+1)))
+   `(undo-tree-visualizer-current-face  ((t :foreground ,red-1)))
    `(undo-tree-visualizer-default-face  ((t :foreground ,fg)))
    `(undo-tree-visualizer-register-face ((t :foreground ,yellow)))
    `(undo-tree-visualizer-unmodified-face ((t :foreground ,cyan)))

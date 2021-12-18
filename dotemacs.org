@@ -1640,10 +1640,6 @@ Prettify the mode-line with customizable and conditional segments.
   (doom-modeline-major-mode-icon nil)
   (doom-modeline-percent-position nil)
   (doom-modeline-vcs-max-length 28)
-  :custom-face
-  (doom-modeline-bar ((t (:inherit mode-line))))
-  (doom-modeline-bar-inactive
-   ((t (:background nil :inherit mode-line-inactive))))
   :config
   (doom-modeline-def-segment me/buffer
     "The buffer description and major mode icon."
