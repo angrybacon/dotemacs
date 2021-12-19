@@ -383,6 +383,14 @@ See `custom--inhibit-theme-enable'."
    `(hydra-face-pink                    ((t :foreground ,magenta)))
    `(hydra-face-red                     ((t :foreground ,red+1)))
    `(hydra-face-teal                    ((t :foreground ,cyan)))
+   `(transient-amaranth                 ((t :foreground ,red-2)))
+   `(transient-blue                     ((t :foreground ,blue+1)))
+   `(transient-disabled-suffix          ((t :foreground ,red)))
+   `(transient-enabled-suffix           ((t :foreground ,green)))
+   `(transient-pink                     ((t :foreground ,magenta)))
+   `(transient-red                      ((t :foreground ,red+1)))
+   `(transient-separator                ((t :foreground ,fg-2)))
+   `(transient-teal                     ((t :foreground ,cyan)))
 ;;;;; Version Control
 ;;;;;; Magit: bisect
    `(magit-bisect-bad                   ((t :foreground ,red)))
