@@ -377,6 +377,7 @@ See [[https://github.com/mooz/js2-mode]] for more details.
    :map lisp-interaction-mode-map
    ("C-c C-c" . me/eval-region-dwim))
   :hook
+  (emacs-lisp-mode . flymake-mode)
   (emacs-lisp-mode . outline-minor-mode))
 #+END_SRC
 
