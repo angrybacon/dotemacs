@@ -201,13 +201,16 @@ See `custom--inhibit-theme-enable'."
    `(org-agenda-date-today              ((t :foreground ,fg+1 :slant italic)))
    `(org-agenda-structure               ((t :inherit font-lock-comment-face)))
    `(org-archived                       ((t :foreground ,fg)))
-   `(org-block                          ((t :background ,bg+1 :extend t)))
+   `(org-block                          ((t :background ,bg+1
+                                            :extend t
+                                            :foreground ,fg)))
    `(org-block-begin-line               ((t :inherit shadow)))
    `(org-checkbox                       ((t :inherit org-verbatim)))
    `(org-column                         ((t :background ,bg-3)))
    `(org-column-title                   ((t :background ,bg-3 :underline t)))
    `(org-date                           ((t :foreground ,blue :underline t)))
    `(org-deadline-announce              ((t :foreground ,red-1)))
+   `(org-default                        ((t :foreground ,fg-1)))
    `(org-document-info                  ((t :foreground ,blue)))
    `(org-document-title                 ((t :foreground ,blue)))
    `(org-done                           ((t :foreground ,green+3)))

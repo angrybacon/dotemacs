@@ -449,6 +449,7 @@ authoring documents with a fast and effective plain-text system.
    ("C-<return>" . nil)
    ("C-<tab>" . me/org-cycle-parent))
   :hook
+  (org-mode . buffer-face-mode)
   (org-mode . hydra-plus-set-super)
   :custom
   (org-adapt-indentation nil)
