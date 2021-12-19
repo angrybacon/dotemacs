@@ -281,8 +281,9 @@ See `custom--inhibit-theme-enable'."
    `(lazy-highlight                     ((t :background ,blue-5
                                             :foreground ,blue
                                             :inherit isearch)))
-   `(match                              ((t :background ,bg-3
-                                            :foreground ,orange)))
+   `(match                              ((t :background ,fg-2
+                                            :box (-1 . -1)
+                                            :foreground ,yellow-2)))
 ;;;;; Syntax
    `(whitespace-empty                   ((t :background ,yellow-2 :extend t)))
    `(whitespace-hspace                  ((t :inherit whitespace-space)))
@@ -342,23 +343,24 @@ See `custom--inhibit-theme-enable'."
                                             :inherit diff-removed)))
 ;;;; Third-party
 ;;;;; Completion
-   `(completions-annotations            ((t :foreground ,fg-1)))
+   `(completions-annotations            ((t :inherit shadow)))
+   `(completions-common-part            ((t :inherit match)))
+   `(completions-first-difference       ((t :inherit default)))
+   `(completions-group-title            ((t :inherit shadow :slant italic)))
    `(consult-preview-line               ((t :extend t :inherit highlight)))
    `(consult-preview-match              ((t :background nil)))
    `(corfu-current                      ((t :inherit 'highlight)))
    `(corfu-default                      ((t :background ,bg-3)))
-   `(orderless-match-face-0             ((t :background ,fg-2
-                                            :box (-1 . -1)
-                                            :foreground ,yellow-2)))
+   `(orderless-match-face-0             ((t :inherit match)))
    `(orderless-match-face-1             ((t :background ,green-3
-                                            :box (-1 . -1)
-                                            :foreground ,green+2)))
+                                            :foreground ,green+2
+                                            :inherit orderless-match-face-0)))
    `(orderless-match-face-2             ((t :background ,red-3
-                                            :box (-1 . -1)
-                                            :foreground ,red+2)))
+                                            :foreground ,red+2
+                                            :inherit orderless-match-face-0)))
    `(orderless-match-face-3             ((t :background ,blue-4
-                                            :box (-1 . -1)
-                                            :foreground ,blue+1)))
+                                            :foreground ,blue+1
+                                            :inherit orderless-match-face-0)))
 ;;;;; Help
    `(helpful-heading                    ((t :foreground ,orange
                                             :height 1.4
