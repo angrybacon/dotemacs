@@ -230,27 +230,20 @@ See `custom--inhibit-theme-enable'."
    `(org-headline-done                  ((t :foreground ,green+3)))
    `(org-hide                           ((t :foreground ,bg)))
    `(org-level-1                        ((t :background ,bg+1
-                                            :foreground ,orange
                                             :height 1.2
+                                            :inherit outline-1
                                             :overline t
                                             :underline t)))
-   `(org-level-2                        ((t :foreground ,green+4
-                                            :inherit org-level-1)))
+   `(org-level-2                        ((t :inherit (outline-2 org-level-1))))
    `(org-level-3                        ((t :background ,bg
-                                            :foreground ,blue-1
-                                            :inherit org-level-2
+                                            :inherit (outline-3 org-level-2)
                                             :overline nil
                                             :underline nil)))
-   `(org-level-4                        ((t :foreground ,yellow-2
-                                            :inherit org-level-3)))
-   `(org-level-5                        ((t :foreground ,cyan
-                                            :inherit org-level-4)))
-   `(org-level-6                        ((t :foreground ,green+2
-                                            :inherit org-level-5)))
-   `(org-level-7                        ((t :foreground ,red-4
-                                            :inherit org-level-6)))
-   `(org-level-8                        ((t :foreground ,blue-4
-                                            :inherit org-level-7)))
+   `(org-level-4                        ((t :inherit (outline-4 org-level-3))))
+   `(org-level-5                        ((t :inherit (outline-5 org-level-4))))
+   `(org-level-6                        ((t :inherit (outline-6 org-level-5))))
+   `(org-level-7                        ((t :inherit (outline-7 org-level-6))))
+   `(org-level-8                        ((t :inherit (outline-8 org-level-7))))
    `(org-link                           ((t :foreground ,yellow-2 :underline t)))
    `(org-mode-line-clock                ((t :foreground ,fg :background ,bg-3)))
    `(org-mode-line-clock-overrun        ((t :background ,red-1 :foreground ,bg)))
@@ -267,6 +260,15 @@ See `custom--inhibit-theme-enable'."
    `(org-upcoming-deadline              ((t :inherit font-lock-keyword-face)))
    `(org-verbatim                       ((t :inherit help-key-binding)))
    `(org-warning                        ((t :foreground ,red)))
+;;;;; Outline
+   `(outline-1                          ((t :foreground ,orange)))
+   `(outline-2                          ((t :foreground ,green+4)))
+   `(outline-3                          ((t :foreground ,blue-1)))
+   `(outline-4                          ((t :foreground ,yellow-2)))
+   `(outline-5                          ((t :foreground ,cyan)))
+   `(outline-6                          ((t :foreground ,green+2)))
+   `(outline-7                          ((t :foreground ,red-4)))
+   `(outline-8                          ((t :foreground ,blue-4)))
 ;;;;; Search
    `(grep-context-face                  ((t :foreground ,fg)))
    `(grep-error-face                    ((t :foreground ,red-1 :underline t)))
@@ -817,15 +819,6 @@ See `custom--inhibit-theme-enable'."
    `(org-ref-cite-face                  ((t :underline t)))
    `(org-ref-glossary-face              ((t :underline t)))
    `(org-ref-acronym-face               ((t :underline t)))
-;;;;; outline
-   `(outline-1                          ((t :foreground ,orange))) ; 1.3
-   `(outline-2                          ((t :foreground ,green+4))) ; 1.2
-   `(outline-3                          ((t :foreground ,blue-1))) ; 1.15
-   `(outline-4                          ((t :foreground ,yellow-2))) ; 1.1
-   `(outline-5                          ((t :foreground ,cyan)))
-   `(outline-6                          ((t :foreground ,green+2)))
-   `(outline-7                          ((t :foreground ,red-4)))
-   `(outline-8                          ((t :foreground ,blue-4)))
 ;;;;; p4
    `(p4-depot-added-face                ((t :inherit diff-added)))
    `(p4-depot-branch-op-face            ((t :inherit diff-changed)))
