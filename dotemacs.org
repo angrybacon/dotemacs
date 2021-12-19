@@ -239,6 +239,7 @@ Mute their colors as well.
   :custom
   (modus-themes-diffs 'fg-only)
   (modus-themes-mode-line 'borderless-accented)
+  (modus-themes-no-mixed-fonts t)
   (modus-themes-operandi-color-overrides
    '((bg-main . "#FAFAFA")
      (bg-main . "#101010")
@@ -273,7 +274,7 @@ adds a /reset/ on save when visiting the theme file.
   :demand
   :config
   (put 'after-save-hook 'safe-local-variable
-     (lambda (value) (equal value '(zenmelt--reset t))))
+       (lambda (value) (equal value '(zenmelt--reset t))))
   (load-theme 'zenmelt t))
 #+END_SRC
 
@@ -2296,6 +2297,7 @@ Highlight line under point.
   :straight nil
   :hook
   (dired-mode . hl-line-mode)
+  (fundamental-mode . hl-line-mode)
   (prog-mode . hl-line-mode)
   (special-mode . hl-line-mode)
   (text-mode . hl-line-mode)
@@ -2372,7 +2374,7 @@ Emacs can also emulate an interactive REST client.
 
 ** Terminal
 
-| =vterm=     | https://github.com/akermu/emacs-libvterm |
+| =vterm= | https://github.com/akermu/emacs-libvterm |
 
 Yes, Emacs emulates terminals too.
 
@@ -2513,6 +2515,11 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
    ("<return>" . magit-diff-visit-file-other-window)
    :map magit-hunk-section-map
    ("<return>" . magit-diff-visit-file-other-window)
+   :map magit-section-mode-map
+   ("M-1" . nil)
+   ("M-2" . nil)
+   ("M-3" . nil)
+   ("M-4" . nil)
    :map magit-status-mode-map
    ("M-1" . nil)
    ("M-2" . nil)
@@ -2525,7 +2532,8 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
   (magit-display-buffer-function
    'magit-display-buffer-same-window-except-diff-v1)
   (magit-diff-highlight-hunk-region-functions
-   '(magit-diff-highlight-hunk-region-using-face))
+   '(magit-diff-highlight-hunk-region-dim-outside
+     magit-diff-highlight-hunk-region-using-face))
   (magit-diff-refine-hunk 'all)
   (magit-module-sections-nested nil)
   (magit-section-initial-visibility-alist
@@ -2535,7 +2543,7 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
    'magit-status-sections-hook
    'magit-insert-modules-overview
    'magit-insert-merge-log)
-  (remove-hook 'magit-section-highlight-hook #'magit-section-highlight))
+  (remove-hook 'magit-section-highlight-hook #'magit-diff-highlight))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp

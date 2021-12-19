@@ -287,19 +287,43 @@ See `custom--inhibit-theme-enable'."
    `(whitespace-tab                     ((t :background ,red-1)))
    `(whitespace-trailing                ((t :inherit trailing-whitespace)))
 ;;;;; Version Control
-   `(diff-added                         ((t :foreground ,green+2)))
-   `(diff-changed                       ((t :foreground ,yellow)))
-   `(diff-file-header                   ((,class :background ,bg+3)
-                                         (t :inverse-video t)))
-   `(diff-header                        ((,class :background ,bg+3)
-                                         (t :inverse-video t)))
-   `(diff-indicator-added               ((t :foreground ,green)))
-   `(diff-indicator-changed             ((t :foreground ,yellow-2)))
-   `(diff-indicator-removed             ((t :foreground ,red-2)))
-   `(diff-refine-added                  ((t :background ,bg+3)))
-   `(diff-refine-changed                ((t :background ,bg+3)))
-   `(diff-refine-removed                ((t :background ,bg+3)))
+;;;;;; Diff
+   `(diff-added                         ((t :foreground ,green)))
+   `(diff-changed                       ((t :foreground ,yellow-2)))
+   `(diff-context                       ((t :foreground ,fg-2)))
+   `(diff-file-header                   ((t :inherit diff-header)))
+   `(diff-function                      ((t :foreground ,blue
+                                            :inherit diff-hunk-header)))
+   `(diff-header                        ((t :background ,bg+1
+                                            :foreground ,yellow)))
+   `(diff-hunk-header                   ((t :foreground ,yellow-2
+                                            :inherit diff-header)))
+   `(diff-indicator-added               ((t :inherit diff-added)))
+   `(diff-indicator-removed             ((t :inherit diff-removed)))
+   `(diff-refine-added                  ((t :foreground ,green+4)))
+   `(diff-refine-changed                ((t :inherit diff-refine-added
+                                            :foreground ,yellow)))
+   `(diff-refine-removed                ((t :inherit diff-refine-added
+                                            :foreground ,red+2)))
    `(diff-removed                       ((t :foreground ,red)))
+;;;;;; Ediff
+   `(ediff-current-diff-A               ((t :background ,red-6)))
+   `(ediff-current-diff-Ancestor        ((t :inherit ediff-current-diff-A)))
+   `(ediff-current-diff-B               ((t :background ,green-5)))
+   `(ediff-current-diff-C               ((t :background ,blue-5)))
+   `(ediff-even-diff-A                  ((t :background ,bg+2)))
+   `(ediff-even-diff-Ancestor           ((t :inherit ediff-even-diff-A)))
+   `(ediff-even-diff-B                  ((t :inherit ediff-even-diff-A)))
+   `(ediff-even-diff-C                  ((t :inherit ediff-even-diff-A)))
+   `(ediff-fine-diff-A                  ((t :background ,red-5)))
+   `(ediff-fine-diff-Ancestor           ((t :inherit ediff-fine-diff-A)))
+   `(ediff-fine-diff-B                  ((t :background ,green-4)))
+   `(ediff-fine-diff-C                  ((t :background ,blue-4)))
+   `(ediff-odd-diff-A                   ((t :background ,bg+1)))
+   `(ediff-odd-diff-Ancestor            ((t :inherit ediff-odd-diff-A)))
+   `(ediff-odd-diff-B                   ((t :inherit ediff-odd-diff-A)))
+   `(ediff-odd-diff-C                   ((t :inherit ediff-odd-diff-A)))
+;;;;;; Smerge
    `(smerge-lower                       ((t :background ,bg+1
                                             :inherit diff-added)))
    `(smerge-markers                     ((t :background ,bg+1 :inherit shadow)))
@@ -338,100 +362,78 @@ See `custom--inhibit-theme-enable'."
    `(doom-modeline-project-parent-dir   ((t :inherit shadow)))
 ;;;;; Version Control
 ;;;;;; Magit: bisect
+   `(magit-bisect-bad                   ((t :foreground ,red)))
    `(magit-bisect-good                  ((t :foreground ,green)))
    `(magit-bisect-skip                  ((t :foreground ,yellow)))
-   `(magit-bisect-bad                   ((t :foreground ,red)))
 ;;;;;; Magit: blame
-   `(magit-blame-heading                ((t :background ,bg-3
-                                            :foreground ,blue-2)))
-   `(magit-blame-hash                   ((t :inherit magit-blame-heading)))
-   `(magit-blame-name                   ((t :foreground ,orange
-                                            :inherit magit-blame-heading)))
-   `(magit-blame-date                   ((t :foreground ,orange
-                                            :inherit magit-blame-heading)))
-   `(magit-blame-summary                ((t :inherit magit-blame-heading)))
+   `(magit-blame-date                   ((t :foreground ,fg)))
+   `(magit-blame-hash                   ((t :foreground ,blue)))
+   `(magit-blame-heading                ((t :background ,bg-3 :inherit shadow)))
+   `(magit-blame-name                   ((t :foreground ,orange)))
 ;;;;;; Magit: diff
-   `(magit-diff-added                   ((t :foreground ,green)))
-   `(magit-diff-added-highlight         ((t :inherit
-                                            (diff-added
-                                             magit-diff-context-highlight))))
-   `(magit-diff-context                 ((t :foreground ,fg-2)))
-   `(magit-diff-context-highlight       ((t :background ,bg+1
-                                            :foreground ,fg-1)))
-   `(magit-diff-file-heading            ((t :foreground ,fg+1)))
-   `(magit-diff-file-heading-highlight  ((t :inherit hl-line)))
+   `(magit-diff-added                   ((t :inherit diff-added)))
+   `(magit-diff-added-highlight         ((t :foreground ,green+1)))
+   `(magit-diff-context                 ((t :inherit magit-dimmed)))
+   `(magit-diff-context-highlight       ((t :background ,bg)))
+   `(magit-diff-file-heading            ((t :weight normal)))
+   `(magit-diff-file-heading-highlight  ((t :foreground ,fg+1)))
    `(magit-diff-file-heading-selection  ((t :foreground ,orange)))
-   `(magit-diff-hunk-heading            ((t :background ,bg+1
-                                            :box 2
-                                            :foreground ,fg-1)))
-   `(magit-diff-hunk-heading-highlight  ((t :box 2
-                                            :foreground ,orange
-                                            :inherit magit-diff-hunk-heading)))
-   `(magit-diff-hunk-heading-selection  ((t :background ,orange
-                                            :box (:color ,orange :line-width 2)
-                                            :foreground ,bg-3)))
-   `(magit-diff-hunk-region             ((t :inherit region)))
-   `(magit-diff-lines-heading           ((t :inherit
-                                            magit-diff-hunk-heading-selection)))
-   `(magit-diff-removed                 ((t :foreground ,red-2)))
-   `(magit-diff-removed-highlight       ((t :inherit
-                                            (diff-removed
-                                             magit-diff-context-highlight))))
+   `(magit-diff-hunk-heading            ((t :inherit diff-hunk-header)))
+   `(magit-diff-hunk-heading-highlight  ((t :foreground ,fg+1)))
+   `(magit-diff-hunk-heading-selection  ((t :foreground ,orange)))
+   `(magit-diff-hunk-region             ((t :weight unspecified)))
+   `(magit-diff-lines-heading           ((t :foreground ,orange)))
+   `(magit-diff-removed                 ((t :inherit diff-removed)))
+   `(magit-diff-removed-highlight       ((t :foreground ,red+1)))
    `(magit-diffstat-added               ((t :foreground ,green+4)))
    `(magit-diffstat-removed             ((t :foreground ,red)))
-;;;;;; Magit: headings
-   `(magit-section-highlight            ((t :background ,bg+1)))
+;;;;;; Magit: section
    `(magit-section-heading              ((t :foreground ,yellow)))
    `(magit-section-heading-selection    ((t :foreground ,orange)))
-;;;;;; Magit: popup
-   `(magit-popup-argument               ((t :foreground ,green)))
-   `(magit-popup-disabled-argument      ((t :foreground ,fg-2)))
-   `(magit-popup-heading                ((t :foreground ,yellow)))
-   `(magit-popup-key                    ((t :foreground ,green-2)))
-   `(magit-popup-option-value           ((t :foreground ,blue-2)))
+   `(magit-section-highlight            ((t :inherit hl-line)))
 ;;;;;; Magit: log
    `(magit-log-author                   ((t :foreground ,orange)))
-   `(magit-log-date                     ((t :foreground ,fg-2)))
-   `(magit-log-graph                    ((t :foreground ,fg+1)))
+   `(magit-log-date                     ((t :inherit magit-dimmed)))
+   `(magit-log-graph                    ((t :foreground ,yellow)))
 ;;;;;; Magit: process
-   `(magit-process-ok                   ((t :foreground ,green)))
    `(magit-process-ng                   ((t :foreground ,red)))
+   `(magit-process-ok                   ((t :foreground ,green)))
 ;;;;;; Magit: references
-   `(magit-branch-current               ((t :box t :foreground ,blue)))
+   `(magit-branch-current               ((t :box (-1 . -1)
+                                            :inherit magit-branch-local)))
    `(magit-branch-local                 ((t :foreground ,blue)))
-   `(magit-branch-remote                ((t :foreground ,green)))
+   `(magit-branch-remote                ((t :foreground ,green+4)))
+   `(magit-branch-remote-head           ((t :box (-1 . -1)
+                                            :inherit magit-branch-remote)))
    `(magit-cherry-equivalent            ((t :foreground ,magenta)))
    `(magit-cherry-unmatched             ((t :foreground ,cyan)))
-   `(magit-dimmed                       ((t :foreground ,bg+4)))
-   `(magit-hash                         ((t :foreground ,bg+4)))
-   `(magit-head                         ((t :foreground ,blue)))
-   `(magit-reflog-amend                 ((t :foreground ,magenta)))
-   `(magit-reflog-checkout              ((t :foreground ,blue)))
-   `(magit-reflog-cherry-pick           ((t :foreground ,green)))
+   `(magit-dimmed                       ((t :inherit shadow)))
+   `(magit-hash                         ((t :inherit magit-dimmed)))
+   `(magit-reflog-amend                 ((t :foreground ,orange)))
+   `(magit-reflog-checkout              ((t :foreground ,blue+1)))
+   `(magit-reflog-cherry-pick           ((t :foreground ,red+2)))
    `(magit-reflog-commit                ((t :foreground ,green)))
-   `(magit-reflog-merge                 ((t :foreground ,green)))
-   `(magit-reflog-other                 ((t :foreground ,cyan)))
-   `(magit-reflog-rebase                ((t :foreground ,magenta)))
+   `(magit-reflog-merge                 ((t :foreground ,green+4)))
+   `(magit-reflog-other                 ((t :foreground ,magenta)))
+   `(magit-reflog-rebase                ((t :foreground ,yellow)))
    `(magit-reflog-remote                ((t :foreground ,cyan)))
    `(magit-reflog-reset                 ((t :foreground ,red)))
-   `(magit-refname                      ((t :background ,bg+3 :foreground ,fg)))
-   `(magit-refname-stash                ((t :background ,bg+3 :foreground ,fg)))
-   `(magit-refname-wip                  ((t :background ,bg+3 :foreground ,fg)))
+   `(magit-refname                      ((t :inherit magit-dimmed)))
    `(magit-signature-bad                ((t :foreground ,red)))
-   `(magit-signature-error              ((t :inherit magit-signature-bad)))
+   `(magit-signature-error              ((t :foreground ,red-1)))
    `(magit-signature-expired            ((t :foreground ,orange)))
    `(magit-signature-good               ((t :foreground ,green)))
    `(magit-signature-revoked            ((t :foreground ,magenta)))
    `(magit-signature-untrusted          ((t :foreground ,yellow)))
    `(magit-tag                          ((t :foreground ,orange)))
 ;;;;;; Magit: sequence
-   `(magit-sequence-done                ((t :foreground ,fg-2)))
+   `(magit-sequence-done                ((t :inherit magit-dimmed)))
    `(magit-sequence-drop                ((t :foreground ,red)))
    `(magit-sequence-head                ((t :foreground ,blue)))
-   `(magit-sequence-onto                ((t :foreground ,fg-2)))
+   `(magit-sequence-onto                ((t :inherit magit-dimmed)))
    `(magit-sequence-part                ((t :foreground ,yellow)))
    `(magit-sequence-pick                ((t :foreground ,yellow-2)))
-   `(magit-sequence-stop                ((t :foreground ,green)))
+   `(magit-sequence-stop                ((t :foreground ,green+4)))
 ;;;;; Markdown
    `(markdown-inline-code-face          ((t :background ,bg+2
                                             :inherit (markdown-code-face
@@ -459,24 +461,6 @@ See `custom--inhibit-theme-enable'."
    `(git-gutter-fr:modified             ((t :foreground ,blue-2)))
 ;;;;; git-rebase
    `(git-rebase-hash                    ((t :foreground, orange)))
-;;;;; ediff
-   `(ediff-current-diff-A               ((t :background ,red-4 :foreground ,fg)))
-   `(ediff-current-diff-Ancestor        ((t :background ,red-4 :foreground ,fg)))
-   `(ediff-current-diff-B               ((t :background ,green-2
-                                            :foreground ,fg)))
-   `(ediff-current-diff-C               ((t :background ,blue-5 :foreground ,fg)))
-   `(ediff-even-diff-A                  ((t :background ,bg+2)))
-   `(ediff-even-diff-Ancestor           ((t :background ,bg+2)))
-   `(ediff-even-diff-B                  ((t :background ,bg+2)))
-   `(ediff-even-diff-C                  ((t :background ,bg+2)))
-   `(ediff-fine-diff-A                  ((t :background ,red-2 :foreground ,fg)))
-   `(ediff-fine-diff-Ancestor           ((t :background ,red-2 :foreground ,fg)))
-   `(ediff-fine-diff-B                  ((t :background ,green :foreground ,fg)))
-   `(ediff-fine-diff-C                  ((t :background ,blue-3 :foreground ,fg)))
-   `(ediff-odd-diff-A                   ((t :background ,bg+3)))
-   `(ediff-odd-diff-Ancestor            ((t :background ,bg+3)))
-   `(ediff-odd-diff-B                   ((t :background ,bg+3)))
-   `(ediff-odd-diff-C                   ((t :background ,bg+3)))
 ;;;;; diff-hl
    `(diff-hl-change                     ((,class :background ,blue-2
                                                  :foreground ,blue)))
