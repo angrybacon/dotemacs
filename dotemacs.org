@@ -2202,7 +2202,6 @@ Highlight line under point.
   (dired-mode . hl-line-mode)
   (fundamental-mode . hl-line-mode)
   (prog-mode . hl-line-mode)
-  (special-mode . hl-line-mode)
   (text-mode . hl-line-mode)
   :custom
   (hl-line-sticky-flag nil))
