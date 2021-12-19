@@ -573,7 +573,7 @@ margins.
   :hook
   (window-configuration-change . me/olivetti-mode-maybe)
   :custom
-  (olivetti-body-width (+ fill-column 6)))
+  (olivetti-body-width (+ fill-column 6)))  ;; Account for line numbers
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp

@@ -26,9 +26,15 @@
 
 ;;; Code:
 
+(defgroup zenmelt nil
+  "A Zenburn clone."
+  :group 'faces)
+
 (deftheme zenmelt "The Zenmelt color theme.")
 
-(defvar zenmelt-colors-alist
+;;; Palette
+
+(defconst zenmelt-colors-alist
   '(("bg-4"     . "#000000")
     ("bg-3"     . "#2B2B2B")
     ("bg-2"     . "#303030")
@@ -92,7 +98,29 @@ See `custom--inhibit-theme-enable'."
                    zenmelt-colors-alist))
      ,@body))
 
+;;; Boxes
+
+(defcustom zenmelt-box-colors-alist
+  (zenmelt-with-colors nil
+    `((blue         . (,blue     . ,blue-5))
+      (blue-focused . (,blue-5   . ,blue))
+      (yellow       . (,yellow-2 . ,fg-2))))
+  "List color tuples for boxes.
+The car gives the foreground color while the cdr gives the background."
+  :type '(alist :key-type symbol :value-type (cons (list color variable)
+                                                   (list color variable))))
+
+(defun zenmelt--box (color)
+  "Return an plist containing properties for a colored box.
+It should be a valid plist to be used in the specifications provided to
+`custom-theme-set-faces'.
+
+See `zenmelt-box-colors-alist' to customize what tuple to use for COLOR."
+  (pcase-let ((`(,f . ,b) (alist-get color zenmelt-box-colors-alist)))
+    `(:background ,b :box (-1 . -1) :foreground ,f)))
+
 ;;; Theme Faces
+
 (zenmelt-with-colors nil
   (custom-theme-set-faces
    'zenmelt
@@ -277,16 +305,10 @@ See `custom--inhibit-theme-enable'."
    `(grep-error-face                    ((t :foreground ,red-1 :underline t)))
    `(grep-hit-face                      ((t :foreground ,blue)))
    `(grep-match-face                    ((t :foreground ,orange)))
-   `(isearch                            ((t :background ,blue
-                                            :box (-1 . -1)
-                                            :foreground ,blue-5)))
+   `(isearch                            ((t ,@(zenmelt--box 'blue-focused))))
    `(isearch-fail                       ((t :foreground ,red)))
-   `(lazy-highlight                     ((t :background ,blue-5
-                                            :foreground ,blue
-                                            :inherit isearch)))
-   `(match                              ((t :background ,fg-2
-                                            :box (-1 . -1)
-                                            :foreground ,yellow-2)))
+   `(lazy-highlight                     ((t ,@(zenmelt--box 'blue))))
+   `(match                              ((t ,@(zenmelt--box 'yellow))))
 ;;;;; Syntax
    `(whitespace-empty                   ((t :background ,yellow-2 :extend t)))
    `(whitespace-hspace                  ((t :inherit whitespace-space)))
@@ -368,9 +390,7 @@ See `custom--inhibit-theme-enable'."
                                             :height 2.0
                                             :inherit variable-pitch)))
 ;;;;; Language Servers
-   `(eglot-highlight-symbol-face        ((t :background ,fg-2
-                                            :box (-1 . -1)
-                                            :foreground ,yellow)))
+   `(eglot-highlight-symbol-face        ((t ,@(zenmelt--box 'yellow))))
 ;;;;; Mode-Line
    `(doom-modeline-bar                  ((t :inherit mode-line)))
    `(doom-modeline-bar-inactive         ((t :inherit doom-modeline-bar)))
