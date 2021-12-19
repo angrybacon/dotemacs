@@ -98,6 +98,8 @@ See `custom--inhibit-theme-enable'."
    'zenmelt
 ;;;; Built-in
 ;;;;; Base
+   `(bold                               ((t :foreground ,fg+1)))
+   `(bold-italic                        ((t :inherit (italic bold))))
    `(default                            ((t :background ,bg :foreground ,fg)))
    `(error                              ((t :foreground ,red)))
    `(escape-glyph                       ((t :foreground ,yellow)))
@@ -118,6 +120,7 @@ See `custom--inhibit-theme-enable'."
    `(font-lock-warning-face             ((t :foreground ,yellow-2)))
    `(highlight                          ((t :background ,blue-5
                                             :foreground ,blue)))
+   `(italic                             ((t :foreground ,fg+1 :slant italic)))
    `(link                               ((t :foreground ,yellow :underline t)))
    `(link-visited                       ((t :foreground ,yellow-2 :underline t)))
    `(shadow                             ((t :foreground ,fg-1)))
@@ -150,9 +153,6 @@ See `custom--inhibit-theme-enable'."
    `(eldoc-box-body                     ((t :inherit tooltip)))
    `(eldoc-box-border                   ((t :background ,red)))
    `(eldoc-highlight-function-argument  ((t :inherit highlight)))
-   `(woman-bold                         ((t :inherit font-lock-keyword-face)))
-   `(woman-italic                       ((t :inherit (font-lock-string-face
-                                                      italic))))
 ;;;;; Interface
    `(button                             ((t :underline t)))
    `(cursor                             ((t :background ,fg+1 :foreground ,fg)))
@@ -160,18 +160,22 @@ See `custom--inhibit-theme-enable'."
    `(header-line                        ((t :background ,bg-3
                                             :box (:color ,bg-3 :line-width 4)
                                             :foreground ,yellow)))
+   `(help-key-binding                   ((t :background ,bg+1
+                                            :box
+                                            (:color ,fg-2 :line-width (-2 . -2))
+                                            :foreground ,orange)))
    `(hl-line                            ((t :background ,bg+2)))
-   `(line-number                        ((t :foreground ,bg+4)))
+   `(line-number                        ((t :inherit shadow)))
    `(line-number-current-line           ((t :foreground ,yellow-2
                                             :inherit hl-line)))
    `(menu                               ((t :inherit default)))
+   `(minibuffer-prompt                  ((t :foreground ,yellow)))
    `(mode-line                          ((t :background ,bg-3
                                             :foreground ,green)))
    `(mode-line-buffer-id                ((t :foreground ,green+4)))
-   `(mode-line-highlight                ((t :inherit highlight :box -2)))
    `(mode-line-emphasis                 ((t :inherit mode-line)))
+   `(mode-line-highlight                ((t :inherit highlight :box (-2 . -2))))
    `(mode-line-inactive                 ((t :background ,bg-1 :inherit shadow)))
-   `(minibuffer-prompt                  ((t :foreground ,yellow)))
    `(region                             ((,class :background ,blue-5)
                                          (t :inverse-video t)))
    `(secondary-selection                ((t :background ,bg+3)))
@@ -199,9 +203,7 @@ See `custom--inhibit-theme-enable'."
    `(org-archived                       ((t :foreground ,fg)))
    `(org-block                          ((t :background ,bg+1 :extend t)))
    `(org-block-begin-line               ((t :inherit shadow)))
-   `(org-checkbox                       ((t :background ,bg+3
-                                            :box (:line-width 1 :style released-button)
-                                            :foreground ,fg+1)))
+   `(org-checkbox                       ((t :inherit org-verbatim)))
    `(org-column                         ((t :background ,bg-3)))
    `(org-column-title                   ((t :background ,bg-3 :underline t)))
    `(org-date                           ((t :foreground ,blue :underline t)))
@@ -260,30 +262,32 @@ See `custom--inhibit-theme-enable'."
    `(org-time-grid                      ((t :foreground ,orange)))
    `(org-todo                           ((t :foreground ,red)))
    `(org-upcoming-deadline              ((t :inherit font-lock-keyword-face)))
-   `(org-verbatim                       ((t :background ,bg+1
-                                            :foreground ,orange)))
+   `(org-verbatim                       ((t :inherit help-key-binding)))
    `(org-warning                        ((t :foreground ,red)))
 ;;;;; Search
    `(grep-context-face                  ((t :foreground ,fg)))
    `(grep-error-face                    ((t :foreground ,red-1 :underline t)))
    `(grep-hit-face                      ((t :foreground ,blue)))
    `(grep-match-face                    ((t :foreground ,orange)))
-   `(isearch                            ((t :background ,blue :foreground ,bg-3)))
+   `(isearch                            ((t :background ,blue
+                                            :box (-1 . -1)
+                                            :foreground ,blue-5)))
    `(isearch-fail                       ((t :foreground ,red)))
-   `(lazy-highlight                     ((t :inherit highlight)))
+   `(lazy-highlight                     ((t :background ,blue-5
+                                            :foreground ,blue
+                                            :inherit isearch)))
    `(match                              ((t :background ,bg-3
                                             :foreground ,orange)))
 ;;;;; Syntax
    `(whitespace-empty                   ((t :background ,yellow-2 :extend t)))
-   `(whitespace-hspace                  ((t :background ,bg+2 :foreground ,bg+2)))
+   `(whitespace-hspace                  ((t :inherit whitespace-space)))
    `(whitespace-indentation             ((t :background ,bg+1 :foreground ,red)))
    `(whitespace-line                    ((t :foreground ,magenta)))
    `(whitespace-newline                 ((t :foreground ,bg+2)))
-   `(whitespace-space                   ((t :background ,bg+2 :foreground ,bg+2)))
-   `(whitespace-space-after-tab         ((t :background ,yellow-2
-                                            :foreground ,red)))
-   `(whitespace-space-before-tab        ((t :background ,orange
-                                            :foreground ,orange)))
+   `(whitespace-space                   ((t :inherit shadow :inverse-video t)))
+   `(whitespace-space-after-tab         ((t :inherit whitespace-space)))
+   `(whitespace-space-before-tab        ((t :inherit
+                                            whitespace-space-after-tab)))
    `(whitespace-tab                     ((t :background ,red-1)))
    `(whitespace-trailing                ((t :inherit trailing-whitespace)))
 ;;;;; Version Control
@@ -333,25 +337,31 @@ See `custom--inhibit-theme-enable'."
                                             :inherit diff-removed)))
 ;;;; Third-party
 ;;;;; Completion
-   `(corfu-current                      ((t :inherit 'highlight)))
-   `(corfu-default                      ((t :background ,bg-3)))
    `(completions-annotations            ((t :foreground ,fg-1)))
    `(consult-preview-line               ((t :extend t :inherit highlight)))
    `(consult-preview-match              ((t :background nil)))
-   `(orderless-match-face-0             ((t :background ,blue-4
-                                            :foreground ,blue+3)))
-   `(orderless-match-face-1             ((t :background ,fg-2
-                                            :foreground ,yellow)))
-   `(orderless-match-face-2             ((t :background ,green-3
-                                            :foreground ,green+4)))
-   `(orderless-match-face-3             ((t :background ,red-4
+   `(corfu-current                      ((t :inherit 'highlight)))
+   `(corfu-default                      ((t :background ,bg-3)))
+   `(orderless-match-face-0             ((t :background ,fg-2
+                                            :box (-1 . -1)
+                                            :foreground ,yellow-2)))
+   `(orderless-match-face-1             ((t :background ,green-3
+                                            :box (-1 . -1)
+                                            :foreground ,green+2)))
+   `(orderless-match-face-2             ((t :background ,red-3
+                                            :box (-1 . -1)
                                             :foreground ,red+2)))
+   `(orderless-match-face-3             ((t :background ,blue-4
+                                            :box (-1 . -1)
+                                            :foreground ,blue+1)))
 ;;;;; Help
    `(helpful-heading                    ((t :foreground ,orange
                                             :height 1.4
                                             :inherit variable-pitch)))
 ;;;;; Language Servers
-   `(eglot-highlight-symbol-face        ((t :inherit highlight)))
+   `(eglot-highlight-symbol-face        ((t :background ,fg-2
+                                            :box (-1 . -1)
+                                            :foreground ,yellow)))
 ;;;;; Mode-Line
    `(doom-modeline-bar                  ((t :inherit mode-line)))
    `(doom-modeline-bar-inactive         ((t :inherit doom-modeline-bar)))
@@ -435,9 +445,7 @@ See `custom--inhibit-theme-enable'."
    `(magit-sequence-pick                ((t :foreground ,yellow-2)))
    `(magit-sequence-stop                ((t :foreground ,green+4)))
 ;;;;; Markdown
-   `(markdown-inline-code-face          ((t :background ,bg+2
-                                            :inherit (markdown-code-face
-                                                      font-lock-constant-face))))
+   `(markdown-inline-code-face          ((t :inherit org-verbatim)))
 
 ;;;; TODO Prettify useful faces and clean up the rest
 ;;;;; git-annex
