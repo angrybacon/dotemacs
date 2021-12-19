@@ -375,6 +375,12 @@ See `custom--inhibit-theme-enable'."
    `(doom-modeline-info                 ((t :foreground ,green+4)))
    `(doom-modeline-project-dir          ((t :inherit dired-directory)))
    `(doom-modeline-project-parent-dir   ((t :inherit shadow)))
+;;;;; Popup
+   `(hydra-face-amaranth                ((t :foreground ,red-2)))
+   `(hydra-face-blue                    ((t :foreground ,blue+1)))
+   `(hydra-face-pink                    ((t :foreground ,magenta)))
+   `(hydra-face-red                     ((t :foreground ,red+1)))
+   `(hydra-face-teal                    ((t :foreground ,cyan)))
 ;;;;; Version Control
 ;;;;;; Magit: bisect
    `(magit-bisect-bad                   ((t :foreground ,red)))
@@ -640,13 +646,6 @@ See `custom--inhibit-theme-enable'."
    `(highlight-thing                    ((t :background ,bg+3)))
 ;;;;; hl-sexp
    `(hl-sexp-face                       ((,class :background ,bg+2) (t)))
-;;;;; hydra
-   `(hydra-face-red                     ((t :foreground ,red-1)))
-   `(hydra-face-amaranth                ((t :foreground ,red-3)))
-   `(hydra-face-blue                    ((t :foreground ,blue)))
-   `(hydra-face-pink                    ((t :background ,bg
-                                            :foreground ,magenta)))
-   `(hydra-face-teal                    ((t :foreground ,cyan)))
 ;;;;; info+
    `(info-command-ref-item              ((t :background ,bg-3
                                             :foreground ,orange)))
