@@ -1,4 +1,4 @@
-;;; morophon.el --- Collection of theme functions -*- lexical-binding: t; -*-
+;;; morophon.el --- Interact with themes -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2021 Mathieu Marques
 
@@ -23,6 +23,10 @@
 ;; A collection of functions that interact with themes.
 
 ;;; Code:
+
+(defgroup morophon nil
+  "Interact with themes."
+  :group 'convenience)
 
 (defcustom morophon-known-themes '(modus-operandi modus-vivendi)
   "List of themes to take into account with `morophon-cycle'.

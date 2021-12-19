@@ -30,6 +30,7 @@
 
 (defgroup shelldock nil
   "Hide away your cache files."
+  :group 'convenience
   :prefix "shelldock-")
 
 (defcustom shelldock-directory (expand-file-name ".cache/" user-emacs-directory)

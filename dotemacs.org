@@ -551,37 +551,9 @@ authoring documents with a fast and effective plain-text system.
 
 * Features
 
-** Buffers and Windows
+** Centered Buffer
 
-| =desktop=  | Built-in                            |
-| =olivetti= | https://github.com/rnkn/olivetti    |
-| =shackle=  | https://github.com/wasamasa/shackle |
-| =windmove= | Built-in                            |
-| =winner=   | Built-in                            |
-
-Bind keys to manage windows and buffers that are more popular.
-
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "s-w") #'delete-window)
-(global-set-key (kbd "s-W") #'kill-this-buffer)
-#+END_SRC
-
-Save and restore Emacs status, including buffers, point and window
-configurations.
-
-#+BEGIN_SRC emacs-lisp
-(use-package desktop
-  :straight nil
-  :hook
-  (after-init . desktop-read)
-  (after-init . desktop-save-mode)
-  :custom
-  (desktop-base-file-name (shelldock "desktop"))
-  (desktop-base-lock-name (shelldock "desktop.lock"))
-  (desktop-restore-eager 4)
-  (desktop-restore-forces-onscreen nil)
-  (desktop-restore-frames t))
-#+END_SRC
+| =olivetti= | https://github.com/rnkn/olivetti |
 
 Olivetti lets you center your buffer for aesthetics and focus. I have it set up
 to turn on automatically when visiting a single buffer, and disable itself
@@ -602,9 +574,6 @@ margins.
   :custom
   (olivetti-body-width (+ fill-column 6)))
 #+END_SRC
-
-| TODO | Prefer =cl-lib= routines                             |
-| TODO | Provide a Hydra head to pause the automatic toggling |
 
 #+BEGIN_SRC emacs-lisp
 (defvar me/olivetti-automatic t
@@ -657,58 +626,6 @@ Otherwise, disable it everywhere."
         (dolist (window windows)
           (with-selected-window window
             (olivetti-mode -1)))))))
-#+END_SRC
-
-Window management.
-
-#+BEGIN_QUOTE
-=shackle= gives you the means to put an end to popped up buffers not behaving
-they way you'd like them to. By setting up simple rules you can for instance
-make Emacs always select help buffers for you or make everything reuse your
-currently selected window.
-
---- Vasilij Schneidermann
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package shackle
-  :hook
-  (after-init . shackle-mode)
-  :custom
-  (shackle-inhibit-window-quit-on-same-windows t)
-  (shackle-rules '((help-mode :same t)
-                   (helpful-mode :same t)
-                   (process-menu-mode :same t)))
-  (shackle-select-reused-windows t))
-#+END_SRC
-
-Bind shorthands to move between windows.
-
-#+BEGIN_SRC emacs-lisp
-(use-package windmove
-  :straight nil
-  :bind
-  ("s-h" . windmove-left)
-  ("s-j" . windmove-down)
-  ("s-k" . windmove-up)
-  ("s-l" . windmove-right))
-#+END_SRC
-
-Allow undo's and redo's with window configurations.
-
-#+BEGIN_QUOTE
-Winner mode is a global minor mode that records the changes in the window
-configuration (i.e. how the frames are partitioned into windows) so that the
-changes can be "undone" using the command =winner-undo=.
-
---- Ivar Rummelhoff
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package winner
-  :straight nil
-  :hook
-  (after-init . winner-mode))
 #+END_SRC
 
 ** Completion
@@ -1203,7 +1120,6 @@ seamless, it's like a minor mode that disables itself auto-magically.
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
   :bind
-  ("C-c a" . hydra-applications/body)
   ("C-c d" . hydra-dates/body)
   ("C-c e" . hydra-eyebrowse/body)
   ("C-c g" . hydra-git/body)
@@ -1222,21 +1138,6 @@ Augments and helpers for =hydra=.
   :demand
   :load-path "lisp/hydra-plus"
   :straight nil)
-#+END_SRC
-
-*** Hydra: Applications
-
-Group commands for high-level applications.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-applications (:color teal)
-  (concat (hydra-plus-heading "Applications" "Shell") "
- _q_ quit            _t_ vterm           ^^                  ^^
- ^^                  _T_ eshell          ^^                  ^^
-")
-  ("q" nil)
-  ("t" vterm)
-  ("T" (eshell t)))
 #+END_SRC
 
 *** Hydra: Dates
@@ -2389,9 +2290,8 @@ Until a proper popup system is implemented, use =s-"= to close the bottom
 =vterm= windows in order to build muscle memory since the future
 =me/popup-toggle= will likely be bound there. Soon :tm:
 
-| TODO | Advice =vterm= motions to support shift                          |
-| TODO | Fix cursor shape when jumping out of =curses=-based applications |
-| TODO | Remove confirm prompt when killing =vterm= buffers               |
+| TODO | Advice =vterm= motions to support shift            |
+| TODO | Remove confirm prompt when killing =vterm= buffers |
 
 #+BEGIN_SRC emacs-lisp
 (use-package vterm
@@ -2602,7 +2502,25 @@ lines.
 
 ** Workspaces
 
+| =desktop=   | Built-in                              |
 | =eyebrowse= | https://github.com/wasamasa/eyebrowse |
+
+Save and restore Emacs status on startup, including buffers, point and window
+configurations.
+
+#+BEGIN_SRC emacs-lisp
+(use-package desktop
+  :straight nil
+  :hook
+  (after-init . desktop-read)
+  (after-init . desktop-save-mode)
+  :custom
+  (desktop-base-file-name (shelldock "desktop"))
+  (desktop-base-lock-name (shelldock "desktop.lock"))
+  (desktop-restore-eager 4)
+  (desktop-restore-forces-onscreen nil)
+  (desktop-restore-frames t))
+#+END_SRC
 
 Workspaces within Emacs.
 
@@ -2637,7 +2555,7 @@ Python.
   (eyebrowse-new-workspace t))
 #+END_SRC
 
-I've got used to how workspaces work in Qtile, where hitting the key for the
+I've gotten used to how workspaces work in Qtile, where hitting the key for the
 current workspace while in that workspace moves you to the last visited
 workspace instead. The below code makes commands to /maybe-switch/ to a given
 =eyebrowse= configuration in the same manner. ie. Go to the specified Nth
@@ -2661,4 +2579,49 @@ configuration.
              (interactive)
              (me/eyebrowse-switch ,n))
           t)))
+#+END_SRC
+
+** Windows
+
+| =shackle=    | https://github.com/wasamasa/shackle |
+| =widowmaker= | =lisp/widowmaker=                   |
+
+Set up rules for window management.
+
+#+BEGIN_QUOTE
+=shackle= gives you the means to put an end to popped up buffers not behaving
+they way you'd like them to. By setting up simple rules you can for instance
+make Emacs always select help buffers for you or make everything reuse your
+currently selected window.
+
+--- Vasilij Schneidermann
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package shackle
+  :hook
+  (after-init . shackle-mode)
+  :custom
+  (shackle-inhibit-window-quit-on-same-windows t)
+  (shackle-rules '((help-mode :same t)
+                   (helpful-mode :same t)
+                   (process-menu-mode :same t)))
+  (shackle-select-reused-windows t))
+#+END_SRC
+
+Bind extra keys to manage windows.
+
+#+BEGIN_SRC emacs-lisp
+(use-package widowmaker
+  :load-path "lisp/widowmaker"
+  :straight nil
+  :bind
+  ("s-h" . windmove-left)
+  ("s-j" . windmove-down)
+  ("s-k" . windmove-up)
+  ("s-l" . windmove-right)
+  ("s-w" . delete-window)
+  ("s-W" . kill-this-buffer)
+  :hook
+  (after-init . winner-mode))
 #+END_SRC

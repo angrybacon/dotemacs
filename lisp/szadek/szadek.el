@@ -47,14 +47,16 @@
   :type 'file)
 
 (defcustom szadek-fix-missing nil
-  "Whether getting missing secrets should automatically set them to their
-fallback value permanently."
+  "Whether getting missing secrets should fix them on disk.
+Set this to t to automatically set the missing secrets to their fallback value
+permanently."
   :type 'boolean)
 
 (defvar szadek-on-save-hook '()
   "Hook run after the secret file has been saved.")
 
 (defun szadek-on-save ()
+  "Run hooks on save in the secret file buffer."
   (let ((file szadek-file))
     (if (file-exists-p file)
         (when (equal (buffer-file-name) file)
@@ -95,8 +97,8 @@ If the secret file does not exist, create it in the process."
       (error "[Szadek] %S is not writeable" file))))
 
 (defun szadek--fallback (value &optional name)
-  "Return fallback VALUE and optionally set it permanently in the secret file
-under NAME if it is provided."
+  "Return fallback VALUE and optionally set it permanently.
+Set the value in the secret file under NAME when it is provided."
   (when name
     (szadek--set-value name value))
   value)

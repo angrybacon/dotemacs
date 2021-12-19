@@ -148,6 +148,7 @@ See `custom--inhibit-theme-enable'."
    `(custom-group-tag                   ((t :foreground ,blue)))
    `(custom-state                       ((t :foreground ,green+4)))
    `(custom-variable-tag                ((t :foreground ,blue)))
+   `(custom-visibility                  ((t :inherit link)))
 ;;;;; Help
    `(Info-quoted                        ((t :inherit font-lock-constant-face)))
    `(eldoc-box-body                     ((t :inherit tooltip)))
@@ -160,10 +161,9 @@ See `custom--inhibit-theme-enable'."
    `(header-line                        ((t :background ,bg-3
                                             :box (:color ,bg-3 :line-width 4)
                                             :foreground ,yellow)))
-   `(help-key-binding                   ((t :background ,bg+1
-                                            :box
-                                            (:color ,fg-2 :line-width (-2 . -2))
-                                            :foreground ,orange)))
+   `(help-key-binding                   ((t :background ,bg+2
+                                            :box (:color ,fg-2 :line-width (-2 . -2))
+                                            :foreground ,green+4)))
    `(hl-line                            ((t :background ,bg+2)))
    `(line-number                        ((t :inherit shadow)))
    `(line-number-current-line           ((t :foreground ,yellow-2
@@ -174,7 +174,7 @@ See `custom--inhibit-theme-enable'."
                                             :foreground ,green)))
    `(mode-line-buffer-id                ((t :foreground ,green+4)))
    `(mode-line-emphasis                 ((t :inherit mode-line)))
-   `(mode-line-highlight                ((t :inherit highlight :box (-2 . -2))))
+   `(mode-line-highlight                ((t :box (-2 . -2) :inherit highlight)))
    `(mode-line-inactive                 ((t :background ,bg-1 :inherit shadow)))
    `(region                             ((,class :background ,blue-5)
                                          (t :inverse-video t)))
@@ -182,7 +182,10 @@ See `custom--inhibit-theme-enable'."
    `(tooltip                            ((t :background ,bg-3)))
    `(trailing-whitespace                ((t :background ,red)))
    `(vertical-border                    ((t :background ,bg-1)))
+   `(widget-button-pressed              ((t :inherit widget-button)))
+   `(widget-documentation               ((t :inherit font-lock-doc-face)))
    `(widget-field                       ((t :background ,bg+4 :foreground ,fg)))
+   `(widget-single-line-field           ((t :inherit widget-field)))
    `(window-divider                     ((t :inherit vertical-border
                                             :inverse-video t)))
    `(window-divider-first-pixel         ((t :inherit window-divider)))
@@ -292,8 +295,7 @@ See `custom--inhibit-theme-enable'."
    `(whitespace-newline                 ((t :foreground ,bg+2)))
    `(whitespace-space                   ((t :inherit shadow :inverse-video t)))
    `(whitespace-space-after-tab         ((t :inherit whitespace-space)))
-   `(whitespace-space-before-tab        ((t :inherit
-                                            whitespace-space-after-tab)))
+   `(whitespace-space-before-tab        ((t :inherit whitespace-space-after-tab)))
    `(whitespace-tab                     ((t :background ,red-1)))
    `(whitespace-trailing                ((t :inherit trailing-whitespace)))
 ;;;;; Version Control
@@ -345,7 +347,7 @@ See `custom--inhibit-theme-enable'."
 ;;;;; Completion
    `(completions-annotations            ((t :inherit shadow)))
    `(completions-common-part            ((t :inherit match)))
-   `(completions-first-difference       ((t :inherit default)))
+   `(completions-first-difference       ((t :weight normal)))
    `(completions-group-title            ((t :inherit shadow :slant italic)))
    `(consult-preview-line               ((t :extend t :inherit highlight)))
    `(consult-preview-match              ((t :background nil)))
@@ -362,8 +364,8 @@ See `custom--inhibit-theme-enable'."
                                             :foreground ,blue+1
                                             :inherit orderless-match-face-0)))
 ;;;;; Help
-   `(helpful-heading                    ((t :foreground ,orange
-                                            :height 1.4
+   `(helpful-heading                    ((t :foreground ,cyan
+                                            :height 2.0
                                             :inherit variable-pitch)))
 ;;;;; Language Servers
    `(eglot-highlight-symbol-face        ((t :background ,fg-2
@@ -419,7 +421,7 @@ See `custom--inhibit-theme-enable'."
    `(magit-diffstat-added               ((t :foreground ,green+4)))
    `(magit-diffstat-removed             ((t :foreground ,red)))
 ;;;;;; Magit: section
-   `(magit-section-heading              ((t :foreground ,yellow)))
+   `(magit-section-heading              ((t :foreground ,cyan)))
    `(magit-section-heading-selection    ((t :foreground ,orange)))
    `(magit-section-highlight            ((t :inherit hl-line)))
 ;;;;;; Magit: log
@@ -537,8 +539,7 @@ See `custom--inhibit-theme-enable'."
                                             :foreground ,bg)))
 ;;;;; cider
    `(cider-result-overlay-face          ((t :background unspecified)))
-   `(cider-enlightened-face             ((t :box
-                                            (:color ,orange :line-width -1))))
+   `(cider-enlightened-face             ((t :box (:color ,orange :line-width -1))))
    `(cider-enlightened-local-face       ((t :foreground ,green+1)))
    `(cider-deprecated-face              ((t :background ,yellow-2)))
    `(cider-instrumented-face            ((t :box (:color ,red :line-width -1))))
@@ -944,35 +945,7 @@ See `custom--inhibit-theme-enable'."
    `(vr/match-0                         ((t :inherit isearch)))
    `(vr/match-1                         ((t :background ,bg-3
                                             :foreground ,yellow-2)))
-   `(vr/match-separator-face            ((t :foreground ,red)))
-;;;;; volatile-highlights
-   `(vhl/default-face                   ((t :background ,bg-1)))
-;;;;; web-mode
-   `(web-mode-builtin-face              ((t :inherit ,font-lock-builtin-face)))
-   `(web-mode-comment-face              ((t :inherit ,font-lock-comment-face)))
-   `(web-mode-constant-face             ((t :inherit ,font-lock-constant-face)))
-   `(web-mode-css-at-rule-face          ((t :foreground ,orange )))
-   `(web-mode-css-prop-face             ((t :foreground ,orange)))
-   `(web-mode-css-pseudo-class-face     ((t :foreground ,green+3)))
-   `(web-mode-css-rule-face             ((t :foreground ,blue)))
-   `(web-mode-doctype-face              ((t :inherit ,font-lock-comment-face)))
-   `(web-mode-folded-face               ((t :underline t)))
-   `(web-mode-function-name-face        ((t :foreground ,blue)))
-   `(web-mode-html-attr-name-face       ((t :foreground ,orange)))
-   `(web-mode-html-attr-value-face      ((t :inherit ,font-lock-string-face)))
-   `(web-mode-html-tag-face             ((t :foreground ,cyan)))
-   `(web-mode-keyword-face              ((t :inherit ,font-lock-keyword-face)))
-   `(web-mode-preprocessor-face         ((t :inherit
-                                            ,font-lock-preprocessor-face)))
-   `(web-mode-string-face               ((t :inherit ,font-lock-string-face)))
-   `(web-mode-type-face                 ((t :inherit ,font-lock-type-face)))
-   `(web-mode-variable-name-face        ((t :inherit
-                                            ,font-lock-variable-name-face)))
-   `(web-mode-server-comment-face       ((t :inherit web-mode-comment-face)))
-   `(web-mode-server-string-face        ((t :inherit web-mode-string-face)))
-   `(web-mode-symbol-face               ((t :inherit font-lock-constant-face)))
-   `(web-mode-warning-face              ((t :inherit font-lock-warning-face)))
-   `(web-mode-whitespaces-face          ((t :background ,red)))))
+   `(vr/match-separator-face            ((t :foreground ,red)))))
 
 ;;; Theme Variables
 (zenmelt-with-colors nil

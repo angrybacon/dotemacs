@@ -31,7 +31,7 @@
 
 (defun barrinalo-kebab (begin end)
   "Convert region to kebab-case.
-that is all lowercase, coma-separated words. if region is not active and begin
+that is all lowercase, coma-separated words. if region is not active and BEGIN
 and END are not defined, apply to the whole line instead."
   (interactive "*r")
   (let ((begin (if (use-region-p) begin (line-beginning-position)))
@@ -79,48 +79,49 @@ If region was active, keep it so that the command can be repeated."
 ;;;; Indent functions
 
 (defun barrinalo-indent-leftward (begin end)
-  "Indent lines between BEG and END leftward by one space and keep mark."
+  "Indent lines between BEGIN and END leftward by one space and keep mark."
   (interactive "*r")
   (indent-rigidly-left begin end)
   (setq deactivate-mark nil))
 
 (defun barrinalo-indent-leftward-tab (begin end)
-  "Indent lines between BEG and END leftward to a tab stop and keep mark."
+  "Indent lines between BEGIN and END leftward to a tab stop and keep mark."
   (interactive "*r")
   (indent-rigidly-left-to-tab-stop begin end)
   (setq deactivate-mark nil))
 
 (defun barrinalo-indent-rightward (begin end)
-  "Indent lines between BEG and END rightward by one space and keep mark."
+  "Indent lines between BEGIN and END rightward by one space and keep mark."
   (interactive "*r")
   (indent-rigidly-right begin end)
   (setq deactivate-mark nil))
 
 (defun barrinalo-indent-rightward-tab (begin end)
-  "Indent lines between BEG and END rightward to a tab stop and keep mark."
+  "Indent lines between BEGIN and END rightward to a tab stop and keep mark."
   (interactive "*r")
   (indent-rigidly-right-to-tab-stop begin end)
   (setq deactivate-mark nil))
 
 ;;;; Transpose functions
 
-(defun barrinalo-reverse (reverse begin end)
-  "Reverse lines in region.
-If region only has one line or when prefixed with \\[universal-argument],
-reverse characters in region instead."
+(defun barrinalo-reverse (begin end)
+  "Reverse region.
+Reverse lines between BEGIN and END. If region only has one line, reverse
+characters in region instead."
   (interactive "*r")
   (if (= (count-lines begin end) 1)
       (insert (nreverse (delete-and-extract-region begin end)))
     (reverse-region begin end)))
 
-(defun barrinalo-sort-words (reverse beg end)
+(defun barrinalo-sort-words (reverse begin end)
   "Sort words in region alphabetically.
-Prefixed with \\[universal-argument], sort in REVERSE instead.
+Sort words between BEGIN and END. When prefixed with \\[universal-argument],
+sort in REVERSE instead.
 
 The variable `sort-fold-case' determines whether the case affects the sort. See
 `sort-regexp-fields'."
   (interactive "*P\nr")
-  (sort-regexp-fields reverse "\\w+" "\\&" beg end))
+  (sort-regexp-fields reverse "\\w+" "\\&" begin end))
 
 (defun barrinalo-swap-down ()
   "Move down the line under point."
