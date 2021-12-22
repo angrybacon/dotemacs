@@ -2207,6 +2207,7 @@ Colorize colors as text with their value.
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-mode
   :hook
+  (help-mode . rainbow-mode)
   (prog-mode . rainbow-mode)
   :custom
   (rainbow-x-colors nil))
@@ -2357,7 +2358,9 @@ root."
 | =pinentry=          | https://elpa.gnu.org/packages/pinentry.html         |
 | =transient=         | https://github.com/magit/transient                  |
 
-Display indicators in the left fringe for Git changes.
+Display indicators in the left fringe for Git changes. This is using the fringe
+version of =git-gutter= since margins may be compromised with other features
+like centered alignment and annotations. Fringes will not work under TTY.
 
 #+BEGIN_SRC emacs-lisp
 (use-package git-gutter-fringe
