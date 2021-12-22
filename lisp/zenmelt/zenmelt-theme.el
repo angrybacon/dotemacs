@@ -432,16 +432,30 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(anzu-replace-highlight             ((t ,@(zenmelt--box 'yellow))))
    `(anzu-replace-to                    ((t ,@(zenmelt--box 'green))))
 ;;;;; Version Control
-;;;;;; Magit: bisect
+;;;;;; Git-Gutter
+   `(git-gutter:added                   ((t :foreground ,green+4)))
+   `(git-gutter:deleted                 ((t :foreground ,red+2)))
+   `(git-gutter:modified                ((t :foreground ,blue)))
+   `(git-gutter:unchanged               ((t :inherit shadow )))
+   `(git-gutter-fr:added                ((t :foreground ,green+2)))
+   `(git-gutter-fr:deleted              ((t :foreground ,red)))
+   `(git-gutter-fr:modified             ((t :foreground ,blue-1)))
+;;;;;; Magit
    `(magit-bisect-bad                   ((t :foreground ,red)))
    `(magit-bisect-good                  ((t :foreground ,green)))
    `(magit-bisect-skip                  ((t :foreground ,yellow)))
-;;;;;; Magit: blame
    `(magit-blame-date                   ((t :foreground ,fg)))
    `(magit-blame-hash                   ((t :foreground ,blue)))
    `(magit-blame-heading                ((t :background ,bg-3 :inherit shadow)))
    `(magit-blame-name                   ((t :foreground ,orange)))
-;;;;;; Magit: diff
+   `(magit-branch-current               ((t :box (-1 . -1)
+                                            :inherit magit-branch-local)))
+   `(magit-branch-local                 ((t :foreground ,blue)))
+   `(magit-branch-remote                ((t :foreground ,green+4)))
+   `(magit-branch-remote-head           ((t :box (-1 . -1)
+                                            :inherit magit-branch-remote)))
+   `(magit-cherry-equivalent            ((t :foreground ,magenta)))
+   `(magit-cherry-unmatched             ((t :foreground ,cyan)))
    `(magit-diff-added                   ((t :inherit diff-added)))
    `(magit-diff-added-highlight         ((t :foreground ,green+1)))
    `(magit-diff-context                 ((t :inherit magit-dimmed)))
@@ -458,28 +472,13 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(magit-diff-removed-highlight       ((t :foreground ,red+1)))
    `(magit-diffstat-added               ((t :foreground ,green+4)))
    `(magit-diffstat-removed             ((t :foreground ,red)))
-;;;;;; Magit: section
-   `(magit-section-heading              ((t :foreground ,cyan)))
-   `(magit-section-heading-selection    ((t :foreground ,orange)))
-   `(magit-section-highlight            ((t :inherit hl-line)))
-;;;;;; Magit: log
+   `(magit-dimmed                       ((t :inherit shadow)))
+   `(magit-hash                         ((t :inherit magit-dimmed)))
    `(magit-log-author                   ((t :foreground ,orange)))
    `(magit-log-date                     ((t :inherit magit-dimmed)))
    `(magit-log-graph                    ((t :foreground ,yellow)))
-;;;;;; Magit: process
    `(magit-process-ng                   ((t :foreground ,red)))
    `(magit-process-ok                   ((t :foreground ,green)))
-;;;;;; Magit: references
-   `(magit-branch-current               ((t :box (-1 . -1)
-                                            :inherit magit-branch-local)))
-   `(magit-branch-local                 ((t :foreground ,blue)))
-   `(magit-branch-remote                ((t :foreground ,green+4)))
-   `(magit-branch-remote-head           ((t :box (-1 . -1)
-                                            :inherit magit-branch-remote)))
-   `(magit-cherry-equivalent            ((t :foreground ,magenta)))
-   `(magit-cherry-unmatched             ((t :foreground ,cyan)))
-   `(magit-dimmed                       ((t :inherit shadow)))
-   `(magit-hash                         ((t :inherit magit-dimmed)))
    `(magit-reflog-amend                 ((t :foreground ,orange)))
    `(magit-reflog-checkout              ((t :foreground ,blue+1)))
    `(magit-reflog-cherry-pick           ((t :foreground ,red+2)))
@@ -490,14 +489,9 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(magit-reflog-remote                ((t :foreground ,cyan)))
    `(magit-reflog-reset                 ((t :foreground ,red)))
    `(magit-refname                      ((t :inherit magit-dimmed)))
-   `(magit-signature-bad                ((t :foreground ,red)))
-   `(magit-signature-error              ((t :foreground ,red-1)))
-   `(magit-signature-expired            ((t :foreground ,orange)))
-   `(magit-signature-good               ((t :foreground ,green)))
-   `(magit-signature-revoked            ((t :foreground ,magenta)))
-   `(magit-signature-untrusted          ((t :foreground ,yellow)))
-   `(magit-tag                          ((t :foreground ,orange)))
-;;;;;; Magit: sequence
+   `(magit-section-heading              ((t :foreground ,cyan)))
+   `(magit-section-heading-selection    ((t :foreground ,orange)))
+   `(magit-section-highlight            ((t :inherit hl-line)))
    `(magit-sequence-done                ((t :inherit magit-dimmed)))
    `(magit-sequence-drop                ((t :foreground ,red)))
    `(magit-sequence-head                ((t :foreground ,blue)))
@@ -505,38 +499,21 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(magit-sequence-part                ((t :foreground ,yellow)))
    `(magit-sequence-pick                ((t :foreground ,yellow-2)))
    `(magit-sequence-stop                ((t :foreground ,green+4)))
+   `(magit-signature-bad                ((t :foreground ,red)))
+   `(magit-signature-error              ((t :foreground ,red-1)))
+   `(magit-signature-expired            ((t :foreground ,orange)))
+   `(magit-signature-good               ((t :foreground ,green)))
+   `(magit-signature-revoked            ((t :foreground ,magenta)))
+   `(magit-signature-untrusted          ((t :foreground ,yellow)))
+   `(magit-tag                          ((t :foreground ,orange)))
+;;;;;; Magit: git-commit
+   `(git-commit-comment-action          ((t :inherit font-lock-comment-face)))
+   `(git-commit-comment-branch-local    ((t :inherit magit-branch-local)))
+   `(git-commit-comment-branch-remote   ((t :inherit magit-branch-remote)))
 ;;;;; Markdown
    `(markdown-inline-code-face          ((t :inherit org-verbatim)))
 
 ;;;; TODO Prettify useful faces and clean up the rest
-;;;;; git-annex
-   `(git-annex-dired-annexed-available  ((t :inherit success)))
-   `(git-annex-dired-annexed-unavailable ((t :inherit error)))
-;;;;; git-commit
-   `(git-commit-comment-action          ((,class :foreground ,green+1)))
-   `(git-commit-comment-branch          ((,class :foreground ,blue+1))) ; Obsolete
-   `(git-commit-comment-branch-local    ((,class :foreground ,blue+1)))
-   `(git-commit-comment-branch-remote   ((,class :foreground ,green)))
-   `(git-commit-comment-heading         ((,class :foreground ,yellow)))
-;;;;; git-gutter
-   `(git-gutter:added                   ((t :foreground ,green :inverse-video t)))
-   `(git-gutter:deleted                 ((t :foreground ,red :inverse-video t)))
-   `(git-gutter:modified                ((t :foreground ,blue-2
-                                            :inverse-video t)))
-   `(git-gutter:unchanged               ((t :foreground ,fg :inverse-video t)))
-;;;;; git-gutter-fr
-   `(git-gutter-fr:added                ((t :foreground ,green)))
-   `(git-gutter-fr:deleted              ((t :foreground ,red)))
-   `(git-gutter-fr:modified             ((t :foreground ,blue-2)))
-;;;;; git-rebase
-   `(git-rebase-hash                    ((t :foreground, orange)))
-;;;;; diff-hl
-   `(diff-hl-change                     ((,class :background ,blue-2
-                                                 :foreground ,blue)))
-   `(diff-hl-delete                     ((,class :background ,red-1
-                                                 :foreground ,red+1)))
-   `(diff-hl-insert                     ((,class :background ,green-2
-                                                 :foreground ,green+1)))
 ;;;;; avy
    `(avy-background-face                ((t :foreground ,fg-2
                                             :inverse-video nil)))
