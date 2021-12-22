@@ -376,6 +376,8 @@ See [[https://github.com/mooz/js2-mode]] for more details.
    ("C-c C-c" . me/eval-region-dwim)
    :map lisp-interaction-mode-map
    ("C-c C-c" . me/eval-region-dwim))
+  :custom
+  (emacs-lisp-docstring-fill-column nil)
   :hook
   (emacs-lisp-mode . flymake-mode)
   (emacs-lisp-mode . outline-minor-mode))
@@ -909,16 +911,16 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
     ("C-e" . nil)
     ("C-w" . nil)
     :map evil-motion-state-map
-    ("gs" . avy-goto-char-timer)
-    ("gS" . avy-goto-char)
-    ("q" . nil)
-    ("C-e" . nil)
-    :map evil-normal-state-map
     ("gb" . switch-to-buffer)
     ("gC" . describe-face)
     ("gD" . me/evil-goto-definition-other-window)
     ("gp" . project-switch-project)
     ("gr" . (lambda () (interactive) (revert-buffer nil t)))
+    ("gs" . avy-goto-char-timer)
+    ("gS" . avy-goto-char)
+    ("q" . nil)
+    ("C-e" . nil)
+    :map evil-normal-state-map
     ("q" . nil)
     :map evil-visual-state-map
     ("f" . fill-region))
