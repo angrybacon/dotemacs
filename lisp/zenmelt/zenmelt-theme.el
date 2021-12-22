@@ -102,22 +102,29 @@ See `custom--inhibit-theme-enable'."
 
 (defcustom zenmelt-box-colors-alist
   (zenmelt-with-colors nil
-    `((blue         . (,blue     . ,blue-5))
-      (blue-focused . (,blue-5   . ,blue))
-      (yellow       . (,yellow-2 . ,fg-2))))
+    `((blue    . (,blue-4  . ,blue+1))
+      (cyan    . (,blue-5  . ,blue))
+      (cyan+   . (,blue    . ,blue-5))
+      (default . (,bg+1    . ,bg+4))
+      (green   . (,green-3 . ,green+2))
+      (red     . (,red-3   . ,red+2))
+      (yellow  . (,fg-2    . ,yellow-2))))
   "List color tuples for boxes.
-The car gives the foreground color while the cdr gives the background."
+The car gives the background color while the cdr gives the border.
+The cdr is also used for the text foreground color."
   :type '(alist :key-type symbol :value-type (cons (list color variable)
                                                    (list color variable))))
 
-(defun zenmelt--box (color)
+(defun zenmelt--box (&optional color)
   "Return an plist containing properties for a colored box.
-It should be a valid plist to be used in the specifications provided to
-`custom-theme-set-faces'.
+When the optional COLOR is not provided, use `'default' by default which yields
+a gray box. It should return a valid plist to be used in the specifications
+provided to `custom-theme-set-faces'.
 
-See `zenmelt-box-colors-alist' to customize what tuple to use for COLOR."
-  (pcase-let ((`(,f . ,b) (alist-get color zenmelt-box-colors-alist)))
-    `(:background ,b :box (-1 . -1) :foreground ,f)))
+See `zenmelt-box-colors-alist' for a complete list of available colors."
+  (pcase-let* ((color (or color 'default))
+               (`(,b . ,f) (alist-get color zenmelt-box-colors-alist)))
+    `(:background ,b :box (:color ,f :line-width (-1 . -1)) :foreground ,f)))
 
 ;;; Theme Faces
 
@@ -126,8 +133,8 @@ See `zenmelt-box-colors-alist' to customize what tuple to use for COLOR."
    'zenmelt
 ;;;; Built-in
 ;;;;; Base
-   `(bold                               ((t :foreground ,fg+1)))
-   `(bold-italic                        ((t :inherit (italic bold))))
+   `(bold                               ((t :foreground ,fg+2)))
+   `(bold-italic                        ((t :inherit (bold italic))))
    `(default                            ((t :background ,bg :foreground ,fg)))
    `(error                              ((t :foreground ,red)))
    `(escape-glyph                       ((t :foreground ,yellow)))
@@ -145,12 +152,10 @@ See `zenmelt-box-colors-alist' to customize what tuple to use for COLOR."
    `(font-lock-string-face              ((t :foreground ,red)))
    `(font-lock-type-face                ((t :foreground ,blue-1)))
    `(font-lock-variable-name-face       ((t :foreground ,orange)))
-   `(font-lock-warning-face             ((t :foreground ,yellow-2)))
+   `(font-lock-warning-face             ((t :inherit warning)))
    `(highlight                          ((t :background ,blue-5
                                             :foreground ,blue)))
    `(italic                             ((t :foreground ,fg+1 :slant italic)))
-   `(link                               ((t :foreground ,yellow :underline t)))
-   `(link-visited                       ((t :foreground ,yellow-2 :underline t)))
    `(shadow                             ((t :foreground ,fg-1)))
    `(success                            ((t :foreground ,green)))
    `(warning                            ((t :foreground ,orange)))
@@ -189,13 +194,14 @@ See `zenmelt-box-colors-alist' to customize what tuple to use for COLOR."
    `(header-line                        ((t :background ,bg-3
                                             :box (:color ,bg-3 :line-width 4)
                                             :foreground ,yellow)))
-   `(help-key-binding                   ((t :background ,bg+2
-                                            :box (:color ,fg-2 :line-width (-2 . -2))
-                                            :foreground ,green+4)))
+   `(help-key-binding                   ((t ,@(zenmelt--box)
+                                            :foreground ,orange)))
    `(hl-line                            ((t :background ,bg+2)))
    `(line-number                        ((t :inherit shadow)))
    `(line-number-current-line           ((t :foreground ,yellow-2
                                             :inherit hl-line)))
+   `(link                               ((t :foreground ,yellow :underline t)))
+   `(link-visited                       ((t :foreground ,yellow-2 :underline t)))
    `(menu                               ((t :inherit default)))
    `(minibuffer-prompt                  ((t :foreground ,yellow)))
    `(mode-line                          ((t :background ,bg-3
@@ -305,9 +311,9 @@ See `zenmelt-box-colors-alist' to customize what tuple to use for COLOR."
    `(grep-error-face                    ((t :foreground ,red-1 :underline t)))
    `(grep-hit-face                      ((t :foreground ,blue)))
    `(grep-match-face                    ((t :foreground ,orange)))
-   `(isearch                            ((t ,@(zenmelt--box 'blue-focused))))
+   `(isearch                            ((t ,@(zenmelt--box 'cyan+))))
    `(isearch-fail                       ((t :foreground ,red)))
-   `(lazy-highlight                     ((t ,@(zenmelt--box 'blue))))
+   `(lazy-highlight                     ((t ,@(zenmelt--box 'cyan))))
    `(match                              ((t ,@(zenmelt--box 'yellow))))
 ;;;;; Syntax
    `(whitespace-empty                   ((t :background ,yellow-2 :extend t)))
@@ -388,7 +394,8 @@ See `zenmelt-box-colors-alist' to customize what tuple to use for COLOR."
 ;;;;; Help
    `(helpful-heading                    ((t :foreground ,cyan
                                             :height 2.0
-                                            :inherit variable-pitch)))
+                                            :inherit variable-pitch
+                                            :underline t)))
 ;;;;; Language Servers
    `(eglot-highlight-symbol-face        ((t ,@(zenmelt--box 'yellow))))
 ;;;;; Mode-Line
