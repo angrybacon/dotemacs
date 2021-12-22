@@ -390,16 +390,10 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(consult-preview-match              ((t :background nil)))
    `(corfu-current                      ((t :inherit 'highlight)))
    `(corfu-default                      ((t :background ,bg-3)))
-   `(orderless-match-face-0             ((t :inherit match)))
-   `(orderless-match-face-1             ((t :background ,green-3
-                                            :foreground ,green+2
-                                            :inherit orderless-match-face-0)))
-   `(orderless-match-face-2             ((t :background ,red-3
-                                            :foreground ,red+2
-                                            :inherit orderless-match-face-0)))
-   `(orderless-match-face-3             ((t :background ,blue-4
-                                            :foreground ,blue+1
-                                            :inherit orderless-match-face-0)))
+   `(orderless-match-face-0             ((t ,@(zenmelt--box 'yellow))))
+   `(orderless-match-face-1             ((t ,@(zenmelt--box 'green))))
+   `(orderless-match-face-2             ((t ,@(zenmelt--box 'red))))
+   `(orderless-match-face-3             ((t ,@(zenmelt--box 'blue))))
 ;;;;; Help
    `(helpful-heading                    ((t :foreground ,cyan
                                             :height 2.0
