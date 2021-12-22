@@ -96,7 +96,7 @@ this document.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default
- straight-use-package-by-default t)     ;; Allow `use-package' interface
+ straight-use-package-by-default t)     ; Allow `use-package' interface
 #+END_SRC
 
 Bootstrap =straight=.
@@ -573,7 +573,7 @@ margins.
   :hook
   (window-configuration-change . me/olivetti-mode-maybe)
   :custom
-  (olivetti-body-width (+ fill-column 6)))  ;; Account for line numbers
+  (olivetti-body-width (+ fill-column 6))) ; Account for line numbers
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp

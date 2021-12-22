@@ -512,6 +512,16 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(git-commit-comment-branch-remote   ((t :inherit magit-branch-remote)))
 ;;;;; Markdown
    `(markdown-inline-code-face          ((t :inherit org-verbatim)))
+;;;;; Pairs
+   `(rainbow-delimiters-depth-1-face    ((t :foreground ,fg)))
+   `(rainbow-delimiters-depth-2-face    ((t :foreground ,blue-2)))
+   `(rainbow-delimiters-depth-3-face    ((t :foreground ,yellow-2)))
+   `(rainbow-delimiters-depth-4-face    ((t :foreground ,green)))
+   `(rainbow-delimiters-depth-5-face    ((t :foreground ,orange)))
+   `(rainbow-delimiters-depth-6-face    ((t :foreground ,cyan)))
+   `(rainbow-delimiters-depth-7-face    ((t :foreground ,yellow)))
+   `(rainbow-delimiters-depth-8-face    ((t :foreground ,green+4)))
+   `(rainbow-delimiters-depth-9-face    ((t :foreground ,red+2)))
 
 ;;;; TODO Prettify useful faces and clean up the rest
 ;;;;; avy
@@ -813,19 +823,6 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(org-ref-cite-face                  ((t :underline t)))
    `(org-ref-glossary-face              ((t :underline t)))
    `(org-ref-acronym-face               ((t :underline t)))
-;;;;; rainbow-delimiters
-   `(rainbow-delimiters-depth-1-face    ((t :foreground ,fg)))
-   `(rainbow-delimiters-depth-2-face    ((t :foreground ,green+4)))
-   `(rainbow-delimiters-depth-3-face    ((t :foreground ,yellow-2)))
-   `(rainbow-delimiters-depth-4-face    ((t :foreground ,cyan)))
-   `(rainbow-delimiters-depth-5-face    ((t :foreground ,green+2)))
-   `(rainbow-delimiters-depth-6-face    ((t :foreground ,blue+1)))
-   `(rainbow-delimiters-depth-7-face    ((t :foreground ,yellow-1)))
-   `(rainbow-delimiters-depth-8-face    ((t :foreground ,green+1)))
-   `(rainbow-delimiters-depth-9-face    ((t :foreground ,blue-2)))
-   `(rainbow-delimiters-depth-10-face   ((t :foreground ,orange)))
-   `(rainbow-delimiters-depth-11-face   ((t :foreground ,green)))
-   `(rainbow-delimiters-depth-12-face   ((t :foreground ,blue-5)))
 ;;;;; rcirc
    `(rcirc-my-nick                      ((t :foreground ,blue)))
    `(rcirc-other-nick                   ((t :foreground ,orange)))
