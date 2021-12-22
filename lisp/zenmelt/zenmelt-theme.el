@@ -423,6 +423,14 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(transient-red                      ((t :foreground ,red+1)))
    `(transient-separator                ((t :foreground ,fg-2)))
    `(transient-teal                     ((t :foreground ,cyan)))
+;;;;; Replace
+   `(anzu-match-1                       ((t ,@(zenmelt--box 'green))))
+   `(anzu-match-2                       ((t ,@(zenmelt--box 'red))))
+   `(anzu-match-3                       ((t ,@(zenmelt--box 'blue))))
+   `(anzu-mode-line                     ((t :foreground ,magenta)))
+   `(anzu-mode-line-no-match            ((t :foreground ,red)))
+   `(anzu-replace-highlight             ((t ,@(zenmelt--box 'yellow))))
+   `(anzu-replace-to                    ((t ,@(zenmelt--box 'green))))
 ;;;;; Version Control
 ;;;;;; Magit: bisect
    `(magit-bisect-bad                   ((t :foreground ,red)))
@@ -529,24 +537,6 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
                                                  :foreground ,red+1)))
    `(diff-hl-insert                     ((,class :background ,green-2
                                                  :foreground ,green+1)))
-;;;;; ace-jump
-   `(ace-jump-face-background           ((t :background ,bg
-                                            :foreground ,fg-2
-                                            :inverse-video nil)))
-   `(ace-jump-face-foreground           ((t :background ,bg
-                                            :foreground ,green+2
-                                            :inverse-video nil)))
-;;;;; anzu
-   `(anzu-mode-line                     ((t :foreground ,cyan)))
-   `(anzu-mode-line-no-match            ((t :foreground ,red)))
-   `(anzu-match-1                       ((t :background ,green
-                                            :foreground ,bg)))
-   `(anzu-match-2                       ((t :background ,orange
-                                            :foreground ,bg)))
-   `(anzu-match-3                       ((t :background ,blue
-                                            :foreground ,bg)))
-   `(anzu-replace-to                    ((t :foreground ,yellow
-                                            :inherit anzu-replace-highlight)))
 ;;;;; avy
    `(avy-background-face                ((t :foreground ,fg-2
                                             :inverse-video nil)))
@@ -840,44 +830,12 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(mingus-album-face                  ((t :foreground ,red+1 :underline t)))
    `(mingus-album-stale-face            ((t :foreground ,red+1)))
    `(mingus-stopped-face                ((t :foreground ,red)))
-;;;;; nav
-   `(nav-face-heading                   ((t :foreground ,yellow)))
-   `(nav-face-button-num                ((t :foreground ,cyan)))
-   `(nav-face-dir                       ((t :foreground ,green)))
-   `(nav-face-hdir                      ((t :foreground ,red)))
-   `(nav-face-file                      ((t :foreground ,fg)))
-   `(nav-face-hfile                     ((t :foreground ,red-4)))
-;;;;; mumamo
-   `(mumamo-background-chunk-major      ((t :background nil)))
-   `(mumamo-background-chunk-submode1   ((t :background ,bg-3)))
-   `(mumamo-background-chunk-submode2   ((t :background ,bg+3)))
-   `(mumamo-background-chunk-submode3   ((t :background ,bg+4)))
-   `(mumamo-background-chunk-submode4   ((t :background ,bg+2)))
 ;;;;; org-ref
    `(org-ref-ref-face                   ((t :underline t)))
    `(org-ref-label-face                 ((t :underline t)))
    `(org-ref-cite-face                  ((t :underline t)))
    `(org-ref-glossary-face              ((t :underline t)))
    `(org-ref-acronym-face               ((t :underline t)))
-;;;;; p4
-   `(p4-depot-added-face                ((t :inherit diff-added)))
-   `(p4-depot-branch-op-face            ((t :inherit diff-changed)))
-   `(p4-depot-deleted-face              ((t :inherit diff-removed)))
-   `(p4-depot-unmapped-face             ((t :inherit diff-changed)))
-   `(p4-diff-change-face                ((t :inherit diff-changed)))
-   `(p4-diff-del-face                   ((t :inherit diff-removed)))
-   `(p4-diff-file-face                  ((t :inherit diff-file-header)))
-   `(p4-diff-head-face                  ((t :inherit diff-header)))
-   `(p4-diff-ins-face                   ((t :inherit diff-added)))
-;;;;; c/perl
-   `(cperl-nonoverridable-face          ((t :foreground ,magenta)))
-   `(cperl-array-face                   ((t :foreground ,yellow)))
-   `(cperl-hash-face                    ((t :foreground ,yellow-1)))
-;;;;; paren-face
-   `(parenthesis                        ((t :foreground ,fg-2)))
-;;;;; racket-mode
-   `(racket-keyword-argument-face       ((t :inherit font-lock-constant-face)))
-   `(racket-selfeval-face               ((t :inherit font-lock-type-face)))
 ;;;;; rainbow-delimiters
    `(rainbow-delimiters-depth-1-face    ((t :foreground ,fg)))
    `(rainbow-delimiters-depth-2-face    ((t :foreground ,green+4)))
