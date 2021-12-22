@@ -1784,21 +1784,14 @@ Evil-snipe emulates =vim-seek= and/or =vim-sneak= in =evil-mode=.
 | =anzu= | https://github.com/syohex/emacs-anzu |
 
 Better search and replace features. Even though I prefer to use
-=multiple-cursors= to replace text in different places at once, =anzu= has a
-nice feedback on regexp matches.
-
-#+BEGIN_QUOTE
-=anzu.el= is an Emacs port of =anzu.vim=. =anzu.el= provides a minor mode which
-displays /current match/ and /total matches/ information in the mode-line in
-various search modes.
-
---- Syohei Yoshida
-#+END_QUOTE
+=multiple-cursors= to replace text in different places at once, =anzu= provides
+a useful visual feedback for more complex expressions.
 
 #+BEGIN_SRC emacs-lisp
 (use-package anzu
   :bind
-  ([remap query-replace] . anzu-query-replace-regexp))
+  ([remap query-replace] . anzu-query-replace)
+  ([remap query-replace-regexp] . anzu-query-replace-regexp))
 #+END_SRC
 
 *** Navigation: Scroll
@@ -2358,20 +2351,11 @@ root."
 
 ** Version Control
 
-| =git-commit=         | https://github.com/magit/magit/blob/master/lisp/git-commit.el |
-| =git-gutter-fringe=  | https://github.com/emacsorphanage/git-gutter-fringe           |
-| =git-modes=          | https://github.com/magit/git-modes                            |
-| =magit=              | https://github.com/magit/magit                                |
-| =pinentry=           | https://elpa.gnu.org/packages/pinentry.html                   |
-| =transient=          | https://github.com/magit/transient                            |
-
-Auto-fill commit messages.
-
-#+BEGIN_SRC emacs-lisp
-(use-package git-commit
-  :hook
-  (git-commit-mode . (lambda () (setq-local fill-column 72))))
-#+END_SRC
+| =git-gutter-fringe= | https://github.com/emacsorphanage/git-gutter-fringe |
+| =git-modes=         | https://github.com/magit/git-modes                  |
+| =magit=             | https://github.com/magit/magit                      |
+| =pinentry=          | https://elpa.gnu.org/packages/pinentry.html         |
+| =transient=         | https://github.com/magit/transient                  |
 
 Display indicators in the left fringe for Git changes.
 
@@ -2432,6 +2416,7 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
   (magit-post-stage-hook . me/magit-recenter)
   :custom
   (epg-pinentry-mode 'loopback)
+  (git-commit-fill-column 72)
   (magit-display-buffer-function
    'magit-display-buffer-same-window-except-diff-v1)
   (magit-diff-highlight-hunk-region-functions
