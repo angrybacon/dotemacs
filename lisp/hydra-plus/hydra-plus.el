@@ -1,6 +1,6 @@
 ;;; hydra-plus.el --- Hydra augments -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2021 Mathieu Marques
+;; Copyright (C) 2022 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: November 29, 2021

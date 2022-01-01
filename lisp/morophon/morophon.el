@@ -1,6 +1,6 @@
 ;;; morophon.el --- Interact with themes -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2021 Mathieu Marques
+;; Copyright (C) 2022 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: November 29, 2021
@@ -31,7 +31,6 @@
 (defcustom morophon-known-themes '(modus-operandi modus-vivendi)
   "List of themes to take into account with `morophon-cycle'.
 See `custom-available-themes'.")
-
 
 (defun morophon-disable-themes ()
   "Disable all themes found in `custom-enable-themes'."

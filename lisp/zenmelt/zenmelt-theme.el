@@ -1,6 +1,6 @@
 ;;; zenmelt-theme.el --- A Zenburn clone -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2021 Mathieu Marques
+;; Copyright (C) 2022 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: February 08, 2021
@@ -32,7 +32,7 @@
 
 (deftheme zenmelt "The Zenmelt color theme.")
 
-;;; Palette
+;;;; Palette
 
 (defconst zenmelt-colors-alist
   '(("bg-4"     . "#000000")
@@ -98,7 +98,7 @@ See `custom--inhibit-theme-enable'."
                    zenmelt-colors-alist))
      ,@body))
 
-;;; Boxes
+;;;; Boxes
 
 (defcustom zenmelt-box-colors-alist
   (zenmelt-with-colors nil
@@ -126,14 +126,14 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
                (`(,b . ,f) (alist-get color zenmelt-box-colors-alist)))
     `(:background ,b :box (:color ,f :line-width (-1 . -1)) :foreground ,f)))
 
-;;; Theme Faces
+;;;; Theme Faces
 
 (zenmelt-with-colors nil
   (custom-theme-set-faces
    'zenmelt
-;;;; Built-in
-;;;;; Base
-   `(bold                               ((t :foreground ,fg+2)))
+;;;;; Built-in
+;;;;;; Base
+   `(bold                               ((t :weight bold)))
    `(bold-italic                        ((t :inherit (bold italic))))
    `(default                            ((t :background ,bg :foreground ,fg)))
    `(error                              ((t :foreground ,red)))
@@ -159,10 +159,10 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(shadow                             ((t :foreground ,fg-1)))
    `(success                            ((t :foreground ,green)))
    `(warning                            ((t :foreground ,orange)))
-;;;;; Applications
+;;;;;; Applications
    `(eww-invalid-certificate            ((t :inherit error)))
    `(eww-valid-certificate              ((t :inherit success)))
-;;;;; Compilation
+;;;;;; Compilation
    `(compilation-column-face            ((t :foreground ,yellow)))
    `(compilation-enter-directory-face   ((t :foreground ,green)))
    `(compilation-error-face             ((t :foreground ,red-1 :underline t)))
@@ -177,7 +177,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(compilation-mode-line-fail         ((t :foreground ,red)))
    `(compilation-mode-line-run          ((t :foreground ,yellow)))
    `(compilation-warning-face           ((t :foreground ,orange :underline t)))
-;;;;; Customize
+;;;;;; Customize
    `(custom-button                      ((t :inherit button)))
    `(custom-button-mouse                ((t :foreground ,yellow
                                             :inherit custom-button)))
@@ -189,12 +189,12 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(custom-state                       ((t :foreground ,green+4)))
    `(custom-variable-tag                ((t :foreground ,blue)))
    `(custom-visibility                  ((t :inherit link)))
-;;;;; Help
+;;;;;; Help
    `(Info-quoted                        ((t :inherit font-lock-constant-face)))
    `(eldoc-box-body                     ((t :inherit tooltip)))
    `(eldoc-box-border                   ((t :background ,red)))
    `(eldoc-highlight-function-argument  ((t :inherit highlight)))
-;;;;; Interface
+;;;;;; Interface
    `(button                             ((t ,@(zenmelt--box 'yellow))))
    `(cursor                             ((t :background ,fg+1 :foreground ,fg)))
    `(fringe                             ((t :foreground ,fg)))
@@ -233,7 +233,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
                                             :inverse-video t)))
    `(window-divider-first-pixel         ((t :inherit window-divider)))
    `(window-divider-last-pixel          ((t :inherit window-divider)))
-;;;;; Language
+;;;;;; Language
    `(flymake-error                      ((t :background ,red-5
                                             :foreground ,red+1
                                             :underline t)))
@@ -243,7 +243,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(flymake-warning                    ((t :background ,fg-2
                                             :foreground ,orange
                                             :underline t)))
-;;;;; Org
+;;;;;; Org
    `(org-agenda-date-today              ((t :foreground ,fg+1 :slant italic)))
    `(org-agenda-structure               ((t :inherit font-lock-comment-face)))
    `(org-archived                       ((t :foreground ,fg)))
@@ -306,7 +306,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(org-upcoming-deadline              ((t :inherit font-lock-keyword-face)))
    `(org-verbatim                       ((t :inherit help-key-binding)))
    `(org-warning                        ((t :foreground ,red)))
-;;;;; Outline
+;;;;;; Outline
    `(outline-1                          ((t :foreground ,orange)))
    `(outline-2                          ((t :foreground ,green+4)))
    `(outline-3                          ((t :foreground ,blue-1)))
@@ -315,7 +315,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(outline-6                          ((t :foreground ,green+2)))
    `(outline-7                          ((t :foreground ,red-4)))
    `(outline-8                          ((t :foreground ,blue-4)))
-;;;;; Search
+;;;;;; Search
    `(grep-context-face                  ((t :foreground ,fg)))
    `(grep-error-face                    ((t :foreground ,red-1 :underline t)))
    `(grep-hit-face                      ((t :foreground ,blue)))
@@ -324,7 +324,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(isearch-fail                       ((t :foreground ,red)))
    `(lazy-highlight                     ((t ,@(zenmelt--box 'cyan))))
    `(match                              ((t ,@(zenmelt--box 'yellow))))
-;;;;; Syntax
+;;;;;; Syntax
    `(whitespace-empty                   ((t :background ,yellow-2 :extend t)))
    `(whitespace-hspace                  ((t :inherit whitespace-space)))
    `(whitespace-indentation             ((t :background ,bg+1 :foreground ,red)))
@@ -335,8 +335,8 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(whitespace-space-before-tab        ((t :inherit whitespace-space-after-tab)))
    `(whitespace-tab                     ((t :background ,red-1)))
    `(whitespace-trailing                ((t :inherit trailing-whitespace)))
-;;;;; Version Control
-;;;;;; Diff
+;;;;;; Version Control
+;;;;;;; Diff
    `(diff-added                         ((t :foreground ,green)))
    `(diff-changed                       ((t :foreground ,yellow-2)))
    `(diff-context                       ((t :foreground ,fg-2)))
@@ -355,7 +355,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(diff-refine-removed                ((t :inherit diff-refine-added
                                             :foreground ,red+2)))
    `(diff-removed                       ((t :foreground ,red)))
-;;;;;; Ediff
+;;;;;;; Ediff
    `(ediff-current-diff-A               ((t :background ,red-6)))
    `(ediff-current-diff-Ancestor        ((t :inherit ediff-current-diff-A)))
    `(ediff-current-diff-B               ((t :background ,green-5)))
@@ -372,7 +372,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(ediff-odd-diff-Ancestor            ((t :inherit ediff-odd-diff-A)))
    `(ediff-odd-diff-B                   ((t :inherit ediff-odd-diff-A)))
    `(ediff-odd-diff-C                   ((t :inherit ediff-odd-diff-A)))
-;;;;;; Smerge
+;;;;;;; Smerge
    `(smerge-lower                       ((t :background ,bg+1
                                             :inherit diff-added)))
    `(smerge-markers                     ((t :background ,bg+1 :inherit shadow)))
@@ -380,8 +380,8 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(smerge-refined-removed             ((t :inherit diff-refine-removed)))
    `(smerge-upper                       ((t :background ,bg+1
                                             :inherit diff-removed)))
-;;;; Third-party
-;;;;; Completion
+;;;;;; Third-party
+;;;;;; Completion
    `(completions-annotations            ((t :inherit shadow)))
    `(completions-common-part            ((t :inherit match)))
    `(completions-first-difference       ((t :weight normal)))
@@ -394,14 +394,14 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(orderless-match-face-1             ((t ,@(zenmelt--box 'green))))
    `(orderless-match-face-2             ((t ,@(zenmelt--box 'red))))
    `(orderless-match-face-3             ((t ,@(zenmelt--box 'blue))))
-;;;;; Help
+;;;;;; Help
    `(helpful-heading                    ((t :foreground ,cyan
                                             :height 2.0
                                             :inherit variable-pitch
                                             :underline t)))
-;;;;; Language Servers
+;;;;;; Language Servers
    `(eglot-highlight-symbol-face        ((t ,@(zenmelt--box 'yellow))))
-;;;;; Mode-Line
+;;;;;; Mode-Line
    `(doom-modeline-bar                  ((t :inherit mode-line)))
    `(doom-modeline-bar-inactive         ((t :inherit doom-modeline-bar)))
    `(doom-modeline-evil-emacs-state     ((t :foreground ,magenta)))
@@ -409,7 +409,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(doom-modeline-info                 ((t :foreground ,green+4)))
    `(doom-modeline-project-dir          ((t :inherit dired-directory)))
    `(doom-modeline-project-parent-dir   ((t :inherit shadow)))
-;;;;; Popup
+;;;;;; Popup
    `(hydra-face-amaranth                ((t :foreground ,red-2)))
    `(hydra-face-blue                    ((t :foreground ,blue+1)))
    `(hydra-face-pink                    ((t :foreground ,magenta)))
@@ -423,7 +423,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(transient-red                      ((t :foreground ,red+1)))
    `(transient-separator                ((t :foreground ,fg-2)))
    `(transient-teal                     ((t :foreground ,cyan)))
-;;;;; Replace
+;;;;;; Replace
    `(anzu-match-1                       ((t ,@(zenmelt--box 'green))))
    `(anzu-match-2                       ((t ,@(zenmelt--box 'red))))
    `(anzu-match-3                       ((t ,@(zenmelt--box 'blue))))
@@ -431,8 +431,8 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(anzu-mode-line-no-match            ((t :foreground ,red)))
    `(anzu-replace-highlight             ((t ,@(zenmelt--box 'yellow))))
    `(anzu-replace-to                    ((t ,@(zenmelt--box 'green))))
-;;;;; Version Control
-;;;;;; Git-Gutter
+;;;;;; Version Control
+;;;;;;; Git-Gutter
    `(git-gutter:added                   ((t :foreground ,green+4)))
    `(git-gutter:deleted                 ((t :foreground ,red+2)))
    `(git-gutter:modified                ((t :foreground ,blue)))
@@ -440,7 +440,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(git-gutter-fr:added                ((t :foreground ,green+2)))
    `(git-gutter-fr:deleted              ((t :foreground ,red)))
    `(git-gutter-fr:modified             ((t :foreground ,blue-1)))
-;;;;;; Magit
+;;;;;;; Magit
    `(magit-bisect-bad                   ((t :foreground ,red)))
    `(magit-bisect-good                  ((t :foreground ,green)))
    `(magit-bisect-skip                  ((t :foreground ,yellow)))
@@ -506,13 +506,13 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(magit-signature-revoked            ((t :foreground ,magenta)))
    `(magit-signature-untrusted          ((t :foreground ,yellow)))
    `(magit-tag                          ((t :foreground ,orange)))
-;;;;;; Magit: git-commit
+;;;;;;; Magit: git-commit
    `(git-commit-comment-action          ((t :inherit font-lock-comment-face)))
    `(git-commit-comment-branch-local    ((t :inherit magit-branch-local)))
    `(git-commit-comment-branch-remote   ((t :inherit magit-branch-remote)))
-;;;;; Markdown
+;;;;;; Markdown
    `(markdown-inline-code-face          ((t :inherit org-verbatim)))
-;;;;; Pairs
+;;;;;; Pairs
    `(rainbow-delimiters-depth-1-face    ((t :foreground ,fg)))
    `(rainbow-delimiters-depth-2-face    ((t :foreground ,blue-2)))
    `(rainbow-delimiters-depth-3-face    ((t :foreground ,yellow-2)))
@@ -523,8 +523,8 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(rainbow-delimiters-depth-8-face    ((t :foreground ,green+4)))
    `(rainbow-delimiters-depth-9-face    ((t :foreground ,red+2)))
 
-;;;; TODO Prettify useful faces and clean up the rest
-;;;;; avy
+;;;;; TODO Prettify useful faces and clean up the rest
+;;;;;; avy
    `(avy-background-face                ((t :foreground ,fg-2
                                             :inverse-video nil)))
    `(avy-lead-face                      ((t :foreground ,cyan
@@ -535,7 +535,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
                                             :inverse-video nil)))
    `(avy-lead-face-2                    ((t :foreground ,red+1
                                             :inverse-video nil)))
-;;;;; bm
+;;;;;; bm
    `(bm-face                            ((t :background ,yellow-1
                                             :foreground ,bg)))
    `(bm-fringe-face                     ((t :background ,yellow-1
@@ -544,7 +544,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
                                             :foreground ,bg)))
    `(bm-persistent-face                 ((t :background ,green-2
                                             :foreground ,bg)))
-;;;;; cider
+;;;;;; cider
    `(cider-result-overlay-face          ((t :background unspecified)))
    `(cider-enlightened-face             ((t :box (:color ,orange :line-width -1))))
    `(cider-enlightened-local-face       ((t :foreground ,green+1)))
@@ -555,7 +555,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(cider-test-error-face              ((t :background ,magenta)))
    `(cider-test-success-face            ((t :background ,green-2)))
    `(cider-fringe-good-face             ((t :foreground ,green+4)))
-;;;;; context-coloring
+;;;;;; context-coloring
    `(context-coloring-level-0-face      ((t :foreground ,fg)))
    `(context-coloring-level-1-face      ((t :foreground ,cyan)))
    `(context-coloring-level-2-face      ((t :foreground ,green+4)))
@@ -566,23 +566,23 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(context-coloring-level-7-face      ((t :foreground ,green+2)))
    `(context-coloring-level-8-face      ((t :foreground ,yellow-2)))
    `(context-coloring-level-9-face      ((t :foreground ,red+1)))
-;;;;; coq
+;;;;;; coq
    `(coq-solve-tactics-face             ((t :foreground nil
                                             :inherit font-lock-constant-face)))
-;;;;; ctable
+;;;;;; ctable
    `(ctbl:face-cell-select              ((t :background ,blue :foreground ,bg)))
    `(ctbl:face-continue-bar             ((t :background ,bg-1 :foreground ,bg)))
    `(ctbl:face-row-select               ((t :background ,cyan :foreground ,bg)))
-;;;;; debbugs
+;;;;;; debbugs
    `(debbugs-gnu-done                   ((t :foreground ,fg-2)))
    `(debbugs-gnu-handled                ((t :foreground ,green)))
    `(debbugs-gnu-new                    ((t :foreground ,red)))
    `(debbugs-gnu-pending                ((t :foreground ,blue)))
    `(debbugs-gnu-stale                  ((t :foreground ,orange)))
    `(debbugs-gnu-tagged                 ((t :foreground ,red)))
-;;;;; dim-autoload
+;;;;;; dim-autoload
    `(dim-autoload-cookie-line           ((t :foreground ,bg+2)))
-;;;;; diredfl
+;;;;;; diredfl
    `(diredfl-compressed-file-suffix     ((t :foreground ,orange)))
    `(diredfl-date-time                  ((t :foreground ,magenta)))
    `(diredfl-deletion                   ((t :foreground ,yellow)))
@@ -604,7 +604,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(diredfl-read-priv                  ((t :foreground ,green-1)))
    `(diredfl-symlink                    ((t :foreground ,yellow)))
    `(diredfl-write-priv                 ((t :foreground ,magenta)))
-;;;;; egg
+;;;;;; egg
    `(egg-text-base                      ((t :foreground ,fg)))
    `(egg-help-header-1                  ((t :foreground ,yellow)))
    `(egg-help-header-2                  ((t :foreground ,green+3)))
@@ -616,7 +616,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(egg-diff-file-header               ((t :foreground ,yellow-2)))
    `(egg-section-title                  ((t :foreground ,yellow)))
    `(egg-stash-mono                     ((t :foreground ,green+4)))
-;;;;; elfeed
+;;;;;; elfeed
    `(elfeed-log-error-level-face        ((t :foreground ,red)))
    `(elfeed-log-info-level-face         ((t :foreground ,blue)))
    `(elfeed-log-warn-level-face         ((t :foreground ,yellow)))
@@ -626,13 +626,13 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(elfeed-search-feed-face            ((t :foreground ,cyan)))
    `(elfeed-search-title-face           ((t :foreground ,fg-1)))
    `(elfeed-search-unread-title-face    ((t :foreground ,fg)))
-;;;;; eros
+;;;;;; eros
    `(eros-result-overlay-face           ((t :background unspecified)))
-;;;;; ert
+;;;;;; ert
    `(ert-test-result-expected           ((t :background ,bg
                                             :foreground ,green+4)))
    `(ert-test-result-unexpected         ((t :foreground ,red)))
-;;;;; eshell
+;;;;;; eshell
    `(eshell-prompt                      ((t :foreground ,yellow)))
    `(eshell-ls-archive                  ((t :foreground ,red-1)))
    `(eshell-ls-backup                   ((t :inherit font-lock-comment-face)))
@@ -644,27 +644,27 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(eshell-ls-product                  ((t :inherit font-lock-doc-face)))
    `(eshell-ls-special                  ((t :foreground ,yellow)))
    `(eshell-ls-symlink                  ((t :foreground ,cyan)))
-;;;;; flx
+;;;;;; flx
    `(flx-highlight-face                 ((t :foreground ,green+2)))
-;;;;; full-ack
+;;;;;; full-ack
    `(ack-separator                      ((t :foreground ,fg)))
    `(ack-file                           ((t :foreground ,blue)))
    `(ack-line                           ((t :foreground ,yellow)))
    `(ack-match                          ((t  :background ,bg-3
                                              :foreground ,orange)))
-;;;;; guide-key
+;;;;;; guide-key
    `(guide-key/highlight-command-face   ((t :foreground ,blue)))
    `(guide-key/key-face                 ((t :foreground ,green)))
    `(guide-key/prefix-command-face      ((t :foreground ,green+1)))
-;;;;; highlight-numbers
+;;;;;; highlight-numbers
    `(highlight-numbers-number           ((t :foreground ,blue)))
-;;;;; highlight-symbol
+;;;;;; highlight-symbol
    `(highlight-symbol-face              ((t :background ,bg+3)))
-;;;;; highlight-thing
+;;;;;; highlight-thing
    `(highlight-thing                    ((t :background ,bg+3)))
-;;;;; hl-sexp
+;;;;;; hl-sexp
    `(hl-sexp-face                       ((,class :background ,bg+2) (t)))
-;;;;; info+
+;;;;;; info+
    `(info-command-ref-item              ((t :background ,bg-3
                                             :foreground ,orange)))
    `(info-constant-ref-item             ((t :background ,bg-3
@@ -690,7 +690,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
                                             :foreground ,red)))
    `(info-variable-ref-item             ((t :background ,bg-3
                                             :foreground ,orange)))
-;;;;; irfc
+;;;;;; irfc
    `(irfc-head-name-face                ((t :foreground ,red)))
    `(irfc-head-number-face              ((t :foreground ,red)))
    `(irfc-reference-face                ((t :foreground ,blue-1)))
@@ -700,9 +700,9 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(irfc-std-number-face               ((t :foreground ,green+4)))
    `(irfc-table-item-face               ((t :foreground ,green+3)))
    `(irfc-title-face                    ((t :foreground ,yellow :underline t)))
-;;;;; iedit-mode
+;;;;;; iedit-mode
    `(iedit-occurrence                   ((t :background ,bg+3)))
-;;;;; js2-mode
+;;;;;; js2-mode
    `(js2-warning                        ((t :underline ,orange)))
    `(js2-error                          ((t :foreground ,red)))
    `(js2-jsdoc-tag                      ((t :foreground ,green-2)))
@@ -719,19 +719,19 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(js2-function-call                  ((t :foreground ,cyan)))
    `(js2-private-member                 ((t :foreground ,blue-1)))
    `(js2-keywords                       ((t :foreground ,magenta)))
-;;;;; lispy
+;;;;;; lispy
    `(lispy-command-name-face            ((t :background ,bg-1
                                             :inherit
                                             ,font-lock-function-name-face)))
    `(lispy-cursor-face                  ((t :background ,fg :foreground ,bg)))
    `(lispy-face-hint                    ((t :foreground ,yellow
                                             :inherit highlight)))
-;;;;; lui
+;;;;;; lui
    `(lui-time-stamp-face                ((t :foreground ,blue-1)))
    `(lui-hilight-face                   ((t :background ,bg
                                             :foreground ,green+2)))
    `(lui-button-face                    ((t :inherit hover-highlight)))
-;;;;; macrostep
+;;;;;; macrostep
    `(macrostep-gensym-1                 ((t :background ,bg-3
                                             :foreground ,green+2)))
    `(macrostep-gensym-2                 ((t :background ,bg-3
@@ -744,7 +744,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
                                             :foreground ,yellow)))
    `(macrostep-expansion-highlight-face ((t :inherit highlight)))
    `(macrostep-macro-face               ((t :underline t)))
-;;;;; markup-faces
+;;;;;; markup-faces
    `(markup-anchor-face                 ((t :foreground ,blue+1)))
    `(markup-code-face                   ((t :inherit font-lock-constant-face)))
    `(markup-command-face                ((t :foreground ,yellow)))
@@ -763,7 +763,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(markup-typewriter-face             ((t :inherit font-lock-constant-face)))
    `(markup-verbatim-face               ((t :inherit font-lock-constant-face)))
    `(markup-value-face                  ((t :foreground ,yellow)))
-;;;;; message-mode
+;;;;;; message-mode
    `(message-cited-text                 ((t :inherit font-lock-comment-face)))
    `(message-header-name                ((t :foreground ,green+1)))
    `(message-header-other               ((t :foreground ,green)))
@@ -774,7 +774,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(message-header-xheader             ((t :foreground ,green)))
    `(message-mml                        ((t :foreground ,yellow)))
    `(message-separator                  ((t :inherit font-lock-comment-face)))
-;;;;; mew
+;;;;;; mew
    `(mew-face-header-subject            ((t :foreground ,orange)))
    `(mew-face-header-from               ((t :foreground ,yellow)))
    `(mew-face-header-date               ((t :foreground ,green)))
@@ -801,12 +801,12 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(mew-face-mark-unread               ((t :foreground ,red-2)))
    `(mew-face-eof-message               ((t :foreground ,green)))
    `(mew-face-eof-part                  ((t :foreground ,yellow)))
-;;;;; mic-paren
+;;;;;; mic-paren
    `(paren-face-match                   ((t :foreground ,cyan)))
    `(paren-face-mismatch                ((t :background ,magenta
                                             :foreground ,bg)))
    `(paren-face-no-match                ((t :background ,red :foreground ,bg)))
-;;;;; mingus
+;;;;;; mingus
    `(mingus-directory-face              ((t :foreground ,blue)))
    `(mingus-pausing-face                ((t :foreground ,magenta)))
    `(mingus-playing-face                ((t :foreground ,cyan)))
@@ -817,13 +817,13 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(mingus-album-face                  ((t :foreground ,red+1 :underline t)))
    `(mingus-album-stale-face            ((t :foreground ,red+1)))
    `(mingus-stopped-face                ((t :foreground ,red)))
-;;;;; org-ref
+;;;;;; org-ref
    `(org-ref-ref-face                   ((t :underline t)))
    `(org-ref-label-face                 ((t :underline t)))
    `(org-ref-cite-face                  ((t :underline t)))
    `(org-ref-glossary-face              ((t :underline t)))
    `(org-ref-acronym-face               ((t :underline t)))
-;;;;; rcirc
+;;;;;; rcirc
    `(rcirc-my-nick                      ((t :foreground ,blue)))
    `(rcirc-other-nick                   ((t :foreground ,orange)))
    `(rcirc-bright-nick                  ((t :foreground ,blue+1)))
@@ -838,16 +838,16 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(rcirc-track-keyword                ((t :foreground ,fg+1)))
    `(rcirc-url                          ((t :foreground ,fg+1)))
    `(rcirc-keyword                      ((t :foreground ,yellow)))
-;;;;; re-builder
+;;;;;; re-builder
    `(reb-match-0                        ((t :background ,magenta
                                             :foreground ,bg)))
    `(reb-match-1                        ((t :background ,blue :foreground ,bg)))
    `(reb-match-2                        ((t :background ,orange
                                             :foreground ,bg)))
    `(reb-match-3                        ((t :background ,red :foreground ,bg)))
-;;;;; regex-tool
+;;;;;; regex-tool
    `(regex-tool-matched-face            ((t :background ,blue-4)))
-;;;;; rpm-mode
+;;;;;; rpm-mode
    `(rpm-spec-dir-face                  ((t :foreground ,green)))
    `(rpm-spec-doc-face                  ((t :foreground ,green)))
    `(rpm-spec-ghost-face                ((t :foreground ,red)))
@@ -857,26 +857,26 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(rpm-spec-section-face              ((t :foreground ,yellow)))
    `(rpm-spec-tag-face                  ((t :foreground ,blue)))
    `(rpm-spec-var-face                  ((t :foreground ,red)))
-;;;;; rst-mode
+;;;;;; rst-mode
    `(rst-level-1-face                   ((t :foreground ,orange)))
    `(rst-level-2-face                   ((t :foreground ,green+1)))
    `(rst-level-3-face                   ((t :foreground ,blue-1)))
    `(rst-level-4-face                   ((t :foreground ,yellow-2)))
    `(rst-level-5-face                   ((t :foreground ,cyan)))
    `(rst-level-6-face                   ((t :foreground ,green-2)))
-;;;;; sh-mode
+;;;;;; sh-mode
    `(sh-heredoc                         ((t :foreground ,yellow)))
    `(sh-quoted-exec                     ((t :foreground ,red)))
-;;;;; show-paren
+;;;;;; show-paren
    `(show-paren-mismatch                ((t :background ,bg+4
                                             :foreground ,red+1)))
    `(show-paren-match                   ((t :background ,bg+4
                                             :foreground ,fg)))
-;;;;; smartparens
+;;;;;; smartparens
    `(sp-show-pair-mismatch-face         ((t :background ,bg+4
                                             :foreground ,red+1)))
    `(sp-show-pair-match-face            ((t :background ,bg+4)))
-;;;;; term
+;;;;;; term
    `(term-color-black                   ((t :background ,bg-3 :foreground ,bg)))
    `(term-color-red                     ((t :background ,red-4
                                             :foreground ,red-2)))
@@ -893,13 +893,13 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(term-color-white                   ((t :background ,fg-2 :foreground ,fg)))
    `(term-default-fg-color              ((t :inherit term-color-white)))
    `(term-default-bg-color              ((t :inherit term-color-black)))
-;;;;; undo-tree
+;;;;;; undo-tree
    `(undo-tree-visualizer-active-branch-face ((t :foreground ,fg+1)))
    `(undo-tree-visualizer-current-face  ((t :foreground ,red-1)))
    `(undo-tree-visualizer-default-face  ((t :foreground ,fg)))
    `(undo-tree-visualizer-register-face ((t :foreground ,yellow)))
    `(undo-tree-visualizer-unmodified-face ((t :foreground ,cyan)))
-;;;;; visual-regexp
+;;;;;; visual-regexp
    `(vr/group-0                         ((t :background ,green :foreground ,bg)))
    `(vr/group-1                         ((t :background ,orange
                                             :foreground ,bg)))
@@ -909,7 +909,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
                                             :foreground ,yellow-2)))
    `(vr/match-separator-face            ((t :foreground ,red)))))
 
-;;; Theme Variables
+;;;; Theme Variables
 (zenmelt-with-colors nil
   (custom-theme-set-variables
    'zenmelt
@@ -944,6 +944,8 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
        (360. . ,magenta)))
    `(vc-annotate-very-old-color ,magenta)
    `(vc-annotate-background ,bg-3)))
+
+;;;; Helpers
 
 (defun zenmelt--reset ()
   "Evaluate Zenmelt with the last saved face properties and variable values.
