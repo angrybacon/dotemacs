@@ -155,7 +155,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(font-lock-warning-face             ((t :inherit warning)))
    `(highlight                          ((t :background ,blue-5
                                             :foreground ,blue)))
-   `(italic                             ((t :foreground ,fg+1 :slant italic)))
+   `(italic                             ((t :slant italic)))
    `(shadow                             ((t :foreground ,fg-1)))
    `(success                            ((t :foreground ,green)))
    `(warning                            ((t :foreground ,orange)))
