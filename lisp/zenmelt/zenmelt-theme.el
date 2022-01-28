@@ -222,7 +222,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(secondary-selection                ((t :background ,bg+3)))
    `(tooltip                            ((t :background ,bg-3)))
    `(trailing-whitespace                ((t :background ,red)))
-   `(vertical-border                    ((t :background ,bg-1)))
+   `(vertical-border                    ((t :background ,bg+1)))
    `(widget-button                      ((t :inherit button)))
    `(widget-button-pressed              ((t :inherit widget-button)))
    `(widget-documentation               ((t :inherit font-lock-doc-face)))
