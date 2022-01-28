@@ -554,83 +554,6 @@ authoring documents with a fast and effective plain-text system.
 
 * Features
 
-** Centered Buffer
-
-| =olivetti= | https://github.com/rnkn/olivetti |
-
-Olivetti lets you center your buffer for aesthetics and focus. I have it set up
-to turn on automatically when visiting a single buffer, and disable itself
-otherwise.
-
-The configuration also conveniently silences left clicks on each of the two
-margins.
-
-| TODO | Allow horizontally lone buffers too |
-
-#+BEGIN_SRC emacs-lisp
-(use-package olivetti
-  :bind
-  ("<left-margin> <mouse-1>" . ignore)
-  ("<right-margin> <mouse-1>" . ignore)
-  :hook
-  (window-configuration-change . me/olivetti-mode-maybe)
-  :custom
-  (olivetti-body-width (+ fill-column 6))) ; Account for line numbers
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defvar me/olivetti-automatic t
-  "Whether `olivetti-mode' should be enabled automatically.
-See `me/olivetti-mode-maybe' for the heuristics used and details of
-implementation.")
-
-(defvar me/olivetti-whitelist-buffers '("*sratch*")
-  "List of buffers for which `olivetti-mode' should be enabled automatically.")
-
-(defvar me/olivetti-whitelist-modes '(Custom-mode
-                                      Info-mode
-                                      dired-mode
-                                      help-mode
-                                      helpful-mode
-                                      lisp-interaction-mode
-                                      magit-mode
-                                      vterm-mode)
-  "List of modes for which `olivetti-mode' should be enabled automatically.")
-
-(defun me/olivetti-automatic-toggle ()
-  "Toggle `me/olivetti-automatic'.
-If enabled, turn on `olivetti-mode'. Otherwise disable it."
-  (interactive)
-  (setq me/olivetti-automatic (not me/olivetti-automatic))
-  (olivetti-mode (if me/olivetti-automatic 1 -1)))
-
-(defun me/olivetti-mode-maybe (&optional frame)
-  "Turn on `olivetti-mode' for lone buffers in FRAME.
-
-Doesn't count volatile windows unless the major-mode of their associated buffer
-is found in `me/olivetti-whitelist-modes' or is derived from one of them.
-Windows from buffers whose names are found in `me/olivetti-whitelist-buffers'
-are also considered.
-
-If FRAME shows exactly one window, turn on `olivetti-mode' for that window.
-Otherwise, disable it everywhere."
-  (when me/olivetti-automatic
-    (let* ((predicate (lambda (window)
-                        (with-selected-window window
-                          (or (buffer-file-name)
-                              (member (buffer-name)
-                                      me/olivetti-whitelist-buffers)
-                              (apply 'derived-mode-p
-                                     me/olivetti-whitelist-modes)))))
-           (windows (seq-filter predicate (window-list frame))))
-      (if (length= windows 1)
-          (with-selected-window (car windows)
-            (olivetti-mode 1))
-        (dolist (window windows)
-          (with-selected-window window
-            (olivetti-mode -1)))))))
-#+END_SRC
-
 ** Completion
 
 | =consult=    | https://github.com/minad/consult      |
@@ -841,7 +764,6 @@ explorer.
   :hook
   (dired-mode . dired-hide-details-mode)
   :bind
-  ("C-x C-g" . dired-jump)
   (:map dired-mode-map
    ("C-<return>" . me/dired-open-externally))
   :custom
@@ -1392,16 +1314,15 @@ Group system-related commands.
 
 Group interface-related commands.
 
-| TODO | Check out =defhydradio=               |
-| TODO | Make a persistent toggle for Olivetti |
-| TODO | Merge =hydra-windows=                 |
+| TODO | Check out =defhydradio= |
+| TODO | Merge =hydra-windows=   |
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-ui (:color pink)
   (concat (hydra-plus-heading "Theme" "Windows" "Zoom" "Line Numbers") "
  _t_ cycle           _b_ balance         _-_ out             _n_ mode: %s`display-line-numbers
  _T_ cycle (noexit)  _m_ maximize frame  _=_ in              _N_ absolute: %s`display-line-numbers-current-absolute
- ^^                  _o_ olivetti: %-3s`me/olivetti-automatic   _0_ reset           ^^
+ ^^                  _o_ olivetti: %-3s`widowmaker-olivetti-automatic   _0_ reset           ^^
  ^^                  ^^                  ^^                  ^^
  ^^                  ^^                  ^^                  ^^
 ")
@@ -1413,7 +1334,7 @@ Group interface-related commands.
   ("m" toggle-frame-maximized)
   ("n" me/display-line-numbers-toggle-type)
   ("N" me/display-line-numbers-toggle-absolute)
-  ("o" me/olivetti-automatic-toggle :color blue)
+  ("o" widowmaker-olivetti-automatic-toggle :color blue)
   ("t" morophon-cycle :color blue)
   ("T" morophon-cycle))
 #+END_SRC
@@ -2276,78 +2197,14 @@ Emacs can also emulate an interactive REST client.
 
 Yes, Emacs emulates terminals too.
 
-The default command bound to =s-'= tries and finds the current project context,
-opens up a terminal at this location. Focus the existing window if already
-displayed, while reusing existing buffers.
-
-If already in the terminal window, spawn a new one in place.
-
-Until a proper popup system is implemented, use =s-"= to close the bottom
-=vterm= windows in order to build muscle memory since the future
-=me/popup-toggle= will likely be bound there. Soon :tm:
-
 | TODO | Advice =vterm= motions to support shift            |
 | TODO | Remove confirm prompt when killing =vterm= buffers |
 
 #+BEGIN_SRC emacs-lisp
 (use-package vterm
-  :commands (vterm vterm-other-window)
   :bind
-  ("s-'" . me/vterm-dwim)
-  ("s-\"" . me/vterm-close)
   (:map vterm-mode-map
    ("C-c C-c" . vterm-send-C-c)))
-#+END_SRC
-
-| TODO | Merge in vterm-specific shackle rules instead of naively overwrite |
-| TODO | Stack rightwards new vterm buffers                                 |
-| TODO | Reset height as per =me/vterm-shackles= specifications             |
-| TODO | Make a proper popup system                                         |
-
-#+BEGIN_SRC emacs-lisp
-(defun me/vterm-close ()
-  "Find and close the bottom `vterm-mode' window."
-  (interactive)
-  (walk-windows
-   (lambda (window)
-     (let ((windmove-wrap-around nil))
-       (with-selected-window window
-         (when (and (eq major-mode 'vterm-mode)
-                    (window-in-direction 'up)
-                    (not (window-in-direction 'down)))
-           (delete-window)))))
-   nil (selected-frame)))
-
-(defvar me/vterm-shackles `(:align 'below
-                            :popup t
-                            :size ,(szadek-get 'popup-height .33))
-  "Shackle rules in the context of `me/vterm-dwim'.
-To see the supported options, see the documentation for `shackle-rules'.")
-
-(defun me/vterm-dwim (&optional argument)
-  "Invoke `vterm' according to context and current location.
-
-With a \\[universal-argument] prefix or if no project is found, invoke a dumb
-`vterm' in place.
-
-If existing, bring back the first vterm window following `me/vterm-shackles'
-specifications. Otherwise create a new buffer with a unique name at the project
-root."
-  (interactive "P")
-  (unless (require 'vterm nil :noerror)
-    (error "Package 'vterm' not found"))
-  (let ((project (me/project-root)))
-    (if (or argument (not project))
-        (vterm)
-      (let* ((buffer (format "*vterm: %s*" (me/project-name project)))
-             (replace (string= buffer (buffer-name)))
-             (buffer (if replace (generate-new-buffer-name buffer) buffer))
-             (shackle-rules (if replace shackle-rules
-                              `((vterm-mode ,@me/vterm-shackles)))))
-        (if (buffer-live-p (get-buffer buffer))
-            (pop-to-buffer buffer)
-          (let ((default-directory project))
-            (vterm buffer)))))))
 #+END_SRC
 
 ** Version Control
@@ -2573,8 +2430,52 @@ configuration.
 
 ** Windows
 
-| =shackle=    | https://github.com/wasamasa/shackle |
-| =widowmaker= | =lisp/widowmaker=                   |
+| =olivetti=   | https://github.com/rnkn/olivetti   |
+| =popper=     | https://github.com/karthink/popper |
+| =shackle=    | https://depp.brause.cc/shackle/    |
+| =widowmaker= | =lisp/widowmaker=                  |
+
+Olivetti lets you center your buffer for aesthetics and focus. I have it set up
+to turn on automatically when windows are considered lone ie. they have no
+neighbour to their left nor to their right. See the configuration for
+=widowmaker=.
+
+The configuration also conveniently silences left clicks on each of the two
+margins.
+
+#+BEGIN_SRC emacs-lisp
+(use-package olivetti
+  :bind
+  ("<left-margin> <mouse-1>" . ignore)
+  ("<right-margin> <mouse-1>" . ignore)
+  :custom
+  (olivetti-body-width (+ fill-column 6))) ; Account for line numbers
+#+END_SRC
+
+Set up rules for pop-ups.
+
+#+BEGIN_SRC emacs-lisp
+(use-package popper
+  :bind
+  ("s-<tab>" . popper-cycle)
+  ("C-s-<tab>" . popper-toggle-type)
+  ("s-\"" . popper-toggle-latest)
+  :custom
+  (popper-display-control nil)
+  (popper-echo-lines 1)
+  (popper-group-function #'popper-group-by-project)
+  (popper-mode-line nil)
+  (popper-reference-buffers
+   `(,(rx bos "*EGLOT")
+     ,(rx bos "*Messages*" eos)
+     ,(rx bos "*eshell")   eshell-mode
+     ,(rx bos "*terminal") vterm-mode
+     help-mode
+     helpful-mode))
+  :hook
+  (after-init . popper-mode)
+  (after-init . popper-echo-mode))
+#+END_SRC
 
 Set up rules for window management.
 
@@ -2592,26 +2493,33 @@ currently selected window.
   :hook
   (after-init . shackle-mode)
   :custom
+  (shackle-default-size (szadek-get 'popup-size .33))
   (shackle-inhibit-window-quit-on-same-windows t)
-  (shackle-rules '((help-mode :same t)
-                   (helpful-mode :same t)
-                   (process-menu-mode :same t)))
+  (shackle-rules
+   `(((help-mode helpful-mode) :align left  :select t :size 80)
+     ("*Messages*"             :align below :select t)
+     ("*eshell*"               :align below :popup t)
+     (,(rx bos "*EGLOT")       :align below :regexp t)
+     (,(rx bos "*terminal")    :align below :popup t :regexp t :select t)))
   (shackle-select-reused-windows t))
 #+END_SRC
 
-Bind extra keys to manage windows.
+Bind extra keys to manage windows and pop-ups.
 
 #+BEGIN_SRC emacs-lisp
 (use-package widowmaker
   :load-path "lisp/widowmaker"
   :straight nil
   :bind
+  ("s-'" . widowmaker-terminal-dwim)
   ("s-h" . windmove-left)
   ("s-j" . windmove-down)
   ("s-k" . windmove-up)
   ("s-l" . windmove-right)
   ("s-w" . delete-window)
   ("s-W" . kill-this-buffer)
+  :commands (widowmaker-olivetti-automatic-toggle)
   :hook
-  (after-init . winner-mode))
+  (after-init . winner-mode)
+  (window-configuration-change . widowmaker-olivetti-maybe))
 #+END_SRC

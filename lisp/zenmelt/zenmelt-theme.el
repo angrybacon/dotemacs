@@ -108,7 +108,7 @@ See `custom--inhibit-theme-enable'."
       (default . (,bg+1    . ,bg+4))
       (green   . (,green-3 . ,green+2))
       (red     . (,red-3   . ,red+2))
-      (yellow  . (,fg-2    . ,yellow-2))))
+      (yellow  . (,fg-2    . ,yellow-1))))
   "List color tuples for boxes.
 The car gives the background color while the cdr gives the border.
 The cdr is also used for the text foreground color."
@@ -145,7 +145,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(font-lock-doc-face                 ((t :foreground ,green+2)))
    `(font-lock-function-name-face       ((t :foreground ,cyan)))
    `(font-lock-keyword-face             ((t :foreground ,yellow)))
-   `(font-lock-negation-char-face       ((t :foreground ,yellow)))
+   `(font-lock-negation-char-face       ((t :foreground ,magenta)))
    `(font-lock-preprocessor-face        ((t :foreground ,blue+1)))
    `(font-lock-regexp-grouping-backslash ((t :foreground ,green)))
    `(font-lock-regexp-grouping-construct ((t :foreground ,yellow)))
@@ -403,7 +403,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(eglot-highlight-symbol-face        ((t ,@(zenmelt--box 'yellow))))
 ;;;;;; Mode-Line
    `(doom-modeline-bar                  ((t :inherit mode-line)))
-   `(doom-modeline-bar-inactive         ((t :inherit doom-modeline-bar)))
+   `(doom-modeline-bar-inactive         ((t :inherit mode-line-inactive)))
    `(doom-modeline-evil-emacs-state     ((t :foreground ,magenta)))
    `(doom-modeline-evil-insert-state    ((t :foreground ,blue)))
    `(doom-modeline-info                 ((t :foreground ,green+4)))
@@ -415,6 +415,8 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(hydra-face-pink                    ((t :foreground ,magenta)))
    `(hydra-face-red                     ((t :foreground ,red+1)))
    `(hydra-face-teal                    ((t :foreground ,cyan)))
+   `(popper-echo-area                   ((t :inherit match)))
+   `(popper-echo-dispatch-hint          ((t :foreground ,orange)))
    `(transient-amaranth                 ((t :foreground ,red-2)))
    `(transient-blue                     ((t :foreground ,blue+1)))
    `(transient-disabled-suffix          ((t :foreground ,red)))

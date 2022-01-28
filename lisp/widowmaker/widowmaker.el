@@ -20,14 +20,15 @@
 
 ;;; Commentary:
 
-;; Collection of window management features such as window navigation but also
-;; pop-up management.
+;; Collection of window management features and customization for window
+;; management packages. Configure window navigation but also pop-up management.
 
 ;;; Code:
 
 (require 'menu-bar)
 (require 'olivetti)
 (require 'project)
+(require 'shackle)
 (require 'window)
 (require 'windmove)
 (require 'winner)
@@ -72,8 +73,8 @@ Return t for all windows that pass the following tests:
     `widowmaker-olivetti-blacklist-modes'
 If any test fails, return nil."
   (with-selected-window window
-    (and (not (window-parameter (selected-window) 'no-other-window))
-         (not (window-parameter (selected-window) 'window-side))
+    (and (not (window-parameter window 'no-other-window))
+         (not (window-parameter window 'window-side))
          (not (member (buffer-name) widowmaker-olivetti-blacklist-buffers))
          (not (apply 'derived-mode-p widowmaker-olivetti-blacklist-modes)))))
 
@@ -99,6 +100,20 @@ If `widowmaker-olivetti-automatic' is nil, do nothing."
             (if (and (equal l 0) (equal r columns))
                 (olivetti-mode 1)
               (olivetti-mode 0))))))))
+
+;;;; Shackle
+
+(defun widowmaker-shackle-set-window-side (_buffer _alist plist)
+  "Set window side parameter for `shackle-last-window' according to PLIST.
+This allows features to filter or select windows based on their function ie. a
+side window."
+  (with-selected-window shackle-last-window
+    (when-let ((window shackle-last-window)
+               (alignment (plist-get plist :align)))
+      (set-window-parameter window 'window-side t))))
+
+(advice-add 'shackle--display-buffer-aligned-window :after
+  #'widowmaker-shackle-set-window-side)
 
 ;;;; Terminal
 
