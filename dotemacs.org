@@ -946,6 +946,7 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
   (web-mode . emmet-mode)
   :custom
   (emmet-insert-flash-time .1)
+  (emmet-jsx-className-braces? t)
   (emmet-move-cursor-between-quote t))
 #+END_SRC
 
