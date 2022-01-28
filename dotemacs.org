@@ -811,6 +811,7 @@ documentation joined with a horizontal rule. eg.
   :straight nil
   :custom
   (eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
+  (eldoc-echo-area-prefer-doc-buffer t)
   (eldoc-idle-delay .1))
 #+END_SRC
 
@@ -1362,6 +1363,7 @@ Cycle between nil, t and 'relative."
 
 ** Intellisense
 
+| =consult-eglot=     | https://github.com/mohkale/consult-eglot               |
 | =eglot=             | https://github.com/joaotavora/eglot                    |
 | =flymake=           | Built-in                                               |
 | =flymake-eslint=    | https://github.com/orzechowskid/flymake-eslint         |
@@ -1400,6 +1402,17 @@ Yup, Emacs supports LSP.
   (add-to-list 'eglot-stay-out-of 'eldoc-documentation-strategy)
   (put 'eglot-error 'flymake-overlay-control nil)
   (put 'eglot-warning 'flymake-overlay-control nil))
+#+END_SRC
+
+This package provides a new =consult= command to browse LSP symbols with the
+=workspace/symbol= procedure within the current project.
+
+#+BEGIN_SRC emacs-lisp
+(use-package consult-eglot
+  :init
+  (with-eval-after-load 'evil
+    (evil-define-key 'motion eglot-mode-map
+      (kbd "go") #'consult-eglot-symbols)))
 #+END_SRC
 
 *** Linters
