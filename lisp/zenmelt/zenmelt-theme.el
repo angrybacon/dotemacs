@@ -198,9 +198,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(button                             ((t ,@(zenmelt--box 'yellow))))
    `(cursor                             ((t :background ,fg+1 :foreground ,fg)))
    `(fringe                             ((t :foreground ,fg)))
-   `(header-line                        ((t :background ,bg-3
-                                            :box (:color ,bg-3 :line-width 4)
-                                            :foreground ,yellow)))
+   `(header-line                        ((t :foreground ,cyan)))
    `(help-key-binding                   ((t ,@(zenmelt--box)
                                             :foreground ,orange)))
    `(hl-line                            ((t :background ,bg+2)))
