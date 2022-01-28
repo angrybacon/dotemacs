@@ -352,7 +352,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
                                             :foreground ,yellow)))
    `(diff-refine-removed                ((t :inherit diff-refine-added
                                             :foreground ,red+2)))
-   `(diff-removed                       ((t :foreground ,red)))
+   `(diff-removed                       ((t :foreground ,red-1)))
 ;;;;;;; Ediff
    `(ediff-current-diff-A               ((t :background ,red-6)))
    `(ediff-current-diff-Ancestor        ((t :inherit ediff-current-diff-A)))
@@ -437,7 +437,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(git-gutter:deleted                 ((t :foreground ,red+2)))
    `(git-gutter:modified                ((t :foreground ,blue)))
    `(git-gutter:unchanged               ((t :inherit shadow )))
-   `(git-gutter-fr:added                ((t :foreground ,green+2)))
+   `(git-gutter-fr:added                ((t :foreground ,green)))
    `(git-gutter-fr:deleted              ((t :foreground ,red)))
    `(git-gutter-fr:modified             ((t :foreground ,blue-1)))
 ;;;;;;; Magit
@@ -514,9 +514,9 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(markdown-inline-code-face          ((t :inherit org-verbatim)))
 ;;;;;; Pairs
    `(rainbow-delimiters-depth-1-face    ((t :foreground ,fg)))
-   `(rainbow-delimiters-depth-2-face    ((t :foreground ,blue-2)))
+   `(rainbow-delimiters-depth-2-face    ((t :foreground ,blue-1)))
    `(rainbow-delimiters-depth-3-face    ((t :foreground ,yellow-2)))
-   `(rainbow-delimiters-depth-4-face    ((t :foreground ,green)))
+   `(rainbow-delimiters-depth-4-face    ((t :foreground ,green+1)))
    `(rainbow-delimiters-depth-5-face    ((t :foreground ,orange)))
    `(rainbow-delimiters-depth-6-face    ((t :foreground ,cyan)))
    `(rainbow-delimiters-depth-7-face    ((t :foreground ,yellow)))
