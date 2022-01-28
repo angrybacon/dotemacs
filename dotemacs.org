@@ -456,6 +456,7 @@ authoring documents with a fast and effective plain-text system.
   (org-mode . hydra-plus-set-super)
   :custom
   (org-adapt-indentation nil)
+  (org-babel-python-command "python3")
   (org-confirm-babel-evaluate nil)
   (org-cycle-separator-lines 0)
   (org-descriptive-links nil)
@@ -472,7 +473,8 @@ authoring documents with a fast and effective plain-text system.
   (org-support-shift-select 'always)
   :config
   (require 'ob-shell)
-  (add-to-list 'org-babel-load-languages '(shell . t))
+  (org-babel-do-load-languages
+   'org-babel-load-languages '((python . t) (shell . t)))
   (modify-syntax-entry ?' "'" org-mode-syntax-table)
   (advice-add 'org-src--construct-edit-buffer-name :override
     #'me/org-src-buffer-name)
@@ -576,13 +578,15 @@ Provide various commands to list and /consult/ existing collections.
   :custom
   (consult-line-start-from-top t)
   (consult-project-root-function #'me/project-root)
+  (xref-show-definitions-function #'consult-xref)
+  (xref-show-xrefs-function #'consult-xref)
   :hook
   (org-mode . (lambda () (setq-local consult-fontify-preserve nil)))
   :init
   (with-eval-after-load 'evil
-    (evil-global-set-key 'motion "gm" 'consult-mark)
-    (evil-global-set-key 'motion "gM" 'consult-imenu)
-    (evil-global-set-key 'motion "go" 'consult-outline)))
+    (evil-global-set-key 'motion "gm" #'consult-mark)
+    (evil-global-set-key 'motion "gM" #'consult-imenu)
+    (evil-global-set-key 'motion "go" #'consult-outline)))
 #+END_SRC
 
 *** Corfu
@@ -1373,10 +1377,6 @@ Find code references throughout a codebase.
 (use-package xref
   :straight nil
   :config
-  (with-eval-after-load 'consult
-    (setq-default
-     xref-show-definitions-function #'consult-xref
-     xref-show-xrefs-function #'consult-xref))
   (with-eval-after-load 'evil
     (evil-define-key* 'motion xref--xref-buffer-mode-map
       (kbd "<backtab") #'xref-prev-group
