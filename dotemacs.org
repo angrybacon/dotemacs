@@ -847,6 +847,7 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
    ("gS" . avy-goto-char)
    ("q" . nil)                          ; Free quit command
    ("C-e" . nil)                        ; Free Readline key
+   ("C-]" . nil)                        ; Free abort edit command
    :map evil-normal-state-map
    ("q" . nil)                          ; Free quit command
    :map evil-visual-state-map
@@ -1023,6 +1024,7 @@ Provide better detailed help buffers.
   :config
   (with-eval-after-load 'evil
     (evil-define-key* 'motion helpful-mode-map
+      (kbd "gr") #'helpful-update
       (kbd "<tab>") #'forward-button)))
 #+END_SRC
 
