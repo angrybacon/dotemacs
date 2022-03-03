@@ -245,9 +245,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(org-agenda-date-today              ((t :foreground ,fg+1 :slant italic)))
    `(org-agenda-structure               ((t :inherit font-lock-comment-face)))
    `(org-archived                       ((t :foreground ,fg)))
-   `(org-block                          ((t :background ,bg+1
-                                            :extend t
-                                            :foreground ,fg)))
+   `(org-block                          ((t :extend t :foreground ,fg)))
    `(org-block-begin-line               ((t :inherit shadow)))
    `(org-checkbox                       ((t :inherit org-verbatim)))
    `(org-column                         ((t :background ,bg-3)))
@@ -306,13 +304,13 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(org-warning                        ((t :foreground ,red)))
 ;;;;;; Outline
    `(outline-1                          ((t :foreground ,orange)))
-   `(outline-2                          ((t :foreground ,green+4)))
-   `(outline-3                          ((t :foreground ,blue-1)))
-   `(outline-4                          ((t :foreground ,yellow-2)))
-   `(outline-5                          ((t :foreground ,cyan)))
-   `(outline-6                          ((t :foreground ,green+2)))
-   `(outline-7                          ((t :foreground ,red-4)))
-   `(outline-8                          ((t :foreground ,blue-4)))
+   `(outline-2                          ((t :foreground ,cyan)))
+   `(outline-3                          ((t :foreground ,yellow)))
+   `(outline-4                          ((t :foreground ,blue-1)))
+   `(outline-5                          ((t :foreground ,yellow-2)))
+   `(outline-6                          ((t :foreground ,blue-1)))
+   `(outline-7                          ((t :foreground ,green+2)))
+   `(outline-8                          ((t :foreground ,fg-1)))
 ;;;;;; Search
    `(grep-context-face                  ((t :foreground ,fg)))
    `(grep-error-face                    ((t :foreground ,red-1 :underline t)))
