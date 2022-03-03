@@ -2253,7 +2253,9 @@ like centered alignment and annotations. Fringes will not work under TTY.
   :config
   (define-fringe-bitmap 'git-gutter-fr:added [240] nil nil '(center t))
   (define-fringe-bitmap 'git-gutter-fr:deleted [240 240 240 240] nil nil 'bottom)
-  (define-fringe-bitmap 'git-gutter-fr:modified [240] nil nil '(center t)))
+  (define-fringe-bitmap 'git-gutter-fr:modified [240] nil nil '(center t))
+  :custom
+  (git-gutter:update-interval .1))
 #+END_SRC
 
 Major modes for Git-specific files.
