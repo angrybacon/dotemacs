@@ -24,6 +24,7 @@ Here are what I consider better defaults as per my own experience.
  inhibit-startup-screen t               ; Disable start-up screen
  initial-scratch-message ""             ; Empty the initial *scratch* buffer
  mouse-yank-at-point t                  ; Yank at point rather than pointer
+ native-comp-async-report-warnings-errors 'silent ; Skip compilation error buffers
  read-process-output-max (* 1024 1024)  ; Increase read size per process
  recenter-positions '(5 top bottom)     ; Set re-centering positions
  scroll-conservatively 101              ; Avoid recentering when scrolling far
@@ -34,12 +35,11 @@ Here are what I consider better defaults as per my own experience.
  tab-always-indent 'complete            ; Indent first then try completions
  tab-width 4                            ; Smaller width for tab characters
  uniquify-buffer-name-style 'forward    ; Uniquify buffer names
- warning-minimum-level :error           ; Skip warning buffers
+ use-short-answers t                    ; Replace yes/no prompts with y/n
  window-combination-resize t            ; Resize windows proportionally
  x-stretch-cursor t)                    ; Stretch cursor to the glyph width
 (blink-cursor-mode 0)                   ; Prefer a still cursor
 (delete-selection-mode 1)               ; Replace region when inserting text
-(fset 'yes-or-no-p 'y-or-n-p)           ; Replace yes/no prompts with y/n
 (global-subword-mode 1)                 ; Iterate through CamelCase words
 (mouse-avoidance-mode 'exile)           ; Avoid collision of mouse with point
 (put 'downcase-region 'disabled nil)    ; Enable downcase-region
@@ -828,33 +828,33 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
 (use-package evil
   :bind
   (;; Text objects
-   (:map evil-inner-text-objects-map
-    ("g" . me/evil-buffer)
-    :map evil-outer-text-objects-map
-    ("g" . me/evil-buffer))
+   :map evil-inner-text-objects-map
+   ("g" . me/evil-buffer)
+   :map evil-outer-text-objects-map
+   ("g" . me/evil-buffer)
    ;; States
-   (:map evil-insert-state-map
-    ("C-a" . nil)
-    ("C-e" . nil)
-    ("C-w" . nil)
-    :map evil-motion-state-map
-    ("gb" . switch-to-buffer)
-    ("gC" . describe-face)
-    ("gD" . me/evil-goto-definition-other-window)
-    ("gp" . project-switch-project)
-    ("gr" . (lambda () (interactive) (revert-buffer nil t)))
-    ("gs" . avy-goto-char-timer)
-    ("gS" . avy-goto-char)
-    ("q" . nil)
-    ("C-e" . nil)
-    :map evil-normal-state-map
-    ("q" . nil)
-    :map evil-visual-state-map
-    ("f" . fill-region))
+   :map evil-insert-state-map
+   ("C-a" . nil)                        ; Free Readline key
+   ("C-e" . nil)                        ; Free Readline key
+   ("C-w" . nil)                        ; Free kill command
+   :map evil-motion-state-map
+   ("gb" . switch-to-buffer)
+   ("gC" . describe-face)
+   ("gD" . me/evil-goto-definition-other-window)
+   ("gp" . project-switch-project)
+   ("gr" . (lambda () (interactive) (revert-buffer nil t)))
+   ("gs" . avy-goto-char-timer)
+   ("gS" . avy-goto-char)
+   ("q" . nil)                          ; Free quit command
+   ("C-e" . nil)                        ; Free Readline key
+   :map evil-normal-state-map
+   ("q" . nil)                          ; Free quit command
+   :map evil-visual-state-map
+   ("f" . fill-region)
    ;; Rest
-   (:map evil-window-map
-    ("u" . winner-undo)
-    ("C-r" . winner-redo)))
+   :map evil-window-map
+   ("u" . winner-undo)
+   ("C-r" . winner-redo))
   :hook
   (after-init . evil-mode)
   (after-save . evil-normal-state)
@@ -1402,7 +1402,13 @@ Yup, Emacs supports LSP.
   :config
   (add-to-list 'eglot-stay-out-of 'eldoc-documentation-strategy)
   (put 'eglot-error 'flymake-overlay-control nil)
-  (put 'eglot-warning 'flymake-overlay-control nil))
+  (put 'eglot-warning 'flymake-overlay-control nil)
+  (advice-add 'project-kill-buffers :before #'me/eglot-shutdown-project)
+  :preface
+  (defun me/eglot-shutdown-project ()
+    "Kill the LSP server for the current project if it exists."
+    (when-let ((server (eglot-current-server)))
+      (eglot-shutdown server))))
 #+END_SRC
 
 This package provides a new =consult= command to browse LSP symbols with the
