@@ -1405,6 +1405,7 @@ Yup, Emacs supports LSP.
   (add-to-list 'eglot-stay-out-of 'eldoc-documentation-strategy)
   (put 'eglot-error 'flymake-overlay-control nil)
   (put 'eglot-warning 'flymake-overlay-control nil)
+  (advice-add 'eglot-rename :after #'me/project-save)
   (advice-add 'project-kill-buffers :before #'me/eglot-shutdown-project)
   :preface
   (defun me/eglot-shutdown-project ()
@@ -1927,6 +1928,11 @@ If PROJECT is not specified, assume current project root."
     (file-name-nondirectory
      (directory-file-name
       (file-name-directory root)))))
+
+(defun me/project-save (&rest _)
+  "Save file-visiting buffers under the current project root."
+  (interactive)
+  (save-some-buffers t #'save-some-buffers-root))
 
 (defun me/project-search ()
   "Run ripgrep against project root.
