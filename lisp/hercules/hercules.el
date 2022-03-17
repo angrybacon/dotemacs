@@ -1,10 +1,10 @@
-;;; hydra-plus.el --- Hydra augments -*- lexical-binding: t; -*-
+;;; hercules.el --- Hydra augments -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: November 29, 2021
-;; Homepage: https://github.com/angrybacon/dotemacs/tree/master/lisp/hydra-plus
+;; Homepage: https://github.com/angrybacon/dotemacs/tree/master/lisp/hercules
 
 ;; This program is free software. You can redistribute it and/or modify it under
 ;; the terms of the Do What The Fuck You Want To Public License, version 2 as
@@ -23,9 +23,9 @@
 
 ;;; Code:
 
-(defvar-local hydra-plus--super-body nil)
+(defvar-local hercules--super-body nil)
 
-(defun hydra-plus-heading (&rest headings)
+(defun hercules-heading (&rest headings)
   "Format HEADINGS to look pretty in a hydra docstring."
   (concat "\n "
           (mapconcat (lambda (heading)
@@ -33,7 +33,7 @@
                      headings
                      nil)))
 
-(defun hydra-plus-set-super ()
+(defun hercules-set-super ()
   (when-let* ((suffix "-mode")
               (position (- (length suffix)))
               (mode (symbol-name major-mode))
@@ -42,14 +42,14 @@
                       mode))
               (body (intern (format "hydra-%s/body" name))))
     (when (functionp body)
-      (setq hydra-plus-super-body body))))
+      (setq hercules-super-body body))))
 
-(defun hydra-plus-super-maybe ()
+(defun hercules-super-maybe ()
   (interactive)
-  (if hydra-plus--super-body
-      (funcall hydra-plus--super-body)
-    (user-error "hydra-plus-super: hydra-plus--super-body is not set")))
+  (if hercules--super-body
+      (funcall hercules--super-body)
+    (user-error "hercules-super: hercules--super-body is not set")))
 
-(provide 'hydra-plus)
+(provide 'hercules)
 
-;;; hydra-plus.el ends here
+;;; hercules.el ends here
