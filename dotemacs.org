@@ -2513,6 +2513,7 @@ Set up rules for pop-ups.
   (popper-reference-buffers
    `(,(rx bos "*EGLOT")
      ,(rx bos "*Messages*" eos)
+     ,(rx bos "*eldoc")
      ,(rx bos "*eshell")   eshell-mode
      ,(rx bos "*terminal") vterm-mode
      help-mode
@@ -2541,9 +2542,10 @@ currently selected window.
   (shackle-default-size (szadek-get 'popup-size .33))
   (shackle-inhibit-window-quit-on-same-windows t)
   (shackle-rules
-   `(((help-mode helpful-mode) :align left  :select t :size 80)
+   `(((help-mode helpful-mode) :align left  :select t :size 85)
      ("*Messages*"             :align below :select t)
-     ("*eshell*"               :align below :popup t)
+     ("*eldoc*"                :align below :size 10)
+     ("*eshell*"               :align below :popup t :select t)
      (,(rx bos "*EGLOT")       :align below :regexp t)
      (,(rx bos "*terminal")    :align below :popup t :regexp t :select t)))
   (shackle-select-reused-windows t))
