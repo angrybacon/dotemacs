@@ -291,6 +291,20 @@ adds a /reset/ on save when visiting the theme file.
   (css-indent-offset 2))
 #+END_SRC
 
+** CSV
+
+| =csv-mode= | https://elpa.gnu.org/packages/csv-mode.html |
+
+#+BEGIN_SRC emacs-lisp
+(use-package csv-mode
+  :bind
+  (:map csv-mode-map
+   ("<backtab>" . csv-backward-field)
+   ("<tab>" . csv-forward-field))
+  :hook
+  (csv-mode . csv-align-mode))
+#+END_SRC
+
 ** HTML
 
 | =sgml-mode= | Built-in |
