@@ -311,6 +311,8 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(outline-6                          ((t :foreground ,blue-1)))
    `(outline-7                          ((t :foreground ,green+2)))
    `(outline-8                          ((t :foreground ,fg-1)))
+;;;;;; Pulse
+   `(pulse-highlight-start-face         ((t :background ,blue-3)))
 ;;;;;; Search
    `(grep-context-face                  ((t :foreground ,fg)))
    `(grep-error-face                    ((t :foreground ,red-1 :underline t)))
@@ -376,7 +378,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(smerge-refined-removed             ((t :inherit diff-refine-removed)))
    `(smerge-upper                       ((t :background ,bg+1
                                             :inherit diff-removed)))
-;;;;;; Third-party
+;;;;; Third-party
 ;;;;;; Completion
    `(completions-annotations            ((t :inherit shadow)))
    `(completions-common-part            ((t :inherit match)))

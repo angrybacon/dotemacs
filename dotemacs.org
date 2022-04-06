@@ -1681,6 +1681,7 @@ Enable multiple cursors outside Evil. Some witchcraft at work here.
 | =avy=        | https://github.com/abo-abo/avy         |
 | =hanna=      | =lisp/hanna=                           |
 | =evil-snipe= | https://github.com/hlissner/evil-snipe |
+| =pulsar=     | https://protesilaos.com/emacs/pulsar   |
 
 #+BEGIN_QUOTE
 =avy= is a GNU Emacs package for jumping to visible text using a char-based
@@ -1699,7 +1700,7 @@ same idea.
 #+END_SRC
 
 I disagree with some of Emacs' opinion with regards to paragraphs amongst other
-things. =hanna= is a collection of replacement for the aforementioned defaults.
+things. =hanna= is a collection of replacements for the aforementioned defaults.
 
 #+BEGIN_SRC emacs-lisp
 (use-package hanna
@@ -1726,6 +1727,13 @@ Evil-snipe emulates =vim-seek= and/or =vim-sneak= in =evil-mode=.
   (evil-snipe-char-fold t)
   (evil-snipe-repeat-scope 'visible)
   (evil-snipe-smart-case t))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package pulsar
+  :defer 1
+  :hook
+  (after-init . pulsar-global-mode))
 #+END_SRC
 
 *** Navigation: Replace
@@ -2308,8 +2316,6 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
    ("M-2" . nil)
    ("M-3" . nil)
    ("M-4" . nil))
-  :hook
-  (magit-post-stage-hook . me/magit-recenter)
   :custom
   (epg-pinentry-mode 'loopback)
   (git-commit-fill-column 72)
@@ -2328,17 +2334,6 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
    'magit-insert-modules-overview
    'magit-insert-merge-log)
   (remove-hook 'magit-section-highlight-hook #'magit-diff-highlight))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defun me/magit-recenter ()
-  "Recenter the current hunk at 25% from the top of the window."
-  (when (magit-section-match 'hunk)
-    (let ((top (max 0 scroll-margin (truncate (/ (window-body-height) 4)))))
-      (message "%s" top)
-      (save-excursion
-        (magit-section-goto (magit-current-section))
-        (recenter top)))))
 #+END_SRC
 
 Start =pinentry= in order for Emacs to be able to prompt for passphrases when
@@ -2496,10 +2491,12 @@ Set up rules for pop-ups.
   ("s-<tab>" . popper-cycle)
   ("C-s-<tab>" . popper-toggle-type)
   ("s-\"" . popper-toggle-latest)
+  :config
+  (with-eval-after-load 'project
+    (setq-default popper-group-function #'popper-group-by-project))
   :custom
   (popper-display-control nil)
   (popper-echo-lines 1)
-  (popper-group-function #'popper-group-by-project)
   (popper-mode-line nil)
   (popper-reference-buffers
    `(,(rx bos "*EGLOT")
