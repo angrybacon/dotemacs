@@ -1432,6 +1432,13 @@ This package provides a new =consult= command to browse LSP symbols with the
 
 *** Linters
 
+#+BEGIN_SRC emacs-lisp
+(use-package flymake
+  :straight nil
+  :custom
+  (flymake-fringe-indicator-position nil))
+#+END_SRC
+
 #+BEGIN_QUOTE
 The current implementation of =flymake-eslint-enable= prevents local setups
 relying on project dependencies ie. running =npx eslint= rather than =eslint=
