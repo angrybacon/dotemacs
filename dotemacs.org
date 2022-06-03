@@ -24,8 +24,8 @@ Here are what I consider better defaults as per my own experience.
  inhibit-startup-screen t               ; Disable start-up screen
  initial-scratch-message ""             ; Empty the initial *scratch* buffer
  mouse-yank-at-point t                  ; Yank at point rather than pointer
- native-comp-async-report-warnings-errors 'silent ; Skip compilation error buffers
- read-process-output-max (* 1024 1024)  ; Increase read size per process
+ native-comp-async-report-warnings-errors 'silent ; Skip error buffers
+ read-process-output-max (* 1024 1024)  ; Increase read size for data chunks
  recenter-positions '(5 bottom)         ; Set re-centering positions
  scroll-conservatively 101              ; Avoid recentering when scrolling far
  scroll-margin 2                        ; Add a margin when scrolling vertically
@@ -61,6 +61,12 @@ Allow a number of commonly safe file variables for further reference.
 (put 'after-save-hook 'safe-local-variable
      (lambda (value) (equal value '(org-babel-tangle t))))
 (put 'display-line-numbers-width 'safe-local-variable 'integerp)
+#+END_SRC
+
+Unbind the =suspend-frame= command.
+
+#+BEGIN_SRC emacs-lisp
+(global-unset-key (kbd "C-x C-z"))
 #+END_SRC
 
 ** Fullscreen
@@ -612,7 +618,7 @@ heavier =company= alternative. With =display-line-numbers-type=, prefer the
 #+BEGIN_SRC emacs-lisp
 (use-package corfu
   :hook
-  (after-init . corfu-global-mode)
+  (after-init . global-corfu-mode)
   :custom
   (corfu-auto t)
   (corfu-auto-delay .5))
@@ -1565,7 +1571,9 @@ Prettify the mode-line with customizable and conditional segments.
                      (doom-modeline-propertize-icon icon 'mode-line-inactive))))
          (when text
            (concat (if icon (doom-modeline-vspc) (doom-modeline-spc))
-                   (if active text (propertize text 'face 'mode-line-inactive))))
+                   (if active
+                       text
+                     (propertize text 'face 'mode-line-inactive))))
          (when (or icon text)
            (doom-modeline-spc))))))
   (doom-modeline-def-segment me/info
@@ -2403,7 +2411,7 @@ configurations.
   (desktop-base-file-name (shelldock "desktop"))
   (desktop-base-lock-name (shelldock "desktop.lock"))
   (desktop-restore-eager 4)
-  (desktop-restore-forces-onscreen nil)
+  (desktop-restore-forces-onscreen 'all)
   (desktop-restore-frames t))
 #+END_SRC
 
