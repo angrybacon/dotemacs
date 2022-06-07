@@ -22,7 +22,7 @@ automagically tangled from an Org file into a Lisp file. See
 * Installation
 
 #+BEGIN_QUOTE
-Tested daily on Arch and MacOS.
+Tested daily on Debian and MacOS.
 
 I trust your Google-fu. Try and make the most of the below notes.
 #+END_QUOTE
@@ -43,9 +43,9 @@ git clone git@github.com:angrybacon/dotemacs.git ~/.config/emacs/
 #+END_SRC
 
 There used to be Git submodules under =lisp/=. Since I'm basically the only
-consumer of these packages and that they mostly exist to clean up my
-configuration, I don't plan on releasing any of them anytime soon. So they're
-back to being simple directories for now.
+consumer of these packages and that they mostly exist to keep my configuration
+clean, I don't plan on releasing any of them anytime soon. So they're back to
+being simple directories for now.
 
 The configuration is used daily under latest Emacs and doesn't guard against
 undefined functions from earlier versions (by choice).
@@ -70,16 +70,10 @@ brew install emacs-plus@29 --with-native-comp
 The configuration also assumes GNU utilities are available, in particular =ls=
 since =dired= relies on it.
 
-** Icons
-
-The mode-line utilizes features from =all-the-icons=.
-
-Run the following command when you start this configuration for the first time
-in order to download the required fonts on your system.
-
-#+BEGIN_SRC
-M-x all-the-icons-install-fonts RET
-#+END_SRC
+Based on =straight.el=, package dependencies could prove difficult to install on
+MacOS where the initial =PATH= is less than reliable, especially when you can't
+easily install a package that fixes just that: =exec-path-from-shell=. A
+workaround is to simply run Emacs from your preferred shell for its first boot.
 
 ** Language Servers
 

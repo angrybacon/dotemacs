@@ -42,7 +42,7 @@
                       mode))
               (body (intern (format "hydra-%s/body" name))))
     (when (functionp body)
-      (setq hercules-super-body body))))
+      (setq hercules--super-body body))))
 
 (defun hercules-super-maybe ()
   (interactive)

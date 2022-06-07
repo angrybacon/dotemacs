@@ -42,8 +42,8 @@ Here are what I consider better defaults as per my own experience.
 (delete-selection-mode 1)               ; Replace region when inserting text
 (global-subword-mode 1)                 ; Iterate through CamelCase words
 (mouse-avoidance-mode 'exile)           ; Avoid collision of mouse with point
-(put 'downcase-region 'disabled nil)    ; Enable downcase-region
-(put 'upcase-region 'disabled nil)      ; Enable upcase-region
+(put 'downcase-region 'disabled nil)    ; Enable `downcase-region'
+(put 'upcase-region 'disabled nil)      ; Enable `upcase-region'
 (set-default-coding-systems 'utf-8)     ; Default to utf-8 encoding
 #+END_SRC
 
@@ -89,8 +89,8 @@ fullscreen immediately.
 
 ** Packages
 
-| =straight=    | https://github.com/raxod502/straight.el#getting-started |
-| =use-package= | https://github.com/jwiegley/use-package                 |
+| =straight=    | https://github.com/radian-software/straight.el |
+| =use-package= | https://github.com/jwiegley/use-package        |
 
 This configuration relies on =straight= and prefers latest Git heads for its
 packages over the default behavior from the built-in =package.el= which pulls
@@ -108,18 +108,16 @@ this document.
 Bootstrap =straight=.
 
 #+BEGIN_SRC emacs-lisp
-(let ((bootstrap-file (expand-file-name
-                       "straight/repos/straight.el/bootstrap.el"
-                       user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (let ((install.el
-           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"))
-      (with-current-buffer
-          (url-retrieve-synchronously install.el 'silent 'inhibit-cookies)
-        (goto-char (point-max))
-        (eval-print-last-sexp))))
-  (load bootstrap-file nil 'nomessage))
+(let* ((bootstrap-file "straight/repos/straight.el/bootstrap.el")
+       (bootstrap-path (expand-file-name bootstrap-file user-emacs-directory))
+       (bootstrap-version 5)
+       (install.el "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"))
+  (unless (file-exists-p bootstrap-path)
+    (with-current-buffer
+        (url-retrieve-synchronously install.el 'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-path nil 'nomessage))
 #+END_SRC
 
 Install =use-package= and defer all packages by default.
@@ -360,7 +358,6 @@ See [[https://github.com/mooz/js2-mode]] for more details.
   :mode (rx (or ".jsx" (and "components/" (* anything) ".js")) eos)
   :hook
   (rjsx-mode . (lambda () (setq me/pretty-print-function #'sgml-pretty-print)))
-  (rjsx-mode . hercules-set-super)
   (rjsx-mode . sgml-electric-tag-pair-mode))
 
 (use-package typescript-mode
@@ -394,6 +391,7 @@ See [[https://github.com/mooz/js2-mode]] for more details.
   :bind
   (:map emacs-lisp-mode-map
    ("C-c C-c" . me/eval-region-dwim)
+   ("C-x C-S-e" . eval-print-last-sexp)
    :map lisp-interaction-mode-map
    ("C-c C-c" . me/eval-region-dwim))
   :custom
@@ -438,8 +436,6 @@ whole buffer."
   (:map markdown-mode-map
    ("M-n" . nil)
    ("M-p" . nil))
-  :hook
-  (markdown-mode . hercules-set-super)
   :custom
   (markdown-asymmetric-header t)
   (markdown-split-window-direction 'right)
@@ -473,7 +469,6 @@ authoring documents with a fast and effective plain-text system.
    ("C-<tab>" . me/org-cycle-parent))
   :hook
   (org-mode . buffer-face-mode)
-  (org-mode . hercules-set-super)
   :custom
   (org-adapt-indentation nil)
   (org-babel-python-command "python3")
@@ -858,7 +853,9 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
    ("C-e" . nil)                        ; Free Readline key
    ("C-w" . nil)                        ; Free kill command
    :map evil-motion-state-map
+   ("RET" . nil)                        ; Free return command
    ("gb" . switch-to-buffer)
+   ("gB" . project-switch-to-buffer)
    ("gC" . describe-face)
    ("gp" . project-switch-project)
    ("gr" . (lambda () (interactive) (revert-buffer nil t)))
@@ -869,6 +866,10 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
    ("C-]" . nil)                        ; Free abort edit command
    :map evil-normal-state-map
    ("q" . nil)                          ; Free quit command
+   ("gd" . dired-jump)
+   ("gD" . project-dired)
+   ("gf" . find-file)
+   ("gF" . project-find-file)
    ("M-." . nil)                        ; Free xref command
    :map evil-visual-state-map
    ("f" . fill-region)
@@ -1061,7 +1062,7 @@ seamless, it's like a minor mode that disables itself auto-magically.
 
 *** Hydra: Bootstrap
 
-Augments and bootstrap helpers for =hydra=.
+Augments and bootstrap helpers for =hydra=. Work in progress.
 
 #+BEGIN_SRC emacs-lisp
 (use-package hercules
@@ -1074,12 +1075,10 @@ Augments and bootstrap helpers for =hydra=.
 (use-package hydra
   :bind
   ("C-c d" . hydra-dates/body)
-  ("C-c e" . hydra-eyebrowse/body)
   ("C-c g" . hydra-git/body)
-  ("C-c o" . hercules-super-maybe)
+  ("C-c i" . hydra-interface/body)
   ("C-c p" . hydra-project/body)
   ("C-c s" . hydra-system/body)
-  ("C-c u" . hydra-ui/body)
   :custom
   (hydra-default-hint nil))
 #+END_SRC
@@ -1090,11 +1089,10 @@ Group date-related commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-dates (:color teal)
-  (concat (hercules-heading "Dates" "Insert" "Insert with Time") "
- _q_ quit            _d_ short           _D_ short           ^^
- ^^                  _i_ iso             _I_ iso             ^^
- ^^                  _l_ long            _L_ long            ^^
-")
+  (concat (hercules-heading "Insert" "Insert with Time") "
+ _d_ short           _D_ short           ^^
+ _i_ iso             _I_ iso             ^^
+ _l_ long            _L_ long            ^^")
   ("q" nil)
   ("d" me/date-short)
   ("D" me/date-short-with-time)
@@ -1104,74 +1102,40 @@ Group date-related commands.
   ("L" me/date-long-with-time))
 #+END_SRC
 
-*** Hydra: Eyebrowse
-
-Group Eyebrowse commands.
-
-| TODO | Make heads to move windows around |
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-eyebrowse (:color teal)
-  (concat (hercules-heading "Eyebrowse" "Do" "Switch") "
- _q_ quit            _c_ create          _1_-_9_ %s(eyebrowse-mode-line-indicator)
- ^^                  _k_ kill            _<_ previous        ^^
- ^^                  _r_ rename          _>_ next            ^^
- ^^                  ^^                  _e_ last            ^^
- ^^                  ^^                  _s_ switch          ^^
-")
-  ("q" nil)
-  ("1" me/eyebrowse-switch-1)
-  ("2" me/eyebrowse-switch-2)
-  ("3" me/eyebrowse-switch-3)
-  ("4" me/eyebrowse-switch-4)
-  ("5" me/eyebrowse-switch-5)
-  ("6" me/eyebrowse-switch-6)
-  ("7" me/eyebrowse-switch-7)
-  ("8" me/eyebrowse-switch-8)
-  ("9" me/eyebrowse-switch-9)
-  ("<" eyebrowse-prev-window-config :color red)
-  (">" eyebrowse-next-window-config :color red)
-  ("c" eyebrowse-create-window-config)
-  ("e" eyebrowse-last-window-config)
-  ("k" eyebrowse-close-window-config :color red)
-  ("r" eyebrowse-rename-window-config)
-  ("s" eyebrowse-switch-to-window-config))
-#+END_SRC
-
 *** Hydra: Git
 
 Group =git= commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-git (:color teal)
-  (concat (hercules-heading "Git" "Do" "Gutter") "
- _q_ quit            _b_ blame           _p_ previous        ^^
- _m_ smerge...       _c_ clone           _n_ next            ^^
- ^^                  _g_ status          _r_ revert          ^^
- ^^                  _i_ init            _s_ stage           ^^
-")
+  (concat (hercules-heading "Do" "Gutter") "
+ _b_ blame           _p_ previous        ^^
+ _c_ clone           _n_ next            ^^
+ _g_ status          _r_ revert          ^^
+ _m_ smerge...       _s_ stage           ^^")
   ("q" nil)
   ("b" magit-blame)
   ("c" magit-clone)
   ("g" magit-status)
-  ("i" magit-init)
-  ("m" (progn (require 'smerge-mode) (hydra-git/smerge/body)))
+  ("m" (progn (require 'smerge-mode) (hydra-git--smerge/body)))
   ("n" git-gutter:next-hunk :color red)
   ("p" git-gutter:previous-hunk :color red)
   ("r" git-gutter:revert-hunk)
   ("s" git-gutter:stage-hunk :color red))
 #+END_SRC
 
+Group =smerge= commands under the Git hydra.
+
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-git/smerge
-  (:color pink :pre (if (not smerge-mode) (smerge-mode 1)) :post (smerge-auto-leave))
-  (concat (hercules-heading "Git / SMerge" "Move" "Keep" "Diff") "
- _q_ quit            _g_ first           _RET_ current       _<_ upper / base
- ^^                  _G_ last            _a_ all             _=_ upper / lower
- ^^                  _j_ next            _b_ base            _>_ base / lower
- ^^                  _k_ previous        _l_ lower           _E_ ediff
- ^^                  ^^                  _u_ upper           _H_ highlight
-")
+(defhydra hydra-git--smerge (:color pink
+                             :pre (if (not smerge-mode) (smerge-mode 1))
+                             :post (smerge-auto-leave))
+  (concat (hercules-heading "Move" "Keep" "Diff") "
+ _g_ first           _RET_ current       _<_ upper / base
+ _G_ last            _a_ all             _=_ upper / lower
+ _j_ next            _b_ base            _>_ base / lower
+ _k_ previous        _l_ lower           _E_ ediff
+ ^^                  _u_ upper           _H_ highlight")
   ("q" nil :color blue)
   ("j" smerge-next)
   ("k" smerge-prev)
@@ -1189,147 +1153,7 @@ Group =git= commands.
   ("u" smerge-keep-upper))
 #+END_SRC
 
-*** Hydra: Markdown
-
-Group Markdown commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-markdown (:color pink)
-  (concat (hercules-heading "Markdown" "Table Columns" "Table Rows") "
- _q_ quit            _c_ insert          _r_ insert          ^^
- ^^                  _C_ delete          _R_ delete          ^^
- ^^                  _M-<left>_ left     _M-<down>_ down     ^^
- ^^                  _M-<right>_ right   _M-<up>_ up         ^^
-")
-  ("q" nil)
-  ("c" markdown-table-insert-column)
-  ("C" markdown-table-delete-column)
-  ("r" markdown-table-insert-row)
-  ("R" markdown-table-delete-row)
-  ("M-<left>" markdown-table-move-column-left)
-  ("M-<right>" markdown-table-move-column-right)
-  ("M-<down>" markdown-table-move-row-down)
-  ("M-<up>" markdown-table-move-row-up))
-#+END_SRC
-
-*** Hydra: Org
-
-Group Org commands.
-
-| TODO | Add heads for =org-table-*= |
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-org (:color pink)
-  (concat (hercules-heading "Org" "Links" "Outline") "
- _q_ quit            _i_ insert          _<_ previous        ^^
- ^^                  _n_ next            _>_ next            ^^
- ^^                  _p_ previous        _a_ all             ^^
- ^^                  _s_ store           _v_ overview        ^^
-")
-  ("q" nil)
-  ("<" org-backward-element)
-  (">" org-forward-element)
-  ("a" outline-show-all :color blue)
-  ("i" org-insert-link :color blue)
-  ("n" org-next-link)
-  ("p" org-previous-link)
-  ("s" org-store-link)
-  ("v" org-overview :color blue))
-#+END_SRC
-
-*** Hydra: Project
-
-Group project commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-project (:color teal)
-  (concat (hercules-heading "Project" "Do" "Find" "Search") "
- _q_ quit            _K_ kill buffers    _b_ buffer          _r_ replace
- ^^                  _t_ forget project  _d_ directory       _s_ ripgrep
- ^^                  _T_ prune projects  _D_ root            ^^
- ^^                  ^^                  _f_ file            ^^
- ^^                  ^^                  _p_ project         ^^
-")
-  ("q" nil)
-  ("b" project-switch-to-buffer)
-  ("d" project-find-dir)
-  ("D" project-dired)
-  ("f" project-find-file)
-  ("K" project-kill-buffers)
-  ("p" project-switch-project)
-  ("r" project-query-replace-regexp)
-  ("s" me/project-search)
-  ("t" project-forget-project)
-  ("T" project-forget-zombie-projects))
-#+END_SRC
-
-*** Hydra: RJSX
-
-Group React JavaScript commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-rjsx (:color teal)
-  (concat (hercules-heading "RJSX" "JSDoc") "
- _q_ quit            _f_ function        ^^                  ^^
- ^^                  _F_ file            ^^                  ^^
-")
-  ("q" nil)
-  ("f" js-doc-insert-function-doc-snippet)
-  ("F" js-doc-insert-file-doc))
-#+END_SRC
-
-*** Hydra: System
-
-Group system-related commands.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-system (:color teal)
-  (concat (hercules-heading "System" "Buffer" "Packages" "Toggle") "
- _d_ clear compiled  _s_ revert          _p_ install         _g_ debug: %-3s`debug-on-error
- _D_ clear desktop   _v_ visit...        _P_ prune           ^^
- _l_ processes       ^^                  _u_ update          ^^
- _Q_ clear and kill  ^^                  _U_ update all      ^^
-")
-  ("q" nil)
-  ("d" me/byte-delete)
-  ("D" desktop-remove)
-  ("g" (setq debug-on-error (not debug-on-error)))
-  ("l" list-processes)
-  ("p" straight-use-package)
-  ("P" (progn (straight-remove-unused-repos) (straight-prune-build)))
-  ("Q" (let ((desktop-save nil))
-         (me/byte-delete)
-         (desktop-remove)
-         (save-buffers-kill-terminal)))
-  ("s" (revert-buffer nil t))
-  ("u" straight-pull-package)
-  ("U" straight-pull-all)
-  ("v" (hydra-system/visit/body)))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra-system/visit (:color teal)
-  (concat (hercules-heading "Visit" "Configuration") "
- _q_ quit            _a_ alacritty       _z_ zsh             ^^
- ^^                  _e_ emacs           ^^                  ^^
- ^^                  _l_ linux           ^^                  ^^
- ^^                  _q_ qtile           ^^                  ^^
-")
-  ("q" nil)
-  ("a" (find-file "~/Workspace/dot/config/alacritty.org"))
-  ("e" (find-file (concat user-emacs-directory "dotemacs.org")))
-  ("l" (find-file "~/Workspace/dot/LINUX.org"))
-  ("q" (find-file "~/Workspace/dot/config/qtile.org"))
-  ("z" (find-file "~/Workspace/dot/config/zsh.org")))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defun me/byte-delete ()
-  (interactive)
-  (shell-command "find . -name \"*.elc\" -type f | xargs rm -f"))
-#+END_SRC
-
-*** Hydra: UI
+*** Hydra: Interface
 
 Group interface-related commands.
 
@@ -1337,25 +1161,20 @@ Group interface-related commands.
 | TODO | Improve =hercules-heading= to accept a list of fields |
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-ui (:color pink)
-  (concat (hercules-heading "Theme" "Windows" "Zoom" "Line Numbers") "
- _t_ cycle           _b_ balance         _-_ out             _n_ mode: %s`display-line-numbers
- _T_ cycle (noexit)  _m_ maximize frame  _=_ in              _N_ absolute: %s`display-line-numbers-current-absolute
- ^^                  _o_ olivetti: %-3s`widowmaker-olivetti-automatic   _0_ reset           ^^
- ^^                  ^^                  ^^                  ^^
- ^^                  ^^                  ^^                  ^^
-")
+(defhydra hydra-interface (:color pink)
+  (concat (hercules-heading "Do" "Zoom" "Toggles") "
+ _m_ maximize frame  _-_ out             _n_ mode: %s`display-line-numbers
+ _t_ cycle theme     _=_ in              _N_ absolute: %s`display-line-numbers-current-absolute
+ ^^                  _0_ reset           _o_ olivetti: %-3s`widowmaker-olivetti-automatic")
   ("q" nil)
   ("-" default-text-scale-decrease)
   ("=" default-text-scale-increase)
   ("0" default-text-scale-reset :color blue)
-  ("b" balance-windows :color blue)
   ("m" toggle-frame-maximized)
   ("n" me/display-line-numbers-toggle-type)
   ("N" me/display-line-numbers-toggle-absolute)
-  ("o" widowmaker-olivetti-automatic-toggle :color blue)
-  ("t" morophon-cycle :color blue)
-  ("T" morophon-cycle))
+  ("o" widowmaker-olivetti-automatic-toggle)
+  ("t" morophon-cycle))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -1375,12 +1194,67 @@ Cycle between nil, t and 'relative."
     (setq-local display-line-numbers (nth position range))))
 #+END_SRC
 
+*** Hydra: Project
+
+Group project-related commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-project (:color teal)
+  (concat (hercules-heading "Do" "Find" "Search") "
+ _K_ kill buffers    _d_ directory       _r_ replace
+ _t_ forget project  _D_ root            _s_ ripgrep
+ _T_ prune projects  _f_ file            ^^
+ ^^                  _p_ project         ^^")
+  ("q" nil)
+  ("d" project-find-dir)
+  ("D" project-dired)
+  ("f" project-find-file)
+  ("K" project-kill-buffers)
+  ("p" project-switch-project)
+  ("r" project-query-replace-regexp)
+  ("s" me/project-search)
+  ("t" project-forget-project)
+  ("T" project-forget-zombie-projects))
+#+END_SRC
+
+*** Hydra: System
+
+Group system-related commands.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-system (:color teal)
+  (concat (hercules-heading "Do" "Packages" "Toggles") "
+ _d_ clear compiled  _p_ install         _g_ debug: %-3s`debug-on-error
+ _D_ clear desktop   _P_ prune           ^^
+ _l_ processes       _u_ update          ^^
+ _Q_ clear and kill  _U_ update all      ^^")
+  ("q" nil)
+  ("d" me/byte-delete)
+  ("D" desktop-remove)
+  ("g" (setq debug-on-error (not debug-on-error)))
+  ("l" list-processes)
+  ("p" straight-use-package)
+  ("P" (progn (straight-remove-unused-repos) (straight-prune-build)))
+  ("Q" (let ((desktop-save nil))
+         (me/byte-delete)
+         (desktop-remove)
+         (save-buffers-kill-terminal)))
+  ("u" straight-pull-package)
+  ("U" straight-pull-all))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/byte-delete ()
+  "Find all byte-compiled files under the current directory and delete them."
+  (interactive)
+  (shell-command "find . -name \"*.elc\" -type f | xargs rm -f"))
+#+END_SRC
+
 ** Intellisense
 
 | =consult-eglot=     | https://github.com/mohkale/consult-eglot               |
 | =eglot=             | https://github.com/joaotavora/eglot                    |
 | =flymake=           | Built-in                                               |
-| =flymake-eslint=    | https://github.com/orzechowskid/flymake-eslint         |
 | =tree-sitter=       | https://github.com/emacs-tree-sitter/elisp-tree-sitter |
 | =tree-sitter-langs= | https://github.com/emacs-tree-sitter/tree-sitter-langs |
 | =xref=              | Built-in                                               |
@@ -1443,23 +1317,6 @@ This package provides a new =consult= command to browse LSP symbols with the
   :straight nil
   :custom
   (flymake-fringe-indicator-position nil))
-#+END_SRC
-
-#+BEGIN_QUOTE
-The current implementation of =flymake-eslint-enable= prevents local setups
-relying on project dependencies ie. running =npx eslint= rather than =eslint=
-directly. Until I can make my own =flymake-eslint= package or provide with a
-fix, the =flymake-eslint--create-process= has to be patched by hand to allow
-="npx eslint"= as binary.
-
-Until then, manually enable in-buffer ESLint diagnostics with =M-x
-flymake-eslint-enable=.
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package flymake-eslint
-  :custom
-  (flymake-eslint-executable-name "npx"))
 #+END_SRC
 
 *** Tree-Sitter
@@ -1945,7 +1802,7 @@ Provide project-wide commands and utilities.
      (project-find-file "File" "f")
      (magit-project-status "Git" "g")
      (me/project-search "Search" "s")
-     (me/vterm-dwim "Terminal" "t"))))
+     (widowmaker-terminal-dwim "Terminal" "t"))))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -2086,7 +1943,7 @@ Use =conf-mode= automatically for configuration files.
       eos))
 #+END_SRC
 
-Insert the current date. See [[#hydra--dates][Hydra / Dates]].
+Insert the current date. See [[#hydra-dates][Hydra / Dates]].
 
 #+BEGIN_SRC emacs-lisp
 (defun me/date-iso ()
@@ -2568,7 +2425,6 @@ Bind extra keys to manage windows and pop-ups.
   ("s-l" . windmove-right)
   ("s-w" . delete-window)
   ("s-W" . kill-this-buffer)
-  :commands (widowmaker-olivetti-automatic-toggle)
   :hook
   (after-init . winner-mode)
   (window-configuration-change . widowmaker-olivetti-maybe))
