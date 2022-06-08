@@ -646,6 +646,7 @@ with live-reload.
 #+BEGIN_SRC emacs-lisp
 (use-package vertico
   :custom
+  (vertico-count-format '("%-5s " . "%2$s"))
   (vertico-resize nil)
   :hook
   (after-init . vertico-mode))
