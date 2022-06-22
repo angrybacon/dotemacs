@@ -193,7 +193,7 @@ machine-specific settings.
   :straight nil
   :commands (morophon-cycle morophon-disable-themes)
   :custom
-  (morophon-known-themes '(zenmelt modus-operandi modus-vivendi)))
+  (morophon-known-themes '(zenmelt modus-operandi)))
 #+END_SRC
 
 ** Customize Fringes
@@ -216,13 +216,12 @@ Mute their colors as well.
 
 #+BEGIN_SRC emacs-lisp
 (defun me/typography-reset ()
-  (let ((font-default (szadek-get 'font-default "monospace"))
-        (font-fixed (szadek-get 'font-fixed "monospace"))
+  (let ((font-fixed (szadek-get 'font-fixed "monospace"))
         (font-size (szadek-get 'font-size 120))
         (font-variable (szadek-get 'font-variable "monospace")))
-    (set-face-attribute 'default nil :font font-default :height font-size)
-    (set-face-attribute 'fixed-pitch nil :font font-fixed)
-    (set-face-attribute 'mode-line nil :font font-default :height font-size)
+    (set-face-attribute 'default nil :font font-fixed :height font-size)
+    (set-face-attribute 'fixed-pitch nil :font font-fixed :height font-size)
+    (set-face-attribute 'mode-line nil :height font-size :inherit 'default)
     (set-face-attribute 'mode-line-inactive nil :inherit 'mode-line)
     (set-face-attribute 'variable-pitch nil :font font-variable)))
 (me/typography-reset)
@@ -242,16 +241,12 @@ Mute their colors as well.
   :straight nil
   :custom
   (modus-themes-diffs 'fg-only)
-  (modus-themes-mode-line 'borderless-accented)
+  (modus-themes-mode-line '(accented borderless))
   (modus-themes-no-mixed-fonts t)
   (modus-themes-operandi-color-overrides
    '((bg-main . "#FAFAFA")
      (fg-main . "#101010")
      (fg-window-divider-inner . "#FAFAFA")))
-  (modus-themes-vivendi-color-overrides
-   '((bg-main . "#101010")
-     (fg-main . "#FAFAFA")
-     (fg-window-divider-inner . "#101010")))
   (modus-themes-org-blocks 'tinted-background))
 #+END_SRC
 
