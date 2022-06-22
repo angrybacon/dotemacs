@@ -1071,6 +1071,7 @@ Augments and bootstrap helpers for =hydra=. Work in progress.
   ("C-c i" . hydra-interface/body)
   ("C-c p" . hydra-project/body)
   ("C-c s" . hydra-system/body)
+  ("C-c v" . hydra-visit/body)
   :custom
   (hydra-default-hint nil))
 #+END_SRC
@@ -1241,6 +1242,24 @@ Group system-related commands.
   "Find all byte-compiled files under the current directory and delete them."
   (interactive)
   (shell-command "find . -name \"*.elc\" -type f | xargs rm -f"))
+#+END_SRC
+
+*** Hydra: Visit
+
+Group shortcuts for often-accessed configuration files.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-visit (:color teal)
+  (concat (hercules-heading "Visit") "
+ _d_ qtile           _l_ linux           _s_ zsh
+ _e_ emacs           _n_ dunst           _t_ kitty")
+  ("q" nil)
+  ("d" (find-file "~/Workspace/dot/config/qtile.org"))
+  ("e" (find-file (concat user-emacs-directory "dotemacs.org")))
+  ("l" (find-file "~/Workspace/dot/LINUX.org"))
+  ("n" (find-file "~/Workspace/dot/config/dunst.org"))
+  ("s" (find-file "~/Workspace/dot/config/zsh.org"))
+  ("t" (find-file "~/Workspace/dot/config/kitty.org")))
 #+END_SRC
 
 ** Intellisense
