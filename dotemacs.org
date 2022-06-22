@@ -55,7 +55,7 @@ Change a few indenting behaviors.
 (put 'plist-put 'lisp-indent-function 2)
 #+END_SRC
 
-Allow a number of commonly safe file variables for further reference.
+Allow a number of commonly used and safe file variables.
 
 #+BEGIN_SRC emacs-lisp
 (put 'after-save-hook 'safe-local-variable
@@ -183,7 +183,7 @@ machine-specific settings.
 
 * Theme
 
-** Helpers
+** Morophon
 
 | =morophon= | =lisp/morophon= |
 
@@ -467,8 +467,6 @@ authoring documents with a fast and effective plain-text system.
   (:map org-mode-map
    ("C-<return>" . nil)
    ("C-<tab>" . me/org-cycle-parent))
-  :hook
-  (org-mode . buffer-face-mode)
   :custom
   (org-adapt-indentation nil)
   (org-babel-python-command "python3")
@@ -497,10 +495,16 @@ authoring documents with a fast and effective plain-text system.
     (evil-define-key* 'motion org-mode-map
       (kbd "<tab>") #'org-cycle
       (kbd "C-j") #'me/org-show-next-heading-tidily
-      (kbd "C-k") #'me/org-show-previous-heading-tidily)))
+      (kbd "C-k") #'me/org-show-previous-heading-tidily))
+  :hook
+  (org-mode . buffer-face-mode))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+(defun me/org-src-buffer-name (name &rest _)
+  "Simple buffer name."
+  (format "*%s*" name))
+
 (defun me/org-cycle-parent (argument)
   "Go to the nearest parent heading and execute `org-cycle'."
   (interactive "p")
@@ -537,10 +541,6 @@ authoring documents with a fast and effective plain-text system.
     (org-reveal t)
     (org-show-entry)
     (outline-show-children)))
-
-(defun me/org-src-buffer-name (name &rest _)
-  "Simple buffer name."
-  (format "*%s*" name))
 #+END_SRC
 
 ** PHP
@@ -843,12 +843,10 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
 #+BEGIN_SRC emacs-lisp
 (use-package evil
   :bind
-  (;; Text objects
-   :map evil-inner-text-objects-map
+  (:map evil-inner-text-objects-map
    ("g" . me/evil-buffer)
    :map evil-outer-text-objects-map
    ("g" . me/evil-buffer)
-   ;; States
    :map evil-insert-state-map
    ("C-a" . nil)                        ; Free Readline key
    ("C-e" . nil)                        ; Free Readline key
@@ -874,7 +872,6 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
    ("M-." . nil)                        ; Free xref command
    :map evil-visual-state-map
    ("f" . fill-region)
-   ;; Rest
    :map evil-window-map
    ("u" . winner-undo)
    ("C-r" . winner-redo))
@@ -957,26 +954,25 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
   (html-mode . emmet-mode)
   (rjsx-mode . emmet-mode)
   (typescript-tsx-mode . emmet-mode)
-  (web-mode . emmet-mode)
   :custom
   (emmet-insert-flash-time .1)
   (emmet-jsx-className-braces? t)
-  (emmet-move-cursor-between-quote t))
+  (emmet-move-cursor-between-quote t)
+  :preface
+  (defun me/emmet-try-expand (args)
+    "Try `emmet-expand-line' if `emmet-mode' is active. Else, does nothing."
+    (interactive "P")
+    (when emmet-mode (emmet-expand-line args))))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package hippie-exp
   :straight nil
-  :preface
-  (defun me/emmet-hippie-try-expand (args)
-    "Try `emmet-expand-line' if `emmet-mode' is active. Else, does nothing."
-    (interactive "P")
-    (when emmet-mode (emmet-expand-line args)))
   :bind
   ("C-<return>" . hippie-expand)
   :custom
   (hippie-expand-try-functions-list
-   '(yas-hippie-try-expand me/emmet-hippie-try-expand))
+   '(yas-hippie-try-expand me/emmet-try-expand))
   (hippie-expand-verbose nil))
 #+END_SRC
 
@@ -1175,7 +1171,8 @@ Group interface-related commands.
   ("n" me/display-line-numbers-toggle-type)
   ("N" me/display-line-numbers-toggle-absolute)
   ("o" widowmaker-olivetti-automatic-toggle)
-  ("t" morophon-cycle))
+  ("t" morophon-cycle :color blue)
+  ("T" morophon-cycle))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -1851,9 +1848,7 @@ Define standard setups for projects that I use on a daily basis.
    (json-mode . ((eval . (prettier-mode))))
    (rjsx-mode . ((eval . (prettier-mode))))
    (scss-mode . ((eval . (prettier-mode))))
-   (typescript-mode . ((eval . (prettier-mode))))
-   (web-mode . ((eval . (prettier-mode))
-                (prettier-parsers . (typescript))))))
+   (typescript-mode . ((eval . (prettier-mode))))))
 #+END_SRC
 
 Assign paths to specific classes according to specifications found in secrets.
@@ -2262,9 +2257,10 @@ configurations.
 #+BEGIN_SRC emacs-lisp
 (use-package desktop
   :straight nil
-  :hook
-  (after-init . desktop-read)
-  (after-init . desktop-save-mode)
+  :defer 1
+  :config
+  (desktop-read)
+  (desktop-save-mode)
   :custom
   (desktop-base-file-name (shelldock "desktop"))
   (desktop-base-lock-name (shelldock "desktop.lock"))
