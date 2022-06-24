@@ -1390,7 +1390,7 @@ Prettify the mode-line with customizable and conditional segments.
   :custom
   (doom-modeline-bar-width 1)
   (doom-modeline-buffer-file-name-style 'truncate-with-project)
-  (doom-modeline-height (szadek-get 'mode-line-height 30))
+  (doom-modeline-height (szadek-get 'mode-line-height 36))
   (doom-modeline-enable-word-count t)
   (doom-modeline-major-mode-icon nil)
   (doom-modeline-percent-position nil)
@@ -1398,16 +1398,14 @@ Prettify the mode-line with customizable and conditional segments.
   :config
   (doom-modeline-def-segment me/buffer
     "The buffer description and major mode icon."
-    (concat (doom-modeline-spc)
-            (doom-modeline--buffer-name)
-            (doom-modeline-spc)))
+    (concat (doom-modeline--buffer-name) doom-modeline-spc))
   (doom-modeline-def-segment me/buffer-position
     "The buffer position."
     (let* ((active (doom-modeline--active))
            (face (if active 'mode-line 'mode-line-inactive)))
-      (propertize (concat (doom-modeline-spc)
+      (propertize (concat doom-modeline-spc
                           (format-mode-line "%l:%c")
-                          (doom-modeline-spc))
+                          doom-modeline-spc)
                   'face face)))
   (doom-modeline-def-segment me/buffer-simple
     "The buffer name but simpler."
@@ -1416,16 +1414,14 @@ Prettify the mode-line with customizable and conditional segments.
                         'doom-modeline-buffer-modified)
                        (active 'doom-modeline-buffer-file)
                        (t 'mode-line-inactive))))
-      (concat (doom-modeline-spc)
-              (propertize "%b" 'face face)
-              (doom-modeline-spc))))
+      (concat (propertize "%b" 'face face) doom-modeline-spc)))
   (doom-modeline-def-segment me/default-directory
     "The buffer directory."
     (let* ((active (doom-modeline--active))
            (face (if active 'doom-modeline-buffer-path 'mode-line-inactive)))
-      (concat (doom-modeline-spc)
+      (concat doom-modeline-spc
               (propertize (abbreviate-file-name default-directory) 'face face)
-              (doom-modeline-spc))))
+              doom-modeline-spc)))
   (doom-modeline-def-segment me/flymake
     "The error status with color codes and icons."
     (when (bound-and-true-p flymake-mode)
@@ -1434,17 +1430,17 @@ Prettify the mode-line with customizable and conditional segments.
             (text doom-modeline--flymake-text))
         (concat
          (when icon
-           (concat (doom-modeline-spc)
+           (concat doom-modeline-spc
                    (if active
                        icon
                      (doom-modeline-propertize-icon icon 'mode-line-inactive))))
          (when text
-           (concat (if icon (doom-modeline-vspc) (doom-modeline-spc))
+           (concat (if icon doom-modeline-vspc doom-modeline-spc)
                    (if active
                        text
                      (propertize text 'face 'mode-line-inactive))))
          (when (or icon text)
-           (doom-modeline-spc))))))
+           doom-modeline-spc)))))
   (doom-modeline-def-segment me/info
     "The topic and nodes in Info buffers."
     (let ((active (doom-modeline--active)))
@@ -1460,7 +1456,7 @@ Prettify the mode-line with customizable and conditional segments.
        (when Info-current-node
          (propertize (concat
                       (replace-regexp-in-string "%" "%%" Info-current-node)
-                      (doom-modeline-spc))
+                      doom-modeline-spc)
                      'face (if active
                                'doom-modeline-buffer-path
                              'mode-line-inactive))))))
@@ -1470,34 +1466,31 @@ Prettify the mode-line with customizable and conditional segments.
            (face (if active
                      'doom-modeline-buffer-major-mode
                    'mode-line-inactive)))
-      (concat (doom-modeline-spc)
+      (concat doom-modeline-spc
               (propertize (format-mode-line mode-name) 'face face)
-              (doom-modeline-spc))))
+              doom-modeline-spc)))
   (doom-modeline-def-segment me/process
     "The ongoing process details."
     (let ((result (format-mode-line mode-line-process)))
       (concat (if (doom-modeline--active)
                   result
                 (propertize result 'face 'mode-line-inactive))
-              (doom-modeline-spc))))
-  (doom-modeline-def-segment me/space
-    "A simple space."
-    (doom-modeline-spc))
+              doom-modeline-spc)))
   (doom-modeline-def-segment me/vcs
     "The version control system information."
     (when-let ((branch doom-modeline--vcs-text))
       (let ((active (doom-modeline--active))
             (text (concat ":" branch)))
-        (concat (doom-modeline-spc)
+        (concat doom-modeline-spc
                 (if active text (propertize text 'face 'mode-line-inactive))
-                (doom-modeline-spc)))))
+                doom-modeline-spc))))
   (doom-modeline-mode 1)
   (doom-modeline-def-modeline 'info
     '(bar modals me/buffer me/info me/buffer-position selection-info)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'main
     '(bar modals me/buffer remote-host me/buffer-position me/flymake
-          selection-info)
+      selection-info)
     '(irc-buffers matches me/process me/vcs debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'message
     '(bar modals me/buffer-simple me/buffer-position selection-info)
