@@ -89,9 +89,6 @@ fullscreen immediately.
 
 ** Packages
 
-| =straight=    | https://github.com/radian-software/straight.el |
-| =use-package= | https://github.com/jwiegley/use-package        |
-
 This configuration relies on =straight= and prefers latest Git heads for its
 packages over the default behavior from the built-in =package.el= which pulls
 releases from (M)ELPA.
@@ -129,8 +126,6 @@ Install =use-package= and defer all packages by default.
 
 ** Cache
 
-| =shelldock= | =lisp/shelldock= |
-
 Use =.cache/= to contain local data. This is to avoid littering in the Emacs
 directory with an ever-growing number of packages used on a daily basis.
 
@@ -165,8 +160,6 @@ redirect the writing to =/dev/null=.
 
 ** Load Secrets
 
-| =szadek= | =lisp/szadek= |
-
 Small framework to read secrets out of a machine-local file. Mostly to keep
 sensible values out of version control, this is also used to have
 machine-specific settings.
@@ -184,8 +177,6 @@ machine-specific settings.
 * Theme
 
 ** Morophon
-
-| =morophon= | =lisp/morophon= |
 
 #+BEGIN_SRC emacs-lisp
 (use-package morophon
@@ -233,9 +224,6 @@ Mute their colors as well.
 
 ** Themes
 
-| =modus-themes=  | Built-in       |
-| =zenmelt-theme= | =lisp/zenmelt= |
-
 #+BEGIN_SRC emacs-lisp
 (use-package modus-themes
   :straight nil
@@ -281,8 +269,6 @@ adds a /reset/ on save when visiting the theme file.
 
 ** CSS
 
-| =css-mode= | Built-in |
-
 #+BEGIN_SRC emacs-lisp
 (use-package css-mode
   :straight nil
@@ -291,8 +277,6 @@ adds a /reset/ on save when visiting the theme file.
 #+END_SRC
 
 ** CSV
-
-| =csv-mode= | https://elpa.gnu.org/packages/csv-mode.html |
 
 #+BEGIN_SRC emacs-lisp
 (use-package csv-mode
@@ -305,8 +289,6 @@ adds a /reset/ on save when visiting the theme file.
 #+END_SRC
 
 ** HTML
-
-| =sgml-mode= | Built-in |
 
 HTML mode is defined in =sgml-mode.el=.
 
@@ -322,10 +304,6 @@ HTML mode is defined in =sgml-mode.el=.
 #+END_SRC
 
 ** JavaScript
-
-| =js2-mode=        | Built-in                                          |
-| =rjsx-mode=       | https://github.com/felipeochoa/rjsx-mode          |
-| =typescript-mode= | https://github.com/emacs-typescript/typescript.el |
 
 There might be confusion between =js-mode=, =js2-mode= and =js2-minor-mode=. All
 three are built-in JavaScript modes. The former is the original major mode to
@@ -367,18 +345,12 @@ See [[https://github.com/mooz/js2-mode]] for more details.
 
 ** JSON
 
-| =json-mode= | https://github.com/joshwnj/json-mode |
-
 #+BEGIN_SRC emacs-lisp
 (use-package json-mode
   :mode (rx ".json" eos))
 #+END_SRC
 
 ** Lisp
-
-| =emacs-lisp-mode= | Built-in |
-| =ielm=            | Built-in |
-| =lisp-mode=       | Built-in |
 
 #+BEGIN_SRC emacs-lisp
 (use-package emacs-lisp-mode
@@ -422,8 +394,6 @@ whole buffer."
 
 ** Markdown
 
-| =markdown-mode= | https://github.com/jrblevin/markdown-mode |
-
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
   :mode (rx (or "INSTALL" "CONTRIBUTORS" "LICENSE" "README" ".mdx") eos)
@@ -440,8 +410,6 @@ whole buffer."
 #+END_SRC
 
 ** Org
-
-| =org= | Built-in |
 
 This very file is organized with =org-mode=. Like Markdown, but with
 superpowers.
@@ -540,8 +508,6 @@ authoring documents with a fast and effective plain-text system.
 
 ** PHP
 
-| =web-mode= | https://github.com/fxbois/web-mode |
-
 #+BEGIN_SRC emacs-lisp
 (use-package web-mode
   :mode (rx ".php" eos)
@@ -558,8 +524,6 @@ authoring documents with a fast and effective plain-text system.
 
 ** YAML
 
-| =yaml-mode= | https://github.com/yoshiki/yaml-mode |
-
 #+BEGIN_SRC emacs-lisp
 (use-package yaml-mode)
 #+END_SRC
@@ -567,12 +531,6 @@ authoring documents with a fast and effective plain-text system.
 * Features
 
 ** Completion
-
-| =consult=    | https://github.com/minad/consult      |
-| =corfu=      | https://github.com/minad/corfu        |
-| =marginalia= | https://github.com/minad/marginalia   |
-| =orderless=  | https://github.com/oantolin/orderless |
-| =vertico=    | https://github.com/minad/vertico      |
 
 *** Consult
 
@@ -649,9 +607,6 @@ with live-reload.
 
 ** Comments
 
-| =evil-commentary= | https://github.com/linktohack/evil-commentary |
-| =newcomment=      | Built-in                                      |
-
 Comment things using Evil operators.
 
 #+BEGIN_SRC emacs-lisp
@@ -674,9 +629,6 @@ Customize the way default comments should be handled.
 #+END_SRC
 
 ** Context Actions
-
-| =embark=   | https://github.com/oantolin/embark        |
-| =selected= | https://github.com/Kungsgeten/selected.el |
 
 *** Embark
 
@@ -750,8 +702,6 @@ use with =selected=.
 
 ** Diff
 
-| =ediff-wind= | Built-in |
-
 Ediff is a visual interface to Unix =diff=.
 
 #+BEGIN_SRC emacs-lisp
@@ -763,8 +713,6 @@ Ediff is a visual interface to Unix =diff=.
 #+END_SRC
 
 ** Dired
-
-| =dired= | Built-in |
 
 Configure Dired buffers. Amongst many other things, Emacs is also a file
 explorer.
@@ -806,8 +754,6 @@ With positive ARGUMENT, prompt for the command to use."
 
 ** Documentation
 
-| =eldoc= | Built-in |
-
 When [[https://debbugs.gnu.org/cgi/bugreport.cgi?bug=47109][this patch]] is
 sorted out, we'll be able to use a new format function to have pieces of
 documentation joined with a horizontal rule. eg.
@@ -827,9 +773,6 @@ documentation joined with a horizontal rule. eg.
 #+END_SRC
 
 ** Evil
-
-| =evil=          | https://github.com/emacs-evil/evil          |
-| =evil-surround= | https://github.com/emacs-evil/evil-surround |
 
 Evil emulates and manages the infamous Vim states and motions ported to Emacs.
 
@@ -931,10 +874,6 @@ support repeated key strokes."
 
 ** Expand
 
-| =emmet-mode= | https://github.com/smihica/emmet-mode   |
-| =hippie-exp= | Built-in                                |
-| =yasnippet=  | https://github.com/joaotavora/yasnippet |
-
 HippieExpand manages expansions a la [[http://emmet.io/][Emmet]]. So I've
 gathered all features that look anywhere close to this behavior for it to handle
 them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
@@ -988,10 +927,6 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
 
 ** Help
 
-| =help-fns=  | Built-in                           |
-| =help-mode= | Built-in                           |
-| =helpful=   | https://github.com/Wilfred/helpful |
-
 Bind useful commands in help buffers.
 
 #+BEGIN_SRC emacs-lisp
@@ -1033,9 +968,6 @@ Provide better detailed help buffers.
 #+END_SRC
 
 ** Hydra
-
-| =hercules= | =lisp/hercules=                  |
-| =hydra=    | https://github.com/abo-abo/hydra |
 
 Hydra allows me to group binds together. It also shows a list of all implemented
 commands in the echo area.
@@ -1264,13 +1196,6 @@ Group shortcuts for often-accessed configuration files.
 
 ** Intellisense
 
-| =consult-eglot=     | https://github.com/mohkale/consult-eglot               |
-| =eglot=             | https://github.com/joaotavora/eglot                    |
-| =flymake=           | Built-in                                               |
-| =tree-sitter=       | https://github.com/emacs-tree-sitter/elisp-tree-sitter |
-| =tree-sitter-langs= | https://github.com/emacs-tree-sitter/tree-sitter-langs |
-| =xref=              | Built-in                                               |
-
 *** Code References
 
 Find code references throughout a codebase.
@@ -1364,8 +1289,6 @@ Display relative line numbers in most editing modes.
 
 ** Linters
 
-| =prettier= | https://github.com/jscheid/prettier.el |
-
 Run Prettier against the whole buffer on save. See the
 [[#directory-local-variables][Directory-Local Variables]] section for automatic
 enabling of the minor mode.
@@ -1377,8 +1300,6 @@ enabling of the minor mode.
 #+END_SRC
 
 ** Mode-Line
-
-| =doom-modeline= | https://github.com/seagle0128/doom-modeline |
 
 Prettify the mode-line with customizable and conditional segments.
 
@@ -1511,9 +1432,6 @@ Prettify the mode-line with customizable and conditional segments.
 
 ** Multiple Cursors
 
-| =evil-multiedit=   | https://github.com/hlissner/evil-multiedit     |
-| =multiple-cursors= | https://github.com/magnars/multiple-cursors.el |
-
 Add support for multiple cursors within Evil.
 
 #+BEGIN_SRC emacs-lisp
@@ -1554,11 +1472,6 @@ Enable multiple cursors outside Evil. Some witchcraft at work here.
 ** Navigation
 
 *** Navigation: Jump Around
-
-| =avy=        | https://github.com/abo-abo/avy         |
-| =hanna=      | =lisp/hanna=                           |
-| =evil-snipe= | https://github.com/hlissner/evil-snipe |
-| =pulsar=     | https://protesilaos.com/emacs/pulsar   |
 
 #+BEGIN_QUOTE
 =avy= is a GNU Emacs package for jumping to visible text using a char-based
@@ -1615,8 +1528,6 @@ Evil-snipe emulates =vim-seek= and/or =vim-sneak= in =evil-mode=.
 
 *** Navigation: Replace
 
-| =anzu= | https://github.com/syohex/emacs-anzu |
-
 Better search and replace features. Even though I prefer to use
 =multiple-cursors= to replace text in different places at once, =anzu= provides
 a useful visual feedback for more complex expressions.
@@ -1629,8 +1540,6 @@ a useful visual feedback for more complex expressions.
 #+END_SRC
 
 *** Navigation: Scroll
-
-| =mwheel= | Built-in |
 
 Customize the scrolling behavior using the mouse wheel.
 
@@ -1653,8 +1562,6 @@ See `scroll-preserve-screen-position'."
 #+END_SRC
 
 *** Navigation: Search
-
-| =isearch= | Built-in |
 
 Isearch stands for /incremental search/. This means that search results are
 updated and highlighted while you are typing your query, incrementally.
@@ -1680,8 +1587,6 @@ updated and highlighted while you are typing your query, incrementally.
 #+END_SRC
 
 ** OS-Specific
-
-| =exec-path-from-shell= | https://github.com/purcell/exec-path-from-shell |
 
 Initialize environment variables.
 
@@ -1734,9 +1639,6 @@ enabled in the first place.
 
 ** Parentheses
 
-| =rainbow-delimiters= | https://github.com/Fanael/rainbow-delimiters |
-| =smartparens=        | https://github.com/Fuco1/smartparens         |
-
 Highlight parenthese-like delimiters in a rainbow fashion. It eases the reading
 when dealing with mismatched parentheses.
 
@@ -1771,8 +1673,6 @@ No package seem to please my person.
 
 ** Paste
 
-| =webpaste= | https://github.com/etu/webpaste.el |
-
 #+BEGIN_QUOTE
 This mode allows to paste whole buffers or parts of buffers to pastebin-like
 services. It supports more than one service and will failover if one service
@@ -1790,8 +1690,6 @@ fails.
 #+END_SRC
 
 ** Project
-
-| =project= | Built-in |
 
 *** Project.el
 
@@ -1882,17 +1780,6 @@ Allow specific =eval= form in directory-local mecanisms.
 #+END_SRC
 
 ** Quality of Life
-
-| =aggressive-indent=       | https://github.com/Malabarba/aggressive-indent-mode    |
-| =barrinalo=               | =lisp/barrinalo=                                       |
-| =default-text-scale=      | https://github.com/purcell/default-text-scale          |
-| =expand-region=           | https://github.com/magnars/expand-region.el            |
-| =files=                   | Built-in                                               |
-| =highlight-indent-guides= | https://github.com/DarthFennec/highlight-indent-guides |
-| =hl-line=                 | Built-in                                               |
-| =rainbow-mode=            | https://elpa.gnu.org/packages/rainbow-mode.html        |
-| =repeat=                  | Built-in                                               |
-| =simple=                  | Built-in                                               |
 
 Auto-indent code as you write.
 
@@ -2091,8 +1978,6 @@ calls to the =message= function.
 
 ** REST Client
 
-| =restclient= | https://github.com/pashky/restclient.el |
-
 Emacs can also emulate an interactive REST client.
 
 #+BEGIN_SRC emacs-lisp
@@ -2110,8 +1995,6 @@ Emacs can also emulate an interactive REST client.
 
 ** Terminal
 
-| =vterm= | https://github.com/akermu/emacs-libvterm |
-
 Yes, Emacs emulates terminals too.
 
 | TODO | Advice =vterm= motions to support shift            |
@@ -2125,12 +2008,6 @@ Yes, Emacs emulates terminals too.
 #+END_SRC
 
 ** Version Control
-
-| =git-gutter-fringe= | https://github.com/emacsorphanage/git-gutter-fringe |
-| =git-modes=         | https://github.com/magit/git-modes                  |
-| =magit=             | https://github.com/magit/magit                      |
-| =pinentry=          | https://elpa.gnu.org/packages/pinentry.html         |
-| =transient=         | https://github.com/magit/transient                  |
 
 Display indicators in the left fringe for Git changes. This is using the fringe
 version of =git-gutter= since margins may be compromised with other features
@@ -2238,8 +2115,6 @@ section for now.
 
 ** Whitespaces
 
-| =whitespace= | Built-in |
-
 Highlight trailing space-like characters, eg. trailing spaces, tabs, empty
 lines.
 
@@ -2254,9 +2129,6 @@ lines.
 #+END_SRC
 
 ** Workspaces
-
-| =desktop=   | Built-in                              |
-| =eyebrowse= | https://github.com/wasamasa/eyebrowse |
 
 Save and restore Emacs status on startup, including buffers, point and window
 configurations.
@@ -2336,11 +2208,6 @@ configuration.
 #+END_SRC
 
 ** Windows
-
-| =olivetti=   | https://github.com/rnkn/olivetti   |
-| =popper=     | https://github.com/karthink/popper |
-| =shackle=    | https://depp.brause.cc/shackle/    |
-| =widowmaker= | =lisp/widowmaker=                  |
 
 Olivetti lets you center your buffer for aesthetics and focus. I have it set up
 to turn on automatically when windows are considered lone ie. they have no

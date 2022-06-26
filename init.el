@@ -37,6 +37,7 @@
          (.el (concat (file-name-sans-extension .org) ".el"))
          (modification-time
           (file-attribute-modification-time (file-attributes .org))))
+    (require 'org-compat)
     (require 'org-macs)
     (unless (org-file-newer-than-p .el modification-time)
       (require 'ob-tangle)
