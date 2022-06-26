@@ -305,33 +305,40 @@ HTML mode is defined in =sgml-mode.el=.
 
 ** JavaScript
 
-There might be confusion between =js-mode=, =js2-mode= and =js2-minor-mode=. All
-three are built-in JavaScript modes. The former is the original major mode to
-edit JavaScript files. The two latters are based on =js-mode=, one major mode
-with various improvements with regards to syntax highlighting amongst other
-things and one minor mode for earlier Emacs versions that might still be using
-=js-mode= as a major mode but willing to take advantage of the AST parsing
-implementation from =js2= as a minor mode.
+There might be confusion between the too many JavaScript editing modes
+available:
 
-See [[https://github.com/mooz/js2-mode]] for more details.
+- =js-mode= ::
+  Default built-in major mode to edit JavaScript buffers. Supports JSX syntax
+  albeit with weak highlighting capabilities.
+- =javascript-mode= ::
+  An alias to =js-mode=.
+- =js2-mode= ::
+  An editing major mode with its own parser and extrea features such as
+  highlighting for errors and warnings. See [[https://github.com/mooz/js2-mode]].
+- =js2-minor-mode= (and =js2-jsx-mode= for Emacs 27) ::
+  Two minor modes shipped with =js2-mode= that let you use another major mode
+  without discarding the AST parser from =js2-mode=.
+- =rjsx-mode= ::
+  A major mode to edit JSX buffers based on =js2-mode=. See
+  [[https://github.com/felipeochoa/rjsx-mode]].
+
+I went with the route that uses built-ins the most since I am set on using
+[[#tree-sitter][Tree-sitter]] to power up the syntax highlighting.
+
+| Syntax | Modes                 |
+|--------+-----------------------|
+| =.js=  | =js-mode=             |
+| =.jsx= | =js-mode=             |
+| =.ts=  | =typescript-mode=     |
+| =.tsx= | =typescript-tsx-mode= |
 
 #+BEGIN_SRC emacs-lisp
-(use-package js2-mode
+(use-package js-mode
   :straight nil
-  :mode (rx ".js" eos)
   :custom
   (js-indent-level 2)
-  (js-switch-indent-offset 2)
-  (js2-highlight-level 3)
-  (js2-idle-timer-delay 0)
-  (js2-mode-show-parse-errors nil)
-  (js2-mode-show-strict-warnings nil))
-
-(use-package rjsx-mode
-  :mode (rx (or ".jsx" (and "components/" (* anything) ".js")) eos)
-  :hook
-  (rjsx-mode . (lambda () (setq me/pretty-print-function #'sgml-pretty-print)))
-  (rjsx-mode . sgml-electric-tag-pair-mode))
+  (js-switch-indent-offset 2))
 
 (use-package typescript-mode
   :init
@@ -504,22 +511,6 @@ authoring documents with a fast and effective plain-text system.
     (org-reveal t)
     (org-show-entry)
     (outline-show-children)))
-#+END_SRC
-
-** PHP
-
-#+BEGIN_SRC emacs-lisp
-(use-package web-mode
-  :mode (rx ".php" eos)
-  :hook
-  (web-mode . sgml-electric-tag-pair-mode)
-  :custom
-  (web-mode-code-indent-offset 2)
-  (web-mode-enable-auto-opening nil)
-  (web-mode-enable-auto-pairing nil)
-  (web-mode-enable-auto-quoting nil)
-  (web-mode-markup-indent-offset 2)
-  (web-mode-enable-auto-indentation nil))
 #+END_SRC
 
 ** YAML
@@ -886,7 +877,6 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
   :hook
   (css-mode . emmet-mode)
   (html-mode . emmet-mode)
-  (rjsx-mode . emmet-mode)
   (typescript-tsx-mode . emmet-mode)
   :custom
   (emmet-insert-flash-time .1)
@@ -1258,9 +1248,13 @@ This package provides a new =consult= command to browse LSP symbols with the
 
 *** Tree-Sitter
 
+Use [[https://tree-sitter.github.io/tree-sitter/][Tree-sitter]] to handle more
+complex syntax trees where the default alternatives lack the highlighting power.
+
 #+BEGIN_SRC emacs-lisp
 (use-package tree-sitter
   :hook
+  (js-mode . tree-sitter-hl-mode)
   (typescript-mode . tree-sitter-hl-mode)
   (typescript-tsx-mode . tree-sitter-hl-mode))
 
@@ -1751,7 +1745,6 @@ Define standard setups for projects that I use on a daily basis.
 (dir-locals-set-class-variables 'prettier
  '((js-mode . ((eval . (prettier-mode))))
    (json-mode . ((eval . (prettier-mode))))
-   (rjsx-mode . ((eval . (prettier-mode))))
    (scss-mode . ((eval . (prettier-mode))))
    (typescript-mode . ((eval . (prettier-mode))))))
 #+END_SRC
