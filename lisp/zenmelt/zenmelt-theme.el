@@ -272,15 +272,10 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(org-headline-done                  ((t :foreground ,green+3)))
    `(org-hide                           ((t :foreground ,bg)))
    `(org-level-1                        ((t :background ,bg+1
-                                            :height 1.2
-                                            :inherit outline-1
-                                            :overline t
-                                            :underline t)))
+                                            :extend t
+                                            :inherit outline-1)))
    `(org-level-2                        ((t :inherit (outline-2 org-level-1))))
-   `(org-level-3                        ((t :background ,bg
-                                            :inherit (outline-3 org-level-2)
-                                            :overline nil
-                                            :underline nil)))
+   `(org-level-3                        ((t :inherit (outline-3 org-level-2))))
    `(org-level-4                        ((t :inherit (outline-4 org-level-3))))
    `(org-level-5                        ((t :inherit (outline-5 org-level-4))))
    `(org-level-6                        ((t :inherit (outline-6 org-level-5))))
@@ -334,7 +329,6 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(whitespace-tab                     ((t :background ,red-1)))
    `(whitespace-trailing                ((t :inherit trailing-whitespace)))
 ;;;;;; Version Control
-;;;;;;; Diff
    `(diff-added                         ((t :foreground ,green)))
    `(diff-changed                       ((t :foreground ,yellow-2)))
    `(diff-context                       ((t :foreground ,fg-2)))
@@ -353,7 +347,6 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(diff-refine-removed                ((t :inherit diff-refine-added
                                             :foreground ,red+2)))
    `(diff-removed                       ((t :foreground ,red-1)))
-;;;;;;; Ediff
    `(ediff-current-diff-A               ((t :background ,red-6)))
    `(ediff-current-diff-Ancestor        ((t :inherit ediff-current-diff-A)))
    `(ediff-current-diff-B               ((t :background ,green-5)))
@@ -370,7 +363,6 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(ediff-odd-diff-Ancestor            ((t :inherit ediff-odd-diff-A)))
    `(ediff-odd-diff-B                   ((t :inherit ediff-odd-diff-A)))
    `(ediff-odd-diff-C                   ((t :inherit ediff-odd-diff-A)))
-;;;;;;; Smerge
    `(smerge-lower                       ((t :background ,bg+1
                                             :inherit diff-added)))
    `(smerge-markers                     ((t :background ,bg+1 :inherit shadow)))
@@ -407,6 +399,12 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(doom-modeline-info                 ((t :foreground ,green+4)))
    `(doom-modeline-project-dir          ((t :inherit dired-directory)))
    `(doom-modeline-project-parent-dir   ((t :inherit shadow)))
+;;;;;; Navigation
+   `(avy-background-face                ((t :inherit shadow)))
+   `(avy-lead-face                      ((t :foreground ,cyan)))
+   `(avy-lead-face-0                    ((t :foreground ,green+4)))
+   `(avy-lead-face-1                    ((t :foreground ,magenta)))
+   `(avy-lead-face-2                    ((t :foreground ,yellow)))
 ;;;;;; Popup
    `(hydra-face-amaranth                ((t :foreground ,red-2)))
    `(hydra-face-blue                    ((t :foreground ,blue+1)))
@@ -432,7 +430,9 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(anzu-replace-highlight             ((t ,@(zenmelt--box 'yellow))))
    `(anzu-replace-to                    ((t ,@(zenmelt--box 'green))))
 ;;;;;; Version Control
-;;;;;;; Git-Gutter
+   `(git-commit-comment-action          ((t :inherit font-lock-comment-face)))
+   `(git-commit-comment-branch-local    ((t :inherit magit-branch-local)))
+   `(git-commit-comment-branch-remote   ((t :inherit magit-branch-remote)))
    `(git-gutter:added                   ((t :foreground ,green+4)))
    `(git-gutter:deleted                 ((t :foreground ,red+2)))
    `(git-gutter:modified                ((t :foreground ,blue)))
@@ -440,7 +440,6 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(git-gutter-fr:added                ((t :foreground ,green)))
    `(git-gutter-fr:deleted              ((t :foreground ,red)))
    `(git-gutter-fr:modified             ((t :foreground ,blue-1)))
-;;;;;;; Magit
    `(magit-bisect-bad                   ((t :foreground ,red)))
    `(magit-bisect-good                  ((t :foreground ,green)))
    `(magit-bisect-skip                  ((t :foreground ,yellow)))
@@ -506,10 +505,6 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(magit-signature-revoked            ((t :foreground ,magenta)))
    `(magit-signature-untrusted          ((t :foreground ,yellow)))
    `(magit-tag                          ((t :foreground ,orange)))
-;;;;;;; Magit: git-commit
-   `(git-commit-comment-action          ((t :inherit font-lock-comment-face)))
-   `(git-commit-comment-branch-local    ((t :inherit magit-branch-local)))
-   `(git-commit-comment-branch-remote   ((t :inherit magit-branch-remote)))
 ;;;;;; Markdown
    `(markdown-inline-code-face          ((t :inherit org-verbatim)))
 ;;;;;; Pairs
@@ -523,63 +518,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(rainbow-delimiters-depth-8-face    ((t :foreground ,green+4)))
    `(rainbow-delimiters-depth-9-face    ((t :foreground ,red+2)))
 
-;;;;; TODO Prettify useful faces and clean up the rest
-;;;;;; avy
-   `(avy-background-face                ((t :foreground ,fg-2
-                                            :inverse-video nil)))
-   `(avy-lead-face                      ((t :foreground ,cyan
-                                            :inverse-video nil)))
-   `(avy-lead-face-0                    ((t :foreground ,green+3
-                                            :inverse-video nil)))
-   `(avy-lead-face-1                    ((t :foreground ,yellow
-                                            :inverse-video nil)))
-   `(avy-lead-face-2                    ((t :foreground ,red+1
-                                            :inverse-video nil)))
-;;;;;; bm
-   `(bm-face                            ((t :background ,yellow-1
-                                            :foreground ,bg)))
-   `(bm-fringe-face                     ((t :background ,yellow-1
-                                            :foreground ,bg)))
-   `(bm-fringe-persistent-face          ((t :background ,green-2
-                                            :foreground ,bg)))
-   `(bm-persistent-face                 ((t :background ,green-2
-                                            :foreground ,bg)))
-;;;;;; cider
-   `(cider-result-overlay-face          ((t :background unspecified)))
-   `(cider-enlightened-face             ((t :box (:color ,orange :line-width -1))))
-   `(cider-enlightened-local-face       ((t :foreground ,green+1)))
-   `(cider-deprecated-face              ((t :background ,yellow-2)))
-   `(cider-instrumented-face            ((t :box (:color ,red :line-width -1))))
-   `(cider-traced-face                  ((t :box (:color ,cyan :line-width -1))))
-   `(cider-test-failure-face            ((t :background ,red-4)))
-   `(cider-test-error-face              ((t :background ,magenta)))
-   `(cider-test-success-face            ((t :background ,green-2)))
-   `(cider-fringe-good-face             ((t :foreground ,green+4)))
-;;;;;; context-coloring
-   `(context-coloring-level-0-face      ((t :foreground ,fg)))
-   `(context-coloring-level-1-face      ((t :foreground ,cyan)))
-   `(context-coloring-level-2-face      ((t :foreground ,green+4)))
-   `(context-coloring-level-3-face      ((t :foreground ,yellow)))
-   `(context-coloring-level-4-face      ((t :foreground ,orange)))
-   `(context-coloring-level-5-face      ((t :foreground ,magenta)))
-   `(context-coloring-level-6-face      ((t :foreground ,blue+1)))
-   `(context-coloring-level-7-face      ((t :foreground ,green+2)))
-   `(context-coloring-level-8-face      ((t :foreground ,yellow-2)))
-   `(context-coloring-level-9-face      ((t :foreground ,red+1)))
-;;;;;; coq
-   `(coq-solve-tactics-face             ((t :foreground nil
-                                            :inherit font-lock-constant-face)))
-;;;;;; ctable
-   `(ctbl:face-cell-select              ((t :background ,blue :foreground ,bg)))
-   `(ctbl:face-continue-bar             ((t :background ,bg-1 :foreground ,bg)))
-   `(ctbl:face-row-select               ((t :background ,cyan :foreground ,bg)))
-;;;;;; debbugs
-   `(debbugs-gnu-done                   ((t :foreground ,fg-2)))
-   `(debbugs-gnu-handled                ((t :foreground ,green)))
-   `(debbugs-gnu-new                    ((t :foreground ,red)))
-   `(debbugs-gnu-pending                ((t :foreground ,blue)))
-   `(debbugs-gnu-stale                  ((t :foreground ,orange)))
-   `(debbugs-gnu-tagged                 ((t :foreground ,red)))
+   ;; TODO Prettify useful faces and clean up the rest
 ;;;;;; dim-autoload
    `(dim-autoload-cookie-line           ((t :foreground ,bg+2)))
 ;;;;;; diredfl
@@ -913,6 +852,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
 (zenmelt-with-colors nil
   (custom-theme-set-variables
    'zenmelt
+   ;; TODO Prettify useful faces and clean up the rest
 ;;;;; ansi-color
    `(ansi-color-names-vector [,bg ,red ,green ,yellow ,blue ,magenta ,cyan ,fg])
 ;;;;; fill-column-indicator
