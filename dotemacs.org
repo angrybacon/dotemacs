@@ -1087,30 +1087,13 @@ Group interface-related commands.
   ("0" default-text-scale-reset :color blue)
   ("m" toggle-frame-maximized :color blue)
   ("M" widowmaker-placement-center :color blue)
-  ("n" me/display-line-numbers-toggle-type)
+  ("n" ruric-toggle-line-numbers)
   ("o" widowmaker-olivetti-automatic-toggle :color blue)
   ("O" widowmaker-olivetti-body-reset :color blue)
   ("<" widowmaker-olivetti-body-less)
   (">" widowmaker-olivetti-body-more)
   ("t" morophon-cycle :color blue)
   ("T" morophon-cycle))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defun me/display-line-numbers-toggle-absolute ()
-  "Toggle the value of `display-line-numbers-current-absolute'."
-  (interactive)
-  (let ((value display-line-numbers-current-absolute))
-    (setq-local display-line-numbers-current-absolute (not value))))
-
-(defun me/display-line-numbers-toggle-type ()
-  "Cycle through the possible values of `display-line-numbers'.
-Cycle between nil, t and 'relative."
-  (interactive)
-  (let* ((range '(nil t relative))
-         (position (1+ (cl-position display-line-numbers range)))
-         (position (if (= position (length range)) 0 position)))
-    (setq-local display-line-numbers (nth position range))))
 #+END_SRC
 
 *** Hydra: Project
