@@ -1451,8 +1451,6 @@ Enable multiple cursors outside Evil. Some witchcraft at work here.
 
 ** Navigation
 
-*** Navigation: Jump Around
-
 #+BEGIN_QUOTE
 =avy= is a GNU Emacs package for jumping to visible text using a char-based
 decision tree. See also =ace-jump-mode= and =vim-easymotion= -- =avy= uses the
@@ -1469,23 +1467,10 @@ same idea.
   (avy-timeout-seconds .3))
 #+END_SRC
 
-I disagree with some of Emacs' opinion with regards to paragraphs amongst other
-things. =hanna= is a collection of replacements for the aforementioned defaults.
-
-#+BEGIN_SRC emacs-lisp
-(use-package hanna
-  :load-path "lisp/hanna"
-  :straight nil
-  :bind
-  ([remap move-beginning-of-line] . hanna-beginning-of-line)
-  ([remap backward-paragraph] . hanna-paragraph-backward)
-  ([remap forward-paragraph] . hanna-paragraph-forward))
-#+END_SRC
-
 #+BEGIN_QUOTE
 Evil-snipe emulates =vim-seek= and/or =vim-sneak= in =evil-mode=.
 
----Henrik Lissner
+--- Henrik Lissner
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
@@ -1499,49 +1484,18 @@ Evil-snipe emulates =vim-seek= and/or =vim-sneak= in =evil-mode=.
   (evil-snipe-smart-case t))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-(use-package pulsar
-  :defer 1
-  :hook
-  (after-init . pulsar-global-mode))
-#+END_SRC
-
-*** Navigation: Replace
-
-Better search and replace features. Even though I prefer to use
-=multiple-cursors= to replace text in different places at once, =anzu= provides
-a useful visual feedback for more complex expressions.
+I disagree with some of Emacs' opinion with regards to paragraphs amongst other
+things. =hanna= is a collection of replacements for the aforementioned defaults.
 
 #+BEGIN_SRC emacs-lisp
-(use-package anzu
-  :bind
-  ([remap query-replace] . anzu-query-replace)
-  ([remap query-replace-regexp] . anzu-query-replace-regexp))
-#+END_SRC
-
-*** Navigation: Scroll
-
-Customize the scrolling behavior using the mouse wheel.
-
-#+BEGIN_SRC emacs-lisp
-(use-package mwheel
+(use-package hanna
+  :load-path "lisp/hanna"
   :straight nil
-  :custom
-  (mouse-wheel-progressive-speed nil)
-  (mouse-wheel-scroll-amount '(2 ((control) . 8)))
-  :config
-  (advice-add 'mwheel-scroll :around #'me/mwheel-scroll))
+  :bind
+  ([remap move-beginning-of-line] . hanna-beginning-of-line)
+  ([remap backward-paragraph] . hanna-paragraph-backward)
+  ([remap forward-paragraph] . hanna-paragraph-forward))
 #+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defun me/mwheel-scroll (original &rest arguments)
-  "Like `mwheel-scroll' but preserve screen position.
-See `scroll-preserve-screen-position'."
-  (let ((scroll-preserve-screen-position :always))
-    (apply original arguments)))
-#+END_SRC
-
-*** Navigation: Search
 
 Isearch stands for /incremental search/. This means that search results are
 updated and highlighted while you are typing your query, incrementally.
@@ -1566,6 +1520,32 @@ updated and highlighted while you are typing your query, incrementally.
       (goto-char isearch-other-end))))
 #+END_SRC
 
+Customize the scrolling behavior using the mouse wheel.
+
+#+BEGIN_SRC emacs-lisp
+(use-package mwheel
+  :straight nil
+  :custom
+  (mouse-wheel-progressive-speed nil)
+  (mouse-wheel-scroll-amount '(2 ((control) . 8)))
+  :config
+  (advice-add 'mwheel-scroll :around
+    (defun me/mwheel-scroll (original &rest arguments)
+      "Like `mwheel-scroll' but preserve screen position."
+      (let ((scroll-preserve-screen-position :always))
+        (apply original arguments)))))
+#+END_SRC
+
+Pulse strategic locations in the current buffer for readability and focus
+purposes.
+
+#+BEGIN_SRC emacs-lisp
+(use-package pulsar
+  :defer 1
+  :hook
+  (after-init . pulsar-global-mode))
+#+END_SRC
+
 ** OS-Specific
 
 Initialize environment variables.
@@ -1588,11 +1568,8 @@ variables of interest, then copying them into the Emacs environment.
 #+BEGIN_SRC emacs-lisp
 (use-package exec-path-from-shell
   :if (eq window-system 'ns)
-  ;; :defer 1
   :hook
   (after-init . exec-path-from-shell-initialize))
-  ;; :custom
-  ;; (exec-path-from-shell-arguments '("-l")))
 #+END_SRC
 
 Augment Emacs experience for MacOS users.
@@ -1612,9 +1589,41 @@ enabled in the first place.
 #+BEGIN_SRC emacs-lisp
 (when (eq system-type 'windows-nt)
   (defun me/bash ()
+    "Run Bash executable under System32."
     (interactive)
     (let ((explicit-shell-file-name "C:/Windows/System32/bash.exe"))
       (shell))))
+#+END_SRC
+
+** Pair-Programming
+
+Adjust font size for all windows at once.
+
+#+BEGIN_QUOTE
+This package provides commands for increasing or decreasing the default font
+size in all GUI Emacs frames -- it is like an Emacs-wide version of
+=text-scale-mode=.
+
+--- Steve Purcell
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+(use-package default-text-scale)
+#+END_SRC
+
+When broadcasting your Emacs session over video online it can be useful to tone
+down the Emacs'ness. Summon the two-headed ogre Ruric with =M-x ruric-mode= and
+start your pair-programming session.
+
+#+BEGIN_SRC emacs-lisp
+(use-package ruric
+  :commands
+  (ruric-global-mode
+   ruric-mode
+   ruric-toggle-line-numbers
+   ruric-toggle-line-numbers-absolute)
+  :load-path "lisp/ruric"
+  :straight nil)
 #+END_SRC
 
 ** Parentheses
@@ -1801,15 +1810,12 @@ A collection of case-changing and transpose functions.
   ("M-N" . barrinalo-duplicate-forward))
 #+END_SRC
 
-Use =conf-mode= automatically for configuration files.
+Add syntax highlighting support for configuration files.
 
 #+BEGIN_SRC emacs-lisp
 (use-package conf-mode
   :straight nil
-  :mode
-  (rx (or "CODEOWNERS" "rc"
-          (and ".env" (? (or ".development" ".local" ".test"))))
-      eos))
+  :mode (rx (or "CODEOWNERS" (and ".env" (* (and "." (+ word))))) eos))
 #+END_SRC
 
 Insert the current date. See [[#hydra-dates][Hydra / Dates]].
@@ -1844,20 +1850,6 @@ Insert the current date. See [[#hydra-dates][Hydra / Dates]].
   "Insert the current date, short format with time, eg. 2016.12.09 14:34"
   (interactive)
   (insert (format-time-string "%Y.%m.%d %H:%M")))
-#+END_SRC
-
-Adjust font size for all windows at once.
-
-#+BEGIN_QUOTE
-This package provides commands for increasing or decreasing the default font
-size in all GUI Emacs frames -- it is like an Emacs-wide version of
-=text-scale-mode=.
-
---- Steve Purcell
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package default-text-scale)
 #+END_SRC
 
 Increase region by semantic units. It tries to be smart about it and adapt to

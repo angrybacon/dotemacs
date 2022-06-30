@@ -20,8 +20,8 @@
 
 ;;; Commentary:
 
-;; Summon the two-headed ogre to enhance settings with regards to
-;; pair-programming.
+;; Collection of functions to enhance settings with regards to pair-programming.
+;; Provide a minor mode and its global variant as a convenient shortcut.
 
 ;;; Code:
 
@@ -31,6 +31,10 @@
   "Pair-programming features."
   :group 'convenience
   :prefix "ruric-")
+
+(defcustom ruric-blacklist-modes nil
+  "List of modes that should not be considered for `ruric-global-mode'."
+  :type '(repeat symbol))
 
 ;;;; Line numbers
 
@@ -53,6 +57,30 @@ Cycle between nil, t and 'relative."
 
 (defvar ruric--initial-display-line-numbers-type nil
   "Previous value for `display-line-numbers' to reset to.")
+
+;;;; Modes
+
+;;;###autoload
+(define-minor-mode ruric-mode
+  "Better pair-programming environment."
+  :global nil
+  :group 'ruric
+  (cond
+   (ruric-mode
+    (setq-local ruric--initial-display-line-numbers-type display-line-numbers)
+    (setq-local display-line-numbers t))
+   (t
+    (setq-local display-line-numbers ruric--initial-display-line-numbers-type)
+    (setq-local ruric--initial-display-line-numbers-type nil))))
+
+(defun ruric--on ()
+  "Turn `ruric-mode' on."
+  (unless (or noninteractive (memq major-mode ruric-blacklist-modes))
+    (ruric-mode 1)))
+
+;;;###autoload
+(define-globalized-minor-mode ruric-global-mode ruric-mode ruric--on
+  :group 'ruric)
 
 (provide 'ruric)
 
