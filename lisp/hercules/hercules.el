@@ -48,7 +48,7 @@
   (interactive)
   (if hercules--super-body
       (funcall hercules--super-body)
-    (user-error "hercules-super: hercules--super-body is not set")))
+    (user-error "[Hercules]: `hercules--super-body' is not set")))
 
 (provide 'hercules)
 

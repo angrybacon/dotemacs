@@ -492,7 +492,7 @@ authoring documents with a fast and effective plain-text system.
     (unless (and (bolp) (org-at-heading-p))
       (org-up-heading-safe)
       (outline-hide-subtree)
-      (user-error "Boundary reached"))
+      (user-error "[Dotemacs] Boundary reached"))
     (org-overview)
     (org-reveal t)
     (org-show-entry)
@@ -506,7 +506,7 @@ authoring documents with a fast and effective plain-text system.
     (unless (and (< (point) pos) (bolp) (org-at-heading-p))
       (goto-char pos)
       (outline-hide-subtree)
-      (user-error "Boundary reached"))
+      (user-error "[Dotemacs] Boundary reached"))
     (org-overview)
     (org-reveal t)
     (org-show-entry)
@@ -688,7 +688,7 @@ use with =selected=.
   (if me/pretty-print-function
       (progn (funcall me/pretty-print-function beg end)
              (setq deactivate-mark t))
-    (user-error "me/pretty-print: me/pretty-print-function is not set")))
+    (user-error "[Dotemacs] `me/pretty-print-function' is not set")))
 #+END_SRC
 
 ** Diff
@@ -1278,7 +1278,7 @@ Display relative line numbers in most editing modes.
 (setq-default
  display-line-numbers-grow-only t
  display-line-numbers-type 'relative
- display-line-numbers-width 2)
+ display-line-numbers-width 3)
 #+END_SRC
 
 ** Linters

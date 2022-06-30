@@ -61,20 +61,19 @@ permanently."
     (if (file-exists-p file)
         (when (equal (buffer-file-name) file)
           (run-hooks 'szadek-on-save-hook))
-      (error "[Szadek] Missing secret file %S" file))))
+      (error "[Szadek] Missing secret file '%S'" file))))
 
 (add-hook 'after-save-hook #'szadek-on-save)
 
 (defun szadek--read-file ()
   "Return the Lisp data found in the secret file.
 The data should be a list."
-  (with-demoted-errors "[Szadek] Error while parsing secret file\n  %s"
-    (with-temp-buffer
-      (insert-file-contents szadek-file)
-      (let ((data (read (buffer-string))))
-        (if (listp data)
-            data
-          (error "Secrets should be a list"))))))
+  (with-temp-buffer
+    (insert-file-contents szadek-file)
+    (let ((data (read (buffer-string))))
+      (if (listp data)
+          data
+        (user-error "[Szadek] Secrets should be a list")))))
 
 (defun szadek--write-secret (secret)
   "Write SECRET in the secret file.
@@ -94,7 +93,7 @@ If the secret file does not exist, create it in the process."
   (let ((file szadek-file))
     (if (file-writable-p file)
         (szadek--write-secret `(,name . ,value))
-      (error "[Szadek] %S is not writeable" file))))
+      (error "[Szadek] '%S' is not writeable" file))))
 
 (defun szadek--fallback (value &optional name)
   "Return fallback VALUE and optionally set it permanently.
