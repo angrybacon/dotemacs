@@ -25,6 +25,7 @@
 
 ;;; Code:
 
+(require 'cl-lib)
 (require 'menu-bar)
 (require 'olivetti)
 (require 'project)
@@ -56,12 +57,41 @@ implementation."
   "Modes for which `olivetti-mode' should not be enabled automatically."
   :type '(repeat symbol))
 
+(defmacro with-widowmaker-olivetti (&rest body)
+  "Protect BODY with a check for `olivetti-mode' active status."
+  (declare (indent defun))
+  `(if olivetti-mode
+       ,@body
+     (user-error "[Widowmaker] `olivetti-mode' must be active")))
+
 (defun widowmaker-olivetti-automatic-toggle ()
   "Toggle `widowmaker-olivetti-automatic'.
-If enabled, turn on `olivetti-mode'. Otherwise disable it."
+When it is disabled that way, turn `olivetti-mode' off in all windows for the
+current frame."
   (interactive)
   (setq widowmaker-olivetti-automatic (not widowmaker-olivetti-automatic))
-  (olivetti-mode (if widowmaker-olivetti-automatic 1 -1)))
+  (unless widowmaker-olivetti-automatic
+    (dolist (window (window-list nil))
+      (with-selected-window window
+        (olivetti-mode 0)))))
+
+(defun widowmaker-olivetti-body-less ()
+  "Narrow the body width by 4 columns."
+  (interactive)
+  (with-widowmaker-olivetti
+    (cl-incf olivetti-body-width -4)))
+
+(defun widowmaker-olivetti-body-more ()
+  "Expand the body width by 4 columns."
+  (interactive)
+  (with-widowmaker-olivetti
+    (cl-incf olivetti-body-width 4)))
+
+(defun widowmaker-olivetti-body-reset ()
+  "Reset the body width to its initial value."
+  (interactive)
+  (with-widowmaker-olivetti
+    (setq-local olivetti-body-width widowmaker-olivetti-body-width)))
 
 (defun widowmaker-olivetti-maybe--predicate (window)
   "Predicate to run against WINDOW in `widowmaker-olivetti-maybe'.
@@ -79,15 +109,15 @@ If any test fails, return nil."
          (not (apply 'derived-mode-p widowmaker-olivetti-blacklist-modes)))))
 
 (defun widowmaker-olivetti-maybe (&optional frame)
-  "Turn on `olivetti-mode' for lone buffers in FRAME.
+  "Turn on `olivetti-mode' for lone windows in FRAME.
 When FRAME is not provided, use the current frame instead.
 
-A buffer is considered lone when it has no neighbour to its left nor to its
-right. A list of modes and buffer names can be configured to ignore the geometry
-heuristic. See `widowmaker-olivetti-blacklist-buffers' to ignore specific buffer
-names and `widowmaker-olivetti-blacklist-modes' to ignore specific major modes
-or modes derived from them. This is useful for modes that behave better in wider
-windows by design like modes that display tabulated data.
+A window is considered lone when it has no neighbour to its left nor to its
+right. A list of modes and buffer names can be configured to ignore this
+geometry heuristic. See `widowmaker-olivetti-blacklist-buffers' to ignore
+specific buffer names and `widowmaker-olivetti-blacklist-modes' to ignore
+specific major modes or modes derived from them. This is useful for modes that
+behave better in wider windows by design like modes that display tabulated data.
 
 If `widowmaker-olivetti-automatic' is nil, do nothing."
   (when widowmaker-olivetti-automatic
@@ -133,10 +163,11 @@ Use BUFFER for the terminal window when it is provided."
 This can either raise a pop-up or invoke in place depending on context."
   (interactive)
   (let ((project (ignore-errors (project-root (project-current)))))
-    (if-let ((project)
-             (buffer (format "*terminal: %s*" (file-name-nondirectory
-                                               (directory-file-name
-                                                (file-name-directory project))))))
+    (if-let* ((project)
+              (project-name (file-name-nondirectory
+                             (directory-file-name
+                              (file-name-directory project))))
+              (buffer (format "*terminal: %s*" project-name)))
         (funcall widowmaker-terminal-function buffer)
       (funcall widowmaker-terminal-function))))
 
