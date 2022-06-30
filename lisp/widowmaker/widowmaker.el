@@ -58,6 +58,13 @@ implementation."
   "Modes for which `olivetti-mode' should not be enabled automatically."
   :type '(repeat symbol))
 
+(defcustom widowmaker-olivetti-body-width (+ fill-column 6)
+  "Default width to use for the body.
+Add a safe margin to account for line numbers."
+  :type 'number)
+
+(setq-default olivetti-body-width widowmaker-olivetti-body-width)
+
 (defmacro with-widowmaker-olivetti (&rest body)
   "Protect BODY with a check for `olivetti-mode' active status."
   (declare (indent defun))
@@ -65,6 +72,7 @@ implementation."
        ,@body
      (user-error "[Widowmaker] `olivetti-mode' must be active")))
 
+;;;###autoload
 (defun widowmaker-olivetti-automatic-toggle ()
   "Toggle `widowmaker-olivetti-automatic'.
 When it is disabled that way, turn `olivetti-mode' off in all windows for the
@@ -76,18 +84,21 @@ current frame."
       (with-selected-window window
         (olivetti-mode 0)))))
 
+;;;###autoload
 (defun widowmaker-olivetti-body-less ()
   "Narrow the body width by 4 columns."
   (interactive)
   (with-widowmaker-olivetti
     (cl-incf olivetti-body-width -4)))
 
+;;;###autoload
 (defun widowmaker-olivetti-body-more ()
   "Expand the body width by 4 columns."
   (interactive)
   (with-widowmaker-olivetti
     (cl-incf olivetti-body-width 4)))
 
+;;;###autoload
 (defun widowmaker-olivetti-body-reset ()
   "Reset the body width to its initial value."
   (interactive)
@@ -132,6 +143,18 @@ If `widowmaker-olivetti-automatic' is nil, do nothing."
                 (olivetti-mode 1)
               (olivetti-mode 0))))))))
 
+;;;; Placement
+
+;;;###autoload
+(defun widowmaker-placement-center ()
+  "Set window geometry to be centered within the main display."
+  (interactive)
+  (set-frame-height nil 25)
+  (set-frame-width nil 90)
+  (let* ((x (/ (- (display-pixel-width) (frame-pixel-width)) 2))
+         (y (/ (- (display-pixel-height) (frame-pixel-height)) 2)))
+    (set-frame-position nil x y)))
+
 ;;;; Shackle
 
 (defun widowmaker-shackle-set-window-side (_buffer _alist plist)
@@ -159,6 +182,7 @@ Use BUFFER for the terminal window when it is provided."
       (vterm buffer)
     (error "[Widowmaker] Package 'vterm' not found")))
 
+;;;###autoload
 (defun widowmaker-terminal-dwim ()
   "Spawn a terminal window using `widowmaker-terminal' command.
 This can either raise a pop-up or invoke in place depending on context."
