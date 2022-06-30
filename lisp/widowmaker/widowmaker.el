@@ -51,7 +51,8 @@ implementation."
   "Buffers for which `olivetti-mode' should not be enabled automatically."
   :type '(repeat string))
 
-(defcustom widowmaker-olivetti-blacklist-modes '(minibuffer-mode
+(defcustom widowmaker-olivetti-blacklist-modes '(magit-status-mode
+                                                 minibuffer-mode
                                                  minibuffer-inactive-mode
                                                  tabulated-list-mode)
   "Modes for which `olivetti-mode' should not be enabled automatically."
