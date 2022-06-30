@@ -1,4 +1,4 @@
-;;; barrinalo.el --- Collection of text-altering functions -*- lexical-binding: t; -*-
+;;; barrinalo.el --- Collection of text-changing functions -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022 Mathieu Marques
 
@@ -19,11 +19,9 @@
 
 ;;; Commentary:
 
-;; A collection of functions to change texts in region.that change the case and
-;; transpose texts.
-;;
-;; - Change case
-;; - Transpose lines
+;; Barrinalo was a powerful blue mage from Dominaria and scribe at the Tolarian
+;; Academy. Comparably, barrinalo.el is a collection of small interactive
+;; functions that help you change text at point or in region.
 
 ;;; Code:
 
@@ -36,14 +34,13 @@ and END are not defined, apply to the whole line instead."
   (interactive "*r")
   (let ((begin (if (use-region-p) begin (line-beginning-position)))
         (end (if (use-region-p) end (line-end-position))))
-    (message "%s %s" begin end)
     (downcase-region begin end)
     (save-excursion
       (perform-replace " +" "-" nil t nil nil nil begin end))))
 
 ;;;; Duplicate functions
 
-(defun barrinalo-duplicate-line (&optional stay)
+(defun barrinalo--duplicate-line (&optional stay)
   "Duplicate current line.
 With optional argument STAY true, leave point where it was."
   (save-excursion
@@ -64,7 +61,7 @@ If region was active, keep it so that the command can be repeated."
       (let (deactivate-mark)
         (save-excursion
           (insert (buffer-substring (region-beginning) (region-end)))))
-    (barrinalo-duplicate-line t)))
+    (barrinalo--duplicate-line t)))
 
 (defun barrinalo-duplicate-forward ()
   "Duplicate current line downward or region forward.
@@ -74,7 +71,7 @@ If region was active, keep it so that the command can be repeated."
       (let (deactivate-mark (point (point)))
         (insert (buffer-substring (region-beginning) (region-end)))
         (push-mark point))
-    (barrinalo-duplicate-line)))
+    (barrinalo--duplicate-line)))
 
 ;;;; Indent functions
 

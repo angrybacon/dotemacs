@@ -23,8 +23,8 @@
 ;; directory.
 ;;
 ;; Other packages with similar intent already exist but I've been using my own
-;; for so long -- and it does exactly what I want -- so there's no real point in
-;; trying to force another code to do that (yet).
+;; for so long -- and it does exactly what I want -- that there's no real point
+;; in trying to force another code to do that (yet).
 
 ;;; Code:
 
@@ -37,6 +37,7 @@
   "Directory where all cache files should be saved."
   :type 'directory)
 
+;;;###autoload
 (defun shelldock (file)
   "Return the absolute path of FILE under `shelldock-directory'."
   (let* ((directory (file-name-as-directory shelldock-directory))

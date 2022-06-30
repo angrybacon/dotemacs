@@ -1755,7 +1755,7 @@ Below is an example of secrets setting no Python project and 2 React projects.
 See how to load secrets for more details: [[#load-secrets][Load Secrets]].
 
 #+BEGIN_SRC lisp-data :tangle no
-((project-react
+((project-prettier
   . ("~/path/to/react/project/one/"
      "~/path/to/react/project/two/")))
 #+END_SRC
@@ -1790,6 +1790,7 @@ electric-indent-mode.
   (emacs-lisp-mode . aggressive-indent-mode)
   (js-mode . aggressive-indent-mode)
   (lisp-mode . aggressive-indent-mode)
+  (lisp-data-mode . aggressive-indent-mode)
   (sgml-mode . aggressive-indent-mode)
   (typescript-mode . aggressive-indent-mode)
   :custom
@@ -1798,7 +1799,7 @@ electric-indent-mode.
   (add-to-list 'aggressive-indent-protected-commands 'comment-dwim))
 #+END_SRC
 
-A collection of case-changing and transpose functions.
+A collection of text-changing and transpose functions.
 
 #+BEGIN_SRC emacs-lisp
 (use-package barrinalo
