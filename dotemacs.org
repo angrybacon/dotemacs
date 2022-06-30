@@ -1791,6 +1791,7 @@ electric-indent-mode.
   (js-mode . aggressive-indent-mode)
   (lisp-mode . aggressive-indent-mode)
   (sgml-mode . aggressive-indent-mode)
+  (typescript-mode . aggressive-indent-mode)
   :custom
   (aggressive-indent-comments-too t)
   :config
