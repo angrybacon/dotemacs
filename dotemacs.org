@@ -432,7 +432,7 @@ authoring documents with a fast and effective plain-text system.
 
 #+BEGIN_SRC emacs-lisp
 (use-package org
-  :straight nil
+  :straight (:type built-in)
   :bind
   (:map org-mode-map
    ("C-<return>" . nil)
