@@ -1209,18 +1209,7 @@ Yup, Emacs supports LSP.
   (defun me/eglot-shutdown-project ()
     "Kill the LSP server for the current project if it exists."
     (when-let ((server (eglot-current-server)))
-      (eglot-shutdown server))))
-#+END_SRC
-
-This package provides a new =consult= command to browse LSP symbols with the
-=workspace/symbol= procedure within the current project.
-
-#+BEGIN_SRC emacs-lisp
-(use-package consult-eglot
-  :init
-  (with-eval-after-load 'evil
-    (evil-define-key 'motion eglot-mode-map
-      (kbd "go") #'consult-eglot-symbols)))
+      (ignore-errors (eglot-shutdown server)))))
 #+END_SRC
 
 *** Linters
@@ -2215,6 +2204,7 @@ Set up rules for pop-ups.
   (popper-reference-buffers
    `(,(rx bos "*EGLOT")
      ,(rx bos "*Messages*" eos)
+     ,(rx bos "*Process List*" eos)
      ,(rx bos "*eldoc")
      ,(rx bos "*eshell")   eshell-mode
      ,(rx bos "*terminal") vterm-mode
@@ -2246,6 +2236,7 @@ currently selected window.
   (shackle-rules
    `(((help-mode helpful-mode) :align left  :select t :size 85)
      ("*Messages*"             :align below :select t)
+     ("*Process List*"         :align below :select t)
      ("*eldoc*"                :align below :size 10)
      ("*eshell*"               :align below :popup t :select t)
      (,(rx bos "*EGLOT")       :align below :regexp t)
