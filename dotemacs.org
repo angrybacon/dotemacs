@@ -410,6 +410,7 @@ whole buffer."
    ("M-p" . nil))
   :custom
   (markdown-asymmetric-header t)
+  (markdown-fontify-code-blocks-natively t)
   (markdown-split-window-direction 'right)
   :config
   (unbind-key "M-<down>" markdown-mode-map)
