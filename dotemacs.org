@@ -1079,7 +1079,7 @@ Group interface-related commands.
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-interface (:color pink)
   (concat (hercules-heading "Do" "Zoom" "Toggles") "
- _m_ maximize frame  _-_ out             _n_ mode: %s`display-line-numbers
+ _m_ maximize frame  _-_ out             _n_ line numbers: %s`display-line-numbers
  _M_ center frame    _=_ in              _o_ olivetti: %s`widowmaker-olivetti-automatic
  _t_ cycle theme     _0_ reset           _O_ olivetti width: %s`olivetti-body-width")
   ("q" nil)
