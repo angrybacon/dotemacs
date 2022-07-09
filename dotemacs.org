@@ -415,7 +415,9 @@ whole buffer."
   (markdown-split-window-direction 'right)
   :config
   (unbind-key "M-<down>" markdown-mode-map)
-  (unbind-key "M-<up>" markdown-mode-map))
+  (unbind-key "M-<up>" markdown-mode-map)
+  (add-to-list 'markdown-code-lang-modes '("tsx" . typescript-tsx-mode))
+  (add-to-list 'markdown-code-lang-modes '("ylm" . yaml-mode)))
 #+END_SRC
 
 ** Org
@@ -1264,9 +1266,7 @@ Run Prettier against the whole buffer on save. See the
 enabling of the minor mode.
 
 #+BEGIN_SRC emacs-lisp
-(use-package prettier
-  :config
-  (add-to-list 'prettier-enabled-parsers 'json-stringify))
+(use-package prettier)
 #+END_SRC
 
 ** Mode-Line
