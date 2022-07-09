@@ -367,7 +367,8 @@ I went with the route that uses built-ins the most since I am set on using
    ("C-c C-c" . me/eval-region-dwim)
    ("C-x C-S-e" . eval-print-last-sexp)
    :map lisp-interaction-mode-map
-   ("C-c C-c" . me/eval-region-dwim))
+   ("C-c C-c" . me/eval-region-dwim)
+   ("C-x C-S-e" . eval-print-last-sexp))
   :custom
   (emacs-lisp-docstring-fill-column nil)
   :hook
@@ -662,7 +663,6 @@ use with =selected=.
    ("C-f"         . fill-region)
    ("C-h h"       . hlt-highlight-region)
    ("C-h H"       . hlt-unhighlight-region)
-   ("C-p"         . webpaste-paste-region)
    ("C-q"         . selected-off)
    ("C-s r"       . barrinalo-reverse)
    ("C-s s"       . sort-lines)
@@ -1664,6 +1664,9 @@ fails.
 
 #+BEGIN_SRC emacs-lisp
 (use-package webpaste
+  :config
+  (with-eval-after-load 'evil
+    (evil-global-set-key 'visual "p" #'webpaste-paste-region))
   :custom
   (webpaste-provider-priority '("paste.mozilla.org" "dpaste.org")))
 #+END_SRC
