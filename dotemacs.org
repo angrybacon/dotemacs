@@ -1279,7 +1279,7 @@ Prettify the mode-line with customizable and conditional segments.
 (use-package doom-modeline
   :demand t
   :custom
-  (doom-modeline-bar-width 1)
+  (doom-modeline-bar-width (szadek-get 'mode-line-width 8))
   (doom-modeline-buffer-file-name-style 'truncate-with-project)
   (doom-modeline-height (szadek-get 'mode-line-height 36))
   (doom-modeline-enable-word-count t)
@@ -1289,7 +1289,7 @@ Prettify the mode-line with customizable and conditional segments.
   :config
   (doom-modeline-def-segment me/buffer
     "The buffer description and major mode icon."
-    (concat (doom-modeline--buffer-name) doom-modeline-spc))
+    (concat doom-modeline-spc (doom-modeline--buffer-name) doom-modeline-spc))
   (doom-modeline-def-segment me/buffer-position
     "The buffer position."
     (let* ((active (doom-modeline--active))
@@ -1305,7 +1305,9 @@ Prettify the mode-line with customizable and conditional segments.
                         'doom-modeline-buffer-modified)
                        (active 'doom-modeline-buffer-file)
                        (t 'mode-line-inactive))))
-      (concat (propertize "%b" 'face face) doom-modeline-spc)))
+      (concat doom-modeline-spc
+              (propertize "%b" 'face face)
+              doom-modeline-spc)))
   (doom-modeline-def-segment me/default-directory
     "The buffer directory."
     (let* ((active (doom-modeline--active))
@@ -1313,6 +1315,9 @@ Prettify the mode-line with customizable and conditional segments.
       (concat doom-modeline-spc
               (propertize (abbreviate-file-name default-directory) 'face face)
               doom-modeline-spc)))
+  (doom-modeline-def-segment me/evil
+    "The current Evil state."
+    (doom-modeline--evil))
   (doom-modeline-def-segment me/flymake
     "The error status with color codes and icons."
     (when (bound-and-true-p flymake-mode)
@@ -1377,26 +1382,26 @@ Prettify the mode-line with customizable and conditional segments.
                 doom-modeline-spc))))
   (doom-modeline-mode 1)
   (doom-modeline-def-modeline 'info
-    '(bar modals me/buffer me/info me/buffer-position selection-info)
+    '(bar me/evil me/buffer me/info me/buffer-position selection-info)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'main
-    '(bar modals me/buffer remote-host me/buffer-position me/flymake
+    '(bar me/evil me/buffer remote-host me/buffer-position me/flymake
       selection-info)
     '(irc-buffers matches me/process me/vcs debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'message
-    '(bar modals me/buffer-simple me/buffer-position selection-info)
+    '(bar me/evil me/buffer-simple me/buffer-position selection-info)
     '(irc-buffers matches me/process me/major-mode workspace-name))
   (doom-modeline-def-modeline 'org-src
-    '(bar modals me/buffer-simple me/buffer-position me/flymake selection-info)
+    '(bar me/evil me/buffer-simple me/buffer-position me/flymake selection-info)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'project
-    '(bar modals me/default-directory)
+    '(bar me/evil me/default-directory)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'special
-    '(bar modals me/buffer me/buffer-position selection-info)
+    '(bar me/evil me/buffer me/buffer-position selection-info)
     '(irc-buffers matches me/process debug me/major-mode workspace-name))
   (doom-modeline-def-modeline 'vcs
-    '(bar modals me/buffer remote-host me/buffer-position selection-info)
+    '(bar me/evil me/buffer remote-host me/buffer-position selection-info)
     '(irc-buffers matches me/process debug me/major-mode workspace-name)))
 #+END_SRC
 
