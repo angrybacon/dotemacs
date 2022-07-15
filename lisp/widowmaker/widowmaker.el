@@ -35,9 +35,22 @@
 (require 'winner)
 
 (defgroup widowmaker nil
-  "Manage windows."
+  "Manage windows and buffers."
   :group 'convenience
   :prefix "widowmaker-")
+
+;;;; Common
+
+;;;###autoload
+(defun widowmaker-kill-process-buffer (&optional buffer-or-name)
+  "Kill BUFFER-OR-NAME with no confirmation.
+If the buffer is not specified, kill the current buffer instead.
+Inhibit `kill-buffer-query-functions' to bypass the modal prompt for process
+buffers."
+  (interactive)
+  (let ((kill-buffer-query-functions (remq 'process-kill-buffer-query-function
+                                           kill-buffer-query-functions)))
+    (kill-buffer (or buffer-or-name (current-buffer)))))
 
 ;;;; Olivetti
 
@@ -99,13 +112,14 @@ current frame."
     (cl-incf olivetti-body-width 4)))
 
 ;;;###autoload
-(defun widowmaker-olivetti-body-reset ()
-  "Reset the body width to its initial value."
+(defun widowmaker-olivetti-body-reset (&optional width)
+  "Set the body width to WIDTH columns.
+When the value is not provided, reset the width to its initial value."
   (interactive)
   (with-widowmaker-olivetti
-    (setq-local olivetti-body-width widowmaker-olivetti-body-width)))
+    (setq-local olivetti-body-width (or width widowmaker-olivetti-body-width))))
 
-(defun widowmaker-olivetti-maybe--predicate (window)
+(defun widowmaker-olivetti--maybe-predicate (window)
   "Predicate to run against WINDOW in `widowmaker-olivetti-maybe'.
 Return t for all windows that pass the following tests:
   - The window is not protected with the `no-other-window' parameter
@@ -133,7 +147,7 @@ behave better in wider windows by design like modes that display tabulated data.
 
 If `widowmaker-olivetti-automatic' is nil, do nothing."
   (when widowmaker-olivetti-automatic
-    (let ((windows (seq-filter #'widowmaker-olivetti-maybe--predicate
+    (let ((windows (seq-filter #'widowmaker-olivetti--maybe-predicate
                                (window-list frame)))
           (columns (frame-total-cols frame)))
       (dolist (window windows)

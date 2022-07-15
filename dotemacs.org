@@ -1973,14 +1973,13 @@ Emacs can also emulate an interactive REST client.
 
 Yes, Emacs emulates terminals too.
 
-| TODO | Advice =vterm= motions to support shift            |
-| TODO | Remove confirm prompt when killing =vterm= buffers |
+| TODO | Advice =vterm= motions to support shift |
 
 #+BEGIN_SRC emacs-lisp
 (use-package vterm
   :bind
   (:map vterm-mode-map
-   ("C-c C-c" . vterm-send-C-c)))
+   ([remap kill-this-buffer] . widowmaker-kill-process-buffer)))
 #+END_SRC
 
 ** Version Control
