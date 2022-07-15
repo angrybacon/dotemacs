@@ -54,6 +54,19 @@ By default consider the current frame."
   (interactive)
   (morophon-alpha-change 5 frame))
 
+;;;; Themes
+
+(defvar morophon-after-load-theme-hook nil
+  "Hook run after a theme is loaded with `load-theme'.")
+
+(advice-add 'load-theme :after
+  (defun morophon-after-load-theme-run-hooks (&rest _)
+    "Run hooks set in `morophon-after-load-theme-hook'.
+Inhibit `custom--inhibit-theme-enable' temporarily for the theme customization
+that might happen within the hook."
+    (let ((custom--inhibit-theme-enable nil))
+      (run-hooks 'morophon-after-load-theme-hook))))
+
 (defcustom morophon-known-themes '(modus-operandi modus-vivendi)
   "List of themes to take into account with `morophon-cycle'.
 See `custom-available-themes'.")
