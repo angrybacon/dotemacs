@@ -262,7 +262,7 @@ adds a /reset/ on save when visiting the theme file.
   :config
   (put 'after-save-hook 'safe-local-variable
        (lambda (value) (equal value '(zenmelt--reset t))))
-  (load-theme 'zenmelt t))
+  (load-theme 'zenmelt :noconfirm))
 #+END_SRC
 
 * Languages
@@ -1081,13 +1081,16 @@ Group interface-related commands.
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-interface (:color pink)
   (concat (hercules-heading "Do" "Zoom" "Toggles") "
- _m_ maximize frame  _-_ out             _n_ line numbers: %s`display-line-numbers
- _M_ center frame    _=_ in              _o_ olivetti: %s`widowmaker-olivetti-automatic
- _t_ cycle theme     _0_ reset           _O_ olivetti width: %s`olivetti-body-width")
+ _m_ maximize frame  _-_ out             _a_ / _A_ alpha: %s`morophon--alpha
+ _M_ center frame    _=_ in              _n_ line numbers: %s`display-line-numbers
+ _t_ cycle theme     _0_ reset           _o_ olivetti: %s`widowmaker-olivetti-automatic
+ ^^                  ^^                  _O_ olivetti width: %s`olivetti-body-width")
   ("q" nil)
   ("-" default-text-scale-decrease)
   ("=" default-text-scale-increase)
   ("0" default-text-scale-reset :color blue)
+  ("a" morophon-alpha-less)
+  ("A" morophon-alpha-more)
   ("m" toggle-frame-maximized :color blue)
   ("M" widowmaker-placement-center :color blue)
   ("n" ruric-toggle-line-numbers)

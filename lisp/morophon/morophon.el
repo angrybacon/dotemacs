@@ -28,6 +28,32 @@
   "Interact with themes."
   :group 'convenience)
 
+;;;; Alpha
+
+(defvar morophon--alpha nil
+  "Variable to hold the current value for the alpha opacity in effect.
+If nil, the opacity has not been modified yet. See `default-frame-alist'.")
+
+(defun morophon-alpha-change (delta &optional frame)
+  "Offset the the opacity level for FRAME by DELTA.
+By default consider the current frame."
+  (let* ((target-frame (or frame (selected-frame)))
+         (alpha (+ (frame-parameter target-frame 'alpha) delta)))
+    (set-frame-parameter target-frame 'alpha alpha)
+    (setq morophon--alpha alpha)))
+
+(defun morophon-alpha-less (&optional frame)
+  "Decrease the opacity level for FRAME.
+By default consider the current frame."
+  (interactive)
+  (morophon-alpha-change -5 frame))
+
+(defun morophon-alpha-more (&optional frame)
+  "Increase the opacity level for FRAME.
+By default consider the current frame."
+  (interactive)
+  (morophon-alpha-change 5 frame))
+
 (defcustom morophon-known-themes '(modus-operandi modus-vivendi)
   "List of themes to take into account with `morophon-cycle'.
 See `custom-available-themes'.")

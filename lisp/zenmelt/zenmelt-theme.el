@@ -387,8 +387,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
 ;;;;;; Help
    `(helpful-heading                    ((t :foreground ,cyan
                                             :height 2.0
-                                            :inherit variable-pitch
-                                            :underline t)))
+                                            :inherit variable-pitch)))
 ;;;;;; Language Servers
    `(eglot-highlight-symbol-face        ((t ,@(zenmelt--box 'yellow))))
 ;;;;;; Mode-Line
