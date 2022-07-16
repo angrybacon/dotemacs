@@ -1177,8 +1177,10 @@ Group shortcuts for often-accessed configuration files.
 (defhydra hydra-visit (:color teal)
   (concat (hercules-heading "Visit") "
  _d_ qtile           _l_ linux           _s_ zsh
- _e_ emacs           _n_ dunst           _t_ kitty")
+ _c_ picom           _n_ dunst           _t_ kitty
+ _e_ emacs           ^^                  ^^")
   ("q" nil)
+  ("c" (find-file "~/Workspace/dot/config/picom.org"))
   ("d" (find-file "~/Workspace/dot/config/qtile.org"))
   ("e" (find-file (concat user-emacs-directory "dotemacs.org")))
   ("l" (find-file "~/Workspace/dot/LINUX.org"))

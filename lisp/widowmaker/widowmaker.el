@@ -67,7 +67,8 @@ implementation."
 (defcustom widowmaker-olivetti-blacklist-modes '(magit-status-mode
                                                  minibuffer-mode
                                                  minibuffer-inactive-mode
-                                                 tabulated-list-mode)
+                                                 tabulated-list-mode
+                                                 vterm-mode)
   "Modes for which `olivetti-mode' should not be enabled automatically."
   :type '(repeat symbol))
 
@@ -189,26 +190,25 @@ side window."
   "Terminal emulator to use."
   :type '(choice (const :tag "Vterm" widowmaker-terminal-vterm)))
 
-(defun widowmaker-terminal-vterm (&optional buffer)
+(defun widowmaker-terminal-vterm (&optional buffer-name)
   "Invoke `vterm'.
-Use BUFFER for the terminal window when it is provided."
+Use BUFFER-NAME as name for the new terminal buffer when it is provided."
   (if (require 'vterm nil :noerror)
-      (vterm buffer)
+      (vterm buffer-name)
     (error "[Widowmaker] Package 'vterm' not found")))
 
 ;;;###autoload
 (defun widowmaker-terminal-dwim ()
-  "Spawn a terminal window using `widowmaker-terminal' command.
-This can either raise a pop-up or invoke in place depending on context."
+  "Spawn a terminal window using `widowmaker-terminal-function'.
+If a project root is found using `project-current', customize the current
+directory to this location before spawning the terminal."
   (interactive)
-  (let ((project (ignore-errors (project-root (project-current)))))
-    (if-let* ((project)
-              (project-name (file-name-nondirectory
-                             (directory-file-name
-                              (file-name-directory project))))
-              (buffer (format "*terminal: %s*" project-name)))
-        (funcall widowmaker-terminal-function buffer)
-      (funcall widowmaker-terminal-function))))
+  (if-let ((root (ignore-errors (project-root (project-current)))))
+      (let* ((default-directory root)
+             (name (file-name-nondirectory (directory-file-name root)))
+             (buffer (format "*terminal: %s*" name)))
+        (funcall widowmaker-terminal-function buffer))
+    (funcall widowmaker-terminal-function)))
 
 (provide 'widowmaker)
 
