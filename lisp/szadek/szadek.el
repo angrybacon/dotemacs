@@ -60,6 +60,7 @@ permanently."
   (let ((file szadek-file))
     (if (file-exists-p file)
         (when (equal (buffer-file-name) file)
+          (message "[Szadek] Running %s hooks" (length szadek-on-save-hook))
           (run-hooks 'szadek-on-save-hook))
       (error "[Szadek] Missing secret file '%S'" file))))
 

@@ -207,6 +207,8 @@ Mute their colors as well.
 
 #+BEGIN_SRC emacs-lisp
 (defun me/typography-reset ()
+  "Set the base settings for typography faces."
+  (interactive)
   (let ((font-fixed (szadek-get 'font-fixed "monospace"))
         (font-size (szadek-get 'font-size 120))
         (font-variable (szadek-get 'font-variable "monospace")))
@@ -217,6 +219,9 @@ Mute their colors as well.
     (set-face-attribute 'variable-pitch nil :font font-variable)))
 (me/typography-reset)
 #+END_SRC
+
+Automatically re-apply the configuration whenever the values change. See
+[[#load-secrets][Load Secrets]].
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'szadek-on-save-hook #'me/typography-reset)
@@ -1240,6 +1245,16 @@ Yup, Emacs supports LSP.
   (flymake-fringe-indicator-position nil))
 #+END_SRC
 
+Run /Prettier/ against the whole buffer on save. See the
+[[#directory-local-variables][Directory-Local Variables]] section for automatic
+enabling of the minor mode.
+
+#+BEGIN_SRC emacs-lisp
+(use-package prettier
+  :init
+  (add-to-list 'safe-local-eval-forms '(prettier-mode)))
+#+END_SRC
+
 *** Tree-Sitter
 
 Use [[https://tree-sitter.github.io/tree-sitter/][Tree-sitter]] to handle more
@@ -1275,21 +1290,12 @@ Display relative line numbers in most editing modes.
  display-line-numbers-width 3)
 #+END_SRC
 
-** Linters
-
-Run Prettier against the whole buffer on save. See the
-[[#directory-local-variables][Directory-Local Variables]] section for automatic
-enabling of the minor mode.
-
-#+BEGIN_SRC emacs-lisp
-(use-package prettier)
-#+END_SRC
-
 ** Mode-Line
 
 Prettify the mode-line with customizable and conditional segments.
 
 | TODO | Make a =arecord -vvv -f dat /dev/null= segment |
+| TODO | Make a segment to track long tasks             |
 
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
@@ -1306,7 +1312,7 @@ Prettify the mode-line with customizable and conditional segments.
   (doom-modeline-def-segment me/buffer
     "The buffer description and major mode icon."
     (concat doom-modeline-spc (doom-modeline--buffer-name) doom-modeline-spc))
-  (doom-modeline-def-segment me/buffer-position
+  (doom-modeline-def-segment me/position
     "The buffer position."
     (let* ((active (doom-modeline--active))
            (face (if active 'mode-line 'mode-line-inactive)))
@@ -1372,7 +1378,7 @@ Prettify the mode-line with customizable and conditional segments.
                      'face (if active
                                'doom-modeline-buffer-path
                              'mode-line-inactive))))))
-  (doom-modeline-def-segment me/major-mode
+  (doom-modeline-def-segment me/major
     "The current major mode, including environment information."
     (let* ((active (doom-modeline--active))
            (face (if active
@@ -1380,13 +1386,6 @@ Prettify the mode-line with customizable and conditional segments.
                    'mode-line-inactive)))
       (concat doom-modeline-spc
               (propertize (format-mode-line mode-name) 'face face)
-              doom-modeline-spc)))
-  (doom-modeline-def-segment me/process
-    "The ongoing process details."
-    (let ((result (format-mode-line mode-line-process)))
-      (concat (if (doom-modeline--active)
-                  result
-                (propertize result 'face 'mode-line-inactive))
               doom-modeline-spc)))
   (doom-modeline-def-segment me/vcs
     "The version control system information."
@@ -1398,27 +1397,26 @@ Prettify the mode-line with customizable and conditional segments.
                 doom-modeline-spc))))
   (doom-modeline-mode 1)
   (doom-modeline-def-modeline 'info
-    '(bar me/evil me/buffer me/info me/buffer-position selection-info)
-    '(irc-buffers matches me/process debug me/major-mode workspace-name))
+    '(bar me/evil me/buffer me/info me/position selection-info)
+    '(irc-buffers matches process debug me/major workspace-name))
   (doom-modeline-def-modeline 'main
-    '(bar me/evil me/buffer remote-host me/buffer-position me/flymake
-      selection-info)
-    '(irc-buffers matches me/process me/vcs debug me/major-mode workspace-name))
+    '(bar me/evil me/buffer remote-host me/position me/flymake selection-info)
+    '(irc-buffers matches process me/vcs debug me/major workspace-name))
   (doom-modeline-def-modeline 'message
-    '(bar me/evil me/buffer-simple me/buffer-position selection-info)
-    '(irc-buffers matches me/process me/major-mode workspace-name))
+    '(bar me/evil me/buffer-simple me/position selection-info)
+    '(irc-buffers matches process me/major workspace-name))
   (doom-modeline-def-modeline 'org-src
-    '(bar me/evil me/buffer-simple me/buffer-position me/flymake selection-info)
-    '(irc-buffers matches me/process debug me/major-mode workspace-name))
+    '(bar me/evil me/buffer-simple me/position me/flymake selection-info)
+    '(irc-buffers matches process debug me/major workspace-name))
   (doom-modeline-def-modeline 'project
     '(bar me/evil me/default-directory)
-    '(irc-buffers matches me/process debug me/major-mode workspace-name))
+    '(irc-buffers matches process debug me/major workspace-name))
   (doom-modeline-def-modeline 'special
-    '(bar me/evil me/buffer me/buffer-position selection-info)
-    '(irc-buffers matches me/process debug me/major-mode workspace-name))
+    '(bar me/evil me/buffer me/position selection-info)
+    '(irc-buffers matches process debug me/major workspace-name))
   (doom-modeline-def-modeline 'vcs
-    '(bar me/evil me/buffer remote-host me/buffer-position selection-info)
-    '(irc-buffers matches me/process debug me/major-mode workspace-name)))
+    '(bar me/evil me/buffer remote-host me/position selection-info)
+    '(irc-buffers matches process debug me/major workspace-name)))
 #+END_SRC
 
 ** Multiple Cursors
@@ -1781,10 +1779,11 @@ If ripgrep is not installed, use grep instead."
 
 In order to customize specifics directories recursively and without polluting
 the Emacs Lisp configuration, one can provide directory-local variables through
-a strategically positioned =.dir-locals.el= file or resort to /directory
-classes/ for reusability.
+a strategically positioned =.dir-locals.el= file. An alternative way is to
+resort to /directory classes/ for reusability across different projects.
 
-Define standard setups for projects that I use on a daily basis.
+First define a standard setup for /Prettier/ projects. That is, projects where
+/Prettier/ should be enabled for a number of major modes by default.
 
 #+BEGIN_SRC emacs-lisp
 (dir-locals-set-class-variables 'prettier
@@ -1797,24 +1796,27 @@ Define standard setups for projects that I use on a daily basis.
 Assign paths to specific classes according to specifications found in secrets.
 
 #+BEGIN_SRC emacs-lisp
-(mapc (lambda (it) (dir-locals-set-directory-class it 'prettier))
-      (szadek-get 'project-prettier))
+(defun me/dir-locals-set-directories ()
+  "Apply directory-local class variables to the appropriate project paths."
+  (interactive)
+  (mapc (lambda (it) (dir-locals-set-directory-class it 'prettier))
+        (szadek-get 'projects-prettier)))
+(me/dir-locals-set-directories)
 #+END_SRC
 
-Below is an example of secrets setting no Python project and 2 React projects.
-See how to load secrets for more details: [[#load-secrets][Load Secrets]].
-
-#+BEGIN_SRC lisp-data :tangle no
-((project-prettier
-  . ("~/path/to/react/project/one/"
-     "~/path/to/react/project/two/")))
-#+END_SRC
-
-Allow specific =eval= form in directory-local mecanisms.
+Automatically re-apply the configuration whenever the values change. See
+[[#load-secrets][Load Secrets]].
 
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'safe-local-eval-forms '(prettier-mode))
-(add-to-list 'safe-local-eval-forms '(eglot-ensure))
+(add-hook 'szadek-on-save-hook #'me/dir-locals-set-directories)
+#+END_SRC
+
+Below is an example of secrets setting 2 /Prettier/ projects.
+
+#+BEGIN_SRC lisp-data :tangle no
+((projects-prettier
+  . ("~/path/to/react/project/one/"
+     "~/path/to/react/project/two/")))
 #+END_SRC
 
 ** Quality of Life
