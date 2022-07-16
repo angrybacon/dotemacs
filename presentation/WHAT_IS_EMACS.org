@@ -1,0 +1,52 @@
+* Who am I?
+
+- I do TypeScript for a living at ManoMano
+- I contribute to open-source projects
+- Mostly I do that directly in Emacs
+
+* What is Emacs?
+
+** Name origin: /Editor MACroS/
+
+** First Release in 1985
+
+- Under the GNU project
+- Written in /C/ and /Lisp/
+
+** Number 1 feature is self-discoverability
+
+- Everything is controllable from the interpreter
+- Everything can be an interactive command
+- Everything is self-documented
+
+* What do I do with it
+
+- I write version-controlled code
+- I do (your) code reviews
+- I do small scripts for my board games
+- This very presentation
+
+* What the .el
+
+** Number 2 feature is customizability
+
+- Un-themed Emacs is (very) ugly
+- Everything is live, I can change /anything/ on the fly
+- If I want /something/, I make /something/... or steal /something/
+
+** My /dot/ Emacs
+
+- 1645 commits, 4400 lines of code
+- 71 forks, 335 stars
+- An evergrowing todo list
+
+https://github.com/angrybacon/dotemacs
+
+* Alternatives (the serious ones)
+
+- Vi(m)
+- Visual Studio Code
+
+* Thank you
+#+ATTR_ORG: :width 800
+[[file:./omniman.jpg]]

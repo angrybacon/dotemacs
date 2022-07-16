@@ -1690,6 +1690,42 @@ fails.
   (webpaste-provider-priority '("paste.mozilla.org" "dpaste.org")))
 #+END_SRC
 
+** Presentation
+
+#+BEGIN_SRC emacs-lisp
+(use-package org-present
+  :hook
+  (org-present-mode . me/org-present-start)
+  (org-present-mode-quit . me/org-present-end)
+  :preface
+  (defvar-local me/org-present-face-remap-cookies nil
+    "Keep the face remappings around to revert them.")
+  (defun me/org-present-end ()
+    "Configurations to run when `org-present-mode' ends."
+    (setq header-line-format nil)
+    (mapc #'face-remap-remove-relative me/org-present-face-remap-cookies)
+    (setq face-remap-remove-relative nil)
+    (display-line-numbers-mode 1)
+    (hl-line-mode 1)
+    (org-remove-inline-images)
+    (evil-change-state evil-default-state)
+    (widowmaker-olivetti-body-reset))
+  (defun me/org-present-start ()
+    "Configurations to run when `org-present-mode' starts."
+    (beginning-of-buffer)
+    (setq header-line-format " ")
+    (push (face-remap-add-relative 'default 'variable-pitch)
+          me/org-present-face-remap-cookies)
+    (push (face-remap-add-relative 'header-line '(:height 4.0))
+          me/org-present-face-remap-cookies)
+    (display-line-numbers-mode 0)
+    (hl-line-mode 0)
+    (org-display-inline-images)
+    (org-present-big)
+    (evil-emacs-state)
+    (widowmaker-olivetti-body-reset 50)))
+#+END_SRC
+
 ** Project
 
 *** Project.el
