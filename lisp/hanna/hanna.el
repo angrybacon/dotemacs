@@ -23,14 +23,19 @@
 
 ;;; Code:
 
+(require 'dired)
+
+;;;###autoload
 (defun hanna-beginning-of-line ()
   "Move point to first non-whitespace character, or beginning of line."
   (interactive "^")
-  (let ((origin (point)))
-    (beginning-of-line)
-    (and (= origin (point))
-         (back-to-indentation))))
+  (if (eq major-mode 'dired-mode)
+      (dired-move-to-filename)
+    (if (bolp)
+        (back-to-indentation)
+      (beginning-of-line))) )
 
+;;;###autoload
 (defun hanna-paragraph-backward ()
   "Move backward to start of paragraph."
   (interactive "^")
@@ -39,6 +44,7 @@
     (goto-char (point-min)))
   (skip-chars-forward "\n"))
 
+;;;###autoload
 (defun hanna-paragraph-forward ()
   "Move forward to start of next paragraph."
   (interactive "^")

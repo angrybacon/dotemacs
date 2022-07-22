@@ -727,9 +727,8 @@ Ediff is a visual interface to Unix =diff=.
 Configure Dired buffers. Amongst many other things, Emacs is also a file
 explorer.
 
-| TODO | Check out =dired-collapse=       |
-| TODO | Check out =dired-imenu=          |
-| TODO | Make =dired-bob= and =dired-eob= |
+| TODO | Check out =dired-collapse= |
+| TODO | Check out =dired-imenu=    |
 
 #+BEGIN_SRC emacs-lisp
 (use-package dired
