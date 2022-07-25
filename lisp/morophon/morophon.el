@@ -71,11 +71,13 @@ that might happen within the hook."
   "List of themes to take into account with `morophon-cycle'.
 See `custom-available-themes'.")
 
+;;;###autoload
 (defun morophon-disable-themes ()
   "Disable all themes found in `custom-enable-themes'."
   (interactive)
   (mapc #'disable-theme custom-enabled-themes))
 
+;;;###autoload
 (defun morophon-cycle ()
   "Cycle through themes from `morophon-known-themes' in succession."
   (interactive)

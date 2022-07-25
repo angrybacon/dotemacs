@@ -328,6 +328,36 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(whitespace-space-before-tab        ((t :inherit whitespace-space-after-tab)))
    `(whitespace-tab                     ((t :background ,red-1)))
    `(whitespace-trailing                ((t :inherit trailing-whitespace)))
+;;;;;; Terminal
+   `(ansi-color-black                   ((t :background ,bg+4 :foreground ,bg)))
+   `(ansi-color-blue                    ((t :background ,blue+2
+                                            :foreground ,blue)))
+   `(ansi-color-cyan                    ((t :background ,cyan
+                                            :foreground ,cyan)))
+   `(ansi-color-green                   ((t :background ,green+2
+                                            :foreground ,green)))
+   `(ansi-color-magenta                 ((t :background ,red+2
+                                            :foreground ,magenta)))
+   `(ansi-color-red                     ((t :background ,red :foreground ,red)))
+   `(ansi-color-white                   ((t :background ,fg :foreground ,fg)))
+   `(ansi-color-yellow                  ((t :background ,yellow-1
+                                            :foreground ,yellow-1)))
+   `(ansi-color-bright-black            ((t :background ,fg-2
+                                            :foreground ,fg-2)))
+   `(ansi-color-bright-blue             ((t :background ,blue+1
+                                            :foreground ,blue+1)))
+   `(ansi-color-bright-cyan             ((t :background ,blue+3
+                                            :foreground ,blue+3)))
+   `(ansi-color-bright-green            ((t :background ,green+2
+                                            :foreground ,green+2)))
+   `(ansi-color-bright-magenta          ((t :background ,magenta
+                                            :foreground ,magenta)))
+   `(ansi-color-bright-red              ((t :background ,red+2
+                                            :foreground ,red+2)))
+   `(ansi-color-bright-white            ((t :background ,fg+2
+                                            :foreground ,fg+2)))
+   `(ansi-color-bright-yellow           ((t :background ,yellow
+                                            :foreground ,yellow)))
 ;;;;;; Version Control
    `(diff-added                         ((t :foreground ,green)))
    `(diff-changed                       ((t :foreground ,yellow-2)))
@@ -517,55 +547,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(rainbow-delimiters-depth-6-face    ((t :foreground ,cyan)))
    `(rainbow-delimiters-depth-7-face    ((t :foreground ,yellow)))
    `(rainbow-delimiters-depth-8-face    ((t :foreground ,green+4)))
-   `(rainbow-delimiters-depth-9-face    ((t :foreground ,red+2)))
-
-   ;; TODO Prettify useful faces and clean up the rest
-;;;;;; dim-autoload
-   `(dim-autoload-cookie-line           ((t :foreground ,bg+2)))
-;;;;;; flx
-   `(flx-highlight-face                 ((t :foreground ,green+2)))
-;;;;;; smartparens
-   `(sp-show-pair-mismatch-face         ((t :background ,bg+4
-                                            :foreground ,red+1)))
-   `(sp-show-pair-match-face            ((t :background ,bg+4)))))
-
-;;;; Theme Variables
-
-(zenmelt-with-colors nil
-  (custom-theme-set-variables
-   'zenmelt
-   ;; TODO Prettify useful faces and clean up the rest
-;;;;; ansi-color
-   `(ansi-color-names-vector [,bg ,red ,green ,yellow ,blue ,magenta ,cyan ,fg])
-;;;;; fill-column-indicator
-   `(fci-rule-color ,bg-1)
-;;;;; nrepl-client
-   `(nrepl-message-colors
-     '(,red ,orange ,yellow ,green ,green+4 ,cyan ,blue+1 ,magenta))
-;;;;; pdf-tools
-   `(pdf-view-midnight-colors '(,fg . ,bg-1))
-;;;;; vc-annotate
-   `(vc-annotate-color-map
-     '(( 20. . ,red-1)
-       ( 40. . ,red)
-       ( 60. . ,orange)
-       ( 80. . ,yellow-2)
-       (100. . ,yellow-1)
-       (120. . ,yellow)
-       (140. . ,green-2)
-       (160. . ,green)
-       (180. . ,green+1)
-       (200. . ,green+2)
-       (220. . ,green+3)
-       (240. . ,green+4)
-       (260. . ,cyan)
-       (280. . ,blue-2)
-       (300. . ,blue-1)
-       (320. . ,blue)
-       (340. . ,blue+1)
-       (360. . ,magenta)))
-   `(vc-annotate-very-old-color ,magenta)
-   `(vc-annotate-background ,bg-3)))
+   `(rainbow-delimiters-depth-9-face    ((t :foreground ,red+2)))))
 
 ;;;; Helpers
 
