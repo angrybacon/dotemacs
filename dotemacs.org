@@ -23,6 +23,7 @@ Here are what I consider better defaults as per my own experience.
  indent-tabs-mode nil                   ; Stop using tabs to indent
  inhibit-startup-screen t               ; Disable start-up screen
  initial-scratch-message ""             ; Empty the initial *scratch* buffer
+ initial-major-mode #'org-mode          ; Prefer `org-mode' for *scratch*
  mouse-yank-at-point t                  ; Yank at point rather than pointer
  native-comp-async-report-warnings-errors 'silent ; Skip error buffers
  read-process-output-max (* 1024 1024)  ; Increase read size for data chunks
@@ -1094,7 +1095,7 @@ Group interface-related commands.
 | TODO | Improve =hercules-heading= to accept a list of fields |
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-interface (:color pink)
+(defhydra hydra-interface (:color pink :pre (require 'morophon))
   (concat (hercules-heading "Do" "Zoom" "Toggles") "
  _m_ maximize frame  _-_ out             _a_ / _A_ alpha: %s`morophon--alpha
  _M_ center frame    _=_ in              _n_ line numbers: %s`display-line-numbers

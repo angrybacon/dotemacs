@@ -38,16 +38,23 @@ If nil, the opacity has not been modified yet. See `default-frame-alist'.")
   "Offset the the opacity level for FRAME by DELTA.
 By default consider the current frame."
   (let* ((target-frame (or frame (selected-frame)))
-         (alpha (+ (frame-parameter target-frame 'alpha) delta)))
-    (set-frame-parameter target-frame 'alpha alpha)
-    (setq morophon--alpha alpha)))
+         (old (frame-parameter target-frame 'alpha))
+         (old (cond ((floatp old) (truncate (* old 100)))
+                    ((numberp old) old)
+                    (t 100)))
+         (new (+ old delta)))
+    (set-frame-parameter target-frame 'alpha new)
+    (setq morophon--alpha new)))
 
+
+;;;###autoload
 (defun morophon-alpha-less (&optional frame)
   "Decrease the opacity level for FRAME.
 By default consider the current frame."
   (interactive)
   (morophon-alpha-change -5 frame))
 
+;;;###autoload
 (defun morophon-alpha-more (&optional frame)
   "Increase the opacity level for FRAME.
 By default consider the current frame."
