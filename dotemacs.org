@@ -2276,7 +2276,8 @@ Set up rules for pop-ups.
      ,(rx bos "*eshell")   eshell-mode
      ,(rx bos "*terminal") vterm-mode
      help-mode
-     helpful-mode))
+     helpful-mode
+     magit-process-mode))
   :hook
   (after-init . popper-mode)
   (after-init . popper-echo-mode))
@@ -2301,12 +2302,13 @@ currently selected window.
   (shackle-default-size (szadek-get 'popup-size .33))
   (shackle-inhibit-window-quit-on-same-windows t)
   (shackle-rules
-   `(((help-mode helpful-mode) :align left  :select t :size 85)
-     ("*Messages*"             :align below :select t)
-     ("*Process List*"         :align below :select t)
-     ("*eldoc*"                :align below :size 10)
+   `(((help-mode helpful-mode) :align left  :popup t :select t :size 82)
+     (magit-process-mode       :align below :popup t)
+     ("*Messages*"             :align below :popup t)
+     ("*Process List*"         :align below :popup t :select t)
+     ("*eldoc*"                :align below :popup t :select t)
      ("*eshell*"               :align below :popup t :select t)
-     (,(rx bos "*EGLOT")       :align below :regexp t)
+     (,(rx bos "*EGLOT")       :align below :popup t :regexp t)
      (,(rx bos "*terminal")    :align below :popup t :regexp t :select t)))
   (shackle-select-reused-windows t))
 #+END_SRC
