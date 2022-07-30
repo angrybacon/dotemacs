@@ -26,6 +26,7 @@ Here are what I consider better defaults as per my own experience.
  initial-major-mode #'org-mode          ; Prefer `org-mode' for *scratch*
  mouse-yank-at-point t                  ; Yank at point rather than pointer
  native-comp-async-report-warnings-errors 'silent ; Skip error buffers
+ pp-use-max-width t                     ; Force `pp' to fold lines
  read-process-output-max (* 1024 1024)  ; Increase read size for data chunks
  recenter-positions '(5 bottom)         ; Set re-centering positions
  scroll-conservatively 101              ; Avoid recentering when scrolling far
@@ -725,41 +726,34 @@ Ediff is a visual interface to Unix =diff=.
 
 ** Dired
 
-Configure Dired buffers. Amongst many other things, Emacs is also a file
-explorer.
-
-| TODO | Check out =dired-collapse= |
-| TODO | Check out =dired-imenu=    |
+Configure the /dir/ectory /ed/itor. Amongst many other things, Emacs also serves
+as file explorer.
 
 #+BEGIN_SRC emacs-lisp
 (use-package dired
   :straight nil
-  :hook
-  (dired-mode . dired-hide-details-mode)
-  :bind
-  (:map dired-mode-map
-   ("C-<return>" . me/dired-open-externally))
   :custom
   (dired-auto-revert-buffer t)
   (dired-dwim-target t)
   (dired-hide-details-hide-symlink-targets nil)
   (dired-listing-switches "-Agho --group-directories-first")
   (dired-kill-when-opening-new-dired-buffer t)
-  (dired-recursive-copies 'always))
+  (dired-recursive-copies 'always)
+  :hook
+  (dired-mode . dired-hide-details-mode))
 #+END_SRC
 
+Dire serves as a repository for all my Dired commands and helpers. Some of them
+will be bound directly to =dired-mode-map=, others will remain unbound
+interactive commands.
+
 #+BEGIN_SRC emacs-lisp
-(defun me/dired-open-externally (argument)
-  "Open file under point with an external program.
-With positive ARGUMENT, prompt for the command to use."
-  (interactive "P")
-  (let* ((file (dired-get-file-for-visit))
-         (command (and (not argument)
-                       (pcase system-type
-                         ('darwin "open")
-                         ((or 'gnu 'gnu/kfreebsd 'gnu/linux) "xdg-open"))))
-         (command (or command (read-shell-command "Open with: "))))
-    (call-process command nil 0 nil file)))
+(use-package dire
+  :load-path "lisp/dire"
+  :straight nil
+  :bind
+  (:map dired-mode-map
+   ("C-<return>" . dire-open-externally)))
 #+END_SRC
 
 ** Documentation
@@ -2001,7 +1995,7 @@ calls to the =message= function.
     (let* ((name "*Messages*")
            (buffer (get-buffer-create name)))
       (when (not (string= name (buffer-name)))
-        (dolist (window (get-buffer-window-list name nil t))
+        (dolist (window (get-buffer-window-list name nil :all-frames))
           (with-selected-window window
             (goto-char (point-max))))))))
 #+END_SRC

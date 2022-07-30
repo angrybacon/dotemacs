@@ -65,6 +65,7 @@ implementation."
   :type '(repeat string))
 
 (defcustom widowmaker-olivetti-blacklist-modes '(magit-status-mode
+                                                 messages-buffer-mode
                                                  minibuffer-mode
                                                  minibuffer-inactive-mode
                                                  tabulated-list-mode
@@ -195,7 +196,7 @@ side window."
 Use BUFFER-NAME as name for the new terminal buffer when it is provided."
   (if (require 'vterm nil :noerror)
       (vterm buffer-name)
-    (error "[Widowmaker] Package 'vterm' not found")))
+    (error "[Widowmaker] Package `vterm' not found")))
 
 ;;;###autoload
 (defun widowmaker-terminal-dwim ()

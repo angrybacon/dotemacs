@@ -60,9 +60,9 @@ permanently."
   (let ((file szadek-file))
     (if (file-exists-p file)
         (when (equal (buffer-file-name) file)
-          (message "[Szadek] Running %s hooks" (length szadek-on-save-hook))
+          (message "[Szadek] Running %d hooks" (length szadek-on-save-hook))
           (run-hooks 'szadek-on-save-hook))
-      (error "[Szadek] Missing secret file '%S'" file))))
+      (error "[Szadek] Missing secret file `%S'" file))))
 
 (add-hook 'after-save-hook #'szadek-on-save)
 
@@ -94,7 +94,7 @@ If the secret file does not exist, create it in the process."
   (let ((file szadek-file))
     (if (file-writable-p file)
         (szadek--write-secret `(,name . ,value))
-      (error "[Szadek] '%S' is not writeable" file))))
+      (error "[Szadek] `%S' is not writeable" file))))
 
 (defun szadek--fallback (value &optional name)
   "Return fallback VALUE and optionally set it permanently.

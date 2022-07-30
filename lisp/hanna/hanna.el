@@ -19,7 +19,8 @@
 
 ;;; Commentary:
 
-;; Functions to move around in buffers. Mostly redefine over Emacs' opinions.
+;; All aboard the Weatherlight! Summon Hanna to help you navigate through the
+;; mist of your buffers.
 
 ;;; Code:
 

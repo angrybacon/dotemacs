@@ -189,6 +189,9 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(custom-state                       ((t :foreground ,green+4)))
    `(custom-variable-tag                ((t :foreground ,blue)))
    `(custom-visibility                  ((t :inherit link)))
+;;;;;; Dired
+   `(dired-broken-symlink               ((t :background ,red-4
+                                            :foreground ,fg)))
 ;;;;;; Help
    `(Info-quoted                        ((t :inherit font-lock-constant-face)))
    `(eldoc-box-body                     ((t :inherit tooltip)))
