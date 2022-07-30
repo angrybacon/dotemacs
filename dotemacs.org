@@ -213,7 +213,7 @@ Mute their colors as well.
   (interactive)
   (let ((font-fixed (szadek-get 'font-fixed "monospace"))
         (font-size (szadek-get 'font-size 120))
-        (font-variable (szadek-get 'font-variable "monospace")))
+        (font-variable (szadek-get 'font-variable "sans-serif")))
     (set-face-attribute 'default nil :font font-fixed :height font-size)
     (set-face-attribute 'fixed-pitch nil :font font-fixed :height font-size)
     (set-face-attribute 'mode-line nil :height font-size :inherit 'default)

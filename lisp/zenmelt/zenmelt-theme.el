@@ -150,7 +150,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(font-lock-regexp-grouping-backslash ((t :foreground ,green)))
    `(font-lock-regexp-grouping-construct ((t :foreground ,yellow)))
    `(font-lock-string-face              ((t :foreground ,red)))
-   `(font-lock-type-face                ((t :foreground ,blue-1)))
+   `(font-lock-type-face                ((t :foreground ,blue-2)))
    `(font-lock-variable-name-face       ((t :foreground ,orange)))
    `(font-lock-warning-face             ((t :inherit warning)))
    `(highlight                          ((t :background ,blue-5
@@ -320,6 +320,10 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(isearch-fail                       ((t :foreground ,red)))
    `(lazy-highlight                     ((t ,@(zenmelt--box 'cyan))))
    `(match                              ((t ,@(zenmelt--box 'yellow))))
+   `(reb-match-0                        ((t :background ,blue-5)))
+   `(reb-match-1                        ((t ,@(zenmelt--box 'yellow))))
+   `(reb-match-2                        ((t ,@(zenmelt--box 'green))))
+   `(reb-match-3                        ((t ,@(zenmelt--box 'red))))
 ;;;;;; Syntax
    `(whitespace-empty                   ((t :background ,yellow-2 :extend t)))
    `(whitespace-hspace                  ((t :inherit whitespace-space)))
