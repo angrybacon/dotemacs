@@ -30,7 +30,7 @@ Here are what I consider better defaults as per my own experience.
  read-process-output-max (* 1024 1024)  ; Increase read size for data chunks
  recenter-positions '(5 bottom)         ; Set re-centering positions
  scroll-conservatively 101              ; Avoid recentering when scrolling far
- scroll-margin 2                        ; Add a margin when scrolling vertically
+ scroll-margin 1                        ; Add a margin when scrolling vertically
  select-enable-clipboard t              ; Merge system's and Emacs' clipboard
  sentence-end-double-space nil          ; Use a single space after dots
  show-help-function nil                 ; Disable help text everywhere
@@ -740,6 +740,7 @@ as file explorer.
   (dired-kill-when-opening-new-dired-buffer t)
   (dired-recursive-copies 'always)
   :hook
+  (dired-mode . auto-revert-mode)
   (dired-mode . dired-hide-details-mode))
 #+END_SRC
 
