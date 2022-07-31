@@ -1036,7 +1036,7 @@ Group date-related commands.
 Group =git= commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-git (:color teal)
+(defhydra hydra-git (:color teal :idle 1.0)
   (concat (hercules-heading "Do" "Gutter") "
  _b_ blame           _p_ previous        ^^
  _c_ clone           _n_ next            ^^
@@ -1118,7 +1118,7 @@ Group interface-related commands.
 Group project-related commands.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-project (:color teal)
+(defhydra hydra-project (:color teal :idle 1.0)
   (concat (hercules-heading "Do" "Find" "Search") "
  _K_ kill buffers    _d_ directory       _r_ replace
  _t_ forget project  _D_ root            _s_ ripgrep
@@ -1174,7 +1174,7 @@ Group system-related commands.
 Group shortcuts for often-accessed configuration files.
 
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-visit (:color teal)
+(defhydra hydra-visit (:color teal :idle 1.0)
   (concat (hercules-heading "Visit") "
  _d_ qtile           _l_ linux           _s_ zsh
  _c_ picom           _n_ dunst           _t_ kitty
@@ -2268,11 +2268,13 @@ Set up rules for pop-ups.
      ,(rx bos "*Messages*" eos)
      ,(rx bos "*Process List*" eos)
      ,(rx bos "*eldoc")
-     ,(rx bos "*eshell")   eshell-mode
-     ,(rx bos "*terminal") vterm-mode
+     ,(rx bos "*eshell")
+     ,(rx bos "*terminal")
+     eshell-mode
      help-mode
      helpful-mode
-     magit-process-mode))
+     magit-process-mode
+     vterm-mode))
   :hook
   (after-init . popper-mode)
   (after-init . popper-echo-mode))
@@ -2291,8 +2293,6 @@ currently selected window.
 
 #+BEGIN_SRC emacs-lisp
 (use-package shackle
-  :hook
-  (after-init . shackle-mode)
   :custom
   (shackle-default-size (szadek-get 'popup-size .33))
   (shackle-inhibit-window-quit-on-same-windows t)
@@ -2305,7 +2305,9 @@ currently selected window.
      ("*eshell*"               :align below :popup t :select t)
      (,(rx bos "*EGLOT")       :align below :popup t :regexp t)
      (,(rx bos "*terminal")    :align below :popup t :regexp t :select t)))
-  (shackle-select-reused-windows t))
+  (shackle-select-reused-windows t)
+  :hook
+  (after-init . shackle-mode))
 #+END_SRC
 
 Bind extra keys to manage windows and pop-ups. Also enable =olivetti-mode=
