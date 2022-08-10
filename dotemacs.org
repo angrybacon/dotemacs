@@ -45,6 +45,7 @@ Here are what I consider better defaults as per my own experience.
 (global-subword-mode 1)                 ; Iterate through CamelCase words
 (mouse-avoidance-mode 'exile)           ; Avoid collision of mouse with point
 (put 'downcase-region 'disabled nil)    ; Enable `downcase-region'
+(put 'scroll-left 'disabled nil)        ; Enable `scroll-left'
 (put 'upcase-region 'disabled nil)      ; Enable `upcase-region'
 (set-default-coding-systems 'utf-8)     ; Default to utf-8 encoding
 #+END_SRC
@@ -274,9 +275,9 @@ adds a /reset/ on save when visiting the theme file.
 
 #+BEGIN_SRC emacs-lisp
 (use-package zenmelt-theme
+  :demand
   :load-path "lisp/zenmelt"
   :straight nil
-  :demand
   :config
   (put 'after-save-hook 'safe-local-variable
        (lambda (value) (equal value '(zenmelt--reset t))))
@@ -934,16 +935,10 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
 Bind useful commands in help buffers.
 
 #+BEGIN_SRC emacs-lisp
-(use-package help-fns
-  :straight nil
-  :bind
-  ("C-h K" . describe-keymap))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
 (use-package help-mode
   :straight nil
   :bind
+  ("C-h K" . describe-keymap)
   (:map help-mode-map
    ("<" . help-go-back)
    (">" . help-go-forward))
@@ -1121,14 +1116,15 @@ Group project-related commands.
 (defhydra hydra-project (:color teal :idle 1.0)
   (concat (hercules-heading "Do" "Find" "Search") "
  _K_ kill buffers    _d_ directory       _r_ replace
- _t_ forget project  _D_ root            _s_ ripgrep
- _T_ prune projects  _f_ file            ^^
- ^^                  _p_ project         ^^")
+ _o_ edit todo       _D_ root            _s_ ripgrep
+ _t_ forget project  _f_ file            ^^
+ _T_ prune projects  _p_ project         ^^")
   ("q" nil)
   ("d" project-find-dir)
   ("D" project-dired)
   ("f" project-find-file)
   ("K" project-kill-buffers)
+  ("o" me/project-todo)
   ("p" project-switch-project)
   ("r" project-query-replace-regexp)
   ("s" me/project-search)
@@ -1259,8 +1255,7 @@ complex syntax trees where the default alternatives lack the highlighting power.
 (use-package tree-sitter
   :hook
   (js-mode . tree-sitter-hl-mode)
-  (typescript-mode . tree-sitter-hl-mode)
-  (typescript-tsx-mode . tree-sitter-hl-mode))
+  (typescript-mode . tree-sitter-hl-mode))
 
 (use-package tree-sitter-langs
   :after tree-sitter
@@ -1529,15 +1524,15 @@ Customize the scrolling behavior using the mouse wheel.
 #+BEGIN_SRC emacs-lisp
 (use-package mwheel
   :straight nil
-  :custom
-  (mouse-wheel-progressive-speed nil)
-  (mouse-wheel-scroll-amount '(2 ((control) . 8)))
   :config
   (advice-add 'mwheel-scroll :around
     (defun me/mwheel-scroll (original &rest arguments)
       "Like `mwheel-scroll' but preserve screen position."
       (let ((scroll-preserve-screen-position :always))
-        (apply original arguments)))))
+        (apply original arguments))))
+  :custom
+  (mouse-wheel-progressive-speed nil)
+  (mouse-wheel-scroll-amount '(2 ((control) . 8))))
 #+END_SRC
 
 Pulse strategic locations in the current buffer for readability and focus
@@ -1621,13 +1616,13 @@ start your pair-programming session.
 
 #+BEGIN_SRC emacs-lisp
 (use-package ruric
+  :load-path "lisp/ruric"
+  :straight nil
   :commands
   (ruric-global-mode
    ruric-mode
    ruric-toggle-line-numbers
-   ruric-toggle-line-numbers-absolute)
-  :load-path "lisp/ruric"
-  :straight nil)
+   ruric-toggle-line-numbers-absolute))
 #+END_SRC
 
 ** Parentheses
@@ -1736,6 +1731,7 @@ Provide project-wide commands and utilities.
    '((project-dired "Root" "D")
      (project-find-file "File" "f")
      (magit-project-status "Git" "g")
+     (me/project-todo "Todo" "o")
      (me/project-search "Search" "s")
      (widowmaker-terminal-dwim "Terminal" "t"))))
 #+END_SRC
@@ -1761,13 +1757,20 @@ If ripgrep is not installed, use grep instead."
   (let ((root (me/project-root)))
     (if (not (executable-find "rg"))
         (consult-grep root)
-      (message "Could not find executable 'rg', using 'grep' instead")
+      (message "[Dotemacs] Could not find 'rg', using 'grep' instead")
       (consult-ripgrep root))))
 
 (defun me/project-root ()
   "Return the current project root."
   (when-let (project (project-current))
     (project-root project)))
+
+(defun me/project-todo ()
+  "Visit the todo file for the current project."
+  (interactive)
+  (if-let (root (me/project-root))
+      (find-file (expand-file-name "TODO.org" root))
+    (user-error "[Dotemacs] Not in a project")))
 #+END_SRC
 
 *** Directory-Local Variables
@@ -2187,7 +2190,6 @@ Python.
 #+BEGIN_SRC emacs-lisp
 (use-package eyebrowse
   :bind
-  ("M-0" . eyebrowse-last-window-config)
   ("M-1" . me/eyebrowse-switch-1)
   ("M-2" . me/eyebrowse-switch-2)
   ("M-3" . me/eyebrowse-switch-3)
