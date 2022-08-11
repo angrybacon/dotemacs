@@ -739,7 +739,7 @@ as file explorer.
   (dired-auto-revert-buffer t)
   (dired-dwim-target t)
   (dired-hide-details-hide-symlink-targets nil)
-  (dired-listing-switches "-Agho --group-directories-first")
+  (dired-listing-switches "-Aghov --group-directories-first")
   (dired-kill-when-opening-new-dired-buffer t)
   (dired-recursive-copies 'always)
   :hook
@@ -962,7 +962,9 @@ Provide better detailed help buffers.
   (with-eval-after-load 'evil
     (evil-define-key* 'motion helpful-mode-map
       (kbd "gr") #'helpful-update
-      (kbd "<tab>") #'forward-button)))
+      (kbd "<tab>") #'forward-button))
+  :custom
+  (helpful-max-buffers 2))
 #+END_SRC
 
 ** Hydra
@@ -1810,41 +1812,6 @@ Below is an example of secrets setting 2 /Prettier/ projects.
 #+END_SRC
 
 ** Quality of Life
-
-Auto-indent code as you write.
-
-#+BEGIN_QUOTE
-=electric-indent-mode= is enough to keep your code nicely aligned when all you
-do is type. However, once you start shifting blocks around, transposing lines,
-or slurping and barfing sexps, indentation is bound to go wrong.
-
-=aggressive-indent-mode= is a minor mode that keeps your code *always* indented.
-It reindents after every change, making it more reliable than
-electric-indent-mode.
-
---- Artur Malabarba
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package aggressive-indent
-  :hook
-  (css-mode . aggressive-indent-mode)
-  (emacs-lisp-mode . aggressive-indent-mode)
-  (js-mode . aggressive-indent-mode)
-  (lisp-mode . aggressive-indent-mode)
-  (lisp-data-mode . aggressive-indent-mode)
-  (sgml-mode . aggressive-indent-mode)
-  (typescript-mode . aggressive-indent-mode)
-  (typescript-tsx-mode . me/aggressive-indent-disable)
-  :custom
-  (aggressive-indent-comments-too t)
-  :config
-  (add-to-list 'aggressive-indent-protected-commands 'comment-dwim)
-  :preface
-  (defun me/aggressive-indent-disable ()
-    "Disable `aggressive-indent-mode`."
-    (aggressive-indent-mode 0)))
-#+END_SRC
 
 A collection of text-changing and transpose functions.
 
