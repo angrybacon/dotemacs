@@ -414,7 +414,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(completions-first-difference       ((t :weight normal)))
    `(completions-group-title            ((t :inherit shadow :slant italic)))
    `(consult-preview-line               ((t :extend t :inherit highlight)))
-   `(consult-preview-match              ((t :background nil)))
+   `(consult-preview-match              ((t :inherit 'match)))
    `(corfu-current                      ((t :inherit 'highlight)))
    `(corfu-default                      ((t :background ,bg-3)))
    `(orderless-match-face-0             ((t ,@(zenmelt--box 'yellow))))
@@ -466,6 +466,11 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(anzu-mode-line-no-match            ((t :foreground ,red)))
    `(anzu-replace-highlight             ((t ,@(zenmelt--box 'yellow))))
    `(anzu-replace-to                    ((t ,@(zenmelt--box 'green))))
+;;;;;; Search
+   `(wgrep-face                         ((t :background ,bg+4)))
+   `(wgrep-done-face                    ((t :foreground ,green+2)))
+   `(wgrep-delete-face                  ((t :foreground ,red :strike-through t)))
+   `(wgrep-reject-face                  ((t :background ,red)))
 ;;;;;; Version Control
    `(git-commit-comment-action          ((t :inherit font-lock-comment-face)))
    `(git-commit-comment-branch-local    ((t :inherit magit-branch-local)))

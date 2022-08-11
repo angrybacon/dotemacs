@@ -653,12 +653,18 @@ Customize the way default comments should be handled.
   :bind
   ("C-;" . embark-act)
   ([remap describe-bindings] . embark-bindings)
+  :config
+  (require 'embark-consult)
   :custom
   (embark-indicators
    '(embark-highlight-indicator
      embark-isearch-highlight-indicator
      embark-minimal-indicator))
   (prefix-help-command #'embark-prefix-help-command))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package embark-consult)
 #+END_SRC
 
 *** Selected
@@ -1813,6 +1819,14 @@ Below is an example of secrets setting 2 /Prettier/ projects.
 
 ** Quality of Life
 
+Turn on =auto-fill-mode= /almost/ everywhere.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook #'auto-fill-mode)
+(add-hook 'prog-mode-hook #'auto-fill-mode)
+(add-hook 'text-mode-hook #'auto-fill-mode)
+#+END_SRC
+
 A collection of text-changing and transpose functions.
 
 #+BEGIN_SRC emacs-lisp
@@ -1904,17 +1918,6 @@ For instance, cycle through windows with =C-x o=, =o=... or =O=, =O=...
   (after-init . repeat-mode))
 #+END_SRC
 
-Turn on =auto-fill-mode= /almost/ everywhere.
-
-#+BEGIN_SRC emacs-lisp
-(use-package simple
-  :straight nil
-  :hook
-  (org-mode . auto-fill-mode)
-  (prog-mode . auto-fill-mode)
-  (text-mode . auto-fill-mode))
-#+END_SRC
-
 Tail =*Messages*= windows. This is useful when debugging naively with repeated
 calls to the =message= function.
 
@@ -1928,6 +1931,19 @@ calls to the =message= function.
         (dolist (window (get-buffer-window-list name nil :all-frames))
           (with-selected-window window
             (goto-char (point-max))))))))
+#+END_SRC
+
+Allow editable grep results.
+
+| TODO | Automatically enter insert state |
+
+#+BEGIN_SRC emacs-lisp
+(use-package wgrep
+  :config
+  (with-eval-after-load 'evil
+    (advice-add 'wgrep-abort-changes :after #'evil-initialize-state))
+  :custom
+  (wgrep-auto-save-buffer t))
 #+END_SRC
 
 ** REST Client
