@@ -127,6 +127,19 @@ Install =use-package= and defer all packages by default.
 (setq-default use-package-always-defer t)
 #+END_SRC
 
+** Core Function and Commands
+
+In an effort to clean up the file as much as possible and in order to promote
+reusability, some features will be written and moved under a common core
+package.
+
+#+BEGIN_SRC emacs-lisp
+(use-package manticore
+  :demand t
+  :load-path "lisp/manticore"
+  :straight nil)
+#+END_SRC
+
 ** Cache
 
 Use =.cache/= to contain local data. This is to avoid littering in the Emacs
@@ -383,10 +396,10 @@ I went with the route that uses built-ins the most since I am set on using
   :straight nil
   :bind
   (:map emacs-lisp-mode-map
-   ("C-c C-c" . me/eval-region-dwim)
+   ("C-c C-c" . manticore-eval-region-dwim)
    ("C-x C-S-e" . eval-print-last-sexp)
    :map lisp-interaction-mode-map
-   ("C-c C-c" . me/eval-region-dwim)
+   ("C-c C-c" . manticore-eval-region-dwim)
    ("C-x C-S-e" . eval-print-last-sexp))
   :custom
   (emacs-lisp-docstring-fill-column nil)
@@ -396,21 +409,10 @@ I went with the route that uses built-ins the most since I am set on using
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(defun me/eval-region-dwim ()
-  "When region is active, evaluate it and kill the mark. Else, evaluate the
-whole buffer."
-  (interactive)
-  (if (not (region-active-p))
-      (eval-buffer)
-    (eval-region (region-beginning) (region-end))
-    (setq-local deactivate-mark t)))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
 (use-package ielm
   :straight nil
   :hook
-  (ielm-mode . (lambda () (setq-local scroll-margin 0))))
+  (ielm-mode . (manticore-scroll-margin-disable)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -801,7 +803,7 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
    ("gB" . project-switch-to-buffer)
    ("gC" . describe-face)
    ("gp" . project-switch-project)
-   ("gr" . (lambda () (interactive) (revert-buffer nil t)))
+   ("gr" . manticore-revert-buffer-immediately)
    ("gs" . avy-goto-char-timer)
    ("gS" . avy-goto-char)
    ("q" . nil)                          ; Free quit command
@@ -839,13 +841,10 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
   (evil-define-text-object me/evil-buffer (_count &optional _begin _end type)
     "Text object to represent the whole buffer."
     (evil-range (point-min) (point-max) type))
-  (advice-add 'evil-indent :around #'me/evil-indent))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defun me/evil-indent (original &rest arguments)
-  "Like `evil-indent' but save excursion."
-  (save-excursion (apply original arguments)))
+  (advice-add 'evil-indent :around
+    (defun me/evil-indent (original &rest arguments)
+      "Like `evil-indent' but save excursion."
+      (save-excursion (apply original arguments)))))
 #+END_SRC
 
 Emulate =vim-surround=. Take actions with surrounding pairs.
@@ -1018,12 +1017,12 @@ Group date-related commands.
  _i_ iso             _I_ iso             ^^
  _l_ long            _L_ long            ^^")
   ("q" nil)
-  ("d" me/date-short)
-  ("D" me/date-short-with-time)
-  ("i" me/date-iso)
-  ("I" me/date-iso-with-time)
-  ("l" me/date-long)
-  ("L" me/date-long-with-time))
+  ("d" barrinalo-date-short)
+  ("D" barrinalo-date-short-with-time)
+  ("i" barrinalo-date-iso)
+  ("I" barrinalo-date-iso-with-time)
+  ("l" barrinalo-date-long)
+  ("L" barrinalo-date-long-with-time))
 #+END_SRC
 
 *** Hydra: Git
@@ -1144,25 +1143,18 @@ Group system-related commands.
  _l_ processes       _u_ update          ^^
  _Q_ clear and kill  _U_ update all      ^^")
   ("q" nil)
-  ("d" me/byte-delete)
+  ("d" manticore-delete-compiled)
   ("D" desktop-remove)
   ("g" (setq debug-on-error (not debug-on-error)))
   ("l" list-processes)
   ("p" straight-use-package)
   ("P" (progn (straight-remove-unused-repos) (straight-prune-build)))
   ("Q" (let ((desktop-save nil))
-         (me/byte-delete)
+         (manticore-delete-compiled)
          (desktop-remove)
          (save-buffers-kill-terminal)))
   ("u" straight-pull-package)
   ("U" straight-pull-all))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defun me/byte-delete ()
-  "Find all byte-compiled files under the current directory and delete them."
-  (interactive)
-  (shell-command "find . -name \"*.elc\" -type f | xargs rm -f"))
 #+END_SRC
 
 *** Hydra: Visit
@@ -1698,7 +1690,7 @@ fails.
     (display-line-numbers-mode 1)
     (hl-line-mode 1)
     (org-remove-inline-images)
-    (evil-change-state evil-default-state)
+    (evil-initialize-state)
     (widowmaker-olivetti-body-reset))
   (defun me/org-present-start ()
     "Configurations to run when `org-present-mode' starts."
@@ -1728,12 +1720,12 @@ Provide project-wide commands and utilities.
   :custom
   (project-list-file (shelldock "projects.eld"))
   (project-switch-commands
-   '((project-dired "Root" "D")
-     (project-find-file "File" "f")
-     (magit-project-status "Git" "g")
-     (me/project-todo "Todo" "o")
-     (me/project-search "Search" "s")
-     (widowmaker-terminal-dwim "Terminal" "t"))))
+   '((project-dired "Root" ?D)
+     (project-find-file "File" ?f)
+     (magit-project-status "Git" ?g)
+     (me/project-todo "Todo" ?o)
+     (me/project-search "Search" ?s)
+     (widowmaker-terminal-dwim "Terminal" ?t))))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -1755,10 +1747,10 @@ If PROJECT is not specified, assume current project root."
 If ripgrep is not installed, use grep instead."
   (interactive)
   (let ((root (me/project-root)))
-    (if (not (executable-find "rg"))
-        (consult-grep root)
+    (if (executable-find "rg")
+        (consult-ripgrep root)
       (message "[Dotemacs] Could not find 'rg', using 'grep' instead")
-      (consult-ripgrep root))))
+      (consult-grep root))))
 
 (defun me/project-root ()
   "Return the current project root."
@@ -1872,41 +1864,7 @@ Add syntax highlighting support for configuration files.
 #+BEGIN_SRC emacs-lisp
 (use-package conf-mode
   :straight nil
-  :mode (rx (or "CODEOWNERS" (and ".env" (* (and "." (+ word))))) eos))
-#+END_SRC
-
-Insert the current date. See [[#hydra-dates][Hydra / Dates]].
-
-#+BEGIN_SRC emacs-lisp
-(defun me/date-iso ()
-  "Insert the current date, ISO format, eg. 2016-12-09."
-  (interactive)
-  (insert (format-time-string "%F")))
-
-(defun me/date-iso-with-time ()
-  "Insert the current date, ISO format with time, eg. 2016-12-09T14:34:54+0100."
-  (interactive)
-  (insert (format-time-string "%FT%T%z")))
-
-(defun me/date-long ()
-  "Insert the current date, long format, eg. December 09, 2016."
-  (interactive)
-  (insert (format-time-string "%B %d, %Y")))
-
-(defun me/date-long-with-time ()
-  "Insert the current date, long format, eg. December 09, 2016 - 14:34."
-  (interactive)
-  (insert (capitalize (format-time-string "%B %d, %Y - %H:%M"))))
-
-(defun me/date-short ()
-  "Insert the current date, short format, eg. 2016.12.09."
-  (interactive)
-  (insert (format-time-string "%Y.%m.%d")))
-
-(defun me/date-short-with-time ()
-  "Insert the current date, short format with time, eg. 2016.12.09 14:34"
-  (interactive)
-  (insert (format-time-string "%Y.%m.%d %H:%M")))
+  :mode (rx (or "CODEOWNERS" (and ".env" (* (and "." (+ word)))) ".list") eos))
 #+END_SRC
 
 Increase region by semantic units. It tries to be smart about it and adapt to
@@ -1996,6 +1954,7 @@ calls to the =message= function.
 #+BEGIN_SRC emacs-lisp
 (advice-add 'message :after
   (defun me/message-tail (&rest _)
+    "Automatically scroll the message buffer to the bottom on new messages"
     (let* ((name "*Messages*")
            (buffer (get-buffer-create name)))
       (when (not (string= name (buffer-name)))
@@ -2255,9 +2214,10 @@ Set up rules for pop-ups.
 #+BEGIN_SRC emacs-lisp
 (use-package popper
   :bind
-  ("s-<tab>" . popper-cycle)
-  ("C-s-<tab>" . popper-toggle-type)
   ("s-\"" . popper-toggle-latest)
+  ("s-<tab>" . popper-cycle)
+  (:map popper-mode-map
+   ("C-s-\"" . popper-toggle-type))
   :config
   (with-eval-after-load 'project
     (setq-default popper-group-function #'popper-group-by-project))

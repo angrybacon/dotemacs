@@ -39,8 +39,7 @@
 
 (defgroup szadek nil
   "Framework to retrieve secrets."
-  :group 'convenience
-  :prefix "szadek-")
+  :group 'convenience)
 
 (defcustom szadek-file (expand-file-name ".szadek.eld" user-emacs-directory)
   "File used to store secrets in `lisp-data-mode' format."

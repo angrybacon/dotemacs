@@ -36,8 +36,7 @@
 
 (defgroup widowmaker nil
   "Manage windows and buffers."
-  :group 'convenience
-  :prefix "widowmaker-")
+  :group 'convenience)
 
 ;;;; Common
 

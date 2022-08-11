@@ -29,8 +29,7 @@
 
 (defgroup ruric nil
   "Pair-programming features."
-  :group 'convenience
-  :prefix "ruric-")
+  :group 'convenience)
 
 (defcustom ruric-blacklist-modes nil
   "List of modes that should not be considered for `ruric-global-mode'."

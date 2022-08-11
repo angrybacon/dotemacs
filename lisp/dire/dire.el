@@ -24,11 +24,11 @@
 ;;; Code:
 
 (require 'dired)
+(require 'subr-x)
 
 (defgroup dire nil
   "Helpers for Dired."
-  :group 'dired
-  :prefix "dire-")
+  :group 'dired)
 
 ;;;; Helpers
 

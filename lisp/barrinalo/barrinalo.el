@@ -25,8 +25,12 @@
 
 ;;; Code:
 
+(require 'replace)
+(require 'simple)
+
 ;;;; Case functions
 
+;;;###autoload
 (defun barrinalo-kebab (begin end)
   "Convert region to kebab-case.
 that is all lowercase, coma-separated words. if region is not active and BEGIN
@@ -37,6 +41,44 @@ and END are not defined, apply to the whole line instead."
     (downcase-region begin end)
     (save-excursion
       (perform-replace " +" "-" nil t nil nil nil begin end))))
+
+;;;; Date commands
+
+;;;###autoload
+(defun barrinalo-date-iso ()
+  "Insert the current date, ISO format eg. 2016-12-09."
+  (interactive "*")
+  (insert (format-time-string "%F")))
+
+;;;###autoload
+(defun barrinalo-date-iso-with-time ()
+  "Insert the current date, ISO format with time eg. 2016-12-09T14:34:54+0100."
+  (interactive "*")
+  (insert (format-time-string "%FT%T%z")))
+
+;;;###autoload
+(defun barrinalo-date-long ()
+  "Insert the current date, long format eg. December 09, 2016."
+  (interactive "*")
+  (insert (format-time-string "%B %d, %Y")))
+
+;;;###autoload
+(defun barrinalo-date-long-with-time ()
+  "Insert the current date, long format eg. December 09, 2016 - 14:34."
+  (interactive "*")
+  (insert (capitalize (format-time-string "%B %d, %Y - %H:%M"))))
+
+;;;###autoload
+(defun barrinalo-date-short ()
+  "Insert the current date, short format eg. 2016.12.09."
+  (interactive "*")
+  (insert (format-time-string "%Y.%m.%d")))
+
+;;;###autoload
+(defun barrinalo-date-short-with-time ()
+  "Insert the current date, short format with time eg. 2016.12.09 14:34"
+  (interactive "*")
+  (insert (format-time-string "%Y.%m.%d %H:%M")))
 
 ;;;; Duplicate functions
 
@@ -53,20 +95,22 @@ With optional argument STAY true, leave point where it was."
       (forward-line)
       (forward-char column))))
 
+;;;###autoload
 (defun barrinalo-duplicate-backward ()
   "Duplicate current line upward or region backward.
 If region was active, keep it so that the command can be repeated."
-  (interactive)
+  (interactive "*")
   (if (region-active-p)
       (let (deactivate-mark)
         (save-excursion
           (insert (buffer-substring (region-beginning) (region-end)))))
     (barrinalo--duplicate-line t)))
 
+;;;###autoload
 (defun barrinalo-duplicate-forward ()
   "Duplicate current line downward or region forward.
 If region was active, keep it so that the command can be repeated."
-  (interactive)
+  (interactive "*")
   (if (region-active-p)
       (let (deactivate-mark (point (point)))
         (insert (buffer-substring (region-beginning) (region-end)))
@@ -75,24 +119,28 @@ If region was active, keep it so that the command can be repeated."
 
 ;;;; Indent functions
 
+;;;###autoload
 (defun barrinalo-indent-leftward (begin end)
   "Indent lines between BEGIN and END leftward by one space and keep mark."
   (interactive "*r")
   (indent-rigidly-left begin end)
   (setq deactivate-mark nil))
 
+;;;###autoload
 (defun barrinalo-indent-leftward-tab (begin end)
   "Indent lines between BEGIN and END leftward to a tab stop and keep mark."
   (interactive "*r")
   (indent-rigidly-left-to-tab-stop begin end)
   (setq deactivate-mark nil))
 
+;;;###autoload
 (defun barrinalo-indent-rightward (begin end)
   "Indent lines between BEGIN and END rightward by one space and keep mark."
   (interactive "*r")
   (indent-rigidly-right begin end)
   (setq deactivate-mark nil))
 
+;;;###autoload
 (defun barrinalo-indent-rightward-tab (begin end)
   "Indent lines between BEGIN and END rightward to a tab stop and keep mark."
   (interactive "*r")
@@ -101,6 +149,7 @@ If region was active, keep it so that the command can be repeated."
 
 ;;;; Transpose functions
 
+;;;###autoload
 (defun barrinalo-reverse (begin end)
   "Reverse region.
 Reverse lines between BEGIN and END. If region only has one line, reverse
@@ -110,6 +159,7 @@ characters in region instead."
       (insert (nreverse (delete-and-extract-region begin end)))
     (reverse-region begin end)))
 
+;;;###autoload
 (defun barrinalo-sort-words (reverse begin end)
   "Sort words in region alphabetically.
 Sort words between BEGIN and END. When prefixed with \\[universal-argument],
@@ -120,17 +170,19 @@ The variable `sort-fold-case' determines whether the case affects the sort. See
   (interactive "*P\nr")
   (sort-regexp-fields reverse "\\w+" "\\&" begin end))
 
+;;;###autoload
 (defun barrinalo-swap-down ()
   "Move down the line under point."
-  (interactive)
+  (interactive "*")
   (forward-line 1)
   (transpose-lines 1)
   (forward-line -1)
   (indent-according-to-mode))
 
+;;;###autoload
 (defun barrinalo-swap-up ()
   "Move up the line under point."
-  (interactive)
+  (interactive "*")
   (transpose-lines 1)
   (forward-line -2)
   (indent-according-to-mode))
