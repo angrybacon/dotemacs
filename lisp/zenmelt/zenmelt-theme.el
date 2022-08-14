@@ -26,6 +26,9 @@
 
 ;;; Code:
 
+(require 'cus-face)  ; `custom-theme-set-faces'
+(require 'pcase)     ; `pcase-let*'
+
 (defgroup zenmelt nil
   "A Zenburn clone."
   :group 'faces)
@@ -479,16 +482,12 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(wgrep-delete-face                  ((t :foreground ,red :strike-through t)))
    `(wgrep-reject-face                  ((t :background ,red)))
 ;;;;;; Version Control
+   `(diff-hl-change                     ((t :foreground ,blue-2)))
+   `(diff-hl-delete                     ((t :foreground ,red)))
+   `(diff-hl-insert                     ((t :foreground ,green)))
    `(git-commit-comment-action          ((t :inherit font-lock-comment-face)))
    `(git-commit-comment-branch-local    ((t :inherit magit-branch-local)))
    `(git-commit-comment-branch-remote   ((t :inherit magit-branch-remote)))
-   `(git-gutter:added                   ((t :foreground ,green+4)))
-   `(git-gutter:deleted                 ((t :foreground ,red+2)))
-   `(git-gutter:modified                ((t :foreground ,blue)))
-   `(git-gutter:unchanged               ((t :inherit shadow )))
-   `(git-gutter-fr:added                ((t :foreground ,green)))
-   `(git-gutter-fr:deleted              ((t :foreground ,red)))
-   `(git-gutter-fr:modified             ((t :foreground ,blue-1)))
    `(magit-bisect-bad                   ((t :foreground ,red)))
    `(magit-bisect-good                  ((t :foreground ,green)))
    `(magit-bisect-skip                  ((t :foreground ,yellow)))

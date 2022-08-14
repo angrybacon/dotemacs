@@ -1953,27 +1953,29 @@ Yes, Emacs emulates a terminal too.
 
 ** Version Control
 
-Display indicators in the left fringe for Git changes. This is using the fringe
-version of =git-gutter= since margins may be compromised with other features
-like centered alignment and annotations. Fringes will not work under TTY.
+Display Git changes indicators in the left fringe. Fringes are not available
+under TTY.
 
 #+BEGIN_SRC emacs-lisp
-(use-package git-gutter-fringe
-  :preface
-  (defun me/git-gutter-enable ()
-    (when-let* ((buffer (buffer-file-name))
-                (backend (vc-backend buffer)))
-      (require 'git-gutter)
-      (require 'git-gutter-fringe)
-      (git-gutter-mode 1)))
-  :hook
-  (after-change-major-mode . me/git-gutter-enable)
+(use-package diff-hl
   :config
-  (define-fringe-bitmap 'git-gutter-fr:added [240] nil nil '(center t))
-  (define-fringe-bitmap 'git-gutter-fr:deleted [240 240 240 240] nil nil 'bottom)
-  (define-fringe-bitmap 'git-gutter-fr:modified [240] nil nil '(center t))
+  (define-fringe-bitmap 'me/diff-hl-insert [240] nil nil '(center t))
+  (define-fringe-bitmap 'me/diff-hl-change [240] nil nil '(center t))
+  (define-fringe-bitmap 'me/diff-hl-delete (make-vector 6 240) nil nil 'top)
+  ;; (with-eval-after-load 'magit
+  ;;   (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
+  ;;   (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))
   :custom
-  (git-gutter:update-interval .1))
+  (diff-hl-fringe-bmp-function #'me/diff-hl-fringe-bitmap)
+  (diff-hl-show-staged-changes nil)
+  :hook
+  ((prog-mode text-mode) . diff-hl-mode)
+  (diff-hl-mode . diff-hl-flydiff-mode)
+  (dired-mode . diff-hl-dired-mode)
+  :preface
+  (defun me/diff-hl-fringe-bitmap (type _position)
+    "Return the name of the bitmap to use for a given change TYPE."
+    (intern (format "me/diff-hl-%s" type))))
 #+END_SRC
 
 Major modes for Git-specific files.
