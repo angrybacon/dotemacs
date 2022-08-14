@@ -678,13 +678,6 @@ use with =selected=.
 (use-package selected
   :bind*
   (:map selected-keymap
-   ("<"           . mc/mark-previous-like-this)
-   (">"           . mc/mark-next-like-this)
-   ("C-<"         . mc/unmark-previous-like-this)
-   ("C->"         . mc/unmark-next-like-this)
-   ("M-<"         . mc/skip-to-previous-like-this)
-   ("M->"         . mc/skip-to-next-like-this)
-   ("C-c >"       . mc/edit-lines)
    ("C-c c"       . capitalize-region)
    ("C-c k"       . barrinalo-kebab)
    ("C-c l"       . downcase-region)
@@ -1424,36 +1417,14 @@ Add support for multiple cursors within Evil.
 #+BEGIN_SRC emacs-lisp
 (use-package evil-multiedit
   :bind
-  (:map evil-insert-state-map
-   ("M-d". evil-multiedit-toggle-marker-here)
-   :map evil-normal-state-map
+  (:map evil-normal-state-map
+   ("M-d". evil-multiedit-match-symbol-and-next)
+   ("M-D". evil-multiedit-match-symbol-and-prev)
+   ("C-M-d". evil-multiedit-match-all)
+   :map evil-visual-state-map
    ("M-d". evil-multiedit-match-and-next)
    ("M-D". evil-multiedit-match-and-prev)
-   :map evil-multiedit-state-map
-   ("C-p". evil-multiedit-prev)
-   ("C-n". evil-multiedit-next)
-   :map evil-multiedit-insert-state-map
-   ("C-n". evil-multiedit-next)
-   ("C-p". evil-multiedit-prev)))
-#+END_SRC
-
-Enable multiple cursors outside Evil. Some witchcraft at work here.
-
-| TODO | Fix =mc/keymap= not always being on top |
-
-#+BEGIN_SRC emacs-lisp
-(use-package multiple-cursors
-  :bind*
-  (:map mc/keymap
-   ("M-a" . mc/vertical-align-with-space)
-   ("M-h" . mc-hide-unmatched-lines-mode)
-   ("M-l" . mc/insert-letters)
-   ("M-n" . mc/insert-numbers))
-  :init
-  (setq-default mc/list-file (shelldock "multiple-cursors.el"))
-  :custom
-  (mc/edit-lines-empty-lines 'ignore)
-  (mc/insert-numbers-default 1))
+   ("C-M-d". evil-multiedit-match-all)))
 #+END_SRC
 
 ** Navigation
