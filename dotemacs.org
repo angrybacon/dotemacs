@@ -12,6 +12,7 @@ Here are what I consider better defaults as per my own experience.
 (setq-default
  ad-redefinition-action 'accept         ; Silence warnings for redefinition
  auto-save-list-file-prefix nil         ; Prevent tracking for auto-saves
+ create-lockfiles nil                   ; Locks are more nuisance than blessing
  cursor-in-non-selected-windows nil     ; Hide the cursor in inactive windows
  cursor-type '(hbar . 2)                ; Underline-shaped cursor
  custom-unlispify-menu-entries nil      ; Prefer kebab-case for titles
