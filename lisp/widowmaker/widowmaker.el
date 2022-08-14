@@ -25,14 +25,14 @@
 
 ;;; Code:
 
-(require 'cl-lib)
-(require 'menu-bar)
+(require 'cl-lib)    ; `cl-incf'
+(require 'frame)     ; `display-pixel-height' `display-pixel-width' `frame-inner-width'
+(require 'nadvice)   ; `advice-add'
 (require 'olivetti)
-(require 'project)
-(require 'shackle)
-(require 'window)
-(require 'windmove)
-(require 'winner)
+(require 'pcase)     ; `pcase-let'
+(require 'project)   ; `project-current' `project-root'
+(require 'seq)       ; `seq-filter'
+(require 'window)    ; `window-edges'
 
 (defgroup widowmaker nil
   "Manage windows and buffers."
@@ -150,10 +150,10 @@ If `widowmaker-olivetti-automatic' is nil, do nothing."
   (when widowmaker-olivetti-automatic
     (let ((windows (seq-filter #'widowmaker-olivetti--maybe-predicate
                                (window-list frame)))
-          (columns (frame-total-cols frame)))
+          (columns (frame-inner-width frame)))
       (dolist (window windows)
         (with-selected-window window
-          (pcase-let ((`(,l ,_t ,r ,_b) (window-edges window)))
+          (pcase-let ((`(,l ,_t ,r ,_b) (window-edges nil nil nil :pixelwise)))
             (if (and (equal l 0) (equal r columns))
                 (olivetti-mode 1)
               (olivetti-mode 0))))))))
