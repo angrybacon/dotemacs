@@ -830,6 +830,7 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
   :custom
   (evil-echo-state nil)
   (evil-emacs-state-cursor (default-value 'cursor-type))
+  (evil-search-module 'evil-search)
   (evil-undo-system 'undo-redo)
   (evil-visual-state-cursor 'hollow)
   (evil-want-keybinding nil)
@@ -1516,14 +1517,7 @@ updated and highlighted while you are typing your query, incrementally.
   (isearch-allow-scroll t)
   (lazy-highlight-buffer t)
   (lazy-highlight-cleanup nil)
-  (lazy-highlight-initial-delay 0)
-  :hook
-  (isearch-update-post . me/isearch-aim-beginning)
-  :preface
-  (defun me/isearch-aim-beginning ()
-    "Move cursor back to the beginning of the current match."
-    (when (and isearch-forward (number-or-marker-p isearch-other-end))
-      (goto-char isearch-other-end))))
+  (lazy-highlight-initial-delay 0))
 #+END_SRC
 
 Customize the scrolling behavior using the mouse wheel.

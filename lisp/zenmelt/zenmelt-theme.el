@@ -199,7 +199,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(eldoc-highlight-function-argument  ((t :inherit highlight)))
 ;;;;;; Interface
    `(button                             ((t ,@(zenmelt--box 'yellow))))
-   `(cursor                             ((t :background ,fg+1 :foreground ,fg)))
+   `(cursor                             ((t :background ,fg+2 :foreground ,fg)))
    `(fringe                             ((t :foreground ,fg)))
    `(header-line                        ((t :foreground ,cyan)))
    `(help-key-binding                   ((t ,@(zenmelt--box)
@@ -209,7 +209,8 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(line-number-current-line           ((t :foreground ,yellow-2
                                             :inherit hl-line)))
    `(link                               ((t :foreground ,yellow :underline t)))
-   `(link-visited                       ((t :foreground ,yellow-2 :underline t)))
+   `(link-visited                       ((t :foreground ,yellow-2
+                                            :underline t)))
    `(menu                               ((t :inherit default)))
    `(minibuffer-prompt                  ((t :foreground ,yellow)))
    `(mode-line                          ((t :background ,bg-3
@@ -227,8 +228,10 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(widget-button                      ((t :inherit button)))
    `(widget-button-pressed              ((t :inherit widget-button)))
    `(widget-documentation               ((t :inherit font-lock-doc-face)))
-   `(widget-field                       ((t :background ,bg+4 :foreground ,fg+2)))
-   `(widget-inactive                    ((t :background ,bg+2 :foreground ,bg+3)))
+   `(widget-field                       ((t :background ,bg+4
+                                            :foreground ,fg+2)))
+   `(widget-inactive                    ((t :background ,bg+2
+                                            :foreground ,bg+3)))
    `(widget-single-line-field           ((t :inherit widget-field)))
    `(window-divider                     ((t :inherit vertical-border
                                             :inverse-video t)))
@@ -259,7 +262,8 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(org-document-info                  ((t :foreground ,blue)))
    `(org-document-title                 ((t :foreground ,blue)))
    `(org-done                           ((t :foreground ,green+3)))
-   `(org-ellipsis                       ((t :foreground ,yellow-1 :underline t)))
+   `(org-ellipsis                       ((t :foreground ,yellow-1
+                                            :underline t)))
    `(org-footnote                       ((t :foreground ,cyan :underline t)))
    `(org-formula                        ((t :foreground ,yellow-2)))
    `(org-habit-alert-face               ((t :background ,yellow-1
@@ -421,6 +425,9 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(orderless-match-face-1             ((t ,@(zenmelt--box 'green))))
    `(orderless-match-face-2             ((t ,@(zenmelt--box 'red))))
    `(orderless-match-face-3             ((t ,@(zenmelt--box 'blue))))
+;;;;;; Evil
+   `(evil-ex-info                       ((t :foreground ,red)))
+   `(evil-ex-substitute-replacement     ((t :foreground ,orange)))
 ;;;;;; Help
    `(helpful-heading                    ((t :foreground ,cyan
                                             :height 2.0
