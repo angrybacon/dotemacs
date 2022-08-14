@@ -24,6 +24,8 @@
 
 ;;; Code:
 
+(require 'simple)  ; `shell-command' `use-region-p'
+
 (defgroup manticore nil
   "Core functions and commands."
   :group 'convenience)
@@ -39,7 +41,7 @@
   "When region is active, evaluate it and kill the mark.
 With no region, evaluate the whole buffer."
   (interactive)
-  (if (not (region-active-p))
+  (if (not (use-region-p))
       (eval-buffer)
     (eval-region (region-beginning) (region-end))
     (setq-local deactivate-mark t)))
@@ -49,6 +51,11 @@ With no region, evaluate the whole buffer."
   "Revert the current buffer with no confirmation."
   (interactive)
   (revert-buffer nil t))
+
+(defun manticore-save-excursion (original &rest arguments)
+  "Advice to wrap ORIGINAL with `save-excursion'.
+Call the original function with ARGUMENTS."
+  (save-excursion (apply original arguments)))
 
 (defcustom manticore-scroll-margin-minimum 0
   "Minimum value possible for the scroll margin when it should be inhibited."

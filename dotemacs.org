@@ -808,28 +808,24 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
    ("gb" . switch-to-buffer)
    ("gB" . project-switch-to-buffer)
    ("gC" . describe-face)
-   ("gp" . project-switch-project)
    ("gr" . manticore-revert-buffer-immediately)
    ("gs" . avy-goto-char-timer)
    ("gS" . avy-goto-char)
-   ("q" . nil)                          ; Free quit command
    ("C-e" . nil)                        ; Free Readline key
    ("C-]" . nil)                        ; Free abort edit command
    :map evil-normal-state-map
-   ("q" . nil)                          ; Free quit command
+   ("q" . me/evil-record-macro-or-quit)
    ("gd" . dired-jump)
    ("gD" . project-dired)
    ("gf" . find-file)
    ("gF" . project-find-file)
+   ("gp" . project-switch-project)
    ("M-." . nil)                        ; Free xref command
    :map evil-visual-state-map
    ("f" . fill-region)
    :map evil-window-map
    ("u" . winner-undo)
    ("C-r" . winner-redo))
-  :hook
-  (after-init . evil-mode)
-  (after-save . evil-normal-state)
   :custom
   (evil-echo-state nil)
   (evil-emacs-state-cursor (default-value 'cursor-type))
@@ -847,10 +843,19 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
   (evil-define-text-object me/evil-buffer (_count &optional _begin _end type)
     "Text object to represent the whole buffer."
     (evil-range (point-min) (point-max) type))
-  (advice-add 'evil-indent :around
-    (defun me/evil-indent (original &rest arguments)
-      "Like `evil-indent' but save excursion."
-      (save-excursion (apply original arguments)))))
+  (advice-add 'evil-indent :around #'manticore-save-excursion)
+  :hook
+  (after-init . evil-mode)
+  (after-save . evil-normal-state))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun me/evil-record-macro-or-quit ()
+  "Quit the current window or record a macro when the buffer is writeable."
+  (interactive)
+  (if buffer-read-only
+      (quit-window)
+    (call-interactively #'evil-record-macro)))
 #+END_SRC
 
 Emulate =vim-surround=. Take actions with surrounding pairs.
@@ -1172,10 +1177,11 @@ Group shortcuts for often-accessed configuration files.
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-visit (:color teal :idle 1.0)
   (concat (hercules-heading "Visit") "
- _d_ qtile           _l_ linux           _s_ zsh
- _c_ picom           _n_ dunst           _t_ kitty
- _e_ emacs           ^^                  ^^")
+ _._ secrets         _e_ emacs           _s_ zsh
+ _c_ picom           _l_ linux           _t_ kitty
+ _d_ qtile           _n_ dunst           ^^")
   ("q" nil)
+  ("." (find-file "~/.config/emacs/.cache/szadek.eld"))
   ("c" (find-file "~/Workspace/dot/config/picom.org"))
   ("d" (find-file "~/Workspace/dot/config/qtile.org"))
   ("e" (find-file (concat user-emacs-directory "dotemacs.org")))
@@ -1968,7 +1974,7 @@ Emacs can also emulate an interactive REST client.
 
 ** Terminal
 
-Yes, Emacs emulates terminals too.
+Yes, Emacs emulates a terminal too.
 
 | TODO | Advice =vterm= motions to support shift |
 
@@ -2245,14 +2251,15 @@ currently selected window.
   (shackle-default-size (szadek-get 'popup-size .33))
   (shackle-inhibit-window-quit-on-same-windows t)
   (shackle-rules
-   `(((help-mode helpful-mode) :align left  :popup t :select t :size 82)
-     (magit-process-mode       :align below :popup t)
-     ("*Messages*"             :align below :popup t)
-     ("*Process List*"         :align below :popup t :select t)
-     ("*eldoc*"                :align below :popup t :select t)
-     ("*eshell*"               :align below :popup t :select t)
-     (,(rx bos "*EGLOT")       :align below :popup t :regexp t)
-     (,(rx bos "*terminal")    :align below :popup t :regexp t :select t)))
+   `((magit-process-mode             :align below :popup t)
+     ("*Messages*"                   :align below :popup t)
+     (,(rx bos "*EGLOT")             :align below :popup t :regexp t)
+     ("*Process List*"               :align below :popup t :select t)
+     ("*eldoc*"                      :align below :popup t :select t)
+     ("*eshell*"                     :align below :popup t :select t)
+     (,(rx bos "*terminal")          :align below :popup t :select t :regexp t)
+     (help-mode                      :align left  :popup t :select t :size 82)
+     (helpful-mode                   :align left  :popup t :select t :size 82)))
   (shackle-select-reused-windows t)
   :hook
   (after-init . shackle-mode))
