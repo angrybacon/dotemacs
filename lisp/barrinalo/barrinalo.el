@@ -25,8 +25,10 @@
 
 ;;; Code:
 
-(require 'replace)
-(require 'simple)
+(require 'replace)  ; `perform-replace'
+(require 'seq)      ; `seq-sort-by'
+(require 'simple)   ; `count-lines' `move-end-of-line' `newline' `push-mark' `transpose-line' `use-region-p'
+(require 'sort)     ; `reverse-region' `sort-regexp-fields'
 
 ;;;; Case functions
 
@@ -76,7 +78,7 @@ and END are not defined, apply to the whole line instead."
 
 ;;;###autoload
 (defun barrinalo-date-short-with-time ()
-  "Insert the current date, short format with time eg. 2016.12.09 14:34"
+  "Insert the current date, short format with time eg. 2016.12.09 14:34."
   (interactive "*")
   (insert (format-time-string "%Y.%m.%d %H:%M")))
 
@@ -100,7 +102,7 @@ With optional argument STAY true, leave point where it was."
   "Duplicate current line upward or region backward.
 If region was active, keep it so that the command can be repeated."
   (interactive "*")
-  (if (region-active-p)
+  (if (use-region-p)
       (let (deactivate-mark)
         (save-excursion
           (insert (buffer-substring (region-beginning) (region-end)))))
@@ -111,7 +113,7 @@ If region was active, keep it so that the command can be repeated."
   "Duplicate current line downward or region forward.
 If region was active, keep it so that the command can be repeated."
   (interactive "*")
-  (if (region-active-p)
+  (if (use-region-p)
       (let (deactivate-mark (point (point)))
         (insert (buffer-substring (region-beginning) (region-end)))
         (push-mark point))
@@ -158,6 +160,21 @@ characters in region instead."
   (if (= (count-lines begin end) 1)
       (insert (nreverse (delete-and-extract-region begin end)))
     (reverse-region begin end)))
+
+;;;###autoload
+(defun barrinalo-sort-numbers (reverse begin end)
+  "Sort numbers in region by natural order.
+When prefixed with \\[universal-agument], sort in REVERSE order instead.
+If called programmatically sort numbers between BEGIN and END."
+  (interactive "*P\nr")
+  (let* ((text (delete-and-extract-region begin end))
+         (separators (split-string text (rx (+ digit))))
+         (sorter (if reverse #'> #'<))
+         (numbers (split-string text (rx (+ (not digit))) t))
+         (numbers (seq-sort-by #'string-to-number sorter numbers)))
+    (goto-char begin)
+    (dotimes (i (length separators))
+      (insert (concat (nth i separators) (nth i numbers))))))
 
 ;;;###autoload
 (defun barrinalo-sort-words (reverse begin end)

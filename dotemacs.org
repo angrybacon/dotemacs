@@ -433,6 +433,7 @@ I went with the route that uses built-ins the most since I am set on using
   :custom
   (markdown-asymmetric-header t)
   (markdown-fontify-code-blocks-natively t)
+  (markdown-list-indent-width 2)
   (markdown-split-window-direction 'right)
   :config
   (unbind-key "M-<down>" markdown-mode-map)
@@ -464,7 +465,6 @@ authoring documents with a fast and effective plain-text system.
    ("C-<tab>" . me/org-cycle-parent))
   :custom
   (org-adapt-indentation nil)
-  (org-babel-python-command "python3")
   (org-confirm-babel-evaluate nil)
   (org-cycle-separator-lines 0)
   (org-descriptive-links nil)
@@ -484,8 +484,7 @@ authoring documents with a fast and effective plain-text system.
   (org-babel-do-load-languages
    'org-babel-load-languages '((python . t) (shell . t)))
   (modify-syntax-entry ?' "'" org-mode-syntax-table)
-  (advice-add 'org-src--construct-edit-buffer-name :override
-    #'me/org-src-buffer-name)
+  (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer)
   (with-eval-after-load 'evil
     (evil-define-key* 'motion org-mode-map
       (kbd "<tab>") #'org-cycle
@@ -496,7 +495,7 @@ authoring documents with a fast and effective plain-text system.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(defun me/org-src-buffer-name (name &rest _)
+(defun me/org-src-buffer (name &rest _)
   "Simple buffer name."
   (format "*%s*" name))
 
@@ -693,6 +692,7 @@ use with =selected=.
    ("C-h h"       . hlt-highlight-region)
    ("C-h H"       . hlt-unhighlight-region)
    ("C-q"         . selected-off)
+   ("C-s n"       . barrinalo-sort-numbers)
    ("C-s r"       . barrinalo-reverse)
    ("C-s s"       . sort-lines)
    ("C-s w"       . barrinalo-sort-words)
@@ -1822,7 +1822,6 @@ Below is an example of secrets setting 2 /Prettier/ projects.
 Turn on =auto-fill-mode= /almost/ everywhere.
 
 #+BEGIN_SRC emacs-lisp
-(add-hook 'org-mode-hook #'auto-fill-mode)
 (add-hook 'prog-mode-hook #'auto-fill-mode)
 (add-hook 'text-mode-hook #'auto-fill-mode)
 #+END_SRC
@@ -1845,7 +1844,11 @@ Add syntax highlighting support for configuration files.
 #+BEGIN_SRC emacs-lisp
 (use-package conf-mode
   :straight nil
-  :mode (rx (or "CODEOWNERS" (and ".env" (* (and "." (+ word)))) ".list") eos))
+  :mode (rx (or ".list"
+                "CODEOWNERS"
+                (and ".env" (* (and "." (+ word))))
+                (and "." (+ word) "rc"))
+            eos))
 #+END_SRC
 
 Increase region by semantic units. It tries to be smart about it and adapt to
