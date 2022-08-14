@@ -24,11 +24,19 @@
 
 ;;; Code:
 
+(require 'custom)   ; `load-theme'
+(require 'frame)    ; `set-frame-parameter'
+(require 'nadvice)  ; `advice-add'
+
 (defgroup morophon nil
   "Interact with themes."
   :group 'convenience)
 
 ;;;; Alpha
+
+(defcustom morophon-alpha-range '(5 . 100)
+  "Accepted range for the frame alpha level."
+  :type '(cons number number))
 
 (defvar morophon--alpha nil
   "Variable to hold the current value for the alpha opacity in effect.
@@ -38,14 +46,16 @@ If nil, the opacity has not been modified yet. See `default-frame-alist'.")
   "Offset the the opacity level for FRAME by DELTA.
 By default consider the current frame."
   (let* ((target-frame (or frame (selected-frame)))
+         (minimum (car morophon-alpha-range))
+         (maximum (cdr morophon-alpha-range))
          (old (frame-parameter target-frame 'alpha))
          (old (cond ((floatp old) (truncate (* old 100)))
                     ((numberp old) old)
-                    (t 100)))
-         (new (+ old delta)))
+                    (t maximum)))
+         (new (+ old delta))
+         (new (max minimum (min maximum new))))
     (set-frame-parameter target-frame 'alpha new)
     (setq morophon--alpha new)))
-
 
 ;;;###autoload
 (defun morophon-alpha-less (&optional frame)
