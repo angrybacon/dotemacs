@@ -1195,6 +1195,9 @@ Find code references throughout a codebase.
 #+BEGIN_SRC emacs-lisp
 (use-package xref
   :straight nil
+  :bind
+  ([remap xref-find-apropos] . xref-find-definitions)
+  ([remap xref-find-definitions] . xref-find-definitions-other-window)
   :config
   (with-eval-after-load 'evil
     (evil-define-key* 'motion xref--xref-buffer-mode-map
