@@ -154,7 +154,7 @@ If `widowmaker-olivetti-automatic' is nil, do nothing."
       (dolist (window windows)
         (with-selected-window window
           (pcase-let ((`(,l ,_t ,r ,_b) (window-edges nil nil nil :pixelwise)))
-            (if (and (equal l 0) (equal r columns))
+            (if (equal (- r l) columns)
                 (olivetti-mode 1)
               (olivetti-mode 0))))))))
 

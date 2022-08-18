@@ -180,7 +180,7 @@ If called programmatically sort numbers between BEGIN and END."
 (defun barrinalo-sort-words (reverse begin end)
   "Sort words in region alphabetically.
 Sort words between BEGIN and END. When prefixed with \\[universal-argument],
-sort in REVERSE instead.
+sort in REVERSE order instead.
 
 The variable `sort-fold-case' determines whether the case affects the sort. See
 `sort-regexp-fields'."
