@@ -153,6 +153,20 @@ consider those only."
       (dired-unmark-all-marks))))
 
 ;;;###autoload
+(defun dire-shows-rename-dwim ()
+  "Clean up TV show files and directories in the current `dired-mode' buffer.
+If no entries are marked, mark all files beforehand. If some are marked,
+consider those only."
+  (interactive)
+  (let ((should-mark-all (not (dire-marked-files))))
+    (unless should-mark-all
+      (dired-unmark-all-marks)
+      (dired-toggle-marks))
+    (mapc #'dire-shows-rename-show (dire-marked-files))
+    (when should-mark-all
+      (dired-unmark-all-marks))))
+
+;;;###autoload
 (defun dire-rename-undo ()
   "Read `dire--rename-list' and revert all items contained within."
   (interactive)
@@ -170,3 +184,6 @@ consider those only."
 (provide 'dire)
 
 ;;; dire.el ends here
+
+;; (with-current-buffer (get-buffer "Downloads")
+;;   (dire-movies-rename-dwim))
