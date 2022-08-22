@@ -198,16 +198,21 @@ Use BUFFER-NAME as name for the new terminal buffer when it is provided."
     (error "[Widowmaker] Package `vterm' not found")))
 
 ;;;###autoload
-(defun widowmaker-terminal-dwim ()
+(defun widowmaker-terminal-dwim (force)
   "Spawn a terminal window using `widowmaker-terminal-function'.
 If a project root is found using `project-current', customize the current
-directory to this location before spawning the terminal."
-  (interactive)
+directory to this location before spawning the terminal.
+When the appropriate terminal window is already open, switch to it.
+When prefixed with \\[universal-argument], FORCE create a new terminal session."
+  (interactive "P")
   (if-let ((root (ignore-errors (project-root (project-current)))))
       (let* ((default-directory root)
              (name (file-name-nondirectory (directory-file-name root)))
-             (buffer (format "*terminal: %s*" name)))
-        (funcall widowmaker-terminal-function buffer))
+             (buffer (format "*terminal: %s*" name))
+             (buffer (if force (generate-new-buffer-name buffer) buffer)))
+       (if-let ((window (get-buffer-window buffer)))
+            (select-window window)
+          (funcall widowmaker-terminal-function buffer)))
     (funcall widowmaker-terminal-function)))
 
 (provide 'widowmaker)
