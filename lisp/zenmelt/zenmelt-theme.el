@@ -208,9 +208,9 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(help-key-binding                   ((t ,@(zenmelt--box)
                                             :foreground ,orange)))
    `(hl-line                            ((t :background ,bg+2)))
-   `(line-number                        ((t :inherit shadow)))
+   `(line-number                        ((t :height .8 :inherit shadow)))
    `(line-number-current-line           ((t :foreground ,yellow-2
-                                            :inherit hl-line)))
+                                            :inherit (hl-line line-number))))
    `(link                               ((t :foreground ,yellow :underline t)))
    `(link-visited                       ((t :foreground ,yellow-2
                                             :underline t)))
