@@ -465,7 +465,6 @@ authoring documents with a fast and effective plain-text system.
    ("C-<return>" . nil)
    ("C-<tab>" . me/org-cycle-parent))
   :custom
-  (org-adapt-indentation nil)
   (org-confirm-babel-evaluate nil)
   (org-cycle-separator-lines 0)
   (org-descriptive-links nil)
@@ -475,8 +474,6 @@ authoring documents with a fast and effective plain-text system.
   (org-fontify-quote-and-verse-blocks t)
   (org-fontify-whole-heading-line t)
   (org-return-follows-link t)
-  (org-src-preserve-indentation t)
-  (org-src-tab-acts-natively t)
   (org-src-window-setup 'current-window)
   (org-startup-truncated nil)
   (org-support-shift-select 'always)
@@ -680,11 +677,6 @@ use with =selected=.
   (:map selected-keymap
    ("C-c c"       . capitalize-region)
    ("C-c k"       . barrinalo-kebab)
-   ("C-c l"       . downcase-region)
-   ("C-c u"       . upcase-region)
-   ("C-f"         . fill-region)
-   ("C-h h"       . hlt-highlight-region)
-   ("C-h H"       . hlt-unhighlight-region)
    ("C-q"         . selected-off)
    ("C-s n"       . barrinalo-sort-numbers)
    ("C-s r"       . barrinalo-reverse)
@@ -699,7 +691,6 @@ use with =selected=.
   (after-init . selected-global-mode)
   :config
   (require 'barrinalo)
-  (require 'browse-url)
   :custom
   (selected-minor-mode-override t))
 #+END_SRC
@@ -823,11 +814,11 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
   :custom
   (evil-echo-state nil)
   (evil-emacs-state-cursor (default-value 'cursor-type))
-  (evil-search-module 'evil-search)
   (evil-undo-system 'undo-redo)
   (evil-visual-state-cursor 'hollow)
   (evil-want-keybinding nil)
   :config
+  (evil-select-search-module 'evil-search-module 'evil-search)
   (add-to-list 'evil-emacs-state-modes 'exwm-mode)
   (add-to-list 'evil-emacs-state-modes 'dired-mode)
   (add-to-list 'evil-emacs-state-modes 'process-menu-mode)
@@ -851,6 +842,14 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
   (if buffer-read-only
       (quit-window)
     (call-interactively #'evil-record-macro)))
+#+END_SRC
+
+Provide =gl= and =gL= align operators, ported from =vim-lion=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-lion
+  :hook
+  (evil-mode . evil-lion-mode))
 #+END_SRC
 
 Emulate =vim-surround=. Take actions with surrounding pairs.
@@ -1419,6 +1418,7 @@ Add support for multiple cursors within Evil.
 
 #+BEGIN_SRC emacs-lisp
 (use-package evil-multiedit
+  :after evil
   :bind
   (:map evil-normal-state-map
    ("M-d". evil-multiedit-match-symbol-and-next)
