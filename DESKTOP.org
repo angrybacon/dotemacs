@@ -1,4 +1,3 @@
-# -*- after-save-hook: (org-babel-tangle t); -*-
 #+TITLE: Desktop
 #+AUTHOR: Mathieu Marques
 #+PROPERTY: header-args :results silent
@@ -48,3 +47,9 @@ eventually mess up your current window configuration.
 -enableMiniWindow=true
 +enableMiniWindow=false
 #+END_SRC
+
+* COMMENT Local Variables
+
+# Local Variables:
+# after-save-hook: (org-babel-tangle t)
+# End:

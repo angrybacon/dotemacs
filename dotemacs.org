@@ -58,14 +58,6 @@ Change a few indenting behaviors.
 (put 'plist-put 'lisp-indent-function 2)
 #+END_SRC
 
-Allow a number of commonly used and safe file variables.
-
-#+BEGIN_SRC emacs-lisp
-(put 'after-save-hook 'safe-local-variable
-     (lambda (value) (equal value '(org-babel-tangle t))))
-(put 'display-line-numbers-width 'safe-local-variable 'integerp)
-#+END_SRC
-
 Unbind the =suspend-frame= command.
 
 #+BEGIN_SRC emacs-lisp
@@ -477,6 +469,7 @@ authoring documents with a fast and effective plain-text system.
   (org-startup-truncated nil)
   (org-support-shift-select 'always)
   :config
+  (add-to-list 'safe-local-variable-values '(after-save-hook . (org-babel-tangle t)))
   (require 'ob-shell)
   (org-babel-do-load-languages
    'org-babel-load-languages '((python . t) (shell . t)))
@@ -1282,6 +1275,12 @@ Display relative line numbers in most editing modes.
  display-line-numbers-width 3)
 #+END_SRC
 
+Allow file-local overrides for the width that numbers should take.
+
+#+BEGIN_SRC emacs-lisp
+(put 'display-line-numbers-width 'safe-local-variable 'integerp)
+#+END_SRC
+
 ** Mode-Line
 
 Prettify the mode-line with customizable and conditional segments.
@@ -1876,8 +1875,8 @@ Colorize colors as text with their value.
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-mode
   :hook
+  (css-mode . rainbow-mode)
   (help-mode . rainbow-mode)
-  (prog-mode . rainbow-mode)
   :custom
   (rainbow-x-colors nil))
 #+END_SRC
