@@ -527,6 +527,13 @@ authoring documents with a fast and effective plain-text system.
     (outline-show-children)))
 #+END_SRC
 
+Install major modes otherwise unused to edit configuration blocks from Org.
+
+#+BEGIN_SRC emacs-lisp
+(use-package haskell-mode)
+(use-package vimrc-mode)
+#+END_SRC
+
 ** YAML
 
 #+BEGIN_SRC emacs-lisp
