@@ -591,4 +591,5 @@ function to `after-save-hook'."
 
 ;; Local Variables:
 ;; after-save-hook: (zenmelt--reset t)
+;; eval: (when (require 'rainbow-mode nil :noerror) (rainbow-mode 1))
 ;; End:

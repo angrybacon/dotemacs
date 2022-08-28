@@ -1884,6 +1884,9 @@ Colorize colors as text with their value.
   :hook
   (css-mode . rainbow-mode)
   (help-mode . rainbow-mode)
+  :init
+  (add-to-list 'safe-local-eval-forms
+               '(when (require 'rainbow-mode nil :noerror) (rainbow-mode 1)))
   :custom
   (rainbow-x-colors nil))
 #+END_SRC
