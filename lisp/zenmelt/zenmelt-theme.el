@@ -481,6 +481,9 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(wgrep-done-face                    ((t :foreground ,green+2)))
    `(wgrep-delete-face                  ((t :foreground ,red :strike-through t)))
    `(wgrep-reject-face                  ((t :background ,red)))
+;;;;;; Straight
+   `(straight-process-command           ((t :foreground ,fg+1)))
+   `(straight-process-error             ((t :foreground ,red)))
 ;;;;;; Version Control
    `(diff-hl-change                     ((t :foreground ,blue-2)))
    `(diff-hl-delete                     ((t :foreground ,red)))

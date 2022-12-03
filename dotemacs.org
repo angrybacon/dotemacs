@@ -469,7 +469,8 @@ authoring documents with a fast and effective plain-text system.
   (org-startup-truncated nil)
   (org-support-shift-select 'always)
   :config
-  (add-to-list 'safe-local-variable-values '(after-save-hook . (org-babel-tangle t)))
+  (add-to-list
+   'safe-local-variable-values '(after-save-hook . (org-babel-tangle t)))
   (require 'ob-shell)
   (org-babel-do-load-languages
    'org-babel-load-languages '((python . t) (shell . t)))
@@ -560,8 +561,6 @@ Provide various commands to list and /consult/ existing collections.
   (consult-project-root-function #'me/project-root)
   (xref-show-definitions-function #'consult-xref)
   (xref-show-xrefs-function #'consult-xref)
-  :hook
-  (org-mode . (lambda () (setq-local consult-fontify-preserve nil)))
   :init
   (with-eval-after-load 'evil
     (evil-global-set-key 'motion "gm" #'consult-mark)
@@ -858,7 +857,7 @@ Emulate =vim-surround=. Take actions with surrounding pairs.
 #+BEGIN_SRC emacs-lisp
 (use-package evil-surround
   :hook
-  (evil-mode . evil-surround-mode))
+  (after-init . global-evil-surround-mode))
 #+END_SRC
 
 Activate volatile keymaps for split sizing.
@@ -1174,7 +1173,7 @@ Group shortcuts for often-accessed configuration files.
   (concat (hercules-heading "Visit") "
  _._ secrets         _e_ emacs           _s_ zsh
  _c_ picom           _l_ linux           _t_ kitty
- _d_ qtile           _n_ dunst           ^^")
+ _d_ qtile           _n_ dunst           _v_ vim")
   ("q" nil)
   ("." (find-file "~/.config/emacs/.cache/szadek.eld"))
   ("c" (find-file "~/Workspace/dot/config/picom.org"))
@@ -1183,7 +1182,8 @@ Group shortcuts for often-accessed configuration files.
   ("l" (find-file "~/Workspace/dot/LINUX.org"))
   ("n" (find-file "~/Workspace/dot/config/dunst.org"))
   ("s" (find-file "~/Workspace/dot/config/zsh.org"))
-  ("t" (find-file "~/Workspace/dot/config/kitty.org")))
+  ("t" (find-file "~/Workspace/dot/config/kitty.org"))
+  ("v" (find-file "~/Workspace/dot/config/vim.org")))
 #+END_SRC
 
 ** Intellisense
@@ -2247,7 +2247,8 @@ currently selected window.
   (shackle-default-size (szadek-get 'popup-size .33))
   (shackle-inhibit-window-quit-on-same-windows t)
   (shackle-rules
-   `((magit-process-mode             :align below :popup t)
+   `((compilation-mode               :align below :popup t)
+     (magit-process-mode             :align below :popup t)
      ("*Messages*"                   :align below :popup t)
      (,(rx bos "*EGLOT")             :align below :popup t :regexp t)
      (embark-collect-mode            :align below :popup t :select t)
