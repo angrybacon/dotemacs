@@ -1213,6 +1213,7 @@ Yup, Emacs supports LSP.
   :custom
   (eglot-autoshutdown t)
   :hook
+  (eglot-managed-mode . me/flymake-eslint-enable-maybe)
   (typescript-mode . eglot-ensure)
   :init
   (put 'eglot-server-programs 'safe-local-variable 'listp)
@@ -1238,6 +1239,20 @@ Yup, Emacs supports LSP.
   (flymake-fringe-indicator-position nil))
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+(use-package flymake-eslint
+  :preface
+  (defun me/flymake-eslint-enable-maybe ()
+    "Enable `flymake-eslint' based on the project configuration.
+Search for the project ESLint configuration to determine whether the buffer
+should be checked."
+    (when-let* ((root (locate-dominating-file (buffer-file-name) "package.json"))
+                (rc (locate-file ".eslintrc" (list root) '(".js" ".json"))))
+      (make-local-variable 'exec-path)
+      (push (file-name-concat root "node_modules" ".bin") exec-path)))
+      (flymake-eslint-enable))
+#+END_SRC
+
 Run /Prettier/ against the whole buffer on save. See the
 [[#directory-local-variables][Directory-Local Variables]] section for automatic
 enabling of the minor mode.
@@ -1250,8 +1265,8 @@ enabling of the minor mode.
 
 *** Tree-Sitter
 
-Use [[https://tree-sitter.github.io/tree-sitter/][Tree-sitter]] to handle more
-complex syntax trees where the default alternatives lack the highlighting power.
+Use [[https://emacs-tree-sitter.github.io][Tree-sitter]] to handle more complex
+syntax trees where the default alternatives lack the highlighting power.
 
 #+BEGIN_SRC emacs-lisp
 (use-package tree-sitter

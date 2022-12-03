@@ -30,6 +30,7 @@
       (read-process-output-max (* 1024 1024)))
 
   ;; Reduce fanfare
+  ;; TODO See https://yrh.dev/blog/rant-obfuscation-in-emacs/
   (setq inhibit-startup-echo-area-message "angrybacon")
 
   ;; Tangle and compile if necessary only, then load the configuration
