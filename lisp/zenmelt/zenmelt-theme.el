@@ -159,7 +159,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(highlight                          ((t :background ,blue-5
                                             :foreground ,blue)))
    `(italic                             ((t :slant italic)))
-   `(shadow                             ((t :foreground ,bg+4)))
+   `(shadow                             ((t :foreground ,fg-1)))
    `(success                            ((t :foreground ,green)))
    `(warning                            ((t :foreground ,orange)))
 ;;;;;; Applications
@@ -208,7 +208,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(help-key-binding                   ((t ,@(zenmelt--box)
                                             :foreground ,orange)))
    `(hl-line                            ((t :background ,bg+2)))
-   `(line-number                        ((t :height .9 :inherit shadow)))
+   `(line-number                        ((t :foreground ,bg+4 :height .9)))
    `(line-number-current-line           ((t :foreground ,yellow-2
                                             :inherit (hl-line line-number))))
    `(link                               ((t :foreground ,yellow :underline t)))

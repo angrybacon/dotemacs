@@ -787,6 +787,8 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
    ("C-a" . nil)                        ; Free Readline key
    ("C-e" . nil)                        ; Free Readline key
    ("C-w" . nil)                        ; Free kill command
+   ("S-<left>" . nil)                   ; Free motion command
+   ("S-<right>" . nil)                  ; Free motion command
    :map evil-motion-state-map
    ("RET" . nil)                        ; Free return command
    ("gb" . switch-to-buffer)
