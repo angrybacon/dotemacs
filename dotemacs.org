@@ -798,12 +798,12 @@ Evil emulates and manages the infamous Vim states and motions ported to Emacs.
    ("gS" . avy-goto-char)
    ("C-e" . nil)                        ; Free Readline key
    ("C-]" . nil)                        ; Free abort edit command
+   ("C-S-d" . evil-scroll-up)
    :map evil-normal-state-map
    ("q" . me/evil-record-macro-or-quit)
    ("gd" . dired-jump)
    ("gD" . project-dired)
-   ("gf" . find-file)
-   ("gF" . project-find-file)
+   ("gf" . me/project-find-file)
    ("gp" . project-switch-project)
    ("M-." . nil)                        ; Free xref command
    :map evil-visual-state-map
@@ -1734,6 +1734,14 @@ Provide project-wide commands and utilities.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+(defun me/project-find-file ()
+  "Find a file under the current project.
+If not in a project, fallback to `find-file-at-point' instead."
+  (interactive)
+  (if (project-current)
+      (call-interactively #'project-find-file)
+    (call-interactively #'find-file-at-point)))
+
 (defun me/project-name (&optional project)
   "Return the name for PROJECT.
 If PROJECT is not specified, assume current project root."
