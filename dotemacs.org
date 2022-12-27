@@ -718,8 +718,8 @@ Ediff is a visual interface to Unix =diff=.
 
 ** Dired
 
-Configure the /dir/ectory /ed/itor. Amongst many other things, Emacs also serves
-as file explorer.
+Configure the /dir/ectory /ed/itor. Amongst many other things, Emacs also ships
+with a file explorer.
 
 #+BEGIN_SRC emacs-lisp
 (use-package dired
@@ -1094,7 +1094,7 @@ Group interface-related commands.
 (defhydra hydra-interface (:color pink :pre (require 'morophon))
   (concat (hercules-heading "Do" "Zoom" "Toggles") "
  _m_ maximize frame  _-_ out             _a_ / _A_ alpha: %s`morophon--alpha
- _M_ center frame    _=_ in              _n_ line numbers: %s`display-line-numbers
+ _M_ cycle displays  _=_ in              _n_ line numbers: %s`display-line-numbers
  _t_ cycle theme     _0_ reset           _o_ olivetti: %s`widowmaker-olivetti-automatic
  ^^                  ^^                  _O_ olivetti width: %s`olivetti-body-width")
   ("q" nil)
@@ -1103,8 +1103,8 @@ Group interface-related commands.
   ("0" default-text-scale-reset :color blue)
   ("a" morophon-alpha-less)
   ("A" morophon-alpha-more)
-  ("m" toggle-frame-maximized :color blue)
-  ("M" widowmaker-placement-center :color blue)
+  ("m" toggle-frame-maximized)
+  ("M" widowmaker-placement-cycle)
   ("n" ruric-toggle-line-numbers)
   ("o" widowmaker-olivetti-automatic-toggle :color blue)
   ("O" widowmaker-olivetti-body-reset :color blue)

@@ -26,7 +26,11 @@
 ;;; Code:
 
 (require 'cl-lib)    ; `cl-incf'
-(require 'frame)     ; `display-pixel-height' `display-pixel-width' `frame-inner-width'
+(require 'cl-macs)   ; `cl-destructuring-bind'
+(require 'cl-seq)    ; `cl-position'
+(require 'frame)     ; `display-monitor-attributes-list' `display-pixel-height'
+                     ; `display-pixel-width' `frame-inner-width'
+                     ; `frame-monitor-attributes' `set-frame-parameter'
 (require 'nadvice)   ; `advice-add'
 (require 'olivetti)
 (require 'pcase)     ; `pcase-let'
@@ -169,6 +173,26 @@ If `widowmaker-olivetti-automatic' is nil, do nothing."
   (let* ((x (/ (- (display-pixel-width) (frame-pixel-width)) 2))
          (y (/ (- (display-pixel-height) (frame-pixel-height)) 2)))
     (set-frame-position nil x y)))
+
+;;;###autoload
+(defun widowmaker-placement-cycle (&optional frame)
+  "Cycle FRAME between the available displays.
+If FRAME is nil, consider the current frame only."
+  (interactive)
+  (let* ((geometry (assq 'geometry (frame-monitor-attributes)))
+         (geometries (mapcar #'(lambda (display) (assq 'geometry display))
+                             (display-monitor-attributes-list)))
+         (index (cl-position geometry geometries :test #'equal)))
+    (when (equal (length geometries) 1)
+      (user-error "[Widowmaker] Found only one display"))
+    (unless (integerp index)
+      (user-error "[Widowmaker] Could not guess current display"))
+    (let* ((next (if (equal index (1- (length geometries))) 0 (1+ index)))
+           (geometry (nth next geometries)))
+      (cl-destructuring-bind (x y width height) (cdr geometry)
+        (set-frame-position frame x y)
+        (set-frame-size frame width height :pixelwise)
+        (set-frame-parameter frame 'fullscreen 'maximized)))))
 
 ;;;; Shackle
 
