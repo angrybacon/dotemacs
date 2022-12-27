@@ -291,15 +291,6 @@ adds a /reset/ on save when visiting the theme file.
 
 * Languages
 
-** CSS
-
-#+BEGIN_SRC emacs-lisp
-(use-package css-mode
-  :straight nil
-  :custom
-  (css-indent-offset 2))
-#+END_SRC
-
 ** CSV
 
 #+BEGIN_SRC emacs-lisp
@@ -329,56 +320,15 @@ HTML mode is defined in =sgml-mode.el=.
 
 ** JavaScript
 
-There might be confusion between the too many JavaScript editing modes
-available:
-
-- =js-mode= ::
-  Default built-in major mode to edit JavaScript buffers. Supports JSX syntax
-  albeit with weak highlighting capabilities.
-- =javascript-mode= ::
-  An alias to =js-mode=.
-- =js2-mode= ::
-  An editing major mode with its own parser and extrea features such as
-  highlighting for errors and warnings. See [[https://github.com/mooz/js2-mode]].
-- =js2-minor-mode= (and =js2-jsx-mode= for Emacs 27) ::
-  Two minor modes shipped with =js2-mode= that let you use another major mode
-  without discarding the AST parser from =js2-mode=.
-- =rjsx-mode= ::
-  A major mode to edit JSX buffers based on =js2-mode=. See
-  [[https://github.com/felipeochoa/rjsx-mode]].
-
-I went with the route that uses built-ins the most since I am set on using
+Since Emacs 29, =js-ts-mode=, =typescript-ts-mode= and =tsx-ts-mode= are the
+built-in major modes to edit JavaScript buffers relying on
 [[#tree-sitter][Tree-sitter]] to power up the syntax highlighting.
 
-| Syntax | Modes                 |
-|--------+-----------------------|
-| =.js=  | =js-mode=             |
-| =.jsx= | =js-mode=             |
-| =.ts=  | =typescript-mode=     |
-| =.tsx= | =typescript-tsx-mode= |
-
 #+BEGIN_SRC emacs-lisp
-(use-package js-mode
+(use-package typescript-ts-mode
   :straight nil
-  :custom
-  (js-indent-level 2)
-  (js-switch-indent-offset 2))
-
-(use-package typescript-mode
-  :init
-  (define-derived-mode typescript-tsx-mode typescript-mode "TSX")
-  (add-to-list 'auto-mode-alist `(,(rx ".tsx" eos) . typescript-tsx-mode))
-  :config
-  (add-hook 'typescript-tsx-mode-hook #'sgml-electric-tag-pair-mode)
-  :custom
-  (typescript-indent-level 2))
-#+END_SRC
-
-** JSON
-
-#+BEGIN_SRC emacs-lisp
-(use-package json-mode
-  :mode (rx ".json" eos))
+  :hook
+  (tsx-ts-mode . sgml-electric-tag-pair-mode))
 #+END_SRC
 
 ** Lisp
@@ -430,8 +380,7 @@ I went with the route that uses built-ins the most since I am set on using
   :config
   (unbind-key "M-<down>" markdown-mode-map)
   (unbind-key "M-<up>" markdown-mode-map)
-  (add-to-list 'markdown-code-lang-modes '("tsx" . typescript-tsx-mode))
-  (add-to-list 'markdown-code-lang-modes '("ylm" . yaml-mode)))
+  (add-to-list 'markdown-code-lang-modes '("tsx" . tsx-ts-mode)))
 #+END_SRC
 
 ** Org
@@ -533,12 +482,6 @@ Install major modes otherwise unused to edit configuration blocks from Org.
 #+BEGIN_SRC emacs-lisp
 (use-package haskell-mode)
 (use-package vimrc-mode)
-#+END_SRC
-
-** YAML
-
-#+BEGIN_SRC emacs-lisp
-(use-package yaml-mode)
 #+END_SRC
 
 * Features
@@ -894,9 +837,9 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
   (:map emmet-mode-keymap
    ("C-<return>" . nil))
   :hook
-  (css-mode . emmet-mode)
+  (css-base-mode . emmet-mode)
   (html-mode . emmet-mode)
-  (typescript-tsx-mode . emmet-mode)
+  (tsx-ts-mode . emmet-mode)
   :custom
   (emmet-insert-flash-time .1)
   (emmet-jsx-className-braces? t)
@@ -1173,13 +1116,15 @@ Group shortcuts for often-accessed configuration files.
   (concat (hercules-heading "Visit") "
  _._ secrets         _e_ emacs           _s_ zsh
  _c_ picom           _l_ linux           _t_ kitty
- _d_ qtile           _n_ dunst           _v_ vim")
+ _d_ qtile           _m_ macos           _v_ vim
+ ^^                  _n_ dunst           ^^")
   ("q" nil)
   ("." (find-file "~/.config/emacs/.cache/szadek.eld"))
   ("c" (find-file "~/Workspace/dot/config/picom.org"))
   ("d" (find-file "~/Workspace/dot/config/qtile.org"))
   ("e" (find-file (concat user-emacs-directory "dotemacs.org")))
   ("l" (find-file "~/Workspace/dot/LINUX.org"))
+  ("m" (find-file "~/Workspace/dot/MACOS.org"))
   ("n" (find-file "~/Workspace/dot/config/dunst.org"))
   ("s" (find-file "~/Workspace/dot/config/zsh.org"))
   ("t" (find-file "~/Workspace/dot/config/kitty.org"))
@@ -1212,11 +1157,12 @@ Yup, Emacs supports LSP.
 
 #+BEGIN_SRC emacs-lisp
 (use-package eglot
+  :straight nil
   :custom
   (eglot-autoshutdown t)
   :hook
   (eglot-managed-mode . me/flymake-eslint-enable-maybe)
-  (typescript-mode . eglot-ensure)
+  (typescript-ts-base-mode . eglot-ensure)
   :init
   (put 'eglot-server-programs 'safe-local-variable 'listp)
   :config
@@ -1267,22 +1213,33 @@ enabling of the minor mode.
 
 *** Tree-Sitter
 
-Use [[https://emacs-tree-sitter.github.io][Tree-sitter]] to handle more complex
-syntax trees where the default alternatives lack the highlighting power.
+Use [[https://tree-sitter.github.io/tree-sitter/][Tree-Sitter]] to handle more
+complex syntax trees where the default alternatives lack the highlighting power.
+
+Emacs 29 can be built with tree-sitter bindings built-in by default and the
+below configuration assumes as much. Language modules can be built from
+[[https://github.com/casouri/tree-sitter-module]].
 
 #+BEGIN_SRC emacs-lisp
-(use-package tree-sitter
-  :hook
-  (js-mode . tree-sitter-hl-mode)
-  (typescript-mode . tree-sitter-hl-mode))
+(use-package treesit
+  :straight nil
+  :init
+  (push '(css-mode . css-ts-mode) major-mode-remap-alist)
+  (push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
+  (push '(js-mode . js-ts-mode) major-mode-remap-alist)
+  (push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
+  (push '(python-mode . python-ts-mode) major-mode-remap-alist))
+#+END_SRC
 
-(use-package tree-sitter-langs
-  :after tree-sitter
-  :defer nil
-  :config
-  (tree-sitter-require 'tsx)
-  (add-to-list 'tree-sitter-major-mode-language-alist
-               '(typescript-tsx-mode . tsx)))
+#+BEGIN_SRC emacs-lisp
+(use-package tree-sitter-module
+  :straight (:host github :repo "casouri/tree-sitter-module" :type git
+             :files ("dist/*.dylib" "dist/*.so")
+             :pre-build ("./batch.sh"))
+  :after treesit
+  :init
+  (add-to-list 'treesit-extra-load-path
+               (straight--build-dir "tree-sitter-module")))
 #+END_SRC
 
 ** Line Numbers
@@ -1310,7 +1267,6 @@ Allow file-local overrides for the width that numbers should take.
 Prettify the mode-line with customizable and conditional segments.
 
 | TODO | Make a =arecord -vvv -f dat /dev/null= segment |
-| TODO | Make a segment to track long tasks             |
 
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
@@ -1790,10 +1746,10 @@ First define a standard setup for /Prettier/ projects. That is, projects where
 
 #+BEGIN_SRC emacs-lisp
 (dir-locals-set-class-variables 'prettier
- '((js-mode . ((eval . (prettier-mode))))
-   (json-mode . ((eval . (prettier-mode))))
-   (scss-mode . ((eval . (prettier-mode))))
-   (typescript-mode . ((eval . (prettier-mode))))))
+ '((css-base-mode . ((eval . (prettier-mode))))
+   (js-base-mode . ((eval . (prettier-mode))))
+   (json-ts-mode . ((eval . (prettier-mode))))
+   (typescript-ts-base-mode . ((eval . (prettier-mode))))))
 #+END_SRC
 
 Assign paths to specific classes according to specifications found in secrets.
@@ -1882,8 +1838,9 @@ Add visual guides towards indenting levels.
 #+BEGIN_SRC emacs-lisp
 (use-package highlight-indent-guides
   :hook
+  (css-base-mode . highlight-indent-guides-mode)
   (python-mode . highlight-indent-guides-mode)
-  (scss-mode . highlight-indent-guides-mode)
+  (yaml-ts-mode . highlight-indent-guides-mode)
   :custom
   (highlight-indent-guides-method 'character))
 #+END_SRC
@@ -1907,7 +1864,7 @@ Colorize colors as text with their value.
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-mode
   :hook
-  (css-mode . rainbow-mode)
+  (css-base-mode . rainbow-mode)
   (help-mode . rainbow-mode)
   :init
   (add-to-list 'safe-local-eval-forms

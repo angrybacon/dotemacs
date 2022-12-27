@@ -22,17 +22,18 @@ automagically tangled from an Org file into a Lisp file. See
 * Installation
 
 #+BEGIN_QUOTE
-Tested daily on Debian and MacOS.
+Tested daily on Arch and MacOS.
 
 I trust your Google-fu. Try and make the most of the below notes.
 #+END_QUOTE
 
 ** Dependencies
 
-| =jansson=  | Enable native JSON parsing             |
-| =libvterm= | Enable terminal emulation within Emacs |
-| =pinentry= | Enable pass prompts within Emacs       |
-| =ripgrep=  | Prefer =rg= over =grep=                |
+| =jansson=     | Enable native JSON parsing             |
+| =libvterm=    | Enable terminal emulation within Emacs |
+| =pinentry=    | Enable pass prompts within Emacs       |
+| =ripgrep=     | Prefer =rg= over =grep=                |
+| =tree-sitter= | Enable built-in tree-sitter bindings   |
 
 ** Emacs
 
@@ -56,24 +57,7 @@ See [[https://github.com/angrybacon/dot/blob/master/LINUX.org#emacs]].
 
 *** MacOS
 
-Living on the edge, install Emacs 29.
-
-I prefer [[https://github.com/d12frosted/homebrew-emacs-plus][ =emacs-plus= ]]
-for its additional compilation flags, specifically the ability not to have a
-title bar ie. fake fullscreen since it has its downsides on macOS.
-
-#+BEGIN_SRC sh
-brew tap d12frosted/emacs-plus
-brew install emacs-plus@29 --with-native-comp
-#+END_SRC
-
-The configuration also assumes GNU utilities are available, in particular =ls=
-since =dired= relies on it.
-
-Based on =straight.el=, package dependencies could prove difficult to install on
-MacOS where the initial =PATH= is less than reliable, especially when you can't
-easily install a package that fixes just that: =exec-path-from-shell=. A
-workaround is to simply run Emacs from your preferred shell for its first boot.
+See [[https://github.com/angrybacon/dot/blob/master/MACOS.org#emacs]].
 
 ** Language Servers
 
