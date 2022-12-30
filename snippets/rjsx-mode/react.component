@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# group: react
-# key: rc
-# --
-class $1 extends React.PureComponent {
-  render() {
-    return $0;
-  }
-}

@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# group: angular
-# key: acomponent
-# --
-${1:module}.component('$2', {
-  $0
-});

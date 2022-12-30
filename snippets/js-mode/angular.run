@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# group: angular
-# key: arun
-# --
-${1:module}.run(function($2) {
-  $0
-});

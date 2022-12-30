@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# group: angular
-# key: acontroller
-# --
-${1:module}.controller('$2', function($3) {
-  var self = this;
-  $0
-});

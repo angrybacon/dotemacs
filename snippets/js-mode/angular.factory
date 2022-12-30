@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# group: angular
-# key: afactory
-# --
-${1:module}.factory('$2', function($3) {
-  var service = {};
-  $0
-  return service;
-});
