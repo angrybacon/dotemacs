@@ -418,6 +418,8 @@ authoring documents with a fast and effective plain-text system.
   (org-startup-truncated nil)
   (org-support-shift-select 'always)
   :config
+  (add-to-list 'org-src-lang-modes (cons "ts" 'typescript-ts))
+  (add-to-list 'org-src-lang-modes (cons "tsx" 'tsx-ts))
   (add-to-list
    'safe-local-variable-values '(after-save-hook . (org-babel-tangle t)))
   (require 'ob-shell)
@@ -1197,8 +1199,8 @@ should be checked."
     (when-let* ((root (locate-dominating-file (buffer-file-name) "package.json"))
                 (rc (locate-file ".eslintrc" (list root) '(".js" ".json"))))
       (make-local-variable 'exec-path)
-      (push (file-name-concat root "node_modules" ".bin") exec-path)))
-      (flymake-eslint-enable))
+      (push (file-name-concat root "node_modules" ".bin") exec-path)
+      (flymake-eslint-enable))))
 #+END_SRC
 
 Run /Prettier/ against the whole buffer on save. See the
@@ -1645,7 +1647,9 @@ fails.
     "Keep the face remappings around to revert them.")
   (defun me/org-present-end ()
     "Configurations to run when `org-present-mode' ends."
-    (setq header-line-format nil)
+    (setq
+     header-line-format nil
+     org-hide-emphasis-markers nil)
     (mapc #'face-remap-remove-relative me/org-present-face-remap-cookies)
     (setq face-remap-remove-relative nil)
     (display-line-numbers-mode 1)
@@ -1656,10 +1660,20 @@ fails.
   (defun me/org-present-start ()
     "Configurations to run when `org-present-mode' starts."
     (beginning-of-buffer)
-    (setq header-line-format " ")
+    (setq
+     header-line-format " "
+     org-hide-emphasis-markers t)
     (push (face-remap-add-relative 'default 'variable-pitch)
           me/org-present-face-remap-cookies)
     (push (face-remap-add-relative 'header-line '(:height 4.0))
+          me/org-present-face-remap-cookies)
+    (push (face-remap-add-relative 'org-block 'fixed-pitch)
+          me/org-present-face-remap-cookies)
+    (push (face-remap-add-relative 'org-block 'hl-line)
+          me/org-present-face-remap-cookies)
+    (push (face-remap-add-relative 'org-block-begin-line 'fixed-pitch)
+          me/org-present-face-remap-cookies)
+    (push (face-remap-add-relative 'org-block-begin-line 'hl-line)
           me/org-present-face-remap-cookies)
     (display-line-numbers-mode 0)
     (hl-line-mode 0)
