@@ -26,6 +26,8 @@
 
 (require 'dired)
 
+;;;; Jump
+
 ;;;###autoload
 (defun hanna-beginning-of-line ()
   "Move point to first non-whitespace character, or beginning of line."
@@ -53,6 +55,29 @@
   (unless (search-forward-regexp "\n[[:blank:]]*\n" nil t)
     (goto-char (point-max)))
   (skip-chars-forward "\n"))
+
+;;;; Scroll
+
+(defun hanna-scroll-horizontal (amount)
+  "Scroll the window horizontall by AMOUNT increment in columns.
+A positive value means to scroll towards the right, as opposed to negative value
+which scroll the content leftwards."
+  (interactive)
+  (let* ((position (mouse-position))
+         (window (window-at (cadr position) (cddr position))))
+    (with-selected-window window
+      (if truncate-lines
+          (scroll-left amount)
+        (message "[hanna] Nothing to scroll")))))
+
+(mapc (lambda (n)
+        (let ((documentation (format "Scroll horizontally by %+d columns." n))
+              (name (intern (format "hanna-scroll-horizontal%+d" n))))
+          (eval `(defun ,name ()
+                   ,documentation
+                   (interactive)
+                   (hanna-scroll-horizontal ,n)))))
+      '(2 4 8 -2 -4 -8))
 
 (provide 'hanna)
 

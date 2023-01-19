@@ -1453,7 +1453,13 @@ things. =hanna= is a collection of replacements for the aforementioned defaults.
   :bind
   ([remap move-beginning-of-line] . hanna-beginning-of-line)
   ([remap backward-paragraph] . hanna-paragraph-backward)
-  ([remap forward-paragraph] . hanna-paragraph-forward))
+  ([remap forward-paragraph] . hanna-paragraph-forward)
+  ("<wheel-right>" . hanna-scroll-horizontal+2)
+  ("<wheel-left>" . hanna-scroll-horizontal-2)
+  ("<double-wheel-right>" . hanna-scroll-horizontal+4)
+  ("<double-wheel-left>" . hanna-scroll-horizontal-4)
+  ("<triple-wheel-right>" . hanna-scroll-horizontal+8)
+  ("<triple-wheel-left>" . hanna-scroll-horizontal-8))
 #+END_SRC
 
 Isearch stands for /incremental search/. This means that search results are
@@ -1477,12 +1483,6 @@ Customize the scrolling behavior using the mouse wheel.
 #+BEGIN_SRC emacs-lisp
 (use-package mwheel
   :straight nil
-  :config
-  (advice-add 'mwheel-scroll :around
-    (defun me/mwheel-scroll (original &rest arguments)
-      "Like `mwheel-scroll' but preserve screen position."
-      (let ((scroll-preserve-screen-position :always))
-        (apply original arguments))))
   :custom
   (mouse-wheel-progressive-speed nil)
   (mouse-wheel-scroll-amount '(2 ((control) . 8))))
