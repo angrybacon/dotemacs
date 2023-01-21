@@ -403,7 +403,9 @@ authoring documents with a fast and effective plain-text system.
   :bind
   (:map org-mode-map
    ("C-<return>" . nil)
-   ("C-<tab>" . me/org-cycle-parent))
+   ("C-<tab>" . me/org-cycle-parent)
+   ("C-S-<down>" . nil)                 ; Free paragraph command
+   ("C-S-<up>" . nil))                  ; Free paragraph command
   :custom
   (org-confirm-babel-evaluate nil)
   (org-cycle-separator-lines 0)
@@ -1166,19 +1168,20 @@ Yup, Emacs supports LSP.
 #+BEGIN_SRC emacs-lisp
 (use-package eglot
   :straight nil
-  :custom
-  (eglot-autoshutdown t)
-  :hook
-  (eglot-managed-mode . me/flymake-eslint-enable-maybe)
-  (typescript-ts-base-mode . eglot-ensure)
-  :init
-  (put 'eglot-server-programs 'safe-local-variable 'listp)
   :config
   (add-to-list 'eglot-stay-out-of 'eldoc-documentation-strategy)
   (put 'eglot-error 'flymake-overlay-control nil)
   (put 'eglot-warning 'flymake-overlay-control nil)
   (advice-add 'eglot--apply-workspace-edit :after #'me/project-save)
   (advice-add 'project-kill-buffers :before #'me/eglot-shutdown-project)
+  :custom
+  (eglot-autoshutdown t)
+  (eglot-events-buffer-size 0)
+  :hook
+  (eglot-managed-mode . me/flymake-eslint-enable-maybe)
+  (typescript-ts-base-mode . eglot-ensure)
+  :init
+  (put 'eglot-server-programs 'safe-local-variable 'listp)
   :preface
   (defun me/eglot-shutdown-project ()
     "Kill the LSP server for the current project if it exists."
@@ -2029,7 +2032,6 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
    ("M-4" . nil))
   :custom
   (epg-pinentry-mode 'loopback)
-  (git-commit-fill-column 72)
   (magit-display-buffer-function
    'magit-display-buffer-same-window-except-diff-v1)
   (magit-diff-highlight-hunk-region-functions
