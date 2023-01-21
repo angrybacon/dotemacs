@@ -515,10 +515,6 @@ Provide various commands to list and /consult/ existing collections.
 
 *** Corfu
 
-Minimal completion-at-point. This is an experiment to try and replace the
-heavier =company= alternative. With =display-line-numbers-type=, prefer the
-='visual= value as ='relative= numbers break when the completion overlay opens.
-
 #+BEGIN_SRC emacs-lisp
 (use-package corfu
   :hook
@@ -526,6 +522,16 @@ heavier =company= alternative. With =display-line-numbers-type=, prefer the
   :custom
   (corfu-auto t)
   (corfu-auto-delay .5))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package corfu-popupinfo
+  :load-path "straight/build/corfu/extensions"
+  :straight nil
+  :custom
+  (corfu-popupinfo-delay '(1.0 . t))
+  :hook
+  (global-corfu-mode . corfu-popupinfo-mode))
 #+END_SRC
 
 *** Marginalia
