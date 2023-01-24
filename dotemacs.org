@@ -1401,6 +1401,13 @@ Prettify the mode-line with customizable and conditional segments.
     '(irc-buffers matches process debug me/major workspace-name)))
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+(use-package leyline
+  :demand
+  :load-path "lisp/leyline"
+  :straight nil)
+#+END_SRC
+
 ** Multiple Cursors
 
 Add support for multiple cursors within Evil.
