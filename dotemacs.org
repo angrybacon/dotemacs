@@ -1195,6 +1195,10 @@ Yup, Emacs supports LSP.
 #+BEGIN_SRC emacs-lisp
 (use-package flymake
   :straight nil
+  :config
+  (with-eval-after-load 'evil
+    (evil-global-set-key 'motion "g'" #'flymake-goto-next-error)
+    (evil-global-set-key 'motion "g\"" #'flymake-goto-prev-error))
   :custom
   (flymake-fringe-indicator-position nil))
 #+END_SRC
@@ -1513,6 +1517,10 @@ purposes.
 #+BEGIN_SRC emacs-lisp
 (use-package pulsar
   :defer 1
+  :config
+  (add-to-list 'pulsar-pulse-functions 'flymake-goto-next-error)
+  (add-to-list 'pulsar-pulse-functions 'flymake-goto-prev-error)
+  (add-to-list 'pulsar-pulse-functions 'goto-char)
   :hook
   (after-init . pulsar-global-mode))
 #+END_SRC
