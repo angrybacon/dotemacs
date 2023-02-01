@@ -27,7 +27,9 @@
 
 (require 'replace)  ; `perform-replace'
 (require 'seq)      ; `seq-sort-by'
-(require 'simple)   ; `count-lines' `move-end-of-line' `newline' `push-mark' `transpose-line' `use-region-p'
+(require 'simple)   ; `count-lines' `cycle-spacing' `delete-blank-lines'
+                    ; `move-end-of-line' `newline' `push-mark' `transpose-line'
+                    ; `use-region-p'
 (require 'sort)     ; `reverse-region' `sort-regexp-fields'
 
 ;;;; Case functions
@@ -120,6 +122,14 @@ If region was active, keep it so that the command can be repeated."
     (barrinalo--duplicate-line)))
 
 ;;;; Indent functions
+
+;;;###autoload
+(defun barrinalo-cycle-spacing ()
+  "If within blank lines delete all but one or cycle spacing around point."
+  (interactive)
+  (if (looking-at "[[:blank:]]*$")
+      (delete-blank-lines)
+    (cycle-spacing)))
 
 ;;;###autoload
 (defun barrinalo-indent-leftward (begin end)

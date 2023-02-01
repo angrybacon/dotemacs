@@ -1125,10 +1125,11 @@ Group shortcuts for often-accessed configuration files.
 (defhydra hydra-visit (:color teal :idle 1.0)
   (concat (hercules-heading "Visit") "
  _._ secrets         _e_ emacs           _s_ zsh
- _c_ picom           _l_ linux           _t_ kitty
- _d_ qtile           _m_ macos           _v_ vim
- ^^                  _n_ dunst           ^^")
+ _`_ scratch         _l_ linux           _t_ kitty
+ _c_ picom           _m_ macos           _v_ vim
+ _d_ qtile           _n_ dunst           ^^")
   ("q" nil)
+  ("`" (scratch-buffer))
   ("." (find-file "~/.config/emacs/.cache/szadek.eld"))
   ("c" (find-file "~/Workspace/dot/config/picom.org"))
   ("d" (find-file "~/Workspace/dot/config/qtile.org"))
@@ -1824,6 +1825,7 @@ A collection of text-changing and transpose functions.
   :load-path "lisp/barrinalo"
   :straight nil
   :bind
+  ([remap delete-horizontal-space] . barrinalo-cycle-spacing)
   ("M-p" . barrinalo-swap-up)
   ("M-n" . barrinalo-swap-down)
   ("M-P" . barrinalo-duplicate-backward)
