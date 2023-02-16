@@ -1174,6 +1174,7 @@ Yup, Emacs supports LSP.
   :config
   (add-to-list 'eglot-stay-out-of 'eldoc-documentation-strategy)
   (put 'eglot-error 'flymake-overlay-control nil)
+  (put 'eglot-note 'flymake-overlay-control nil)
   (put 'eglot-warning 'flymake-overlay-control nil)
   (advice-add 'eglot--apply-workspace-edit :after #'me/project-save)
   (advice-add 'project-kill-buffers :before #'me/eglot-shutdown-project)
