@@ -1076,8 +1076,9 @@ Group project-related commands.
   (concat (hercules-heading "Do" "Find" "Search") "
  _K_ kill buffers    _d_ directory       _r_ replace
  _o_ edit todo       _D_ root            _s_ ripgrep
- _t_ forget project  _f_ file            ^^
- _T_ prune projects  _p_ project         ^^")
+ _S_ save project    _f_ file            ^^
+ _t_ forget project  _p_ project         ^^
+ _T_ prune projects  ^^                  ^^")
   ("q" nil)
   ("d" project-find-dir)
   ("D" project-dired)
@@ -1087,6 +1088,7 @@ Group project-related commands.
   ("p" project-switch-project)
   ("r" project-query-replace-regexp)
   ("s" me/project-search)
+  ("S" me/project-save)
   ("t" project-forget-project)
   ("T" project-forget-zombie-projects))
 #+END_SRC
