@@ -25,10 +25,8 @@
 ;;; Code:
 
 (setq-default
- load-prefer-newer t
- mode-line-format nil
- package-enable-at-startup nil
- package-native-compile t)
+ load-prefer-newer t                    ; Avoid old byte-compiled dependencies
+ mode-line-format nil)                  ; Less flickering and speed optimization
 
 (setq-default
  default-frame-alist

@@ -38,6 +38,7 @@ Here are what I consider better defaults as per my own experience.
  tab-width 4                            ; Smaller width for tab characters
  uniquify-buffer-name-style 'forward    ; Uniquify buffer names
  use-short-answers t                    ; Replace yes/no prompts with y/n
+ vc-follow-symlinks t                   ; Never prompt when visiting symlinks
  window-combination-resize t            ; Resize windows proportionally
  x-stretch-cursor t)                    ; Stretch cursor to the glyph width
 (blink-cursor-mode 0)                   ; Prefer a still cursor
@@ -84,39 +85,16 @@ fullscreen immediately.
 
 ** Packages
 
-This configuration relies on =straight= and prefers latest Git heads for its
-packages over the default behavior from the built-in =package.el= which pulls
-releases from (M)ELPA.
-
-For customizing and loading the packages, =use-package= incentivizes clearly
-defined, consistent and more efficient configurations for all packages used in
-this document.
+Set up =use-package= to install packages automatically.
 
 #+BEGIN_SRC emacs-lisp
+(require 'package)
+(setq-default package-native-compile t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") 'append)
+(require 'use-package)
 (setq-default
- straight-use-package-by-default t)     ; Allow `use-package' interface
-#+END_SRC
-
-Bootstrap =straight=.
-
-#+BEGIN_SRC emacs-lisp
-(let* ((bootstrap-file "straight/repos/straight.el/bootstrap.el")
-       (bootstrap-path (expand-file-name bootstrap-file user-emacs-directory))
-       (bootstrap-version 5)
-       (install.el "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"))
-  (unless (file-exists-p bootstrap-path)
-    (with-current-buffer
-        (url-retrieve-synchronously install.el 'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-path nil 'nomessage))
-#+END_SRC
-
-Install =use-package= and defer all packages by default.
-
-#+BEGIN_SRC emacs-lisp
-(straight-use-package 'use-package)
-(setq-default use-package-always-defer t)
+ use-package-always-defer t
+ use-package-always-ensure t)
 #+END_SRC
 
 ** Core Function and Commands
@@ -128,8 +106,7 @@ package.
 #+BEGIN_SRC emacs-lisp
 (use-package manticore
   :demand t
-  :load-path "lisp/manticore"
-  :straight nil)
+  :load-path "lisp/manticore")
 #+END_SRC
 
 ** Cache
@@ -140,7 +117,6 @@ directory with an ever-growing number of packages used on a daily basis.
 #+BEGIN_SRC emacs-lisp
 (use-package shelldock
   :load-path "lisp/shelldock"
-  :straight nil
   :commands (shelldock))
 #+END_SRC
 
@@ -175,7 +151,6 @@ machine-specific settings.
 #+BEGIN_SRC emacs-lisp
 (use-package szadek
   :load-path "lisp/szadek"
-  :straight nil
   :commands (szadek-get)
   :custom
   (szadek-file (shelldock "szadek.eld"))
@@ -189,7 +164,6 @@ machine-specific settings.
 #+BEGIN_SRC emacs-lisp
 (use-package morophon
   :load-path "lisp/morophon"
-  :straight nil
   :commands (morophon-cycle morophon-disable-themes)
   :custom
   (morophon-known-themes '(zenmelt modus-operandi)))
@@ -239,7 +213,7 @@ Automatically re-apply the configuration whenever the values change. See
 
 #+BEGIN_SRC emacs-lisp
 (use-package modus-themes
-  :straight nil
+  :ensure nil
   :custom
   (modus-themes-diffs 'fg-only)
   (modus-themes-mode-line '(accented borderless))
@@ -282,7 +256,6 @@ adds a /reset/ on save when visiting the theme file.
 (use-package zenmelt-theme
   :demand
   :load-path "lisp/zenmelt"
-  :straight nil
   :config
   (put 'after-save-hook 'safe-local-variable
        (lambda (value) (equal value '(zenmelt--reset t))))
@@ -297,7 +270,7 @@ HTML mode is defined in =sgml-mode.el=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package sgml-mode
-  :straight nil
+  :ensure nil
   :hook
   (html-mode . (lambda () (setq me/pretty-print-function #'sgml-pretty-print)))
   (html-mode . sgml-electric-tag-pair-mode)
@@ -314,16 +287,17 @@ built-in major modes to edit JavaScript buffers relying on
 
 #+BEGIN_SRC emacs-lisp
 (use-package typescript-ts-mode
-  :straight nil
+  :ensure nil
   :hook
-  (tsx-ts-mode . sgml-electric-tag-pair-mode))
+  (tsx-ts-mode . sgml-electric-tag-pair-mode)
+  :mode (rx ".ts" eos))
 #+END_SRC
 
 ** Lisp
 
 #+BEGIN_SRC emacs-lisp
 (use-package emacs-lisp-mode
-  :straight nil
+  :ensure nil
   :bind
   (:map emacs-lisp-mode-map
    ("C-c C-c" . manticore-eval-region-dwim)
@@ -340,14 +314,14 @@ built-in major modes to edit JavaScript buffers relying on
 
 #+BEGIN_SRC emacs-lisp
 (use-package ielm
-  :straight nil
+  :ensure nil
   :hook
   (ielm-mode . (manticore-scroll-margin-disable)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package lisp-mode
-  :straight nil
+  :ensure nil
   :mode ((rx ".eld" eos) . lisp-data-mode))
 #+END_SRC
 
@@ -387,7 +361,7 @@ authoring documents with a fast and effective plain-text system.
 
 #+BEGIN_SRC emacs-lisp
 (use-package org
-  :straight (:type built-in)
+  :ensure nil
   :bind
   (:map org-mode-map
    ("C-<return>" . nil)
@@ -516,8 +490,7 @@ Provide various commands to list and /consult/ existing collections.
 
 #+BEGIN_SRC emacs-lisp
 (use-package corfu-popupinfo
-  :load-path "straight/build/corfu/extensions"
-  :straight nil
+  :ensure nil
   :custom
   (corfu-popupinfo-delay '(1.0 . t))
   :hook
@@ -571,7 +544,7 @@ Customize the way default comments should be handled.
 
 #+BEGIN_SRC emacs-lisp
 (use-package newcomment
-  :straight nil
+  :ensure nil
   :bind
   ("M-<return>" . comment-indent-new-line)
   :hook
@@ -651,7 +624,7 @@ Ediff is a visual interface to Unix =diff=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package ediff-wind
-  :straight nil
+  :ensure nil
   :custom
   (ediff-split-window-function #'split-window-horizontally)
   (ediff-window-setup-function #'ediff-setup-windows-plain))
@@ -664,7 +637,7 @@ with a file explorer.
 
 #+BEGIN_SRC emacs-lisp
 (use-package dired
-  :straight nil
+  :ensure nil
   :custom
   (dired-auto-revert-buffer t)
   (dired-dwim-target t)
@@ -684,7 +657,6 @@ interactive commands.
 #+BEGIN_SRC emacs-lisp
 (use-package dire
   :load-path "lisp/dire"
-  :straight nil
   :bind
   (:map dired-mode-map
    ("C-<return>" . dire-open-externally)))
@@ -703,7 +675,7 @@ documentation joined with a horizontal rule. eg.
 
 #+BEGIN_SRC emacs-lisp
 (use-package eldoc
-  :straight nil
+  :ensure nil
   :custom
   (eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
   (eldoc-echo-area-prefer-doc-buffer t)
@@ -851,7 +823,7 @@ them under the same bind, that is =<C-return>=. It's basically an expand DWIM.
 
 #+BEGIN_SRC emacs-lisp
 (use-package hippie-exp
-  :straight nil
+  :ensure nil
   :bind
   ("C-<return>" . hippie-expand)
   :custom
@@ -881,7 +853,7 @@ Bind useful commands in help buffers.
 
 #+BEGIN_SRC emacs-lisp
 (use-package help-mode
-  :straight nil
+  :ensure nil
   :bind
   ("C-h K" . describe-keymap)
   (:map help-mode-map
@@ -937,8 +909,7 @@ Augments and bootstrap helpers for =hydra=. Work in progress.
 #+BEGIN_SRC emacs-lisp
 (use-package hercules
   :demand
-  :load-path "lisp/hercules"
-  :straight nil)
+  :load-path "lisp/hercules")
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -1085,23 +1056,21 @@ Group system-related commands.
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-system (:color teal)
   (concat (hercules-heading "Do" "Packages" "Toggles") "
- _d_ clear compiled  _p_ install         _g_ debug: %-3s`debug-on-error
+ _d_ clear compiled  _p_ update          _g_ debug: %-3s`debug-on-error
  _D_ clear desktop   _P_ prune           ^^
- _l_ processes       _u_ update          ^^
- _Q_ clear and kill  _U_ update all      ^^")
+ _l_ processes       ^^                  ^^
+ _Q_ clear and kill  ^^                  ^^")
   ("q" nil)
   ("d" manticore-delete-compiled)
   ("D" desktop-remove)
   ("g" (setq debug-on-error (not debug-on-error)))
   ("l" list-processes)
-  ("p" straight-use-package)
-  ("P" (progn (straight-remove-unused-repos) (straight-prune-build)))
+  ("p" package-update-all)
+  ("P" package-autoremove)
   ("Q" (let ((desktop-save nil))
          (manticore-delete-compiled)
          (desktop-remove)
-         (save-buffers-kill-terminal)))
-  ("u" straight-pull-package)
-  ("U" straight-pull-all))
+         (save-buffers-kill-terminal))))
 #+END_SRC
 
 *** Hydra: Visit
@@ -1137,7 +1106,7 @@ Find code references throughout a codebase.
 
 #+BEGIN_SRC emacs-lisp
 (use-package xref
-  :straight nil
+  :ensure nil
   :bind
   ([remap xref-find-apropos] . xref-find-definitions)
   ([remap xref-find-definitions] . xref-find-definitions-other-window)
@@ -1155,7 +1124,7 @@ Yup, Emacs supports LSP.
 
 #+BEGIN_SRC emacs-lisp
 (use-package eglot
-  :straight nil
+  :ensure nil
   :config
   (add-to-list 'eglot-stay-out-of 'eldoc-documentation-strategy)
   (put 'eglot-error 'flymake-overlay-control nil)
@@ -1182,7 +1151,7 @@ Yup, Emacs supports LSP.
 
 #+BEGIN_SRC emacs-lisp
 (use-package flymake
-  :straight nil
+  :ensure nil
   :config
   (with-eval-after-load 'evil
     (evil-global-set-key 'motion "g'" #'flymake-goto-next-error)
@@ -1221,12 +1190,15 @@ Use [[https://tree-sitter.github.io/tree-sitter/][Tree-Sitter]] to handle more
 complex syntax trees where the default alternatives lack the highlighting power.
 
 Emacs 29 can be built with tree-sitter bindings built-in by default and the
-below configuration assumes as much. Language modules can be built from
+below configuration assumes as much. Language modules can be found at
 [[https://github.com/casouri/tree-sitter-module]].
 
 #+BEGIN_SRC emacs-lisp
 (use-package treesit
-  :straight nil
+  :ensure nil
+  :custom
+  (treesit-extra-load-path
+   `(,(expand-file-name "elpa/tree-sitter-module/dist/" user-emacs-directory)))
   :init
   (push '(css-mode . css-ts-mode) major-mode-remap-alist)
   (push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
@@ -1236,14 +1208,8 @@ below configuration assumes as much. Language modules can be built from
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(use-package tree-sitter-module
-  :straight (:host github :repo "casouri/tree-sitter-module" :type git
-             :files ("dist/*.dylib" "dist/*.so")
-             :pre-build ("./batch.sh"))
-  :after treesit
-  :init
-  (add-to-list 'treesit-extra-load-path
-               (straight--build-dir "tree-sitter-module")))
+(unless (package-installed-p 'tree-sitter-module)
+  (package-vc-install "https://github.com/casouri/tree-sitter-module"))
 #+END_SRC
 
 ** Line Numbers
@@ -1286,14 +1252,15 @@ Prettify the mode-line with customizable and conditional segments.
   :config
   (doom-modeline-def-segment me/buffer
     "The buffer description and major mode icon."
-    (concat doom-modeline-spc (doom-modeline--buffer-name) doom-modeline-spc))
+    (concat
+     (doom-modeline-spc) (doom-modeline--buffer-name) (doom-modeline-spc)))
   (doom-modeline-def-segment me/position
     "The buffer position."
     (let* ((active (doom-modeline--active))
            (face (if active 'mode-line 'mode-line-inactive)))
-      (propertize (concat doom-modeline-spc
+      (propertize (concat (doom-modeline-spc)
                           (format-mode-line "%l:%c")
-                          doom-modeline-spc)
+                          (doom-modeline-spc))
                   'face face)))
   (doom-modeline-def-segment me/buffer-simple
     "The buffer name but simpler."
@@ -1302,16 +1269,16 @@ Prettify the mode-line with customizable and conditional segments.
                         'doom-modeline-buffer-modified)
                        (active 'doom-modeline-buffer-file)
                        (t 'mode-line-inactive))))
-      (concat doom-modeline-spc
+      (concat (doom-modeline-spc)
               (propertize "%b" 'face face)
-              doom-modeline-spc)))
+              (doom-modeline-spc))))
   (doom-modeline-def-segment me/default-directory
     "The buffer directory."
     (let* ((active (doom-modeline--active))
            (face (if active 'doom-modeline-buffer-path 'mode-line-inactive)))
-      (concat doom-modeline-spc
+      (concat (doom-modeline-spc)
               (propertize (abbreviate-file-name default-directory) 'face face)
-              doom-modeline-spc)))
+              (doom-modeline-spc))))
   (doom-modeline-def-segment me/evil
     "The current Evil state."
     (doom-modeline--evil))
@@ -1323,17 +1290,17 @@ Prettify the mode-line with customizable and conditional segments.
             (text doom-modeline--flymake-text))
         (concat
          (when icon
-           (concat doom-modeline-spc
+           (concat (doom-modeline-spc)
                    (if active
                        icon
                      (doom-modeline-propertize-icon icon 'mode-line-inactive))))
          (when text
-           (concat (if icon doom-modeline-vspc doom-modeline-spc)
+           (concat (if icon (doom-modeline-vspc) (doom-modeline-spc))
                    (if active
                        text
                      (propertize text 'face 'mode-line-inactive))))
          (when (or icon text)
-           doom-modeline-spc)))))
+           (doom-modeline-spc))))))
   (doom-modeline-def-segment me/info
     "The topic and nodes in Info buffers."
     (let ((active (doom-modeline--active)))
@@ -1349,7 +1316,7 @@ Prettify the mode-line with customizable and conditional segments.
        (when Info-current-node
          (propertize (concat
                       (replace-regexp-in-string "%" "%%" Info-current-node)
-                      doom-modeline-spc)
+                      (doom-modeline-spc))
                      'face (if active
                                'doom-modeline-buffer-path
                              'mode-line-inactive))))))
@@ -1359,17 +1326,17 @@ Prettify the mode-line with customizable and conditional segments.
            (face (if active
                      'doom-modeline-buffer-major-mode
                    'mode-line-inactive)))
-      (concat doom-modeline-spc
+      (concat (doom-modeline-spc)
               (propertize (format-mode-line mode-name) 'face face)
-              doom-modeline-spc)))
+              (doom-modeline-spc))))
   (doom-modeline-def-segment me/vcs
     "The version control system information."
     (when-let ((branch doom-modeline--vcs-text))
       (let ((active (doom-modeline--active))
             (text (concat ":" branch)))
-        (concat doom-modeline-spc
+        (concat (doom-modeline-spc)
                 (if active text (propertize text 'face 'mode-line-inactive))
-                doom-modeline-spc))))
+                (doom-modeline-spc)))))
   (doom-modeline-mode 1)
   (doom-modeline-def-modeline 'info
     '(bar me/evil me/buffer me/info me/position selection-info)
@@ -1397,8 +1364,7 @@ Prettify the mode-line with customizable and conditional segments.
 #+BEGIN_SRC emacs-lisp
 (use-package leyline
   :demand
-  :load-path "lisp/leyline"
-  :straight nil)
+  :load-path "lisp/leyline")
 #+END_SRC
 
 ** Multiple Cursors
@@ -1460,7 +1426,6 @@ things. =hanna= is a collection of replacements for the aforementioned defaults.
 #+BEGIN_SRC emacs-lisp
 (use-package hanna
   :load-path "lisp/hanna"
-  :straight nil
   :bind
   ([remap move-beginning-of-line] . hanna-beginning-of-line)
   ([remap backward-paragraph] . hanna-paragraph-backward)
@@ -1478,7 +1443,7 @@ updated and highlighted while you are typing your query, incrementally.
 
 #+BEGIN_SRC emacs-lisp
 (use-package isearch
-  :straight nil
+  :ensure nil
   :bind
   (("C-S-r" . isearch-backward-regexp)
    ("C-S-s" . isearch-forward-regexp))
@@ -1493,7 +1458,7 @@ Customize the scrolling behavior using the mouse wheel.
 
 #+BEGIN_SRC emacs-lisp
 (use-package mwheel
-  :straight nil
+  :ensure nil
   :custom
   (mouse-wheel-progressive-speed nil)
   (mouse-wheel-scroll-amount '(2 ((control) . 8))))
@@ -1571,7 +1536,6 @@ start your pair-programming session.
 #+BEGIN_SRC emacs-lisp
 (use-package ruric
   :load-path "lisp/ruric"
-  :straight nil
   :commands
   (ruric-global-mode
    ruric-mode
@@ -1690,7 +1654,7 @@ Provide project-wide commands and utilities.
 
 #+BEGIN_SRC emacs-lisp
 (use-package project
-  :straight nil
+  :ensure nil
   :custom
   (project-list-file (shelldock "projects.eld"))
   (project-switch-commands
@@ -1805,7 +1769,6 @@ A collection of text-changing and transpose functions.
 #+BEGIN_SRC emacs-lisp
 (use-package barrinalo
   :load-path "lisp/barrinalo"
-  :straight nil
   :bind
   ([remap delete-horizontal-space] . barrinalo-cycle-spacing)
   ("M-p" . barrinalo-swap-up)
@@ -1818,7 +1781,7 @@ Add syntax highlighting support for configuration files.
 
 #+BEGIN_SRC emacs-lisp
 (use-package conf-mode
-  :straight nil
+  :ensure nil
   :mode (rx (or ".list"
                 "CODEOWNERS"
                 (and ".env" (* (and "." (+ word))))
@@ -1839,7 +1802,7 @@ Customize the noisy default towards backup files.
 
 #+BEGIN_SRC emacs-lisp
 (use-package files
-  :straight nil
+  :ensure nil
   :custom
   (backup-by-copying t)
   (backup-directory-alist `(("." . ,(shelldock "backups/"))))
@@ -1863,7 +1826,7 @@ Highlight line under point.
 
 #+BEGIN_SRC emacs-lisp
 (use-package hl-line
-  :straight nil
+  :ensure nil
   :hook
   (dired-mode . hl-line-mode)
   (fundamental-mode . hl-line-mode)
@@ -1895,7 +1858,7 @@ For instance, cycle through windows with =C-x o=, =o=... or =O=, =O=...
 
 #+BEGIN_SRC emacs-lisp
 (use-package repeat
-  :straight nil
+  :ensure nil
   :hook
   (after-init . repeat-mode))
 #+END_SRC
@@ -2016,9 +1979,7 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
    '(magit-diff-highlight-hunk-region-dim-outside
      magit-diff-highlight-hunk-region-using-face))
   (magit-diff-refine-hunk 'all)
-  (magit-module-sections-nested nil)
-  (magit-section-initial-visibility-alist
-   '((modules . show) (stashes . show) (unpulled . show) (unpushed . show)))
+  (magit-section-initial-visibility-alist '((unpushed . show)))
   :config
   (magit-add-section-hook
    'magit-status-sections-hook
@@ -2059,7 +2020,7 @@ lines.
 
 #+BEGIN_SRC emacs-lisp
 (use-package whitespace
-  :straight nil
+  :ensure nil
   :hook
   (prog-mode . whitespace-mode)
   (text-mode . whitespace-mode)
@@ -2074,7 +2035,7 @@ configurations.
 
 #+BEGIN_SRC emacs-lisp
 (use-package desktop
-  :straight nil
+  :ensure nil
   :defer 1
   :config
   (desktop-read)
@@ -2216,9 +2177,11 @@ currently selected window.
      (magit-process-mode             :align below :popup t)
      ("*Messages*"                   :align below :popup t)
      (,(rx bos "*EGLOT")             :align below :popup t :regexp t)
+     (debugger-mode                  :align below :popup t :select t)
      (embark-collect-mode            :align below :popup t :select t)
      (grep-mode                      :align below :popup t :select t)
      ("*Process List*"               :align below :popup t :select t)
+     ("*Warnings*"                   :align below :popup t :select t)
      ("*dired-check-process output*" :align below :popup t :select t)
      ("*eldoc*"                      :align below :popup t :select t)
      ("*eshell*"                     :align below :popup t :select t)
@@ -2236,7 +2199,6 @@ semi-automatically depending on window geometry.
 #+BEGIN_SRC emacs-lisp
 (use-package widowmaker
   :load-path "lisp/widowmaker"
-  :straight nil
   :bind
   ("s-'" . widowmaker-terminal-dwim)
   ("s-h" . windmove-left)
