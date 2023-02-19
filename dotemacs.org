@@ -291,18 +291,6 @@ adds a /reset/ on save when visiting the theme file.
 
 * Languages
 
-** CSV
-
-#+BEGIN_SRC emacs-lisp
-(use-package csv-mode
-  :bind
-  (:map csv-mode-map
-   ("<backtab>" . csv-backward-field)
-   ("<tab>" . csv-forward-field))
-  :hook
-  (csv-mode . csv-align-mode))
-#+END_SRC
-
 ** HTML
 
 HTML mode is defined in =sgml-mode.el=.
@@ -601,8 +589,6 @@ Customize the way default comments should be handled.
   :bind
   ("C-;" . embark-act)
   ([remap describe-bindings] . embark-bindings)
-  :config
-  (require 'embark-consult)
   :custom
   (embark-indicators
    '(embark-highlight-indicator
@@ -612,7 +598,9 @@ Customize the way default comments should be handled.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(use-package embark-consult)
+(use-package embark-consult
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 #+END_SRC
 
 *** Selected
@@ -1045,15 +1033,12 @@ Group interface-related commands.
 
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-interface (:color pink :pre (require 'morophon))
-  (concat (hercules-heading "Do" "Zoom" "Toggles") "
- _m_ maximize frame  _-_ out             _a_ / _A_ alpha: %s`morophon--alpha
- _M_ cycle displays  _=_ in              _n_ line numbers: %s`display-line-numbers
- _t_ cycle theme     _0_ reset           _o_ olivetti: %s`widowmaker-olivetti-automatic
- ^^                  ^^                  _O_ olivetti width: %s`olivetti-body-width")
+  (concat (hercules-heading "Do" "Toggles") "
+ _m_ maximize frame  _a_ / _A_ alpha: %s`morophon--alpha
+ _M_ cycle displays  _n_ line numbers: %s`display-line-numbers
+ _t_ cycle theme     _o_ olivetti: %s`widowmaker-olivetti-automatic
+ ^^                  _O_ olivetti width: %s`olivetti-body-width")
   ("q" nil)
-  ("-" default-text-scale-decrease)
-  ("=" default-text-scale-increase)
-  ("0" default-text-scale-reset :color blue)
   ("a" morophon-alpha-less)
   ("A" morophon-alpha-more)
   ("m" toggle-frame-maximized)
@@ -1291,7 +1276,7 @@ Prettify the mode-line with customizable and conditional segments.
 (use-package doom-modeline
   :demand t
   :custom
-  (doom-modeline-bar-width (szadek-get 'mode-line-width 8))
+  (doom-modeline-bar-width (szadek-get 'mode-line-bar 8))
   (doom-modeline-buffer-file-name-style 'truncate-with-project)
   (doom-modeline-height (szadek-get 'mode-line-height 36))
   (doom-modeline-enable-word-count t)
@@ -1549,7 +1534,7 @@ variables of interest, then copying them into the Emacs environment.
 
 #+BEGIN_SRC emacs-lisp
 (use-package exec-path-from-shell
-  :if (eq window-system 'ns)
+  :if (eq system-type 'darwin)
   :hook
   (after-init . exec-path-from-shell-initialize))
 #+END_SRC
@@ -1578,20 +1563,6 @@ enabled in the first place.
 #+END_SRC
 
 ** Pair-Programming
-
-Adjust font size for all windows at once.
-
-#+BEGIN_QUOTE
-This package provides commands for increasing or decreasing the default font
-size in all GUI Emacs frames -- it is like an Emacs-wide version of
-=text-scale-mode=.
-
---- Steve Purcell
-#+END_QUOTE
-
-#+BEGIN_SRC emacs-lisp
-(use-package default-text-scale)
-#+END_SRC
 
 When broadcasting your Emacs session over video online it can be useful to tone
 down the Emacs'ness. Summon the two-headed ogre Ruric with =M-x ruric-mode= and
@@ -1942,19 +1913,6 @@ calls to the =message= function.
         (dolist (window (get-buffer-window-list name nil :all-frames))
           (with-selected-window window
             (goto-char (point-max))))))))
-#+END_SRC
-
-Allow editable grep results.
-
-| TODO | Automatically enter insert state |
-
-#+BEGIN_SRC emacs-lisp
-(use-package wgrep
-  :config
-  (with-eval-after-load 'evil
-    (advice-add 'wgrep-abort-changes :after #'evil-initialize-state))
-  :custom
-  (wgrep-auto-save-buffer t))
 #+END_SRC
 
 ** REST Client

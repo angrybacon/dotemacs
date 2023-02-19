@@ -1,6 +1,6 @@
-;;; barrinalo.el --- Collection of text-changing functions -*- lexical-binding: t; -*-
+;;; barrinalo.el --- Collection of text transformers -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022 Mathieu Marques
+;; Copyright (C) 2023 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: November 29, 2021

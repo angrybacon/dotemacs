@@ -1,6 +1,6 @@
 ;;; init.el --- My Emacs configuration -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022 Mathieu Marques
+;; Copyright (C) 2023 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: October 16, 2014

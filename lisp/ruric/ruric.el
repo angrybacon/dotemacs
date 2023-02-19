@@ -1,6 +1,6 @@
 ;;; ruric.el --- Pair-programming features -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022 Mathieu Marques
+;; Copyright (C) 2023 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: June 30, 2022

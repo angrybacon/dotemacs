@@ -1,6 +1,6 @@
 ;;; zenmelt-theme.el --- A Zenburn clone -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022 Mathieu Marques
+;; Copyright (C) 2023 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: February 08, 2021
