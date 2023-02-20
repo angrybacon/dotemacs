@@ -1240,15 +1240,6 @@ Prettify the mode-line with customizable and conditional segments.
 
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
-  :demand t
-  :custom
-  (doom-modeline-bar-width (szadek-get 'mode-line-bar 8))
-  (doom-modeline-buffer-file-name-style 'truncate-with-project)
-  (doom-modeline-height (szadek-get 'mode-line-height 36))
-  (doom-modeline-enable-word-count t)
-  (doom-modeline-major-mode-icon nil)
-  (doom-modeline-percent-position nil)
-  (doom-modeline-vcs-max-length 28)
   :config
   (doom-modeline-def-segment me/buffer
     "The buffer description and major mode icon."
@@ -1337,7 +1328,6 @@ Prettify the mode-line with customizable and conditional segments.
         (concat (doom-modeline-spc)
                 (if active text (propertize text 'face 'mode-line-inactive))
                 (doom-modeline-spc)))))
-  (doom-modeline-mode 1)
   (doom-modeline-def-modeline 'info
     '(bar me/evil me/buffer me/info me/position selection-info)
     '(irc-buffers matches process debug me/major workspace-name))
@@ -1358,7 +1348,17 @@ Prettify the mode-line with customizable and conditional segments.
     '(irc-buffers matches process debug me/major workspace-name))
   (doom-modeline-def-modeline 'vcs
     '(bar me/evil me/buffer remote-host me/position selection-info)
-    '(irc-buffers matches process debug me/major workspace-name)))
+    '(irc-buffers matches process debug me/major workspace-name))
+  :custom
+  (doom-modeline-bar-width (szadek-get 'mode-line-bar 8))
+  (doom-modeline-buffer-file-name-style 'truncate-with-project)
+  (doom-modeline-height (szadek-get 'mode-line-height 36))
+  (doom-modeline-enable-word-count t)
+  (doom-modeline-major-mode-icon nil)
+  (doom-modeline-percent-position nil)
+  (doom-modeline-vcs-max-length 28)
+  :hook
+  (after-init . doom-modeline-mode))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -1454,16 +1454,6 @@ updated and highlighted while you are typing your query, incrementally.
   (lazy-highlight-initial-delay 0))
 #+END_SRC
 
-Customize the scrolling behavior using the mouse wheel.
-
-#+BEGIN_SRC emacs-lisp
-(use-package mwheel
-  :ensure nil
-  :custom
-  (mouse-wheel-progressive-speed nil)
-  (mouse-wheel-scroll-amount '(2 ((control) . 8))))
-#+END_SRC
-
 Pulse strategic locations in the current buffer for readability and focus
 purposes.
 
@@ -1511,8 +1501,7 @@ Augment Emacs experience for MacOS users.
   (setq-default
    ns-alternate-modifier 'super         ; Map Super to the Alt key
    ns-command-modifier 'meta            ; Map Meta to the Cmd key
-   ns-pop-up-frames nil                 ; Always re-use the same frame
-   ns-use-mwheel-momentum nil))         ; Disable smooth scroll
+   ns-pop-up-frames nil))               ; Always re-use the same frame
 #+END_SRC
 
 Provide a way to invoke =bash= on Windows. This requires /Developer Mode/ to be
@@ -1893,6 +1882,29 @@ Emacs can also emulate an interactive REST client.
    ("C-p" . restclient-jump-prev))
   :hook
   (restclient-mode . display-line-numbers-mode))
+#+END_SRC
+
+** Scroll
+
+Customize the scrolling behavior using the mouse wheel.
+
+#+BEGIN_SRC emacs-lisp
+(use-package mwheel
+  :ensure nil
+  :custom
+  (mouse-wheel-progressive-speed nil)
+  (mouse-wheel-scroll-amount '(2 ((control) . 8))))
+#+END_SRC
+
+Enable pixe-wise scroll.
+
+#+BEGIN_SRC emacs-lisp
+(use-package pixel-scroll
+  :ensure nil
+  :custom
+  (pixel-scroll-precision-use-momentum t)
+  :hook
+  (after-init . pixel-scroll-precision-mode))
 #+END_SRC
 
 ** Terminal
