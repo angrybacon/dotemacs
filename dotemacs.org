@@ -18,6 +18,7 @@ Here are what I consider better defaults as per my own experience.
  custom-unlispify-menu-entries nil      ; Prefer kebab-case for titles
  custom-unlispify-tag-names nil         ; Prefer kebab-case for symbols
  delete-by-moving-to-trash t            ; Delete files to trash
+ epg-pinentry-mode 'loopback            ; Redirect passphrase prompts to self
  fill-column 80                         ; Set width for automatic line breaks
  gc-cons-threshold (* 8 1024 1024)      ; We're not using Game Boys anymore
  help-window-select t                   ; Focus new help windows when opened
@@ -1472,21 +1473,6 @@ purposes.
 
 Initialize environment variables.
 
-#+BEGIN_QUOTE
-Ever find that a command works in your shell, but not in Emacs?
-
-This happens a lot on OS X, where an Emacs instance started from the GUI
-inherits a default set of environment variables.
-
-This library works solves this problem by copying important environment
-variables from the user's shell: it works by asking your shell to print out the
-variables of interest, then copying them into the Emacs environment.
-
---- Steve Purcell
-#+END_QUOTE
-
-| TODO | Figure out how to feed nvm path from a non-interactive shell |
-
 #+BEGIN_SRC emacs-lisp
 (use-package exec-path-from-shell
   :if (eq system-type 'darwin)
@@ -1502,18 +1488,6 @@ Augment Emacs experience for MacOS users.
    ns-alternate-modifier 'super         ; Map Super to the Alt key
    ns-command-modifier 'meta            ; Map Meta to the Cmd key
    ns-pop-up-frames nil))               ; Always re-use the same frame
-#+END_SRC
-
-Provide a way to invoke =bash= on Windows. This requires /Developer Mode/ to be
-enabled in the first place.
-
-#+BEGIN_SRC emacs-lisp
-(when (eq system-type 'windows-nt)
-  (defun me/bash ()
-    "Run Bash executable under System32."
-    (interactive)
-    (let ((explicit-shell-file-name "C:/Windows/System32/bash.exe"))
-      (shell))))
 #+END_SRC
 
 ** Pair-Programming
@@ -1532,7 +1506,27 @@ start your pair-programming session.
    ruric-toggle-line-numbers-absolute))
 #+END_SRC
 
-** Parentheses
+** Parens
+
+Automatically close pairs based on current major mode.
+
+#+BEGIN_SRC emacs-lisp
+(use-package electric-pair
+  :ensure nil
+  :hook
+  (after-init . electric-pair-mode))
+#+END_SRC
+
+Highlight matching pairs.
+
+#+BEGIN_SRC emacs-lisp
+(use-package paren
+  :ensure nil
+  :custom
+  (show-paren-delay 0)
+  :hook
+  (after-init . show-paren-mode))
+#+END_SRC
 
 Highlight parenthese-like delimiters in a rainbow fashion. It eases the reading
 when dealing with mismatched parentheses.
@@ -1541,29 +1535,6 @@ when dealing with mismatched parentheses.
 (use-package rainbow-delimiters
   :hook
   (prog-mode . rainbow-delimiters-mode))
-#+END_SRC
-
-I am still looking for the perfect parenthesis management setup as of today...
-No package seem to please my person.
-
-#+BEGIN_SRC emacs-lisp
-(use-package smartparens
-  :bind
-  ("M-<backspace>" . sp-unwrap-sexp)
-  ("M-<left>" . sp-forward-barf-sexp)
-  ("M-<right>" . sp-forward-slurp-sexp)
-  ("M-S-<left>" . sp-backward-slurp-sexp)
-  ("M-S-<right>" . sp-backward-barf-sexp)
-  :hook
-  (after-init . smartparens-global-mode)
-  (wdired-mode . smartparens-mode)
-  :custom
-  (sp-highlight-pair-overlay nil)
-  (sp-highlight-wrap-overlay nil)
-  (sp-highlight-wrap-tag-overlay nil)
-  :config
-  (show-paren-mode 0)
-  (require 'smartparens-config))
 #+END_SRC
 
 ** Paste
@@ -1984,7 +1955,6 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
    ("M-3" . nil)
    ("M-4" . nil))
   :custom
-  (epg-pinentry-mode 'loopback)
   (magit-display-buffer-function
    'magit-display-buffer-same-window-except-diff-v1)
   (magit-diff-highlight-hunk-region-functions
@@ -2000,8 +1970,10 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
   (remove-hook 'magit-section-highlight-hook #'magit-diff-highlight))
 #+END_SRC
 
-Start =pinentry= in order for Emacs to be able to prompt for passphrases when
-necessary.
+Start a =pinentry= service automatically in order for Emacs to be able to prompt
+passphrases from the minibuffer. If Emacs doesn't redirect prompts regardless of
+the value for =epg-pinentry-mode=, add =allow-emacs-pinentry= to
+=~/.gnupg/gpg-agent.conf=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package pinentry

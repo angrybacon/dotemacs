@@ -316,6 +316,9 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(outline-6                          ((t :foreground ,blue-1)))
    `(outline-7                          ((t :foreground ,green+2)))
    `(outline-8                          ((t :foreground ,fg-1)))
+;;;;;; Parens
+   `(show-paren-match                   ((t :background ,cyan :foreground ,bg)))
+   `(show-paren-mismatch                ((t :background ,magenta :foreground ,bg)))
 ;;;;;; Pulse
    `(pulse-highlight-start-face         ((t :background ,blue-3)))
 ;;;;;; Search
@@ -561,6 +564,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(markdown-table-face                ((t :height .9
                                             :inherit markdown-code-face)))
 ;;;;;; Pairs
+   `(rainbow-delimiters-base-error-face ((t :foreground ,magenta)))
    `(rainbow-delimiters-depth-1-face    ((t :foreground ,fg)))
    `(rainbow-delimiters-depth-2-face    ((t :foreground ,blue-1)))
    `(rainbow-delimiters-depth-3-face    ((t :foreground ,yellow-2)))

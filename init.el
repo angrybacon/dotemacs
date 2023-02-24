@@ -35,12 +35,8 @@
 
   ;; Tangle and compile if necessary only, then load the configuration
   (let* ((.org "dotemacs.org")
-         (.el (concat (file-name-sans-extension .org) ".el"))
-         (modification-time
-          (file-attribute-modification-time (file-attributes .org))))
-    (require 'org-compat)
-    (require 'org-macs)
-    (unless (org-file-newer-than-p .el modification-time)
+         (.el (concat (file-name-sans-extension .org) ".el")))
+    (when (file-newer-than-file-p .org .el)
       (require 'ob-tangle)
       (org-babel-tangle-file .org .el "emacs-lisp"))
     (load-file .el))
