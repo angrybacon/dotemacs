@@ -10,11 +10,12 @@ Here are what I consider better defaults as per my own experience.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default
- ad-redefinition-action 'accept         ; Silence warnings for redefinition
+ ad-redefinition-action 'accept         ; Silence warnings for redefinitions
  auto-save-list-file-prefix nil         ; Prevent tracking for auto-saves
  create-lockfiles nil                   ; Locks are more nuisance than blessing
  cursor-in-non-selected-windows nil     ; Hide the cursor in inactive windows
  cursor-type '(hbar . 2)                ; Underline-shaped cursor
+ custom-file null-device                ; Prevent littering
  custom-unlispify-menu-entries nil      ; Prefer kebab-case for titles
  custom-unlispify-tag-names nil         ; Prefer kebab-case for symbols
  delete-by-moving-to-trash t            ; Delete files to trash
@@ -22,7 +23,7 @@ Here are what I consider better defaults as per my own experience.
  fill-column 80                         ; Set width for automatic line breaks
  gc-cons-threshold (* 8 1024 1024)      ; We're not using Game Boys anymore
  help-window-select t                   ; Focus new help windows when opened
- indent-tabs-mode nil                   ; Stop using tabs to indent
+ indent-tabs-mode nil                   ; Prefer spaces over tabs to indent
  inhibit-startup-screen t               ; Disable start-up screen
  initial-scratch-message ""             ; Empty the initial *scratch* buffer
  initial-major-mode #'org-mode          ; Prefer `org-mode' for *scratch*
@@ -42,6 +43,7 @@ Here are what I consider better defaults as per my own experience.
  vc-follow-symlinks t                   ; Never prompt when visiting symlinks
  window-combination-resize t            ; Resize windows proportionally
  x-stretch-cursor t)                    ; Stretch cursor to the glyph width
+
 (blink-cursor-mode 0)                   ; Prefer a still cursor
 (delete-selection-mode 1)               ; Replace region when inserting text
 (global-subword-mode 1)                 ; Iterate through CamelCase words
@@ -50,6 +52,7 @@ Here are what I consider better defaults as per my own experience.
 (put 'scroll-left 'disabled nil)        ; Enable `scroll-left'
 (put 'upcase-region 'disabled nil)      ; Enable `upcase-region'
 (set-default-coding-systems 'utf-8)     ; Default to utf-8 encoding
+(global-unset-key (kbd "C-x C-z"))      ; Unbind the `suspend-frame' command
 #+END_SRC
 
 Change a few indenting behaviors.
@@ -60,38 +63,16 @@ Change a few indenting behaviors.
 (put 'plist-put 'lisp-indent-function 2)
 #+END_SRC
 
-Unbind the =suspend-frame= command.
-
-#+BEGIN_SRC emacs-lisp
-(global-unset-key (kbd "C-x C-z"))
-#+END_SRC
-
-** Fullscreen
-
-Enable fullscreen. Given there are differences in meaning for /fullscreen/
-between window managers, the following tree aims to provide a pain-free
-experience with regard to fullscreen in most setups.
-
-In the case of macOS, fullscreen means Emacs will occupy a dedicated workspace
-so we want to maximize it instead. Works best with titlebar-less frames.
-
-Ideally, this should stay near the top of the file so that Emacs appear
-fullscreen immediately.
-
-#+BEGIN_SRC emacs-lisp
-(pcase window-system
-  ('w32 (set-frame-parameter nil 'fullscreen 'fullboth))
-  (_ (set-frame-parameter nil 'fullscreen 'maximized)))
-#+END_SRC
-
 ** Packages
 
-Set up =use-package= to install packages automatically.
+Set up =use-package= to install packages automatically deferring everything by
+default.
 
 #+BEGIN_SRC emacs-lisp
 (require 'package)
 (setq-default package-native-compile t)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") 'append)
+
 (require 'use-package)
 (setq-default
  use-package-always-defer t
@@ -100,8 +81,8 @@ Set up =use-package= to install packages automatically.
 
 ** Core Function and Commands
 
-In an effort to clean up the file as much as possible and in order to promote
-reusability, some features will be written and moved under a common core
+In an effort to clean up this very file as much as possible and in order to
+promote reusability, some features will be written and moved under a common core
 package.
 
 #+BEGIN_SRC emacs-lisp
@@ -113,12 +94,12 @@ package.
 ** Cache
 
 Use =.cache/= to contain local data. This is to avoid littering in the Emacs
-directory with an ever-growing number of packages used on a daily basis.
+user directory with an ever-growing number of packages used on a daily basis.
 
 #+BEGIN_SRC emacs-lisp
 (use-package shelldock
   :load-path "lisp/shelldock"
-  :commands (shelldock))
+  :commands shelldock)
 #+END_SRC
 
 Garbage-collect on focus-out, Emacs /should/ feel snappier overall.
@@ -130,19 +111,6 @@ Garbage-collect on focus-out, Emacs /should/ feel snappier overall.
       (garbage-collect))))
 #+END_SRC
 
-I chose to lay out my configurations and customizations in this very Org
-document for better visibility and maintainability through time and various
-upgrades. Albeit useful, the =customize-*= routines go against that strategy by
-writing directly at the end of the =user-init-file= or into a dedicated file
-when set accordingly.
-
-To fight the littering I've decided to completely disable this feature and
-redirect the writing to =/dev/null=.
-
-#+BEGIN_SRC emacs-lisp
-(setq-default custom-file null-device)
-#+END_SRC
-
 ** Load Secrets
 
 Small framework to read secrets out of a machine-local file. Mostly to keep
@@ -152,7 +120,7 @@ machine-specific settings.
 #+BEGIN_SRC emacs-lisp
 (use-package szadek
   :load-path "lisp/szadek"
-  :commands (szadek-get)
+  :commands szadek-get
   :custom
   (szadek-file (shelldock "szadek.eld"))
   (szadek-fix-missing t))
@@ -165,7 +133,7 @@ machine-specific settings.
 #+BEGIN_SRC emacs-lisp
 (use-package morophon
   :load-path "lisp/morophon"
-  :commands (morophon-cycle morophon-disable-themes)
+  :commands morophon-cycle morophon-disable-themes
   :custom
   (morophon-known-themes '(zenmelt modus-operandi)))
 #+END_SRC
@@ -586,7 +554,7 @@ use with =selected=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package selected
-  :bind*
+  :bind
   (:map selected-keymap
    ("C-c c"       . capitalize-region)
    ("C-c k"       . barrinalo-kebab)
@@ -2028,8 +1996,8 @@ configurations.
   (desktop-base-file-name (shelldock "desktop"))
   (desktop-base-lock-name (shelldock "desktop.lock"))
   (desktop-restore-eager 4)
-  (desktop-restore-forces-onscreen 'all)
-  (desktop-restore-frames t))
+  (desktop-restore-forces-onscreen nil)
+  (desktop-restore-frames nil))
 #+END_SRC
 
 Workspaces within Emacs.

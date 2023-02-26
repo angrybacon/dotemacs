@@ -1,4 +1,4 @@
-;;; dire.el --- Helpers for Dired -*- lexical-binding: t; -*-
+;;; dire.el --- Helpers for Dired                    -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023 Mathieu Marques
 

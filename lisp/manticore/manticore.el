@@ -1,4 +1,4 @@
-;;; manticore.el --- Core functions -*- lexical-binding: t; -*-
+;;; manticore.el --- Core functions                  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023 Mathieu Marques
 
@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(require 'simple)  ; `shell-command' `use-region-p'
+(require 'simple)                       ; `shell-command' `use-region-p'
 
 (defgroup manticore nil
   "Core functions and commands."

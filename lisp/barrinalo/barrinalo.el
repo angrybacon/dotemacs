@@ -25,12 +25,14 @@
 
 ;;; Code:
 
-(require 'replace)  ; `perform-replace'
-(require 'seq)      ; `seq-sort-by'
-(require 'simple)   ; `count-lines' `cycle-spacing' `delete-blank-lines'
-                    ; `move-end-of-line' `newline' `push-mark' `transpose-line'
-                    ; `use-region-p'
-(require 'sort)     ; `reverse-region' `sort-regexp-fields'
+(require 'replace)                      ; `perform-replace'
+(require 'seq)                          ; `seq-sort-by'
+(require 'simple)                       ; `count-lines' `cycle-spacing'
+                                        ; `delete-blank-lines'
+                                        ; `move-end-of-line' `newline'
+                                        ; `push-mark' `transpose-line'
+                                        ; `use-region-p'
+(require 'sort)                         ; `reverse-region' `sort-regexp-fields'
 
 ;;;; Case functions
 
@@ -92,7 +94,7 @@ With optional argument STAY true, leave point where it was."
   (save-excursion
     (move-end-of-line nil)
     (save-excursion
-      (insert (buffer-substring (point-at-bol) (point-at-eol))))
+      (insert (buffer-substring (pos-bol) (pos-eol))))
     (newline))
   (unless stay
     (let ((column (current-column)))

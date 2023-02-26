@@ -1,4 +1,4 @@
-;;; szadek.el --- Framework to retrieve secrets -*- lexical-binding: t; -*-
+;;; szadek.el --- Framework to retrieve secrets      -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023 Mathieu Marques
 

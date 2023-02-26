@@ -1,4 +1,4 @@
-;;; ruric.el --- Pair-programming features -*- lexical-binding: t; -*-
+;;; ruric.el --- Pair-programming features           -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023 Mathieu Marques
 

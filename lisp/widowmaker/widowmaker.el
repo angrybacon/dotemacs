@@ -1,4 +1,4 @@
-;;; widowmaker.el --- Manage windows -*- lexical-binding: t; -*-
+;;; widowmaker.el --- Manage windows                 -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023 Mathieu Marques
 

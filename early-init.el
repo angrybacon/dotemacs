@@ -1,4 +1,4 @@
-;;; early-init.el --- Early Emacs configuration -*- lexical-binding: t; -*-
+;;; early-init.el --- Early Emacs configuration      -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023 Mathieu Marques
 

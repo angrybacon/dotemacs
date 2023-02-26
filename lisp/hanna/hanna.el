@@ -1,4 +1,4 @@
-;;; hanna.el --- Collection of navigation functions -*- lexical-binding: t; -*-
+;;; hanna.el --- Collection of navigation functions  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023 Mathieu Marques
 

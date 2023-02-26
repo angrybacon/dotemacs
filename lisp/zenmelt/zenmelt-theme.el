@@ -1,4 +1,4 @@
-;;; zenmelt-theme.el --- A Zenburn clone -*- lexical-binding: t; -*-
+;;; zenmelt-theme.el --- A Zenburn clone             -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023 Mathieu Marques
 

@@ -1,4 +1,4 @@
-;;; hercules.el --- Hydra augments -*- lexical-binding: t; -*-
+;;; hercules.el --- Hydra augments                   -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023 Mathieu Marques
 

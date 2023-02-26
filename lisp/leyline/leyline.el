@@ -1,4 +1,4 @@
-;;; leyline.el --- Mode-line utilities -*- lexical-binding: t; -*-
+;;; leyline.el --- Mode-line utilities               -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023 Mathieu Marques
 

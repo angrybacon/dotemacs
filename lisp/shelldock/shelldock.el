@@ -1,4 +1,4 @@
-;;; shelldock.el --- Hide away your cache files -*- lexical-binding: t; -*-
+;;; shelldock.el --- Hide away your cache files      -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023 Mathieu Marques
 

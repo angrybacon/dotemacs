@@ -1,4 +1,4 @@
-;;; morophon.el --- Interact with themes -*- lexical-binding: t; -*-
+;;; morophon.el --- Interact with themes             -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023 Mathieu Marques
 
