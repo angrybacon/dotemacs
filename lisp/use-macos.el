@@ -5,6 +5,8 @@
 (when (eq system-type 'darwin)
 
   (use-package exec-path-from-shell
+    :custom
+    (exec-path-from-shell-variables '("ANDROID_HOME" "MANPATH" "PATH"))
     :hook
     (after-init . exec-path-from-shell-initialize))
 
