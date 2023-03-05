@@ -343,7 +343,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(whitespace-space                   ((t :inherit shadow :inverse-video t)))
    `(whitespace-space-after-tab         ((t :inherit whitespace-space)))
    `(whitespace-space-before-tab        ((t :inherit whitespace-space-after-tab)))
-   `(whitespace-tab                     ((t :background ,red-1)))
+   `(whitespace-tab                     ((t :background ,bg+1)))
    `(whitespace-trailing                ((t :inherit trailing-whitespace)))
 ;;;;;; Terminal
    `(ansi-color-black                   ((t :background ,bg+4 :foreground ,bg)))

@@ -2,6 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
+;;;; Compilation
+
 (use-package flymake
   :ensure nil
   :config
@@ -24,8 +26,22 @@ should be checked."
       (push (file-name-concat root "node_modules" ".bin") exec-path)
       (flymake-eslint-enable))))
 
+;;;; Prettier
+
 (use-package prettier
   :init
   (add-to-list 'safe-local-eval-forms '(prettier-mode)))
+
+;;;; Whitespaces
+
+(use-package whitespace
+  :ensure nil
+  :custom
+  (whitespace-display-mappings '((tab-mark ?\t [?› ?\t])))
+  (whitespace-global-modes '(prog-mode text-mode))
+  (whitespace-line-column nil)
+  (whitespace-style '(empty face tab-mark tabs trailing))
+  :hook
+  (after-init . global-whitespace-mode))
 
 ;;; use-lint.el ends here

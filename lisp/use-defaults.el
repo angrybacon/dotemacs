@@ -39,20 +39,16 @@
  sentence-end-double-space nil          ; Use a single space after dots
  show-help-function nil                 ; Disable help text everywhere
  tab-always-indent 'complete            ; Indent first then try completions
- tab-width 4                            ; Smaller width for tab characters
  uniquify-buffer-name-style 'forward    ; Uniquify buffer names
  use-short-answers t                    ; Replace yes/no prompts with y/n
  vc-follow-symlinks t                   ; Never prompt when visiting symlinks
  version-control t                      ; Use numeric versions for backups
- whitespace-global-modes '(prog-mode text-mode) ; Ignore special buffers
- whitespace-style '(empty face tabs trailing) ; Configure whitespace characters
  window-combination-resize t            ; Resize windows proportionally
  x-stretch-cursor t)                    ; Stretch cursor to the glyph width
 
 (blink-cursor-mode 0)                   ; Prefer a still cursor
 (delete-selection-mode 1)               ; Replace region when inserting text
 (global-subword-mode 1)                 ; Iterate through CamelCase words
-(global-whitespace-mode 1)              ; Highlight extraneous whitespaces
 (mouse-avoidance-mode 'exile)           ; Avoid collision of mouse with point
 (repeat-mode 1)                         ; Allow common repeated commands
 (put 'downcase-region 'disabled nil)    ; Enable `downcase-region'
