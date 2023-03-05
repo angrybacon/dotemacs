@@ -8,8 +8,9 @@
   ;; NOTE Pending https://debbugs.gnu.org/cgi/bugreport.cgi?bug=47109 we would
   ;;      be able to join pieces of documentation with horizontal rules.
   (eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
+  (eldoc-echo-area-display-truncation-message nil)
   (eldoc-echo-area-prefer-doc-buffer t)
-  (eldoc-idle-delay .1))
+  (eldoc-idle-delay 0))
 
 (use-package help-mode
   :ensure nil

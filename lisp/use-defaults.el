@@ -27,6 +27,7 @@
  lazy-highlight-buffer t                ; Highlight the entire buffer
  lazy-highlight-cleanup nil             ; Keep isearch highlights around
  lazy-highlight-initial-delay 0         ; Remove highlight delay
+ max-mini-window-height 10              ; Limit height for minibuffer transients
  mouse-wheel-progressive-speed nil      ; Disable wheel acceleration
  mouse-wheel-scroll-amount '(2 ((control) . 8)) ; Allow faster scrolling
  mouse-yank-at-point t                  ; Yank at point rather than pointer
