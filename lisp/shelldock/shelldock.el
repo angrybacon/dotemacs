@@ -44,6 +44,12 @@
     (make-directory (file-name-directory path) t)
     path))
 
+(with-eval-after-load 'files
+  (setq-default backup-directory-alist `(("." . ,(shelldock "backups/")))))
+
+(with-eval-after-load 'org-persist
+  (setq-default org-persist-directory (shelldock "org-persist/")))
+
 (with-eval-after-load 'request
   (setq-default request-storage-directory (shelldock "request/")))
 

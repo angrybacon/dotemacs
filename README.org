@@ -11,13 +11,10 @@
 [[https://img.shields.io/badge/macos-yes-success.svg?logo=apple&style=flat-square]]
 [[https://img.shields.io/badge/windows-untested-important.svg?logo=windows&style=flat-square]]
 
-This repository contains my personal Emacs configuration.
-
-* What the .el
-
-If you are wondering where has gone all of the Lisp, fear not, for it is
-automagically tangled from an Org file into a Lisp file. See
-[[./dotemacs.org][dotemacs.org]].
+This repository contains my personal Emacs configuration. I've kept it around
+since my first hello-world through many /Emacs bankruptcies/ so it fits /me/ and
+it might not fit /you/. Do feel free however to use it as your own, adapt it to
+your needs. The licensing is /very/ permissive.
 
 * Installation
 

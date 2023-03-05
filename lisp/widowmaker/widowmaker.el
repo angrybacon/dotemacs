@@ -45,7 +45,7 @@
 ;;;; Common
 
 ;;;###autoload
-(defun widowmaker-kill-process-buffer (&optional buffer-or-name)
+(defun widowmaker-kill-buffer-with-process (&optional buffer-or-name)
   "Kill BUFFER-OR-NAME with no confirmation.
 If the buffer is not specified, kill the current buffer instead.
 Inhibit `kill-buffer-query-functions' to bypass the modal prompt for process
@@ -210,16 +210,16 @@ side window."
 
 ;;;; Terminal
 
-(defcustom widowmaker-terminal-function 'widowmaker-terminal-vterm
-  "Terminal emulator to use."
-  :type '(choice (const :tag "Vterm" widowmaker-terminal-vterm)))
-
 (defun widowmaker-terminal-vterm (&optional buffer-name)
   "Invoke `vterm'.
 Use BUFFER-NAME as name for the new terminal buffer when it is provided."
   (if (require 'vterm nil :noerror)
       (vterm buffer-name)
     (error "[Widowmaker] Package `vterm' not found")))
+
+(defcustom widowmaker-terminal-function 'widowmaker-terminal-vterm
+  "Terminal emulator to use."
+  :type '(choice (const :tag "Vterm" widowmaker-terminal-vterm)))
 
 ;;;###autoload
 (defun widowmaker-terminal-dwim (force)

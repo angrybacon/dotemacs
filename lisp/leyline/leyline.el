@@ -33,12 +33,11 @@
   "Rules for major-mode names to be renamed."
   :type '(alist :key-type symbol :value-type string))
 
-(defun leyline--rename ()
+;;;###autoload
+(defun leyline-rename ()
   "Rename the current major-mode name as per `leyline-rules'."
   (when-let ((name (alist-get major-mode leyline-rules)))
     (setq mode-name name)))
-
-(add-hook 'after-change-major-mode-hook #'leyline--rename)
 
 (provide 'leyline)
 

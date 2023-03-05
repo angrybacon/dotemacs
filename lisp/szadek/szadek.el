@@ -54,7 +54,7 @@ permanently."
 (defvar szadek-on-save-hook '()
   "Hook run after the secret file has been saved.")
 
-(defun szadek-on-save ()
+(defun szadek--on-save ()
   "Run hooks on save in the secret file buffer."
   (let ((file szadek-file))
     (if (file-exists-p file)
@@ -63,7 +63,16 @@ permanently."
           (run-hooks 'szadek-on-save-hook))
       (error "[Szadek] Missing secret file `%S'" file))))
 
-(add-hook 'after-save-hook #'szadek-on-save)
+(add-hook 'after-save-hook #'szadek--on-save)
+
+;;;###autoload
+(defun szadek-register (function &optional immediate)
+  "Register FUNCTION under `szadek-on-save-hook'.
+It will be called every time the secret file `szadek-file' is updated.
+With IMMEDIATE, call FUNCTION immediately too."
+  (add-hook 'szadek-on-save-hook function)
+  (when immediate
+    (funcall function)))
 
 (defun szadek--read-file ()
   "Return the Lisp data found in the secret file.

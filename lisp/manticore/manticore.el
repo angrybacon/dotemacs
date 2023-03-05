@@ -52,6 +52,7 @@ With no region, evaluate the whole buffer."
   (interactive)
   (revert-buffer nil t))
 
+;;;###autoload
 (defun manticore-save-excursion (original &rest arguments)
   "Advice to wrap ORIGINAL with `save-excursion'.
 Call the original function with ARGUMENTS."

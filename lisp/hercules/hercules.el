@@ -25,6 +25,10 @@
 
 (defvar-local hercules--super-body nil)
 
+;; TODO Check out `defhydradio'
+;; TODO Improve `hercules-heading' to accept a list of fields
+
+;;;###autoload
 (defun hercules-heading (&rest headings)
   "Format HEADINGS to look pretty in a hydra docstring."
   (concat "\n "
@@ -32,23 +36,6 @@
                        (propertize (format "%-18s" heading) 'face 'shadow))
                      headings
                      nil)))
-
-(defun hercules-set-super ()
-  (when-let* ((suffix "-mode")
-              (position (- (length suffix)))
-              (mode (symbol-name major-mode))
-              (name (if (string= suffix (substring mode position))
-                        (substring mode 0 position)
-                      mode))
-              (body (intern (format "hydra-%s/body" name))))
-    (when (functionp body)
-      (setq hercules--super-body body))))
-
-(defun hercules-super-maybe ()
-  (interactive)
-  (if hercules--super-body
-      (funcall hercules--super-body)
-    (user-error "[Hercules] `hercules--super-body' is not set")))
 
 (provide 'hercules)
 

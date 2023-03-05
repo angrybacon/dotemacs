@@ -24,6 +24,11 @@
 
 ;;; Code:
 
+(when (getenv-internal "DEBUG")
+  (setq-default
+   debug-on-error t
+   init-file-debug t))
+
 (setq-default
  load-prefer-newer t                    ; Avoid old byte-compiled dependencies
  mode-line-format nil)                  ; Less flickering and speed optimization

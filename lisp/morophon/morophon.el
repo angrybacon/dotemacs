@@ -24,9 +24,9 @@
 
 ;;; Code:
 
-(require 'custom)   ; `load-theme'
-(require 'frame)    ; `set-frame-parameter'
-(require 'nadvice)  ; `advice-add'
+(require 'custom)                       ; `load-theme'
+(require 'frame)                        ; `set-frame-parameter'
+(require 'nadvice)                      ; `advice-add'
 
 (defgroup morophon nil
   "Interact with themes."
@@ -105,6 +105,21 @@ See `custom-available-themes'.")
     (when next
       (load-theme next t))
     (message "%s" next)))
+
+;;;; Typography
+
+;;;###autoload
+(defun morophon-typography-reset ()
+  "Set the base settings for typography faces."
+  (interactive)
+  (let ((font-fixed (szadek-get 'font-fixed "monospace"))
+        (font-size (szadek-get 'font-size 120))
+        (font-variable (szadek-get 'font-variable "sans-serif")))
+    (set-face-attribute 'default nil :font font-fixed :height font-size)
+    (set-face-attribute 'fixed-pitch nil :font font-fixed :height font-size)
+    (set-face-attribute 'mode-line nil :height font-size :inherit 'default)
+    (set-face-attribute 'mode-line-inactive nil :inherit 'mode-line)
+    (set-face-attribute 'variable-pitch nil :font font-variable)))
 
 (provide 'morophon)
 

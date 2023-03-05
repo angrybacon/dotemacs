@@ -2,4 +2,4 @@
 # group: vanilla
 # key: l
 # --
-console.log($0;
+console.log($0);

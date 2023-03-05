@@ -33,18 +33,44 @@
   ;; TODO See https://yrh.dev/blog/rant-obfuscation-in-emacs/
   (setq inhibit-startup-echo-area-message "angrybacon")
 
-  ;; Tangle and compile if necessary only, then load the configuration
-  (let* ((.org "dotemacs.org")
-         (.el (concat (file-name-sans-extension .org) ".el")))
-    (when (file-newer-than-file-p .org .el)
-      (require 'ob-tangle)
-      (org-babel-tangle-file .org .el "emacs-lisp"))
-    (load-file .el))
+  ;; Set up packages
+  (add-to-list 'load-path (expand-file-name "lisp/" user-emacs-directory))
+  (load "use-packages")
+
+  ;; Load these first to avoid flickering
+  (load "use-core")
+  (load "use-defaults")
+  (load "use-interface")
+  (load "use-macos")
+
+  ;; Load partials
+  (load "use-completion")
+  (load "use-dired")
+  (load "use-display")
+  (load "use-evil")
+  (load "use-git")
+  (load "use-help")
+  (load "use-http")
+  (load "use-hydra")
+  (load "use-languages")
+  (load "use-line")
+  (load "use-lint")
+  (load "use-lsp")
+  (load "use-parens")
+  (load "use-presentation")
+  (load "use-project")
+  (load "use-qol")
+  (load "use-snippets")
+  (load "use-terminal")
+  (load "use-workspaces")
 
   ;; Set the working directory to home regardless of where Emacs was started from
   (cd "~/")
 
   ;; Collect garbage when all else is done
-  (garbage-collect))
+  (garbage-collect)
+
+  ;; Log the start-up time
+  (add-hook 'emacs-startup-hook #'(lambda () (message "%s" (emacs-init-time)))))
 
 ;;; init.el ends here

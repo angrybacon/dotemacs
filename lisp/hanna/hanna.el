@@ -68,7 +68,7 @@ which scroll the content leftwards."
     (with-selected-window window
       (if truncate-lines
           (scroll-left amount)
-        (message "[hanna] Nothing to scroll")))))
+        (message "[Hanna] Nothing to scroll")))))
 
 (mapc (lambda (n)
         (let ((documentation (format "Scroll horizontally by %+d columns." n))
