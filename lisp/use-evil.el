@@ -68,6 +68,8 @@
    ("gD" . project-dired)
    ("gf" . me/project-find-file)
    ("gp" . project-switch-project)
+   ;; TODO Make me/project-yank-path
+   ("g/" . (lambda () (interactive) (kill-new (buffer-file-name))))
    ("M-." . nil)                        ; Free xref command
    :map evil-visual-state-map
    ("f" . fill-region)
