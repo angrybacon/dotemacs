@@ -47,10 +47,13 @@
   (orderless-component-separator 'orderless-escapable-split-on-space))
 
 (use-package vertico
+  :bind
+  ("M-R" . vertico-repeat)
   :custom
   (vertico-count-format '("%-5s " . "%2$s"))
   (vertico-resize nil)
   :hook
-  (after-init . vertico-mode))
+  (after-init . vertico-mode)
+  (minibuffer-setup . vertico-repeat-save))
 
 ;;; use-completion.el ends here
