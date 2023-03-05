@@ -5,7 +5,8 @@
 (use-package electric-pair
   :ensure nil
   :hook
-  (after-init . electric-pair-mode))
+  (after-init . electric-pair-mode)
+  (minibuffer-setup . (lambda () (electric-pair-local-mode 0))))
 
 (use-package paren
   :ensure nil
