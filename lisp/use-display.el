@@ -24,6 +24,7 @@
     (setq-default popper-group-function #'popper-group-by-project))
   :custom
   (popper-display-control nil)
+  (popper-echo-dispatch-keys nil)
   (popper-echo-lines 1)
   (popper-mode-line nil)
   (popper-reference-buffers
