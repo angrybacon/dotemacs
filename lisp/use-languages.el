@@ -44,6 +44,11 @@
 
 ;;;; JavaScript
 
+(use-package js
+  :ensure nil
+  :custom
+  (js-indent-level 2))
+
 (use-package typescript-ts-mode
   :ensure nil
   :hook
