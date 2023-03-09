@@ -180,6 +180,15 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(compilation-mode-line-fail         ((t :foreground ,red)))
    `(compilation-mode-line-run          ((t :foreground ,yellow)))
    `(compilation-warning-face           ((t :foreground ,orange :underline t)))
+   `(flymake-error                      ((t :background ,red-5
+                                            :foreground ,red+1
+                                            :underline t)))
+   `(flymake-note                       ((t :background ,blue-5
+                                            :foreground ,blue+1
+                                            :underline t)))
+   `(flymake-warning                    ((t :background ,fg-2
+                                            :foreground ,orange
+                                            :underline t)))
 ;;;;;; Customize
    `(custom-button                      ((t :inherit button)))
    `(custom-button-mouse                ((t :foreground ,yellow
@@ -240,16 +249,6 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
                                             :inverse-video t)))
    `(window-divider-first-pixel         ((t :inherit window-divider)))
    `(window-divider-last-pixel          ((t :inherit window-divider)))
-;;;;;; Language
-   `(flymake-error                      ((t :background ,red-5
-                                            :foreground ,red+1
-                                            :underline t)))
-   `(flymake-note                       ((t :background ,blue-5
-                                            :foreground ,blue+1
-                                            :underline t)))
-   `(flymake-warning                    ((t :background ,fg-2
-                                            :foreground ,orange
-                                            :underline t)))
 ;;;;;; Org
    `(org-agenda-date-today              ((t :foreground ,fg+1 :slant italic)))
    `(org-agenda-structure               ((t :inherit font-lock-comment-face)))
@@ -334,6 +333,9 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(reb-match-1                        ((t ,@(zenmelt--box 'yellow))))
    `(reb-match-2                        ((t ,@(zenmelt--box 'green))))
    `(reb-match-3                        ((t ,@(zenmelt--box 'red))))
+;;;;;; Shell
+   `(sh-heredoc                         ((t :foreground ,green+4)))
+   `(sh-quoted-exec                     ((t :foreground ,magenta)))
 ;;;;;; Syntax
    `(whitespace-empty                   ((t :background ,yellow-2 :extend t)))
    `(whitespace-hspace                  ((t :inherit whitespace-space)))

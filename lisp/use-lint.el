@@ -40,7 +40,7 @@ should be checked."
   (whitespace-display-mappings '((tab-mark ?\t [?› ?\t])))
   (whitespace-global-modes '(prog-mode text-mode))
   (whitespace-line-column nil)
-  (whitespace-style '(empty face tab-mark tabs trailing))
+  (whitespace-style '(empty face lines-tail tab-mark tabs trailing))
   :hook
   (after-init . global-whitespace-mode))
 

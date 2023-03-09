@@ -31,6 +31,11 @@
 (use-package git-modes)
 
 (use-package magit
+  :defines
+  (magit-file-section-map
+   magit-hunk-section-map
+   magit-section-mode-map
+   magit-status-mode-map)
   :functions magit-add-section-hook magit-diff-highlight
   :bind
   (:map magit-file-section-map
