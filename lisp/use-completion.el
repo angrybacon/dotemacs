@@ -27,7 +27,7 @@
   (after-init . global-corfu-mode)
   :custom
   (corfu-auto t)
-  (corfu-auto-delay .5))
+  (corfu-auto-delay 1))
 
 (use-package corfu-popupinfo
   :ensure nil
