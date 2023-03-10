@@ -49,8 +49,7 @@
   :commands
   (manticore-delete-compiled
    manticore-eval-region-dwim
-   manticore-revert-buffer-immediately
-   manticore-save-excursion))
+   manticore-revert-buffer-immediately))
 
 (use-package shelldock
   :demand

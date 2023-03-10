@@ -12,14 +12,13 @@
   ("C-c d" . hydra-dates/body)
   ("C-c g" . hydra-git/body)
   ("C-c i" . hydra-interface/body)
-  ("C-c p" . hydra-project/body)
   ("C-c s" . hydra-system/body)
   ("C-c v" . hydra-visit/body)
   :custom
   (hydra-default-hint nil)
   :config
 
-  (defhydra hydra-dates (:color teal)
+  (defhydra hydra-dates (:color teal :idle 1.0)
     (concat (hercules-heading "Insert" "Insert with Time") "
  _d_ short           _D_ short           ^^
  _i_ iso             _I_ iso             ^^
@@ -49,8 +48,9 @@
     ("s" git-gutter:stage-hunk :color red))
 
   (defhydra hydra-git--smerge (:color pink
-                                      :pre (if (not smerge-mode) (smerge-mode 1))
-                                      :post (smerge-auto-leave))
+                               :idle 1.0
+                               :pre (if (not smerge-mode) (smerge-mode 1))
+                               :post (smerge-auto-leave))
     (concat (hercules-heading "Move" "Keep" "Diff") "
  _g_ first           _RET_ current       _<_ upper / base
  _G_ last            _a_ all             _=_ upper / lower
@@ -73,7 +73,7 @@
     ("l" smerge-keep-lower)
     ("u" smerge-keep-upper))
 
-  (defhydra hydra-interface (:color pink :pre (require 'morophon))
+  (defhydra hydra-interface (:color pink :idle 1.0 :pre (require 'morophon))
     (concat (hercules-heading "Do" "Toggles") "
  _m_ maximize frame  _a_ / _A_ alpha: %s`morophon--alpha
  _M_ cycle displays  _n_ line numbers: %s`display-line-numbers
@@ -92,23 +92,7 @@
     ("t" morophon-cycle :color blue)
     ("T" morophon-cycle))
 
-  (defhydra hydra-project (:color teal :idle 1.0)
-    (concat (hercules-heading "Do" "Project" "Search") "
- _K_ kill buffers     _o_ todo            _f_ file
- ^^                   _S_ save            _r_ replace
- ^^                   _t_ forget project  _s_ ripgrep
- ^^                   _T_ prune projects  ^^")
-    ("q" nil)
-    ("f" me/project-find-file)
-    ("K" project-kill-buffers)
-    ("o" me/project-todo)
-    ("r" project-query-replace-regexp)
-    ("s" me/project-search)
-    ("S" me/project-save)
-    ("t" project-forget-project)
-    ("T" project-forget-zombie-projects))
-
-  (defhydra hydra-system (:color teal)
+  (defhydra hydra-system (:color teal :idle 1.0)
     (concat (hercules-heading "Do" "Packages" "Toggles") "
  _d_ clear compiled  _p_ update          _g_ debug: %-3s`debug-on-error
  _D_ clear desktop   _P_ prune           ^^

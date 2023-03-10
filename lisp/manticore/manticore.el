@@ -52,12 +52,6 @@ With no region, evaluate the whole buffer."
   (interactive)
   (revert-buffer nil t))
 
-;;;###autoload
-(defun manticore-save-excursion (original &rest arguments)
-  "Advice to wrap ORIGINAL with `save-excursion'.
-Call the original function with ARGUMENTS."
-  (save-excursion (apply original arguments)))
-
 (defcustom manticore-scroll-margin-minimum 0
   "Minimum value possible for the scroll margin when it should be inhibited."
   :type 'number)

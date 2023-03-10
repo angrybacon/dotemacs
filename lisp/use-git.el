@@ -31,11 +31,7 @@
 (use-package git-modes)
 
 (use-package magit
-  :defines
-  (magit-file-section-map
-   magit-hunk-section-map
-   magit-section-mode-map
-   magit-status-mode-map)
+  :defines magit-file-section-map magit-hunk-section-map magit-section-mode-map
   :functions magit-add-section-hook magit-diff-highlight
   :bind
   (:map magit-file-section-map
@@ -43,11 +39,6 @@
    :map magit-hunk-section-map
    ("<return>" . magit-diff-visit-file-other-window)
    :map magit-section-mode-map
-   ("M-1" . nil)
-   ("M-2" . nil)
-   ("M-3" . nil)
-   ("M-4" . nil)
-   :map magit-status-mode-map
    ("M-1" . nil)
    ("M-2" . nil)
    ("M-3" . nil)
