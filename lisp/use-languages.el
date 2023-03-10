@@ -9,6 +9,7 @@
   :custom
   (treesit-extra-load-path
    `(,(expand-file-name "elpa/tree-sitter-module/dist/" user-emacs-directory)))
+  (treesit-font-lock-level 4)
   :init
   (push '(css-mode . css-ts-mode) major-mode-remap-alist)
   (push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
