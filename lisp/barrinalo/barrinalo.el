@@ -25,7 +25,6 @@
 
 ;;; Code:
 
-(require 'replace)                      ; `perform-replace'
 (require 'seq)                          ; `seq-sort-by'
 (require 'simple)                       ; `count-lines' `cycle-spacing'
                                         ; `delete-blank-lines'
@@ -33,20 +32,6 @@
                                         ; `push-mark' `transpose-line'
                                         ; `use-region-p'
 (require 'sort)                         ; `reverse-region' `sort-regexp-fields'
-
-;;;; Case functions
-
-;;;###autoload
-(defun barrinalo-kebab (begin end)
-  "Convert region to kebab-case.
-that is all lowercase, coma-separated words. if region is not active and BEGIN
-and END are not defined, apply to the whole line instead."
-  (interactive "*r")
-  (let ((begin (if (use-region-p) begin (line-beginning-position)))
-        (end (if (use-region-p) end (line-end-position))))
-    (downcase-region begin end)
-    (save-excursion
-      (perform-replace " +" "-" nil t nil nil nil begin end))))
 
 ;;;; Date commands
 
@@ -134,28 +119,28 @@ If region was active, keep it so that the command can be repeated."
     (cycle-spacing)))
 
 ;;;###autoload
-(defun barrinalo-indent-leftward (begin end)
-  "Indent lines between BEGIN and END leftward by one space and keep mark."
+(defun barrinalo-shift-left (begin end)
+  "Shift lines between BEGIN and END leftward by one space and keep mark."
   (interactive "*r")
   (indent-rigidly-left begin end)
   (setq deactivate-mark nil))
 
 ;;;###autoload
-(defun barrinalo-indent-leftward-tab (begin end)
+(defun barrinalo-shift-left-tab (begin end)
   "Indent lines between BEGIN and END leftward to a tab stop and keep mark."
   (interactive "*r")
   (indent-rigidly-left-to-tab-stop begin end)
   (setq deactivate-mark nil))
 
 ;;;###autoload
-(defun barrinalo-indent-rightward (begin end)
-  "Indent lines between BEGIN and END rightward by one space and keep mark."
+(defun barrinalo-shift-right (begin end)
+  "Shift lines between BEGIN and END rightward by one space and keep mark."
   (interactive "*r")
   (indent-rigidly-right begin end)
   (setq deactivate-mark nil))
 
 ;;;###autoload
-(defun barrinalo-indent-rightward-tab (begin end)
+(defun barrinalo-shift-right-tab (begin end)
   "Indent lines between BEGIN and END rightward to a tab stop and keep mark."
   (interactive "*r")
   (indent-rigidly-right-to-tab-stop begin end)
@@ -176,8 +161,8 @@ characters in region instead."
 ;;;###autoload
 (defun barrinalo-sort-numbers (reverse begin end)
   "Sort numbers in region by natural order.
-When prefixed with \\[universal-agument], sort in REVERSE order instead.
-If called programmatically sort numbers between BEGIN and END."
+Sort numbers between BEGIN and END, or region if called interactively.
+When prefixed with \\[universal-agument], sort in REVERSE order instead."
   (interactive "*P\nr")
   (let* ((text (delete-and-extract-region begin end))
          (separators (split-string text (rx (+ digit))))
@@ -191,8 +176,8 @@ If called programmatically sort numbers between BEGIN and END."
 ;;;###autoload
 (defun barrinalo-sort-words (reverse begin end)
   "Sort words in region alphabetically.
-Sort words between BEGIN and END. When prefixed with \\[universal-argument],
-sort in REVERSE order instead.
+Sort words between BEGIN and END, or region is called interactively.
+When prefixed with \\[universal-argument], sort in REVERSE order instead.
 
 The variable `sort-fold-case' determines whether the case affects the sort. See
 `sort-regexp-fields'."

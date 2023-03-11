@@ -15,18 +15,10 @@
 (use-package help-mode
   :ensure nil
   :bind
-  ("C-h K" . describe-keymap)
-  (:map help-mode-map
-   ("<" . help-go-back)
-   (">" . help-go-forward))
-  :config
-  (with-eval-after-load 'evil
-    (evil-define-key* 'motion help-mode-map
-      (kbd "<tab>") #'forward-button)))
+  ("C-h K" . describe-keymap))
 
 (use-package helpful
   :defines helpful-mode-map
-  :functions helpful-update
   :bind
   ([remap describe-command] . helpful-command)
   ([remap describe-function] . helpful-callable)
@@ -36,9 +28,9 @@
   ("C-h F" . helpful-function)
   :config
   (with-eval-after-load 'evil
-    (evil-define-key* 'motion helpful-mode-map
-      (kbd "gr") #'helpful-update
-      (kbd "<tab>") #'forward-button))
+    (evil-define-key* 'normal helpful-mode-map
+      (kbd "<") #'help-go-back
+      (kbd ">") #'help-go-forward))
   :custom
   (helpful-max-buffers 2))
 

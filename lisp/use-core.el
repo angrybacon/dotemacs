@@ -14,11 +14,10 @@
    barrinalo-date-short-with-time
    barrinalo-duplicate-backward
    barrinalo-duplicate-forward
-   barrinalo-indent-leftward
-   barrinalo-indent-leftward-tab
-   barrinalo-indent-rightward
-   barrinalo-indent-rightward-tab
-   barrinalo-kebab
+   barrinalo-shift-left
+   barrinalo-shift-left-tab
+   barrinalo-shift-right
+   barrinalo-shift-right-tab
    barrinalo-reverse
    barrinalo-sort-numbers
    barrinalo-sort-words
@@ -50,6 +49,8 @@
   (manticore-delete-compiled
    manticore-eval-region-dwim
    manticore-revert-buffer-immediately))
+
+;; TODO Merge shelldock and szadek
 
 (use-package shelldock
   :demand

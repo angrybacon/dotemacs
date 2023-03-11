@@ -18,9 +18,10 @@
   (xref-show-xrefs-function #'consult-xref)
   :init
   (with-eval-after-load 'evil
-    (evil-global-set-key 'motion "gm" #'consult-mark)
-    (evil-global-set-key 'motion "gM" #'consult-imenu)
-    (evil-global-set-key 'motion "go" #'consult-outline)))
+    (evil-define-key* 'motion 'global
+      (kbd "gm") #'consult-imenu
+      (kbd "gM") #'consult-mark
+      (kbd "go") #'consult-outline)))
 
 (use-package corfu
   :hook

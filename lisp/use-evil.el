@@ -5,32 +5,7 @@
 (use-package avy
   :custom
   (avy-background t)
-  (avy-style 'at-full)
   (avy-timeout-seconds .3))
-
-;; TODO Vilify all selected.el commands
-
-(use-package selected
-  :defines selected-keymap
-  :bind
-  (:map selected-keymap
-   ("C-c c"       . capitalize-region)
-   ("C-c k"       . barrinalo-kebab)
-   ("C-q"         . selected-off)
-   ("C-s n"       . barrinalo-sort-numbers)
-   ("C-s r"       . barrinalo-reverse)
-   ("C-s s"       . sort-lines)
-   ("C-s w"       . barrinalo-sort-words)
-   ("M-<left>"    . barrinalo-indent-leftward)
-   ("M-<right>"   . barrinalo-indent-rightward)
-   ("M-S-<left>"  . barrinalo-indent-leftward-tab)
-   ("M-S-<right>" . barrinalo-indent-rightward-tab))
-  :hook
-  (after-init . selected-global-mode)
-  :config
-  (require 'barrinalo)
-  :custom
-  (selected-minor-mode-override t))
 
 (use-package evil
   :defines
@@ -40,7 +15,7 @@
   evil-normal-state-map
   :functions
   evil-avy-goto-char-timer
-  evil-define-key
+  evil-define-key*
   evil-define-text-object
   evil-range
   evil-scroll-up
@@ -59,6 +34,7 @@
    ("M-." . nil))                       ; Free xref command
   :custom
   (evil-emacs-state-cursor (default-value 'cursor-type))
+  (evil-shift-round nil)
   (evil-undo-system 'undo-redo)
   (evil-visual-state-cursor 'hollow)
   (evil-want-keybinding nil)
@@ -75,10 +51,10 @@
   :preface
   (defun me/evil-define-bindings ()
     "Add personal bindings to the global maps."
-    (evil-define-key 'motion global-map
-      (kbd "gs")    #'evil-avy-goto-char-timer
+    (evil-define-key* 'motion 'global
+      (kbd "gs") #'evil-avy-goto-char-timer
       (kbd "C-S-d") #'evil-scroll-up)
-    (evil-define-key 'normal global-map
+    (evil-define-key* 'normal 'global
       (kbd "gb") #'switch-to-buffer
       (kbd "gB") #'project-switch-to-buffer
       (kbd "gC") #'describe-face
@@ -88,12 +64,25 @@
       (kbd "gF") #'me/project-search
       (kbd "gp") #'project-switch-project
       (kbd "gP") #'me/project-todo
-      (kbd "gr") #'manticore-revert-buffer-immediately)))
+      (kbd "gr") #'manticore-revert-buffer-immediately
+      (kbd "g/") #'me/project-yank-path)
+    (evil-define-key* 'visual 'global
+      (kbd "sn") #'barrinalo-sort-numbers
+      (kbd "sr") #'barrinalo-reverse
+      (kbd "ss") #'sort-lines
+      (kbd "sw") #'barrinalo-sort-words
+      (kbd "<") #'barrinalo-shift-left
+      (kbd ">") #'barrinalo-shift-right
+      (kbd "c-<") #'barrinalo-shift-left-tab
+      (kbd "C->") #'barrinalo-shift-right-tab)))
 
 (use-package evil-collection
   :custom
-  (evil-collection-key-blacklist '("gfp" "gfu" "gpp" "gpu"))
-  (evil-collection-magit-section-use-z-for-folds t)
+  (evil-collection-key-blacklist
+   '("gfp" "gfu"                        ; Free project command
+     "gpp" "gpu"                        ; Free project command
+     "gs"                               ; Free avy command
+     "M-1" "M-2" "M-3" "M-4"))          ; Free workspace command
   (evil-collection-want-find-usages-bindings nil)
   :hook
   (evil-mode . evil-collection-init))
@@ -112,42 +101,17 @@
   :preface
   (defun me/evil-multiedit-define-bindings ()
     "Add personal bindings to the global maps."
-    (evil-define-key 'normal global-map
-      (kbd "M-d")   #'evil-multiedit-match-symbol-and-next
-      (kbd "M-D")   #'evil-multiedit-match-symbol-and-prev
+    (evil-define-key* '(normal visual) global-map
       (kbd "C-M-d") #'evil-multiedit-match-all)
-    (evil-define-key 'visual global-map
-      (kbd "M-d")   #'evil-multiedit-match-and-next
-      (kbd "M-D")   #'evil-multiedit-match-and-prev
-      (kbd "C-M-d") #'evil-multiedit-match-all)))
-
-(use-package evil-snipe
-  :hook
-  (evil-mode . evil-snipe-mode)
-  (evil-mode . evil-snipe-override-mode)
-  :custom
-  (evil-snipe-char-fold t)
-  (evil-snipe-repeat-scope 'visible)
-  (evil-snipe-smart-case t))
+    (evil-define-key* 'normal global-map
+      (kbd "M-d") #'evil-multiedit-match-symbol-and-next
+      (kbd "M-D") #'evil-multiedit-match-symbol-and-prev)
+    (evil-define-key* 'visual global-map
+      (kbd "M-d") #'evil-multiedit-match-and-next
+      (kbd "M-D") #'evil-multiedit-match-and-prev)))
 
 (use-package evil-surround
   :hook
-  (after-init . global-evil-surround-mode))
-
-;; TODO Use `repeat-mode' instead
-(defun me/evil-window-resize-continue (&optional _count)
-  "Activate a sparse keymap for repeated resizing routines."
-  (set-transient-map
-   (let ((map (make-sparse-keymap)))
-     (define-key map (kbd "-") #'evil-window-decrease-height)
-     (define-key map (kbd "+") #'evil-window-increase-height)
-     (define-key map (kbd "<") #'evil-window-decrease-width)
-     (define-key map (kbd ">") #'evil-window-increase-width)
-     map)))
-
-(advice-add 'evil-window-decrease-height :after #'me/evil-window-resize-continue)
-(advice-add 'evil-window-increase-height :after #'me/evil-window-resize-continue)
-(advice-add 'evil-window-decrease-width :after #'me/evil-window-resize-continue)
-(advice-add 'evil-window-increase-width :after #'me/evil-window-resize-continue)
+  (evil-mode . global-evil-surround-mode))
 
 ;;; use-evil.el ends here

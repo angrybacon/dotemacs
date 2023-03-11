@@ -8,8 +8,9 @@
   :ensure nil
   :config
   (with-eval-after-load 'evil
-    (evil-global-set-key 'motion "g'" #'flymake-goto-next-error)
-    (evil-global-set-key 'motion "g\"" #'flymake-goto-prev-error))
+    (evil-define-key* 'motion 'global
+      (kbd "g'") #'flymake-goto-next-error
+      (kbd "g\"") #'flymake-goto-prev-error))
   :custom
   (flymake-fringe-indicator-position nil))
 

@@ -42,7 +42,7 @@
   (webpaste-provider-priority '("paste.mozilla.org" "dpaste.org"))
   :init
   (with-eval-after-load 'evil
-    (evil-global-set-key 'visual "p" #'webpaste-paste-region)))
+    (evil-define-key* 'visual 'global (kbd "p") #'webpaste-paste-region)))
 
 ;;;; Pixel-Wise Scroll
 
