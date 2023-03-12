@@ -1,5 +1,4 @@
 # -*- mode: snippet -*-
-# group: vanilla
 # key: f
 # --
 const $1 = ($2) => $0;

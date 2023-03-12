@@ -1,9 +1,6 @@
 # -*- mode: snippet -*-
-# group: react
 # key: rc
 # --
-import { FunctionComponent } from 'react';
-
-export const $1: FunctionComponent = () => (
+export const $1: FunctionComponent = ($2) => (
   $0
 );

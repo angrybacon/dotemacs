@@ -1,5 +1,4 @@
 # -*- mode: snippet -*-
-# group: vanilla
 # key: c
 # --
 const ${1} = $0;
