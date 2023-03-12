@@ -27,6 +27,8 @@
    ("C-a" . nil)                        ; Free Readline key
    ("C-e" . nil)                        ; Free Readline key
    ("C-w" . nil)                        ; Free kill command
+   ("S-<left>" . nil)                   ; Free `left-char' command
+   ("S-<right>" . nil)                  ; Free `right-char' command
    :map evil-motion-state-map
    ("C-e" . nil)                        ; Free Readline key
    ("C-]" . nil)                        ; Free abort edit command
