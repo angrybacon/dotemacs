@@ -6,11 +6,6 @@
 
 (use-package flymake
   :ensure nil
-  :config
-  (with-eval-after-load 'evil
-    (evil-define-key* 'motion 'global
-      (kbd "g'") #'flymake-goto-next-error
-      (kbd "g\"") #'flymake-goto-prev-error))
   :custom
   (flymake-fringe-indicator-position nil))
 

@@ -110,35 +110,6 @@ With ARGUMENT move up that amount."
     (org-previous-visible-heading argument))
   (org-cycle))
 
-(defun me/org-show-next-heading-tidily ()
-  "Show next entry, keeping other entries closed."
-  (interactive)
-  (if (save-excursion (end-of-line) (outline-invisible-p))
-      (progn (org-fold-show-entry) (outline-show-children))
-    (outline-next-heading)
-    (unless (and (bolp) (org-at-heading-p))
-      (org-up-heading-safe)
-      (outline-hide-subtree)
-      (user-error "[Languages] Boundary reached"))
-    (org-overview)
-    (org-reveal t)
-    (org-fold-show-entry)
-    (outline-show-children)))
-
-(defun me/org-show-previous-heading-tidily ()
-  "Show previous entry, keeping other entries closed."
-  (interactive)
-  (let ((pos (point)))
-    (outline-previous-heading)
-    (unless (and (< (point) pos) (bolp) (org-at-heading-p))
-      (goto-char pos)
-      (outline-hide-subtree)
-      (user-error "[Languages] Boundary reached"))
-    (org-overview)
-    (org-reveal t)
-    (org-fold-show-entry)
-    (outline-show-children)))
-
 (use-package org
   :ensure nil
   :bind
@@ -170,11 +141,6 @@ With ARGUMENT move up that amount."
    'org-babel-load-languages '((python . t) (shell . t)))
   (modify-syntax-entry ?' "'" org-mode-syntax-table)
   (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer)
-  (with-eval-after-load 'evil
-    (evil-define-key* 'motion org-mode-map
-      (kbd "TAB") #'org-cycle
-      (kbd "C-j") #'me/org-show-next-heading-tidily
-      (kbd "C-k") #'me/org-show-previous-heading-tidily))
   :hook
   (org-mode . buffer-face-mode)
   (org-mode . (lambda () (setq-local comment-auto-fill-only-comments nil))))

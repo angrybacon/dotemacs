@@ -7,7 +7,7 @@
 (add-hook 'prog-mode-hook #'auto-fill-mode)
 (add-hook 'text-mode-hook #'auto-fill-mode)
 
-;;;; Messages
+;;;; Logs
 
 (advice-add 'message :after
   (defun me/message-tail (&rest _)
@@ -39,10 +39,7 @@
 
 (use-package webpaste
   :custom
-  (webpaste-provider-priority '("paste.mozilla.org" "dpaste.org"))
-  :init
-  (with-eval-after-load 'evil
-    (evil-define-key* 'visual 'global (kbd "p") #'webpaste-paste-region)))
+  (webpaste-provider-priority '("paste.mozilla.org" "dpaste.org")))
 
 ;;;; Pixel-Wise Scroll
 

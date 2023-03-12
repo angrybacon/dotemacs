@@ -5,24 +5,24 @@
 (use-package barrinalo
   :load-path "lisp/barrinalo"
   :commands
-  (barrinalo-cycle-spacing
-   barrinalo-date-iso
-   barrinalo-date-iso-with-time
-   barrinalo-date-long
-   barrinalo-date-long-with-time
-   barrinalo-date-short
-   barrinalo-date-short-with-time
-   barrinalo-duplicate-backward
-   barrinalo-duplicate-forward
-   barrinalo-shift-left
-   barrinalo-shift-left-tab
-   barrinalo-shift-right
-   barrinalo-shift-right-tab
-   barrinalo-reverse
-   barrinalo-sort-numbers
-   barrinalo-sort-words
-   barrinalo-swap-down
-   barrinalo-swap-up)
+  barrinalo-cycle-spacing
+  barrinalo-date-iso
+  barrinalo-date-iso-with-time
+  barrinalo-date-long
+  barrinalo-date-long-with-time
+  barrinalo-date-short
+  barrinalo-date-short-with-time
+  barrinalo-duplicate-backward
+  barrinalo-duplicate-forward
+  barrinalo-shift-left
+  barrinalo-shift-left-tab
+  barrinalo-shift-right
+  barrinalo-shift-right-tab
+  barrinalo-reverse
+  barrinalo-sort-numbers
+  barrinalo-sort-words
+  barrinalo-swap-down
+  barrinalo-swap-up
   :bind
   ([remap delete-horizontal-space] . barrinalo-cycle-spacing)
   ("M-p" . barrinalo-swap-up)
@@ -32,6 +32,10 @@
 
 (use-package hanna
   :load-path "lisp/hanna"
+  :commands
+  hanna-beginning-of-line
+  hanna-paragraph-backward
+  hanna-paragraph-forward
   :bind
   ([remap move-beginning-of-line] . hanna-beginning-of-line)
   ([remap backward-paragraph] . hanna-paragraph-backward)
@@ -46,9 +50,9 @@
 (use-package manticore
   :load-path "lisp/manticore"
   :commands
-  (manticore-delete-compiled
-   manticore-eval-region-dwim
-   manticore-revert-buffer-immediately))
+  manticore-delete-compiled
+  manticore-eval-region-dwim
+  manticore-revert-buffer-immediately)
 
 ;; TODO Merge shelldock and szadek
 

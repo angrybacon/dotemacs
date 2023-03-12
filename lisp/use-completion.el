@@ -16,13 +16,7 @@
   (consult-line-start-from-top t)
   (consult-project-root-function #'me/project-root)
   (xref-show-definitions-function #'consult-xref)
-  (xref-show-xrefs-function #'consult-xref)
-  :init
-  (with-eval-after-load 'evil
-    (evil-define-key* 'motion 'global
-      (kbd "gm") #'consult-imenu
-      (kbd "gM") #'consult-mark
-      (kbd "go") #'consult-outline)))
+  (xref-show-xrefs-function #'consult-xref))
 
 (use-package corfu
   :hook

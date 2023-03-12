@@ -59,11 +59,11 @@
 (use-package morophon
   :load-path "lisp/morophon"
   :commands
-  (morophon-alpha-less
-   morophon-alpha-more
-   morophon-cycle
-   morophon-disable-themes
-   morophon-typography-reset)
+  morophon-alpha-less
+  morophon-alpha-more
+  morophon-cycle
+  morophon-disable-themes
+  morophon-typography-reset
   :custom
   (morophon-known-themes '(zenmelt modus-operandi))
   :init

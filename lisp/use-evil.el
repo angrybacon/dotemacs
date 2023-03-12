@@ -52,9 +52,14 @@
   (defun me/evil-define-bindings ()
     "Add personal bindings to the global maps."
     (evil-define-key* 'motion 'global
-      (kbd "gs") #'evil-avy-goto-char-timer
+      (kbd "gm") #'consult-imenu
+      (kbd "gM") #'consult-mark
+      (kbd "go") #'consult-outline
+      (kbd "g'") #'flymake-goto-next-error
+      (kbd "g\"") #'flymake-goto-prev-error
       (kbd "C-S-d") #'evil-scroll-up)
-    (evil-define-key* 'normal 'global
+    ;; NOTE Use `global-map' instead of `'global' to bypass Magit overwrites
+    (evil-define-key* 'normal global-map
       (kbd "gb") #'switch-to-buffer
       (kbd "gB") #'project-switch-to-buffer
       (kbd "gC") #'describe-face
@@ -65,8 +70,10 @@
       (kbd "gp") #'project-switch-project
       (kbd "gP") #'me/project-todo
       (kbd "gr") #'manticore-revert-buffer-immediately
+      (kbd "gs") #'evil-avy-goto-char-timer
       (kbd "g/") #'me/project-yank-path)
     (evil-define-key* 'visual 'global
+      (kbd "p") #'webpaste-paste-region
       (kbd "sn") #'barrinalo-sort-numbers
       (kbd "sr") #'barrinalo-reverse
       (kbd "ss") #'sort-lines
@@ -101,12 +108,12 @@
   :preface
   (defun me/evil-multiedit-define-bindings ()
     "Add personal bindings to the global maps."
-    (evil-define-key* '(normal visual) global-map
+    (evil-define-key* '(normal visual) 'global
       (kbd "C-M-d") #'evil-multiedit-match-all)
-    (evil-define-key* 'normal global-map
+    (evil-define-key* 'normal 'global
       (kbd "M-d") #'evil-multiedit-match-symbol-and-next
       (kbd "M-D") #'evil-multiedit-match-symbol-and-prev)
-    (evil-define-key* 'visual global-map
+    (evil-define-key* 'visual 'global
       (kbd "M-d") #'evil-multiedit-match-and-next
       (kbd "M-D") #'evil-multiedit-match-and-prev)))
 
