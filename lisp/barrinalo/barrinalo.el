@@ -182,7 +182,7 @@ When prefixed with \\[universal-argument], sort in REVERSE order instead.
 The variable `sort-fold-case' determines whether the case affects the sort. See
 `sort-regexp-fields'."
   (interactive "*P\nr")
-  (sort-regexp-fields reverse "\\w+" "\\&" begin end))
+  (sort-regexp-fields reverse "\\(\\sw\\|\\s_\\)+" "\\&" begin end))
 
 ;;;###autoload
 (defun barrinalo-swap-down ()
