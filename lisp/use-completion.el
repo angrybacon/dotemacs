@@ -8,9 +8,10 @@
   ([remap goto-line] . consult-goto-line)
   ([remap isearch-forward] . consult-line)
   ([remap switch-to-buffer] . consult-buffer)
-  ("C-h M" . consult-minor-mode-menu)
-  ("C-S-r" . isearch-backward-regexp)   ; Move `isearch' command
-  ("C-S-s" . isearch-forward-regexp)    ; Move `isearch' command
+  ("C-h m" . consult-minor-mode-menu)
+  ("C-h M" . describe-mode)
+  ("C-S-r" . isearch-backward-regexp)
+  ("C-S-s" . isearch-forward-regexp)
   :custom
   (consult-line-start-from-top t)
   (consult-project-root-function #'me/project-root)

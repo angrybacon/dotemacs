@@ -2,9 +2,15 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package hercules
-  :load-path "lisp/hercules"
-  :commands hercules-heading)
+;; TODO Migrate Hydra to simple maps
+
+(defun hercules-heading (&rest headings)
+  "Format HEADINGS to look pretty in a hydra docstring."
+  (concat "\n "
+          (mapconcat (lambda (heading)
+                       (propertize (format "%-18s" heading) 'face 'shadow))
+                     headings
+                     nil)))
 
 (use-package hydra
   :functions defhydra

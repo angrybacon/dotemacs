@@ -13,9 +13,7 @@
   :custom
   (desktop-base-file-name (shelldock "desktop"))
   (desktop-base-lock-name (shelldock "desktop.lock"))
-  (desktop-restore-eager 4)
-  (desktop-restore-forces-onscreen nil)
-  (desktop-restore-frames nil))
+  (desktop-restore-eager 4))
 
 ;;;; Workspaces
 

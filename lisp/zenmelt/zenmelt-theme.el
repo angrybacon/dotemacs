@@ -111,7 +111,7 @@ See `custom--inhibit-theme-enable'."
       (default . (,bg+1    . ,bg+4))
       (green   . (,green-3 . ,green+2))
       (red     . (,red-3   . ,red+2))
-      (yellow  . (,fg-2    . ,yellow-1))))
+      (yellow  . (,fg-2    . ,yellow-2))))
   "List color tuples for boxes.
 The car gives the background color while the cdr gives the border.
 The cdr is also used for the text foreground color."

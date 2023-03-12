@@ -8,13 +8,7 @@
   :ensure nil
   :bind
   ([remap xref-find-apropos] . xref-find-definitions)
-  ([remap xref-find-definitions] . xref-find-definitions-other-window)
-  :config
-  (with-eval-after-load 'evil
-    (evil-define-key* 'motion xref--xref-buffer-mode-map
-      (kbd "<backtab>") #'xref-prev-group
-      (kbd "<return>") #'xref-goto-xref
-      (kbd "<tab>") #'xref-next-group)))
+  ([remap xref-find-definitions] . xref-find-definitions-other-window))
 
 ;;;; LSP Client
 

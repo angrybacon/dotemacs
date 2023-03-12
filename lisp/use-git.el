@@ -35,9 +35,9 @@
   :functions magit-add-section-hook magit-diff-highlight
   :bind
   (:map magit-file-section-map
-   ("<return>" . magit-diff-visit-file-other-window)
+   ("RET" . magit-diff-visit-file-other-window)
    :map magit-hunk-section-map
-   ("<return>" . magit-diff-visit-file-other-window)
+   ("RET" . magit-diff-visit-file-other-window)
    :map magit-section-mode-map
    ("M-1" . nil)
    ("M-2" . nil)

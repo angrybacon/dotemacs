@@ -172,7 +172,7 @@ With ARGUMENT move up that amount."
   (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer)
   (with-eval-after-load 'evil
     (evil-define-key* 'motion org-mode-map
-      (kbd "<tab>") #'org-cycle
+      (kbd "TAB") #'org-cycle
       (kbd "C-j") #'me/org-show-next-heading-tidily
       (kbd "C-k") #'me/org-show-previous-heading-tidily))
   :hook
