@@ -4,12 +4,9 @@
 
 ;;;; Pair-Programming Mode
 
-;; TODO Remove the non-global mode
-
 (use-package ruric
   :load-path "lisp/ruric"
   :commands
-  ruric-global-mode
   ruric-mode
   ruric-toggle-line-numbers
   ruric-toggle-line-numbers-absolute)

@@ -21,18 +21,18 @@
 ;;; Commentary:
 
 ;; Collection of functions to enhance settings with regards to pair-programming.
-;; Provide a minor mode and its global variant as a convenient shortcut.
+;; Provide a global minor mode to enable the feature in all buffers.
 
 ;;; Code:
 
-(require 'cl-seq)
+(require 'cl-seq)                       ; `cl-position'
 
 (defgroup ruric nil
   "Pair-programming features."
   :group 'convenience)
 
 (defcustom ruric-blacklist-modes nil
-  "List of modes that should not be considered for `ruric-global-mode'."
+  "List of modes that should not be considered for `ruric-mode'."
   :type '(repeat symbol))
 
 ;;;; Line numbers
@@ -40,7 +40,7 @@
 ;;;###autoload
 (defun ruric-toggle-line-numbers ()
   "Cycle through the possible values of `display-line-numbers'.
-Cycle between nil, t and 'relative."
+Cycle between nil, t and `'relative'."
   (interactive)
   (let* ((range '(nil t relative))
          (position (1+ (cl-position display-line-numbers range)))
@@ -59,26 +59,30 @@ Cycle between nil, t and 'relative."
 
 ;;;; Modes
 
-;;;###autoload
-(define-minor-mode ruric-mode
+(define-minor-mode ruric-local-mode
   "Better pair-programming environment."
-  :global nil
-  :group 'ruric
-  (cond
-   (ruric-mode
-    (setq-local ruric--initial-display-line-numbers-type display-line-numbers)
-    (setq-local display-line-numbers t))
-   (t
-    (setq-local display-line-numbers ruric--initial-display-line-numbers-type)
-    (setq-local ruric--initial-display-line-numbers-type nil))))
+  :init-value nil
+  (if ruric-local-mode
+      (when display-line-numbers-mode
+        (setq-local
+         ruric--initial-display-line-numbers-type display-line-numbers
+         display-line-numbers t))
+    (when display-line-numbers-mode
+      (setq-local
+       display-line-numbers ruric--initial-display-line-numbers-type
+       ruric--initial-display-line-numbers-type nil))))
+
+(defun ruric--off ()
+  "Turn `ruric-local-mode' off."
+  (ruric-local-mode -1))
 
 (defun ruric--on ()
-  "Turn `ruric-mode' on."
+  "Turn `ruric-local-mode' on."
   (unless (or noninteractive (memq major-mode ruric-blacklist-modes))
-    (ruric-mode 1)))
+    (ruric-local-mode 1)))
 
 ;;;###autoload
-(define-globalized-minor-mode ruric-global-mode ruric-mode ruric--on
+(define-globalized-minor-mode ruric-mode ruric-local-mode ruric--on
   :group 'ruric)
 
 (provide 'ruric)
