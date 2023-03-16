@@ -77,10 +77,11 @@
   "Duplicate current line.
 With optional argument STAY true, leave point where it was."
   (save-excursion
-    (move-end-of-line nil)
-    (save-excursion
-      (insert (buffer-substring (pos-bol) (pos-eol))))
-    (newline))
+    (let (auto-fill-function)
+      (move-end-of-line nil)
+      (save-excursion
+        (insert (buffer-substring (pos-bol) (pos-eol))))
+      (newline)))
   (unless stay
     (let ((column (current-column)))
       (forward-line)
