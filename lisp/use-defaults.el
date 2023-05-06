@@ -57,6 +57,7 @@
 (put 'scroll-left 'disabled nil)        ; Enable `scroll-left'
 (put 'upcase-region 'disabled nil)      ; Enable `upcase-region'
 (set-default-coding-systems 'utf-8)     ; Default to utf-8 encoding
+(global-unset-key (kbd "<pinch>"))      ; Unbind the `text-scale-pinch' command
 (global-unset-key (kbd "C-x C-z"))      ; Unbind the `suspend-frame' command
 (global-unset-key (kbd "C-<wheel-down>")) ; Unbind the `mouse-wheel-text-scale' command
 (global-unset-key (kbd "C-<wheel-up>")) ; Unbind the `mouse-wheel-text-scale' command
