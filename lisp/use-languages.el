@@ -145,6 +145,10 @@ With ARGUMENT move up that amount."
   (org-mode . buffer-face-mode)
   (org-mode . (lambda () (setq-local comment-auto-fill-only-comments nil))))
 
+;;;; Terraform
+
+(use-package terraform-mode)
+
 ;;;; VIMrc
 
 (use-package vimrc-mode)
