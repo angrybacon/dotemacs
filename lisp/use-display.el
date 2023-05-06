@@ -18,7 +18,7 @@
   ("s-\"" . popper-toggle-latest)
   ("s-<tab>" . popper-cycle)
   (:map popper-mode-map
-   ("C-s-\"" . popper-toggle-type))
+   ("C-s-<tab>" . popper-toggle-type))
   :config
   (with-eval-after-load 'project
     (setq-default popper-group-function #'popper-group-by-project))
