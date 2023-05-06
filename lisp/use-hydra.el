@@ -2,6 +2,21 @@
 ;;; Commentary:
 ;;; Code:
 
+(global-set-key (kbd "C-c d")
+                (let ((map (make-sparse-keymap "Dates")))
+                  (define-key map "d" '("date" . barrinalo-date-short))
+                  (define-key map "i" '("iso" . barrinalo-date-iso))
+                  (define-key map "l" '("long" . barrinalo-date-long))
+                  map))
+
+(global-set-key (kbd "C-c g")
+                (let ((map (make-sparse-keymap "Git")))
+                  (define-key map "b" '("blame" . magit-blame))
+                  (define-key map "c" '("clone" . magit-clone))
+                  (define-key map "r" '("revert" . diff-hl-revert-hunk))
+                  (define-key map "s" '("stage" . diff-hl-stage-current-hunk))
+                  map))
+
 ;; TODO Migrate Hydra to simple maps
 
 (defun hercules-heading (&rest headings)
@@ -14,70 +29,10 @@
 (use-package hydra
   :functions defhydra
   :bind
-  ("C-c d" . hydra-dates/body)
-  ("C-c g" . hydra-git/body)
   ("C-c i" . hydra-interface/body)
   ("C-c s" . hydra-system/body)
   ("C-c v" . hydra-visit/body)
-  :custom
-  (hydra-default-hint nil)
   :config
-
-  (defhydra hydra-dates (:color teal :idle 1.0)
-    (concat (hercules-heading "Insert" "Insert with Time") "
- _d_ short           _D_ short           ^^
- _i_ iso             _I_ iso             ^^
- _l_ long            _L_ long            ^^")
-    ("q" nil)
-    ("d" barrinalo-date-short)
-    ("D" barrinalo-date-short-with-time)
-    ("i" barrinalo-date-iso)
-    ("I" barrinalo-date-iso-with-time)
-    ("l" barrinalo-date-long)
-    ("L" barrinalo-date-long-with-time))
-
-  (defhydra hydra-git (:color teal :idle 1.0)
-    (concat (hercules-heading "Do" "Gutter") "
- _b_ blame           _p_ previous        ^^
- _c_ clone           _n_ next            ^^
- _g_ status          _r_ revert          ^^
- _m_ smerge...       _s_ stage           ^^")
-    ("q" nil)
-    ("b" magit-blame)
-    ("c" magit-clone)
-    ("g" magit-status)
-    ("m" (progn (require 'smerge-mode) (hydra-git--smerge/body)))
-    ("n" git-gutter:next-hunk :color red)
-    ("p" git-gutter:previous-hunk :color red)
-    ("r" git-gutter:revert-hunk)
-    ("s" git-gutter:stage-hunk :color red))
-
-  (defhydra hydra-git--smerge (:color pink
-                               :idle 1.0
-                               :pre (if (not smerge-mode) (smerge-mode 1))
-                               :post (smerge-auto-leave))
-    (concat (hercules-heading "Move" "Keep" "Diff") "
- _g_ first           _RET_ current       _<_ upper / base
- _G_ last            _a_ all             _=_ upper / lower
- _j_ next            _b_ base            _>_ base / lower
- _k_ previous        _l_ lower           _E_ ediff
- ^^                  _u_ upper           _H_ highlight")
-    ("q" nil :color blue)
-    ("j" smerge-next)
-    ("k" smerge-prev)
-    ("<" smerge-diff-base-upper :color blue)
-    ("=" smerge-diff-upper-lower :color blue)
-    (">" smerge-diff-base-lower :color blue)
-    ("RET" smerge-keep-current)
-    ("a" smerge-keep-all)
-    ("b" smerge-keep-base)
-    ("E" smerge-ediff :color blue)
-    ("g" (progn (goto-char (point-min)) (smerge-next)))
-    ("G" (progn (goto-char (point-max)) (smerge-prev)))
-    ("H" smerge-refine)
-    ("l" smerge-keep-lower)
-    ("u" smerge-keep-upper))
-
   (defhydra hydra-interface (:color pink :idle 1.0 :pre (require 'morophon))
     (concat (hercules-heading "Do" "Toggles") "
  _m_ maximize frame  _a_ / _A_ alpha: %s`morophon--alpha
@@ -96,7 +51,6 @@
     (">" widowmaker-olivetti-body-more)
     ("t" morophon-cycle :color blue)
     ("T" morophon-cycle))
-
   (defhydra hydra-system (:color teal :idle 1.0)
     (concat (hercules-heading "Do" "Packages" "Toggles") "
  _d_ clear compiled  _p_ update          _g_ debug: %-3s`debug-on-error
