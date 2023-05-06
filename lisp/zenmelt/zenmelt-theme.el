@@ -207,10 +207,11 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
 ;;;;;; Help
    `(Info-quoted                        ((t :inherit font-lock-constant-face)))
    `(eldoc-box-body                     ((t :inherit tooltip)))
-   `(eldoc-box-border                   ((t :background ,red)))
+   `(eldoc-box-border                   ((t :inherit child-frame-border)))
    `(eldoc-highlight-function-argument  ((t :inherit highlight)))
 ;;;;;; Interface
    `(button                             ((t ,@(zenmelt--box 'yellow))))
+   `(child-frame-border                 ((t :background ,bg+2)))
    `(cursor                             ((t :background ,fg+2 :foreground ,fg)))
    `(fringe                             ((t :foreground ,fg)))
    `(header-line                        ((t :foreground ,cyan)))
@@ -427,6 +428,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(completions-group-title            ((t :inherit shadow :slant italic)))
    `(consult-preview-line               ((t :extend t :inherit highlight)))
    `(consult-preview-match              ((t :inherit 'match)))
+   `(corfu-border                       ((t :inherit child-frame-border)))
    `(corfu-current                      ((t :inherit 'highlight)))
    `(corfu-default                      ((t :background ,bg-3)))
    `(orderless-match-face-0             ((t ,@(zenmelt--box 'yellow))))

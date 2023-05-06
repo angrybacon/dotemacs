@@ -25,13 +25,6 @@
   (corfu-auto t)
   (corfu-auto-delay 1))
 
-(use-package corfu-popupinfo
-  :ensure nil
-  :custom
-  (corfu-popupinfo-delay '(1.0 . t))
-  :hook
-  (global-corfu-mode . corfu-popupinfo-mode))
-
 (use-package marginalia
   :hook
   (after-init . marginalia-mode))

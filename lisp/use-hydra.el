@@ -9,8 +9,7 @@
   (concat "\n "
           (mapconcat (lambda (heading)
                        (propertize (format "%-18s" heading) 'face 'shadow))
-                     headings
-                     nil)))
+                     headings)))
 
 (use-package hydra
   :functions defhydra

@@ -196,6 +196,7 @@ If FRAME is nil, consider the current frame only."
 
 ;;;; Shackle
 
+;;;###autoload
 (defun widowmaker-shackle-set-window-side (_buffer _alist plist)
   "Set window side parameter for `shackle-last-window' according to PLIST.
 This allows features to filter or select windows based on their function ie. a
@@ -204,9 +205,6 @@ side window."
     (when-let ((window shackle-last-window)
                (alignment (plist-get plist :align)))
       (set-window-parameter window 'window-side t))))
-
-(advice-add 'shackle--display-buffer-aligned-window :after
-  #'widowmaker-shackle-set-window-side)
 
 ;;;; Terminal
 

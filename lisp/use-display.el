@@ -79,8 +79,21 @@
   ("s-l" . windmove-right)
   ("s-w" . delete-window)
   ("s-W" . kill-this-buffer)
+  :commands
+  widowmaker-kill-buffer-with-process
+  widowmaker-olivetti-automatic-toggle
+  widowmaker-olivetti-body-less
+  widowmaker-olivetti-body-more
+  widowmaker-olivetti-body-reset
+  widowmaker-placement-center
+  widowmaker-placement-cycle
+  widowmaker-shackle-set-window-side
+  widowmaker-terminal-dwim
   :hook
   (after-init . winner-mode)
-  (window-configuration-change . widowmaker-olivetti-maybe))
+  (window-configuration-change . widowmaker-olivetti-maybe)
+  :init
+  (advice-add 'shackle--display-buffer-aligned-window :after
+    #'widowmaker-shackle-set-window-side))
 
 ;;; use-display.el ends here

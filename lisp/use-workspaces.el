@@ -34,6 +34,7 @@
              (me/eyebrowse-switch ,n))
           t)))
 
+;; TODO Replace with built-in tabs
 (use-package eyebrowse
   :bind
   ("M-1" . me/eyebrowse-switch-1)

@@ -15,7 +15,7 @@
   "Apply directory-local class variables to the appropriate project paths."
   (interactive)
   (mapc (lambda (it) (dir-locals-set-directory-class it 'prettier))
-        (szadek-get 'projects-prettier '(""))))
+        (szadek-get 'projects-prettier '())))
 
 (szadek-register #'me/dir-locals-set-directories :immediate)
 
