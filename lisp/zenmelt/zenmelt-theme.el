@@ -438,6 +438,12 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
 ;;;;;; Evil
    `(evil-ex-info                       ((t :foreground ,red)))
    `(evil-ex-substitute-replacement     ((t :foreground ,orange)))
+   `(evil-goggles-change-face           ((t :background ,fg-2
+                                            :inherit evil-goggles-default-face)))
+   `(evil-goggles-delete-face           ((t :background ,red-4
+                                            :inherit evil-goggles-default-face)))
+   `(evil-goggles-paste-face            ((t :background ,green-2
+                                            :inherit evil-goggles-default-face)))
 ;;;;;; Help
    `(helpful-heading                    ((t :foreground ,cyan
                                             :height 2.0

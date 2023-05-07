@@ -29,7 +29,7 @@
  lazy-highlight-initial-delay 0         ; Remove highlight delay
  max-mini-window-height 10              ; Limit height for minibuffer transients
  mouse-wheel-progressive-speed nil      ; Disable wheel acceleration
- mouse-wheel-scroll-amount '(2 ((control) . 8)) ; Allow faster scrolling
+ mouse-wheel-scroll-amount '(1 ((control) . 8)) ; Allow faster scrolling
  mouse-yank-at-point t                  ; Yank at point rather than pointer
  native-comp-async-report-warnings-errors 'silent ; Skip error buffers
  read-process-output-max (* 1024 1024)  ; Increase read size for data chunks

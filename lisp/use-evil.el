@@ -99,6 +99,13 @@
   :hook
   (evil-mode . evil-commentary-mode))
 
+(use-package evil-goggles
+  :custom
+  (evil-goggles-duration .1)
+  (evil-goggles-pulse nil)
+  :hook
+  (evil-mode . evil-goggles-mode))
+
 (use-package evil-lion
   :hook
   (evil-mode . evil-lion-mode))
