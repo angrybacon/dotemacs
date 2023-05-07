@@ -88,8 +88,7 @@
 (use-package evil-collection
   :custom
   (evil-collection-key-blacklist
-   '("gfp" "gfu"                        ; Free project command
-     "gpp" "gpu"                        ; Free project command
+   '("gd" "gf" "gfp" "gfu" "gpp" "gpu"  ; Free project commands
      "gs"                               ; Free avy command
      "M-1" "M-2" "M-3" "M-4"))          ; Free workspace command
   (evil-collection-want-find-usages-bindings nil)

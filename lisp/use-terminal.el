@@ -7,6 +7,10 @@
   :bind
   (:map vterm-mode-map
    ([remap kill-this-buffer] . widowmaker-kill-buffer-with-process))
+  :config
+  (with-eval-after-load 'evil
+    (evil-define-key* 'insert vterm-mode-map
+      (kbd "C-o") #'evil-execute-in-normal-state))
   :custom
   (vterm-keymap-exceptions
    '("C-c" "C-g" "C-h" "C-l" "C-u" "C-x" "C-y"
