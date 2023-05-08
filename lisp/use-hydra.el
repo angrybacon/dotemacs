@@ -17,6 +17,15 @@
                   (define-key map "s" '("stage" . diff-hl-stage-current-hunk))
                   map))
 
+(global-set-key (kbd "C-c s")
+                (let ((map (make-sparse-keymap "System")))
+                  (define-key map "d" '("clear desktop" . desktop-remove))
+                  (define-key map "g" '("toggle debug" . toggle-debug-on-error))
+                  (define-key map "l" '("processes" . list-processes))
+                  (define-key map "p" '("packages" . package-list-packages))
+                  (define-key map "Q" '("clear kill" . manticore-kill-terminal))
+                  map))
+
 ;; TODO Migrate Hydra to simple maps
 
 (defun hercules-heading (&rest headings)
@@ -30,7 +39,6 @@
   :functions defhydra
   :bind
   ("C-c i" . hydra-interface/body)
-  ("C-c s" . hydra-system/body)
   ("C-c v" . hydra-visit/body)
   :config
   (defhydra hydra-interface (:color pink :idle 1.0 :pre (require 'morophon))
@@ -51,24 +59,6 @@
     (">" widowmaker-olivetti-body-more)
     ("t" morophon-cycle :color blue)
     ("T" morophon-cycle))
-  (defhydra hydra-system (:color teal :idle 1.0)
-    (concat (hercules-heading "Do" "Packages" "Toggles") "
- _d_ clear compiled  _p_ update          _g_ debug: %-3s`debug-on-error
- _D_ clear desktop   _P_ prune           ^^
- _l_ processes       ^^                  ^^
- _Q_ clear and kill  ^^                  ^^")
-    ("q" nil)
-    ("d" manticore-delete-compiled)
-    ("D" desktop-remove)
-    ("g" (setq debug-on-error (not debug-on-error)))
-    ("l" list-processes)
-    ("p" package-update-all)
-    ("P" package-autoremove)
-    ("Q" (let ((desktop-save nil))
-           (manticore-delete-compiled)
-           (desktop-remove)
-           (save-buffers-kill-terminal))))
-
   (defhydra hydra-visit (:color teal :idle 1.0)
     (concat (hercules-heading "Visit") "
  _._ secrets         _e_ emacs           _s_ zsh
@@ -87,7 +77,6 @@
     ("s" (find-file "~/Workspace/dot/config/zsh.org"))
     ("t" (find-file "~/Workspace/dot/config/kitty.org"))
     ("v" (find-file "~/Workspace/dot/config/vim.org")))
-
   :hook
   (emacs-lisp-mode . hydra-add-imenu))
 

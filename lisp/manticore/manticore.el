@@ -24,6 +24,7 @@
 
 ;;; Code:
 
+(require 'desktop)                      ; `desktop-save'
 (require 'simple)                       ; `shell-command' `use-region-p'
 
 (defgroup manticore nil
@@ -45,6 +46,15 @@ With no region, evaluate the whole buffer."
       (eval-buffer)
     (eval-region (region-beginning) (region-end))
     (setq-local deactivate-mark t)))
+
+;;;###autoload
+(defun manticore-kill-terminal ()
+  "Clear byte-compiled libraries, desktop backups and then quit Emacs."
+  (interactive)
+  (let ((desktop-save nil))
+    (manticore-delete-compiled)
+    (desktop-remove)
+    (save-buffers-kill-terminal)))
 
 ;;;###autoload
 (defun manticore-revert-buffer-immediately ()
