@@ -66,6 +66,14 @@ If ripgrep is not installed, use grep instead."
       (find-file (expand-file-name "TODO.org" root))
     (user-error "[Project] Not in a project")))
 
+(defun me/project-kill-path ()
+  "Save the current absolute path in the kill ring."
+  (interactive)
+  ;; TODO Provide a variant that starts at project root
+  (let ((path (buffer-file-name)))
+    (kill-new path)
+    (message (format "[Project] Copied '%s'" path))))
+
 (use-package project
   :ensure nil
   :custom

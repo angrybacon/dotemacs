@@ -73,7 +73,7 @@
       (kbd "gP") #'me/project-todo
       (kbd "gr") #'manticore-revert-buffer-immediately
       (kbd "gs") #'evil-avy-goto-char-timer
-      (kbd "g/") #'me/project-yank-path)
+      (kbd "g/") #'me/project-kill-path)
     (evil-define-key* 'visual 'global
       (kbd "p") #'webpaste-paste-region
       (kbd "sn") #'barrinalo-sort-numbers
