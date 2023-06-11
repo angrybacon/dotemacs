@@ -118,6 +118,7 @@
   (doom-modeline-buffer-file-name-style 'truncate-with-project)
   (doom-modeline-height (szadek-get 'mode-line-height 36))
   (doom-modeline-enable-word-count t)
+  (doom-modeline-icon nil)
   (doom-modeline-major-mode-icon nil)
   (doom-modeline-percent-position nil)
   (doom-modeline-vcs-max-length 28)

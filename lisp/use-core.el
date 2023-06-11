@@ -52,6 +52,7 @@
   :commands
   manticore-delete-compiled
   manticore-eval-region-dwim
+  manticore-kill-terminal
   manticore-revert-buffer-immediately)
 
 ;; TODO Merge shelldock and szadek

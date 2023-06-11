@@ -49,8 +49,7 @@
   :hook
   (after-init . eyebrowse-mode)
   :custom
-  (eyebrowse-mode-line-left-delimiter "")
-  (eyebrowse-mode-line-right-delimiter "")
+  (eyebrowse-mode-line-style nil)
   (eyebrowse-new-workspace t))
 
 ;;; use-workspaces.el ends here
