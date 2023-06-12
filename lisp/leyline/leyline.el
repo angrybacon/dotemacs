@@ -205,18 +205,19 @@
   "Return the version control details for the mode-line."
   (unless (or (not leyline--vc-text)
               (string-blank-p leyline--vc-text))
-    (format " %s " leyline--vc-text)))
+    (format " :%s " leyline--vc-text)))
 
 ;;;; Mode
 
 (defun leyline--format (left right)
-  "Format a mode line with LEFT and RIGHT justified list of segments."
-  (let ((reserve (1- (length right))))
-    (concat
-     left
-     (propertize " " 'display `((space :align-to
-                                       (- right (- 0 right-margin) ,reserve))))
-     right)))
+  "Format a mode line with LEFT and RIGHT justified segments."
+  (concat
+   left
+   (propertize " " 'display `((space :align-to (- right
+                                                  (- 0 right-fringe)
+                                                  (- 0 right-margin)
+                                                  ,(length right)))))
+   right))
 
 (defun leyline--make ()
   "Return the mode-line format."
