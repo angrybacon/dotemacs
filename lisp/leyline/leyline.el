@@ -25,11 +25,16 @@
 ;;; Code:
 
 (declare-function cl-struct-slot-value "cl-macs")
+(declare-function eglot-current-server "eglot")
+(declare-function eglot-project-nickname "eglot")
+(declare-function eglot--managed-mode "eglot")
 (declare-function flymake--handle-report "flymake")
 (declare-function flymake-reporting-backends "flymake")
 (declare-function flymake-running-backends "flymake")
 (declare-function flymake-start "flymake")
 (declare-function flymake-start "flymake")
+(declare-function jsonrpc-last-error "jsonrpc")
+(declare-function jsonrpc--request-continuations "jsonrpc")
 
 (defgroup leyline nil
   "Yet another minimal mode-line."
@@ -209,6 +214,19 @@
              (not (string-blank-p leyline--flymake-text)))
     (format " %s " leyline--flymake-text)))
 
+(defun leyline-segment-lsp ()
+  "Return the current LSP status for the mode-line."
+  (when (bound-and-true-p eglot--managed-mode)
+    (when-let* ((server (eglot-current-server))
+                (name (eglot-project-nickname server)))
+      (let* ((pending (hash-table-count (jsonrpc--request-continuations server)))
+             (last-error (jsonrpc-last-error server))
+             (result `(,@(when (cl-plusp pending) (list (format "%d" pending)))
+                       ,@(when last-error (list last-error))
+                       ,name)))
+        (propertize
+         (format " %s " (string-join result ":")) 'face 'leyline-secondary)))))
+
 (defun leyline-segment-major ()
   "Return the current major mode for the mode-line."
   (let ((text (substring-no-properties (format-mode-line mode-name))))
@@ -225,7 +243,7 @@
   "Return the current cursor position for the mode-line."
   (concat
    " %l:%c"
-   (propertize " %p%% " 'face 'leyline-secondary)))
+   (propertize "  %p%% " 'face 'leyline-secondary)))
 
 (defun leyline-segment-process ()
   "Return current value of `mode-line-process' for the mode-line."
@@ -262,13 +280,18 @@
          (:eval (leyline-segment-buffer))
          (:eval (leyline-segment-position))))
       (format-mode-line
-       '((:eval (leyline-segment-miscellaneous))
-         (:eval (leyline-segment-flymake))
+       '((:eval (leyline-segment-flymake))
          (:eval (leyline-segment-process))
+         (:eval (leyline-segment-miscellaneous))
+         (:eval (leyline-segment-lsp))
          (:eval (leyline-segment-vc))
          (:eval (leyline-segment-major))))))))
 
-(defvar-local leyline--default-format mode-line-format)
+(defvar leyline--default-format nil
+  "Remember the previous format for when `leyline-mode' is turned off.")
+
+(defvar leyline--default-miscellaneous nil
+  "Remember the previous segment format for when `leyline-mode' is turned off.")
 
 ;;;###autoload
 (define-minor-mode leyline-mode
@@ -282,14 +305,23 @@
         (add-hook 'after-save-hook #'leyline--update-vc)
         (add-hook 'find-file-hook #'leyline--update-vc)
         (advice-add #'vc-refresh-state :after #'leyline--update-vc)
-        (setq leyline--default-format mode-line-format)
-        (setq-default mode-line-format (leyline--make)))
+        (setq
+         leyline--default-format mode-line-format
+         leyline--default-miscellaneous mode-line-misc-info)
+        (setq-default
+         mode-line-format (leyline--make)
+         mode-line-misc-info (assq-delete-all
+                              'eglot--managed-mode mode-line-misc-info)
+         mode-line-misc-info (assq-delete-all
+                              'eyebrowse-mode mode-line-misc-info)))
     (advice-remove #'flymake-start #'leyline--update-flymake)
     (advice-remove #'flymake--handle-report #'leyline--update-flymake)
     (remove-hook 'after-save-hook #'leyline--update-vc)
     (remove-hook 'file-find-hook #'leyline--update-vc)
     (advice-remove #'vc-refresh-state #'leyline--update-vc)
-    (setq-default mode-line-format leyline--default-format)))
+    (setq-default
+     mode-line-format leyline--default-format
+     mode-line-misc-info leyline--default-miscellaneous)))
 
 (provide 'leyline)
 

@@ -12,6 +12,9 @@
 
 ;;;; LSP Client
 
+(declare-function eglot-current-server "eglot")
+(declare-function eglot-shutdown "eglot")
+
 (defun me/eglot-shutdown-project ()
   "Kill the LSP server for the current project if it exists."
   (when-let ((server (eglot-current-server)))
