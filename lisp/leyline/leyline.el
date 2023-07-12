@@ -67,6 +67,11 @@
   "Face used for displaying the value of `buffer-name'."
   :group 'leyline-faces)
 
+(defface leyline-buffer-modified
+  '((t (:inherit (warning leyline-buffer))))
+  "Face used for displaying the value of `buffer-name' when it is modified."
+  :group 'leyline-faces)
+
 (defface leyline-error
   '((t (:inherit error)))
   "Face for error status indicators."
@@ -199,7 +204,9 @@
 
 (defun leyline-segment-buffer ()
   "Return the name of the current buffer for the mode-line."
-  (propertize " %b " 'face 'leyline-buffer))
+  (propertize " %b " 'face (if (buffer-modified-p)
+                               'leyline-buffer-modified
+                             'leyline-buffer)))
 
 (defun leyline-segment-evil ()
   "Return the current `evil-mode' state for the mode-line."
