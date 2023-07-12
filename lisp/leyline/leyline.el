@@ -24,11 +24,12 @@
 
 ;;; Code:
 
-(declare-function cl-struct-slot-value "cl-macs" (struct-type slot-name inst))
-(declare-function flymake--handle-report "flymake" ())
-(declare-function flymake-reporting-backends "flymake" ())
-(declare-function flymake-running-backends "flymake" ())
-(declare-function flymake-start "flymake" ())
+(declare-function cl-struct-slot-value "cl-macs")
+(declare-function flymake--handle-report "flymake")
+(declare-function flymake-reporting-backends "flymake")
+(declare-function flymake-running-backends "flymake")
+(declare-function flymake-start "flymake")
+(declare-function flymake-start "flymake")
 
 (defgroup leyline nil
   "Yet another minimal mode-line."
@@ -36,7 +37,8 @@
 
 ;;;; Rename major modes
 
-(defcustom leyline-rules '((tsx-ts-mode "TSX")
+(defcustom leyline-rules '((emacs-lisp-mode "ELisp")
+                           (tsx-ts-mode "TSX")
                            (typescript-ts-mode "TS"))
   "Rules for major-mode names to be renamed."
   :type '(alist :key-type symbol :value-type string))
@@ -60,13 +62,43 @@
   :group 'leyline-faces)
 
 (defface leyline-error
-  '((t (:inherit error :weight normal)))
+  '((t (:inherit error)))
   "Face for error status indicators."
   :group 'leyline-faces)
 
-(defface leyline-major
-  '((t (:inherit bold)))
-  "Face used for the major mode indicator."
+(defface leyline-evil-emacs-face
+  '((t (:inherit font-lock-keyword-face)))
+  "Face used for the evil state segment."
+  :group 'leyline-faces)
+
+(defface leyline-evil-insert-face
+  '((t (:inherit font-lock-warning-face)))
+  "Face used for the evil state segment."
+  :group 'leyline-faces)
+
+(defface leyline-evil-motion-face
+  '((t (:inherit leyline-evil-normal-face)))
+  "Face used for the evil state segment."
+  :group 'leyline-faces)
+
+(defface leyline-evil-normal-face
+  '((t ()))
+  "Face used for the evil state segment."
+  :group 'leyline-faces)
+
+(defface leyline-evil-operator-face
+  '((t (:inherit font-lock-constant-face)))
+  "Face used for the evil state segment."
+  :group 'leyline-faces)
+
+(defface leyline-evil-replace-face
+  '((t (:inherit font-lock-type-face)))
+  "Face used for the evil state segment."
+  :group 'leyline-faces)
+
+(defface leyline-evil-visual-face
+  '((t (:inherit font-lock-function-name-face)))
+  "Face used for the evil state segment."
   :group 'leyline-faces)
 
 (defface leyline-note
@@ -75,30 +107,30 @@
   :group 'leyline-faces)
 
 (defface leyline-secondary
-  '((t (:inherit shadow :weight normal)))
+  '((t (:inherit shadow)))
   "Face used for less important mode-line content."
   :group 'leyline-faces)
 
 (defface leyline-success
-  '((t (:inherit success :weight normal)))
+  '((t (:inherit success)))
   "Face used for successful status indicators."
   :group 'leyline-faces)
 
 (defface leyline-warning
-  '((t (:inherit warning :weight normal)))
+  '((t (:inherit warning)))
   "Face for warning status indicators."
   :group 'leyline-faces)
 
 ;;;; Evil
 
 (defcustom leyline-evil-alist
-  '((emacs    . ("<E>" . font-lock-builtin-face))
-    (insert   . ("<I>" . font-lock-string-face))
-    (motion   . ("<M>" . font-lock-constant-face))
-    (normal   . ("<N>" . font-lock-variable-name-face))
-    (operator . ("<O>" . font-lock-function-name-face))
-    (replace  . ("<R>" . font-lock-type-face))
-    (visual   . ("<V>" . font-lock-keyword-face)))
+  '((emacs    . ("EMACS" . leyline-evil-emacs-face))
+    (insert   . ("INSERT" . leyline-evil-insert-face))
+    (motion   . ("MOTION" . leyline-evil-motion-face))
+    (normal   . ("NORMAL" . leyline-evil-normal-face))
+    (operator . ("OPERATOR" . leyline-evil-operator-face))
+    (replace  . ("REPLACE" . leyline-evil-replace-face))
+    (visual   . ("VISUAL" . leyline-evil-visual-face)))
   "Configure the display text and face for all `evil-mode' states."
   :group 'leyline
   :type '(alist :key-type symbol
@@ -180,7 +212,7 @@
 (defun leyline-segment-major ()
   "Return the current major mode for the mode-line."
   (let ((text (substring-no-properties (format-mode-line mode-name))))
-    (propertize (format " %s " text) 'face 'leyline-major)))
+    (format " %s " text)))
 
 (defun leyline-segment-miscellaneous ()
   "Return the current value of `mode-line-misc-info' for the mode-line."
@@ -218,6 +250,8 @@
                                                   (- 0 right-margin)
                                                   ,(length right)))))
    right))
+
+;; TODO Check out `mode-line-right-align-edge'
 
 (defun leyline--make ()
   "Return the mode-line format."

@@ -227,11 +227,14 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(menu                               ((t :inherit default)))
    `(minibuffer-prompt                  ((t :foreground ,yellow)))
    `(mode-line                          ((t :background ,bg-3
+                                            :box (:color ,bg-3 :line-width (0 . 6))
                                             :foreground ,green)))
    `(mode-line-buffer-id                ((t :foreground ,green+4)))
    `(mode-line-emphasis                 ((t :inherit mode-line)))
    `(mode-line-highlight                ((t :box (-2 . -2) :inherit highlight)))
-   `(mode-line-inactive                 ((t :background ,bg-1 :inherit shadow)))
+   `(mode-line-inactive                 ((t :background ,bg-1
+                                            :box (:color ,bg-1 :line-width (0 . 6))
+                                            :inherit shadow)))
    `(region                             ((,class :background ,blue-5)
                                          (t :inverse-video t)))
    `(secondary-selection                ((t :background ,bg+3)))
@@ -458,6 +461,11 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(doom-modeline-info                 ((t :foreground ,green+4)))
    `(doom-modeline-project-dir          ((t :inherit dired-directory)))
    `(doom-modeline-project-parent-dir   ((t :inherit shadow)))
+   `(leyline-evil-emacs-face            ((t :foreground ,magenta)))
+   `(leyline-evil-insert-face           ((t :foreground ,red)))
+   `(leyline-evil-operator-face         ((t :foreground ,cyan)))
+   `(leyline-evil-replace-face          ((t :foreground ,green+4)))
+   `(leyline-evil-visual-face           ((t :foreground ,blue-2)))
 ;;;;;; Navigation
    `(avy-background-face                ((t :inherit shadow)))
    `(avy-lead-face                      ((t :foreground ,cyan)))
