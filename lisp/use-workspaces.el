@@ -17,6 +17,9 @@
 
 ;;;; Workspaces
 
+(declare-function eyebrowse--get "eyebrowse")
+(declare-function eyebrowse-last-window-config "eyebrowse")
+
 (defun me/eyebrowse-switch (n)
   "Switch to configuration N or to the last visited."
   (if (eq (eyebrowse--get 'current-slot) n)
@@ -49,7 +52,6 @@
   :hook
   (after-init . eyebrowse-mode)
   :custom
-  (eyebrowse-mode-line-style nil)
   (eyebrowse-new-workspace t))
 
 ;;; use-workspaces.el ends here

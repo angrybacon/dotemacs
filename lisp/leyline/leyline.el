@@ -28,6 +28,7 @@
 (declare-function eglot-current-server "eglot")
 (declare-function eglot-project-nickname "eglot")
 (declare-function eglot--managed-mode "eglot")
+(declare-function eyebrowse--get "eyebrowse")
 (declare-function flymake--handle-report "flymake")
 (declare-function flymake-reporting-backends "flymake")
 (declare-function flymake-running-backends "flymake")
@@ -257,6 +258,16 @@
               (string-blank-p leyline--vc-text))
     (format " :%s " leyline--vc-text)))
 
+(defun leyline-segment-workspace ()
+  "Return the current workspace name for the mode-line."
+  (when (and (bound-and-true-p eyebrowse-mode)
+             (length> (eyebrowse--get 'window-configs) 1))
+    (when-let*
+        ((slot (eyebrowse--get 'current-slot))
+         (tag (nth 2 (assoc slot (eyebrowse--get 'window-configs))))
+         (name (if (length> tag 0) tag slot)))
+      (propertize (format " %s " name) 'face 'leyline-secondary))))
+
 ;;;; Mode
 
 (defun leyline--format (left right)
@@ -285,7 +296,8 @@
          (:eval (leyline-segment-miscellaneous))
          (:eval (leyline-segment-lsp))
          (:eval (leyline-segment-vc))
-         (:eval (leyline-segment-major))))))))
+         (:eval (leyline-segment-major))
+         (:eval (leyline-segment-workspace))))))))
 
 (defvar leyline--default-format nil
   "Remember the previous format for when `leyline-mode' is turned off.")
