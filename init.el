@@ -53,7 +53,6 @@
   (load "use-http")
   (load "use-hydra")
   (load "use-languages")
-  (load "use-line")
   (load "use-lint")
   (load "use-lsp")
   (load "use-parens")

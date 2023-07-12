@@ -39,6 +39,14 @@
   (prog-mode . display-line-numbers-mode)
   (text-mode . display-line-numbers-mode))
 
+;;;; Mode-Line
+
+(use-package leyline
+  :load-path "lisp/leyline"
+  :hook
+  (after-change-major-mode . leyline-rename)
+  (after-init . leyline-mode))
+
 ;;;; Pulse
 
 (use-package pulsar
@@ -55,6 +63,8 @@
 (global-set-key [remap text-scale-adjust] #'global-text-scale-adjust)
 
 ;;;; Themes
+
+(declare-function szadek-register "szadek")
 
 (use-package morophon
   :load-path "lisp/morophon"
