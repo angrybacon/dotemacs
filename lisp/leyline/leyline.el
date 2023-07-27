@@ -77,37 +77,37 @@
   "Face for error status indicators."
   :group 'leyline-faces)
 
-(defface leyline-evil-emacs-face
+(defface leyline-evil-emacs
   '((t (:inherit font-lock-keyword-face)))
   "Face used for the evil state segment."
   :group 'leyline-faces)
 
-(defface leyline-evil-insert-face
+(defface leyline-evil-insert
   '((t (:inherit font-lock-warning-face)))
   "Face used for the evil state segment."
   :group 'leyline-faces)
 
-(defface leyline-evil-motion-face
+(defface leyline-evil-motion
   '((t (:inherit leyline-evil-normal-face)))
   "Face used for the evil state segment."
   :group 'leyline-faces)
 
-(defface leyline-evil-normal-face
+(defface leyline-evil-normal
   '((t ()))
   "Face used for the evil state segment."
   :group 'leyline-faces)
 
-(defface leyline-evil-operator-face
+(defface leyline-evil-operator
   '((t (:inherit font-lock-constant-face)))
   "Face used for the evil state segment."
   :group 'leyline-faces)
 
-(defface leyline-evil-replace-face
+(defface leyline-evil-replace
   '((t (:inherit font-lock-type-face)))
   "Face used for the evil state segment."
   :group 'leyline-faces)
 
-(defface leyline-evil-visual-face
+(defface leyline-evil-visual
   '((t (:inherit font-lock-function-name-face)))
   "Face used for the evil state segment."
   :group 'leyline-faces)
@@ -115,6 +115,11 @@
 (defface leyline-note
   '((t (:inherit font-lock-keyword-face :weight normal)))
   "Face used for neutral status indicators."
+  :group 'leyline-faces)
+
+(defface leyline-pending
+  '((t (:inherit mode-line-highlight)))
+  "Face used for transient segments."
   :group 'leyline-faces)
 
 (defface leyline-secondary
@@ -135,13 +140,13 @@
 ;;;; Evil
 
 (defcustom leyline-evil-alist
-  '((emacs    . ("EMACS" . leyline-evil-emacs-face))
-    (insert   . ("INSERT" . leyline-evil-insert-face))
-    (motion   . ("MOTION" . leyline-evil-motion-face))
-    (normal   . ("NORMAL" . leyline-evil-normal-face))
-    (operator . ("OPERATOR" . leyline-evil-operator-face))
-    (replace  . ("REPLACE" . leyline-evil-replace-face))
-    (visual   . ("VISUAL" . leyline-evil-visual-face)))
+  '((emacs    . ("EMACS" . leyline-evil-emacs))
+    (insert   . ("INSERT" . leyline-evil-insert))
+    (motion   . ("MOTION" . leyline-evil-motion))
+    (normal   . ("NORMAL" . leyline-evil-normal))
+    (operator . ("OPERATOR" . leyline-evil-operator))
+    (replace  . ("REPLACE" . leyline-evil-replace))
+    (visual   . ("VISUAL" . leyline-evil-visual)))
   "Configure the display text and face for all `evil-mode' states."
   :group 'leyline
   :type '(alist :key-type symbol
@@ -180,13 +185,13 @@
             (cond
              ((seq-difference (flymake-running-backends)
                               (flymake-reporting-backends))
-              (propertize "Checking..." 'face 'leyline-note))
+              (propertize " Checking... " 'face 'leyline-pending))
              ((> .errors 0)
-              (propertize (number-to-string .all) 'face 'leyline-error))
+              (propertize (format " %s " .all) 'face 'leyline-error))
              ((> .warnings 0)
-              (propertize (number-to-string .all) 'face 'leyline-warning))
+              (propertize (format " %s " .all) 'face 'leyline-warning))
              ((> .notes 0)
-              (propertize (number-to-string .all) 'face 'leyline-note)))))))
+              (propertize (format " %s " .all) 'face 'leyline-note)))))))
 
 ;;;; Version control
 
@@ -220,7 +225,7 @@
   (when (and (bound-and-true-p flymake-mode)
              leyline--flymake-text
              (not (string-blank-p leyline--flymake-text)))
-    (format " %s " leyline--flymake-text)))
+    (format "%s" leyline--flymake-text)))
 
 (defun leyline-segment-lsp ()
   "Return the current LSP status for the mode-line."
@@ -257,7 +262,7 @@
   "Return current value of `mode-line-process' for the mode-line."
   (let ((text (format-mode-line mode-line-process)))
     (unless (string-blank-p text)
-      (format " %s " (string-trim text)))))
+      (propertize (format " %s " (string-trim text)) 'face 'leyline-pending))))
 
 (defun leyline-segment-vc ()
   "Return the version control details for the mode-line."

@@ -25,6 +25,7 @@
  initial-scratch-message ""             ; Empty the initial *scratch* buffer
  isearch-allow-scroll t                 ; Allow scroll commands while isearching
  lazy-highlight-buffer t                ; Highlight the entire buffer
+ ;; TODO Clean up highlights after replace operations
  lazy-highlight-cleanup nil             ; Keep isearch highlights around
  lazy-highlight-initial-delay 0         ; Remove highlight delay
  max-mini-window-height 10              ; Limit height for minibuffer transients
