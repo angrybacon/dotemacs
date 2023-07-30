@@ -24,6 +24,7 @@
 
 ;;; Code:
 
+(declare-function cl-map "cl-extra")
 (declare-function cl-struct-slot-value "cl-macs")
 (declare-function eglot-current-server "eglot")
 (declare-function eglot-project-nickname "eglot")
@@ -254,9 +255,7 @@
 
 (defun leyline-segment-position ()
   "Return the current cursor position for the mode-line."
-  (concat
-   " %l:%c"
-   (propertize "  %p%% " 'face 'leyline-secondary)))
+  (propertize " %p%% " 'face 'leyline-secondary))
 
 (defun leyline-segment-process ()
   "Return current value of `mode-line-process' for the mode-line."
@@ -282,34 +281,36 @@
 
 ;;;; Mode
 
-(defun leyline--format (left right)
-  "Format a mode line with LEFT and RIGHT justified segments."
-  (concat
-   left
-   (propertize " " 'display `((space :align-to (- right
-                                                  (- 0 right-fringe)
-                                                  (- 0 right-margin)
-                                                  ,(length right)))))
-   right))
+(defun leyline--format-segments (segments)
+  "Format SEGMENTS for a mode-line construct."
+  (format-mode-line
+   (cl-map 'list (lambda (it) `(:eval ,it)) segments)))
 
-;; TODO Check out `mode-line-right-align-edge'
+(defun leyline--format (left-segments right-segments)
+  "Format a mode line with LEFT-SEGMENTS and RIGHT-SEGMENT.
+LEFT-SEGMENT and RIGHT-SEGMENTS should be lists and the result value is a list
+starting with `:eval' in order to form a valid mode-line format string."
+  (let* ((left (leyline--format-segments left-segments))
+         (right (leyline--format-segments right-segments))
+         ;; TODO Check out `mode-line-right-align-edge'
+         (offset `(- right (- 0 right-fringe right-margin) ,(length right)))
+         (spacing (propertize " " 'display `((space :align-to ,offset)))))
+    (concat left spacing right)))
 
 (defun leyline--make ()
-  "Return the mode-line format."
+  "Return the new mode-line format."
   '((:eval
      (leyline--format
-      (format-mode-line
-       '((:eval (leyline-segment-evil))
-         (:eval (leyline-segment-buffer))
-         (:eval (leyline-segment-position))))
-      (format-mode-line
-       '((:eval (leyline-segment-flymake))
-         (:eval (leyline-segment-process))
-         (:eval (leyline-segment-miscellaneous))
-         (:eval (leyline-segment-lsp))
-         (:eval (leyline-segment-vc))
-         (:eval (leyline-segment-major))
-         (:eval (leyline-segment-workspace))))))))
+      '((leyline-segment-evil)
+        (leyline-segment-buffer)
+        (leyline-segment-position))
+      '((leyline-segment-flymake)
+        (leyline-segment-process)
+        (leyline-segment-miscellaneous)
+        (leyline-segment-lsp)
+        (leyline-segment-vc)
+        (leyline-segment-major)
+        (leyline-segment-workspace))))))
 
 (defvar leyline--default-format nil
   "Remember the previous format for when `leyline-mode' is turned off.")

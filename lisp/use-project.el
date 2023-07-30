@@ -42,7 +42,7 @@ If PROJECT is not specified, assume current project root."
 (defun me/project-save (&rest _)
   "Save file-visiting buffers under the current project root."
   (interactive)
-  (save-some-buffers t #'save-some-buffers-root))
+  (save-some-buffers :noconfirm #'save-some-buffers-root))
 
 (defun me/project-search ()
   "Run ripgrep against project root.

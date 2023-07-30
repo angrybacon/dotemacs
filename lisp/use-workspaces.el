@@ -49,9 +49,9 @@
   ("M-7" . me/eyebrowse-switch-7)
   ("M-8" . me/eyebrowse-switch-8)
   ("M-9" . me/eyebrowse-switch-9)
-  :hook
-  (after-init . eyebrowse-mode)
   :custom
-  (eyebrowse-new-workspace t))
+  (eyebrowse-new-workspace t)
+  :hook
+  (after-init . eyebrowse-mode))
 
 ;;; use-workspaces.el ends here
