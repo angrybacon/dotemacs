@@ -186,7 +186,7 @@
             (cond
              ((seq-difference (flymake-running-backends)
                               (flymake-reporting-backends))
-              (propertize " Checking... " 'face 'leyline-pending))
+              (propertize " Checking " 'face 'leyline-pending))
              ((> .errors 0)
               (propertize (format " %s " .all) 'face 'leyline-error))
              ((> .warnings 0)
