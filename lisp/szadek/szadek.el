@@ -65,6 +65,8 @@ permanently."
 
 (add-hook 'after-save-hook #'szadek--on-save)
 
+;; TODO Check out `add-variable-watcher'
+
 ;;;###autoload
 (defun szadek-register (function &optional immediate)
   "Register FUNCTION under `szadek-on-save-hook'.

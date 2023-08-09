@@ -7,17 +7,6 @@
 (add-hook 'prog-mode-hook #'auto-fill-mode)
 (add-hook 'text-mode-hook #'auto-fill-mode)
 
-;;;; Logs
-
-(advice-add 'message :after
-  (defun me/message-tail (&rest _)
-    "Automatically scroll the message buffer to the bottom on new messages."
-    (let* ((name "*Messages*"))
-      (when (not (string= name (buffer-name)))
-        (dolist (window (get-buffer-window-list name nil :all-frames))
-          (with-selected-window window
-            (goto-char (point-max))))))))
-
 ;;;; Embark
 
 (use-package embark
@@ -34,6 +23,17 @@
 (use-package embark-consult
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
+
+;;;; Logs
+
+(advice-add 'message :after
+  (defun me/message-tail (&rest _)
+    "Automatically scroll the message buffer to the bottom on new messages."
+    (let* ((name "*Messages*"))
+      (when (not (string= name (buffer-name)))
+        (dolist (window (get-buffer-window-list name nil :all-frames))
+          (with-selected-window window
+            (goto-char (point-max))))))))
 
 ;;;; Paste
 

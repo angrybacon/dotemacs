@@ -462,6 +462,12 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(doom-modeline-project-dir          ((t :inherit dired-directory)))
    `(doom-modeline-project-parent-dir   ((t :inherit shadow)))
    `(leyline-evil-emacs                 ((t :foreground ,magenta)))
+   `(leyline-error                      ((t :background ,red-5
+                                            :foreground ,red+1)))
+   `(leyline-note                       ((t :background ,blue-5
+                                            :foreground ,blue+1)))
+   `(leyline-warning                    ((t :background ,fg-2
+                                            :foreground ,orange)))
    `(leyline-evil-insert                ((t :foreground ,red)))
    `(leyline-evil-operator              ((t :foreground ,cyan)))
    `(leyline-evil-replace               ((t :foreground ,green+4)))
