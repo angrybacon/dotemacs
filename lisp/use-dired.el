@@ -18,6 +18,7 @@
   :custom
   (dired-auto-revert-buffer t)
   (dired-dwim-target t)
+  (dired-free-space nil)
   (dired-hide-details-hide-symlink-targets nil)
   (dired-listing-switches "-Aghov --group-directories-first")
   (dired-kill-when-opening-new-dired-buffer t)
