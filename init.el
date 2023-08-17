@@ -55,6 +55,7 @@
   (load "use-languages")
   (load "use-lint")
   (load "use-lsp")
+  (load "use-mouse")
   (load "use-parens")
   (load "use-presentation")
   (load "use-project")

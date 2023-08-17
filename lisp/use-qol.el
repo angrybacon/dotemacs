@@ -41,15 +41,6 @@
   :custom
   (webpaste-provider-priority '("paste.mozilla.org" "dpaste.org")))
 
-;;;; Pixel-Wise Scroll
-
-(use-package pixel-scroll
-  :ensure nil
-  :custom
-  (pixel-scroll-precision-use-momentum t)
-  :hook
-  (after-init . pixel-scroll-precision-mode))
-
 ;;;; Rainbow
 
 (use-package rainbow-mode

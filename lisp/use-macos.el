@@ -10,6 +10,13 @@
     :hook
     (after-init . exec-path-from-shell-initialize))
 
+  (use-package pixel-scroll
+    :ensure nil
+    :custom
+    (pixel-scroll-precision-use-momentum t)
+    :hook
+    (after-init . pixel-scroll-precision-mode))
+
   (setq-default
    ns-alternate-modifier 'super         ; Map Super to the Alt key
    ns-command-modifier 'meta            ; Map Meta to the Cmd key

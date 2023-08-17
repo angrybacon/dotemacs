@@ -29,8 +29,6 @@
  lazy-highlight-cleanup nil             ; Keep isearch highlights around
  lazy-highlight-initial-delay 0         ; Remove highlight delay
  max-mini-window-height 10              ; Limit height for minibuffer transients
- mouse-wheel-progressive-speed nil      ; Disable wheel acceleration
- mouse-wheel-scroll-amount '(1 ((control) . 8)) ; Allow faster scrolling
  mouse-yank-at-point t                  ; Yank at point rather than pointer
  native-comp-async-report-warnings-errors 'silent ; Skip error buffers
  read-process-output-max (* 1024 1024)  ; Increase read size for data chunks
@@ -60,8 +58,6 @@
 (set-default-coding-systems 'utf-8)     ; Default to utf-8 encoding
 (global-unset-key (kbd "<pinch>"))      ; Unbind the `text-scale-pinch' command
 (global-unset-key (kbd "C-x C-z"))      ; Unbind the `suspend-frame' command
-(global-unset-key (kbd "C-<wheel-down>")) ; Unbind the `mouse-wheel-text-scale' command
-(global-unset-key (kbd "C-<wheel-up>")) ; Unbind the `mouse-wheel-text-scale' command
 
 (put 'add-function 'lisp-indent-function 2)
 (put 'advice-add 'lisp-indent-function 2)

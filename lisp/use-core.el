@@ -32,20 +32,10 @@
 
 (use-package hanna
   :load-path "lisp/hanna"
-  :commands
-  hanna-beginning-of-line
-  hanna-paragraph-backward
-  hanna-paragraph-forward
   :bind
   ([remap move-beginning-of-line] . hanna-beginning-of-line)
   ([remap backward-paragraph] . hanna-paragraph-backward)
-  ([remap forward-paragraph] . hanna-paragraph-forward)
-  ("<wheel-right>" . hanna-scroll-horizontal+2)
-  ("<wheel-left>" . hanna-scroll-horizontal-2)
-  ("<double-wheel-right>" . hanna-scroll-horizontal+4)
-  ("<double-wheel-left>" . hanna-scroll-horizontal-4)
-  ("<triple-wheel-right>" . hanna-scroll-horizontal+8)
-  ("<triple-wheel-left>" . hanna-scroll-horizontal-8))
+  ([remap forward-paragraph] . hanna-paragraph-forward))
 
 (use-package manticore
   :load-path "lisp/manticore"
