@@ -24,9 +24,6 @@
 
 ;;; Code:
 
-(require 'desktop)                      ; `desktop-save'
-(require 'simple)                       ; `shell-command' `use-region-p'
-
 (defgroup manticore nil
   "Core functions and commands."
   :group 'convenience)

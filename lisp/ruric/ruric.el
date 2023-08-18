@@ -25,7 +25,7 @@
 
 ;;; Code:
 
-(require 'cl-seq)                       ; `cl-position'
+(declare-function cl-position "cl-seq")
 
 (defgroup ruric nil
   "Pair-programming features."

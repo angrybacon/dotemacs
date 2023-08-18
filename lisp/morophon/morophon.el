@@ -24,9 +24,7 @@
 
 ;;; Code:
 
-(require 'custom)                       ; `load-theme'
-(require 'frame)                        ; `set-frame-parameter'
-(require 'nadvice)                      ; `advice-add'
+(declare-function szadek-get "szadek")
 
 (defgroup morophon nil
   "Interact with themes."

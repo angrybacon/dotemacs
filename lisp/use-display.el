@@ -35,6 +35,7 @@
      ,(rx bos "*eshell")
      ,(rx bos "*terminal")
      eshell-mode
+     flymake-diagnostics-buffer-mode
      help-mode
      helpful-mode
      magit-process-mode
@@ -50,21 +51,22 @@
   (shackle-default-size (szadek-get 'popup-size .33))
   (shackle-inhibit-window-quit-on-same-windows t)
   (shackle-rules
-   `((compilation-mode               :align below :popup t)
-     (magit-process-mode             :align below :popup t)
-     ("*Messages*"                   :align below :popup t)
-     (,(rx bos "*EGLOT")             :align below :popup t :regexp t)
-     (debugger-mode                  :align below :popup t :select t)
-     (embark-collect-mode            :align below :popup t :select t)
-     (grep-mode                      :align below :popup t :select t)
-     ("*Process List*"               :align below :popup t :select t)
-     ("*Warnings*"                   :align below :popup t :select t)
-     ("*dired-check-process output*" :align below :popup t :select t)
-     ("*eldoc*"                      :align below :popup t :select t)
-     ("*eshell*"                     :align below :popup t :select t)
-     (,(rx bos "*terminal")          :align below :popup t :select t :regexp t)
-     (help-mode                      :align left  :popup t :select t :size 82)
-     (helpful-mode                   :align left  :popup t :select t :size 82)))
+   `((compilation-mode                :align below :popup t)
+     (flymake-diagnostics-buffer-mode :align below :popup t)
+     (magit-process-mode              :align below :popup t)
+     ("*Messages*"                    :align below :popup t)
+     (,(rx bos "*EGLOT")              :align below :popup t :regexp t)
+     (debugger-mode                   :align below :popup t :select t)
+     (embark-collect-mode             :align below :popup t :select t)
+     (grep-mode                       :align below :popup t :select t)
+     ("*Process List*"                :align below :popup t :select t)
+     ("*Warnings*"                    :align below :popup t :select t)
+     ("*dired-check-process output*"  :align below :popup t :select t)
+     ("*eldoc*"                       :align below :popup t :select t)
+     ("*eshell*"                      :align below :popup t :select t)
+     (,(rx bos "*terminal")           :align below :popup t :select t :regexp t)
+     (help-mode                       :align left  :popup t :select t :size 82)
+     (helpful-mode                    :align left  :popup t :select t :size 82)))
   (shackle-select-reused-windows t)
   :hook
   (after-init . shackle-mode))

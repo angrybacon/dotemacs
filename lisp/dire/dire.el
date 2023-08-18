@@ -23,8 +23,11 @@
 
 ;;; Code:
 
-(require 'dired)
-(require 'subr-x)
+(declare-function dired-get-file-for-visit "dired")
+(declare-function dired-get-filename "dired")
+(declare-function dired-get-marked-files "dired")
+(declare-function dired-toggle-marks "dired")
+(declare-function dired-unmark-all-marks "dired")
 
 (defgroup dire nil
   "Helpers for Dired."

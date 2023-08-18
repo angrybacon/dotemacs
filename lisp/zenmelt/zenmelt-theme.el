@@ -26,9 +26,6 @@
 
 ;;; Code:
 
-(require 'cus-face)  ; `custom-theme-set-faces'
-(require 'pcase)     ; `pcase-let*'
-
 (defgroup zenmelt nil
   "A Zenburn clone."
   :group 'faces)

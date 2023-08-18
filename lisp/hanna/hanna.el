@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(require 'dired)
+(declare-function dired-move-to-filename "dired")
 
 ;;;; Jump
 

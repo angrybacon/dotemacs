@@ -75,9 +75,6 @@
   (emacs-lisp-mode . flymake-mode)
   (emacs-lisp-mode . outline-minor-mode))
 
-(use-package lisp-mode :ensure nil
-  :mode ((rx ".eld" eos) . lisp-data-mode))
-
 ;;;; Markdown
 
 (use-package markdown-mode

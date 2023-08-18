@@ -34,8 +34,7 @@
 
 ;;; Code:
 
-(require 'cl-seq)
-(require 'pp)
+(declare-function cl-member-if "cl-seq")
 
 (defgroup szadek nil
   "Framework to retrieve secrets."

@@ -25,18 +25,9 @@
 
 ;;; Code:
 
-(require 'cl-lib)    ; `cl-incf'
-(require 'cl-macs)   ; `cl-destructuring-bind'
-(require 'cl-seq)    ; `cl-position'
-(require 'frame)     ; `display-monitor-attributes-list' `display-pixel-height'
-                     ; `display-pixel-width' `frame-inner-width'
-                     ; `frame-monitor-attributes' `set-frame-parameter'
-(require 'nadvice)   ; `advice-add'
-(require 'olivetti)
-(require 'pcase)     ; `pcase-let'
-(require 'project)   ; `project-current' `project-root'
-(require 'seq)       ; `seq-filter'
-(require 'window)    ; `window-edges'
+(declare-function olivetti-mode "olivetti")
+(declare-function project-root "project")
+(declare-function vterm "vterm")
 
 (defgroup widowmaker nil
   "Manage windows and buffers."

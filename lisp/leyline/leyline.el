@@ -24,16 +24,13 @@
 
 ;;; Code:
 
-(declare-function cl-map "cl-extra")
 (declare-function cl-struct-slot-value "cl-macs")
 (declare-function eglot-current-server "eglot")
 (declare-function eglot-project-nickname "eglot")
-(declare-function eglot--managed-mode "eglot")
 (declare-function eyebrowse--get "eyebrowse")
 (declare-function flymake--handle-report "flymake")
 (declare-function flymake-reporting-backends "flymake")
 (declare-function flymake-running-backends "flymake")
-(declare-function flymake-start "flymake")
 (declare-function flymake-start "flymake")
 (declare-function jsonrpc-last-error "jsonrpc")
 (declare-function jsonrpc--request-continuations "jsonrpc")

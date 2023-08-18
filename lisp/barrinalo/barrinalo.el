@@ -25,14 +25,6 @@
 
 ;;; Code:
 
-(require 'seq)                          ; `seq-sort-by'
-(require 'simple)                       ; `count-lines' `cycle-spacing'
-                                        ; `delete-blank-lines'
-                                        ; `move-end-of-line' `newline'
-                                        ; `push-mark' `transpose-line'
-                                        ; `use-region-p'
-(require 'sort)                         ; `reverse-region' `sort-regexp-fields'
-
 ;;;; Date commands
 
 ;;;###autoload
