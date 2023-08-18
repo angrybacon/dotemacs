@@ -51,6 +51,7 @@
      magit-diff-highlight-hunk-region-using-face))
   (magit-diff-refine-hunk 'all)
   (magit-section-initial-visibility-alist '((unpushed . show)))
+  (magit-section-visibility-indicator '("…" . nil))
   :config
   (magit-add-section-hook
    'magit-status-sections-hook
