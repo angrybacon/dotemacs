@@ -84,7 +84,9 @@
    :map evil-normal-state-map
    ("M-." . nil))                       ; Free xref command
   :custom
+  (evil-echo-state nil)
   (evil-emacs-state-cursor (default-value 'cursor-type))
+  (evil-move-cursor-back nil)
   (evil-shift-round nil)
   (evil-undo-system 'undo-redo)
   (evil-visual-state-cursor 'hollow)
@@ -103,9 +105,10 @@
 (use-package evil-collection
   :custom
   (evil-collection-key-blacklist
-   '("gd" "gf" "gfp" "gfu" "gpp" "gpu"  ; Free project commands
+   '("gD" "gd" "gp"                     ; Free project commands
+     "gf" "gfp" "gfu"                   ; Free project commands in Magit
      "gs"                               ; Free avy command
-     "M-1" "M-2" "M-3" "M-4"))          ; Free workspace command
+     "M-1" "M-2" "M-3" "M-4"))          ; Free workspace commands
   (evil-collection-want-find-usages-bindings nil)
   :hook
   (evil-mode . evil-collection-init))
