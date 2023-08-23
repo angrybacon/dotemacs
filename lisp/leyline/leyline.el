@@ -308,8 +308,8 @@ starting with `:eval' in order to form a valid mode-line format string."
            (leyline-segment-miscellaneous)
            (leyline-segment-lsp)
            (leyline-segment-vc)
-           (leyline-segment-major)
-           (leyline-segment-workspace))))))))
+           (leyline-segment-major)))
+        (leyline-segment-workspace))))))
 
 (defvar leyline--default-format nil
   "Remember the previous format for when `leyline-mode' is turned off.")

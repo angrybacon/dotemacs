@@ -45,15 +45,15 @@
   manticore-kill-terminal
   manticore-revert-buffer-immediately)
 
-;; TODO Merge shelldock and szadek
-
 (use-package shelldock
   :demand
   :load-path "lisp/shelldock")
 
 (use-package szadek
   :load-path "lisp/szadek"
-  :commands szadek-get szadek-register
+  :commands
+  szadek-get
+  szadek-register
   :custom
   (szadek-file (shelldock "szadek.eld"))
   (szadek-fix-missing t))

@@ -54,6 +54,9 @@ See `widowmaker-olivetti-mode-maybe' for the heuristics used and details of
 implementation."
   :type 'boolean)
 
+;; TODO Add support for regular expression so that Eglot buffers can be targeted
+;;      as well.
+
 (defcustom widowmaker-olivetti-blacklist-buffers '()
   "Buffers for which `olivetti-mode' should not be enabled automatically."
   :type '(repeat string))
@@ -215,7 +218,8 @@ Use BUFFER-NAME as name for the new terminal buffer when it is provided."
   "Spawn a terminal window using `widowmaker-terminal-function'.
 If a project root is found using `project-current', customize the current
 directory to this location before spawning the terminal.
-When the appropriate terminal window is already open, switch to it.
+When the appropriate terminal window is already open but unfocused, switch to
+it.
 When prefixed with \\[universal-argument], FORCE create a new terminal session."
   (interactive "P")
   (if-let ((root (ignore-errors (project-root (project-current)))))

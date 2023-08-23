@@ -1,4 +1,4 @@
-;;; shelldock.el --- Hide away your cache files      -*- lexical-binding: t; -*-
+;;; shelldock.el --- Hide away your files            -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023 Mathieu Marques
 
@@ -29,7 +29,7 @@
 ;;; Code:
 
 (defgroup shelldock nil
-  "Hide away your cache files."
+  "Hide away your files."
   :group 'convenience)
 
 (defcustom shelldock-directory (expand-file-name ".cache/" user-emacs-directory)
