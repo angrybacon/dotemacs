@@ -20,6 +20,10 @@
 (unless (package-installed-p 'tree-sitter-module)
   (package-vc-install "https://github.com/casouri/tree-sitter-module"))
 
+;;;; CSV
+
+(use-package csv-mode)
+
 ;;;; Configuration Files
 
 (use-package conf-mode
