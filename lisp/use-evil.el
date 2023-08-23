@@ -125,6 +125,8 @@
   (evil-mode . evil-goggles-mode))
 
 (use-package evil-lion
+  :custom
+  (evil-lion-squeeze-spaces nil)
   :hook
   (evil-mode . evil-lion-mode))
 
