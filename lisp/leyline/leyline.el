@@ -42,6 +42,7 @@
 ;;;; Rename major modes
 
 (defcustom leyline-rules '((emacs-lisp-mode "ELisp")
+                           (js-ts-mode "JS")
                            (tsx-ts-mode "TSX")
                            (typescript-ts-mode "TS"))
   "Rules for major-mode names to be renamed."

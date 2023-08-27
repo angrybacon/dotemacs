@@ -4,21 +4,19 @@
 
 ;;;; Tree-Sitter
 
+(use-package pendelhaven
+  :load-path "lisp/pendelhaven"
+  :commands
+  pendelhaven-install
+  :custom
+  (pendelhaven-directory (shelldock "pendelhaven/"))
+  :hook
+  (after-init . pendelhaven-configure))
+
 (use-package treesit
   :ensure nil
   :custom
-  (treesit-extra-load-path
-   `(,(expand-file-name "elpa/tree-sitter-module/dist/" user-emacs-directory)))
-  (treesit-font-lock-level 4)
-  :init
-  (push '(css-mode . css-ts-mode) major-mode-remap-alist)
-  (push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
-  (push '(js-mode . js-ts-mode) major-mode-remap-alist)
-  (push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
-  (push '(python-mode . python-ts-mode) major-mode-remap-alist))
-
-(unless (package-installed-p 'tree-sitter-module)
-  (package-vc-install "https://github.com/casouri/tree-sitter-module"))
+  (treesit-font-lock-level 4))
 
 ;;;; CSV
 
@@ -57,10 +55,7 @@
 (use-package typescript-ts-mode
   :ensure nil
   :hook
-  (tsx-ts-mode . sgml-electric-tag-pair-mode)
-  :mode
-  ((rx ".ts" eos) . typescript-ts-mode)
-  ((rx ".tsx" eos) . tsx-ts-mode))
+  (tsx-ts-mode . sgml-electric-tag-pair-mode))
 
 ;;;; Lisp
 
