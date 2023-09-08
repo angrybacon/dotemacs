@@ -137,15 +137,15 @@
 (declare-function evil-multiedit-match-symbol-and-prev "evil-multiedit")
 
 (defun me/evil-multiedit-define-bindings ()
-    "Add personal bindings to the global maps."
-    (evil-define-key* '(normal visual) 'global
-      (kbd "C-M-d") #'evil-multiedit-match-all)
-    (evil-define-key* 'normal 'global
-      (kbd "M-d") #'evil-multiedit-match-symbol-and-next
-      (kbd "M-D") #'evil-multiedit-match-symbol-and-prev)
-    (evil-define-key* 'visual 'global
-      (kbd "M-d") #'evil-multiedit-match-and-next
-      (kbd "M-D") #'evil-multiedit-match-and-prev))
+  "Add personal bindings to the global maps."
+  (evil-define-key* '(normal visual) 'global
+    (kbd "C-M-d") #'evil-multiedit-match-all)
+  (evil-define-key* 'normal 'global
+    (kbd "M-d") #'evil-multiedit-match-symbol-and-next
+    (kbd "M-D") #'evil-multiedit-match-symbol-and-prev)
+  (evil-define-key* 'visual 'global
+    (kbd "M-d") #'evil-multiedit-match-and-next
+    (kbd "M-D") #'evil-multiedit-match-and-prev))
 
 (use-package evil-multiedit
   :hook

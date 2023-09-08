@@ -63,7 +63,7 @@ Return `treesit-language-source-alist' once it is populated."
   "Install all languages in `pendelhaven-languages'."
   (interactive)
   (let ((languages (pendelhaven-languages)))
-    (advice-add #'treesit--install-language-grammar-1 :filter-args
+    (advice-add 'treesit--install-language-grammar-1 :filter-args
       (lambda (rest) (append `(,pendelhaven-directory) (cdr rest)))
       '((name . pendelhaven--force-directory)))
     (unwind-protect

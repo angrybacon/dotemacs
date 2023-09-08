@@ -52,6 +52,22 @@
   :custom
   (js-indent-level 2))
 
+(declare-function json-pretty-print-ordered "json")
+(declare-function json-pretty-print-buffer-ordered "json")
+
+(defun me/json-prettify-dwim ()
+  "Prettify region if active or entire buffer accordingly."
+  (interactive)
+  (if (use-region-p)
+      (json-pretty-print-ordered (use-region-beginning) (use-region-end))
+    (json-pretty-print-buffer-ordered)))
+
+(use-package json-ts-mode
+  :ensure nil
+  :bind
+  (:map json-ts-mode-map
+   ([remap fill-paragraph] . me/json-prettify-dwim)))
+
 (use-package typescript-ts-mode
   :ensure nil
   :hook
@@ -92,6 +108,10 @@
   :mode (rx (or "INSTALL" "CONTRIBUTORS" "LICENSE" "README" ".mdx") eos))
 
 ;;;; Org
+
+(declare-function org-at-heading-p "org")
+(declare-function org-previous-visible-heading "org")
+(declare-function outline-up-heading "outline")
 
 (defun me/org-src-buffer (name &rest _)
   "Format a simple buffer NAME."

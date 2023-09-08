@@ -337,20 +337,20 @@ starting with `:eval' in order to form a valid mode-line format string."
   :global t
   (if leyline-mode
       (progn
-        (advice-add #'flymake-start :after #'leyline--update-flymake)
-        (advice-add #'flymake--handle-report :after #'leyline--update-flymake)
+        (advice-add 'flymake-start :after #'leyline--update-flymake)
+        (advice-add 'flymake--handle-report :after #'leyline--update-flymake)
         (add-hook 'after-save-hook #'leyline--update-vc)
         (add-hook 'find-file-hook #'leyline--update-vc)
-        (advice-add #'vc-refresh-state :after #'leyline--update-vc)
+        (advice-add 'vc-refresh-state :after #'leyline--update-vc)
         (setq leyline--default-format mode-line-format)
         (setq-default mode-line-format (leyline--make))
         (add-hook 'eglot-managed-mode-hook #'leyline-remember-eglot)
         (add-hook 'eglot-managed-mode-hook #'leyline-remember-eyebrowse))
-    (advice-remove #'flymake-start #'leyline--update-flymake)
-    (advice-remove #'flymake--handle-report #'leyline--update-flymake)
+    (advice-remove 'flymake-start #'leyline--update-flymake)
+    (advice-remove 'flymake--handle-report #'leyline--update-flymake)
     (remove-hook 'after-save-hook #'leyline--update-vc)
     (remove-hook 'file-find-hook #'leyline--update-vc)
-    (advice-remove #'vc-refresh-state #'leyline--update-vc)
+    (advice-remove 'vc-refresh-state #'leyline--update-vc)
     (remove-hook 'eglot-managed-mode-hook #'leyline-remember-eglot)
     (remove-hook 'eyebrowse-mode-hook #'leyline-remember-eyebrowse)
     (setq-default

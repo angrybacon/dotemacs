@@ -43,6 +43,7 @@ Also toggle `eglot-inlay-hints-mode' accordingly."
 (defun me/eglot-initialize-typescript ()
   "Bootstrap TypeScript-specific customizations.
 See https://github.com/typescript-language-server/typescript-language-server."
+  (defvar eglot-server-programs)
   (let ((target-mode 'typescript-ts-mode)
         (target-modes '(js-base-mode typescript-ts-base-mode)))
     (setq-default
@@ -79,6 +80,9 @@ See https://github.com/typescript-language-server/typescript-language-server."
   (put 'eglot-note 'flymake-overlay-control nil)
   (put 'eglot-warning 'flymake-overlay-control nil)
   (advice-add 'eglot--apply-workspace-edit :after #'me/project-save)
+  (advice-add 'eglot--format-markup :filter-return
+    (lambda (output) (replace-regexp-in-string (rx "\n```" eos) "" output))
+    '((name . me/eglot--trim-block-end)))
   (advice-add 'project-kill-buffers :before #'me/eglot-shutdown-project)
   (me/eglot-initialize-typescript)
   :custom

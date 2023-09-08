@@ -75,12 +75,13 @@ By default consider the current frame."
   "Hook run after a theme is loaded with `load-theme'.")
 
 (advice-add 'load-theme :after
-  (defun morophon-after-load-theme-run-hooks (&rest _)
+  (lambda (&rest _)
     "Run hooks set in `morophon-after-load-theme-hook'.
 Inhibit `custom--inhibit-theme-enable' temporarily for the theme customization
 that might happen within the hook."
     (let ((custom--inhibit-theme-enable nil))
-      (run-hooks 'morophon-after-load-theme-hook))))
+      (run-hooks 'morophon-after-load-theme-hook)))
+  '((name . morophon--after-load-theme-run-hooks)))
 
 (defcustom morophon-known-themes '(modus-operandi modus-vivendi)
   "List of themes to take into account with `morophon-cycle'.
