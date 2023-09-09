@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# key: rc
-# --
-export const $1: FunctionComponent = ($2) => (
-  $0
-);

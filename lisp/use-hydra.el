@@ -2,13 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(global-set-key (kbd "C-c d")
-                (let ((map (make-sparse-keymap "Dates")))
-                  (define-key map "d" '("date" . barrinalo-date-short))
-                  (define-key map "i" '("iso" . barrinalo-date-iso))
-                  (define-key map "l" '("long" . barrinalo-date-long))
-                  map))
-
 (global-set-key (kbd "C-c g")
                 (let ((map (make-sparse-keymap "Git")))
                   (define-key map "b" '("blame" . magit-blame))

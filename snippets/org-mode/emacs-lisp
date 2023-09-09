@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# key: s
-# --
-#+BEGIN_SRC${1: ${2:emacs-lisp}}
-$0
-#+END_SRC

@@ -1,4 +1,0 @@
-# -*- mode: snippet -*-
-# key: L
-# --
-console.log(JSON.stringify($0, null, 2));

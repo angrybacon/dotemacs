@@ -60,7 +60,7 @@
   (load "use-presentation")
   (load "use-project")
   (load "use-qol")
-  (load "use-snippets")
+  (load "use-templates")
   (load "use-terminal")
   (load "use-workspaces")
 

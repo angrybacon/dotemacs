@@ -1,0 +1,48 @@
+emacs-lisp-mode
+
+(autoload ";;;###autoload")
+(let "(let (" p ")" n> r> ")")
+(lett "(let* (" p ")" n> r> ")")
+
+fundamental-mode
+
+(now (barrinalo-date-short-with-time))
+(Now (barrinalo-date-long-with-time))
+(today (barrinalo-date-short))
+(Today (barrinalo-date-long))
+
+js-base-mode typescript-ts-base-mode
+
+(c "const " p " = " p ";")
+(f "const " p " = (" p ") => " p ";")
+(l "console.log(" p ");")
+(L "console.log(JSON.stringify(" p ", null, 2));")
+
+org-mode
+
+(q "#+BEGIN_QUOTE" n> r> n "#+END_QUOTE")
+(s "#+BEGIN_SRC " (p "emacs-lisp") n> r> n "#+END_SRC")
+
+prog-mode
+
+(note
+ (if (derived-mode-p 'emacs-lisp-mode 'lisp-data-mode) ";; " comment-start)
+ "NOTE ")
+(todo
+ (if (derived-mode-p 'emacs-lisp-mode 'lisp-data-mode) ";; " comment-start)
+ "TODO ")
+(warn
+ (if (derived-mode-p 'emacs-lisp-mode 'lisp-data-mode) ";; " comment-start)
+ "WARN ")
+
+text-mode
+
+(box "┌─" (make-string (length str) ?─) "─┐" n
+     "│ " (s str)                       " │" n
+     "└─" (make-string (length str) ?─) "─┘" n)
+(k "<kbd>" p "</kbd>")
+
+;; Local Variables:
+;; mode: lisp-data
+;; outline-regexp: "[a-z]"
+;; End:
