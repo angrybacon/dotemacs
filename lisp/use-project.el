@@ -51,7 +51,7 @@ If ripgrep is not installed, use grep instead."
   (let ((root (me/project-root)))
     (if (executable-find "rg")
         (consult-ripgrep root)
-      (message "[Project] Could not find 'rg', using 'grep' instead")
+      (message "[Project] Could not find `rg', using `grep' instead")
       (consult-grep root))))
 
 (defun me/project-root ()
@@ -72,7 +72,7 @@ If ripgrep is not installed, use grep instead."
   ;; TODO Provide a variant that starts at project root
   (let ((path (buffer-file-name)))
     (kill-new path)
-    (message (format "[Project] Copied '%s'" path))))
+    (message (format "[Project] Copied `%s'" path))))
 
 (use-package project
   :ensure nil

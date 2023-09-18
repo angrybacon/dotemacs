@@ -41,18 +41,7 @@
 
 (defun dire--propertize-file (file)
   "Return a propertize string representing FILE."
-  (propertize file 'face '(:inherit default)))
-
-(defun dire-marked-files ()
-  "Return the currently marked files."
-  (let* ((files (dired-get-marked-files nil nil nil :distinguish-one-marked))
-         (count (length files)))
-    (pcase count
-      (1 nil)
-      (2 (if (eq (car files) t)
-             (cdr files)
-           files))
-      (_ files))))
+  (propertize file 'face '(:inherit dired-marked :inverse-video t)))
 
 ;;;; Commands
 
@@ -78,48 +67,27 @@ With positive ARGUMENT, prompt for the command to use."
                              "."
                              (* not-newline)
                              eos)
-  "Regular expression used to identify parts of a movie file name."
+  "Regular expression used to identify parts of a movie file name.
+The first group should capture the name of the movie and the second group should
+capture the year of release."
   :type 'regexp)
 
-(defvar dire--rename-list nil
+(defvar dire--rename-history nil
   "Keep the last rename operations around for reverting purposes.
 Each entry in the list should be a tuple representing the old and new names.")
 
-(defun dire-movies-add-extension (movie extension)
-  "Return a new string representing MOVIE with EXTENSION.
-If EXTENSION is nil, don't add a dot separator."
-  (if extension
-      (concat movie "." extension)
-    movie))
-
-(defun dire-movies-get-compliant-name (name)
-  "Return a compliant movie file name from NAME or nil."
-  (when (string-match dire-movie-re name)
+(defun dire-movies-get-compliant-name (input)
+  "Return a compliant movie file name from INPUT."
+  (let ((name (if (string-match dire-movie-re input)
+                  (replace-regexp-in-string dire-movie-re "\\1 (\\2)" input)
+                input)))
     ;; TODO Enforce proper title casing
-    (replace-regexp-in-string dire-movie-re "\\1 (\\2)" name)))
-
-(defun dire--movies-rename-movie-file (old new extension)
-  "Sub-routine for `dire-movies-rename-movie' to handle non-directory files.
-OLD is the current filename and NEW is the new name to use both without
-extension. EXTENSION is the extension to consider.
-See `dire--movies-rename-movie-directory' for the directory counterpart."
-  (when-let* ((left (dire--propertize-file old))
-              (right (dire--propertize-file new))
-              (confirm (yes-or-no-p
-                        (format "[Dire] Rename `%s' to `%s'?" left right)))
-              (old (dire-movies-add-extension old extension))
-              (new (dire-movies-add-extension new extension)))
-    (condition-case nil
-        (progn
-          (rename-file old new 0)
-          (message "[Dire] Renamed `%s' to `%s'" old new)
-          (push (cons old new) dire--rename-list))
-      ('file-already-exists (message "[Dire] Ignored `%s'" old)))))
+    (subst-char-in-string ?. ?\s name :in-place)))
 
 (defun dire-movies-rename-movie (file)
   "Rename the provided FILE to be compliant with most media servers.
-If FILE is a directory, rename it, enter it and rename the expected files that
-are contained there.
+If FILE is not a directory, rename it accordingly.
+If FILE is a directory, do nothing.
 
 Files are renamed to be compliant with most media servers:
 
@@ -128,47 +96,44 @@ Files are renamed to be compliant with most media servers:
   ├── Movie Title in Title Case (2022).fr.srt
   └── Movie Title in Title Case (2022).mp4
 
-If a movie title cannot be guessed from FILE, do nothing."
-  (if-let* ((file (or file (dired-get-filename)))
-            (base (file-name-base file)))
-      (when-let ((compliant-name (dire-movies-get-compliant-name base)))
-        (if (file-directory-p file)
-            (progn
-              ;; TODO Handle directories
-              )
-          (dire--movies-rename-movie-file base
-                                          compliant-name
-                                          (file-name-extension file))))
-    (user-error "[Dire] No file selected")))
+If a movie title cannot be guessed from FILE, print a warning and do nothing.
+On successful rename, populate `dire--rename-history'."
+  ;; TODO Handle directories
+  (unless (file-directory-p file)
+    (if-let* ((new (dire-movies-get-compliant-name (file-name-base file))))
+        (let ((old (file-name-nondirectory file))
+              (new (file-name-with-extension new (file-name-extension file))))
+          (when (yes-or-no-p (format "[Dire] Rename %s to %s?"
+                                     (dire--propertize-file old)
+                                     (dire--propertize-file new)))
+            (condition-case nil
+                (progn
+                  (rename-file old new 0)
+                  (message "[Dire] Renamed `%s' to `%s'" old new)
+                  (push (cons old new) dire--rename-history))
+              ('file-already-exists (message "[Dire] Ignored `%s'" old)))))
+      (user-error "[Dire] Could not guess compliant name from `%s'" file))))
 
 ;;;###autoload
 (defun dire-movies-rename-dwim ()
-  "Clean up movie files and directories in the current `dired-mode' buffer.
-If no entries are marked, mark all files beforehand. If some are marked,
-consider those only."
+  "Clean up movie files in the current `dired-mode' buffer.
+Apply changes on marked entries only or currently selected entry."
   (interactive)
-  (let ((should-mark-all (not (dire-marked-files))))
-    (when should-mark-all
-      (dired-unmark-all-marks)
-      (dired-toggle-marks))
-    (mapc #'dire-movies-rename-movie (dire-marked-files))
-    (when should-mark-all
-      (dired-unmark-all-marks))))
+  (mapc #'dire-movies-rename-movie (dired-get-marked-files)))
 
 ;;;###autoload
 (defun dire-rename-undo ()
-  "Read `dire--rename-list' and revert all items contained within."
+  "Read `dire--rename-history' and revert all items contained within."
   (interactive)
-  (let ((count (length dire--rename-list)))
+  (let ((count (length dire--rename-history)))
     (if (zerop count)
-        (user-error "[Dire] Nothing to revert")
-      (dolist (entry dire--rename-list)
+        (message "[Dire] Nothing to revert")
+      (dolist (entry dire--rename-history)
         (pcase-let ((`(,old . ,new) entry))
           (rename-file new old 0)))
-      (message "[Dire] Reverted %d %s"
-               count
-               (if (> count 1) "entries" "entry"))))
-  (setq dire--rename-list nil))
+      (message "[Dire] Reverted %d entr%s" count (if (> count 1) "ies" "y"))))
+  ;; TODO Clean history progressively in case of errors
+  (setq dire--rename-history nil))
 
 (provide 'dire)
 
