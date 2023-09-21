@@ -4,6 +4,9 @@
 
 ;;;; Directory Variables
 
+(declare-function szadek-get "szadek")
+(declare-function szadek-register "szadek")
+
 ;; Create and set a class for Prettier-enabled projects
 (dir-locals-set-class-variables 'prettier
  '((css-base-mode . ((eval . (prettier-mode))))
@@ -12,6 +15,11 @@
    (markdown-mode . ((eval . (prettier-mode))))
    (typescript-ts-base-mode . ((eval . (prettier-mode))))
    (yaml-ts-mode . ((eval . (prettier-mode))))))
+
+(defun me/dir-locals-reset-directory-cache ()
+  "Reset the class directory cache."
+  (interactive)
+  (setq dir-locals-directory-cache nil))
 
 (defun me/dir-locals-set-directories ()
   "Apply directory-local class variables to the appropriate project paths."
@@ -22,6 +30,11 @@
 (szadek-register #'me/dir-locals-set-directories :immediate)
 
 ;;;; Project
+
+(declare-function consult-grep "consult")
+(declare-function consult-ripgrep "consult")
+(declare-function project-root "project")
+(declare-function shelldock "shelldock")
 
 (defun me/project-find-file ()
   "Find a file under the current project.

@@ -97,7 +97,6 @@ and the regular version of the corresponding major mode, both optional.")
   "Remap Tree-sitter major mode for LANGUAGE.
 For languages that don't have a built-in non-Tree-sitter major mode, register
 them in `auto-mode-alist' directly. See `pendelhaven--pattern-alist'."
-  (interactive)
   (cl-destructuring-bind (&key regular tree)
       (alist-get language pendelhaven--mode-alist)
     (let ((mode (or regular (intern (format "%s-mode" language))))

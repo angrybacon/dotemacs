@@ -15,8 +15,8 @@ js-base-mode typescript-ts-base-mode
 
 (c "const " p " = " p ";")
 (f "const " p " = (" p ") => " p ";")
-(l "console.log(" p ");")
-(L "console.log(JSON.stringify(" p ", null, 2));")
+(l "console.log(" r ");")
+(L "console.log(JSON.stringify(" r ", null, 2));")
 
 org-mode
 

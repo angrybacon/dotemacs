@@ -17,10 +17,20 @@
   (html-mode . emmet-mode)
   (tsx-ts-mode . emmet-mode))
 
+(declare-function tempel-expand "tempel")
+(declare-function tempel-insert "tempel")
+
+(defun me/tempel-dwim ()
+  "Call `tempel-expand' or `tempel-insert' when region is active."
+  (interactive)
+  (if (use-region-p)
+      (call-interactively #'tempel-insert)
+    (tempel-expand :interactive)))
+
 (use-package tempel
   :defines tempel-map
   :bind
-  ("C-<return>" . tempel-expand)
+  ("C-<return>" . me/tempel-dwim)
   (:map tempel-map
    ([backtab] . tempel-previous)
    ([tab] . tempel-next)))
