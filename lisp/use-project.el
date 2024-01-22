@@ -31,6 +31,7 @@
 
 ;;;; Project
 
+(declare-function cl-nsubstitute "cl-seq")
 (declare-function consult-grep "consult")
 (declare-function consult-ripgrep "consult")
 (declare-function project-root "project")
@@ -79,6 +80,12 @@ If ripgrep is not installed, use grep instead."
       (find-file (expand-file-name "TODO.org" root))
     (user-error "[Project] Not in a project")))
 
+(defun me/project-kill-buffer-p (buffer)
+  "Return whether BUFFER is safe to kill with `project-kill-buffers'."
+  ;; (when (not (eq buffer (current-buffer)))
+  ;;   (message "%s" buffer))
+  (not (eq buffer (current-buffer))))
+
 (defun me/project-kill-path ()
   "Save the current absolute path in the kill ring."
   (interactive)
@@ -89,6 +96,9 @@ If ripgrep is not installed, use grep instead."
 
 (use-package project
   :ensure nil
+  :config
+  (cl-nsubstitute
+   #'me/project-kill-buffer-p #'buffer-file-name project-kill-buffer-conditions)
   :custom
   (project-switch-commands
    '((project-dired "Root" ?D)
