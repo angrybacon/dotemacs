@@ -7,6 +7,7 @@
 (use-package pendelhaven
   :load-path "lisp/pendelhaven"
   :commands
+  pendelhaven-configure
   pendelhaven-install
   :custom
   (pendelhaven-directory (shelldock "pendelhaven/"))
@@ -30,6 +31,10 @@
                 (and ".env" (* (and "." (+ word))))
                 (and "." (+ word) "rc"))
             eos))
+
+;;;; GraphQL
+
+(use-package graphql-ts-mode)
 
 ;;;; HTML
 

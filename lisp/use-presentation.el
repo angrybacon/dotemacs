@@ -13,11 +13,21 @@
 
 ;;;; Presentation Mode
 
+(declare-function face-remap-remove-relative "face-remap")
+(declare-function evil-initialize-state "evil-core")
+(declare-function evil-emacs-state "evil-states")
+(declare-function org-display-inline-images "org")
+(declare-function org-remove-inline-images "org")
+(declare-function org-present-big "org-present")
+(declare-function widowmaker-olivetti-body-reset "widowmaker")
+
 (defvar-local me/org-present-face-remap-cookies nil
   "Keep the face remappings around to revert them.")
 
 (defun me/org-present-end ()
   "Configurations to run when `org-present-mode' ends."
+  (defvar face-remap-remove-relative)
+  (defvar org-hide-emphasis-markers)
   (setq
    header-line-format nil
    org-hide-emphasis-markers nil)
@@ -31,6 +41,7 @@
 
 (defun me/org-present-begin ()
   "Configurations to run when `org-present-mode' begins."
+  (defvar org-hide-emphasis-markers)
   (goto-char (point-min))
   (setq
    header-line-format " "

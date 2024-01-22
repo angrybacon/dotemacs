@@ -58,4 +58,16 @@
   (szadek-file (shelldock "szadek.eld"))
   (szadek-fix-missing t))
 
+(declare-function shelldock "shelldock")
+
+(use-package transient
+  :init
+  (setq-default
+   transient-history-file (shelldock "transient/history.el")
+   transient-levels-file (shelldock "transient/levels.el")
+   transient-values-file (shelldock "transient/values.el"))
+  :custom
+  (transient-default-level 5)
+  (transient-show-popup nil))
+
 ;;; use-core.el ends here

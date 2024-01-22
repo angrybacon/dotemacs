@@ -25,6 +25,7 @@
   ([remap describe-key] . helpful-key)
   ([remap describe-symbol] . helpful-symbol)
   ([remap describe-variable] . helpful-variable)
+  ("C-h C" . find-function-on-key)
   ("C-h F" . helpful-function)
   :config
   (with-eval-after-load 'evil
