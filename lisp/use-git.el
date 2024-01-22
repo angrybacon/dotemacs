@@ -22,9 +22,10 @@
     "Return the name of the bitmap to use for a given change TYPE."
     (intern (format "me/diff-hl-%s" type))))
 
-(use-package ediff-wind
+(use-package ediff
   :ensure nil
   :custom
+  (ediff-keep-variants nil)
   (ediff-split-window-function #'split-window-horizontally)
   (ediff-window-setup-function #'ediff-setup-windows-plain))
 

@@ -1,14 +1,15 @@
 #+TITLE: DotEmacs
 #+AUTHOR: Mathieu Marques
 
-[[https://img.shields.io/github/license/angrybacon/dotemacs.svg]]
-[[https://img.shields.io/github/forks/angrybacon/dotemacs.svg]]
-[[https://img.shields.io/github/stars/angrybacon/dotemacs.svg]]
-[[https://img.shields.io/github/commit-activity/m/angrybacon/dotemacs.svg?label=commits]]
+[[https://img.shields.io/github/license/angrybacon/dotemacs.svg?style=flat-square]]
+[[https://img.shields.io/github/forks/angrybacon/dotemacs.svg?style=flat-square]]
+[[https://img.shields.io/github/stars/angrybacon/dotemacs.svg?style=flat-square]]
+[[https://img.shields.io/github/commit-activity/m/angrybacon/dotemacs.svg?style=flat-square&label=commits]]
+[[https://img.shields.io/github/last-commit/angrybacon/dotemacs/master.svg?style=flat-square]]
 
-[[https://img.shields.io/badge/archlinux-ok-orchid.svg?logo=archlinux]]
-[[https://img.shields.io/badge/macos-ok-orchid.svg?logo=apple]]
-[[https://img.shields.io/badge/windows-untested-important.svg?logo=windows]]
+[[https://img.shields.io/badge/archlinux-29.1-teal.svg?style=flat-square&logo=archlinux]]
+[[https://img.shields.io/badge/macos-29.1-teal.svg?style=flat-square&logo=apple]]
+[[https://img.shields.io/badge/windows-untested-red.svg?style=flat-square&logo=windows]]
 
 This repository contains my personal Emacs configuration. I've kept it around
 since my first hello-world through many /Emacs bankruptcies/ so it fits /me/ and
@@ -29,7 +30,7 @@ I trust your Google-fu. Try and make the most of the below notes.
 | =libvterm=    | Enable terminal emulation within Emacs |
 | =pinentry=    | Enable pass prompts within Emacs       |
 | =ripgrep=     | Prefer =rg= over =grep=                |
-| =tree-sitter= | Enable built-in tree-sitter bindings   |
+| =tree-sitter= | Enable built-in Tree-sitter bindings   |
 
 ** Emacs
 

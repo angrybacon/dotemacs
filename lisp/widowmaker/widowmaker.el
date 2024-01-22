@@ -1,6 +1,6 @@
 ;;; widowmaker.el --- Manage windows                 -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2023 Mathieu Marques
+;; Copyright (C) 2024 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: December 19, 2021

@@ -1,6 +1,6 @@
 ;;; manticore.el --- Core functions                  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2023 Mathieu Marques
+;; Copyright (C) 2024 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: August 10, 2022

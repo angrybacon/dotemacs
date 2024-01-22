@@ -15,7 +15,7 @@
   :defines popper-mode-map
   :functions popper-group-by-project
   :bind
-  ("s-\"" . popper-toggle-latest)
+  ("s-\"" . popper-toggle)
   ("s-<tab>" . popper-cycle)
   (:map popper-mode-map
    ("C-s-<tab>" . popper-toggle-type))

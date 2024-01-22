@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-;;;; Tree-Sitter
+;;;; Tree-sitter
 
 (use-package pendelhaven
   :load-path "lisp/pendelhaven"

@@ -1,6 +1,6 @@
 ;;; leyline.el --- Yet another minimal mode-line     -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2023 Mathieu Marques
+;; Copyright (C) 2024 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: January 23, 2023
@@ -207,27 +207,27 @@
 ;;;; Segments
 
 (defun leyline-segment-buffer ()
-  "Return the name of the current buffer for the mode-line."
+  "Format the name of the current buffer for the mode-line."
   (propertize " %b " 'face (if (buffer-modified-p)
                                'leyline-buffer-modified
                              'leyline-buffer)))
 
 (defun leyline-segment-evil ()
-  "Return the current `evil-mode' state for the mode-line."
+  "Format the current `evil-mode' state for the mode-line."
   (when (and (bound-and-true-p evil-mode)
              (boundp 'evil-state))
     (let ((state (alist-get evil-state leyline-evil-alist)))
       (propertize (format " %s " (car state)) 'face (cdr state)))))
 
 (defun leyline-segment-flymake ()
-  "Return the current Flymake status for the mode-line."
+  "Format the current Flymake status for the mode-line."
   (when (and (bound-and-true-p flymake-mode)
              leyline--flymake-text
              (not (string-blank-p leyline--flymake-text)))
     (format " %s " leyline--flymake-text)))
 
 (defun leyline-segment-lsp ()
-  "Return the current LSP status for the mode-line."
+  "Format the current LSP status for the mode-line."
   (when (bound-and-true-p eglot--managed-mode)
     (when-let* ((server (eglot-current-server))
                 (name (eglot-project-nickname server)))
@@ -240,35 +240,35 @@
          (format " %s " (string-join result ":")) 'face 'leyline-secondary)))))
 
 (defun leyline-segment-major ()
-  "Return the current major mode for the mode-line."
+  "Format the current major mode for the mode-line."
   (let ((text (substring-no-properties (format-mode-line mode-name))))
     (format " %s " text)))
 
 (defun leyline-segment-miscellaneous ()
-  "Return the current value of `mode-line-misc-info' for the mode-line."
+  "Format the current value of `mode-line-misc-info' for the mode-line."
   (let ((text (format-mode-line mode-line-misc-info)))
     (unless (string-blank-p text)
       (propertize (format " %s " (string-trim text))
                   'face 'leyline-secondary))))
 
 (defun leyline-segment-position ()
-  "Return the current cursor position for the mode-line."
+  "Format the current cursor position for the mode-line."
   (propertize " %p%% " 'face 'leyline-secondary))
 
 (defun leyline-segment-process ()
-  "Return current value of `mode-line-process' for the mode-line."
+  "Format current value of `mode-line-process' for the mode-line."
   (let ((text (format-mode-line mode-line-process)))
     (unless (string-blank-p text)
       (propertize (format " %s " (string-trim text)) 'face 'leyline-pending))))
 
 (defun leyline-segment-vc ()
-  "Return the version control details for the mode-line."
+  "Format the version control details for the mode-line."
   (unless (or (not leyline--vc-text)
               (string-blank-p leyline--vc-text))
     (format " :%s " leyline--vc-text)))
 
 (defun leyline-segment-workspace ()
-  "Return the current workspace name for the mode-line."
+  "Format the current workspace name for the mode-line."
   (when (and (bound-and-true-p eyebrowse-mode)
              (length> (eyebrowse--get 'window-configs) 1))
     (when-let*
@@ -300,8 +300,7 @@ starting with `:eval' in order to form a valid mode-line format string."
   '((:eval
      (leyline--format
       '((leyline-segment-evil)
-        (leyline-segment-buffer)
-        (leyline-segment-position))
+        (leyline-segment-buffer))
       '((leyline-segment-process)
         (when (mode-line-window-selected-p)
           (concat

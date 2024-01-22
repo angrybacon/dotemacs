@@ -1,6 +1,6 @@
 ;;; barrinalo.el --- Collection of text transformers -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2023 Mathieu Marques
+;; Copyright (C) 2024 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: November 29, 2021
