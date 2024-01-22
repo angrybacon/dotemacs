@@ -1,4 +1,4 @@
-;;; use-parens.el --- Quality of life with parens    -*- lexical-binding: t; -*-
+;;; use-parentheses.el --- Parentheses management    -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -19,4 +19,4 @@
   :hook
   (prog-mode . rainbow-delimiters-mode))
 
-;;; use-parens.el ends here
+;;; use-parentheses.el ends here
