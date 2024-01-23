@@ -211,7 +211,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(child-frame-border                 ((t :background ,bg+2)))
    `(cursor                             ((t :background ,fg+2 :foreground ,fg)))
    `(fringe                             ((t :foreground ,fg)))
-   `(header-line                        ((t :foreground ,cyan)))
+   `(header-line                        ((t :inherit mode-line-inactive)))
    `(help-key-binding                   ((t ,@(zenmelt--box)
                                             :foreground ,orange)))
    `(hl-line                            ((t :background ,bg+2)))

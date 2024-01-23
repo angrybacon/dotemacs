@@ -1,7 +1,6 @@
 #+TITLE: DotEmacs
 #+AUTHOR: Mathieu Marques
 
-[[https://img.shields.io/github/license/angrybacon/dotemacs.svg?style=flat-square]]
 [[https://img.shields.io/github/forks/angrybacon/dotemacs.svg?style=flat-square]]
 [[https://img.shields.io/github/stars/angrybacon/dotemacs.svg?style=flat-square]]
 [[https://img.shields.io/github/commit-activity/m/angrybacon/dotemacs.svg?style=flat-square&label=commits]]
@@ -26,11 +25,13 @@ I trust your Google-fu. Try and make the most of the below notes.
 
 ** Dependencies
 
-| =jansson=     | Enable native JSON parsing             |
-| =libvterm=    | Enable terminal emulation within Emacs |
-| =pinentry=    | Enable pass prompts within Emacs       |
-| =ripgrep=     | Prefer =rg= over =grep=                |
-| =tree-sitter= | Enable built-in Tree-sitter bindings   |
+| =jansson=                    | Enable native JSON parsing             |
+| =libvterm=                   | Enable terminal emulation within Emacs |
+| =pinentry=                   | Enable pass prompts within Emacs       |
+| =ripgrep=                    | Prefer =rg= over =grep=                |
+| =tree-sitter=                | Enable built-in Tree-sitter bindings   |
+| =typescript-language-server= | Enable LSP for TypeScript buffers      |
+| =vscode-css-language-server= | Enable LSP for (S)CSS buffers          |
 
 ** Emacs
 
@@ -56,16 +57,7 @@ See [[https://github.com/angrybacon/dot/blob/master/LINUX.org#emacs]].
 
 See [[https://github.com/angrybacon/dot/blob/master/MACOS.org#emacs]].
 
-** Language Servers
-
-In order for Emacs to connect to the LSP servers, install the language-specific
-dependencies.
-
-#+BEGIN_SRC sh
-paru -S typescript-language-server
-#+END_SRC
-
 * Window Manager
 
 Emacs can be used as a window manager under Linux. See
-[[./DESKTOP.org][DESKTOP.org]].
+[[./DESKTOP.org][DESKTOP.org]] (deprecated).
