@@ -281,8 +281,7 @@
 
 (defun leyline--format-segments (segments)
   "Format SEGMENTS for a mode-line construct."
-  (format-mode-line
-   (cl-map 'list (lambda (it) `(:eval ,it)) segments)))
+  (format-mode-line (cl-map 'list (lambda (it) `(:eval ,it)) segments)))
 
 (defun leyline--format (left-segments right-segments)
   "Format a mode line with LEFT-SEGMENTS and RIGHT-SEGMENT.
@@ -311,23 +310,23 @@ starting with `:eval' in order to form a valid mode-line format string."
            (leyline-segment-major)))
         (leyline-segment-workspace))))))
 
-(defvar leyline--default-format nil
-  "Remember the previous format for when `leyline-mode' is turned off.")
+(defvar leyline--previous-format nil
+  "Previous `mode-line-format' for when `leyline-mode' is turned off.")
 
-(defvar leyline--default-miscellaneous nil
-  "Remember the previous segment format for when `leyline-mode' is turned off.")
+(defvar leyline--previous-miscellaneous nil
+  "Previous `mode-line-misc-info' for when `leyline-mode' is turned off.")
 
-(defun leyline-remember-eglot ()
-  "Save eglot mode-line for when `leyline-mode' is turned off."
+(defun leyline--remember-previous ()
+  "Save previous formats for when `leyline-mode' is turned off."
   (setq-default
-   leyline--default-miscellaneous mode-line-misc-info
-   mode-line-misc-info (assq-delete-all 'eglot--managed-mode mode-line-misc-info)))
+   leyline--previous-format mode-line-format
+   leyline--previous-miscellaneous mode-line-misc-info))
 
-(defun leyline-remember-eyebrowse ()
-  "Save eyebrowse mode-line for when `leyline-mode' is turned off."
+(defun leyline--restore-previous ()
+  "Restore previous formats after `leyline-mode' is turned off."
   (setq-default
-   leyline--default-miscellaneous mode-line-misc-info
-   mode-line-misc-info (assq-delete-all 'eyebrowse-mode mode-line-misc-info)))
+   mode-line-format leyline--previous-format
+   mode-line-misc-info leyline--previous-miscellaneous))
 
 ;;;###autoload
 (define-minor-mode leyline-mode
@@ -341,20 +340,21 @@ starting with `:eval' in order to form a valid mode-line format string."
         (add-hook 'after-save-hook #'leyline--update-vc)
         (add-hook 'find-file-hook #'leyline--update-vc)
         (advice-add 'vc-refresh-state :after #'leyline--update-vc)
-        (setq leyline--default-format mode-line-format)
-        (setq-default mode-line-format (leyline--make))
-        (add-hook 'eglot-managed-mode-hook #'leyline-remember-eglot)
-        (add-hook 'eglot-managed-mode-hook #'leyline-remember-eyebrowse))
+        (leyline--remember-previous)
+        (setq-default
+         mode-line-format (leyline--make)
+         mode-line-misc-info (assq-delete-all
+                              'eglot--managed-mode mode-line-misc-info)
+         mode-line-misc-info (assq-delete-all
+                              'eyebrowse-mode mode-line-misc-info)))
     (advice-remove 'flymake-start #'leyline--update-flymake)
     (advice-remove 'flymake--handle-report #'leyline--update-flymake)
     (remove-hook 'after-save-hook #'leyline--update-vc)
     (remove-hook 'file-find-hook #'leyline--update-vc)
     (advice-remove 'vc-refresh-state #'leyline--update-vc)
-    (remove-hook 'eglot-managed-mode-hook #'leyline-remember-eglot)
-    (remove-hook 'eyebrowse-mode-hook #'leyline-remember-eyebrowse)
-    (setq-default
-     mode-line-format leyline--default-format
-     mode-line-misc-info leyline--default-miscellaneous)))
+    (leyline--restore-previous))
+  ;; NOTE Force mode-line update
+  (normal-mode :find-file))
 
 (provide 'leyline)
 
