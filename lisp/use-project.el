@@ -94,6 +94,56 @@ If ripgrep is not installed, use grep instead."
       (find-file (expand-file-name "TODO.org" root))
     (user-error "[Project] Not in a project")))
 
+;;;;; Lint
+
+(defun me/project-lint-command (path)
+  "Return the lint command for the provided PATH."
+  (format "npx eslint %s --fix" path))
+
+(defun me/project-prettify-command (path)
+  "Return the prettify command for the provided PATH."
+  (format "npx prettier %s --write" path))
+
+(defun me/project-lint-dwim ()
+  "Run lint for the current file."
+  (interactive)
+  (let ((path (buffer-file-name)))
+    (shell-command (format "%s && %s"
+                           (me/project-lint-command path)
+                           (me/project-prettify-command path)))))
+
+;;;;; Test
+
+(declare-function vterm-send-return "vterm")
+(declare-function vterm-send-string "vterm")
+(declare-function widowmaker-terminal-window "widowmaker")
+
+(defvar me/project-test-file-pattern (rx ".test." (1+ alphabetic) eos)
+  "Pattern describing a supported test file.")
+
+(defun me/project-test-command (path &optional watch)
+  "Return the test command for the provided PATH as per project configuration.
+With WATCH optional parameter, return a command that watch for file changes."
+  (concat "yarn test" (and watch " --watch") " " path))
+
+(defun me/project-test-path (path)
+  "Run test suite at PATH location."
+  (if-let ((window (widowmaker-terminal-window)))
+      (with-current-buffer (window-buffer window)
+        (vterm-send-string (me/project-test-command path))
+        (vterm-send-return))
+    (message "[Project] Could not find terminal window")))
+
+(defun me/project-test-dwim ()
+  "Run test suite for the current file."
+  (interactive)
+  (let* ((path (buffer-file-name))
+         (match (string-match me/project-test-file-pattern path)))
+    (if (and match (> match 0))
+        (me/project-test-path path)
+      ;; TODO Current file is not a test file, find nearest that matches
+      (message "[Project] Not a test file"))))
+
 ;;;;; Project.el
 
 (declare-function cl-nsubstitute "cl-seq")

@@ -201,12 +201,21 @@ side window."
 
 ;;;; Terminal
 
+(declare-function cl-find-if "cl-seq")
+
 (defun widowmaker-terminal-vterm (&optional buffer-name)
   "Invoke `vterm'.
 Use BUFFER-NAME as name for the new terminal buffer when it is provided."
   (if (require 'vterm nil :noerror)
       (vterm buffer-name)
     (error "[Widowmaker] Package `vterm' not found")))
+
+;;;###autoload
+(defun widowmaker-terminal-window ()
+  "Return the first terminal window currently open."
+  (cl-find-if
+   #'(lambda (window) (with-selected-window window (eq major-mode 'vterm-mode)))
+   (window-list)))
 
 (defcustom widowmaker-terminal-function 'widowmaker-terminal-vterm
   "Terminal emulator to use."

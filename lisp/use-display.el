@@ -93,6 +93,7 @@
   widowmaker-placement-cycle
   widowmaker-shackle-set-window-side
   widowmaker-terminal-dwim
+  widowmaker-terminal-window
   :hook
   (after-init . winner-mode)
   (window-configuration-change . widowmaker-olivetti-maybe)
