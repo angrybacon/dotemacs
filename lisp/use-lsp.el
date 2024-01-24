@@ -4,11 +4,22 @@
 
 ;;;; Code References
 
+(declare-function xref--find-xrefs "xref")
+(declare-function xref--read-identifier "xref")
+
+(defun me/xref-find-references-other-window (identifier)
+  "Find IDENTIFIER references in other window.
+Like `xref-find-references' but switch to the other window."
+  (interactive (list (xref--read-identifier "Find references of: ")))
+  (xref--find-xrefs identifier 'references identifier 'window))
+
 (use-package xref
   :ensure nil
   :bind
-  ([remap xref-find-apropos] . xref-find-definitions)
-  ([remap xref-find-definitions] . xref-find-definitions-other-window))
+  ("M-." . xref-find-definitions-other-window)
+  ("C-M-." . xref-find-definitions)
+  ("M-?" . me/xref-find-references-other-window)
+  ("C-M-?" . xref-find-references))
 
 ;;;; LSP Client
 
@@ -83,7 +94,6 @@ See https://github.com/typescript-language-server/typescript-language-server."
   (advice-add 'eglot--format-markup :filter-return
     (lambda (output) (replace-regexp-in-string (rx "\n```" eos) "" output))
     '((name . me/eglot--trim-block-end)))
-  (advice-add 'project-kill-buffers :before #'me/eglot-shutdown-project)
   (me/eglot-initialize-typescript)
   :custom
   (eglot-autoshutdown t)

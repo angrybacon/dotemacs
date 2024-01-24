@@ -56,6 +56,8 @@
   (add-to-list 'pulsar-pulse-functions 'flymake-goto-next-error)
   (add-to-list 'pulsar-pulse-functions 'flymake-goto-prev-error)
   (add-to-list 'pulsar-pulse-functions 'goto-char)
+  (add-to-list 'pulsar-pulse-functions 'xref-find-definitions)
+  (add-to-list 'pulsar-pulse-functions 'xref-find-definitions-other-window)
   :hook
   (after-init . pulsar-global-mode))
 

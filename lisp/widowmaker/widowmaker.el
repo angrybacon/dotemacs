@@ -54,9 +54,7 @@ See `widowmaker-olivetti-mode-maybe' for the heuristics used and details of
 implementation."
   :type 'boolean)
 
-;; TODO Add support for regular expression so that Eglot buffers can be targeted
-;;      as well.
-
+;; TODO Add support for regular expressions
 (defcustom widowmaker-olivetti-blacklist-buffers '()
   "Buffers for which `olivetti-mode' should not be enabled automatically."
   :type '(repeat string))
@@ -130,7 +128,8 @@ If any test fails, return nil."
   (with-selected-window window
     (and (not (window-parameter window 'no-other-window))
          (not (window-parameter window 'window-side))
-         (not (member (buffer-name) widowmaker-olivetti-blacklist-buffers))
+         (not (member (string-trim (buffer-name))
+                      widowmaker-olivetti-blacklist-buffers))
          (not (apply 'derived-mode-p widowmaker-olivetti-blacklist-modes)))))
 
 (defun widowmaker-olivetti-maybe (&optional frame)

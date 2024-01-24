@@ -10,6 +10,8 @@
     :hook
     (after-init . exec-path-from-shell-initialize))
 
+  ;; TODO https://github.com/KaratasFurkan/.emacs.d/tree/emacs-29#pixel-scroll
+
   (use-package pixel-scroll
     :ensure nil
     :custom

@@ -31,11 +31,11 @@
 
 ;;;; Project
 
-(declare-function cl-nsubstitute "cl-seq")
+;;;;; Core
+
 (declare-function consult-grep "consult")
 (declare-function consult-ripgrep "consult")
 (declare-function project-root "project")
-(declare-function shelldock "shelldock")
 
 (defun me/project-find-file ()
   "Find a file under the current project.
@@ -45,6 +45,20 @@ If not in a project, fallback to `find-file-at-point' instead."
       (call-interactively #'project-find-file)
     (call-interactively #'find-file-at-point)))
 
+(defun me/project-kill-buffer-p (buffer)
+  "Return whether BUFFER is safe to kill with `project-kill-buffers'."
+  ;; (when (not (eq buffer (current-buffer)))
+  ;;   (message "%s" buffer))
+  (not (eq buffer (current-buffer))))
+
+(defun me/project-kill-path ()
+  "Save the current absolute path in the kill ring."
+  (interactive)
+  ;; TODO Provide a variant that starts at project root
+  (let ((path (buffer-file-name)))
+    (kill-new path)
+    (message (format "[Project] Copied `%s'" path))))
+
 (defun me/project-name (&optional project)
   "Return the name for PROJECT.
 If PROJECT is not specified, assume current project root."
@@ -52,6 +66,11 @@ If PROJECT is not specified, assume current project root."
     (file-name-nondirectory
      (directory-file-name
       (file-name-directory root)))))
+
+(defun me/project-root ()
+  "Return the current project root."
+  (when-let (project (project-current))
+    (project-root project)))
 
 (defun me/project-save (&rest _)
   "Save file-visiting buffers under the current project root."
@@ -68,11 +87,6 @@ If ripgrep is not installed, use grep instead."
       (message "[Project] Could not find `rg', using `grep' instead")
       (consult-grep root))))
 
-(defun me/project-root ()
-  "Return the current project root."
-  (when-let (project (project-current))
-    (project-root project)))
-
 (defun me/project-todo ()
   "Visit the todo file for the current project."
   (interactive)
@@ -80,19 +94,10 @@ If ripgrep is not installed, use grep instead."
       (find-file (expand-file-name "TODO.org" root))
     (user-error "[Project] Not in a project")))
 
-(defun me/project-kill-buffer-p (buffer)
-  "Return whether BUFFER is safe to kill with `project-kill-buffers'."
-  ;; (when (not (eq buffer (current-buffer)))
-  ;;   (message "%s" buffer))
-  (not (eq buffer (current-buffer))))
+;;;;; Project.el
 
-(defun me/project-kill-path ()
-  "Save the current absolute path in the kill ring."
-  (interactive)
-  ;; TODO Provide a variant that starts at project root
-  (let ((path (buffer-file-name)))
-    (kill-new path)
-    (message (format "[Project] Copied `%s'" path))))
+(declare-function cl-nsubstitute "cl-seq")
+(declare-function shelldock "shelldock")
 
 (use-package project
   :ensure nil
