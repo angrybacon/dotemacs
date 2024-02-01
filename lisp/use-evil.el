@@ -40,6 +40,7 @@
     (kbd "gD") #'project-dired
     (kbd "gf") #'me/project-find-file
     (kbd "gF") #'me/project-search
+    ;; TODO Somehow doesn't work in *Messages* during startup
     (kbd "gp") #'project-switch-project
     (kbd "gP") #'me/project-todo
     (kbd "gr") #'manticore-revert-buffer-immediately

@@ -5,7 +5,7 @@
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: January 23, 2023
 ;; Homepage: https://github.com/angrybacon/dotemacs/tree/master/lisp/leyline
-;; Package-Requires: ((emacs "29.0.60"))
+;; Package-Requires: ((emacs "30.0.50"))
 
 ;; This program is free software. You can redistribute it and/or modify it under
 ;; the terms of the Do What The Fuck You Want To Public License, version 2 as
@@ -279,36 +279,29 @@
 
 ;;;; Mode
 
-(defun leyline--format-segments (segments)
-  "Format SEGMENTS for a mode-line construct."
-  (format-mode-line (cl-map 'list (lambda (it) `(:eval ,it)) segments)))
-
-(defun leyline--format (left-segments right-segments)
-  "Format a mode line with LEFT-SEGMENTS and RIGHT-SEGMENT.
-LEFT-SEGMENT and RIGHT-SEGMENTS should be lists and the result value is a list
-starting with `:eval' in order to form a valid mode-line format string."
-  (let* ((left (leyline--format-segments left-segments))
-         (right (leyline--format-segments right-segments))
-         ;; TODO Check out `mode-line-right-align-edge'
-         (offset `(- right (- 0 right-fringe right-margin) ,(length right)))
-         (spacing (propertize " " 'display `((space :align-to ,offset)))))
-    (concat left spacing right)))
+(defun leyline--format (&rest inputs)
+  "Format INPUTS for the mode-line.
+Each item in INPUTS can either be a segment or a list of segments."
+  (format-mode-line (flatten-tree inputs)))
 
 (defun leyline--make ()
   "Return the new mode-line format."
   '((:eval
      (leyline--format
-      '((leyline-segment-evil)
-        (leyline-segment-buffer))
-      '((leyline-segment-process)
-        (when (mode-line-window-selected-p)
-          (concat
-           (leyline-segment-flymake)
-           (leyline-segment-miscellaneous)
-           (leyline-segment-lsp)
-           (leyline-segment-vc)
-           (leyline-segment-major)))
-        (leyline-segment-workspace))))))
+      (leyline-segment-evil)
+      (leyline-segment-buffer)))
+    mode-line-format-right-align
+    (:eval
+     (leyline--format
+      (leyline-segment-process)
+      (when (mode-line-window-selected-p)
+        (list
+         (leyline-segment-flymake)
+         (leyline-segment-miscellaneous)
+         (leyline-segment-lsp)
+         (leyline-segment-vc)
+         (leyline-segment-major)))
+      (leyline-segment-workspace)))))
 
 (defvar leyline--previous-format nil
   "Previous `mode-line-format' for when `leyline-mode' is turned off.")
