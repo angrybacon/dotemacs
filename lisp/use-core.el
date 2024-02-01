@@ -67,7 +67,6 @@
    transient-levels-file (shelldock "transient/levels.el")
    transient-values-file (shelldock "transient/values.el"))
   :custom
-  (transient-default-level 5)
   (transient-show-popup nil))
 
 ;;; use-core.el ends here

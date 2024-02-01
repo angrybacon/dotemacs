@@ -24,17 +24,6 @@
 
 ;;; Code:
 
-(declare-function cl-struct-slot-value "cl-macs")
-(declare-function eglot-current-server "eglot")
-(declare-function eglot-project-nickname "eglot")
-(declare-function eyebrowse--get "eyebrowse")
-(declare-function flymake--handle-report "flymake")
-(declare-function flymake-reporting-backends "flymake")
-(declare-function flymake-running-backends "flymake")
-(declare-function flymake-start "flymake")
-(declare-function jsonrpc-last-error "jsonrpc")
-(declare-function jsonrpc--request-continuations "jsonrpc")
-
 (defgroup leyline nil
   "Yet another minimal mode-line."
   :group 'mode-line)
@@ -155,6 +144,8 @@
 ;;;; Flymake
 
 (declare-function flymake-diagnostic-type "flymake")
+(declare-function flymake-reporting-backends "flymake")
+(declare-function flymake-running-backends "flymake")
 (defvar-local leyline--flymake-text nil)
 
 (defun leyline--flymake-count (type)
@@ -195,17 +186,23 @@
 
 ;;;; Version control
 
-(defvar-local leyline--vc-text nil)
+(defvar-local leyline--revision-text nil)
 
-(defun leyline--update-vc (&rest _)
-  "Update `leyline--vc-text' with the current version control branch."
-  (setq leyline--vc-text
+(defun leyline--update-revision (&rest _)
+  "Update `leyline--revision-text' with the current version control branch."
+  (setq leyline--revision-text
         (when (and vc-mode buffer-file-name)
           (let* ((backend (vc-backend buffer-file-name))
                  (offset (+ (if (eq backend 'Hg) 2 3) 2)))
             (substring-no-properties vc-mode offset)))))
 
 ;;;; Segments
+
+(declare-function eglot-current-server "eglot")
+(declare-function eglot-project-nickname "eglot")
+(declare-function eyebrowse--get "eyebrowse")
+(declare-function jsonrpc-continuation-count "jsonrpc")
+(declare-function jsonrpc-last-error "jsonrpc")
 
 (defun leyline-segment-buffer ()
   "Format the name of the current buffer for the mode-line."
@@ -232,10 +229,10 @@
   (when (bound-and-true-p eglot--managed-mode)
     (when-let* ((server (eglot-current-server))
                 (name (eglot-project-nickname server)))
-      (let* ((pending (hash-table-count (jsonrpc--request-continuations server)))
-             (last-error (jsonrpc-last-error server))
+      (let* ((pending (jsonrpc-continuation-count server))
+             (text (jsonrpc-last-error server))
              (result `(,@(when (cl-plusp pending) (list (format "%d" pending)))
-                       ,@(when last-error (list last-error))
+                       ,@(when text (list text))
                        ,name)))
         (propertize
          (format " %s " (string-join result ":")) 'face 'leyline-secondary)))))
@@ -262,11 +259,11 @@
     (unless (string-blank-p text)
       (propertize (format " %s " (string-trim text)) 'face 'leyline-pending))))
 
-(defun leyline-segment-vc ()
+(defun leyline-segment-revision ()
   "Format the version control details for the mode-line."
-  (unless (or (not leyline--vc-text)
-              (string-blank-p leyline--vc-text))
-    (format " :%s " leyline--vc-text)))
+  (unless (or (not leyline--revision-text)
+              (string-blank-p leyline--revision-text))
+    (format " :%s " leyline--revision-text)))
 
 (defun leyline-segment-workspace ()
   "Format the current workspace name for the mode-line."
@@ -279,6 +276,9 @@
       (propertize (format " %s " name) 'face 'leyline-secondary))))
 
 ;;;; Mode
+
+(declare-function flymake--handle-report "flymake")
+(declare-function flymake-start "flymake")
 
 (defun leyline--format (&rest inputs)
   "Format INPUTS for the mode-line.
@@ -300,7 +300,7 @@ Each item in INPUTS can either be a segment or a list of segments."
          (leyline-segment-flymake)
          (leyline-segment-miscellaneous)
          (leyline-segment-lsp)
-         (leyline-segment-vc)
+         (leyline-segment-revision)
          (leyline-segment-major)))
       (leyline-segment-workspace)))))
 
@@ -331,9 +331,9 @@ Each item in INPUTS can either be a segment or a list of segments."
       (progn
         (advice-add 'flymake-start :after #'leyline--update-flymake)
         (advice-add 'flymake--handle-report :after #'leyline--update-flymake)
-        (add-hook 'after-save-hook #'leyline--update-vc)
-        (add-hook 'find-file-hook #'leyline--update-vc)
-        (advice-add 'vc-refresh-state :after #'leyline--update-vc)
+        (add-hook 'after-save-hook #'leyline--update-revision)
+        (add-hook 'find-file-hook #'leyline--update-revision)
+        (advice-add 'vc-refresh-state :after #'leyline--update-revision)
         (leyline--remember-previous)
         (setq-default
          mode-line-format (leyline--make)
@@ -343,12 +343,10 @@ Each item in INPUTS can either be a segment or a list of segments."
                               'eyebrowse-mode mode-line-misc-info)))
     (advice-remove 'flymake-start #'leyline--update-flymake)
     (advice-remove 'flymake--handle-report #'leyline--update-flymake)
-    (remove-hook 'after-save-hook #'leyline--update-vc)
-    (remove-hook 'file-find-hook #'leyline--update-vc)
-    (advice-remove 'vc-refresh-state #'leyline--update-vc)
-    (leyline--restore-previous))
-  ;; NOTE Force mode-line update
-  (normal-mode :find-file))
+    (remove-hook 'after-save-hook #'leyline--update-revision)
+    (remove-hook 'file-find-hook #'leyline--update-revision)
+    (advice-remove 'vc-refresh-state #'leyline--update-revision)
+    (leyline--restore-previous)))
 
 (provide 'leyline)
 
