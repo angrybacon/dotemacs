@@ -154,13 +154,14 @@
 
 ;;;; Flymake
 
+(declare-function flymake-diagnostic-type "flymake")
 (defvar-local leyline--flymake-text nil)
 
 (defun leyline--flymake-count (type)
   "Return the count of Flymake diagnostics of the given TYPE."
   (let ((count 0))
     (dolist (diagnostic (flymake-diagnostics))
-      (when (eq (cl-struct-slot-value 'flymake--diag 'type diagnostic) type)
+      (when (eq (flymake-diagnostic-type diagnostic) type)
         (cl-incf count)))
     count))
 
