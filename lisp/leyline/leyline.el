@@ -206,7 +206,7 @@
 
 (defun leyline-segment-buffer ()
   "Format the name of the current buffer for the mode-line."
-  (propertize " %b " 'face (if (buffer-modified-p)
+  (propertize "%b" 'face (if (buffer-modified-p)
                                'leyline-buffer-modified
                              'leyline-buffer)))
 
@@ -215,14 +215,14 @@
   (when (and (bound-and-true-p evil-mode)
              (boundp 'evil-state))
     (let ((state (alist-get evil-state leyline-evil-alist)))
-      (propertize (format " %s " (car state)) 'face (cdr state)))))
+      (propertize (format "%s" (car state)) 'face (cdr state)))))
 
 (defun leyline-segment-flymake ()
   "Format the current Flymake status for the mode-line."
   (when (and (bound-and-true-p flymake-mode)
              leyline--flymake-text
              (not (string-blank-p leyline--flymake-text)))
-    (format " %s " leyline--flymake-text)))
+    leyline--flymake-text))
 
 (defun leyline-segment-lsp ()
   "Format the current LSP status for the mode-line."
@@ -235,23 +235,22 @@
                        ,@(when text (list text))
                        ,name)))
         (propertize
-         (format " %s " (string-join result ":")) 'face 'leyline-secondary)))))
+         (format "%s" (string-join result ":")) 'face 'leyline-secondary)))))
 
 (defun leyline-segment-major ()
   "Format the current major mode for the mode-line."
   (let ((text (substring-no-properties (format-mode-line mode-name))))
-    (format " %s " text)))
+    (format "%s" text)))
 
 (defun leyline-segment-miscellaneous ()
   "Format the current value of `mode-line-misc-info' for the mode-line."
   (let ((text (format-mode-line mode-line-misc-info)))
     (unless (string-blank-p text)
-      (propertize (format " %s " (string-trim text))
-                  'face 'leyline-secondary))))
+      (propertize (string-trim text) 'face 'leyline-secondary))))
 
 (defun leyline-segment-position ()
   "Format the current cursor position for the mode-line."
-  (propertize " %p%% " 'face 'leyline-secondary))
+  (propertize "%p%%" 'face 'leyline-secondary))
 
 (defun leyline-segment-process ()
   "Format current value of `mode-line-process' for the mode-line."
@@ -263,7 +262,7 @@
   "Format the version control details for the mode-line."
   (unless (or (not leyline--revision-text)
               (string-blank-p leyline--revision-text))
-    (format " :%s " leyline--revision-text)))
+    (format ":%s" leyline--revision-text)))
 
 (defun leyline-segment-workspace ()
   "Format the current workspace name for the mode-line."
@@ -273,7 +272,7 @@
         ((slot (eyebrowse--get 'current-slot))
          (tag (nth 2 (assoc slot (eyebrowse--get 'window-configs))))
          (name (if (length> tag 0) tag slot)))
-      (propertize (format " %s " name) 'face 'leyline-secondary))))
+      (propertize (format "%s" name) 'face 'leyline-secondary))))
 
 ;;;; Mode
 
@@ -283,7 +282,7 @@
 (defun leyline--format (&rest inputs)
   "Format INPUTS for the mode-line.
 Each item in INPUTS can either be a segment or a list of segments."
-  (format-mode-line (flatten-tree inputs)))
+  (format-mode-line (string-join (flatten-tree inputs) "  ")))
 
 (defun leyline--make ()
   "Return the new mode-line format."
@@ -291,6 +290,7 @@ Each item in INPUTS can either be a segment or a list of segments."
      (leyline--format
       (leyline-segment-evil)
       (leyline-segment-buffer)))
+    ;; TODO Add segment for repeat-echo-mode-line-string
     mode-line-format-right-align
     (:eval
      (leyline--format
