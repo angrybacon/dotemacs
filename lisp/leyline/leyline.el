@@ -310,6 +310,13 @@ Each item in INPUTS can either be a segment or a list of segments."
 (defvar leyline--previous-miscellaneous nil
   "Previous `mode-line-misc-info' for when `leyline-mode' is turned off.")
 
+(defun leyline--prune-miscellaneous (name)
+  "Pull NAME out of `mode-line-misc-info'.
+Remember the previous value beforehand so that it can be restored later."
+  (setq-default
+   leyline--previous-miscellaneous mode-line-misc-info
+   mode-line-misc-info (assq-delete-all name mode-line-misc-info)))
+
 (defun leyline--remember-previous ()
   "Save previous formats for when `leyline-mode' is turned off."
   (setq-default
@@ -335,12 +342,11 @@ Each item in INPUTS can either be a segment or a list of segments."
         (add-hook 'find-file-hook #'leyline--update-revision)
         (advice-add 'vc-refresh-state :after #'leyline--update-revision)
         (leyline--remember-previous)
-        (setq-default
-         mode-line-format (leyline--make)
-         mode-line-misc-info (assq-delete-all
-                              'eglot--managed-mode mode-line-misc-info)
-         mode-line-misc-info (assq-delete-all
-                              'eyebrowse-mode mode-line-misc-info)))
+        (setq-default mode-line-format (leyline--make))
+        (with-eval-after-load 'eglot
+          (leyline--prune-miscellaneous 'eglot--managed-mode))
+        (with-eval-after-load 'eyebrowse
+          (leyline--prune-miscellaneous 'eyebrowse-mode)))
     (advice-remove 'flymake-start #'leyline--update-flymake)
     (advice-remove 'flymake--handle-report #'leyline--update-flymake)
     (remove-hook 'after-save-hook #'leyline--update-revision)

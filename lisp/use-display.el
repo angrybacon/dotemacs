@@ -29,7 +29,7 @@
   (popper-mode-line nil)
   (popper-reference-buffers
    `(,(rx bos "*EGLOT")
-     ,(rx bos "*HTTP Response*" eos)
+     ,(rx bos "*HTTP Response")
      ,(rx bos "*Messages*" eos)
      ,(rx bos "*Process List*" eos)
      ,(rx bos "*eldoc")
@@ -55,8 +55,8 @@
    `((compilation-mode                :align below :popup t)
      (flymake-diagnostics-buffer-mode :align below :popup t)
      (magit-process-mode              :align below :popup t)
-     ("*HTTP Response*"               :align below :popup t)
      ("*Messages*"                    :align below :popup t)
+     (,(rx bos "*HTTP Response")      :align below :popup t :regexp t)
      (,(rx bos "*EGLOT")              :align below :popup t :regexp t)
      (debugger-mode                   :align below :popup t :select t)
      (embark-collect-mode             :align below :popup t :select t)
