@@ -78,6 +78,7 @@ See https://github.com/typescript-language-server/typescript-language-server."
            :organizeImportsIgnoreCase :json-false
            :quotePreference "single"))))
       (lambda (program)
+        ;; TODO Fix predicate to account for `:language-id' in nested targets
         (if (listp (car program))
             (member target-mode (car program))
           (eq target-mode program)))
@@ -96,6 +97,8 @@ See https://github.com/typescript-language-server/typescript-language-server."
     '((name . me/eglot--trim-block-end)))
   (me/eglot-initialize-typescript)
   :custom
+  ;; NOTE Progress is handled by the custom mode-line package directly
+  (eglot-report-progress nil)
   (eglot-autoshutdown t)
   (eglot-events-buffer-size 0)
   :hook

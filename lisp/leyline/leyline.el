@@ -279,10 +279,14 @@
 (declare-function flymake--handle-report "flymake")
 (declare-function flymake-start "flymake")
 
+(defcustom leyline-separator "  "
+  "Separator to insert between mode-line segments."
+  :type 'string)
+
 (defun leyline--format (&rest inputs)
   "Format INPUTS for the mode-line.
 Each item in INPUTS can either be a segment or a list of segments."
-  (format-mode-line (string-join (flatten-tree inputs) "  ")))
+  (format-mode-line (string-join (flatten-tree inputs) leyline-separator)))
 
 (defun leyline--make ()
   "Return the new mode-line format."

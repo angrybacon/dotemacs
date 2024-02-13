@@ -90,15 +90,6 @@
 (set-fringe-bitmap-face 'left-curly-arrow 'shadow)
 (set-fringe-bitmap-face 'right-curly-arrow 'shadow)
 
-(defun me/modus-themes-override ()
-  "Override some of the `modus-operandi' theme.
-This function should be called everytime the theme is loaded."
-  (when (member 'modus-operandi custom-enabled-themes)
-    (custom-theme-set-faces
-     'modus-operandi
-     '(doom-modeline-bar ((t (:inherit mode-line))))
-     '(doom-modeline-bar-inactive ((t (:inherit mode-line-inactive)))))))
-
 (use-package modus-themes
   :ensure nil
   :custom
@@ -109,9 +100,7 @@ This function should be called everytime the theme is loaded."
    '((bg-main . "#FAFAFA")
      (fg-main . "#101010")
      (fg-window-divider-inner . "#FAFAFA")))
-  (modus-themes-org-blocks 'tinted-background)
-  :hook
-  (morophon-after-load-theme . me/modus-themes-override))
+  (modus-themes-org-blocks 'tinted-background))
 
 (use-package zenmelt-theme
   :demand

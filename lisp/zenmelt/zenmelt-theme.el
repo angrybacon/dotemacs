@@ -163,20 +163,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(eww-invalid-certificate            ((t :inherit error)))
    `(eww-valid-certificate              ((t :inherit success)))
 ;;;;;; Compilation
-   `(compilation-column-face            ((t :foreground ,yellow)))
-   `(compilation-enter-directory-face   ((t :foreground ,green)))
-   `(compilation-error-face             ((t :foreground ,red-1 :underline t)))
-   `(compilation-face                   ((t :foreground ,fg)))
-   `(compilation-info                   ((t :foreground ,green+4 :underline t)))
-   `(compilation-info-face              ((t :foreground ,blue)))
-   `(compilation-leave-directory-face   ((t :foreground ,green)))
-   `(compilation-line-face              ((t :foreground ,yellow)))
-   `(compilation-line-number            ((t :foreground ,yellow)))
-   `(compilation-message-face           ((t :foreground ,blue)))
-   `(compilation-mode-line-exit         ((t :foreground ,green+2)))
-   `(compilation-mode-line-fail         ((t :foreground ,red)))
-   `(compilation-mode-line-run          ((t :foreground ,yellow)))
-   `(compilation-warning-face           ((t :foreground ,orange :underline t)))
+   `(compilation-mode-line-fail         ((t :inherit compilation-error)))
    `(flymake-error                      ((t :background ,red-5
                                             :foreground ,red+1
                                             :underline t)))
@@ -451,13 +438,6 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
 ;;;;;; Language Servers
    `(eglot-highlight-symbol-face        ((t ,@(zenmelt--box 'yellow))))
 ;;;;;; Mode-Line
-   `(doom-modeline-bar                  ((t :inherit mode-line)))
-   `(doom-modeline-bar-inactive         ((t :inherit mode-line-inactive)))
-   `(doom-modeline-evil-emacs-state     ((t :foreground ,magenta)))
-   `(doom-modeline-evil-insert-state    ((t :foreground ,blue)))
-   `(doom-modeline-info                 ((t :foreground ,green+4)))
-   `(doom-modeline-project-dir          ((t :inherit dired-directory)))
-   `(doom-modeline-project-parent-dir   ((t :inherit shadow)))
    `(leyline-evil-emacs                 ((t :foreground ,magenta)))
    `(leyline-error                      ((t :background ,red-5
                                             :foreground ,red+1)))
@@ -492,14 +472,6 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(transient-red                      ((t :foreground ,red-1)))
    `(transient-separator                ((t :foreground ,fg-2)))
    `(transient-teal                     ((t :foreground ,cyan)))
-;;;;;; Replace
-   `(anzu-match-1                       ((t ,@(zenmelt--box 'green))))
-   `(anzu-match-2                       ((t ,@(zenmelt--box 'red))))
-   `(anzu-match-3                       ((t ,@(zenmelt--box 'blue))))
-   `(anzu-mode-line                     ((t :foreground ,magenta)))
-   `(anzu-mode-line-no-match            ((t :foreground ,red)))
-   `(anzu-replace-highlight             ((t ,@(zenmelt--box 'yellow))))
-   `(anzu-replace-to                    ((t ,@(zenmelt--box 'green))))
 ;;;;;; Search
    `(wgrep-face                         ((t :background ,bg+4)))
    `(wgrep-done-face                    ((t :foreground ,green+2)))
