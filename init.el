@@ -41,16 +41,16 @@
   (load "use-core")
   (load "use-defaults")
   (load "use-interface")
-  (load "use-macos")
+  (load "use-os")
 
   ;; Load partials
+  (load "use-applications")
   (load "use-completion")
   (load "use-dired")
   (load "use-display")
   (load "use-evil")
   (load "use-git")
   (load "use-help")
-  (load "use-http")
   (load "use-hydra")
   (load "use-languages")
   (load "use-lint")
@@ -61,7 +61,6 @@
   (load "use-project")
   (load "use-qol")
   (load "use-templates")
-  (load "use-terminal")
   (load "use-workspaces")
 
   ;; Set the working directory to home regardless of where Emacs was started from

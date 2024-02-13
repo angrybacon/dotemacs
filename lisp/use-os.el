@@ -1,4 +1,4 @@
-;;; use-macos.el --- Augment MacOS experience        -*- lexical-binding: t; -*-
+;;; use-os.el --- Augment Os experience              -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -24,4 +24,4 @@
    ns-command-modifier 'meta            ; Map Meta to the Cmd key
    ns-pop-up-frames nil))               ; Always re-use the same frame
 
-;;; use-macos.el ends here
+;;; use-os.el ends here

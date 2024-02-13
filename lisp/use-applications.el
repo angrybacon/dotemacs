@@ -1,20 +1,27 @@
-;;; use-terminal.el --- Emacs as a terminal          -*- lexical-binding: t; -*-
+;;; use-applications.el --- Emacs as X               -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
+
+;;;; REST Client
+
+(use-package restclient
+  :hook
+  (restclient-mode . display-line-numbers-mode)
+  :mode ((rx ".http" eos) . restclient-mode))
+
+;;;; Terminal
+
+;; TODO Allow C-o for quick pastes
 
 (use-package vterm
   :defines vterm-mode-map
   :bind
   (:map vterm-mode-map
    ([remap kill-this-buffer] . widowmaker-kill-buffer-with-process))
-  :config
-  (with-eval-after-load 'evil
-    (evil-define-key* 'insert vterm-mode-map
-      (kbd "C-o") #'evil-execute-in-normal-state))
   :custom
   (vterm-keymap-exceptions
    '("C-c" "C-g" "C-h" "C-l" "C-u" "C-x" "C-y"
      "M-0" "M-1" "M-2" "M-3" "M-4" "M-5" "M-6" "M-7" "M-8" "M-9"
      "M-:" "M-o" "M-x" "M-y")))
 
-;;; use-terminal.el ends here
+;;; use-applications.el ends here
