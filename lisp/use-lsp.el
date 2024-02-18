@@ -13,14 +13,6 @@ Like `xref-find-references' but switch to the other window."
   (interactive (list (xref--read-identifier "Find references of: ")))
   (xref--find-xrefs identifier 'references identifier 'window))
 
-(use-package xref
-  :ensure nil
-  :bind
-  ("M-." . xref-find-definitions-other-window)
-  ("C-M-." . xref-find-definitions)
-  ("M-?" . me/xref-find-references-other-window)
-  ("C-M-?" . xref-find-references))
-
 ;;;; LSP Client
 
 (declare-function eglot-current-server "eglot")

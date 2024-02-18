@@ -9,12 +9,16 @@
 
 (use-package dire
   :load-path "lisp/dire"
-  :bind
-  (:map dired-mode-map
-   ("C-<return>" . dire-open-externally)))
+  :commands
+  dire-movies-rename-dwim
+  dire-open-externally
+  dire-rename-undo)
 
 (use-package dired
   :ensure nil
+  :bind
+  (:map dired-mode-map
+   ("C-<return>" . dire-open-externally))
   :custom
   (dired-auto-revert-buffer t)
   (dired-dwim-target t)

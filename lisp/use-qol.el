@@ -11,8 +11,8 @@
 
 (use-package embark
   :bind
-  ("C-;" . embark-act)
   ([remap describe-bindings] . embark-bindings)
+  ("C-;" . embark-act)
   :custom
   (embark-indicators
    '(embark-highlight-indicator

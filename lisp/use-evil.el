@@ -9,11 +9,15 @@
 (declare-function barrinalo-shift-right-tab "barrinalo")
 (declare-function barrinalo-sort-numbers "barrinalo")
 (declare-function barrinalo-sort-words "barrinalo")
-(declare-function consult-imenu "consult")
-(declare-function consult-mark "consult")
-(declare-function consult-outline "consult")
-(declare-function flymake-goto-next-error "flymake")
-(declare-function flymake-goto-prev-error "flymake")
+(declare-function diff-hl-revert-hunk "diff-hl")
+(declare-function diff-hl-stage-current-hunk "diff-hl")
+(declare-function evil-scroll-up "evil-commands")
+(declare-function evil-define-key* "evil-core")
+(declare-function evil-avy-goto-char-timer "evil-integration")
+(declare-function magit-blame "magit-blame")
+(declare-function magit-clone "magit-clone")
+(declare-function magit-status "magit-status")
+(declare-function manticore-kill-terminal "manticore")
 (declare-function manticore-revert-buffer-immediately "manticore")
 (declare-function webpaste-paste-region "webpaste")
 
@@ -22,68 +26,58 @@
   (avy-background t)
   (avy-timeout-seconds .3))
 
+(defvar-keymap me/magit-map
+  "b" #'magit-blame
+  "c" #'magit-clone
+  "g" #'magit-status
+  "r" #'diff-hl-revert-hunk
+  "s" #'diff-hl-stage-current-hunk)
+
+(defvar-keymap me/system-map
+  "d" #'desktop-remove
+  "g" #'toggle-debug-on-error
+  "l" #'list-processes
+  "p" #'package-list-packages
+  "q" #'manticore-kill-terminal
+  "s" #'manticore-revert-buffer-immediately)
+
 (defun me/evil-define-bindings ()
   "Add personal bindings to the global maps."
-  (evil-define-key* 'motion 'global
-    (kbd "gm") #'consult-imenu
-    (kbd "gM") #'consult-mark
-    (kbd "go") #'consult-outline
-    (kbd "g'") #'flymake-goto-next-error
-    (kbd "g\"") #'flymake-goto-prev-error
-    (kbd "C-S-d") #'evil-scroll-up)
-  ;; NOTE Use `global-map' instead of `'global' to bypass Magit overwrites
-  (evil-define-key* 'normal global-map
+  (evil-define-key* 'normal 'global
+    ;; TODO Port these bindings from old setup
+    ;; (kbd "gr") #'manticore-revert-buffer-immediately
+    ;; TODO Broken in dired and magit, targeting `global-map' instead might fix
+    (kbd "<leader>h") help-map
+    (kbd "<leader>g") me/magit-map
+    (kbd "<leader>p") project-prefix-map
+    (kbd "<leader>s") me/system-map
+    ;; TODO Broken in magit
+    (kbd "g/") #'me/project-kill-path
     (kbd "gb") #'switch-to-buffer
-    (kbd "gB") #'project-switch-to-buffer
-    (kbd "gC") #'describe-face
-    (kbd "gd") #'project-find-dir
-    (kbd "gD") #'project-dired
-    (kbd "gf") #'me/project-find-file
-    (kbd "gF") #'me/project-search
-    ;; TODO Somehow doesn't work in *Messages* during startup
-    (kbd "gp") #'project-switch-project
-    (kbd "gP") #'me/project-todo
-    (kbd "gr") #'manticore-revert-buffer-immediately
-    (kbd "gs") #'evil-avy-goto-char-timer
-    (kbd "g/") #'me/project-kill-path)
+    (kbd "gs") #'evil-avy-goto-char-timer)
+  (evil-define-key* 'motion 'global
+    (kbd "C-S-d") #'evil-scroll-up)
   (evil-define-key* 'visual 'global
+    (kbd "<") #'barrinalo-shift-left-tab
+    (kbd ">") #'barrinalo-shift-right-tab
+    (kbd "C-<") #'barrinalo-shift-left
+    (kbd "C->") #'barrinalo-shift-right
     (kbd "p") #'webpaste-paste-region
     (kbd "sn") #'barrinalo-sort-numbers
     (kbd "sr") #'barrinalo-reverse
     (kbd "ss") #'sort-lines
-    (kbd "sw") #'barrinalo-sort-words
-    (kbd "<") #'barrinalo-shift-left
-    (kbd ">") #'barrinalo-shift-right
-    (kbd "c-<") #'barrinalo-shift-left-tab
-    (kbd "C->") #'barrinalo-shift-right-tab))
+    (kbd "sw") #'barrinalo-sort-words))
 
 (use-package evil
   :defines
-  evil-inner-text-objects-map
   evil-insert-state-map
   evil-motion-state-map
-  evil-normal-state-map
+  evil-window-map
   :functions
-  evil-avy-goto-char-timer
-  evil-define-key*
   evil-define-text-object
   evil-range
-  evil-scroll-up
   evil-select-search-module
-  :bind
-  (:map evil-inner-text-objects-map
-   ("g" . me/evil-inner-buffer)
-   :map evil-insert-state-map
-   ("C-a" . nil)                        ; Free Readline key
-   ("C-e" . nil)                        ; Free Readline key
-   ("C-w" . nil)                        ; Free kill command
-   ("S-<left>" . nil)                   ; Free `left-char' command
-   ("S-<right>" . nil)                  ; Free `right-char' command
-   :map evil-motion-state-map
-   ("C-e" . nil)                        ; Free Readline key
-   ("C-]" . nil)                        ; Free abort edit command
-   :map evil-normal-state-map
-   ("M-." . nil))                       ; Free xref command
+  evil-set-leader
   :custom
   (evil-echo-state nil)
   (evil-emacs-state-cursor (default-value 'cursor-type))
@@ -93,24 +87,30 @@
   (evil-visual-state-cursor 'hollow)
   (evil-want-keybinding nil)
   :config
-  (evil-select-search-module 'evil-search-module 'evil-search)
-  (evil-define-text-object me/evil-inner-buffer
-    (_count &optional _begin _end type)
+  (evil-define-text-object me/evil-buffer-object (_count &optional _begin _end type)
     "Text object to represent the whole buffer."
     (evil-range (point-min) (point-max) type))
+  (define-key evil-inner-text-objects-map (kbd "g") #'me/evil-buffer-object)
+  (define-key evil-insert-state-map (kbd "C-a") nil :remove)
+  (define-key evil-insert-state-map (kbd "C-e") nil :remove)
+  (define-key evil-insert-state-map (kbd "C-w") nil :remove)
+  (define-key evil-insert-state-map (kbd "S-<left>") nil :remove)
+  (define-key evil-insert-state-map (kbd "S-<right>") nil :remove)
+  (define-key evil-motion-state-map (kbd "C-]") nil :remove)
+  (define-key evil-motion-state-map (kbd "C-e") nil :remove)
+  (define-key evil-window-map (kbd "C-h") nil :remove)
+  (evil-select-search-module 'evil-search-module 'evil-search)
+  (evil-set-leader 'normal (kbd "SPC"))
   :hook
   (after-init . evil-mode)
   (after-save . evil-normal-state)
   (evil-mode . me/evil-define-bindings))
 
+;; TODO Repeatize the unimpaired bindings from evil-collection
+
 (use-package evil-collection
   :custom
-  (evil-collection-key-blacklist
-   '("gD" "gd" "gp"                     ; Free project commands
-     "gf" "gfp" "gfu"                   ; Free project commands in Magit
-     "gs"                               ; Free avy command
-     "M-1" "M-2" "M-3" "M-4"))          ; Free workspace commands
-  (evil-collection-want-find-usages-bindings nil)
+  (evil-collection-key-blacklist '("M-1" "M-2" "M-3" "M-4"))
   :hook
   (evil-mode . evil-collection-init))
 

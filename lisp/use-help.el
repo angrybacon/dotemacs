@@ -12,26 +12,21 @@
   (eldoc-echo-area-prefer-doc-buffer t)
   (eldoc-idle-delay 0))
 
-(use-package help-mode
+(use-package help
   :ensure nil
-  :bind
-  ("C-h K" . describe-keymap))
+  :config
+  (define-key help-map (kbd "C-h") nil :remove)
+  (define-key help-map (kbd "C") #'find-function-on-key)
+  (define-key help-map (kbd "F") #'describe-face)
+  (define-key help-map (kbd "K") #'describe-keymap))
 
 (use-package helpful
-  :defines helpful-mode-map
   :bind
   ([remap describe-command] . helpful-command)
   ([remap describe-function] . helpful-callable)
   ([remap describe-key] . helpful-key)
   ([remap describe-symbol] . helpful-symbol)
   ([remap describe-variable] . helpful-variable)
-  ("C-h C" . find-function-on-key)
-  ("C-h F" . helpful-function)
-  :config
-  (with-eval-after-load 'evil
-    (evil-define-key* 'normal helpful-mode-map
-      (kbd "<") #'help-go-back
-      (kbd ">") #'help-go-forward))
   :custom
   (helpful-max-buffers 2))
 

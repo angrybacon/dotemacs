@@ -3,18 +3,29 @@
 ;;; Code:
 
 (use-package consult
+  :defines consult-narrow-map
   :functions consult-imenu consult-mark consult-outline
   :bind
-  ([remap goto-line] . consult-goto-line)
-  ([remap isearch-forward] . consult-line)
-  ([remap switch-to-buffer] . consult-buffer)
-  ("C-h m" . consult-minor-mode-menu)
-  ("C-h M" . describe-mode)
-  ("C-S-r" . isearch-backward-regexp)
-  ("C-S-s" . isearch-forward-regexp)
+  (([remap bookmark-jump] . consult-bookmark)
+   ([remap goto-line] . consult-goto-line)
+   ([remap imenu] . consult-imenu)
+   ([remap isearch-forward] . consult-line)
+   ([remap project-switch-to-buffer] . consult-project-buffer)
+   ([remap repeat-complex-command] . consult-complex-command)
+   ([remap switch-to-buffer] . consult-buffer)
+   ([remap yank-pop] . consult-yank-pop)
+   ("C-S-r" . isearch-backward-regexp)
+   ("C-S-s" . isearch-forward-regexp)
+   :map consult-narrow-map
+   ("C-h" . consult-narrow-help)
+   :map goto-map
+   ("m" . consult-mark)
+   ;; TODO Use `consult-org-heading' in `org-mode'
+   ("o" . consult-outline)
+   :map help-map
+   ("M" . consult-minor-mode-menu))
   :custom
   (consult-line-start-from-top t)
-  (consult-project-root-function #'me/project-root)
   (xref-show-definitions-function #'consult-xref)
   (xref-show-xrefs-function #'consult-xref))
 

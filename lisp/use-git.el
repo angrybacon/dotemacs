@@ -32,18 +32,23 @@
 (use-package git-modes)
 
 (use-package magit
-  :defines magit-file-section-map magit-hunk-section-map magit-section-mode-map
-  :functions magit-add-section-hook magit-diff-highlight
+  :defines
+  magit-file-section-map
+  magit-hunk-section-map
+  magit-section-mode-map
+  :functions
+  magit-diff-highlight
   :bind
   (:map magit-file-section-map
    ("RET" . magit-diff-visit-file-other-window)
    :map magit-hunk-section-map
-   ("RET" . magit-diff-visit-file-other-window)
-   :map magit-section-mode-map
-   ("M-1" . nil)
-   ("M-2" . nil)
-   ("M-3" . nil)
-   ("M-4" . nil))
+   ("RET" . magit-diff-visit-file-other-window))
+  :config
+  (define-key magit-section-mode-map (kbd "M-1") nil :remove)
+  (define-key magit-section-mode-map (kbd "M-2") nil :remove)
+  (define-key magit-section-mode-map (kbd "M-3") nil :remove)
+  (define-key magit-section-mode-map (kbd "M-4") nil :remove)
+  (remove-hook 'magit-section-highlight-hook #'magit-diff-highlight)
   :custom
   (magit-display-buffer-function
    'magit-display-buffer-same-window-except-diff-v1)
@@ -52,13 +57,7 @@
      magit-diff-highlight-hunk-region-using-face))
   (magit-diff-refine-hunk 'all)
   (magit-section-initial-visibility-alist '((unpushed . show)))
-  (magit-section-visibility-indicator '("…" . nil))
-  :config
-  (magit-add-section-hook
-   'magit-status-sections-hook
-   'magit-insert-modules-overview
-   'magit-insert-merge-log)
-  (remove-hook 'magit-section-highlight-hook #'magit-diff-highlight))
+  (magit-section-visibility-indicator '("…" . nil)))
 
 ;; NOTE Start a pinentry service automatically in order for Emacs to be able to
 ;;      prompt passphrases from the minibuffer. If Emacs doesn't redirect

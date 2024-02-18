@@ -2,24 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(global-set-key (kbd "C-c g")
-                (let ((map (make-sparse-keymap "Git")))
-                  (define-key map "b" '("blame" . magit-blame))
-                  (define-key map "c" '("clone" . magit-clone))
-                  (define-key map "r" '("revert" . diff-hl-revert-hunk))
-                  (define-key map "s" '("stage" . diff-hl-stage-current-hunk))
-                  map))
-
-(global-set-key (kbd "C-c s")
-                (let ((map (make-sparse-keymap "System")))
-                  (define-key map "d" '("clear desktop" . desktop-remove))
-                  (define-key map "g" '("toggle debug" . toggle-debug-on-error))
-                  (define-key map "l" '("processes" . list-processes))
-                  (define-key map "p" '("packages" . package-list-packages))
-                  (define-key map "Q" '("clear kill" . manticore-kill-terminal))
-                  map))
-
-;; TODO Migrate Hydra to simple maps
+;; TODO Migrate Hydra to transient maps
 
 (defun hercules-heading (&rest headings)
   "Format HEADINGS to look pretty in a hydra docstring."

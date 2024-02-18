@@ -40,6 +40,7 @@
      help-mode
      helpful-mode
      magit-process-mode
+     shell-mode
      vterm-mode))
   :hook
   (after-init . popper-mode)
@@ -56,6 +57,7 @@
      (flymake-diagnostics-buffer-mode :align below :popup t)
      (magit-process-mode              :align below :popup t)
      ("*Messages*"                    :align below :popup t)
+     ("*eldoc*"                       :align below :popup t)
      (,(rx bos "*HTTP Response")      :align below :popup t :regexp t)
      (,(rx bos "*EGLOT")              :align below :popup t :regexp t)
      (debugger-mode                   :align below :popup t :select t)
@@ -64,9 +66,9 @@
      ("*Process List*"                :align below :popup t :select t)
      ("*Warnings*"                    :align below :popup t :select t)
      ("*dired-check-process output*"  :align below :popup t :select t)
-     ("*eldoc*"                       :align below :popup t :select t)
      ("*eshell*"                      :align below :popup t :select t)
      (,(rx bos "*terminal")           :align below :popup t :select t :regexp t)
+     (,(rx "-shell*" eos)             :align below :popup t :select t :regexp t)
      (help-mode                       :align left  :popup t :select t :size 82)
      (helpful-mode                    :align left  :popup t :select t :size 82)))
   (shackle-select-reused-windows t)

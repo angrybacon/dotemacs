@@ -151,16 +151,22 @@ With WATCH optional parameter, return a command that watch for file changes."
 
 (use-package project
   :ensure nil
+  :bind
+  (:map project-prefix-map
+   ("g" . me/project-search)
+   ("l" . me/project-lint-dwim)
+   ("P" . me/project-todo)
+   ("t" . me/project-test-dwim))
   :config
   (cl-nsubstitute
    #'me/project-kill-buffer-p #'buffer-file-name project-kill-buffer-conditions)
   :custom
   (project-switch-commands
-   '((project-dired "Root" ?D)
-     (project-find-file "File" ?f)
-     (magit-project-status "Git" ?g)
-     (me/project-todo "Todo" ?o)
-     (me/project-search "Search" ?s)
+   '((project-dired            "Root"     ?D)
+     (project-find-file        "File"     ?f)
+     (magit-project-status     "Git"      ?g)
+     (me/project-todo          "Todo"     ?o)
+     (me/project-search        "Search"   ?s)
      (widowmaker-terminal-dwim "Terminal" ?t)))
   :init
   (setq-default project-list-file (shelldock "projects.eld")))

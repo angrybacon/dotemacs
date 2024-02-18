@@ -146,7 +146,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(font-lock-function-name-face       ((t :foreground ,cyan)))
    `(font-lock-keyword-face             ((t :foreground ,yellow)))
    `(font-lock-negation-char-face       ((t :foreground ,magenta)))
-   `(font-lock-preprocessor-face        ((t :foreground ,blue+1)))
+   `(font-lock-preprocessor-face        ((t :foreground ,orange)))
    `(font-lock-regexp-grouping-backslash ((t :foreground ,green)))
    `(font-lock-regexp-grouping-construct ((t :foreground ,yellow)))
    `(font-lock-string-face              ((t :foreground ,red)))
@@ -171,7 +171,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
                                             :foreground ,blue+1
                                             :underline t)))
    `(flymake-warning                    ((t :background ,fg-2
-                                            :foreground ,orange
+                                            :foreground ,yellow-2
                                             :underline t)))
 ;;;;;; Customize
    `(custom-button                      ((t :inherit button)))
@@ -438,17 +438,17 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
 ;;;;;; Language Servers
    `(eglot-highlight-symbol-face        ((t ,@(zenmelt--box 'yellow))))
 ;;;;;; Mode-Line
+   `(leyline-error                      ((t :inherit flymake-error
+                                            :underline nil)))
    `(leyline-evil-emacs                 ((t :foreground ,magenta)))
-   `(leyline-error                      ((t :background ,red-5
-                                            :foreground ,red+1)))
-   `(leyline-note                       ((t :background ,blue-5
-                                            :foreground ,blue+1)))
-   `(leyline-warning                    ((t :background ,fg-2
-                                            :foreground ,orange)))
    `(leyline-evil-insert                ((t :foreground ,red)))
    `(leyline-evil-operator              ((t :foreground ,cyan)))
    `(leyline-evil-replace               ((t :foreground ,green+4)))
    `(leyline-evil-visual                ((t :foreground ,blue-2)))
+   `(leyline-note                       ((t :inherit flymake-note
+                                            :underline nil)))
+   `(leyline-warning                    ((t :inherit flymake-warning
+                                            :underline nil)))
 ;;;;;; Navigation
    `(avy-background-face                ((t :inherit shadow)))
    `(avy-lead-face                      ((t :foreground ,cyan)))
