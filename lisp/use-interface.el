@@ -36,7 +36,6 @@
   (display-line-numbers-width 3)
   :hook
   (conf-mode . display-line-numbers-mode)
-  (dired-mode . display-line-numbers-mode)
   (prog-mode . display-line-numbers-mode)
   (text-mode . display-line-numbers-mode))
 
