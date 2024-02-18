@@ -51,7 +51,6 @@
   (load "use-evil")
   (load "use-git")
   (load "use-help")
-  (load "use-hydra")
   (load "use-languages")
   (load "use-lint")
   (load "use-lsp")

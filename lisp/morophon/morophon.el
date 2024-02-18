@@ -88,12 +88,6 @@ that might happen within the hook."
 See `custom-available-themes'.")
 
 ;;;###autoload
-(defun morophon-disable-themes ()
-  "Disable all themes found in `custom-enable-themes'."
-  (interactive)
-  (mapc #'disable-theme custom-enabled-themes))
-
-;;;###autoload
 (defun morophon-cycle ()
   "Cycle through themes from `morophon-known-themes' in succession."
   (interactive)
@@ -104,6 +98,12 @@ See `custom-available-themes'.")
     (when next
       (load-theme next t))
     (message "%s" next)))
+
+;;;###autoload
+(defun morophon-disable-themes ()
+  "Disable all themes found in `custom-enable-themes'."
+  (interactive)
+  (mapc #'disable-theme custom-enabled-themes))
 
 ;;;; Typography
 

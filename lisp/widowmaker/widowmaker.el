@@ -203,23 +203,16 @@ side window."
 
 (declare-function cl-find-if "cl-seq")
 
+(defcustom widowmaker-terminal-function 'widowmaker-terminal-vterm
+  "Terminal emulator to use."
+  :type '(choice (const :tag "Vterm" widowmaker-terminal-vterm)))
+
 (defun widowmaker-terminal-vterm (&optional buffer-name)
   "Invoke `vterm'.
 Use BUFFER-NAME as name for the new terminal buffer when it is provided."
   (if (require 'vterm nil :noerror)
       (vterm buffer-name)
     (error "[Widowmaker] Package `vterm' not found")))
-
-;;;###autoload
-(defun widowmaker-terminal-window ()
-  "Return the first terminal window currently open."
-  (cl-find-if
-   #'(lambda (window) (with-selected-window window (eq major-mode 'vterm-mode)))
-   (window-list)))
-
-(defcustom widowmaker-terminal-function 'widowmaker-terminal-vterm
-  "Terminal emulator to use."
-  :type '(choice (const :tag "Vterm" widowmaker-terminal-vterm)))
 
 ;;;###autoload
 (defun widowmaker-terminal-dwim (force)
@@ -239,6 +232,13 @@ When prefixed with \\[universal-argument], FORCE create a new terminal session."
             (select-window window)
           (funcall widowmaker-terminal-function buffer)))
     (funcall widowmaker-terminal-function)))
+
+;;;###autoload
+(defun widowmaker-terminal-window ()
+  "Return the first terminal window currently open."
+  (cl-find-if
+   #'(lambda (window) (with-selected-window window (eq major-mode 'vterm-mode)))
+   (window-list)))
 
 (provide 'widowmaker)
 

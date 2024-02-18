@@ -56,4 +56,6 @@
   (after-init . vertico-mode)
   (minibuffer-setup . vertico-repeat-save))
 
+(use-package wgrep)
+
 ;;; use-completion.el ends here

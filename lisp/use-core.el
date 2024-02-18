@@ -60,7 +60,38 @@
 
 (declare-function shelldock "shelldock")
 
+(defun me/visit--make-visiter (target)
+  "Create a visiter function for TARGET.
+TARGET should be a cons whose car is the name for the visiter, and whose cdr is
+either an absolute file path or a function to call on visit."
+  (cl-destructuring-bind (name . action) target
+    (eval
+     `(defun ,(intern (format "me/visit-%s" name)) ()
+        (interactive)
+        ,(cl-typecase action
+           (function `(,action))
+           (string `(find-file ,action))
+           (symbol `(find-file ,(eval action :lexical)))
+           (t `(user-error "[Visit] Unsupported type `%s'" ,action))))
+     :lexical)))
+
+(mapc #'me/visit--make-visiter
+      '((compositor    . "~/Workspace/dot/config/picom.org")
+        (desktop       . "~/Workspace/dot/config/qtile.org")
+        (emacs         . user-init-file)
+        (linux         . "~/Workspace/dot/LINUX.org")
+        (macos         . "~/Workspace/dot/MACOS.org")
+        (notifications . "~/Workspace/dot/config/dunst.org")
+        (scratch       . scratch-buffer)
+        (secrets       . "~/.config/emacs/.cache/szadek.eld")
+        (shell         . "~/Workspace/dot/config/zsh.org")
+        (terminal      . "~/Workspace/dot/config/kitty.org")
+        (vim           . "~/Workspace/dot/config/vim.org")))
+
 (use-package transient
+  :bind
+  ("<leader>i" . me/transient-interface)
+  ("<leader>v" . me/transient-visit)
   :init
   (setq-default
    transient-history-file (shelldock "transient/history.el")
@@ -68,5 +99,36 @@
    transient-values-file (shelldock "transient/values.el"))
   :custom
   (transient-show-popup nil))
+
+(transient-define-prefix me/transient-interface ()
+  "Visit configuration files."
+  ["Frame"
+   ("m" "Maximize"      toggle-frame-maximized)
+   ("M" "Cycle display" widowmaker-placement-cycle)]
+  ["Olivetti"
+   ("o" "Toggle"        widowmaker-olivetti-automatic-toggle)
+   ("O" "Toggle"        widowmaker-olivetti-body-reset)]
+  ["Pair-programming"
+   ("n" "Cycle line numbers" ruric-toggle-line-numbers)
+   ("r" "Toggle pair-programming mode" ruric-mode)]
+  ["Themes"
+   ("t" "Cycle themes"  morophon-cycle)])
+
+(transient-define-prefix me/transient-visit ()
+  "Visit configuration files."
+  ["Applications"
+   ("c" "Picom"         me/visit-compositor)
+   ("d" "Qtile"         me/visit-desktop)
+   ("i" "Vim"           me/visit-vim)
+   ("n" "Dunst"         me/visit-notifications)
+   ("s" "Zsh"           me/visit-shell)
+   ("t" "Kitty"         me/visit-terminal)]
+  ["Emacs"
+   ("." "Secrets"       me/visit-secrets)
+   ("e" "Configuration" me/visit-emacs)
+   ("v" "Scratch"       me/visit-scratch)]
+  ["OS"
+   ("l" "Linux"         me/visit-linux)
+   ("m" "macOS"         me/visit-macos)])
 
 ;;; use-core.el ends here
