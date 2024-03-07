@@ -152,22 +152,25 @@ With WATCH optional parameter, return a command that watch for file changes."
 (use-package project
   :ensure nil
   :bind
-  (:map project-prefix-map
-   ("g" . me/project-search)
+  (([remap project-vc-dir] . magit-project-status)
+   ([remap project-find-regexp] . me/project-search)
+   ([remap project-shell] . widowmaker-terminal-dwim)
+   :map project-prefix-map
    ("l" . me/project-lint-dwim)
    ("P" . me/project-todo)
+   ("S" . me/project-save)
    ("t" . me/project-test-dwim))
   :config
   (cl-nsubstitute
    #'me/project-kill-buffer-p #'buffer-file-name project-kill-buffer-conditions)
   :custom
+  ;; TODO Should reuse the same keys from the avove remaps
   (project-switch-commands
-   '((project-dired            "Root"     ?D)
-     (project-find-file        "File"     ?f)
-     (magit-project-status     "Git"      ?g)
-     (me/project-todo          "Todo"     ?o)
-     (me/project-search        "Search"   ?s)
-     (widowmaker-terminal-dwim "Terminal" ?t)))
+   '((project-find-file        "File")
+     (magit-project-status     "Git" ?v)
+     (me/project-todo          "Todo")
+     (me/project-search        "Search" ?g)
+     (widowmaker-terminal-dwim "Terminal" ?s)))
   :init
   (setq-default project-list-file (shelldock "projects.eld")))
 
