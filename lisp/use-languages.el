@@ -78,6 +78,10 @@
   :hook
   (tsx-ts-mode . sgml-electric-tag-pair-mode))
 
+;;;; Kotlin
+
+(use-package kotlin-ts-mode)
+
 ;;;; Lisp
 
 (use-package emacs-lisp-mode

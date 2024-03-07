@@ -43,6 +43,7 @@ Return `treesit-language-source-alist' once it is populated."
   (interactive)
   (when pendelhaven-directory
     (add-to-list 'treesit-extra-load-path pendelhaven-directory))
+  ;; TODO This should probably be done in user-land instead
   (setq
    treesit-language-source-alist
    '((css        . ("https://github.com/tree-sitter/tree-sitter-css"))
@@ -51,6 +52,7 @@ Return `treesit-language-source-alist' once it is populated."
      (graphql    . ("https://github.com/bkegley/tree-sitter-graphql"))
      (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
      (json       . ("https://github.com/tree-sitter/tree-sitter-json"))
+     (kotlin     . ("https://github.com/fwcd/tree-sitter-kotlin"))
      (python     . ("https://github.com/tree-sitter/tree-sitter-python"))
      (toml       . ("https://github.com/tree-sitter/tree-sitter-toml"))
      (tsx        . ("https://github.com/tree-sitter/tree-sitter-typescript"
@@ -90,6 +92,7 @@ and the regular version of the corresponding major mode, both optional.")
 (defvar pendelhaven--pattern-alist
   `((go         . ,(rx ".go" eos))
     (gomod      . ,(rx "/go.mod" eos))
+    (kotlin     . ,(rx ".kt" eos))
     (tsx        . ,(rx ".tsx" eos))
     (typescript . ,(rx ".ts" eos))
     (yaml       . ,(rx ".y" (? "a") "ml" eos)))
