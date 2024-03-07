@@ -15,6 +15,7 @@ Like `xref-find-references' but switch to the other window."
 
 ;;;; LSP Client
 
+(declare-function cl-substitute-if "cl-seq")
 (declare-function eglot-current-server "eglot")
 (declare-function eglot-inlay-hints-mode "eglot")
 (declare-function eglot-shutdown "eglot")

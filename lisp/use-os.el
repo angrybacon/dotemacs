@@ -9,12 +9,6 @@
    ns-command-modifier 'meta            ; Map Meta to the Cmd key
    ns-pop-up-frames nil)                ; Always re-use the same frame
 
-  (use-package exec-path-from-shell
-    :custom
-    (exec-path-from-shell-variables '("ANDROID_HOME" "MANPATH" "PATH"))
-    :hook
-    (after-init . exec-path-from-shell-initialize))
-
   (use-package pixel-scroll
     ;; NOTE A bug in `pixel-scroll-mode' from Emacs 29 sometimes halts the
     ;;      current scroll motion.

@@ -89,6 +89,7 @@ either an absolute file path or a function to call on visit."
         (vim           . "~/Workspace/dot/config/vim.org")))
 
 (use-package transient
+  :ensure nil
   :bind
   ("<leader>i" . me/transient-interface)
   ("<leader>v" . me/transient-visit)

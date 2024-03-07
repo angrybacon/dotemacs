@@ -55,7 +55,7 @@ implementation."
   :type 'boolean)
 
 ;; TODO Add support for regular expressions
-(defcustom widowmaker-olivetti-blacklist-buffers '()
+(defcustom widowmaker-olivetti-blacklist-buffers '("*Async-native-compile-log*")
   "Buffers for which `olivetti-mode' should not be enabled automatically."
   :type '(repeat string))
 
