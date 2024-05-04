@@ -98,38 +98,38 @@ either an absolute file path or a function to call on visit."
    transient-history-file (shelldock "transient/history.el")
    transient-levels-file (shelldock "transient/levels.el")
    transient-values-file (shelldock "transient/values.el"))
+  :config
+  (transient-define-prefix me/transient-interface ()
+    "Visit configuration files."
+    ["Frame"
+     ("m" "Maximize"      toggle-frame-maximized)
+     ("M" "Cycle display" widowmaker-placement-cycle)]
+    ["Olivetti"
+     ("o" "Toggle"        widowmaker-olivetti-automatic-toggle)
+     ("O" "Toggle"        widowmaker-olivetti-body-reset)]
+    ["Pair-programming"
+     ("n" "Cycle line numbers" ruric-toggle-line-numbers)
+     ("r" "Toggle pair-programming mode" ruric-mode)]
+    ["Themes"
+     ("t" "Cycle themes"  morophon-cycle)])
+  (transient-define-prefix me/transient-visit ()
+    "Visit configuration files."
+    ["Applications"
+     ("c" "Picom"         me/visit-compositor)
+     ("d" "Qtile"         me/visit-desktop)
+     ("i" "Vim"           me/visit-vim)
+     ("n" "Dunst"         me/visit-notifications)
+     ("s" "Zsh"           me/visit-shell)
+     ("t" "Kitty"         me/visit-terminal)]
+    ["Emacs"
+     ("." "Secrets"       me/visit-secrets)
+     ("e" "Configuration" me/visit-emacs)
+     ("v" "Scratch"       me/visit-scratch)]
+    ["OS"
+     ("l" "Linux"         me/visit-linux)
+     ("m" "macOS"         me/visit-macos)])
   :custom
   (transient-show-popup nil))
 
-(transient-define-prefix me/transient-interface ()
-  "Visit configuration files."
-  ["Frame"
-   ("m" "Maximize"      toggle-frame-maximized)
-   ("M" "Cycle display" widowmaker-placement-cycle)]
-  ["Olivetti"
-   ("o" "Toggle"        widowmaker-olivetti-automatic-toggle)
-   ("O" "Toggle"        widowmaker-olivetti-body-reset)]
-  ["Pair-programming"
-   ("n" "Cycle line numbers" ruric-toggle-line-numbers)
-   ("r" "Toggle pair-programming mode" ruric-mode)]
-  ["Themes"
-   ("t" "Cycle themes"  morophon-cycle)])
-
-(transient-define-prefix me/transient-visit ()
-  "Visit configuration files."
-  ["Applications"
-   ("c" "Picom"         me/visit-compositor)
-   ("d" "Qtile"         me/visit-desktop)
-   ("i" "Vim"           me/visit-vim)
-   ("n" "Dunst"         me/visit-notifications)
-   ("s" "Zsh"           me/visit-shell)
-   ("t" "Kitty"         me/visit-terminal)]
-  ["Emacs"
-   ("." "Secrets"       me/visit-secrets)
-   ("e" "Configuration" me/visit-emacs)
-   ("v" "Scratch"       me/visit-scratch)]
-  ["OS"
-   ("l" "Linux"         me/visit-linux)
-   ("m" "macOS"         me/visit-macos)])
 
 ;;; use-core.el ends here

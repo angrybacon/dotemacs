@@ -20,7 +20,7 @@
   (:map dired-mode-map
    ("C-<return>" . dire-open-externally))
   :custom
-  (dired-auto-revert-buffer t)
+  (dired-auto-revert-buffer #'dired-buffer-stale-p)
   (dired-dwim-target t)
   (dired-free-space nil)
   (dired-hide-details-hide-symlink-targets nil)
