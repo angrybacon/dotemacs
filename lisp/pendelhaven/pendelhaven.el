@@ -5,7 +5,7 @@
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: August 26, 2023
 ;; Homepage: https://github.com/angrybacon/dotemacs/tree/master/lisp/pendelhaven
-;; Package-Requires: ((emacs "29.0.60"))
+;; Package-Requires: ((emacs "30.0.60"))
 
 ;; This program is free software. You can redistribute it and/or modify it under
 ;; the terms of the Do What The Fuck You Want To Public License, version 2 as
@@ -26,7 +26,7 @@
 ;;; Code:
 
 (require 'treesit)
-;; (declare-function treesit-ready-p "treesit")
+(declare-function cl-destructuring-bind "cl-macs")
 
 (defgroup pendelhaven nil
   "Tree-sitter facilities."
@@ -37,44 +37,21 @@
 This directory is automatically added to `treesit-extra-load-path'."
   :type 'directory)
 
+;;;###autoload
 (defun pendelhaven-configure ()
-  "Register language grammars to be used with the built-in major modes.
-Return `treesit-language-source-alist' once it is populated."
+  "Register language grammars to be used with the built-in major modes."
   (interactive)
   (when pendelhaven-directory
     (add-to-list 'treesit-extra-load-path pendelhaven-directory))
-  ;; TODO This should probably be done in user-land instead
-  (setq
-   treesit-language-source-alist
-   '((css        . ("https://github.com/tree-sitter/tree-sitter-css"))
-     (go         . ("https://github.com/tree-sitter/tree-sitter-go"))
-     (gomod      . ("https://github.com/camdencheek/tree-sitter-go-mod"))
-     (graphql    . ("https://github.com/bkegley/tree-sitter-graphql"))
-     (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
-     (json       . ("https://github.com/tree-sitter/tree-sitter-json"))
-     (kotlin     . ("https://github.com/fwcd/tree-sitter-kotlin"))
-     (python     . ("https://github.com/tree-sitter/tree-sitter-python"))
-     (toml       . ("https://github.com/tree-sitter/tree-sitter-toml"))
-     (tsx        . ("https://github.com/tree-sitter/tree-sitter-typescript"
-                    "master" "tsx/src"))
-     (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript"
-                    "master" "typescript/src"))
-     (yaml       . ("https://github.com/ikatyang/tree-sitter-yaml"))))
   (pendelhaven-remap-languages))
 
 ;;;###autoload
 (defun pendelhaven-install ()
   "Install all languages in `pendelhaven-languages'."
   (interactive)
-  (let ((languages (pendelhaven-languages)))
-    (advice-add 'treesit--install-language-grammar-1 :filter-args
-      (lambda (rest) (append `(,pendelhaven-directory) (cdr rest)))
-      '((name . pendelhaven--force-directory)))
-    (unwind-protect
-        (mapc #'treesit-install-language-grammar languages)
-      (advice-remove
-       #'treesit--install-language-grammar-1 'pendelhaven--force-directory))
-    (pendelhaven-remap-languages languages)))
+  (dolist (language (pendelhaven-languages))
+    (treesit-install-language-grammar language pendelhaven-directory))
+  (pendelhaven-remap-languages))
 
 (defun pendelhaven-languages ()
   "Return all configured languages."
@@ -86,8 +63,8 @@ Return `treesit-language-source-alist' once it is populated."
     (gomod      . (:tree go-mod-ts-mode))
     (toml       . (:regular conf-toml-mode)))
   "List of major mode pairs for languages where they cannot be guessed easily.
-The values should be a plist of overwrites containing the Tree-sitter version
-and the regular version of the corresponding major mode, both optional.")
+The values should be a plist of overrides containing the Tree-sitter version
+and the regular version of the corresponding major mode.")
 
 (defvar pendelhaven--pattern-alist
   `((go         . ,(rx ".go" eos))
@@ -96,7 +73,7 @@ and the regular version of the corresponding major mode, both optional.")
     (tsx        . ,(rx ".tsx" eos))
     (typescript . ,(rx ".ts" eos))
     (yaml       . ,(rx ".y" (? "a") "ml" eos)))
-  "List of file patterns for languages that don't have a built-in mode.")
+  "List of file patterns for languages that don't have a built-in mapping.")
 
 (defun pendelhaven-remap-language (language)
   "Remap the appropriate Tree-sitter major mode for LANGUAGE.
@@ -105,19 +82,18 @@ them in `auto-mode-alist' directly. See `pendelhaven--pattern-alist'."
   (cl-destructuring-bind (&key regular tree)
       (alist-get language pendelhaven--mode-alist)
     (let ((mode (or regular (intern (format "%s-mode" language))))
-          (ts-mode (or tree (intern (format "%s-ts-mode" language)))))
-      (if (not (fboundp ts-mode))
-          (message "[Pendelhaven] Unknown mode `%s'" ts-mode)
+          (tree-mode (or tree (intern (format "%s-ts-mode" language)))))
+      (if (not (fboundp tree-mode))
+          (message "[Pendelhaven] Unknown Tree-sitter mode `%s'" tree-mode)
         (if (not (treesit-ready-p language :quiet))
             (message "[Pendelhaven] Language `%s' isn't ready" language)
-          (add-to-list 'major-mode-remap-alist `(,mode . ,ts-mode))
+          (add-to-list 'major-mode-remap-alist `(,mode . ,tree-mode))
           (when-let ((pattern (alist-get language pendelhaven--pattern-alist)))
-            (add-to-list 'auto-mode-alist `(,pattern . ,ts-mode))))))))
+            (add-to-list 'auto-mode-alist `(,pattern . ,tree-mode))))))))
 
-(defun pendelhaven-remap-languages (&optional languages)
-  "Remap Tree-sitter major mode for LANGUAGES.
-When LANGUAGES is omitted, use `pendelhaven-languages'."
-  (mapc #'pendelhaven-remap-language (or languages (pendelhaven-languages))))
+(defun pendelhaven-remap-languages ()
+  "Remap Tree-sitter major mode for all languages in `pendelhaven-languages'."
+  (mapc #'pendelhaven-remap-language (pendelhaven-languages)))
 
 (provide 'pendelhaven)
 

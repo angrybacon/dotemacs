@@ -16,8 +16,25 @@
 
 (use-package treesit
   :ensure nil
-  :custom
-  (treesit-font-lock-level 4))
+  :config
+  (setq-default
+   treesit-language-source-alist
+   '((css        . ("https://github.com/tree-sitter/tree-sitter-css"))
+     (go         . ("https://github.com/tree-sitter/tree-sitter-go"))
+     (gomod      . ("https://github.com/camdencheek/tree-sitter-go-mod"))
+     (graphql    . ("https://github.com/bkegley/tree-sitter-graphql"))
+     (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
+     (json       . ("https://github.com/tree-sitter/tree-sitter-json"))
+     (kotlin     . ("https://github.com/fwcd/tree-sitter-kotlin"))
+     (python     . ("https://github.com/tree-sitter/tree-sitter-python"))
+     (toml       . ("https://github.com/tree-sitter/tree-sitter-toml"))
+     (tsx        . ("https://github.com/tree-sitter/tree-sitter-typescript"
+                    "master"
+                    "tsx/src"))
+     (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript"
+                    "master"
+                    "typescript/src"))
+     (yaml       . ("https://github.com/ikatyang/tree-sitter-yaml")))))
 
 ;;;; CSV
 
