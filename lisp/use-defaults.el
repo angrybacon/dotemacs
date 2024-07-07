@@ -24,6 +24,7 @@
  initial-major-mode #'org-mode          ; Prefer `org-mode' for *scratch*
  initial-scratch-message ""             ; Empty the initial *scratch* buffer
  isearch-allow-scroll t                 ; Allow scroll commands while isearching
+ isearch-lazy-count t                   ; Display match count while searching
  lazy-highlight-buffer t                ; Highlight the entire buffer
  ;; TODO Clean up highlights after replace operations
  lazy-highlight-cleanup nil             ; Keep isearch highlights around
