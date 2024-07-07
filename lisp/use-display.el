@@ -84,7 +84,7 @@
   ("s-k" . windmove-up)
   ("s-l" . windmove-right)
   ("s-w" . delete-window)
-  ("s-W" . kill-this-buffer)
+  ("s-W" . kill-current-buffer)
   :commands
   widowmaker-kill-buffer-with-process
   widowmaker-olivetti-automatic-toggle

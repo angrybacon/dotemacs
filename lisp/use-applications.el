@@ -17,7 +17,7 @@
   :defines vterm-mode-map
   :bind
   (:map vterm-mode-map
-   ([remap kill-this-buffer] . widowmaker-kill-buffer-with-process))
+   ([remap kill-current-buffer] . widowmaker-kill-buffer-with-process))
   :custom
   (vterm-keymap-exceptions
    '("C-c" "C-g" "C-h" "C-l" "C-u" "C-x" "C-y"
