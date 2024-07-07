@@ -241,7 +241,9 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(org-agenda-date-today              ((t :foreground ,fg+1 :slant italic)))
    `(org-agenda-structure               ((t :inherit font-lock-comment-face)))
    `(org-archived                       ((t :foreground ,fg)))
-   `(org-block                          ((t :extend t :foreground ,fg)))
+   `(org-block                          ((t :background ,bg+1
+                                            :extend t
+                                            :foreground ,fg)))
    `(org-block-begin-line               ((t :inherit shadow)))
    `(org-checkbox                       ((t :inherit org-verbatim)))
    `(org-column                         ((t :background ,bg-3)))
@@ -268,9 +270,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(org-habit-ready-future-face        ((t :background ,green-2)))
    `(org-headline-done                  ((t :foreground ,green+3)))
    `(org-hide                           ((t :foreground ,bg)))
-   `(org-level-1                        ((t :background ,bg+1
-                                            :extend t
-                                            :inherit outline-1)))
+   `(org-level-1                        ((t :extend t :inherit outline-1)))
    `(org-level-2                        ((t :inherit (outline-2 org-level-1))))
    `(org-level-3                        ((t :inherit (outline-3 org-level-2))))
    `(org-level-4                        ((t :inherit (outline-4 org-level-3))))
