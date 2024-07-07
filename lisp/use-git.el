@@ -3,13 +3,14 @@
 ;;; Code:
 
 (use-package diff-hl
+  :disabled t
   :config
   (define-fringe-bitmap 'me/diff-hl-insert [240] nil nil '(center t))
   (define-fringe-bitmap 'me/diff-hl-change [240] nil nil '(center t))
   (define-fringe-bitmap 'me/diff-hl-delete (make-vector 6 240) nil nil 'top)
-  ;; (with-eval-after-load 'magit
-  ;;   (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
-  ;;   (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))
+  (with-eval-after-load 'magit
+    (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
+    (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))
   :custom
   (diff-hl-fringe-bmp-function #'me/diff-hl-fringe-bitmap)
   (diff-hl-show-staged-changes nil)
