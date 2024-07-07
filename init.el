@@ -23,10 +23,10 @@
 
 ;;; Code:
 
-(let ((default-directory user-emacs-directory)
-      (file-name-handler-alist nil)
+(let ((file-name-handler-alist nil)
       (gc-cons-percentage .6)
       (gc-cons-threshold most-positive-fixnum)
+      (mode-line-format nil)
       (read-process-output-max (* 1024 1024)))
 
   ;; Reduce fanfare
@@ -35,6 +35,7 @@
 
   ;; Set up packages
   (add-to-list 'load-path (expand-file-name "lisp/" user-emacs-directory))
+  (load "use-doctor")
   (load "use-packages")
 
   ;; Load these first to avoid flickering

@@ -30,10 +30,6 @@
    init-file-debug t))
 
 (setq-default
- load-prefer-newer t                    ; Avoid old byte-compiled dependencies
- mode-line-format nil)                  ; Less flickering and speed optimization
-
-(setq-default
  default-frame-alist
  '((background-color . "#3F3F3F")       ; Default background color
    (bottom-divider-width . 4)           ; Thin horizontal window divider
@@ -46,6 +42,7 @@
    (right-fringe . 8)                   ; Thin right fringe
    (tool-bar-lines . 0)                 ; No tool bar
    (undecorated . t)                    ; Remove extraneous X decorations
-   (vertical-scroll-bars . nil)))       ; No vertical scroll-bars
+   (vertical-scroll-bars . nil))        ; No vertical scroll-bars
+ load-prefer-newer t)                   ; Avoid old byte-compiled dependencies
 
 ;;; early-init.el ends here
