@@ -124,13 +124,15 @@ If ripgrep is not installed, use grep instead."
 (defun me/project-test-command (path &optional watch)
   "Return the test command for the provided PATH as per project configuration.
 With WATCH optional parameter, return a command that watch for file changes."
-  (concat "yarn test" (and watch " --watch") " " path))
+  (concat "pnpm run test" (and watch " --watch") " " path))
 
-(defun me/project-test-path (path)
-  "Run test suite at PATH location."
+(defun me/project-test-path (path &optional watch)
+  "Run test suite at PATH location.
+With WATCH optional parameter, instruct the test command to watch for file
+changes."
   (if-let ((window (widowmaker-terminal-window)))
       (with-current-buffer (window-buffer window)
-        (vterm-send-string (me/project-test-command path))
+        (vterm-send-string (me/project-test-command path watch))
         (vterm-send-return))
     (message "[Project] Could not find terminal window")))
 
@@ -140,7 +142,7 @@ With WATCH optional parameter, return a command that watch for file changes."
   (let* ((path (buffer-file-name))
          (match (string-match me/project-test-file-pattern path)))
     (if (and match (> match 0))
-        (me/project-test-path path)
+        (me/project-test-path path :watch)
       ;; TODO Current file is not a test file, find nearest that matches
       (message "[Project] Not a test file"))))
 
