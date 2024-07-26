@@ -24,7 +24,23 @@ should be checked."
 
 ;;;; Prettier
 
+(defun me/prettier-markdown-parser ()
+  "Return the Prettier parser for the current file.
+Use the current buffer file extension if possible or fallback to the default
+Markdown parser."
+  (if-let* ((name (buffer-file-name))
+            (extension (file-name-extension name))
+            (_ (string-equal extension "mdx")))
+      '(mdx)
+    '(markdown)))
+
 (use-package prettier
+  :config
+  (add-to-list
+   'prettier-major-mode-parsers
+   `(markdown-mode . ,#'me/prettier-markdown-parser))
+  :custom
+  (prettier-mode-sync-config-flag nil)
   :init
   (add-to-list 'safe-local-eval-forms '(prettier-mode)))
 
