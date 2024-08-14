@@ -7,6 +7,7 @@
 (declare-function xref--find-xrefs "xref")
 (declare-function xref--read-identifier "xref")
 
+;; NOTE Unused currently
 (defun me/xref-find-references-other-window (identifier)
   "Find IDENTIFIER references in other window.
 Like `xref-find-references' but switch to the other window."
@@ -47,35 +48,25 @@ Also toggle `eglot-inlay-hints-mode' accordingly."
 (defun me/eglot-initialize-typescript ()
   "Bootstrap TypeScript-specific customizations.
 See https://github.com/typescript-language-server/typescript-language-server."
-  (defvar eglot-server-programs)
-  (let ((target-mode 'typescript-ts-mode)
-        (target-modes '(js-base-mode typescript-ts-base-mode)))
-    (setq-default
-     eglot-server-programs
-     (cl-substitute-if
-      (cons
-       target-modes
-       '("typescript-language-server" "--stdio" :initializationOptions
-         (:preferences
-          (:importModuleSpecifierPreference "non-relative"
+  (let ((target-modes '(tsx-ts-mode typescript-ts-mode))
+        (preferences
+         '(:importModuleSpecifierPreference "non-relative"
            :includeInlayEnumMemberValueHints t
            :includeInlayFunctionLikeReturnTypeHints t
            :includeInlayFunctionParameterTypeHints t
-           :includeInlayParameterNameHints "literals" ; "none" | "literals" | "all"
+           :includeInlayParameterNameHints "literals" ; none | literals | all
            :includeInlayParameterNameHintsWhenArgumentMatchesName t
            :includeInlayPropertyDeclarationTypeHints t
            :includeInlayVariableTypeHints t
            :includeInlayVariableTypeHintsWhenTypeMatchesName t
            :organizeImportsCaseFirst "upper"
-           :organizeImportsCollation "unicode" ; "ordinal" | "unicode"
-           :organizeImportsIgnoreCase :json-false
-           :quotePreference "single"))))
-      (lambda (program)
-        ;; TODO Fix predicate to account for `:language-id' in nested targets
-        (if (listp (car program))
-            (member target-mode (car program))
-          (eq target-mode program)))
-      eglot-server-programs))))
+           :organizeImportsCollation "unicode" ; ordinal | unicode
+           :organizeImportsIgnoreCase :json-false)))
+    (add-to-list
+     'eglot-server-programs
+     `(,target-modes
+       "typescript-language-server" "--stdio"
+       :initializationOptions (:preferences ,preferences)))))
 
 (use-package eglot
   :ensure nil
@@ -93,7 +84,7 @@ See https://github.com/typescript-language-server/typescript-language-server."
   ;; NOTE Progress is handled by the custom mode-line package directly
   (eglot-report-progress nil)
   (eglot-autoshutdown t)
-  (eglot-events-buffer-size 0)
+  (eglot-events-buffer-config '(:size 0))
   :hook
   (eglot-managed-mode . me/eglot-inlay-hints-maybe)
   (eglot-managed-mode . me/flymake-eslint-enable-maybe)
