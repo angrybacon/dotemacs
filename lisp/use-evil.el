@@ -2,29 +2,16 @@
 ;;; Commentary:
 ;;; Code:
 
-(declare-function barrinalo-reverse "barrinalo")
-(declare-function barrinalo-shift-left "barrinalo")
-(declare-function barrinalo-shift-left-tab "barrinalo")
-(declare-function barrinalo-shift-right "barrinalo")
-(declare-function barrinalo-shift-right-tab "barrinalo")
-(declare-function barrinalo-sort-numbers "barrinalo")
-(declare-function barrinalo-sort-words "barrinalo")
-(declare-function diff-hl-revert-hunk "diff-hl")
-(declare-function diff-hl-stage-current-hunk "diff-hl")
-(declare-function evil-scroll-up "evil-commands")
-(declare-function evil-define-key* "evil-core")
-(declare-function evil-avy-goto-char-timer "evil-integration")
-(declare-function magit-blame "magit-blame")
-(declare-function magit-clone "magit-clone")
-(declare-function magit-status "magit-status")
-(declare-function manticore-kill-terminal "manticore")
-(declare-function manticore-revert-buffer-immediately "manticore")
-(declare-function webpaste-paste-region "webpaste")
-
 (use-package avy
   :custom
   (avy-background t)
   (avy-timeout-seconds .3))
+
+(declare-function magit-blame "magit-blame")
+(declare-function magit-clone "magit-clone")
+(declare-function magit-status "magit-status")
+(declare-function diff-hl-revert-hunk "diff-hl")
+(declare-function diff-hl-stage-current-hunk "diff-hl")
 
 (defvar-keymap me/magit-map
   "b" #'magit-blame
@@ -32,6 +19,9 @@
   "g" #'magit-status
   "r" #'diff-hl-revert-hunk
   "s" #'diff-hl-stage-current-hunk)
+
+(declare-function manticore-kill-terminal "manticore")
+(declare-function manticore-revert-buffer-immediately "manticore")
 
 (defvar-keymap me/system-map
   "d" #'desktop-remove
@@ -41,23 +31,32 @@
   "q" #'manticore-kill-terminal
   "s" #'manticore-revert-buffer-immediately)
 
+(declare-function barrinalo-reverse "barrinalo")
+(declare-function barrinalo-shift-left "barrinalo")
+(declare-function barrinalo-shift-left-tab "barrinalo")
+(declare-function barrinalo-shift-right "barrinalo")
+(declare-function barrinalo-shift-right-tab "barrinalo")
+(declare-function barrinalo-sort-numbers "barrinalo")
+(declare-function barrinalo-sort-words "barrinalo")
+(declare-function evil-scroll-up "evil-commands")
+(declare-function evil-define-key "evil-core")
+(declare-function evil-avy-goto-char-timer "evil-integration")
+(declare-function webpaste-paste-region "webpaste")
+
 (defun me/evil-define-bindings ()
   "Add personal bindings to the global maps."
-  (evil-define-key* 'normal 'global
-    ;; TODO Port these bindings from old setup
-    ;; (kbd "gr") #'manticore-revert-buffer-immediately
-    ;; TODO Broken in dired and magit, targeting `global-map' instead might fix
-    (kbd "<leader>h") help-map
+  (evil-define-key 'motion 'global
+    (kbd "C-S-d") #'evil-scroll-up)
+  (evil-define-key 'normal 'global
+    ;; TODO Those are shadowed by Magit's own keybindings
     (kbd "<leader>g") me/magit-map
+    (kbd "<leader>h") help-map
     (kbd "<leader>p") project-prefix-map
     (kbd "<leader>s") me/system-map
-    ;; TODO Broken in magit
     (kbd "g/") #'me/project-kill-path
     (kbd "gb") #'switch-to-buffer
     (kbd "gs") #'evil-avy-goto-char-timer)
-  (evil-define-key* 'motion 'global
-    (kbd "C-S-d") #'evil-scroll-up)
-  (evil-define-key* 'visual 'global
+  (evil-define-key 'visual 'global
     (kbd "<") #'barrinalo-shift-left-tab
     (kbd ">") #'barrinalo-shift-right-tab
     (kbd "C-<") #'barrinalo-shift-left
@@ -70,6 +69,7 @@
 
 (use-package evil
   :defines
+  evil-inner-text-objects-map
   evil-insert-state-map
   evil-motion-state-map
   evil-window-map
@@ -88,7 +88,7 @@
   (evil-want-keybinding nil)
   :config
   (evil-define-text-object me/evil-buffer-object (_count &optional _begin _end type)
-    "Text object to represent the whole buffer."
+    "Text object to select the whole buffer."
     (evil-range (point-min) (point-max) type))
   (define-key evil-inner-text-objects-map (kbd "g") #'me/evil-buffer-object)
   (define-key evil-insert-state-map (kbd "C-a") nil :remove)
@@ -106,7 +106,7 @@
   (after-save . evil-normal-state)
   (evil-mode . me/evil-define-bindings))
 
-;; TODO Repeatize the unimpaired bindings from evil-collection
+;; TODO Repeat'ize the unimpaired bindings from evil-collection
 
 (use-package evil-collection
   :custom
@@ -139,12 +139,12 @@
 
 (defun me/evil-multiedit-define-bindings ()
   "Add personal bindings to the global maps."
-  (evil-define-key* '(normal visual) 'global
+  (evil-define-key '(normal visual) 'global
     (kbd "C-M-d") #'evil-multiedit-match-all)
-  (evil-define-key* 'normal 'global
+  (evil-define-key 'normal 'global
     (kbd "M-d") #'evil-multiedit-match-symbol-and-next
     (kbd "M-D") #'evil-multiedit-match-symbol-and-prev)
-  (evil-define-key* 'visual 'global
+  (evil-define-key 'visual 'global
     (kbd "M-d") #'evil-multiedit-match-and-next
     (kbd "M-D") #'evil-multiedit-match-and-prev))
 
