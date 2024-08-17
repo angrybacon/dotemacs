@@ -55,7 +55,7 @@ If not in a project, fallback to `find-file-at-point' instead."
   "Save the current absolute path in the kill ring."
   (interactive)
   ;; TODO Provide a variant that starts at project root
-  (let ((path (buffer-file-name)))
+  (let ((path (or (buffer-file-name) (pwd))))
     (kill-new path)
     (message (format "[Project] Copied `%s'" path))))
 
