@@ -56,6 +56,7 @@
    `((compilation-mode                :align below :popup t)
      (flymake-diagnostics-buffer-mode :align below :popup t)
      (magit-process-mode              :align below :popup t)
+     ("*Async-native-compile-log*"    :align below :popup t)
      ("*Messages*"                    :align below :popup t)
      ("*eldoc*"                       :align below :popup t)
      (,(rx bos "*HTTP Response")      :align below :popup t :regexp t)
