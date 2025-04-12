@@ -61,11 +61,22 @@
     (kbd ">") #'barrinalo-shift-right-tab
     (kbd "C-<") #'barrinalo-shift-left
     (kbd "C->") #'barrinalo-shift-right
+    (kbd "g+") #'me/evil-sum
     (kbd "p") #'webpaste-paste-region
     (kbd "sn") #'barrinalo-sort-numbers
     (kbd "sr") #'barrinalo-reverse
     (kbd "ss") #'sort-lines
     (kbd "sw") #'barrinalo-sort-words))
+
+(defun me/evil-define-operators ()
+  "Create custom operators."
+  (evil-define-operator me/evil-sum (begin end type)
+    "Count the sum of all numbers in block."
+    (unless (eq type 'block)
+      (user-error "[Evil] Expected a block to work on"))
+    (let* ((items (mapcar #'string-to-number (extract-rectangle begin end)))
+           (result (apply #'+ items)))
+      (message "Count: %d" result))))
 
 (use-package evil
   :defines
@@ -104,7 +115,8 @@
   :hook
   (after-init . evil-mode)
   (after-save . evil-normal-state)
-  (evil-mode . me/evil-define-bindings))
+  (evil-mode . me/evil-define-bindings)
+  (evil-mode . me/evil-define-operators))
 
 ;; TODO Repeat'ize the unimpaired bindings from evil-collection
 
