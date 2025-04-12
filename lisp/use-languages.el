@@ -68,7 +68,6 @@
 (use-package sgml-mode
   :ensure nil
   :hook
-  (html-mode . sgml-electric-tag-pair-mode)
   (html-mode . sgml-name-8bit-mode)
   :custom
   (sgml-basic-offset 2))
@@ -100,11 +99,6 @@
   :bind
   (:map json-ts-mode-map
    ([remap fill-paragraph] . me/json-prettify-dwim)))
-
-(use-package typescript-ts-mode
-  :ensure nil
-  :hook
-  (tsx-ts-mode . sgml-electric-tag-pair-mode))
 
 ;;;; Kotlin
 
