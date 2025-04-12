@@ -1,6 +1,6 @@
 ;;; morophon.el --- Interact with themes             -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2024 Mathieu Marques
+;; Copyright (C) 2025 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: November 29, 2021

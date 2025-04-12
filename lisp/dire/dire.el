@@ -1,6 +1,6 @@
 ;;; dire.el --- Helpers for Dired                    -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2024 Mathieu Marques
+;; Copyright (C) 2025 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: July 29, 2022

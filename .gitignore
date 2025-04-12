@@ -1,5 +1,3 @@
 .cache/
 eln-cache/
 elpa/
-straight/
-dotemacs.el

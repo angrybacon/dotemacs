@@ -1,6 +1,6 @@
 ;;; early-init.el --- Early Emacs configuration      -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2024 Mathieu Marques
+;; Copyright (C) 2025 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: January 05, 2021
@@ -41,7 +41,7 @@
    (right-divider-width . 4)            ; Thin vertical window divider
    (right-fringe . 8)                   ; Thin right fringe
    (tool-bar-lines . 0)                 ; No tool bar
-   (undecorated . t)                    ; Remove extraneous X decorations
+   (undecorated-round . t)              ; Enable round corners
    (vertical-scroll-bars . nil))        ; No vertical scroll-bars
  load-prefer-newer t)                   ; Avoid old byte-compiled dependencies
 

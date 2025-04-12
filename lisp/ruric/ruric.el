@@ -1,6 +1,6 @@
 ;;; ruric.el --- Pair-programming features           -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2024 Mathieu Marques
+;; Copyright (C) 2025 Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: June 30, 2022
@@ -59,30 +59,38 @@ Cycle between nil, t and `'relative'."
 
 ;;;; Modes
 
+(defun ruric--off ()
+  "Turn pair-programming features off."
+  (when display-line-numbers-mode
+    (setq-local
+     display-line-numbers ruric--initial-display-line-numbers-type
+     ruric--initial-display-line-numbers-type nil))
+  (when (fboundp 'breadcrumb-mode)
+    (breadcrumb-mode -1)))
+
+(defun ruric--on ()
+  "Turn pair-programming features on."
+  (when display-line-numbers-mode
+    (setq-local
+     ruric--initial-display-line-numbers-type display-line-numbers
+     display-line-numbers t))
+  (when (fboundp 'breadcrumb-mode)
+    (breadcrumb-mode 1)))
+
 (define-minor-mode ruric-local-mode
   "Better pair-programming environment."
   :init-value nil
   (if ruric-local-mode
-      (when display-line-numbers-mode
-        (setq-local
-         ruric--initial-display-line-numbers-type display-line-numbers
-         display-line-numbers t))
-    (when display-line-numbers-mode
-      (setq-local
-       display-line-numbers ruric--initial-display-line-numbers-type
-       ruric--initial-display-line-numbers-type nil))))
+      (ruric--on)
+    (ruric--off)))
 
-(defun ruric--off ()
-  "Turn `ruric-local-mode' off."
-  (ruric-local-mode -1))
-
-(defun ruric--on ()
+(defun ruric--initialize ()
   "Turn `ruric-local-mode' on."
   (unless (or noninteractive (memq major-mode ruric-blacklist-modes))
     (ruric-local-mode 1)))
 
 ;;;###autoload
-(define-globalized-minor-mode ruric-mode ruric-local-mode ruric--on
+(define-globalized-minor-mode ruric-mode ruric-local-mode ruric--initialize
   :group 'ruric)
 
 (provide 'ruric)

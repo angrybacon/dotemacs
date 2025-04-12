@@ -2,6 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
+;;;; Breadcrumbs
+
+(use-package breadcrumb)
+
 ;;;; Current Line
 
 (use-package hl-line
