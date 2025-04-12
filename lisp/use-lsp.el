@@ -45,6 +45,12 @@ Also toggle `eglot-inlay-hints-mode' accordingly."
     (eglot-inlay-hints-mode (if value -1 1))
     (setq-default me/eglot-inlay-hints-automatic (not value))))
 
+(defun me/eglot-initialize-scss ()
+  "Bootstrap SCSS-specific customizations."
+  (defvar eglot-server-programs)
+  (push '(scss-mode . ("vscode-css-language-server" "--stdio"))
+        eglot-server-programs))
+
 (defun me/eglot-initialize-typescript ()
   "Bootstrap TypeScript-specific customizations.
 See https://github.com/typescript-language-server/typescript-language-server."
@@ -78,6 +84,7 @@ See https://github.com/typescript-language-server/typescript-language-server."
   (advice-add 'eglot--format-markup :filter-return
     (lambda (output) (replace-regexp-in-string (rx "\n```" eos) "" output))
     '((name . me/eglot--trim-block-end)))
+  (me/eglot-initialize-scss)
   (me/eglot-initialize-typescript)
   :custom
   ;; NOTE Progress is handled by the custom mode-line package directly
@@ -88,6 +95,7 @@ See https://github.com/typescript-language-server/typescript-language-server."
   (eglot-managed-mode . me/eglot-inlay-hints-maybe)
   (eglot-managed-mode . me/flymake-eslint-enable-maybe)
   (python-base-mode . eglot-ensure)
+  (scss-mode . eglot-ensure)
   (typescript-ts-base-mode . eglot-ensure)
   :init
   (put 'eglot-server-programs 'safe-local-variable 'listp))

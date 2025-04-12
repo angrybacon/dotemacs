@@ -35,7 +35,9 @@
      (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript"
                     "master"
                     "typescript/src"))
-     (yaml       . ("https://github.com/ikatyang/tree-sitter-yaml")))))
+     (yaml       . ("https://github.com/ikatyang/tree-sitter-yaml"))))
+  :custom
+  (treesit-font-lock-level 4))
 
 ;;;; CSS
 
