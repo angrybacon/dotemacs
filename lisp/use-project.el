@@ -47,9 +47,8 @@ If not in a project, fallback to `find-file-at-point' instead."
 
 (defun me/project-kill-buffer-p (buffer)
   "Return whether BUFFER is safe to kill with `project-kill-buffers'."
-  ;; (when (not (eq buffer (current-buffer)))
-  ;;   (message "%s" buffer))
-  (not (eq buffer (current-buffer))))
+  (and (not (eq buffer (current-buffer)))
+       (buffer-file-name)))
 
 (defun me/project-kill-path ()
   "Save the current absolute path in the kill ring."
