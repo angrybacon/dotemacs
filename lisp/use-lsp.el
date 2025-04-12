@@ -71,7 +71,6 @@ See https://github.com/typescript-language-server/typescript-language-server."
 (use-package eglot
   :ensure nil
   :config
-  (add-to-list 'eglot-stay-out-of 'eldoc-documentation-strategy)
   (put 'eglot-error 'flymake-overlay-control nil)
   (put 'eglot-note 'flymake-overlay-control nil)
   (put 'eglot-warning 'flymake-overlay-control nil)

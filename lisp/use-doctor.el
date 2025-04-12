@@ -11,6 +11,8 @@
   (when (version< current target)
     (me/doctor-error "Emacs %s is not supported. Install %s" current target)))
 
+;; TODO Check executable path
+
 (unless (functionp 'json-serialize)
   (me/doctor-error "Native JSON parsing is not enabled"))
 

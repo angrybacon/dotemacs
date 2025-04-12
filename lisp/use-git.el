@@ -33,6 +33,7 @@
 (use-package git-modes)
 
 (use-package magit
+  :demand t ;; NOTE See https://github.com/emacs-evil/evil-collection/issues/637
   :defines
   magit-file-section-map
   magit-hunk-section-map
@@ -57,7 +58,8 @@
    '(magit-diff-highlight-hunk-region-dim-outside
      magit-diff-highlight-hunk-region-using-face))
   (magit-diff-refine-hunk 'all)
-  (magit-section-initial-visibility-alist '((unpushed . show)))
+  (magit-section-initial-visibility-alist
+   '((unpulled . show) (unpushed . show) (untracked . show)))
   (magit-section-visibility-indicator '("…" . nil)))
 
 ;; NOTE Start a pinentry service automatically in order for Emacs to be able to

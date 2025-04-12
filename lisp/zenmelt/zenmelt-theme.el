@@ -173,6 +173,9 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(flymake-warning                    ((t :background ,fg-2
                                             :foreground ,yellow-2
                                             :underline t)))
+;;;;;; Completion
+   `(completion-preview-exact           ((t :inherit completion-preview-common
+                                            :underline ,green)))
 ;;;;;; Customize
    `(custom-button                      ((t :inherit button)))
    `(custom-button-mouse                ((t :foreground ,yellow
@@ -325,6 +328,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(sh-heredoc                         ((t :foreground ,green+4)))
    `(sh-quoted-exec                     ((t :foreground ,magenta)))
 ;;;;;; Syntax
+   `(elisp-shorthand-font-lock-face     ((t :inherit font-lock-type-face)))
    `(whitespace-empty                   ((t :background ,yellow-2 :extend t)))
    `(whitespace-hspace                  ((t :inherit whitespace-space)))
    `(whitespace-indentation             ((t :background ,bg+1 :foreground ,red)))

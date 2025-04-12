@@ -131,5 +131,4 @@ either an absolute file path or a function to call on visit."
   :custom
   (transient-show-popup nil))
 
-
 ;;; use-core.el ends here

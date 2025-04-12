@@ -78,14 +78,6 @@
   evil-range
   evil-select-search-module
   evil-set-leader
-  :custom
-  (evil-echo-state nil)
-  (evil-emacs-state-cursor (default-value 'cursor-type))
-  (evil-move-cursor-back nil)
-  (evil-shift-round nil)
-  (evil-undo-system 'undo-redo)
-  (evil-visual-state-cursor 'hollow)
-  (evil-want-keybinding nil)
   :config
   (evil-define-text-object me/evil-buffer-object (_count &optional _begin _end type)
     "Text object to select the whole buffer."
@@ -101,6 +93,14 @@
   (define-key evil-window-map (kbd "C-h") nil :remove)
   (evil-select-search-module 'evil-search-module 'evil-search)
   (evil-set-leader 'normal (kbd "SPC"))
+  :custom
+  (evil-echo-state nil)
+  (evil-emacs-state-cursor (default-value 'cursor-type))
+  (evil-move-cursor-back nil)
+  (evil-shift-round nil)
+  (evil-undo-system 'undo-redo)
+  (evil-visual-state-cursor 'hollow)
+  (evil-want-keybinding nil)
   :hook
   (after-init . evil-mode)
   (after-save . evil-normal-state)

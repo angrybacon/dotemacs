@@ -2,6 +2,11 @@
 ;;; Commentary:
 ;;; Code:
 
+(use-package completion-preview
+  :ensure nil
+  :hook
+  (after-init . global-completion-preview-mode))
+
 (use-package consult
   :defines consult-narrow-map
   :functions consult-imenu consult-mark consult-outline

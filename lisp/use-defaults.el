@@ -16,6 +16,7 @@
  delete-by-moving-to-trash t            ; Delete files to trash
  delete-old-versions t                  ; Delete extra backups silently
  epg-pinentry-mode 'loopback            ; Redirect passphrase prompts to self
+ frame-resize-pixelwise t               ; Play nice with tiling window managers
  fill-column 80                         ; Set width for automatic line breaks
  gc-cons-threshold (* 8 1024 1024)      ; We're not using Game Boys anymore
  help-window-select t                   ; Focus new help windows when opened
@@ -29,7 +30,6 @@
  ;; TODO Clean up highlights after replace operations
  lazy-highlight-cleanup nil             ; Keep isearch highlights around
  lazy-highlight-initial-delay 0         ; Remove highlight delay
- max-mini-window-height 10              ; Limit height for minibuffer transients
  mouse-yank-at-point t                  ; Yank at point rather than pointer
  native-comp-async-report-warnings-errors 'silent ; Skip error buffers
  read-process-output-max (* 1024 1024)  ; Increase read size for data chunks

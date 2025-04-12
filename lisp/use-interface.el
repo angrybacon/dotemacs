@@ -13,6 +13,7 @@
   :custom
   (hl-line-sticky-flag nil)
   :hook
+  (conf-mode . hl-line-mode)
   (dired-mode . hl-line-mode)
   (fundamental-mode . hl-line-mode)
   (prog-mode . hl-line-mode)
@@ -22,9 +23,10 @@
 
 (use-package highlight-indent-guides
   :custom
-  (highlight-indent-guides-method 'character)
+  (highlight-indent-guides-method 'column)
   :hook
   (css-base-mode . highlight-indent-guides-mode)
+  (json-ts-mode . highlight-indent-guides-mode)
   (python-mode . highlight-indent-guides-mode)
   (yaml-ts-mode . highlight-indent-guides-mode))
 

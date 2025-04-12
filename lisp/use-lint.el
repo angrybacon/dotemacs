@@ -50,7 +50,7 @@ Markdown parser."
   :ensure nil
   :custom
   (whitespace-display-mappings '((tab-mark ?\t [?› ?\t])))
-  (whitespace-global-modes '(prog-mode text-mode))
+  (whitespace-global-modes '(conf-mode prog-mode text-mode))
   (whitespace-line-column nil)
   (whitespace-style '(empty face lines-tail tab-mark tabs trailing))
   :hook

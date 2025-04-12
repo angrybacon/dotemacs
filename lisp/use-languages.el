@@ -24,6 +24,7 @@
      (gomod      . ("https://github.com/camdencheek/tree-sitter-go-mod"))
      (graphql    . ("https://github.com/bkegley/tree-sitter-graphql"))
      (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
+     (jsdoc      . ("https://github.com/tree-sitter/tree-sitter-jsdoc"))
      (json       . ("https://github.com/tree-sitter/tree-sitter-json"))
      (kotlin     . ("https://github.com/fwcd/tree-sitter-kotlin"))
      (python     . ("https://github.com/tree-sitter/tree-sitter-python"))
@@ -35,6 +36,13 @@
                     "master"
                     "typescript/src"))
      (yaml       . ("https://github.com/ikatyang/tree-sitter-yaml")))))
+
+;;;; CSS
+
+(use-package css-mode
+  :ensure nil
+  :custom
+  (css-indent-offset 2))
 
 ;;;; CSV
 
@@ -72,7 +80,8 @@
 (use-package js
   :ensure nil
   :custom
-  (js-indent-level 2))
+  (js-indent-level 2)
+  :mode ((rx ".mjs" eos) . js-ts-mode))
 
 (declare-function json-pretty-print-ordered "json")
 (declare-function json-pretty-print-buffer-ordered "json")
