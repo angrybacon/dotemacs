@@ -27,14 +27,15 @@
 ;;;; Logs
 
 (advice-add 'message :after
-  (lambda (&rest _)
-    "Automatically scroll the message buffer to the bottom on new messages."
-    (let* ((name "*Messages*"))
-      (when (not (string= name (buffer-name)))
-        (dolist (window (get-buffer-window-list name nil :all-frames))
+  (defun me/message-tail (&rest _)
+    "Automatically scroll the message buffer to the bottom on new messages.
+The behavior is ignored when the message buffer is active."
+    (let* ((name "*Messages*")
+           (windows (get-buffer-window-list name nil :all-frames)))
+      (unless (string-equal name (buffer-name))
+        (dolist (window windows)
           (with-selected-window window
-            (goto-char (point-max)))))))
-  '((name . me/message-tail)))
+            (goto-char (point-max))))))))
 
 ;;;; Paste
 
