@@ -61,14 +61,14 @@ If not in a project, fallback to `find-file-at-point' instead."
 (defun me/project-name (&optional project)
   "Return the name for PROJECT.
 If PROJECT is not specified, assume current project root."
-  (when-let (root (or project (me/project-root)))
+  (and-let* ((root (or project (me/project-root))))
     (file-name-nondirectory
      (directory-file-name
       (file-name-directory root)))))
 
 (defun me/project-root ()
   "Return the current project root."
-  (when-let (project (project-current))
+  (and-let* ((project (project-current)))
     (project-root project)))
 
 (defun me/project-save (&rest _)
@@ -89,7 +89,7 @@ If ripgrep is not installed, use grep instead."
 (defun me/project-todo ()
   "Visit the todo file for the current project."
   (interactive)
-  (if-let (root (me/project-root))
+  (if-let* ((root (me/project-root)))
       (find-file (expand-file-name "TODO.org" root))
     (user-error "[Project] Not in a project")))
 
@@ -129,7 +129,7 @@ With WATCH optional parameter, return a command that watch for file changes."
   "Run test suite at PATH location.
 With WATCH optional parameter, instruct the test command to watch for file
 changes."
-  (if-let ((window (widowmaker-terminal-window)))
+  (if-let* ((window (widowmaker-terminal-window)))
       (with-current-buffer (window-buffer window)
         (vterm-send-string (me/project-test-command path watch))
         (vterm-send-return))

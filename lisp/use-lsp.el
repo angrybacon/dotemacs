@@ -24,7 +24,7 @@ Like `xref-find-references' but switch to the other window."
 
 (defun me/eglot-shutdown-project ()
   "Kill the LSP server for the current project if it exists."
-  (when-let ((server (eglot-current-server)))
+  (when-let* ((server (eglot-current-server)))
     (ignore-errors (eglot-shutdown server))))
 
 (defvar me/eglot-inlay-hints-automatic nil

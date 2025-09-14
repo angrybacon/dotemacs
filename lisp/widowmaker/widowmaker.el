@@ -198,7 +198,7 @@ If FRAME is nil, consider the current frame only."
 This allows features to filter or select windows based on their function ie. a
 side window."
   (with-selected-window shackle-last-window
-    (when-let ((window shackle-last-window)
+    (when-let* ((window shackle-last-window)
                (alignment (plist-get plist :align)))
       (set-window-parameter window 'window-side t))))
 
@@ -226,12 +226,12 @@ When the appropriate terminal window is already open but unfocused, switch to
 it.
 When prefixed with \\[universal-argument], FORCE create a new terminal session."
   (interactive "P")
-  (if-let ((root (ignore-errors (project-root (project-current)))))
+  (if-let* ((root (ignore-errors (project-root (project-current)))))
       (let* ((default-directory root)
              (name (file-name-nondirectory (directory-file-name root)))
              (buffer (format "*terminal: %s*" name))
              (buffer (if force (generate-new-buffer-name buffer) buffer)))
-       (if-let ((window (get-buffer-window buffer)))
+       (if-let* ((window (get-buffer-window buffer)))
             (select-window window)
           (funcall widowmaker-terminal-function buffer)))
     (funcall widowmaker-terminal-function)))

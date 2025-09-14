@@ -88,7 +88,7 @@ them in `auto-mode-alist' directly. See `pendelhaven--pattern-alist'."
         (if (not (treesit-ready-p language :quiet))
             (message "[Pendelhaven] Language `%s' isn't ready" language)
           (add-to-list 'major-mode-remap-alist `(,mode . ,tree-mode))
-          (when-let ((pattern (alist-get language pendelhaven--pattern-alist)))
+          (when-let* ((pattern (alist-get language pendelhaven--pattern-alist)))
             (add-to-list 'auto-mode-alist `(,pattern . ,tree-mode))))))))
 
 (defun pendelhaven-remap-languages ()

@@ -40,7 +40,7 @@
 ;;;###autoload
 (defun leyline-rename ()
   "Rename the current major-mode name as per `leyline-rules'."
-  (when-let ((name (alist-get major-mode leyline-rules)))
+  (when-let* ((name (alist-get major-mode leyline-rules)))
     (setq mode-name name)))
 
 ;;;; Faces
