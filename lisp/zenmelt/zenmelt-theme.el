@@ -214,13 +214,13 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(menu                               ((t :inherit default)))
    `(minibuffer-prompt                  ((t :foreground ,yellow)))
    `(mode-line                          ((t :background ,bg-3
-                                            :box (:color ,bg-3 :line-width 6)
+                                            :box (:color ,bg-3 :line-width 4)
                                             :foreground ,green)))
    `(mode-line-buffer-id                ((t :foreground ,green+4)))
    `(mode-line-emphasis                 ((t :inherit mode-line)))
    `(mode-line-highlight                ((t :inherit highlight)))
    `(mode-line-inactive                 ((t :background ,bg-1
-                                            :box (:color ,bg-1 :line-width 6)
+                                            :box (:color ,bg-1 :line-width 4)
                                             :inherit shadow)))
    `(region                             ((,class :background ,blue-5)
                                          (t :inverse-video t)))
