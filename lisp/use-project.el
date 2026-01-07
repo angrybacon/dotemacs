@@ -123,7 +123,7 @@ If ripgrep is not installed, use grep instead."
 (defun me/project-test-command (path &optional watch)
   "Return the test command for the provided PATH as per project configuration.
 With WATCH optional parameter, return a command that watch for file changes."
-  (concat "pnpm run test" (and watch " --watch") " " path))
+  (concat "pnpm run test " path (if watch " --watch" "")))
 
 (defun me/project-test-path (path &optional watch)
   "Run test suite at PATH location.

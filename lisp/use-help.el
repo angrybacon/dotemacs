@@ -3,10 +3,10 @@
 ;;; Code:
 
 (use-package eldoc
-  :ensure nil
-  :custom
   ;; NOTE Pending https://debbugs.gnu.org/cgi/bugreport.cgi?bug=47109 we would
   ;;      be able to join pieces of documentation with horizontal rules.
+  :ensure nil
+  :custom
   (eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
   (eldoc-echo-area-display-truncation-message nil)
   (eldoc-echo-area-prefer-doc-buffer t)

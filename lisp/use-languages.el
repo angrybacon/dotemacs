@@ -24,7 +24,6 @@
      (gomod      . ("https://github.com/camdencheek/tree-sitter-go-mod"))
      (graphql    . ("https://github.com/bkegley/tree-sitter-graphql"))
      (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
-     (jsdoc      . ("https://github.com/tree-sitter/tree-sitter-jsdoc"))
      (json       . ("https://github.com/tree-sitter/tree-sitter-json"))
      (kotlin     . ("https://github.com/fwcd/tree-sitter-kotlin"))
      (python     . ("https://github.com/tree-sitter/tree-sitter-python"))

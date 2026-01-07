@@ -15,6 +15,7 @@
  custom-unlispify-tag-names nil         ; Prefer kebab-case for symbols
  delete-by-moving-to-trash t            ; Delete files to trash
  delete-old-versions t                  ; Delete extra backups silently
+ enable-recursive-minibuffers t         ; Allow nested minibuffer invokes
  epg-pinentry-mode 'loopback            ; Redirect passphrase prompts to self
  frame-resize-pixelwise t               ; Play nice with tiling window managers
  fill-column 80                         ; Set width for automatic line breaks
@@ -51,6 +52,7 @@
 (blink-cursor-mode 0)                   ; Prefer a still cursor
 (delete-selection-mode 1)               ; Replace region when inserting text
 (global-subword-mode 1)                 ; Iterate through CamelCase words
+(minibuffer-depth-indicate-mode 1)      ; Print depth for nested minibuffers
 (mouse-avoidance-mode 'exile)           ; Avoid collision of mouse with point
 (repeat-mode 1)                         ; Allow common repeated commands
 (put 'downcase-region 'disabled nil)    ; Enable `downcase-region'
