@@ -16,6 +16,7 @@
   (conf-mode . hl-line-mode)
   (dired-mode . hl-line-mode)
   (fundamental-mode . hl-line-mode)
+  (grep-mode . hl-line-mode)
   (prog-mode . hl-line-mode)
   (text-mode . hl-line-mode))
 
