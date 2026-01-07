@@ -99,8 +99,8 @@ If ripgrep is not installed, use grep instead."
   "Return the lint command for the provided PATH."
   (format "npx eslint %s --fix" path))
 
-(defun me/project-prettify-command (path)
-  "Return the prettify command for the provided PATH."
+(defun me/project-format-command (path)
+  "Return the format command for the provided PATH."
   (format "npx prettier %s --write" path))
 
 (defun me/project-lint-dwim ()
@@ -108,8 +108,8 @@ If ripgrep is not installed, use grep instead."
   (interactive)
   (let ((path (buffer-file-name)))
     (shell-command (format "%s && %s"
-                           (me/project-lint-command path)
-                           (me/project-prettify-command path)))))
+                           (me/project-format-command path)
+                           (me/project-lint-command path)))))
 
 ;;;;; Test
 

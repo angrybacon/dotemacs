@@ -93,7 +93,6 @@ See https://github.com/typescript-language-server/typescript-language-server."
   (eglot-events-buffer-config '(:size 0))
   :hook
   (eglot-managed-mode . me/eglot-inlay-hints-maybe)
-  (eglot-managed-mode . me/flymake-eslint-enable-maybe)
   (python-base-mode . eglot-ensure)
   (scss-mode . eglot-ensure)
   (typescript-ts-base-mode . eglot-ensure)
