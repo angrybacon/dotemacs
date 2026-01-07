@@ -45,13 +45,13 @@ Also toggle `eglot-inlay-hints-mode' accordingly."
     (eglot-inlay-hints-mode (if value -1 1))
     (setq-default me/eglot-inlay-hints-automatic (not value))))
 
-(defun me/eglot-initialize-scss ()
+(defun me/eglot-configure-scss ()
   "Bootstrap SCSS-specific customizations."
   (defvar eglot-server-programs)
   (push '(scss-mode . ("vscode-css-language-server" "--stdio"))
         eglot-server-programs))
 
-(defun me/eglot-initialize-typescript ()
+(defun me/eglot-configure-typescript ()
   "Bootstrap TypeScript-specific customizations.
 See https://github.com/typescript-language-server/typescript-language-server."
   (let ((target-modes '(tsx-ts-mode typescript-ts-mode))
@@ -84,15 +84,16 @@ See https://github.com/typescript-language-server/typescript-language-server."
   (advice-add 'eglot--format-markup :filter-return
     (lambda (output) (replace-regexp-in-string (rx "\n```" eos) "" output))
     '((name . me/eglot--trim-block-end)))
-  (me/eglot-initialize-scss)
-  (me/eglot-initialize-typescript)
+  (me/eglot-configure-scss)
+  (me/eglot-configure-typescript)
   :custom
-  ;; NOTE Progress is handled by the custom mode-line package directly
-  (eglot-report-progress nil)
   (eglot-autoshutdown t)
   (eglot-events-buffer-config '(:size 0))
+  ;; NOTE Progress is handled by the custom mode-line package directly
+  (eglot-report-progress nil)
   :hook
   (eglot-managed-mode . me/eglot-inlay-hints-maybe)
+  (json-ts-mode . eglot-ensure)
   (python-base-mode . eglot-ensure)
   (scss-mode . eglot-ensure)
   (typescript-ts-base-mode . eglot-ensure)
