@@ -57,7 +57,7 @@
   (magit-diff-refine-hunk 'all)
   (magit-section-initial-visibility-alist
    '((unpulled . show) (unpushed . show) (untracked . show)))
-  (magit-section-visibility-indicator '("…" . nil)))
+  (magit-section-visibility-indicators nil))
 
 ;; NOTE Start a pinentry service automatically in order for Emacs to be able to
 ;;      prompt passphrases from the minibuffer. If Emacs doesn't redirect
