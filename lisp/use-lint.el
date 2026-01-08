@@ -4,10 +4,16 @@
 
 ;;;; Compilation
 
-(use-package flymake
-  :ensure nil
+(use-package flymake :ensure nil)
+
+(use-package flyover
   :custom
-  (flymake-fringe-indicator-position nil))
+  (flyover-border-style 'slant)
+  (flyover-show-error-id t)
+  (flyover-show-icon nil)
+  (flyover-virtual-line-type 'line-no-arrow)
+  :hook
+  (flymake-mode . flyover-mode))
 
 ;;;; Prettier
 

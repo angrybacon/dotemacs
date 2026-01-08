@@ -112,13 +112,15 @@ See `custom-available-themes'.")
   "Set the base settings for typography faces."
   (interactive)
   (let ((font-fixed (szadek-get 'font-fixed "monospace"))
+        (font-iconography (szadek-get 'font-iconography "sans-serif"))
         (font-size (szadek-get 'font-size 120))
         (font-variable (szadek-get 'font-variable "sans-serif")))
     (set-face-attribute 'default nil :font font-fixed :height font-size)
     (set-face-attribute 'fixed-pitch nil :font font-fixed :height font-size)
     (set-face-attribute 'mode-line nil :height font-size :inherit 'default)
     (set-face-attribute 'mode-line-inactive nil :inherit 'mode-line)
-    (set-face-attribute 'variable-pitch nil :font font-variable)))
+    (set-face-attribute 'variable-pitch nil :font font-variable)
+    (set-fontset-font t '(#xe0a0 . #xe0d4) font-iconography nil 'prepend)))
 
 (provide 'morophon)
 
