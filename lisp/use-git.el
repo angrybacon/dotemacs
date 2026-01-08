@@ -38,8 +38,6 @@
   magit-file-section-map
   magit-hunk-section-map
   magit-section-mode-map
-  :functions
-  magit-diff-highlight
   :bind
   (:map magit-file-section-map
    ("RET" . magit-diff-visit-file-other-window)
@@ -50,7 +48,6 @@
   (define-key magit-section-mode-map (kbd "M-2") nil :remove)
   (define-key magit-section-mode-map (kbd "M-3") nil :remove)
   (define-key magit-section-mode-map (kbd "M-4") nil :remove)
-  (remove-hook 'magit-section-highlight-hook #'magit-diff-highlight)
   :custom
   (magit-display-buffer-function
    'magit-display-buffer-same-window-except-diff-v1)

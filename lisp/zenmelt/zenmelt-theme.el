@@ -370,23 +370,18 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(ansi-color-bright-yellow           ((t :background ,yellow
                                             :foreground ,yellow)))
 ;;;;;; Version Control
-   `(diff-added                         ((t :foreground ,green)))
+   `(diff-added                         ((t :foreground ,green-1)))
    `(diff-changed                       ((t :foreground ,yellow-2)))
    `(diff-context                       ((t :foreground ,fg-2)))
-   `(diff-file-header                   ((t :inherit diff-header)))
-   `(diff-function                      ((t :foreground ,blue
-                                            :inherit diff-hunk-header)))
-   `(diff-header                        ((t :background ,bg+1
-                                            :foreground ,yellow)))
-   `(diff-hunk-header                   ((t :foreground ,yellow-2
-                                            :inherit diff-header)))
+   `(diff-file-header                   ((t :foreground ,fg)))
+   `(diff-function                      ((t :inherit diff-hunk-header)))
+   `(diff-header                        ((t :foreground ,yellow-2)))
+   `(diff-hunk-header                   ((t :inherit diff-header)))
    `(diff-indicator-added               ((t :inherit diff-added)))
    `(diff-indicator-removed             ((t :inherit diff-removed)))
    `(diff-refine-added                  ((t :foreground ,green+4)))
-   `(diff-refine-changed                ((t :inherit diff-refine-added
-                                            :foreground ,yellow)))
-   `(diff-refine-removed                ((t :inherit diff-refine-added
-                                            :foreground ,red+2)))
+   `(diff-refine-changed                ((t :foreground ,yellow)))
+   `(diff-refine-removed                ((t :foreground ,red+2)))
    `(diff-removed                       ((t :foreground ,red-1)))
    `(ediff-current-diff-A               ((t :background ,red-6)))
    `(ediff-current-diff-Ancestor        ((t :inherit ediff-current-diff-A)))
@@ -404,8 +399,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(ediff-odd-diff-Ancestor            ((t :inherit ediff-odd-diff-A)))
    `(ediff-odd-diff-B                   ((t :inherit ediff-odd-diff-A)))
    `(ediff-odd-diff-C                   ((t :inherit ediff-odd-diff-A)))
-   `(smerge-lower                       ((t :background ,bg+1
-                                            :inherit diff-added)))
+   `(smerge-lower                       ((t :background ,bg+1 :inherit diff-added)))
    `(smerge-markers                     ((t :background ,bg+1 :inherit shadow)))
    `(smerge-refined-added               ((t :inherit diff-refine-added)))
    `(smerge-refined-removed             ((t :inherit diff-refine-removed)))
@@ -507,19 +501,25 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(magit-cherry-equivalent            ((t :foreground ,magenta)))
    `(magit-cherry-unmatched             ((t :foreground ,cyan)))
    `(magit-diff-added                   ((t :inherit diff-added)))
-   `(magit-diff-added-highlight         ((t :foreground ,green+1)))
+   `(magit-diff-added-highlight         ((t :foreground ,green
+                                            :inherit magit-diff-context-highlight)))
    `(magit-diff-context                 ((t :inherit magit-dimmed)))
-   `(magit-diff-context-highlight       ((t :background ,bg)))
-   `(magit-diff-file-heading            ((t :weight normal)))
-   `(magit-diff-file-heading-highlight  ((t :foreground ,fg+1)))
+   `(magit-diff-context-highlight       ((t :inherit (hl-line magit-diff-context))))
+   `(magit-diff-file-heading            ((t :inherit diff-file-header)))
+   `(magit-diff-file-heading-highlight  ((t :inherit (magit-diff-file-heading
+                                                      magit-diff-context-highlight))))
    `(magit-diff-file-heading-selection  ((t :foreground ,orange)))
-   `(magit-diff-hunk-heading            ((t :inherit diff-hunk-header)))
-   `(magit-diff-hunk-heading-highlight  ((t :foreground ,fg+1)))
+   `(magit-diff-hunk-heading            ((t :inherit (diff-hunk-header
+                                                      magit-diff-context))))
+   `(magit-diff-hunk-heading-highlight  ((t :foreground ,yellow
+                                            :inherit (magit-diff-hunk-heading
+                                                      magit-diff-context-highlight))))
    `(magit-diff-hunk-heading-selection  ((t :foreground ,orange)))
-   `(magit-diff-hunk-region             ((t :weight unspecified)))
-   `(magit-diff-lines-heading           ((t :foreground ,orange)))
+   `(magit-diff-hunk-region             ((t :inherit region)))
+   `(magit-diff-lines-heading           ((t :inherit magit-diff-hunk-heading)))
    `(magit-diff-removed                 ((t :inherit diff-removed)))
-   `(magit-diff-removed-highlight       ((t :foreground ,red+1)))
+   `(magit-diff-removed-highlight       ((t :foreground ,red
+                                            :inherit magit-diff-context-highlight)))
    `(magit-diffstat-added               ((t :foreground ,green+4)))
    `(magit-diffstat-removed             ((t :foreground ,red)))
    `(magit-dimmed                       ((t :inherit shadow)))
