@@ -90,6 +90,9 @@ See https://github.com/typescript-language-server/typescript-language-server."
   (eglot-autoshutdown t)
   (eglot-code-action-indications '(eldoc-hint))
   (eglot-events-buffer-config '(:size 0))
+  ;; NOTE Let Tree-Sitter handle the highlighting.
+  ;;      Who thought that was a good idea to enable by default?
+  (eglot-ignored-server-capabilities '(:semanticTokensProvider))
   :hook
   (eglot-managed-mode . me/eglot-inlay-hints-maybe)
   (json-ts-mode . eglot-ensure)
