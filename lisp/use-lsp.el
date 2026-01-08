@@ -14,7 +14,7 @@ Like `xref-find-references' but switch to the other window."
   (interactive (list (xref--read-identifier "Find references of: ")))
   (xref--find-xrefs identifier 'references identifier 'window))
 
-;;;; LSP Client
+;;;; L(anguage) S(erver) P(rotocol) Client
 
 (declare-function cl-substitute-if "cl-seq")
 (declare-function eglot-current-server "eglot")
@@ -88,9 +88,8 @@ See https://github.com/typescript-language-server/typescript-language-server."
   (me/eglot-configure-typescript)
   :custom
   (eglot-autoshutdown t)
+  (eglot-code-action-indications '(eldoc-hint))
   (eglot-events-buffer-config '(:size 0))
-  ;; NOTE Progress is handled by the custom mode-line package directly
-  (eglot-report-progress nil)
   :hook
   (eglot-managed-mode . me/eglot-inlay-hints-maybe)
   (json-ts-mode . eglot-ensure)
