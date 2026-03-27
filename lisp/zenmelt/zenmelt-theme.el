@@ -213,6 +213,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
                                             :underline t)))
    `(menu                               ((t :inherit default)))
    `(minibuffer-prompt                  ((t :foreground ,yellow)))
+   `(minibuffer-nonselected             ((t :inherit shadow)))
    `(mode-line                          ((t :background ,bg-3
                                             :box (:color ,bg-3 :line-width 4)
                                             :foreground ,green)))
@@ -307,7 +308,8 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(outline-7                          ((t :foreground ,green+2)))
    `(outline-8                          ((t :foreground ,fg-1)))
 ;;;;;; Parens
-   `(show-paren-match                   ((t :background ,fg-1 :foreground ,bg)))
+   `(show-paren-match                   ((t :inherit lazy-highlight)))
+   `(show-paren-match-expression        ((t :background ,bg+1)))
    `(show-paren-mismatch                ((t :background ,magenta :foreground ,bg)))
 ;;;;;; Pulse
    `(pulse-highlight-start-face         ((t :background ,blue-3)))

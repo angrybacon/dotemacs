@@ -8,6 +8,11 @@
   (after-init . electric-pair-mode)
   (minibuffer-setup . (lambda () (electric-pair-local-mode 0))))
 
+(use-package paren
+  :ensure nil
+  :custom
+  (show-paren-style 'mixed))
+
 (use-package rainbow-delimiters
   :hook
   (prog-mode . rainbow-delimiters-mode))
