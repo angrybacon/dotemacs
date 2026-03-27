@@ -45,6 +45,17 @@ Also toggle `eglot-inlay-hints-mode' accordingly."
     (eglot-inlay-hints-mode (if value -1 1))
     (setq-default me/eglot-inlay-hints-automatic (not value))))
 
+(defun me/eglot-configure-hover ()
+  "Configure `eldoc-documentation-functions' to allow multiline entries."
+  (setq-local
+   eldoc-documentation-functions
+   (cl-substitute
+    #'(lambda (f)
+        "Wrap F like `eglot-hover-eldoc-function', but skip the :echo cookie."
+        (eglot-hover-eldoc-function (lambda (data &rest _ignore) (funcall f data))))
+    'eglot-hover-eldoc-function
+    eldoc-documentation-functions)))
+
 (defun me/eglot-configure-scss ()
   "Bootstrap SCSS-specific customizations."
   (defvar eglot-server-programs)
@@ -67,7 +78,8 @@ See https://github.com/typescript-language-server/typescript-language-server."
            :includeInlayVariableTypeHintsWhenTypeMatchesName t
            :organizeImportsCaseFirst "upper"
            :organizeImportsCollation "unicode" ; ordinal | unicode
-           :organizeImportsIgnoreCase :json-false)))
+           :organizeImportsIgnoreCase :json-false
+           :preferTypeOnlyAutoImports t)))
     (add-to-list
      'eglot-server-programs
      `(,target-modes
@@ -94,6 +106,7 @@ See https://github.com/typescript-language-server/typescript-language-server."
   ;;      Who thought that was a good idea to enable by default?
   (eglot-ignored-server-capabilities '(:semanticTokensProvider))
   :hook
+  (eglot-managed-mode . me/eglot-configure-hover)
   (eglot-managed-mode . me/eglot-inlay-hints-maybe)
   (json-ts-mode . eglot-ensure)
   (python-base-mode . eglot-ensure)
