@@ -1,6 +1,6 @@
 ;;; pendelhaven.el --- Tree-sitter facilities        -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2025 Mathieu Marques
+;; Copyright (C) Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: August 26, 2023

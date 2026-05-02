@@ -1,6 +1,6 @@
 ;;; early-init.el --- Early Emacs configuration      -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2025 Mathieu Marques
+;; Copyright (C) Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: January 05, 2021

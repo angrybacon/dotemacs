@@ -1,6 +1,6 @@
 ;;; leyline.el --- Yet another minimal mode-line     -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2025 Mathieu Marques
+;; Copyright (C) Mathieu Marques
 
 ;; Author: Mathieu Marques <mathieumarques78@gmail.com>
 ;; Created: January 23, 2023
@@ -30,7 +30,7 @@
 
 ;;;; Rename major modes
 
-(defcustom leyline-rules '((emacs-lisp-mode "ELisp")
+(defcustom leyline-rules '((emacs-lisp-mode "EL")
                            (js-ts-mode "JS")
                            (tsx-ts-mode "TSX")
                            (typescript-ts-mode "TS"))
