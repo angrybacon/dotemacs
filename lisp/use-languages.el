@@ -99,6 +99,10 @@
   (:map json-ts-mode-map
    ([remap fill-paragraph] . me/json-prettify-dwim)))
 
+(use-package typescript-ts-mode
+  :ensure nil
+  :mode ((rx ".mts" eos) . typescript-ts-mode))
+
 ;;;; Kotlin
 
 (use-package kotlin-ts-mode)
