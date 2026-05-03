@@ -7,8 +7,10 @@
 (use-package flymake :ensure nil)
 
 (use-package flyover
+  :disabled
   :custom
-  (flyover-border-style 'slant)
+  (flyover-base-height .9)
+  (flyover-border-style 'none)
   (flyover-show-error-id t)
   (flyover-show-icon nil)
   (flyover-virtual-line-type 'line-no-arrow)
