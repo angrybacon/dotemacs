@@ -35,6 +35,7 @@
      ,(rx bos "*eldoc")
      ,(rx bos "*eshell")
      ,(rx bos "*terminal")
+     agent-shell-mode
      eshell-mode
      flymake-diagnostics-buffer-mode
      help-mode
@@ -53,28 +54,35 @@
   (shackle-default-size (szadek-get 'popup-size .33))
   (shackle-inhibit-window-quit-on-same-windows t)
   (shackle-rules
-   `((compilation-mode                :align below :popup t)
-     (debugger-mode                   :align below :popup t :select t)
-     (embark-collect-mode             :align below :popup t :select t)
-     (flymake-diagnostics-buffer-mode :align below :popup t)
-     (grep-mode                       :align below :popup t :select t)
-     (magit-process-mode              :align below :popup t)
-     ("*Async-native-compile-log*"    :align below :popup t)
-     ("*Messages*"                    :align below :popup t)
-     ("*Process List*"                :align below :popup t :select t)
-     ("*Warnings*"                    :align below :popup t :select t)
-     ("*dired-check-process output*"  :align below :popup t :select t)
-     ("*eldoc*"                       :align below :popup t)
-     ("*eshell*"                      :align below :popup t :select t)
-     (,(rx bos "*EGLOT")              :align below :popup t :regexp t)
-     (,(rx bos "*HTTP Response")      :align below :popup t :regexp t)
-     (,(rx bos "*terminal")           :align below :popup t :select t :regexp t)
-     (,(rx "-shell*" eos)             :align below :popup t :select t :regexp t)
-     (help-mode                       :align left  :popup t :select t :size 82)
-     (helpful-mode                    :align left  :popup t :select t :size 82)))
+   `(("*Async-native-compile-log*"    ,@me/shackle-below)
+     ("*Disabled Command*"            ,@me/shackle-below)
+     ("*Messages*"                    ,@me/shackle-below)
+     ("*Process List*"                ,@me/shackle-below :select t)
+     ("*Python*"                      ,@me/shackle-below)
+     ("*Shell Command Output*"        ,@me/shackle-below)
+     ("*Warnings*"                    ,@me/shackle-below)
+     ("*eldoc*"                       ,@me/shackle-below)
+     ("*eshell*"                      ,@me/shackle-below)
+     ("COMMIT_EDITMSG"                ,@me/shackle-below)
+     (,(rx bos "*Customize Group:")   ,@me/shackle-left :regexp t)
+     (,(rx bos "*EGLOT")              ,@me/shackle-below :regexp t :select t)
+     (,(rx bos "*HTTP Response")      ,@me/shackle-below :regexp t)
+     (,(rx bos "*terminal:")          ,@me/shackle-below :regexp t :select t)
+     (agent-shell-mode                ,@me/shackle-left :select t)
+     (compilation-mode                ,@me/shackle-below :select t)
+     (debugger-mode                   ,@me/shackle-below)
+     (embark-collect-mode             ,@me/shackle-below)
+     (flymake-diagnostics-buffer-mode ,@me/shackle-below)
+     (grep-mode                       ,@me/shackle-below)
+     (help-mode                       ,@me/shackle-left)
+     (helpful-mode                    ,@me/shackle-left)
+     (magit-process-mode              ,@me/shackle-below)))
   (shackle-select-reused-windows t)
   :hook
-  (after-init . shackle-mode))
+  (after-init . shackle-mode)
+  :preface
+  (defvar me/shackle-below '(:align below :popup t))
+  (defvar me/shackle-left '(:align left :popup t :size 83)))
 
 (use-package widowmaker
   :load-path "lisp/widowmaker"

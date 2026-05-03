@@ -60,7 +60,8 @@ implementation."
 Support mixed exact strings and regular expressions."
   :type '(repeat string))
 
-(defcustom widowmaker-olivetti-blacklist-modes '(csv-mode
+(defcustom widowmaker-olivetti-blacklist-modes '(agent-shell-mode
+                                                 csv-mode
                                                  magit-revision-mode
                                                  magit-status-mode
                                                  messages-buffer-mode

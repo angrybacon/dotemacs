@@ -33,7 +33,6 @@
 (use-package git-modes)
 
 (use-package magit
-  :demand t ;; NOTE See https://github.com/emacs-evil/evil-collection/issues/637
   :defines
   magit-file-section-map
   magit-hunk-section-map

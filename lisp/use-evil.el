@@ -12,7 +12,6 @@
 (declare-function magit-status "magit-status")
 (declare-function diff-hl-revert-hunk "diff-hl")
 (declare-function diff-hl-stage-current-hunk "diff-hl")
-
 (defvar-keymap me/magit-map
   "b" #'magit-blame
   "c" #'magit-clone
@@ -22,7 +21,6 @@
 
 (declare-function manticore-kill-terminal "manticore")
 (declare-function manticore-revert-buffer-immediately "manticore")
-
 (defvar-keymap me/system-map
   "d" #'desktop-remove
   "g" #'toggle-debug-on-error
@@ -31,6 +29,7 @@
   "q" #'manticore-kill-terminal
   "s" #'manticore-revert-buffer-immediately)
 
+(declare-function agent-shell-help-menu "agent-shell")
 (declare-function barrinalo-reverse "barrinalo")
 (declare-function barrinalo-shift-left "barrinalo")
 (declare-function barrinalo-shift-left-tab "barrinalo")
@@ -49,6 +48,7 @@
     (kbd "C-S-d") #'evil-scroll-up)
   (evil-define-key 'normal 'global
     ;; TODO Those are shadowed by Magit's own keybindings
+    (kbd "<leader>a") #'agent-shell-help-menu
     (kbd "<leader>g") me/magit-map
     (kbd "<leader>h") help-map
     (kbd "<leader>p") project-prefix-map

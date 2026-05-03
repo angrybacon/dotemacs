@@ -45,6 +45,7 @@
   (load "use-os")
 
   ;; Load partials
+  (load "use-agent")
   (load "use-applications")
   (load "use-completion")
   (load "use-dired")
