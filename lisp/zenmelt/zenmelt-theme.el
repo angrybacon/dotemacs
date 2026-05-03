@@ -312,7 +312,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(show-paren-match-expression        ((t :background ,bg+1)))
    `(show-paren-mismatch                ((t :background ,magenta :foreground ,bg)))
 ;;;;;; Pulse
-   `(pulse-highlight-start-face         ((t :background ,blue-3)))
+   `(pulse-highlight-start-face         ((t :inherit highlight)))
 ;;;;;; Search
    `(grep-context-face                  ((t :foreground ,fg)))
    `(grep-error-face                    ((t :foreground ,red-1 :underline t)))
@@ -376,6 +376,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(diff-changed                       ((t :foreground ,yellow-2)))
    `(diff-context                       ((t :foreground ,fg-2)))
    `(diff-file-header                   ((t :foreground ,fg)))
+   `(diff-file-header                   ((t :foreground ,fg+1)))
    `(diff-function                      ((t :inherit diff-hunk-header)))
    `(diff-header                        ((t :foreground ,yellow-2)))
    `(diff-hunk-header                   ((t :inherit diff-header)))
@@ -455,6 +456,12 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(avy-lead-face-0                    ((t :foreground ,green+4)))
    `(avy-lead-face-1                    ((t :foreground ,magenta)))
    `(avy-lead-face-2                    ((t :foreground ,yellow)))
+   `(pulsar-blue                        ((t :background ,blue-5)))
+   `(pulsar-cyan                        ((t :background ,cyan)))
+   `(pulsar-green                       ((t :background ,green-5)))
+   `(pulsar-magenta                     ((t :background ,magenta)))
+   `(pulsar-red                         ((t :background ,red-5)))
+   `(pulsar-yellow                      ((t :background ,fg-2)))
 ;;;;;; Popup
    `(hydra-face-amaranth                ((t :foreground ,red-3)))
    `(hydra-face-blue                    ((t :foreground ,blue+1)))
