@@ -54,6 +54,7 @@
     (kbd "<leader>p") project-prefix-map
     (kbd "<leader>s") me/system-map
     (kbd "g/") #'me/project-kill-path
+    (kbd "gA") #'describe-char
     (kbd "gb") #'switch-to-buffer
     (kbd "gs") #'evil-avy-goto-char-timer)
   (evil-define-key 'visual 'global

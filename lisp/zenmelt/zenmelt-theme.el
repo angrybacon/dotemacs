@@ -177,13 +177,13 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(completion-preview-exact           ((t :inherit completion-preview-common
                                             :underline ,green)))
 ;;;;;; Customize
-   `(custom-button                      ((t :inherit button)))
+   `(custom-button                      ((t :inherit widget-button)))
    `(custom-button-mouse                ((t :foreground ,yellow
                                             :inherit custom-button)))
    `(custom-button-pressed              ((t :foreground ,fg-1
-                                            :inherit custom-button-mouse)))
+                                            :inherit widget-button-pressed)))
    `(custom-button-pressed-unraised     ((t :inherit custom-button-pressed)))
-   `(custom-button-unraised             ((t :inherit custom-button-pressed)))
+   `(custom-button-unraised             ((t :inherit custom-button)))
    `(custom-group-tag                   ((t :foreground ,blue)))
    `(custom-state                       ((t :foreground ,green+4)))
    `(custom-variable-tag                ((t :foreground ,blue)))
@@ -205,19 +205,20 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(help-key-binding                   ((t ,@(zenmelt--box)
                                             :foreground ,orange)))
    `(hl-line                            ((t :background ,bg+2)))
+   `(icon                               ((t :foreground ,fg)))
+   `(icon-button                        ((t :inherit (icon button))))
    `(line-number                        ((t :foreground ,bg+4 :height .9)))
    `(line-number-current-line           ((t :foreground ,yellow-2
                                             :inherit (hl-line line-number))))
    `(link                               ((t :foreground ,yellow :underline t)))
-   `(link-visited                       ((t :foreground ,yellow-2
-                                            :underline t)))
+   `(link-visited                       ((t :foreground ,yellow-2 :inherit link)))
    `(menu                               ((t :inherit default)))
    `(minibuffer-prompt                  ((t :foreground ,yellow)))
    `(mode-line                          ((t :background ,bg-3
                                             :box (:color ,bg-3 :line-width 4)
                                             :foreground ,green)))
    `(mode-line-buffer-id                ((t :foreground ,green+4)))
-   `(mode-line-emphasis                 ((t :inherit mode-line)))
+   `(mode-line-emphasis                 ((t :inherit (bold mode-line))))
    `(mode-line-highlight                ((t :inherit highlight)))
    `(mode-line-inactive                 ((t :background ,bg-1
                                             :box (:color ,bg-1 :line-width 4)
@@ -229,12 +230,12 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(trailing-whitespace                ((t :background ,red)))
    `(vertical-border                    ((t :background ,bg+1)))
    `(widget-button                      ((t :inherit button)))
-   `(widget-button-pressed              ((t :inherit widget-button)))
+   `(widget-button-pressed              ((t :foreground ,fg-1
+                                            :inherit widget-button)))
    `(widget-documentation               ((t :inherit font-lock-doc-face)))
    `(widget-field                       ((t :background ,bg+4
                                             :foreground ,fg+2)))
-   `(widget-inactive                    ((t :background ,bg+2
-                                            :foreground ,bg+3)))
+   `(widget-inactive                    ((t :inherit (shadow widget-field))))
    `(widget-single-line-field           ((t :inherit widget-field)))
    `(window-divider                     ((t :inherit vertical-border
                                             :inverse-video t)))
