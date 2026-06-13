@@ -33,8 +33,6 @@
      ,(rx bos "*Messages*" eos)
      ,(rx bos "*Process List*" eos)
      ,(rx bos "*eldoc")
-     ,(rx bos "*eshell")
-     ,(rx bos "*terminal")
      agent-shell-mode
      eshell-mode
      flymake-diagnostics-buffer-mode
@@ -57,16 +55,18 @@
    `(("*Async-native-compile-log*"    ,@me/shackle-below)
      ("*Disabled Command*"            ,@me/shackle-below)
      ("*Messages*"                    ,@me/shackle-below)
+     ("*Org-Babel Error Output*"      ,@me/shackle-below :select t)
      ("*Process List*"                ,@me/shackle-below :select t)
      ("*Python*"                      ,@me/shackle-below)
      ("*Shell Command Output*"        ,@me/shackle-below)
      ("*Warnings*"                    ,@me/shackle-below)
      ("*eldoc*"                       ,@me/shackle-below)
-     ("*eshell*"                      ,@me/shackle-below)
      ("COMMIT_EDITMSG"                ,@me/shackle-below)
      (,(rx bos "*Customize Group:")   ,@me/shackle-left :regexp t)
      (,(rx bos "*EGLOT")              ,@me/shackle-below :regexp t :select t)
      (,(rx bos "*HTTP Response")      ,@me/shackle-below :regexp t)
+     (,(rx bos "*eshell")             ,@me/shackle-below :regexp t)
+     (,(rx bos "*shell")              ,@me/shackle-below :regexp t)
      (,(rx bos "*terminal:")          ,@me/shackle-below :regexp t :select t)
      (agent-shell-mode                ,@me/shackle-left :select t)
      (compilation-mode                ,@me/shackle-below :select t)

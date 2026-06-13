@@ -344,35 +344,23 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(whitespace-tab                     ((t :background ,bg+1)))
    `(whitespace-trailing                ((t :inherit trailing-whitespace)))
 ;;;;;; Terminal
-   `(ansi-color-black                   ((t :background ,bg+4 :foreground ,bg)))
-   `(ansi-color-blue                    ((t :background ,blue+2
-                                            :foreground ,blue)))
-   `(ansi-color-cyan                    ((t :background ,cyan
-                                            :foreground ,cyan)))
-   `(ansi-color-green                   ((t :background ,green+2
-                                            :foreground ,green)))
-   `(ansi-color-magenta                 ((t :background ,red+2
-                                            :foreground ,magenta)))
-   `(ansi-color-red                     ((t :background ,red :foreground ,red)))
-   `(ansi-color-white                   ((t :background ,fg :foreground ,fg)))
-   `(ansi-color-yellow                  ((t :background ,yellow-1
-                                            :foreground ,yellow-1)))
-   `(ansi-color-bright-black            ((t :background ,fg-2
-                                            :foreground ,fg-2)))
-   `(ansi-color-bright-blue             ((t :background ,blue+1
-                                            :foreground ,blue+1)))
-   `(ansi-color-bright-cyan             ((t :background ,blue+3
-                                            :foreground ,blue+3)))
-   `(ansi-color-bright-green            ((t :background ,green+2
-                                            :foreground ,green+2)))
-   `(ansi-color-bright-magenta          ((t :background ,magenta
-                                            :foreground ,magenta)))
-   `(ansi-color-bright-red              ((t :background ,red+2
-                                            :foreground ,red+2)))
-   `(ansi-color-bright-white            ((t :background ,fg+2
-                                            :foreground ,fg+2)))
-   `(ansi-color-bright-yellow           ((t :background ,yellow
-                                            :foreground ,yellow)))
+   `(ansi-color-black                   ((t :foreground ,bg-4)))
+   `(ansi-color-blue                    ((t :foreground ,blue-1)))
+   `(ansi-color-bright-black            ((t :inherit ansi-color-black)))
+   `(ansi-color-bright-blue             ((t :inherit ansi-color-blue)))
+   `(ansi-color-bright-cyan             ((t :inherit ansi-color-cyan)))
+   `(ansi-color-bright-green            ((t :inherit ansi-color-green)))
+   `(ansi-color-bright-magenta          ((t :inherit ansi-color-magenta)))
+   `(ansi-color-bright-red              ((t :inherit ansi-color-red)))
+   `(ansi-color-bright-white            ((t :inherit ansi-color-white)))
+   `(ansi-color-bright-yellow           ((t :inherit ansi-color-yellow)))
+   `(ansi-color-cyan                    ((t :foreground ,cyan)))
+   `(ansi-color-faint                   ((t :inherit shadow)))
+   `(ansi-color-green                   ((t :foreground ,green)))
+   `(ansi-color-magenta                 ((t :foreground ,magenta)))
+   `(ansi-color-red                     ((t :foreground ,red)))
+   `(ansi-color-white                   ((t :foreground ,fg+2)))
+   `(ansi-color-yellow                  ((t :foreground ,yellow)))
 ;;;;;; Version Control
    `(diff-added                         ((t :foreground ,green-1)))
    `(diff-changed                       ((t :foreground ,yellow-2)))
@@ -589,6 +577,13 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(rainbow-delimiters-depth-7-face    ((t :foreground ,yellow)))
    `(rainbow-delimiters-depth-8-face    ((t :foreground ,green+4)))
    `(rainbow-delimiters-depth-9-face    ((t :foreground ,red+2)))))
+
+;;;; Theme Variables
+
+(zenmelt-with-colors nil
+  (custom-theme-set-variables
+   'zenmelt
+   `(ansi-color-names-vector [,bg ,red ,green ,yellow ,blue ,magenta ,cyan ,fg])))
 
 ;;;; Helpers
 
