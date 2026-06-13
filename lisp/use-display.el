@@ -76,7 +76,8 @@
      (grep-mode                       ,@me/shackle-below)
      (help-mode                       ,@me/shackle-left)
      (helpful-mode                    ,@me/shackle-left)
-     (magit-process-mode              ,@me/shackle-below)))
+     (magit-process-mode              ,@me/shackle-below)
+     (xref--xref-buffer-mode          ,@me/shackle-below)))
   (shackle-select-reused-windows t)
   :hook
   (after-init . shackle-mode)

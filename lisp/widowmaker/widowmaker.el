@@ -61,14 +61,17 @@ Support mixed exact strings and regular expressions."
   :type '(repeat string))
 
 (defcustom widowmaker-olivetti-blacklist-modes '(agent-shell-mode
+                                                 compilation-mode
                                                  csv-mode
+                                                 grep-mode
                                                  magit-revision-mode
                                                  magit-status-mode
                                                  messages-buffer-mode
                                                  minibuffer-mode
                                                  minibuffer-inactive-mode
                                                  tabulated-list-mode
-                                                 vterm-mode)
+                                                 vterm-mode
+                                                 xref--xref-buffer-mode)
   "Modes for which `olivetti-mode' should not be enabled automatically."
   :type '(repeat symbol))
 

@@ -18,7 +18,8 @@
   (fundamental-mode . hl-line-mode)
   (grep-mode . hl-line-mode)
   (prog-mode . hl-line-mode)
-  (text-mode . hl-line-mode))
+  (text-mode . hl-line-mode)
+  (xref--xref-buffer-mode . hl-line-mode))
 
 ;;;; Indent Guides
 

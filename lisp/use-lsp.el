@@ -93,9 +93,6 @@ See https://github.com/typescript-language-server/typescript-language-server."
   (put 'eglot-note 'flymake-overlay-control nil)
   (put 'eglot-warning 'flymake-overlay-control nil)
   (advice-add 'eglot--apply-workspace-edit :after #'me/project-save)
-  (advice-add 'eglot--format-markup :filter-return
-    (lambda (output) (replace-regexp-in-string (rx "\n```" eos) "" output))
-    '((name . me/eglot--trim-block-end)))
   (me/eglot-configure-scss)
   (me/eglot-configure-typescript)
   :custom
