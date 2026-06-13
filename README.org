@@ -57,6 +57,16 @@ See [[https://github.com/angrybacon/dot/blob/master/LINUX.org#emacs]].
 
 See [[https://github.com/angrybacon/dot/blob/master/MACOS.org#emacs]].
 
+* Claude
+
+Run =claude= with the appropriate value for =CLAUDE_CONFIG_DIR= then use
+=/login= to save your credentials in the corresponding configuration root. This
+will unlock the account for =agent-shell= automatically.
+
+#+BEGIN_SRC sh
+CLAUDE_CONFIG_DIR=~/.config/claude-<domain> claude
+#+END_SRC
+
 * Window Manager
 
 Emacs can be used as a window manager under Linux. See
