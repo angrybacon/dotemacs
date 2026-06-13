@@ -47,8 +47,12 @@ If not in a project, fallback to `find-file-at-point' instead."
 
 (defun me/project-kill-buffer-p (buffer)
   "Return whether BUFFER is safe to kill with `project-kill-buffers'."
-  (and (not (eq buffer (current-buffer)))
-       (buffer-file-name)))
+  (let ((major (buffer-local-value 'major-mode buffer))
+        (name (buffer-file-name buffer)))
+    (and (not (eq buffer (current-buffer)))
+         (or name
+             (provided-mode-derived-p major 'dired-mode)
+             (provided-mode-derived-p major 'special-mode)))))
 
 (defun me/project-kill-path ()
   "Save the current absolute path in the kill ring."
@@ -161,10 +165,8 @@ changes."
    ("P" . me/project-todo)
    ("S" . me/project-save)
    ("t" . me/project-test-dwim))
-  :config
-  (cl-nsubstitute
-   #'me/project-kill-buffer-p #'buffer-file-name project-kill-buffer-conditions)
   :custom
+  (project-kill-buffer-conditions '(me/project-kill-buffer-p))
   ;; TODO Should reuse the same keys from the avove remaps
   (project-switch-commands
    '((project-find-file        "File")
