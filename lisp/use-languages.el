@@ -182,6 +182,7 @@ With ARGUMENT move up that amount."
   (org-startup-truncated nil)
   (org-support-shift-select 'always)
   :config
+  (add-to-list 'org-src-lang-modes (cons "json" 'json-ts))
   (add-to-list 'org-src-lang-modes (cons "ts" 'typescript-ts))
   (add-to-list 'org-src-lang-modes (cons "tsx" 'tsx-ts))
   (add-to-list

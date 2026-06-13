@@ -213,7 +213,6 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
                                             :underline t)))
    `(menu                               ((t :inherit default)))
    `(minibuffer-prompt                  ((t :foreground ,yellow)))
-   `(minibuffer-nonselected             ((t :inherit shadow)))
    `(mode-line                          ((t :background ,bg-3
                                             :box (:color ,bg-3 :line-width 4)
                                             :foreground ,green)))
@@ -285,29 +284,31 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(org-link                           ((t :foreground ,yellow-2 :underline t)))
    `(org-mode-line-clock                ((t :foreground ,fg :background ,bg-3)))
    `(org-mode-line-clock-overrun        ((t :background ,red-1 :foreground ,bg)))
-   `(org-quote                          ((t :foreground ,fg-1 :italic t)))
+   `(org-quote                          ((t :foreground ,fg-1 :slant italic)))
    `(org-scheduled                      ((t :foreground ,green+4)))
    `(org-scheduled-previously           ((t :foreground ,red)))
    `(org-scheduled-today                ((t :foreground ,blue+1)))
    `(org-sexp-date                      ((t :foreground ,blue+1 :underline t)))
    `(org-special-keyword                ((t :inherit font-lock-comment-face)))
-   `(org-table                          ((t :foreground ,green+2)))
+   `(org-table                          ((t :foreground ,fg)))
+   `(org-table-header                   ((t :inverse-video t)))
    `(org-tag                            ((t :foreground ,fg+1)))
    `(org-time-grid                      ((t :foreground ,orange)))
    `(org-todo                           ((t :foreground ,red)))
    `(org-upcoming-deadline              ((t :inherit font-lock-keyword-face)))
-   `(org-verbatim                       ((t :inherit help-key-binding)))
+   `(org-verbatim                       ((t :background ,bg+1
+                                            :inherit font-lock-doc-markup-face)))
    `(org-warning                        ((t :foreground ,red)))
 ;;;;;; Outline
    `(outline-1                          ((t :foreground ,orange)))
    `(outline-2                          ((t :foreground ,cyan)))
    `(outline-3                          ((t :foreground ,yellow)))
-   `(outline-4                          ((t :foreground ,blue-1)))
-   `(outline-5                          ((t :foreground ,yellow-2)))
-   `(outline-6                          ((t :foreground ,blue-1)))
-   `(outline-7                          ((t :foreground ,green+2)))
-   `(outline-8                          ((t :foreground ,fg-1)))
-;;;;;; Parens
+   `(outline-4                          ((t :foreground ,green+2)))
+   `(outline-5                          ((t :foreground ,blue)))
+   `(outline-6                          ((t :foreground ,yellow-2)))
+   `(outline-7                          ((t :foreground ,green)))
+   `(outline-8                          ((t :foreground ,blue-2)))
+;;;;;; Parentheses
    `(show-paren-match                   ((t :inherit lazy-highlight)))
    `(show-paren-match-expression        ((t :background ,bg+1)))
    `(show-paren-mismatch                ((t :background ,magenta :foreground ,bg)))
@@ -375,7 +376,6 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(diff-added                         ((t :foreground ,green-1)))
    `(diff-changed                       ((t :foreground ,yellow-2)))
    `(diff-context                       ((t :foreground ,fg-2)))
-   `(diff-file-header                   ((t :foreground ,fg)))
    `(diff-file-header                   ((t :foreground ,fg+1)))
    `(diff-function                      ((t :inherit diff-hunk-header)))
    `(diff-header                        ((t :foreground ,yellow-2)))
@@ -409,6 +409,13 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(smerge-upper                       ((t :background ,bg+1
                                             :inherit diff-removed)))
 ;;;;; Third-party
+;;;;;; Agent
+   `(agent-shell-markdown-inline-code   ((t :inherit org-verbatim)))
+   `(agent-shell-markdown-source-block  ((t :inherit org-block)))
+   `(agent-shell-markdown-source-block-language ((t :inherit (shadow org-block))))
+   `(agent-shell-markdown-table-border  ((t :inherit (shadow org-table))))
+   `(agent-shell-markdown-table-header  ((t :inherit org-table)))
+   `(agent-shell-markdown-table-zebra   ((t :background ,bg+1 :inherit (shadow org-table))))
 ;;;;;; Completion
    `(completions-annotations            ((t :inherit shadow)))
    `(completions-common-part            ((t :inherit match)))
@@ -566,6 +573,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(magit-signature-untrusted          ((t :foreground ,yellow)))
    `(magit-tag                          ((t :foreground ,orange)))
 ;;;;;; Markdown
+   `(markdown-code-face                 ((t :inherit org-block)))
    `(markdown-inline-code-face          ((t :inherit org-verbatim)))
    `(markdown-table-face                ((t :height .9
                                             :inherit markdown-code-face)))

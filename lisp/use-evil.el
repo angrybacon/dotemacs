@@ -123,6 +123,7 @@
 (use-package evil-collection
   :custom
   (evil-collection-key-blacklist '("M-1" "M-2" "M-3" "M-4"))
+  (evil-collection-repl-submit-state 'insert)
   :hook
   (evil-mode . evil-collection-init))
 

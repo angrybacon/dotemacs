@@ -76,7 +76,8 @@ either an absolute file path or a function to call on visit."
      :lexical)))
 
 (mapc #'me/visit--make-visiter
-      '((compositor    . "~/Workspace/dot/config/picom.org")
+      '((claude        . "~/Workspace/dot/config/claude.org")
+        (compositor    . "~/Workspace/dot/config/picom.org")
         (desktop       . "~/Workspace/dot/config/qtile.org")
         (emacs         . user-init-file)
         (linux         . "~/Workspace/dot/LINUX.org")
@@ -115,6 +116,7 @@ either an absolute file path or a function to call on visit."
   (transient-define-prefix me/transient-visit ()
     "Visit configuration files."
     ["Applications"
+     ("a" "Claude"        me/visit-claude)
      ("c" "Picom"         me/visit-compositor)
      ("d" "Qtile"         me/visit-desktop)
      ("i" "Vim"           me/visit-vim)

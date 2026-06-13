@@ -9,12 +9,13 @@
   (agent-shell-anthropic-authentication
    (agent-shell-anthropic-make-authentication :api-key (szadek-get 'anthropic-key)))
   (agent-shell-busy-indicator-frames 'dots-block)
-  (agent-shell-header-style 'graphical)
   (agent-shell-header-style 'text)
   (agent-shell-preferred-agent-config 'claude-code)
   (agent-shell-session-strategy 'latest)
   (agent-shell-show-welcome-message nil)
-  (agent-shell-show-usage-at-turn-end t))
+  (agent-shell-show-usage-at-turn-end t)
+  :hook
+  (agent-shell-mode . hl-line-mode))
 
 (use-package shell-maker
   :custom
