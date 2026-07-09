@@ -120,7 +120,12 @@ See `custom-available-themes'.")
     (set-face-attribute 'mode-line nil :height font-size :inherit 'default)
     (set-face-attribute 'mode-line-inactive nil :inherit 'mode-line)
     (set-face-attribute 'variable-pitch nil :font font-variable)
-    (set-fontset-font t '(#xe0a0 . #xe0d4) font-iconography nil 'prepend)))
+    (dolist (range '((#x2000 . #x206f)   ; General punctuation
+                     (#x2500 . #x257f)   ; Box drawing characters
+                     (#x25a0 . #x25ff)   ; Geometric shapes
+                     (#x2700 . #x27bf)   ; Dingbats
+                     (#xe0a0 . #xe0d4))) ; Powerline shapes
+      (set-fontset-font t range font-iconography nil 'prepend))))
 
 (provide 'morophon)
 

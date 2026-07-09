@@ -330,6 +330,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(reb-match-3                        ((t ,@(zenmelt--box 'red))))
    `(xref-file-header                   ((t :inherit shadow)))
 ;;;;;; Shell
+   `(comint-highlight-input             ((t :inherit shadow)))
    `(sh-heredoc                         ((t :foreground ,green+4)))
    `(sh-quoted-exec                     ((t :foreground ,magenta)))
 ;;;;;; Syntax

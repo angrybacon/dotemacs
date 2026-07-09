@@ -50,8 +50,7 @@
   (agent-shell-session-strategy 'latest)
   (agent-shell-show-usage-at-turn-end t)
   (agent-shell-show-welcome-message nil)
-  ;; NOTE See <https://github.com/xenodium/agent-shell/issues/273>
-  (agent-shell-status-kind-label-function #'agent-shell--inverse-label-status-kind-label)
+  (agent-shell-thought-process-icon nil)
   :hook
   (agent-shell-mode . hl-line-mode))
 
