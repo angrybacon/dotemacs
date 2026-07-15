@@ -45,6 +45,7 @@
   (agent-shell-anthropic-authentication
    (agent-shell-anthropic-make-authentication :login t))
   (agent-shell-busy-indicator-frames 'dots-block)
+  (agent-shell-context-sources '(error files region))
   (agent-shell-header-style 'text)
   (agent-shell-preferred-agent-config 'claude-code)
   (agent-shell-session-strategy 'latest)
