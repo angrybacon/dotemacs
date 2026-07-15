@@ -11,13 +11,18 @@
 
 ;;;; Terminal
 
-;; TODO Allow C-o for quick pastes
-
 (use-package vterm
   :defines vterm-mode-map
   :bind
   (:map vterm-mode-map
    ([remap kill-current-buffer] . widowmaker-kill-buffer-with-process))
+  :config
+  (define-advice set-window-vscroll
+      (:after (&rest _) toggle-scroll)
+    (when (eq major-mode 'vterm-mode)
+      (if (> (window-end) (buffer-size))
+          (when vterm-copy-mode (vterm-copy-mode-done nil))
+        (vterm-copy-mode 1))))
   :custom
   (vterm-keymap-exceptions
    '("C-c" "C-g" "C-h" "C-l" "C-u" "C-x" "C-y"
