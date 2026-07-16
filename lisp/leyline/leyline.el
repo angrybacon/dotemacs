@@ -290,7 +290,8 @@ Each item in INPUTS can either be a segment or a list of segments."
 
 (defun leyline--make ()
   "Return the new mode-line format."
-  '((:eval
+  '(" "
+    (:eval
      (leyline--format
       (leyline-segment-evil)
       (leyline-segment-buffer)))
@@ -306,7 +307,8 @@ Each item in INPUTS can either be a segment or a list of segments."
          (leyline-segment-lsp)
          (leyline-segment-revision)
          (leyline-segment-major)))
-      (leyline-segment-workspace)))))
+      (leyline-segment-workspace)))
+    " "))
 
 (defvar leyline--previous-format nil
   "Previous `mode-line-format' for when `leyline-mode' is turned off.")

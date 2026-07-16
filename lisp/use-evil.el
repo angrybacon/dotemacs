@@ -26,6 +26,7 @@
   "g" #'toggle-debug-on-error
   "l" #'list-processes
   "p" #'package-list-packages
+  "P" #'package-upgrade-all
   "q" #'manticore-kill-terminal
   "s" #'manticore-revert-buffer-immediately)
 

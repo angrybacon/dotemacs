@@ -107,7 +107,7 @@ either an absolute file path or a function to call on visit."
      ("M" "Cycle display" widowmaker-placement-cycle)]
     ["Olivetti"
      ("o" "Toggle"        widowmaker-olivetti-automatic-toggle)
-     ("O" "Toggle"        widowmaker-olivetti-body-reset)]
+     ("O" "Reset"         widowmaker-olivetti-body-reset)]
     ["Pair-programming"
      ("n" "Cycle line numbers" ruric-toggle-line-numbers)
      ("r" "Toggle pair-programming mode" ruric-mode)]
