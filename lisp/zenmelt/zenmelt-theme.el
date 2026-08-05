@@ -609,6 +609,6 @@ function to `after-save-hook'."
 ;;; zenmelt-theme.el ends here
 
 ;; Local Variables:
-;; after-save-hook: (zenmelt--reset t)
+;; eval: (add-hook 'after-save-hook #'zenmelt--reset nil t)
 ;; eval: (when (require 'rainbow-mode nil :noerror) (rainbow-mode 1))
 ;; End:

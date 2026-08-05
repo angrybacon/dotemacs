@@ -113,8 +113,9 @@
   :demand
   :load-path "lisp/zenmelt"
   :config
-  (put 'after-save-hook 'safe-local-variable
-       (lambda (value) (equal value '(zenmelt--reset t))))
-  (load-theme 'zenmelt :noconfirm))
+  (load-theme 'zenmelt :noconfirm)
+  :init
+  (add-to-list 'safe-local-eval-forms
+               '(add-hook 'after-save-hook #'zenmelt--reset nil t)))
 
 ;;; use-interface.el ends here

@@ -168,6 +168,15 @@ With ARGUMENT move up that amount."
    ("C-<tab>" . me/org-cycle-parent)
    ("C-S-<down>" . nil)                 ; Free paragraph command
    ("C-S-<up>" . nil))                  ; Free paragraph command
+  :config
+  (add-to-list 'org-src-lang-modes (cons "json" 'json-ts))
+  (add-to-list 'org-src-lang-modes (cons "ts" 'typescript-ts))
+  (add-to-list 'org-src-lang-modes (cons "tsx" 'tsx-ts))
+  (require 'ob-shell)
+  (org-babel-do-load-languages
+   'org-babel-load-languages '((python . t) (shell . t)))
+  (modify-syntax-entry ?' "'" org-mode-syntax-table)
+  (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer)
   :custom
   (org-confirm-babel-evaluate nil)
   (org-cycle-separator-lines 0)
@@ -181,20 +190,12 @@ With ARGUMENT move up that amount."
   (org-src-window-setup 'current-window)
   (org-startup-truncated nil)
   (org-support-shift-select 'always)
-  :config
-  (add-to-list 'org-src-lang-modes (cons "json" 'json-ts))
-  (add-to-list 'org-src-lang-modes (cons "ts" 'typescript-ts))
-  (add-to-list 'org-src-lang-modes (cons "tsx" 'tsx-ts))
-  (add-to-list
-   'safe-local-variable-values '(after-save-hook . (org-babel-tangle t)))
-  (require 'ob-shell)
-  (org-babel-do-load-languages
-   'org-babel-load-languages '((python . t) (shell . t)))
-  (modify-syntax-entry ?' "'" org-mode-syntax-table)
-  (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer)
   :hook
   (org-mode . buffer-face-mode)
-  (org-mode . (lambda () (setq-local comment-auto-fill-only-comments nil))))
+  (org-mode . (lambda () (setq-local comment-auto-fill-only-comments nil)))
+  :init
+  (add-to-list 'safe-local-eval-forms
+               '(add-hook 'after-save-hook #'org-babel-tangle nil t)))
 
 ;;;; Terraform
 

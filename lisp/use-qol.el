@@ -49,10 +49,10 @@ The behavior is ignored when the message buffer is active."
   :hook
   (css-base-mode . rainbow-mode)
   (help-mode . rainbow-mode)
+  :custom
+  (rainbow-x-colors nil)
   :init
   (add-to-list 'safe-local-eval-forms
-               '(when (require 'rainbow-mode nil :noerror) (rainbow-mode 1)))
-  :custom
-  (rainbow-x-colors nil))
+               '(when (require 'rainbow-mode nil :noerror) (rainbow-mode 1))))
 
 ;;; use-qol.el ends here

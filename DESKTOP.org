@@ -51,5 +51,5 @@ eventually mess up your current window configuration.
 * COMMENT Local Variables
 
 # Local Variables:
-# after-save-hook: (org-babel-tangle t)
+# eval: (add-hook 'after-save-hook #'org-babel-tangle nil t)
 # End:

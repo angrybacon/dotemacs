@@ -17,8 +17,8 @@
  delete-old-versions t                  ; Delete extra backups silently
  enable-recursive-minibuffers t         ; Allow nested minibuffer invokes
  epg-pinentry-mode 'loopback            ; Redirect passphrase prompts to self
- frame-resize-pixelwise t               ; Play nice with tiling window managers
  fill-column 80                         ; Set width for automatic line breaks
+ frame-resize-pixelwise t               ; Play nice with tiling window managers
  gc-cons-threshold (* 8 1024 1024)      ; We're not using Game Boys anymore
  grep-use-headings t                    ; Make grep results behave like xref's
  help-window-select t                   ; Focus new help windows when opened
@@ -63,8 +63,6 @@
 (global-unset-key (kbd "<pinch>"))      ; Unbind the `text-scale-pinch' command
 (global-unset-key (kbd "C-x C-z"))      ; Unbind the `suspend-frame' command
 
-(put 'add-function 'lisp-indent-function 2)
-(put 'advice-add 'lisp-indent-function 2)
-(put 'plist-put 'lisp-indent-function 2)
+(add-to-list 'safe-local-eval-forms '(toggle-truncate-lines 1))
 
 ;;; use-defaults.el ends here
