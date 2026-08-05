@@ -54,24 +54,28 @@ See `widowmaker-olivetti-mode-maybe' for the heuristics used and details of
 implementation."
   :type 'boolean)
 
-(defcustom widowmaker-olivetti-blacklist-buffers `("*Async-native-compile-log*"
-                                                   ,(rx ".log" eos))
+(defcustom widowmaker-olivetti-blacklist-buffers
+  `("*Local Variables*"
+    "*Warnings*"
+    ,(rx ".log" eos))
   "Buffers for which `olivetti-mode' should not be enabled automatically.
 Support mixed exact strings and regular expressions."
   :type '(repeat string))
 
-(defcustom widowmaker-olivetti-blacklist-modes '(agent-shell-mode
-                                                 compilation-mode
-                                                 csv-mode
-                                                 grep-mode
-                                                 magit-revision-mode
-                                                 magit-status-mode
-                                                 messages-buffer-mode
-                                                 minibuffer-mode
-                                                 minibuffer-inactive-mode
-                                                 tabulated-list-mode
-                                                 vterm-mode
-                                                 xref--xref-buffer-mode)
+(defcustom widowmaker-olivetti-blacklist-modes
+  '(compilation-mode
+    csv-mode
+    inferior-python-mode
+    magit-process-mode
+    magit-status-mode
+    minibuffer-inactive-mode
+    minibuffer-mode
+    native-comp-limple-mode
+    vterm-mode
+    ;; NOTE Let's observe how the list grows and perhaps skip all `special-mode'
+    messages-buffer-mode
+    tabulated-list-mode
+    vc-annotate-mode)
   "Modes for which `olivetti-mode' should not be enabled automatically."
   :type '(repeat symbol))
 

@@ -28,17 +28,14 @@
   (popper-echo-lines 1)
   (popper-mode-line nil)
   (popper-reference-buffers
-   `(,(rx bos "*EGLOT")
-     ,(rx bos "*HTTP Response")
-     ,(rx bos "*Messages*" eos)
-     ,(rx bos "*Process List*" eos)
-     ,(rx bos "*eldoc")
+   `(,(rx bos "*HTTP Response")
+     ,(rx bos "*eldoc*" eos)
      agent-shell-mode
      eshell-mode
      flymake-diagnostics-buffer-mode
      help-mode
      helpful-mode
-     magit-process-mode
+     messages-buffer-mode
      shell-mode
      vterm-mode))
   :hook
@@ -47,43 +44,33 @@
 
 ;;;; Window Management
 
-(use-package shackle
+(use-package entrave
+  :load-path "lisp/entrave"
   :custom
-  (shackle-default-size (szadek-get 'popup-size .33))
-  (shackle-inhibit-window-quit-on-same-windows t)
-  (shackle-rules
-   `(("*Async-native-compile-log*"    ,@me/shackle-below)
-     ("*Disabled Command*"            ,@me/shackle-below)
-     ("*Messages*"                    ,@me/shackle-below)
-     ("*Org-Babel Error Output*"      ,@me/shackle-below :select t)
-     ("*Process List*"                ,@me/shackle-below :select t)
-     ("*Python*"                      ,@me/shackle-below)
-     ("*Shell Command Output*"        ,@me/shackle-below)
-     ("*Warnings*"                    ,@me/shackle-below)
-     ("*eldoc*"                       ,@me/shackle-below)
-     ("COMMIT_EDITMSG"                ,@me/shackle-below)
-     (,(rx bos "*Customize Group:")   ,@me/shackle-left :regexp t)
-     (,(rx bos "*EGLOT")              ,@me/shackle-below :regexp t :select t)
-     (,(rx bos "*HTTP Response")      ,@me/shackle-below :regexp t)
-     (,(rx bos "*eshell")             ,@me/shackle-below :regexp t)
-     (,(rx bos "*shell")              ,@me/shackle-below :regexp t)
-     (,(rx bos "*terminal:")          ,@me/shackle-below :regexp t :select t)
-     (agent-shell-mode                ,@me/shackle-left :select t)
-     (compilation-mode                ,@me/shackle-below :select t)
-     (debugger-mode                   ,@me/shackle-below)
-     (embark-collect-mode             ,@me/shackle-below)
-     (flymake-diagnostics-buffer-mode ,@me/shackle-below)
-     (grep-mode                       ,@me/shackle-below)
-     (help-mode                       ,@me/shackle-left)
-     (helpful-mode                    ,@me/shackle-left)
-     (magit-process-mode              ,@me/shackle-below)
-     (xref--xref-buffer-mode          ,@me/shackle-below)))
-  (shackle-select-reused-windows t)
+  (entrave-rules
+   `((,(rx bos "*Disabled Command*" eos)  :bottom)
+     (,(rx bos "*EGLOT")                  :bottom :select)
+     (,(rx bos "*HTTP Response")          :bottom)
+     (,(rx bos "*Warnings*" eos)          :bottom :select)
+     (,(rx bos "*eldoc*" eos)             :bottom)
+     (,(rx bos "*eshell")                 :bottom :select)
+     (,(rx bos "*shell")                  :bottom :select)
+     (,(rx bos "*terminal")               :bottom :select)
+     (Custom-mode                         :left)
+     (agent-shell-mode                    :left :select)
+     (compilation-mode                    :bottom :select)
+     (flymake-diagnostics-buffer-mode     :bottom)
+     (help-mode                           :left)
+     (helpful-mode                        :left)
+     (inferior-python-mode                :bottom)
+     (magit-process-mode                  :bottom)
+     (messages-buffer-mode                :bottom :select)
+     (occur-mode                          :bottom :select)
+     (process-menu-mode                   :bottom :select)
+     (vc-annotate-mode                    :bottom)
+     (xref--xref-buffer-mode              :bottom)))
   :hook
-  (after-init . shackle-mode)
-  :preface
-  (defvar me/shackle-below '(:align below :popup t))
-  (defvar me/shackle-left '(:align left :popup t :size 83)))
+  (after-init . entrave-mode))
 
 (use-package widowmaker
   :load-path "lisp/widowmaker"
