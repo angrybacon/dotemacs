@@ -48,12 +48,10 @@
   (agent-shell-confirm-interrupt nil)
   (agent-shell-context-sources '(error files region))
   (agent-shell-header-style 'text)
-  (agent-shell-permission-icon nil)
   (agent-shell-preferred-agent-config 'claude-code)
   (agent-shell-session-strategy 'latest)
   (agent-shell-show-usage-at-turn-end t)
-  (agent-shell-show-welcome-message nil)
-  (agent-shell-thought-process-icon nil))
+  (agent-shell-show-welcome-message nil))
 
 (use-package shell-maker
   :custom

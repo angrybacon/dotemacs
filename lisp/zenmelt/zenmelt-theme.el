@@ -214,6 +214,8 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(link-visited                       ((t :foreground ,yellow-2 :inherit link)))
    `(menu                               ((t :inherit default)))
    `(minibuffer-prompt                  ((t :foreground ,yellow)))
+   `(minibuffer-nonselected             ((t :inherit minibuffer-prompt
+                                            :inverse-video t)))
    `(mode-line                          ((t :background ,bg-3
                                             :box (:color ,bg-3 :line-width (-1 . 4))
                                             :foreground ,green)))
@@ -254,7 +256,6 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(org-column-title                   ((t :background ,bg-3 :underline t)))
    `(org-date                           ((t :foreground ,blue :underline t)))
    `(org-deadline-announce              ((t :foreground ,red-1)))
-   `(org-default                        ((t :foreground ,fg-1)))
    `(org-document-info                  ((t :foreground ,blue)))
    `(org-document-title                 ((t :foreground ,blue)))
    `(org-done                           ((t :foreground ,green+3)))
@@ -338,7 +339,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(whitespace-empty                   ((t :background ,yellow-2 :extend t)))
    `(whitespace-hspace                  ((t :inherit whitespace-space)))
    `(whitespace-indentation             ((t :background ,bg+1 :foreground ,red)))
-   `(whitespace-line                    ((t :foreground ,magenta)))
+   `(whitespace-line                    ((t :underline ,magenta)))
    `(whitespace-newline                 ((t :foreground ,bg+2)))
    `(whitespace-space                   ((t :inherit shadow :inverse-video t)))
    `(whitespace-space-after-tab         ((t :inherit whitespace-space)))
@@ -395,12 +396,17 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(ediff-odd-diff-C                   ((t :inherit ediff-odd-diff-A)))
    `(smerge-lower                       ((t :background ,bg+1 :inherit diff-added)))
    `(smerge-markers                     ((t :background ,bg+1 :inherit shadow)))
+   `(smerge-refine-shadow-cursor        ((t :inverse-video t)))
    `(smerge-refined-added               ((t :inherit diff-refine-added)))
    `(smerge-refined-removed             ((t :inherit diff-refine-removed)))
    `(smerge-upper                       ((t :background ,bg+1
                                             :inherit diff-removed)))
 ;;;;; Third-party
 ;;;;;; Agent
+   `(agent-shell-chat-agent-label       ((t :inherit font-lock-function-name-face
+                                            :inverse-video t)))
+   `(agent-shell-chat-me-label          ((t :inherit font-lock-keyword-face
+                                            :inverse-video t)))
    `(agent-shell-markdown-inline-code   ((t :inherit org-verbatim)))
    `(agent-shell-markdown-source-block  ((t :inherit org-block)))
    `(agent-shell-markdown-source-block-language ((t :inherit (shadow org-block))))
