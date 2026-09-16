@@ -50,6 +50,7 @@
   (define-key magit-section-mode-map (kbd "M-4") nil :remove)
   (with-eval-after-load 'marginalia
     (dolist (f '(magit-read-branch
+                 magit-read-local-branch
                  magit-read-other-branch
                  magit-read-other-branch-or-commit
                  magit-read-branch-prefer-other))
