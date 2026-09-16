@@ -36,8 +36,6 @@
 
 (use-package display-line-numbers
   :ensure nil
-  :config
-  (put 'display-line-numbers-width 'safe-local-variable 'integerp)
   :custom
   (display-line-numbers-grow-only t)
   (display-line-numbers-type 'relative)
@@ -62,7 +60,6 @@
   :config
   (add-to-list 'pulsar-pulse-functions 'flymake-goto-next-error)
   (add-to-list 'pulsar-pulse-functions 'flymake-goto-prev-error)
-  (add-to-list 'pulsar-pulse-functions 'goto-char)
   (add-to-list 'pulsar-pulse-functions 'xref-find-definitions)
   (add-to-list 'pulsar-pulse-functions 'xref-find-definitions-other-window)
   :hook

@@ -135,7 +135,6 @@
 
 (use-package evil-goggles
   :custom
-  (evil-goggles-duration .1)
   (evil-goggles-pulse nil)
   :hook
   (evil-mode . evil-goggles-mode))

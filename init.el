@@ -23,6 +23,12 @@
 
 ;;; Code:
 
+(defun me/load (file)
+  "Load FILE, prefixing any error with FILE's name."
+  (condition-case message
+      (load file)
+    (error (error "[%s] %s" file (error-message-string message)))))
+
 (let ((file-name-handler-alist nil)
       (gc-cons-percentage .6)
       (gc-cons-threshold most-positive-fixnum)
@@ -35,34 +41,34 @@
 
   ;; Set up packages
   (add-to-list 'load-path (expand-file-name "lisp/" user-emacs-directory))
-  (load "use-doctor")
-  (load "use-packages")
+  (me/load "use-doctor")
+  (me/load "use-packages")
 
   ;; Load these first to avoid flickering
-  (load "use-core")
-  (load "use-defaults")
-  (load "use-interface")
-  (load "use-os")
+  (me/load "use-core")
+  (me/load "use-defaults")
+  (me/load "use-interface")
+  (me/load "use-os")
 
   ;; Load partials
-  (load "use-agent")
-  (load "use-applications")
-  (load "use-completion")
-  (load "use-dired")
-  (load "use-display")
-  (load "use-evil")
-  (load "use-git")
-  (load "use-help")
-  (load "use-languages")
-  (load "use-lint")
-  (load "use-lsp")
-  (load "use-mouse")
-  (load "use-parentheses")
-  (load "use-presentation")
-  (load "use-project")
-  (load "use-qol")
-  (load "use-templates")
-  (load "use-workspaces")
+  (me/load "use-agent")
+  (me/load "use-applications")
+  (me/load "use-completion")
+  (me/load "use-dired")
+  (me/load "use-display")
+  (me/load "use-evil")
+  (me/load "use-git")
+  (me/load "use-help")
+  (me/load "use-languages")
+  (me/load "use-lint")
+  (me/load "use-lsp")
+  (me/load "use-mouse")
+  (me/load "use-parentheses")
+  (me/load "use-presentation")
+  (me/load "use-project")
+  (me/load "use-qol")
+  (me/load "use-templates")
+  (me/load "use-workspaces")
 
   ;; Set the working directory to home regardless of where Emacs was started from
   (cd "~/")
