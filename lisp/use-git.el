@@ -78,7 +78,19 @@
     (when-let* ((label (magit-get "branch" branch "description"))
                 ((not (string-empty-p label))))
       (marginalia--fields
-       ((string-trim label) :face 'marginalia-documentation :truncate 1.0 )))))
+       ((string-trim label) :face 'marginalia-documentation :truncate 1.0 ))))
+  (defun me/magit-husky-toggle ()
+    "Toggle Husky git hooks for the current Emacs session.
+Useful when an interactive rebase rewords commits that were not passing the
+hooks in the first place. Keep this command until `magit-rebase' supports a
+no-verify argument like `magit-commit' does."
+    (interactive)
+    (if (getenv "HUSKY")
+        (progn
+          (setenv "HUSKY" nil)
+          (message "[Magit] Husky hooks enabled"))
+      (setenv "HUSKY" "0")
+      (message "[Magit] Husky hooks disabled"))))
 
 ;; NOTE Start a pinentry service automatically in order for Emacs to be able to
 ;;      prompt passphrases from the minibuffer. If Emacs doesn't redirect
