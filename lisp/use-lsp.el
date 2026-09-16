@@ -54,6 +54,15 @@ See https://github.com/typescript-language-server/typescript-language-server."
        "typescript-language-server" "--stdio"
        :initializationOptions (:preferences ,preferences)))))
 
+(defun me/eglot-events-buffer-toggle ()
+  "Toggle `eglot-events-buffer-config' between quiet and verbose."
+  (interactive)
+  (let ((value (if (zerop (plist-get eglot-events-buffer-config :size))
+                   '(:size 2000000 :format full)
+                 '(:size 0))))
+    (message "[Lsp] events buffer configuration updated: `%S'"
+             (setq eglot-events-buffer-config value))))
+
 (use-package eglot
   :ensure nil
   :config
