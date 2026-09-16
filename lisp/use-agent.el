@@ -53,9 +53,7 @@
   (agent-shell-session-strategy 'latest)
   (agent-shell-show-usage-at-turn-end t)
   (agent-shell-show-welcome-message nil)
-  (agent-shell-thought-process-icon nil)
-  :hook
-  (agent-shell-mode . hl-line-mode))
+  (agent-shell-thought-process-icon nil))
 
 (use-package shell-maker
   :custom

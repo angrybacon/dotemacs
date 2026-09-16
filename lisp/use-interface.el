@@ -13,10 +13,10 @@
   :custom
   (hl-line-sticky-flag nil)
   :hook
+  (comint-mode . hl-line-mode)
+  (compilation-mode . hl-line-mode)
   (conf-mode . hl-line-mode)
   (dired-mode . hl-line-mode)
-  (fundamental-mode . hl-line-mode)
-  (grep-mode . hl-line-mode)
   (prog-mode . hl-line-mode)
   (text-mode . hl-line-mode)
   (xref--xref-buffer-mode . hl-line-mode))
