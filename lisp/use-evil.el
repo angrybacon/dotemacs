@@ -109,13 +109,16 @@
   :custom
   (evil-echo-state nil)
   (evil-emacs-state-cursor (default-value 'cursor-type))
+  (evil-move-beyond-eol t)
   (evil-move-cursor-back nil)
-  (evil-shift-round nil)
+  (evil-respect-visual-line-mode t)
+  (evil-shift-width 2)
   (evil-undo-system 'undo-redo)
   (evil-visual-state-cursor 'hollow)
   (evil-want-keybinding nil)
   :hook
   (after-init . evil-mode)
+  (after-revert . evil-refresh-cursor)
   (after-save . evil-normal-state)
   (evil-mode . me/evil-define-bindings)
   (evil-mode . me/evil-define-operators))
