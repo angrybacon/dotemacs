@@ -17,6 +17,7 @@ Like `xref-find-references' but switch to the other window."
 ;;;; L(anguage) S(erver) P(rotocol) Client
 
 (declare-function cl-substitute-if "cl-seq")
+(declare-function eglot-completion-at-point "eglot")
 (declare-function eglot-current-server "eglot")
 (declare-function eglot-shutdown "eglot")
 (declare-function me/project-save "use-project")
@@ -33,26 +34,24 @@ Like `xref-find-references' but switch to the other window."
     eldoc-documentation-functions)))
 
 (defun me/eglot-configure-scss ()
-  "Bootstrap SCSS-specific customizations."
+  "Register the SCSS server program and return its preferences."
   (defvar eglot-server-programs)
-  (push '(scss-mode . ("vscode-css-language-server" "--stdio"))
-        eglot-server-programs))
+  (let ((modes '(scss-mode))
+        (command '("vscode-css-language-server" "--stdio")))
+    (add-to-list 'eglot-server-programs `(,modes ,@command)))
+  '(:lint (:duplicateProperties "warning"
+           :float "warning"
+           :important "warning"
+           :zeroUnits "warning")))
 
 (defun me/eglot-configure-typescript ()
-  "Bootstrap TypeScript-specific customizations.
-See https://github.com/typescript-language-server/typescript-language-server."
-  (let ((target-modes '(tsx-ts-mode typescript-ts-mode))
-        (preferences
-         '(:importModuleSpecifierPreference "non-relative"
-           :organizeImportsCaseFirst "upper"
-           :organizeImportsCollation "unicode" ; ordinal | unicode
-           :organizeImportsIgnoreCase :json-false
-           :preferTypeOnlyAutoImports t)))
-    (add-to-list
-     'eglot-server-programs
-     `(,target-modes
-       "typescript-language-server" "--stdio"
-       :initializationOptions (:preferences ,preferences)))))
+  "Register the TypeScript server program and return its preferences."
+  (defvar eglot-server-programs)
+  (let ((modes '(tsx-ts-mode typescript-ts-mode))
+        (command '("npx" "tsc" "--lsp" "--stdio")))
+    (add-to-list 'eglot-server-programs `(,modes ,@command)))
+  '(:preferences (:importModuleSpecifier "non-relative"
+                  :preferTypeOnlyAutoImports t)))
 
 (defun me/eglot-events-buffer-toggle ()
   "Toggle `eglot-events-buffer-config' between quiet and verbose."
@@ -70,8 +69,37 @@ See https://github.com/typescript-language-server/typescript-language-server."
   (put 'eglot-note 'flymake-overlay-control nil)
   (put 'eglot-warning 'flymake-overlay-control nil)
   (advice-add 'eglot--apply-workspace-edit :after #'me/project-save)
-  (me/eglot-configure-scss)
-  (me/eglot-configure-typescript)
+  (define-advice eglot-completion-at-point (:filter-return (f) add-source)
+    ;; NOTE TypeScript 7 moved the module source shown for same-named
+    ;;      auto-import candidates from the classic `detail' completion field to
+    ;;      the newer `labelDetails.description' field. Eglot's annotation
+    ;;      function only reads `detail', falling back to the completion kind
+    ;;      name (e.g. "Function") when it is absent, so Corfu silently drops
+    ;;      that disambiguation hint. Insert `labelDetails.description' into
+    ;;      that fallback chain, ahead of the kind name.
+    (when-let* ((props (nthcdr 3 f)))
+      (plist-put
+       props :annotation-function
+       (lambda (proxy)
+         (let* ((item (get-text-property 0 'eglot--lsp-item proxy))
+                (detail (plist-get item :detail))
+                (detail (and (stringp detail) (not (string= detail "")) detail))
+                (details (plist-get item :labelDetails))
+                (description (plist-get details :description))
+                (description (and (stringp description)
+                                  (not (string= description "")) description))
+                (kind (plist-get item :kind))
+                (annotation (or detail
+                                description
+                                (cdr (assoc kind eglot--kind-names)))))
+           (when annotation
+             (concat " " (propertize annotation
+                                     'face 'completions-annotations)))))))
+    f)
+  (setq-default
+   ;; NOTE Not a `defcustom' so `:custom' cannot reliably configure it
+   eglot-workspace-configuration `(:scss ,(me/eglot-configure-scss)
+                                   :typescript ,(me/eglot-configure-typescript)))
   :custom
   (eglot-autoshutdown t)
   (eglot-code-action-indications '(eldoc-hint))
