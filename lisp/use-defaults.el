@@ -44,6 +44,7 @@
  show-help-function nil                 ; Disable help text everywhere
  tab-always-indent 'complete            ; Indent first then try completions
  uniquify-buffer-name-style 'forward    ; Uniquify buffer names
+ use-dialog-box nil                     ; Disable window manager dialog always
  use-short-answers t                    ; Replace yes/no prompts with y/n
  vc-follow-symlinks t                   ; Never prompt when visiting symlinks
  version-control t                      ; Use numeric versions for backups
