@@ -45,10 +45,14 @@
 ;;;; Window Management
 
 (use-package entrave
+  :demand
   :load-path "lisp/entrave"
+  :config
+  (entrave-mode)
   :custom
   (entrave-rules
-   `((,(rx bos "*Disabled Command*" eos)  :bottom)
+   `((,(rx bos " *Install vterm* " eos)   :bottom)
+     (,(rx bos "*Disabled Command*" eos)  :bottom)
      (,(rx bos "*EGLOT")                  :bottom :select)
      (,(rx bos "*HTTP Response")          :bottom)
      (,(rx bos "*Warnings*" eos)          :bottom :select)
@@ -68,9 +72,7 @@
      (occur-mode                          :bottom :select)
      (process-menu-mode                   :bottom :select)
      (vc-annotate-mode                    :bottom)
-     (xref--xref-buffer-mode              :bottom)))
-  :hook
-  (after-init . entrave-mode))
+     (xref--xref-buffer-mode              :bottom))))
 
 (use-package widowmaker
   :load-path "lisp/widowmaker"

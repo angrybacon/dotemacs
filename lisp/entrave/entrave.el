@@ -56,11 +56,10 @@ First match wins.
 (defvar entrave--entry '(entrave-match-p (entrave-display))
   "The `display-buffer-alist' entry managed by entrave.")
 
-(defvar entrave--select nil
-  "Whether the last matched rule requests window selection.")
-
-(defvar entrave--side nil
-  "Side found by the last `entrave-match-p' call.")
+(defun entrave--find-rule (buffer)
+  "Return the first entrave rule matching BUFFER, or nil."
+  (seq-find (lambda (entry) (entrave--match-rule-p buffer (car entry)))
+            entrave-rules))
 
 (defun entrave--reset-margins ()
   "Reset window margins on all windows.
@@ -73,7 +72,8 @@ split."
 (defun entrave-display (buffer alist)
   "Display BUFFER according to entrave rules.
 ALIST is the action alist passed by `display-buffer'."
-  (when-let* ((side entrave--side)
+  (when-let* ((rule (entrave--find-rule buffer))
+              (side (cadr rule))
               (extra (pcase side
                        (:bottom
                         `((side . bottom)
@@ -87,26 +87,20 @@ ALIST is the action alist passed by `display-buffer'."
     (entrave--reset-margins)
     (when-let* ((window (display-buffer-in-side-window buffer
                                                        (append extra alist))))
-      (when entrave--select
+      (when (memq :select (cddr rule))
         (select-window window))
       window)))
 
 (defun entrave--match-rule-p (name rule)
   "Return non-nil if buffer NAME matches RULE."
   (if (stringp rule)
-      (string-match-p rule name)
+      (string-match-p rule (if (bufferp name) (buffer-name name) name))
     (with-current-buffer name
       (derived-mode-p rule))))
 
 (defun entrave-match-p (name &rest _)
   "Return non-nil if NAME matches any entrave rule."
-  (when-let* ((rule (seq-find (lambda (entry)
-                                (entrave--match-rule-p name (car entry)))
-                              entrave-rules)))
-    (setq
-     entrave--select (memq :select (cddr rule))
-     entrave--side (cadr rule))
-    entrave--side))
+  (and (entrave--find-rule name) t))
 
 ;;;###autoload
 (define-minor-mode entrave-mode
