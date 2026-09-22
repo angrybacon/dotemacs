@@ -53,7 +53,8 @@
                  magit-read-local-branch
                  magit-read-other-branch
                  magit-read-other-branch-or-commit
-                 magit-read-branch-prefer-other))
+                 magit-read-branch-prefer-other
+                 magit-read-starting-point))
       (advice-add f :around #'me/magit-branch-category))
     (add-to-list
      'marginalia-annotators

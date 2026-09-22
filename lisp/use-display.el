@@ -35,6 +35,7 @@
      flymake-diagnostics-buffer-mode
      help-mode
      helpful-mode
+     magit-status-mode
      messages-buffer-mode
      shell-mode
      vterm-mode))
@@ -68,6 +69,7 @@
      (helpful-mode                        :left)
      (inferior-python-mode                :bottom)
      (magit-process-mode                  :bottom)
+     (magit-status-mode                   :left :select)
      (messages-buffer-mode                :bottom :select)
      (occur-mode                          :bottom :select)
      (process-menu-mode                   :bottom :select)
