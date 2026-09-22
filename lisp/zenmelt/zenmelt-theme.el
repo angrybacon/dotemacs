@@ -412,7 +412,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(agent-shell-markdown-source-block-language ((t :inherit (shadow org-block))))
    `(agent-shell-markdown-table-border  ((t :inherit (shadow org-table))))
    `(agent-shell-markdown-table-header  ((t :inherit org-table)))
-   `(agent-shell-markdown-table-zebra   ((t :background ,bg+1 :inherit (shadow org-table))))
+   `(agent-shell-markdown-table-zebra   ((t :background ,bg+1 :inherit org-table)))
 ;;;;;; Completion
    `(completions-annotations            ((t :inherit shadow)))
    `(completions-common-part            ((t :inherit match)))

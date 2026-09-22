@@ -25,6 +25,7 @@ I trust your Google-fu. Try and make the most of the below notes.
 
 ** Dependencies
 
+| =claude-agent-acp=           | ACP bindings to use =agent-shell=      |
 | =jansson=                    | Enable native JSON parsing             |
 | =libvterm=                   | Enable terminal emulation within Emacs |
 | =pinentry=                   | Enable pass prompts within Emacs       |
