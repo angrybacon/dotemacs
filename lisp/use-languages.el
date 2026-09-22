@@ -187,6 +187,7 @@ With ARGUMENT move up that amount."
   (modify-syntax-entry ?' "'" org-mode-syntax-table)
   (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer)
   :custom
+  (org-babel-default-header-args:sh '((:results . "silent")))
   (org-confirm-babel-evaluate nil)
   (org-cycle-separator-lines 0)
   (org-descriptive-links nil)
