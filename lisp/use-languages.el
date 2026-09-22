@@ -26,6 +26,7 @@
      (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
      (json       . ("https://github.com/tree-sitter/tree-sitter-json"))
      (kotlin     . ("https://github.com/fwcd/tree-sitter-kotlin"))
+     (lua        . ("https://github.com/tree-sitter-grammars/tree-sitter-lua"))
      (python     . ("https://github.com/tree-sitter/tree-sitter-python"))
      (toml       . ("https://github.com/tree-sitter/tree-sitter-toml"))
      (tsx        . ("https://github.com/tree-sitter/tree-sitter-typescript"
@@ -123,6 +124,14 @@
   :hook
   (emacs-lisp-mode . flymake-mode)
   (emacs-lisp-mode . outline-minor-mode))
+
+;;;; Lua
+
+(use-package lua-ts-mode
+  :ensure nil
+  :custom
+  (lua-ts-indent-offset 2)
+  :mode (rx ".lua" eos))
 
 ;;;; Markdown
 

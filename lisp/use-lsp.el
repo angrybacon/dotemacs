@@ -110,6 +110,7 @@ Like `xref-find-references' but switch to the other window."
   :hook
   (eglot-managed-mode . me/eglot-configure-hover)
   (json-ts-mode . eglot-ensure)
+  (lua-ts-mode . eglot-ensure)
   (python-base-mode . eglot-ensure)
   (scss-mode . eglot-ensure)
   (typescript-ts-base-mode . eglot-ensure)
