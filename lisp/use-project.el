@@ -57,8 +57,7 @@ If not in a project, fallback to `find-file-at-point' instead."
 (defun me/project-kill-path ()
   "Save the current absolute path in the kill ring."
   (interactive)
-  ;; TODO Provide a variant that starts at project root
-  (let ((path (or (buffer-file-name) (pwd))))
+  (let ((path (abbreviate-file-name (or (buffer-file-name) (pwd)))))
     (kill-new path)
     (message (format "[Project] Copied `%s'" path))))
 
