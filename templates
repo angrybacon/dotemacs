@@ -6,6 +6,8 @@ emacs-lisp-mode
 
 fundamental-mode
 
+(eg "e.g. ")
+(ie "i.e. ")
 (now (barrinalo-date-short-with-time))
 (Now (barrinalo-date-long-with-time))
 (today (barrinalo-date-short))
