@@ -152,6 +152,8 @@
 
 ;;;; Org
 
+(use-package gnuplot)
+
 (declare-function org-at-heading-p "org")
 (declare-function org-previous-visible-heading "org")
 (declare-function outline-up-heading "outline")
@@ -183,10 +185,13 @@ With ARGUMENT move up that amount."
   (add-to-list 'org-src-lang-modes (cons "tsx" 'tsx-ts))
   (require 'ob-shell)
   (org-babel-do-load-languages
-   'org-babel-load-languages '((python . t) (shell . t)))
+   'org-babel-load-languages '((gnuplot . t) (python . t) (shell . t)))
   (modify-syntax-entry ?' "'" org-mode-syntax-table)
   (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer)
   :custom
+  (org-babel-default-header-args:gnuplot
+   '((:results . "file")
+     (:session . "none")))
   (org-babel-default-header-args:sh '((:results . "silent")))
   (org-confirm-babel-evaluate nil)
   (org-cycle-separator-lines 0)
@@ -205,7 +210,11 @@ With ARGUMENT move up that amount."
   (org-mode . (lambda () (setq-local comment-auto-fill-only-comments nil)))
   :init
   (add-to-list 'safe-local-eval-forms
-               '(add-hook 'after-save-hook #'org-babel-tangle nil t)))
+               '(add-hook 'after-save-hook #'org-babel-tangle nil t))
+  (add-to-list 'safe-local-eval-forms
+               '(add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images nil t))
+  (add-to-list 'safe-local-eval-forms
+               '(add-hook 'org-babel-after-execute-hook #'save-buffer nil t)))
 
 ;;;; Terraform
 
