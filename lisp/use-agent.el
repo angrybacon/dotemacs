@@ -41,12 +41,18 @@
       (:before (&rest _) require-configuration)
     (unless (me/claude-get)
       (user-error "No Claude configuration set")))
+  (defun me/agent-shell-directory (directory)
+    "Return path to DIRECTORY under `shelldock-directory' instead of the project."
+    (if-let* ((name (me/project-name)))
+        (shelldock (file-name-concat "agent-shell" name directory))
+      (agent-shell--dot-subdir-in-repo directory)))
   :custom
   (agent-shell-anthropic-authentication
    (agent-shell-anthropic-make-authentication :login t))
   (agent-shell-busy-indicator-frames 'dots-block)
   (agent-shell-confirm-interrupt nil)
   (agent-shell-context-sources '(error files region))
+  (agent-shell-dot-subdir-function #'me/agent-shell-directory)
   (agent-shell-header-style 'text)
   (agent-shell-preferred-agent-config 'claude-code)
   (agent-shell-session-strategy 'latest)
