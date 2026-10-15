@@ -17,6 +17,13 @@
   :hook
   (flymake-mode . flyover-mode))
 
+;;;; Fill-Column
+
+(use-package display-fill-column-indicator
+  :ensure nil
+  :hook
+  (after-init . global-display-fill-column-indicator-mode))
+
 ;;;; Prettier
 
 (defun me/prettier-markdown-parser ()
@@ -45,7 +52,7 @@ Markdown parser."
   (whitespace-display-mappings '((tab-mark ?\t [?› ?\t])))
   (whitespace-global-modes '(conf-mode prog-mode text-mode))
   (whitespace-line-column nil)
-  (whitespace-style '(empty face lines-tail tab-mark tabs trailing))
+  (whitespace-style '(empty face tab-mark tabs trailing))
   :hook
   (after-init . global-whitespace-mode))
 
