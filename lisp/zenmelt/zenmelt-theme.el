@@ -444,6 +444,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
                                             :inherit variable-pitch)))
 ;;;;;; Language Servers
    `(eglot-highlight-symbol-face        ((t ,@(zenmelt--box 'yellow))))
+   `(eglot-inlay-hint-face              ((t :height .9 :inherit shadow)))
 ;;;;;; Mode-Line
    `(leyline-error                      ((t :inherit flymake-error
                                             :underline nil)))

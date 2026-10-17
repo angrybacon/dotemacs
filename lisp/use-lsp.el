@@ -104,9 +104,11 @@ Like `xref-find-references' but switch to the other window."
   (eglot-autoshutdown t)
   (eglot-code-action-indications '(eldoc-hint))
   (eglot-events-buffer-config '(:size 0))
-  ;; NOTE Let Tree-Sitter handle the highlighting.
-  ;;      Who thought that was a good idea to enable by default?
-  (eglot-ignored-server-capabilities '(:semanticTokensProvider))
+  (eglot-ignored-server-capabilities
+   '(:inlayHintProvider
+     ;; NOTE Let Tree-Sitter handle the highlighting.
+     ;;      Who thought that was a good idea to enable by default?
+     :semanticTokensProvider))
   :hook
   (eglot-managed-mode . me/eglot-configure-hover)
   (json-ts-mode . eglot-ensure)
