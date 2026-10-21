@@ -80,6 +80,7 @@ either an absolute file path or a function to call on visit."
         (compositor    . "~/Workspace/dot/config/picom.org")
         (desktop       . "~/Workspace/dot/config/qtile.org")
         (emacs         . user-init-file)
+        (git           . "~/Workspace/dot/config/git.org")
         (linux         . "~/Workspace/dot/LINUX.org")
         (macos         . "~/Workspace/dot/MACOS.org")
         (notifications . "~/Workspace/dot/config/dunst.org")
@@ -120,6 +121,7 @@ either an absolute file path or a function to call on visit."
      ("c" "Picom"         me/visit-compositor)
      ("d" "Qtile"         me/visit-desktop)
      ("i" "Vim"           me/visit-vim)
+     ("g" "Git"           me/visit-git)
      ("n" "Dunst"         me/visit-notifications)
      ("s" "Zsh"           me/visit-shell)
      ("t" "Kitty"         me/visit-terminal)]

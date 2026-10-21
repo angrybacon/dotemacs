@@ -212,6 +212,12 @@ With ARGUMENT move up that amount."
   (add-to-list 'safe-local-eval-forms
                '(add-hook 'after-save-hook #'org-babel-tangle nil t))
   (add-to-list 'safe-local-eval-forms
+               '(when (eq system-type 'darwin)
+                  (add-hook 'after-save-hook #'org-babel-tangle nil t)))
+  (add-to-list 'safe-local-eval-forms
+               '(when (eq system-type 'gnu/linux)
+                  (add-hook 'after-save-hook #'org-babel-tangle nil t)))
+  (add-to-list 'safe-local-eval-forms
                '(add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images nil t))
   (add-to-list 'safe-local-eval-forms
                '(add-hook 'org-babel-after-execute-hook #'save-buffer nil t)))
