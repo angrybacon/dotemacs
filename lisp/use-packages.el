@@ -3,7 +3,6 @@
 ;;; Code:
 
 (setq-default
- package-install-upgrade-built-in t
  package-native-compile t
  use-package-always-defer t
  use-package-always-ensure t

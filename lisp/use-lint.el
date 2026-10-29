@@ -4,8 +4,6 @@
 
 ;;;; Compilation
 
-(use-package flymake :ensure nil)
-
 (use-package flyover
   :disabled
   :custom
