@@ -42,8 +42,24 @@
   (corfu-auto-delay 1))
 
 (use-package marginalia
+  :config
+  (add-to-list 'marginalia-annotators
+               '(variable me/marginalia-annotate-variable builtin none))
   :hook
-  (after-init . marginalia-mode))
+  (after-init . marginalia-mode)
+  :preface
+  (defun me/marginalia-annotate-variable (candidate)
+    "Alternate annotator for variable CANDIDATE."
+    (when-let* ((symbol (intern-soft candidate)))
+      (marginalia--fields
+       ((marginalia--variable-value symbol) :truncate 0.5)
+       ((if-let* ((standard (get symbol 'standard-value)))
+            (prin1-to-string (eval (car standard) t))
+          "")
+        :face 'shadow :truncate 0.1)
+       ((or (documentation-property symbol 'variable-documentation)
+            (marginalia--definition-prefix symbol))
+        :face 'marginalia-documentation :truncate 1.0)))))
 
 (use-package orderless
   :custom
