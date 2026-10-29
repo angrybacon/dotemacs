@@ -98,10 +98,14 @@
   widowmaker-terminal-dwim
   widowmaker-terminal-window
   :hook
-  (after-init . winner-mode)
   (window-configuration-change . widowmaker-olivetti-maybe)
   :init
   (advice-add 'shackle--display-buffer-aligned-window :after
     #'widowmaker-shackle-set-window-side))
+
+(use-package winner
+  :ensure nil
+  :hook
+  (after-init . winner-mode))
 
 ;;; use-display.el ends here

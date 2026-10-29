@@ -126,6 +126,10 @@
 ;; TODO Repeat'ize the unimpaired bindings from evil-collection
 
 (use-package evil-collection
+  :config
+  (with-eval-after-load 'agent-shell
+    (evil-collection-bind
+     'agent-shell-mode-map 'repl-submit #'agent-shell-submit))
   :custom
   (evil-collection-key-blacklist '("M-1" "M-2" "M-3" "M-4"))
   (evil-collection-repl-submit-state 'insert)
