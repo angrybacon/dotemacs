@@ -200,7 +200,6 @@ With ARGUMENT move up that amount."
   (org-edit-src-persistent-message nil)
   (org-fontify-done-headline t)
   (org-fontify-quote-and-verse-blocks t)
-  (org-fontify-whole-heading-line t)
   (org-return-follows-link t)
   (org-src-window-setup 'current-window)
   (org-startup-truncated nil)
