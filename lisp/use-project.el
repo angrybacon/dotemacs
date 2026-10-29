@@ -12,7 +12,7 @@
  '((css-base-mode . ((eval . (prettier-mode))))
    (js-base-mode . ((eval . (prettier-mode))))
    (json-ts-mode . ((eval . (prettier-mode))))
-   (markdown-mode . ((eval . (prettier-mode))))
+   (markdown-ts-mode . ((eval . (prettier-mode))))
    (typescript-ts-base-mode . ((eval . (prettier-mode))))
    (yaml-ts-mode . ((eval . (prettier-mode))))))
 

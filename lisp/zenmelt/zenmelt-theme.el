@@ -404,7 +404,7 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(smerge-refined-removed             ((t :inherit diff-refine-removed)))
    `(smerge-upper                       ((t :background ,bg+1
                                             :inherit diff-removed)))
-;;;;; Third-party
+;;;;; Third-Party
 ;;;;;; Agent
    `(agent-shell-chat-agent-label       ((t :inherit font-lock-function-name-face
                                             :inverse-video t)))
@@ -574,10 +574,10 @@ See `zenmelt-box-colors-alist' for a complete list of available colors."
    `(magit-signature-untrusted          ((t :foreground ,yellow)))
    `(magit-tag                          ((t :foreground ,orange)))
 ;;;;;; Markdown
-   `(markdown-code-face                 ((t :inherit org-block)))
-   `(markdown-inline-code-face          ((t :inherit org-verbatim)))
-   `(markdown-table-face                ((t :height .9
-                                            :inherit markdown-code-face)))
+   `(markdown-ts-code-block             ((t :background ,bg+1)))
+   `(markdown-ts-table                  ((t :inherit nil)))
+   `(markdown-ts-table-delimiter-cell   ((t :inherit shadow)))
+   `(markdown-ts-table-header           ((t :inherit shadow)))
 ;;;;;; Pairs
    `(rainbow-delimiters-base-error-face ((t :foreground ,magenta)))
    `(rainbow-delimiters-depth-1-face    ((t :foreground ,fg)))

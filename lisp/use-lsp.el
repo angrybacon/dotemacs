@@ -106,7 +106,7 @@ Like `xref-find-references' but switch to the other window."
   (eglot-events-buffer-config '(:size 0))
   (eglot-ignored-server-capabilities
    '(:inlayHintProvider
-     ;; NOTE Let Tree-Sitter handle the highlighting.
+     ;; NOTE Let Tree-sitter handle the highlighting.
      ;;      Who thought that was a good idea to enable by default?
      :semanticTokensProvider))
   :hook

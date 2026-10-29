@@ -2,41 +2,17 @@
 ;;; Commentary:
 ;;; Code:
 
-;;;; Tree-sitter
-
-(use-package pendelhaven
-  :load-path "lisp/pendelhaven"
-  :commands
-  pendelhaven-configure
-  pendelhaven-install
-  :custom
-  (pendelhaven-directory (shelldock "pendelhaven/"))
-  :hook
-  (after-init . pendelhaven-configure))
+;;;; Tree-Sitter
 
 (use-package treesit
   :ensure nil
   :config
-  (setq-default
-   treesit-language-source-alist
-   '((css        . ("https://github.com/tree-sitter/tree-sitter-css"))
-     (go         . ("https://github.com/tree-sitter/tree-sitter-go"))
-     (gomod      . ("https://github.com/camdencheek/tree-sitter-go-mod"))
-     (graphql    . ("https://github.com/bkegley/tree-sitter-graphql"))
-     (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
-     (json       . ("https://github.com/tree-sitter/tree-sitter-json"))
-     (kotlin     . ("https://github.com/fwcd/tree-sitter-kotlin"))
-     (lua        . ("https://github.com/tree-sitter-grammars/tree-sitter-lua"))
-     (python     . ("https://github.com/tree-sitter/tree-sitter-python"))
-     (toml       . ("https://github.com/tree-sitter/tree-sitter-toml"))
-     (tsx        . ("https://github.com/tree-sitter/tree-sitter-typescript"
-                    "master"
-                    "tsx/src"))
-     (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript"
-                    "master"
-                    "typescript/src"))
-     (yaml       . ("https://github.com/ikatyang/tree-sitter-yaml"))))
+  (dolist (source '((graphql "https://github.com/bkegley/tree-sitter-graphql")
+                    (kotlin "https://github.com/fwcd/tree-sitter-kotlin")))
+    (add-to-list 'treesit-language-source-alist source))
   :custom
+  (treesit-enabled-modes t)
+  (treesit-extra-load-path (list (shelldock "treesit/")))
   (treesit-font-lock-level 4))
 
 ;;;; CSS
@@ -61,7 +37,10 @@
 
 ;;;; GraphQL
 
-(use-package graphql-ts-mode)
+(use-package graphql-ts-mode
+  :config
+  ;; NOTE The mode itself should probably be doing this
+  (treesit-ensure-installed 'graphql))
 
 ;;;; HTML
 
@@ -82,31 +61,22 @@
   :ensure nil
   :custom
   (js-indent-level 2)
-  :mode ((rx ".mjs" eos) . js-ts-mode))
-
-(declare-function json-pretty-print-ordered "json")
-(declare-function json-pretty-print-buffer-ordered "json")
-
-(defun me/json-prettify-dwim ()
-  "Prettify region if active or entire buffer accordingly."
-  (interactive)
-  (if (use-region-p)
-      (json-pretty-print-ordered (use-region-beginning) (use-region-end))
-    (json-pretty-print-buffer-ordered)))
-
-(use-package json-ts-mode
-  :ensure nil
-  :bind
-  (:map json-ts-mode-map
-   ([remap fill-paragraph] . me/json-prettify-dwim)))
+  :init
+  ;; NOTE Shebang mapping uses `js-mode' regardless of `treesit'
+  (add-to-list 'major-mode-remap-alist '(js-mode . js-ts-mode))
+  :mode ((rx "." (or "cjs" "mjs") eos) . js-ts-mode))
 
 (use-package typescript-ts-mode
   :ensure nil
-  :mode ((rx ".mts" eos) . typescript-ts-mode))
+  :mode ((rx "." (or "cts" "mts") eos) . typescript-ts-mode))
 
 ;;;; Kotlin
 
-(use-package kotlin-ts-mode)
+(use-package kotlin-ts-mode
+  :config
+  ;; NOTE The mode itself should probably be doing this
+  (treesit-ensure-installed 'kotlin)
+  :mode (rx "." (or "kt" "kts") eos))
 
 ;;;; Lisp
 
@@ -130,25 +100,13 @@
 (use-package lua-ts-mode
   :ensure nil
   :custom
-  (lua-ts-indent-offset 2)
-  :mode (rx ".lua" eos))
+  (lua-ts-indent-offset 2))
 
 ;;;; Markdown
 
-(use-package markdown-mode
-  :defines markdown-code-lang-modes markdown-mode-map
-  :bind
-  (:map markdown-mode-map
-   ("M-n" . nil)
-   ("M-p" . nil))
-  :custom
-  (markdown-asymmetric-header t)
-  (markdown-fontify-code-blocks-natively t)
-  (markdown-list-indent-width 2)
-  (markdown-split-window-direction 'right)
-  :config
-  (add-to-list 'markdown-code-lang-modes '("tsx" . tsx-ts-mode))
-  :mode (rx (or "INSTALL" "CONTRIBUTORS" "LICENSE" "README" ".mdx") eos))
+(use-package markdown-ts-mode
+  :ensure nil
+  :mode (rx (or ".md" ".mdx" "CONTRIBUTORS" "INSTALL" "LICENSE" "README") eos))
 
 ;;;; Org
 
@@ -181,8 +139,6 @@ With ARGUMENT move up that amount."
    ("C-S-<up>" . nil))                  ; Free paragraph command
   :config
   (add-to-list 'org-src-lang-modes (cons "json" 'json-ts))
-  (add-to-list 'org-src-lang-modes (cons "ts" 'typescript-ts))
-  (add-to-list 'org-src-lang-modes (cons "tsx" 'tsx-ts))
   (require 'ob-shell)
   (org-babel-do-load-languages
    'org-babel-load-languages '((gnuplot . t) (python . t) (shell . t)))
