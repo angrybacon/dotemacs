@@ -4,6 +4,8 @@
 
 ;;;; Pair-Programming Mode
 
+;; TODO Check out winpulse.el
+
 (use-package ruric
   :load-path "lisp/ruric"
   :commands

@@ -66,6 +66,10 @@
   (add-to-list 'major-mode-remap-alist '(js-mode . js-ts-mode))
   :mode ((rx "." (or "cjs" "mjs") eos) . js-ts-mode))
 
+(use-package json-ts-mode
+  :ensure nil
+  :mode ((rx ".jsonc" eos) . json-ts-mode))
+
 (use-package typescript-ts-mode
   :ensure nil
   :mode ((rx "." (or "cts" "mts") eos) . typescript-ts-mode))
