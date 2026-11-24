@@ -30,7 +30,6 @@
   "q" #'manticore-kill-terminal
   "s" #'manticore-revert-buffer-immediately)
 
-(declare-function agent-shell-help-menu "agent-shell")
 (declare-function barrinalo-reverse "barrinalo")
 (declare-function barrinalo-shift-left "barrinalo")
 (declare-function barrinalo-shift-left-tab "barrinalo")
@@ -111,7 +110,6 @@
   (evil-emacs-state-cursor (default-value 'cursor-type))
   (evil-move-beyond-eol t)
   (evil-move-cursor-back nil)
-  (evil-respect-visual-line-mode t)
   (evil-shift-width 2)
   (evil-undo-system 'undo-redo)
   (evil-visual-state-cursor 'hollow)
@@ -126,11 +124,10 @@
 ;; TODO Repeat'ize the unimpaired bindings from evil-collection
 
 (use-package evil-collection
-  :config
-  (with-eval-after-load 'agent-shell
-    (evil-collection-bind
-     'agent-shell-mode-map 'repl-submit #'agent-shell-submit))
   :custom
+  (evil-collection-binding-overrides
+   '((repl-newline :state normal)
+     (repl-submit :state insert)))
   (evil-collection-key-blacklist '("M-1" "M-2" "M-3" "M-4"))
   (evil-collection-repl-submit-state 'insert)
   :hook
