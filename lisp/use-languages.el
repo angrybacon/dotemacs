@@ -149,6 +149,12 @@ With ARGUMENT move up that amount."
    'org-babel-load-languages '((gnuplot . t) (python . t) (shell . t)))
   (modify-syntax-entry ?' "'" org-mode-syntax-table)
   (advice-add 'org-src--construct-edit-buffer-name :override #'me/org-src-buffer)
+  (define-advice org-escape-code-in-region (:override (begin end) only-at-zero)
+    "Escape only lines starting with `*' or `#+' at column 0."
+    (save-excursion
+      (goto-char end)
+      (while (re-search-backward "^\\(,*\\(?:\\*\\|#\\+\\)\\)" begin t)
+        (save-excursion (goto-char (match-beginning 1)) (insert ",")))))
   :custom
   (org-babel-default-header-args:gnuplot
    '((:results . "file")
