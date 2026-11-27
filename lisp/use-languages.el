@@ -142,7 +142,8 @@ With ARGUMENT move up that amount."
    ("C-S-<down>" . nil)                 ; Free paragraph command
    ("C-S-<up>" . nil))                  ; Free paragraph command
   :config
-  (add-to-list 'org-src-lang-modes (cons "json" 'json-ts))
+  (add-to-list 'org-src-lang-modes '("json" . json-ts))
+  (add-to-list 'org-src-lang-modes '("markdown" . markdown-ts))
   (require 'ob-shell)
   (org-babel-do-load-languages
    'org-babel-load-languages '((gnuplot . t) (python . t) (shell . t)))
